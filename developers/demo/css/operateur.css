@@ -1,0 +1,37 @@
+html, body { min-height:100%;}
+body {
+    font-family: Montserrat;
+    font-weight: 200;
+    font-style: normal;
+    color: #343434;
+    font-size: 14px;
+    background-color:#FFFFFF;
+    background-size:cover;
+}
+
+html, body, .full-screen { height:100%; margin:0; padding:0; text-align:center; } 
+.full-screen .notvisible { height:100%; display:inline-block; vertical-align:middle; }     
+.full-screen .message { display:inline-block; vertical-align:middle; font-size:50px; }
+.full-screen.popup { position:absolute; left:0; top:0; width:100%; z-index:10000; background-color:rgba(255,255,255,0.8); display:none; }
+
+span.reponse { display:block; max-width:100%; overflow:auto; }
+
+#home { margin:100px; }
+#visio { padding:100px; display:none; }
+
+#visio #webcams { position:relative; max-width:100%; }
+#visio #webcam_operateur { max-width:100%; max-height:100%; }
+
+#divVideo, #divVideo video { max-width:100%;}
+
+#webcam_local { max-width:100%; }
+#webcam_robot { max-width:100%; }
+video { max-width:150px; }
+
+#videos { text-align:left; }
+
+#videos, #events, #functions { text-align:left; }
+#events span { color:#CC0000; }
+
+.modal-backdrop { z-index:10000; }
+.modal-dialog { z-index:10001; }
