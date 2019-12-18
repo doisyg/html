@@ -31,6 +31,7 @@ body { min-height:100vh; }
 
 .cone, .cone_dir, .route, .rayon, .robot, .robot_secure, .poly , .text, .route_rayon { z-index:500; }
 .movable, .route_elem_num, .cone_dir_active { display:none; }
+.movable.dock_elem { display:block; }
 
 #colonneInfos, #colonneElements { max-height:90vh; overflow:auto; }
 
@@ -38,28 +39,12 @@ body { min-height:100vh; }
 
 .text.text_elem, .route_elem_num {  dominant-baseline:middle; text-anchor:middle; cursor:default; }
 
-body .poly, body.addPoly .poly_elem_current {  fill:rgba(204,102,0, 0.5); stroke:#00CCFF; display:block; }
+body .poly, body.addForbidden .forbidden_elem_current, body.addArea .area_elem_current, body.addPoly .poly_elem_current {  fill:rgba(204,102,0, 0.5); stroke:#00CCFF; display:block; }
 body .text, body.no_current .text.movable {  display:block !important; }
 body .info, body.no_current .info.movable {  display:block !important; }
 
-body .rayon, body.show_rayon .rayon { cursor:pointer; stroke:#00CCFF; display:block; }
-.rayon.active, .rayon.active { cursor:pointer; stroke: red; display:block; }
-
 .activ_over { stroke: black !important; fill: rgba(0,0,0,0.5) !important; visibility:visible; }
 .activ_select { stroke: red !important; fill: rgba(255,0,0,0.5) !important; visibility:visible; }
-
-text.activ_over { stroke: none !important; fill: red !important; text-decoration:underline; }
-text.activ_select { stroke: none !important; fill: red !important; text-decoration:underline; }
-
-text.active { text-decoration:underline; }
-
-body .rayon.movable, body.show_rayon .rayon.movable { display:none; }
-.rayon.active.movable, .rayon.active.movable { stroke: transparent; fill:rgba(0,0,0, 0.8); display:block; }
-
-body .route, body .route.route_elem_0, body.show_route .route, .route.active, body.select_path .route { stroke:#00FF00; display:block; }
-
-body .cone, body .cone.route_elem_0, body.show_route .cone, .cone.active { fill:rgba(204,102,0, 0.5); display:block; }
-body .cone_dir, body .cone_dir.route_elem_0, body.show_route .cone_dir, .cone_dir.active { fill:#009900; display:block; }
 
 body .robot, body .robot.route_elem_0, body.show_route .robot, .robot.active { fill:#009900; display:block; }
 
@@ -70,25 +55,20 @@ text.info.activ_over { fill:#FFFFFF !important; }
 .info_r.activ_over { fill:#96D4D1 !important; stroke:none !important; }
 .info_r.active { fill:#F0AD4E; }
 
+.dock_elem_fond.active { fill:#CC0000; }
+.poi_elem_secure { fill:#AAAAAA; }
+.poi_elem_fond { fill:#589FB1; }
+.poi_elem_fond.active { fill:#CC0000; }
+
 .route_rayon.active { display:block; stroke:#000000; }
 
 body .robot_secure, body .robot_secure.route_elem_0, body.show_route .robot_secure, .robot_secure.active { fill:rgba(0,0,0, 0.2); display:block; }
 body.jobs_over .route_elem_num { fill:#F00; display:block; }
 
-#colonneCarte .active { display:block !important; visibility:visible; }
-#colonneCarte .route_elem_num.active { display:none !important; }
-
-
+#container_all .active { display:block !important; visibility:visible; }
 
 body.show_rayon .cone, body.show_rayon .cone_dir, body.show_rayon .route, body.show_rayon .robot, body.show_rayon .robot_secure, body.show_rayon .poly , body.show_rayon .text, body.show_rayon .route_rayon { display:none; }
 body.select_path .rayon { display:none; }
-
-body.select .text, body .text.text_elem_0, .text.active { cursor:pointer; }
-body.select_path .route, body.select .route, body .route.route_elem_0, body.show_route .route, .route.active { cursor:pointer; }
-body.select_path .cone, body.select .cone, body .cone.route_elem_0, body.show_route .cone, .cone.active { cursor:pointer; }
-body.select_path .cone_dir, body.select .cone_dir,  body .cone_dir.route_elem_0, body.show_route .cone_dir, .cone_dir.active { cursor:pointer; }
-body.select_path .robot, body.select .robot, body .robot.route_elem_0, body.show_route .robot, .robot.active { cursor:pointer; }
-body.select_path .robot_secure, body.select .robot_secure, body .robot_secure.route_elem_0, body.show_route .robot_secure, .robot_secure.active { cursor:pointer; }
 
 body.select_path .robot_elem { cursor:pointer; }
 .form-group { margin-bottom:10px; padding-top:5px; }
@@ -119,13 +99,6 @@ label.active { color:#F00; }
 
 .todo_text { font-weight:bold; }
 
-.job { border:1px solid #CCC; margin:10px 0; padding:10px; }
-.job h3 { font-size:14px; line-height:30px; margin:0; padding:0; padding-left:10px; padding-right:10px; padding-bottom:10px; }
-.job .actions { float:right; }
-.job .actions .btn { margin-left:5px; }
-.job .actions .btn:first-child { margin-left:0; }
-.job li h3 { margin:0; padding:0; }
-
 .ui-state-default { line-height:30px; }
 
 #blocInfoOpened { background-color:#FFF; border-radius:0px; padding:10px; color:#000; position:absolute; top:0; left:0; overflow:auto; z-index:1003; cursor:pointer; }
@@ -148,21 +121,13 @@ label.active { color:#F00; }
 
 .tab-content { border:1px solid #ddd; border-top:0; padding:10px; padding-top:20px; }
 
-#zoom_carte_container { z-index:1000; background-color:#FFF; position:absolute; top:0px; right:0px; }
+#zoom_carte_container { z-index:1000; background-color:#FFF; position:absolute; top:0px; right:20px; }
 #main_row.hide_element #zoom_carte_container { right:50px; }
 #zoom_carte { position:relative; width:100px; border:1px solid #000; }
 
 #main_row.hide_element #colonneCarte { padding-right:30px; }
 #main_row.hide_element #colonneElements { display:none; }
 #main_row #bToogleElements { font-size:24px; color:#333333; margin-right:20px; position:fixed; top:65px; right:-15px; }
-
-#blocElements ul { margin:0; padding:0; list-style:none; }
-#blocElements > ul > li { border-bottom:1px solid #CCC; margin-bottom:2px; }
-
-#blocElements ul li.eye { cursor:pointer; }
-#blocElements ul ul li.eye:hover > .head {  background-color:#EFEFEF; }
-
-#blocElements ul ul li.eye.active > .head {  background-color:#E2EFFE; }
 
 .no_icon_2 { display:inline-block; width:28px; }
 .no_icon { display:inline-block; width:8px; }
@@ -253,4 +218,5 @@ body.show_rayon .rayon_elem.visibility_hide { visibility:visible; }
     font-weight: normal;
     color: #555555;
 }
-	
+
+#message_aide { position:absolute; top:5px; left:5px; padding:2px 5px; border-radius:5px; background-color:rgba(255,255,255,0.7); color:#C00; font-weight:bold; display:none; }

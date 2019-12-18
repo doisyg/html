@@ -83,7 +83,6 @@
 	'use strict';
 
 	if ( $.isFunction($.fn[ 'colorpicker' ]) ) {
-
 		$(function() {
 			$('[data-plugin-colorpicker]').each(function() {
 				var $this = $( this ),

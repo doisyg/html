@@ -6,10 +6,7 @@ class PoiCore
 	public $x_ros = 0.0;
 	public $y_ros = 0.0;
 	public $t_ros = 0.0;
-	public $num = -1;
-	public $type = "";
-	public $info = "";
-	public $floor = -1;
+	public $name = "";
 
 	public function __construct( $id_poi = null, $byrow=false ) 
 	{
@@ -34,10 +31,7 @@ class PoiCore
 		$this->x_ros = $object->x_ros;
 		$this->y_ros = $object->y_ros;
 		$this->t_ros = $object->t_ros;
-		$this->num = $object->num;
-		$this->type = $object->type;
-		$this->info = $object->info;
-		$this->floor = $object->floor;
+		$this->name = $object->name;
 	}
 
 	public static function getPoi( $id_poi )
@@ -62,16 +56,13 @@ class PoiCore
 	public function Insert()
 	{
 		global $_CONFIG;
-		$query = "INSERT INTO poi ( id_plan, x_ros, y_ros, t_ros, num, type, info, floor ) VALUES ( 
+		$query = "INSERT INTO poi ( id_plan, x_ros, y_ros, t_ros, name ) VALUES ( 
 
 			'". mysqli_real_escape_string(DB::$connexion, $this->id_plan) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->x_ros) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->y_ros) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->t_ros) ."', 
-			'". mysqli_real_escape_string(DB::$connexion, $this->num) ."', 
-			'". mysqli_real_escape_string(DB::$connexion, $this->type) ."', 
-			'". mysqli_real_escape_string(DB::$connexion, $this->info) ."', 
-			'". mysqli_real_escape_string(DB::$connexion, $this->floor) ."'
+			'". mysqli_real_escape_string(DB::$connexion, $this->name) ."'
 			) ";
 		$insert=mysqli_query(DB::$connexion, $query) or die ('ERREUR Insert Poi : '.$query.'<br />'.mysqli_error(DB::$connexion).'<br /><br />');
 		$this->id_poi = mysqli_insert_id(DB::$connexion);
@@ -86,10 +77,7 @@ class PoiCore
 			x_ros = '". mysqli_real_escape_string(DB::$connexion,  $this->x_ros )."', 
 			y_ros = '". mysqli_real_escape_string(DB::$connexion,  $this->y_ros )."', 
 			t_ros = '". mysqli_real_escape_string(DB::$connexion,  $this->t_ros )."', 
-			num = '". mysqli_real_escape_string(DB::$connexion,  $this->num )."', 
-			type = '". mysqli_real_escape_string(DB::$connexion,  $this->type )."', 
-			info = '". mysqli_real_escape_string(DB::$connexion,  $this->info )."', 
-			floor = '". mysqli_real_escape_string(DB::$connexion,  $this->floor )."'
+			name = '". mysqli_real_escape_string(DB::$connexion,  $this->name )."'
 		WHERE id_poi = '". mysqli_real_escape_string(DB::$connexion, $this->id_poi)."'";
 		$update=mysqli_query(DB::$connexion, $query) or die ('ERREUR Update Poi : '.$query.'<br />'.mysqli_error(DB::$connexion).'<br /><br />');
 	}

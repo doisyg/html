@@ -921,6 +921,8 @@ SvgPanZoom.prototype.zoomAtPoint = function(zoomScale, point, zoomAbsolute) {
   if (newCTM.a !== oldCTM.a) {
     this.viewport.setCTM(newCTM);
   }
+  
+  if (this.options.RefreshMap != undefined) this.options.RefreshMap();
 };
 
 /**
@@ -1119,6 +1121,7 @@ SvgPanZoom.prototype.handleMouseMove = function(evt) {
       );
 
     this.viewport.setCTM(viewportCTM);
+	if (this.options.RefreshMap != undefined) this.options.RefreshMap();
   }
 };
 
@@ -1202,6 +1205,7 @@ SvgPanZoom.prototype.pan = function(point) {
   viewportCTM.e = point.x;
   viewportCTM.f = point.y;
   this.viewport.setCTM(viewportCTM);
+  if (this.options.RefreshMap != undefined) this.options.RefreshMap();
 };
 
 /**
@@ -1214,6 +1218,7 @@ SvgPanZoom.prototype.panBy = function(point) {
   viewportCTM.e += point.x;
   viewportCTM.f += point.y;
   this.viewport.setCTM(viewportCTM);
+  if (this.options.RefreshMap != undefined) this.options.RefreshMap();
 };
 
 /**

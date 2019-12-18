@@ -45,6 +45,7 @@
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/jquery-ui-touch-punch/jquery.ui.touch-punch.js"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/jquery-appear/jquery.appear.js"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js"></script>
+        <script src="<?php echo $_CONFIG['URL'];?>assets/vendor/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/jquery-easypiechart/jquery.easypiechart.js"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/flot/jquery.flot.js"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/flot-tooltip/jquery.flot.tooltip.js"></script>

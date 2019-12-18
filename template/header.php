@@ -37,6 +37,7 @@
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/vendor/magnific-popup/magnific-popup.css" />
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" />
+		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/vendor/bootstrap-colorpicker/css/bootstrap-colorpicker.css" />
 
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css" />
@@ -57,7 +58,7 @@
 
 		<!-- Theme Custom CSS -->
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/theme-custom.css?v=20191210">
-		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/map.css">
+		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/map.css?v=20191214">
         
 		<!-- Head Libs -->
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/modernizr/modernizr.js"></script>

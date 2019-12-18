@@ -18,21 +18,20 @@ var currentStep = '';
 
 var svg;
 
+var timerRotate = null;
+
 var previewDisplayed = false;
-var currentRayonId = -1;
-var currentRayonIndex;
-var currentPathIndex = -1;
-var saveCurrentPath = null;
-var saveCurrentShelf = null;
-var currentRayonUpdated = false;
-var currentPolyIndex = -1;
-var saveCurrentPoly = null;
-var currentTextIndex = -1;
-var saveCurrentText = null;
-var currentInfoIndex = -1;
-var saveCurrentInfo = null;
-var currentIdJob = -1;
-var currentIdMultiPath = -1;
+var currentForbiddenIndex = -1;
+var saveCurrentForbidden = null;
+var currentAreaIndex = -1;
+var saveCurrentArea = null;
+var currentDockIndex = -1;
+var saveCurrentDock = null;
+var currentPoiIndex = -1;
+var saveCurrentPio = null;
+
+var currentDockPose = {};
+var currentPoiPose = {};
 
 var downOnZoomClick = false;
 var downOnSVG = false;
@@ -42,7 +41,9 @@ var downOnSVG_x_scroll = 0;
 var downOnSVG_y_scroll = 0;
 var downOnMovable = false;
 var movableDown = null;
-var currentPolyPoints = Array();
+var currentForbiddenPoints = Array();
+var currentAreaPoints = Array();
+var currentGommePoints = Array();
 var ctrlZ = false;
 var previewInProgress = false;
 var displayHelpAddShelf = true;
@@ -110,6 +111,160 @@ function HideCurrentMenuNotSelect()
 	currentStep = '';
 }
 
+var historiques = Array();
+var historiqueIndex = -1;
+
+
+function Undo()
+{
+	elem = historiques[historiqueIndex];
+	switch(elem.action)
+	{
+		case 'gomme':
+			gommes.pop();
+			$('.gomme_elem_current_'+gommes.length).remove();
+			break;
+		case 'add_forbidden':
+			forbiddens.pop();
+			$('.forbidden_elem_'+elem.data.id_area).remove();
+			break;
+		case 'edit_forbidden':
+			forbiddens[elem.data.index] = JSON.parse(elem.data.old);
+			TraceForbidden(elem.data.index);
+			break;
+		case 'delete_forbidden':
+			forbiddens[elem.data].deleted = 0;
+			TraceForbidden(elem.data);
+			break;
+		case 'add_area':
+			areas.pop();
+			$('.area_elem_'+elem.data.id_area).remove();
+			break;
+		case 'edit_area':
+			areas[elem.data.index] = JSON.parse(elem.data.old);
+			TraceArea(elem.data.index);
+			break;
+		case 'delete_area':
+			areas[elem.data].deleted = 0;
+			TraceArea(elem.data);
+			break;
+		case 'add_dock':
+			docks.pop();
+			$('.dock_elem_'+elem.data.id_station_recharge).remove();
+			break;
+		case 'edit_dock':
+			docks[elem.data.index] = JSON.parse(elem.data.old);
+			TraceDock(elem.data.index);
+			break;
+		case 'delete_dock':
+			docks[elem.data].deleted = 0;
+			TraceDock(elem.data);
+			break;
+		case 'add_poi':
+			pois.pop();
+			$('.poi_elem_'+elem.data.id_poi).remove();
+			break;
+		case 'edit_poi':
+			pois[elem.data.index] = JSON.parse(elem.data.old);
+			TracePoi(elem.data.index);
+			break;
+		case 'delete_poi':
+			pois[elem.data].deleted = 0;
+			TracePoi(elem.data);
+			break;
+	}
+	historiqueIndex--;
+	
+	RefreshHistorique();
+}
+
+function Redo()
+{
+	historiqueIndex++;
+	
+	elem = historiques[historiqueIndex];
+	switch(elem.action)
+	{
+		case 'gomme':
+			gommes.push(elem.data);
+			TraceCurrentGomme(gommes[gommes.length-1], gommes.length-1)
+			break;
+		case 'add_forbidden':
+			forbiddens.push(elem.data);
+			TraceForbidden(forbiddens.length-1);
+			break;
+		case 'edit_forbidden':
+			forbiddens[elem.data.index] = JSON.parse(elem.data.new);
+			TraceForbidden(elem.data.index);
+			break;
+		case 'delete_forbidden':
+			forbiddens[elem.data].deleted = 1;
+			TraceForbidden(elem.data);
+			break;
+		case 'add_area':
+			areas.push(elem.data);
+			TraceArea(areas.length-1);
+			break;
+		case 'edit_area':
+			areas[elem.data.index] = JSON.parse(elem.data.new);
+			TraceArea(elem.data.index);
+			break;
+		case 'delete_area':
+			areas[elem.data].deleted = 1;
+			TraceArea(elem.data);
+			break;
+		case 'add_dock':
+			docks.push(elem.data);
+			TraceDock(docks.length-1);
+			break;
+		case 'edit_dock':
+			docks[elem.data.index] = JSON.parse(elem.data.new);
+			TraceDock(elem.data.index);
+			break;
+		case 'delete_dock':
+			docks[elem.data].deleted = 1;
+			TraceDock(elem.data);
+			break;
+		case 'add_poi':
+			pois.push(elem.data);
+			TracePoi(pois.length-1);
+			break;
+		case 'edit_poi':
+			pois[elem.data.index] = JSON.parse(elem.data.new);
+			TracePoi(elem.data.index);
+			break;
+		case 'delete_poi':
+			pois[elem.data].deleted = 1;
+			TracePoi(elem.data);
+			break;
+	}
+	
+	RefreshHistorique();
+}
+
+function AddHistorique(elem)
+{
+	
+	while (historiqueIndex < historiques.length-1)
+		historiques.pop();
+	
+	historiques.push(elem);
+	historiqueIndex++;
+	
+	RefreshHistorique();
+}
+function RefreshHistorique()
+{
+	if (historiqueIndex == -1)
+		$('#bUndo').addClass('disabled');
+	else
+		$('#bUndo').removeClass('disabled');
+	if (historiqueIndex == historiques.length-1)
+		$('#bRedo').addClass('disabled');
+	else
+		$('#bRedo').removeClass('disabled');
+}
+
 function SetModeSelect()
 {
 	$('body').addClass('select');
@@ -128,437 +283,73 @@ $(document).ready(function() {
 		
 	$('body').addClass('no_current');
 	
-  	if (!isChrome)
-	{
-		window.addEventListener('wheel', function (e) {
-			// Firefox
-		  if (event.ctrlKey) {
-				e.stopImmediatePropagation();
-				e.stopPropagation();
-				e.preventDefault();
-				
-				x_decallage = (e.offsetX - document.getElementById('container_all').scrollLeft);
-				y_decallage = (e.offsetY - document.getElementById('container_all').scrollTop);
-				
-				x_centre = (e.offsetX) / zoom_carte;
-				y_centre = (e.offsetY) / zoom_carte;
-				
-				if (e.deltaY > 0)
-				{
-					zoom_carte--;
-					if (zoom_carte < 1) zoom_carte = 0.5;
-					AppliquerZoom();
-				}
-				else
-				{
-					zoom_carte++;
-					if (zoom_carte % 1 == 0.5) zoom_carte = parseInt(zoom_carte);
-					if (zoom_carte>10) zoom_carte = 10;
-					AppliquerZoom();
-				}
-				
-				$("#zoom_slider").slider('value',zoom_carte);
-				handle.text( zoom_carte );
-				
-				x_centre = x_centre * zoom_carte;
-				y_centre = y_centre * zoom_carte;
-							
-				w = $('#container_all').width();
-				h = $('#container_all').height();
-				
-				wAll = $('#all').width();
-				hAll = $('#all').height();
-				
-				wOver = $('#container_all').width();
-				hOver = $('#container_all').height();
-				
-				wZoom = $('#zone_zoom').width();
-				hZoom = $('#zone_zoom').height();
-				
-				
-				x_centre -= x_decallage;
-				y_centre -= y_decallage;
-				
-				$('#container_all').scrollLeft(x_centre);
-				$('#container_all').scrollTop(y_centre);
-					
-				t = document.getElementById('container_all').scrollTop;
-				l = document.getElementById('container_all').scrollLeft;
-						
-				$('#zone_zoom').css('top', t/hAll * h - 1);
-				$('#zone_zoom').css('left', l/wAll * w -1);
-		  }
-		});
-	}
-	else
-	{
-		window.addEventListener('mousewheel', function(e){
-			if (e.ctrlKey)
-			{
-				e.stopImmediatePropagation();
-				e.stopPropagation();
-				e.preventDefault();
-				
-				x_decallage = (e.offsetX - document.getElementById('container_all').scrollLeft);
-				y_decallage = (e.offsetY - document.getElementById('container_all').scrollTop);
-				
-				x_centre = (e.offsetX) / zoom_carte;
-				y_centre = (e.offsetY) / zoom_carte;
-				
-				if (e.deltaY > 0)
-				{
-					zoom_carte--;
-					if (zoom_carte < 1) zoom_carte = 0.5;
-					AppliquerZoom();
-				}
-				else
-				{
-					zoom_carte++;
-					if (zoom_carte % 1 == 0.5) zoom_carte = parseInt(zoom_carte);
-					if (zoom_carte>10) zoom_carte = 10;
-					AppliquerZoom();
-				}
-				
-				$("#zoom_slider").slider('value',zoom_carte);
-				handle.text( zoom_carte );
-				
-				x_centre = x_centre * zoom_carte;
-				y_centre = y_centre * zoom_carte;
-							
-				w = $('#container_all').width();
-				h = $('#container_all').height();
-				
-				wAll = $('#all').width();
-				hAll = $('#all').height();
-				
-				wOver = $('#container_all').width();
-				hOver = $('#container_all').height();
-				
-				wZoom = $('#zone_zoom').width();
-				hZoom = $('#zone_zoom').height();
-				
-				
-				x_centre -= x_decallage;
-				y_centre -= y_decallage;
-				
-				$('#container_all').scrollLeft(x_centre);
-				$('#container_all').scrollTop(y_centre);
-					
-				t = document.getElementById('container_all').scrollTop;
-				l = document.getElementById('container_all').scrollLeft;
-						
-				$('#zone_zoom').css('top', t/hAll * h - 1);
-				$('#zone_zoom').css('left', l/wAll * w -1);
-			}
-		}, { passive: false });
-	}
-	
 	
 	svg = document.querySelector('#svg');
 	InitSVG();
 	
-	$('*').mouseup(function(e) {
-        //e.preventDefault();
-		downOnZoomClick = false;
-		downOnSVG = false;
-		downOnMovable = false;
-		
-		if (clickSelectSVG && currentAction == 'select' && clickSelectSVG_x_last != -1)
-		{
-			$('.selection').remove();
-			
-			x1 = (clickSelectSVG_x * largeurRos / $('#mapBox').width()) * ros_resolution / 100;
-			y1 = (($('#mapBox').height() - clickSelectSVG_y) * largeurRos / $('#mapBox').width()) * ros_resolution / 100;
-			x2 = (clickSelectSVG_x_last * largeurRos / $('#mapBox').width()) * ros_resolution / 100;
-			y2 = (($('#mapBox').height() - clickSelectSVG_y_last) * largeurRos / $('#mapBox').width()) * ros_resolution / 100;
-			
-			if (x1 < x2){	xRos1 = x1; xRos2 = x2; }
-			else { xRos1 = x2; xRos2 = x1; }
-			
-			if (y1 < y2) { yRos1 = y1; yRos2 = y2; }
-			else { yRos1 = y2; yRos2 = y1; }
-			
-			// On cherche ^les éléments qui ont au moins un point dans la sélection
-			if (!e.ctrlKey)
-			{
-				currentSelectedItem = Array();
-			}
-						
-			
-			$.each(polys, function( index, poly ) {
-				selected = false;
-				
-				$.each(poly.points, function( index, point ) {
-					if (xRos1 <= point.x && point.x <= xRos2 && yRos1 <= point.y && point.y <= yRos2)
-						selected = true;
-				});
-				
-				if (selected)
-				{
-					trouve = false;
-					cur_id = poly.id_area;
-					$.each(currentSelectedItem, function(index, value){
-						if (value.type == 'poly' && value.id == cur_id)
-						{
-							trouve = true;
-							currentSelectedItem.splice(index, 1);
-							return false;
-						}
-					});
-					
-					if (!trouve)
-						currentSelectedItem.push({'type':'poly', 'id':poly.id_area});
-				}
-				
-			});
-			
-			clickSelectSVG = false;
-			clickSelectSVG_x_last = -1;
-			clickSelectSVG_y_last = -1;
-			
-			ResfreshMultipleSelection();
-			HideCurrentMenuNotSelect();
-		}
-		clickSelectSVG = false;
-		
-    });
-	
-	$('*').keyup(function(e) {
-		if (!e.altKey)
-			$('.btn-group .badge').hide();
-		if (!e.ctrlKey) ctrlClickIsPressed = false;
-		if (e.keyCode == 67) // c
-		{
-			cPressed = false;
-		}
+	$('#bUndo').click(function(e) {
+        e.preventDefault();
+		if (!$('#bUndo').hasClass('disabled'))
+			Undo();
+	});
+	$('#bUndo').on('touchstart', function(e) { 
+		e.preventDefault();
+		if (!$('#bUndo').hasClass('disabled'))
+			Undo();
 	});
 	
-	var downOnLabeledElem = undefined;
-	$(document).on('mousedown', '.movable', function(e) {
-		if ($(this).data('label_active') != undefined)
-		{
-			downOnLabeledElem = $(this);
-		}
+	$('#bRedo').click(function(e) {
+        e.preventDefault();
+		if (!$('#bRedo').hasClass('disabled'))
+			Redo();
     });
-	
-	$(document).on('mouseover', '.movable', function(e) {
-		if ($(this).data('label_active') != undefined)
-		{
-			$($(this).data('label_active')).addClass('active');
-		}
-    });
-	
-	$(document).on('mouseup', function(e) {
-		if (downOnLabeledElem != undefined && e.toElement.id != downOnLabeledElem.attr('id'))
-		{
-			$(downOnLabeledElem.data('label_active')).removeClass('active');
-			downOnLabeledElem = undefined;
-		}
-    });	
-	$(document).on('mouseout', '.movable', function(e) {
-		if ($(this).data('label_active') != undefined)
-		{
-			$($(this).data('label_active')).removeClass('active');
-		}
-    });
-	
-	$(document).on('mousedown', '.movable', function(e) {
+	$('#bRedo').on('touchstart', function(e) { 
 		e.preventDefault();
-		downOnMovable = true;
-		movableDown = $(this);
-		
-		downOnSVG_x = e.pageX;
-		downOnSVG_y = e.pageY;
-		
-		canChangeMenu = false;
-    });
+		if (!$('#bRedo').hasClass('disabled'))
+			Redo();
+	});
 	
-	$('#svg').mousedown(function(e) {
-
-       	e.preventDefault();
-	    downOnSVG = true;
-		downOnSVG_x = e.pageX;
-		downOnSVG_y = e.pageY;
-		downOnSVG_x_scroll = document.getElementById('container_all').scrollLeft;
-		downOnSVG_y_scroll = document.getElementById('container_all').scrollTop;
-		
-		if (currentAction == 'select')
+	$(document).on('touchstart', '.movable', function(e) {
+		if (currentAction != 'gomme')
 		{
-			clickSelectSVG = true;
+			console.log('touchstart movable');
+			touchStarted = true;
+			downOnMovable = true;
+			movableDown = $(this);
+			downOnSVG_x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX);
+			downOnSVG_y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY);
 			
-			clickSelectSVG_x = e.offsetX;
-			clickSelectSVG_y = e.offsetY;
-		}
-		else if (currentAction == 'addPoly' && currentStep=='trace')
-		{
-			if (e.button != 2)
-			{
-				x = e.offsetX;
-				y = $('#mapBox').height() - e.offsetY;
-					
-				xRos = (x * largeurRos / $('#mapBox').width()) * ros_resolution / 100;
-				yRos = (y * largeurRos / $('#mapBox').width()) * ros_resolution / 100;
-				
-				
-				currentPolyPoints.pop(); // Point du curseur
-				currentPolyPoints.push({x:xRos, y:yRos});
-				currentPolyPoints.push({x:xRos, y:yRos}); // Point du curseur
-				TraceCurrentPoly(currentPolyPoints);
-				
-				canChangeMenu = false;
-			}
+			canChangeMenu = false;
+			
+			blockZoom = true;
 		}
     });
 	
 	$('#svg').on('contextmenu', function (e) {
-		if (currentAction == 'addPoly' && currentStep=='trace')
+		
+		if (currentAction == 'gomme' && currentStep=='trace')
 		{
 			currentStep = '';
-			currentPolyPoints.pop(); // Point du curseur
-			TraceCurrentPoly(currentPolyPoints);
+			currentGommePoints.pop(); // Point du curseur
+			TraceCurrentGomme(currentGommePoints);
+			return false;
+			
+		}
+		else if (currentAction == 'addForbiddenArea' && currentStep=='trace')
+		{
+			currentStep = '';
+			currentForbiddenPoints.pop(); // Point du curseur
+			TraceCurrentForbidden(currentForbiddenPoints);
+			return false;
+		}
+		else if (currentAction == 'addArea' && currentStep=='trace')
+		{
+			currentStep = '';
+			currentAreaPoints.pop(); // Point du curseur
+			TraceCurrentArea(currentAreaPoints);
 			return false;
 		}
     });
-	
-	$('#svg').mouseup(function(e) {
-		
-	});
-	
-	$('#svg').mousemove(function(e) {
-       e.preventDefault();
-	  
-	  	if (clickSelectSVG && currentAction == 'select')
-		{
-			clickSelectSVG_x_last = e.offsetX;
-			clickSelectSVG_y_last = e.offsetY;
-			
-			TraceSection(clickSelectSVG_x, clickSelectSVG_y, clickSelectSVG_x_last, clickSelectSVG_y_last);
-		}
-	   else if (currentAction == 'addPoly' && currentStep=='trace')
-	   {
-			x = e.offsetX;
-			y = $('#mapBox').height() - e.offsetY;
-				
-			xRos = (x * largeurRos / $('#mapBox').width()) * ros_resolution / 100;
-			yRos = (y * largeurRos / $('#mapBox').width()) * ros_resolution / 100;
-			
-			currentPolyPoints[currentPolyPoints.length-1].x = xRos;
-			currentPolyPoints[currentPolyPoints.length-1].y = yRos;
-			TraceCurrentPoly(currentPolyPoints);
-	   }
-	   else if (currentAction == 'mesure' && currentStep=='start_ok')
-	   {
-		   rx1 = parseFloat($('#mesureStartX').html());
-		   ry1 = parseFloat($('#mesureStartY').html());
-		   
-		    rx2 = e.offsetX;
-			ry2 = $('#mapBox').height() - e.offsetY;
-			
-			rx2 = (rx2 * largeurRos / $('#mapBox').width()) * ros_resolution / 100;
-			ry2 = (ry2 * largeurRos / $('#mapBox').width()) * ros_resolution / 100;
-
-			x1 = (rx1 * 100 / ros_resolution) / largeurRos * $('#mapBox').width();
-			y1 = $('#mapBox').height() - ((ry1 * 100 / ros_resolution) / largeurRos * $('#mapBox').width());
-			x2 = (rx2 * 100 / ros_resolution) / largeurRos * $('#mapBox').width();
-			y2 = $('#mapBox').height() - ((ry2 * 100 / ros_resolution) / largeurRos * $('#mapBox').width());
-			
-			path = $('#mesure_add');
-			path.attr('d', 'M' + [x1, y1] + ' L '+[x2, y2]);
-			
-			path = $('#mesure_start_add');
-			path.attr('x', x1 -5);
-		    path.attr('y', y1 - 5);
-			
-			path = $('#mesure_end_add');
-			path.attr('x', x2 -5);
-		    path.attr('y', y2 - 5);
-			
-			$('#mesureEndX').html(rx2.toFixed(2));
-			$('#mesureEndY').html(ry2.toFixed(2));
-			
-			CalculDistanceMesure();
-		   
-	   }
-	   else if (downOnMovable)
-	   {
-		   if (movableDown.data('element_type') == 'mesure')
-		   {
-			   if (currentAction == 'mesure')
-			   {
-				   rx1 = parseFloat($('#mesureStartX').html());
-				   ry1 = parseFloat($('#mesureStartY').html());
-				   rx2 = parseFloat($('#mesureEndX').html());
-				   ry2 = parseFloat($('#mesureEndY').html());
-				   if(movableDown.data('element') == 'start')
-				   {
-					   delta = ((downOnSVG_x - e.pageX) / $('#mapBox').width() * largeurRos) * ros_resolution / 100;
-					   rx1 -= delta;
-					   delta = ((downOnSVG_y - e.pageY) / $('#mapBox').width() * largeurRos) * ros_resolution / 100;
-					   ry1 += delta;
-					   
-					   $('#mesureStartX').html(rx1.toFixed(2));
-					   $('#mesureStartY').html(ry1.toFixed(2));
-				   }
-				   else if(movableDown.data('element') == 'end')
-				   {
-					  delta = ((downOnSVG_x - e.pageX) / $('#mapBox').width() * largeurRos) * ros_resolution / 100;
-					  rx2 -= delta;
-					  delta = ((downOnSVG_y - e.pageY) / $('#mapBox').width() * largeurRos) * ros_resolution / 100;
-					  ry2 += delta;
-					   $('#mesureEndX').html(rx2.toFixed(2));
-					   $('#mesureEndY').html(ry2.toFixed(2));
-					}
-				   
-				    x1 = (rx1 * 100 / ros_resolution) / largeurRos * $('#mapBox').width();
-					y1 = $('#mapBox').height() - ((ry1 * 100 / ros_resolution) / largeurRos * $('#mapBox').width());
-					x2 = (rx2 * 100 / ros_resolution) / largeurRos * $('#mapBox').width();
-					y2 = $('#mapBox').height() - ((ry2 * 100 / ros_resolution) / largeurRos * $('#mapBox').width());
-					
-					path = $('#mesure_add');
-					path.attr('d', 'M' + [x1, y1] + ' L '+[x2, y2]);
-					
-					path = $('#mesure_start_add');
-					path.attr('x', x1 -5);
-					path.attr('y', y1 - 5);
-					
-					path = $('#mesure_end_add');
-					path.attr('x', x2 -5);
-					path.attr('y', y2 - 5);
-					
-					CalculDistanceMesure();					
-					
-					downOnSVG_x = e.pageX;
-					downOnSVG_y = e.pageY;
-			   }
-		   }
-		   else if (movableDown.data('element_type') == 'poly')
-		   {
-			   poly = GetPolyFromID(movableDown.data('id_area'));
-			   
-			   	movableDown.attr('x', parseInt(movableDown.attr('x')) - (downOnSVG_x - e.pageX));
-				movableDown.attr('y', parseInt(movableDown.attr('y')) - (downOnSVG_y - e.pageY)); 
-				  
-				delta = ((downOnSVG_x - e.pageX) / $('#mapBox').width() * largeurRos) * ros_resolution / 100;
-				poly.points[movableDown.data('index_point')].x = parseFloat(poly.points[movableDown.data('index_point')].x) - delta;
-				delta = ((downOnSVG_y - e.pageY) / $('#mapBox').width() * largeurRos) * ros_resolution / 100;
-				poly.points[movableDown.data('index_point')].y = parseFloat(poly.points[movableDown.data('index_point')].y) + delta;
-			   
-			    TracePoly(GetPolyIndexFromID(movableDown.data('id_area')));
-			   
-				downOnSVG_x = e.pageX;
-				downOnSVG_y = e.pageY;
-		   }
-	   }
-	   else if (downOnSVG)
-	   {
-			$('#container_all').scrollLeft(downOnSVG_x_scroll + ((downOnSVG_x - e.pageX)));
-			$('#container_all').scrollTop(downOnSVG_y_scroll + ((downOnSVG_y - e.pageY)));
-	   }
-    });
-	
-	$('#container_all').scroll(function(e) {
-		RefreshZoomView();
-	});
 	
 	$('#zone_zoom_click').mousedown(function(e) {
        e.preventDefault();
@@ -571,26 +362,20 @@ $(document).ready(function() {
 			w = $('#zoom_carte').width();
 			h = $('#zoom_carte').height();
 			
-			wAll = $('#all').width();
-			hAll = $('#all').height();
-			
-			wOver = $('#container_all').width();
-			hOver = $('#container_all').height();
-			
 			wZoom = $('#zone_zoom').width();
 			hZoom = $('#zone_zoom').height();
 			
 			x = e.offsetX - wZoom / 2;
 			y = e.offsetY - hZoom / 2;
-			
-			$('#container_all').scrollLeft(x / w * wAll);
-			$('#container_all').scrollTop(y / h * hAll);
-		
-			t = document.getElementById('container_all').scrollTop;
-			l = document.getElementById('container_all').scrollLeft;
 					
-			$('#zone_zoom').css('top', t/hAll * h - 1);
-			$('#zone_zoom').css('left', l/wAll * w -1);
+			zoom = ros_largeur / $('#svg').width() / window.panZoom.getZoom();
+			
+			largeur_img = ros_largeur / zoom
+			
+			x = - x / w * largeur_img;
+			y = - y / w * largeur_img;
+			
+			window.panZoom.pan({'x':x, 'y':y});
 	   }
     });
 	
@@ -600,33 +385,66 @@ $(document).ready(function() {
 		w = $('#zoom_carte').width();
 		h = $('#zoom_carte').height();
 		
-		wAll = $('#all').width();
-		hAll = $('#all').height();
-		
-		wOver = $('#container_all').width();
-		hOver = $('#container_all').height();
-		
 		wZoom = $('#zone_zoom').width();
 		hZoom = $('#zone_zoom').height();
 		
 		x = e.offsetX - wZoom / 2;
 		y = e.offsetY - hZoom / 2;
-		
-		$('#container_all').scrollLeft(x / w * wAll);
-		$('#container_all').scrollTop(y / h * hAll);
-	
-		t = document.getElementById('container_all').scrollTop;
-		l = document.getElementById('container_all').scrollLeft;
 				
-		$('#zone_zoom').css('top', t/hAll * h - 1);
-		$('#zone_zoom').css('left', l/wAll * w -1);
+		zoom = ros_largeur / $('#svg').width() / window.panZoom.getZoom();
 		
+		largeur_img = ros_largeur / zoom
+		
+		x = - x / w * largeur_img;
+		y = - y / w * largeur_img;
+		
+		window.panZoom.pan({'x':x, 'y':y});
 	});
 	
-	$(document).on('click', '.poly_elem', function(e) {
+	$('#zone_zoom_click').on('touchstart', function(e) {
+       e.preventDefault();
+	   downOnZoomClick = true;
+    });
+	$('#zone_zoom_click').on('touchend', function(e) {
+       e.preventDefault();
+	   downOnZoomClick = false;
+    });
+	$('#zone_zoom_click').on('touchmove', function(e) {
+       e.preventDefault();
+	   if (downOnZoomClick)
+	   {
+		   w = $('#zoom_carte').width();
+			h = $('#zoom_carte').height();
+			
+			wZoom = $('#zone_zoom').width();
+			hZoom = $('#zone_zoom').height();
+			
+			p = $('#zoom_carte_container').position();
+			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left + 15;
+			p = $('#container_all').position();
+			y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top - 6;
+						
+			x = x - wZoom / 2;
+			y = y - hZoom / 2;
+					
+			zoom = ros_largeur / $('#svg').width() / window.panZoom.getZoom();
+			
+			largeur_img = ros_largeur / zoom
+			
+			x = - x / w * largeur_img;
+			y = - y / w * largeur_img;
+			
+			window.panZoom.pan({'x':x, 'y':y});
+	   }
+    });
+	
+	$(document).on('click', '.forbidden_elem', function(e) {
 		e.preventDefault();
 		
-		if (currentAction == 'addPoly' && currentStep == 'trace')
+		if ((currentAction == 'addArea' || currentAction == 'addForbiddenArea') && currentStep == 'trace')
+		{
+		}
+		else if (currentAction == 'gomme')
 		{
 		}
 		else if (canChangeMenu)
@@ -634,364 +452,904 @@ $(document).ready(function() {
 			RemoveClass('.active', 'active');
 			RemoveClass('.activ_select', 'activ_select'); 
 			
-			if ((e.ctrlKey != undefined && e.ctrlKey) || (e.ctrlKey == undefined && ctrlClickIsPressed))
+			
+			currentSelectedItem = Array();
+			currentSelectedItem.push({'type':'forbidden', 'id':$(this).data('id_area')});	
+			HideCurrentMenuNotSelect();			
+			
+			$('#boutonsForbidden').show();
+            $('#boutonsStandard').hide();
+			
+			$('#boutonsForbidden #bForbiddenDelete').show();
+			
+			$('body').removeClass('no_current select');
+			$('.select').css("strokeWidth", minStokeWidth);
+			
+			currentAction = 'editForbiddenArea';	
+			currentStep = '';
+			
+			currentForbiddenIndex = GetForbiddenIndexFromID($(this).data('id_area'));
+			forbidden = forbiddens[currentForbiddenIndex];
+			saveCurrentForbidden = JSON.stringify(forbidden);
+			
+			AddClass('.forbidden_elem_'+forbidden.id_area, 'active');
+		}
+		else
+			AvertCantChange();
+	});
+	
+	$(document).on('click', '.area_elem', function(e) {
+		e.preventDefault();
+		
+		if ((currentAction == 'addArea' || currentAction == 'addForbiddenArea') && currentStep == 'trace')
+		{
+		}
+		else if (currentAction == 'gomme')
+		{
+		}
+		else if (canChangeMenu)
+		{
+			RemoveClass('.active', 'active');
+			RemoveClass('.activ_select', 'activ_select'); 
+			
+			
+			currentSelectedItem = Array();
+			currentSelectedItem.push({'type':'area', 'id':$(this).data('id_area')});	
+			HideCurrentMenuNotSelect();
+			
+			$('#boutonsArea').show();
+            $('#boutonsStandard').hide();
+			
+			$('#boutonsArea #bAreaDelete').show();
+			
+			$('body').removeClass('no_current select');
+			$('.select').css("strokeWidth", minStokeWidth);
+			
+			currentAction = 'editArea';	
+			currentStep = '';
+			
+			currentAreaIndex = GetAreaIndexFromID($(this).data('id_area'));
+			area = areas[currentAreaIndex];
+			saveCurrentArea = JSON.stringify(area);
+			
+			AddClass('.area_elem_'+area.id_area, 'active');
+		}
+		else
+			AvertCantChange();
+	});
+	
+	$(document).on('click', '.dock_elem', function(e) {
+		e.preventDefault();
+		
+		if (currentAction == 'addDock')
+		{
+		}
+		else if (currentAction == 'gomme')
+		{
+		}
+		else if (canChangeMenu)
+		{
+			RemoveClass('.active', 'active');
+			RemoveClass('.activ_select', 'activ_select'); 
+			
+			
+			currentSelectedItem = Array();
+			currentSelectedItem.push({'type':'dock', 'id':$(this).data('id_station_recharge')});	
+			HideCurrentMenuNotSelect();
+			
+			$('#boutonsDock').show();
+            $('#boutonsStandard').hide();
+			
+			$('#boutonsDock a').show();
+			
+			$('body').removeClass('no_current select');
+			$('.select').css("strokeWidth", minStokeWidth);
+			
+			currentAction = 'editDock';	
+			currentStep = '';
+			
+			currentDockIndex = GetDockIndexFromID($(this).data('id_station_recharge'));
+			dock = docks[currentDockIndex];
+			saveCurrentDock = JSON.stringify(dock);
+			
+			AddClass('.dock_elem_'+dock.id_station_recharge, 'active');
+			AddClass('.dock_elem_'+dock.id_station_recharge, 'movable');
+			
+		}
+		else
+			AvertCantChange();
+	});
+	
+	
+	$(document).on('click', '.poi_elem', function(e) {
+		e.preventDefault();
+		
+		if (currentAction == 'addPoi')
+		{
+		}
+		else if (currentAction == 'gomme')
+		{
+		}
+		else if (canChangeMenu)
+		{
+			RemoveClass('.active', 'active');
+			RemoveClass('.activ_select', 'activ_select'); 
+			
+			
+			currentSelectedItem = Array();
+			currentSelectedItem.push({'type':'poi', 'id':$(this).data('id_poi')});	
+			HideCurrentMenuNotSelect();
+			
+			$('#boutonsPoi').show();
+			
+            $('#boutonsStandard').hide();
+			
+			$('#boutonsPoi a').show();
+			
+			$('body').removeClass('no_current select');
+			$('.select').css("strokeWidth", minStokeWidth);
+			
+			currentAction = 'editPoi';	
+			currentStep = '';
+			
+			currentPoiIndex = GetPoiIndexFromID($(this).data('id_poi'));
+			poi = pois[currentPoiIndex];
+			saveCurrentPoi = JSON.stringify(poi);
+			
+			AddClass('.poi_elem_'+poi.id_poi, 'active');
+			AddClass('.poi_elem_'+poi.id_poi, 'movable');
+		}
+		else
+			AvertCantChange();
+	});
+	
+	
+	$('#bGomme').click(function(e) {
+        e.preventDefault();
+		
+		if ($('#bGomme').hasClass('btn-primary'))
+		{
+			blockZoom = false;
+			
+			HideCurrentMenu();
+			
+			$('#bGomme').removeClass('btn-primary');
+		
+			currentAction = '';	
+			currentStep = '';
+			
+			$('body').addClass('no_current');
+			$('body').removeClass('gomme');
+			
+			//currentGommePoints = Array();
+			
+			canChangeMenu = true;
+		}
+		else
+		{
+			blockZoom = true;
+			
+			if (canChangeMenu)
 			{
-				trouve = false;
-				cur_id = $(this).data('id_area');
-				$.each(currentSelectedItem, function(index, value){
-					if (value.type == 'poly' && value.id == cur_id)
-					{
-						trouve = true;
-						currentSelectedItem.splice(index, 1);
-						return false;
-					}
-				});
+				HideCurrentMenu();
 				
-				if (!trouve)
-					currentSelectedItem.push({'type':'poly', 'id':$(this).data('id_area')});
-				ResfreshMultipleSelection();
-			}
-			else
-			{	
-				currentSelectedItem = Array();
-				currentSelectedItem.push({'type':'poly', 'id':$(this).data('id_area')});	
-				HideCurrentMenuNotSelect();
-				
-				$('body').removeClass('show_rayon');
-				$('body').removeClass('no_current select');
-				$('.select').css("strokeWidth", minStokeWidth);
-				
-				$('#blocElements').addClass('active');
-				$('#blocElements li').removeClass('active');
-				$('#li_poly_'+$(this).data('id_area')).addClass('active');
-				
-				currentAction = 'editPoly';	
+				$('#bGomme').addClass('btn-primary');
+			
+				currentAction = 'gomme';	
 				currentStep = '';
 				
-				currentPolyIndex = GetPolyIndexFromID($(this).data('id_area'));
-				poly = polys[currentPolyIndex];
-				saveCurrentPoly = JSON.stringify(poly);
+				$('body').removeClass('no_current');
+				$('body').addClass('gomme');
 				
-				AddClass('.poly_elem_'+poly.id_area, 'active');
-				
-				$('#infoAddPoly h2').html('Edit Area');
-				$('#infoAddPoly .btndelete').show();
-				$('#infoAddPoly').show();
-				$('#infoAddPoly .todo_text').html('');
-				
-				$('#infoAddPoly_nom').val(poly.nom);
-				$('#infoAddPoly_comment').val(poly.comment);
+				//currentGommePoints = Array();
 				
 			}
-		}
-		else
-			AvertCantChange();
-	});
-	
-	$('#bDeletePoly').click(function(e) {
-        if (confirm('Are you sure you want to delete this block?'))
-		{
-			//location.href = 'plan-trax.php?id_plan='+id_plan+'&deletePoly='+polys[currentPolyIndex].id_area;
-			DeletePoly(currentPolyIndex);
+			else
+				AvertCantChange();
 		}
     });
 	
-	$('#bSelect').click(function(e) {
+	$('#bAddForbiddenArea').click(function(e) {
         e.preventDefault();
 		if (canChangeMenu)
 		{
-			HideCurrentMenu();
+			blockZoom = true;
 			
-			$('#bSelect').addClass('btn-primary');
-			$('.select').css("strokeWidth", maxStokeWidth);
+			$('#boutonsForbidden').show();
+            $('#boutonsStandard').hide();
 			
-			$('body').addClass('select');
-			//$('body').removeClass('no_current select');
+			$('#boutonsForbidden #bForbiddenDelete').hide();
 			
-			currentAction = 'select';
-			currentStep = '';
-		}
-		else if (currentAction == 'select')
-		{
-			$('.btn-mode-gene').removeClass('btn-primary');
-			$('body').removeClass('select');
-			$('.select').css("strokeWidth", minStokeWidth);
-			currentAction = '';
-			currentStep = '';
-		}
-		else
-			AvertCantChange();
-	});
-	
-	$('#bAddPoly').click(function(e) {
-        e.preventDefault();
-		if (canChangeMenu)
-		{
-			HideCurrentMenu();
-			
-			$('#bAddPoly').addClass('btn-primary');
-		
-			currentAction = 'addPoly';	
+			currentAction = 'addForbiddenArea';	
 			currentStep = 'trace';
 			
-			$('#infoAddPoly h2').html('Add Area');
-			$('#infoAddPoly .btndelete').hide();
-			$('#infoAddPoly').show();
-			$('#infoAddPoly_comment').val('');
-			$('#infoAddPoly .todo_text').html('Click on the map to create forbidden area.');
-			
 			$('body').removeClass('no_current');
-			$('body').addClass('addPoly');
+			$('body').addClass('addForbidden');
 			
-			currentPolyPoints = Array();
-			currentPolyPoints.push({x:0, y:0}); // Point du curseur
+			currentForbiddenPoints = Array();
+			currentForbiddenPoints.push({x:0, y:0}); // Point du curseur
 		}
 		else
 			AvertCantChange();
 	});
-	$('#infoAddPoly .save').click(function(e) {
-        e.preventDefault();
-		
-		$('.poly_elem_current').remove();
-		
-		if (currentAction == 'addPoly')
+	
+	$('#bForbiddenDelete').click(function(e) {
+        if (confirm('Are you sure you want to delete this area?'))
 		{
-			jQuery.ajax({
-				url: 'ajax/addArea.php',
-				type: "post",
-				dataType: "json",
-				data: { 
-						'id_plan':id_plan,
-						'nom':$('#infoAddPoly_nom').val(),
-						'couleur':$('#infoAddPoly_couleur').val(),
-						'comment':$('#infoAddPoly_comment').val(),
-						'points':JSON.stringify(currentPolyPoints)
-					},
-				error: function(jqXHR, textStatus, errorThrown) {
-					},
-				success: function(data, textStatus, jqXHR) {
-					
-					canChangeMenu = true;
-					
-					polys.push(data);
-					TracePoly(polys.length-1);
-					
-					RemoveClass('.active', 'active');
-					
-					currentAction = '';
-					currentStep = '';
-					
-					$('#infoAddPoly_nom').val('');
-					$('#infoAddPoly_couleur').val('#FF0000');
-					$('#infoAddPoly_comment').val('');
-					
-					$('#infoAddPoly').hide();
-					$('#infoAddPoly .todo_text').html('');
-				
-					$('body').addClass('no_current');
-					
-					copie = $('#li_poly_vide').clone();
-					copie.attr('id', 'li_poly_'+data.id_area);
-					copie.data('id', data.id_area);
-					copie.attr('title', data.comment);
-					
-					copie.find('i.fa-info-circle').attr('title', data.comment);
-					if (data.comment == '')
-						copie.find('i.fa-info-circle').hide();
-					else
-						copie.find('i.fa-info-circle').show();
-					
-					copie.find('.eye').attr('id', 'eye_poly_'+data.id_area);
-					copie.find('.eye').data('id', data.id_area);
-					copie.find('.carre').css('background-color','rgba('+data.couleur_r+','+data.couleur_g+','+data.couleur_b+',0.5)');
-					copie.find('.titre').html('Area '+data.id_area);
-					
-					copie.appendTo('#listElemPoly ul');
-			
-					$('.btn-mode-gene').removeClass('btn-primary');
-					$('.btn-mode-gene').addClass('btn-default');
-					
-					SetModeSelect();
-					}
-			});
-		}
-		else if (currentAction == 'editPoly')
-		{
-			jQuery.ajax({
-				url: 'ajax/editArea.php',
-				type: "post",
-				dataType: "json",
-				data: { 
-						'id_area':polys[currentPolyIndex].id_area,
-						'id_plan':id_plan,
-						'nom':$('#infoAddPoly_nom').val(),
-						'couleur':$('#infoAddPoly_couleur').val(),
-						'comment':$('#infoAddPoly_comment').val(),
-						'points':JSON.stringify(polys[currentPolyIndex].points)
-					},
-				error: function(jqXHR, textStatus, errorThrown) {
-					},
-				success: function(data, textStatus, jqXHR) {
-					currentAction = '';
-					currentStep = '';
-					
-					canChangeMenu = true;
-					
-					polys[currentPolyIndex] = data;
-					TracePoly(currentPolyIndex);
-					
-					RemoveClass('.active', 'active');
-					
-					$('#infoAddPoly_nom').val('');
-					$('#infoAddPoly_couleur').val('#FF0000');
-					$('#infoAddPoly_comment').val('');
-					
-					$('#infoAddPoly').hide();
-					$('#infoAddPoly .todo_text').html('');
-					
-					
-					$('#li_poly_'+data.id_area).attr('title', data.comment);
-					
-					$('#li_poly_'+data.id_area+' i.fa-info-circle').attr('title', data.comment);
-					if (data.comment == '')
-						$('#li_poly_'+data.id_area+' i.fa-info-circle').hide();
-					else
-						$('#li_poly_'+data.id_area+' i.fa-info-circle').show();
-				
-					$('body').addClass('no_current');
-			
-					$('.btn-mode-gene').removeClass('btn-primary');
-					$('.btn-mode-gene').addClass('btn-default');
-					
-					SetModeSelect();
-					}
-			});
+			DeleteForbidden(currentForbiddenIndex);
 		}
     });
-	$('#infoAddPoly .cancel').click(function(e) {
+	$('#bForbiddenSave').click(function(e) {
+        e.preventDefault();
+		
+		$('.forbidden_elem_current').remove();
+		
+		if (currentAction == 'addForbiddenArea')
+		{
+			canChangeMenu = true;
+			
+			nextIdArea++;
+			
+			currentForbiddenPoints.pop();
+			
+			f = {'id_area':nextIdArea, 'id_plan':id_plan, 'nom':'', 'comment':'', 'is_forbidden':1, 'couleur_r':0, 'couleur_g':0, 'couleur_b':0, 'deleted':0, 'points':currentForbiddenPoints};
+			AddHistorique({'action':'add_forbidden', 'data':f});
+			
+			forbiddens.push(f);
+			TraceForbidden(forbiddens.length-1);
+			
+			RemoveClass('.active', 'active');
+			
+			currentAction = '';
+			currentStep = '';
+			
+			$('#boutonsForbidden').hide();
+			$('#boutonsStandard').show();
+			blockZoom = false;
+			
+			$('body').addClass('no_current');
+			
+			SetModeSelect();
+		}
+		else if (currentAction == 'editForbiddenArea')
+		{	
+			canChangeMenu = true;
+			
+			AddHistorique({'action':'edit_forbidden', 'data':{'index':currentForbiddenIndex, 'old':saveCurrentForbidden, 'new':JSON.stringify(forbiddens[currentForbiddenIndex])}});
+			
+			RemoveClass('.active', 'active');
+			
+			currentAction = '';
+			currentStep = '';
+			
+			$('#boutonsForbidden').hide();
+			$('#boutonsStandard').show();
+			blockZoom = false;
+			
+			$('body').addClass('no_current');
+			
+			SetModeSelect();
+		}
+    });
+	$('#bForbiddenCancel').click(function(e) {
         e.preventDefault();
 		
 		canChangeMenu = true;
 		
-		$('.poly_elem_current').remove();
-		
-		$('.btn-mode-gene').removeClass('btn-primary');
-		$('.btn-mode-gene').addClass('btn-default');
-		
-		$('#infoAddPoly_nom').val('');
-		$('#infoAddPoly_couleur').val('#FF0000');
-		$('#infoAddPoly_comment').val('');
-		
-		$('#infoAddPoly').hide();
-		$('#infoAddPoly .todo_text').html('');
-		
+		$('.forbidden_elem_current').remove();
 		RemoveClass('.active', 'active');
 	
 		$('body').addClass('no_current');
 		
-		if (currentAction == 'addPoly')
+		if (currentAction == 'addForbiddenArea')
 		{
-			$('.poly_elem_0').remove();
-			//polys.pop();
+			$('.forbidden_elem_0').remove();
 		}
-		else if (currentAction == 'editPoly')
+		else if (currentAction == 'editForbiddenArea')
 		{
-			polys[currentPolyIndex] = JSON.parse(saveCurrentPoly);
-			TracePoly(currentPolyIndex);
+			forbiddens[currentForbiddenIndex] = JSON.parse(saveCurrentForbidden);
+			TraceForbidden(currentForbiddenIndex);
 		}
 		currentAction = '';
 		currentStep = '';
 		
+		$('#boutonsForbidden').hide();
+        $('#boutonsStandard').show();
+		blockZoom = false;
+		
 		SetModeSelect();
 	});
 	
-	$('#svg').click(function(e) {
+	
+	$('#bAddArea').click(function(e) {
         e.preventDefault();
-		
-		if (!e.target.classList.contains('info'))
-			$('#blocInfoOpened').hide();
-		
-		if (cPressed)
+		if (canChangeMenu)
 		{
-			// Center view
-			$('#container_all').scrollLeft(e.offsetX - $('#container_all').width()/2);
-			$('#container_all').scrollTop(e.offsetY - $('#container_all').height()/2);
-			e.stopPropagation();
+			blockZoom = true;
+			
+			$('#boutonsArea').show();
+            $('#boutonsStandard').hide();
+			
+			$('#boutonsArea #bAreaDelete').hide();
+			
+			currentAction = 'addArea';	
+			currentStep = 'trace';
+			
+			$('body').removeClass('no_current');
+			$('body').addClass('addArea');
+			
+			currentAreaPoints = Array();
+			currentAreaPoints.push({x:0, y:0}); // Point du curseur
 		}
-		else if (currentAction == 'mesure')
+		else
+			AvertCantChange();
+	});
+	
+	$('#bAreaDelete').click(function(e) {
+        if (confirm('Are you sure you want to delete this area?'))
 		{
-			if (currentStep == '')
-			{
-				// Add start
-				canChangeMenu = false;
-				$('#infoMesure .cancel').css('visibility', 'visible');
-				
-				x = e.offsetX;
-				y = $('#mapBox').height() - e.offsetY;
-				 
-				xRos = (x * largeurRos / $('#mapBox').width()) * ros_resolution / 100;
-				yRos = (y * largeurRos / $('#mapBox').width()) * ros_resolution / 100;
-				
-				$('#mesureStartX').html(xRos.toFixed(2));
-				$('#mesureStartY').html(yRos.toFixed(2));
-				
-				x1 = x2 = x;
-				y1 = y2 = e.offsetY;
-				
-				path = makeSVGElement('path', { d: 'M' + [x1, y1] + ' L '+[x2, y2],
-						   'stroke-width': minStokeWidth,
-						   'class': 'rayon select rayon_elem mesure_elem_add active',
-						   'id': 'mesure_add',
-						   'data-id_rayon': -1,
-						   'data-element_type': 'mesure',
-						   'data-element': 'mesure'
-						   });
-				svg.appendChild(path);
-				
-				path = makeSVGElement('rect', { x: x1-5, y:y1-5, height:10, width:10,
-						   'stroke-width': minStokeWidth,
-						   'class':'rayon movable rayon_elem mesure_elem_add',
-						   'id': 'mesure_start_add',
-						   'data-id_rayon': -1,
-						   'data-element_type': 'mesure',
-						   'data-element': 'start'
-						  });
-				svg.appendChild(path);
-				
-				path = makeSVGElement('rect', { x: x2-5, y:y2-5, height:10, width:10,
-									   'stroke-width': minStokeWidth,
-									   'class':'rayon movable rayon_elem mesure_elem_add',
-									   'id': 'mesure_end_add',
-									   'data-id_rayon': -1,
-									   'data-element_type': 'mesure',
-									   'data-element': 'end'
-									  });
-				svg.appendChild(path);
-				
-				$('.mesure_elem_add').show();
-				currentStep = 'start_ok';
-			}
-			else if (currentStep == 'start_ok')
-			{
-				// Add start
-				canChangeMenu = false;
-				
-				x = e.offsetX;
-				y = $('#mapBox').height() - e.offsetY;
-				 
-				xRos = (x * largeurRos / $('#mapBox').width()) * ros_resolution / 100;
-				yRos = (y * largeurRos / $('#mapBox').width()) * ros_resolution / 100;
-				
-				$('#mesureEndX').html(xRos.toFixed(2));
-				$('#mesureEndY').html(yRos.toFixed(2));
-				
-				currentStep = 'end_ok';
-				
-				CalculDistanceMesure();
-			}
+			DeleteArea(currentAreaIndex);
 		}
     });
 	
+	$('.selectChangeAffGroup').change(function(e) {
+        if ($(this).val() == 'Automatic')
+			$('#' + $(this).attr('id').replace('mode', 'group')).hide();
+		else
+			$('#' + $(this).attr('id').replace('mode', 'group')).show();
+    });
+	
+	$('#bAreaOptions').click(function(e) {
+        area = areas[currentAreaIndex];
+		
+		$.each(area.configs, function( indexConfig, config ) {
+			switch(config.name)
+			{
+				case 'led_color_mode': $('#led_color_mode').val(config.value); break;
+				case 'led_color': $('#led_color').val(config.value); $('#led_color').keyup(); break;
+				case 'led_animation_mode': $('#led_animation_mode').val(config.value); break;
+				case 'led_animation': $('#led_animation').val(config.value); break;
+				case 'max_speed_mode': $('#max_speed_mode').val(config.value); break;
+				case 'max_speed': $('#max_speed').val(config.value); break;
+			}
+		});
+		
+		if ($('#led_color_mode').val() == 'Automatic') $('#led_color_group').hide(); else  $('#led_color_group').show();
+		if ($('#led_animation_mode').val() == 'Automatic') $('#led_animation_group').hide(); else  $('#led_animation_group').show();
+		if ($('#max_speed_mode').val() == 'Automatic') $('#max_speed_group').hide(); else  $('#max_speed_group').show();
+    });
+	
+	$('#bAreaSaveConfig').click(function(e) {
+		area = areas[currentAreaIndex];
+		area.configs = Array();
+		area.configs.push({'name':'led_color_mode' , 'value':$('#led_color_mode').val()});
+		area.configs.push({'name':'led_color' , 'value':$('#led_color').val()});
+		area.configs.push({'name':'led_animation_mode' , 'value':$('#led_animation_mode').val()});
+		area.configs.push({'name':'led_animation' , 'value':$('#led_animation').val()});
+		area.configs.push({'name':'max_speed_mode' , 'value':$('#max_speed_mode').val()});
+		area.configs.push({'name':'max_speed' , 'value':$('#max_speed').val()});
+		
+	});
+		
+	$('#bAreaSave').click(function(e) {
+        e.preventDefault();
+		
+		$('.area_elem_current').remove();
+		
+		if (currentAction == 'addArea')
+		{
+			canChangeMenu = true;
+			
+			nextIdArea++;
+			
+			currentAreaPoints.pop();
+			a = {'id_area':nextIdArea, 'id_plan':id_plan, 'nom':'', 'comment':'', 'is_forbidden':0, 'couleur_r':87, 'couleur_g':159, 'couleur_b':177, 'deleted':0, 'points':currentAreaPoints};
+			AddHistorique({'action':'add_area', 'data':a});
+			
+			areas.push(a);
+			TraceArea(areas.length-1);
+			
+			RemoveClass('.active', 'active');
+			
+			currentAction = '';
+			currentStep = '';
+			
+			$('#boutonsArea').hide();
+			$('#boutonsStandard').show();
+			blockZoom = false;
+			
+			$('body').addClass('no_current');
+			
+			SetModeSelect();
+		}
+		else if (currentAction == 'editArea')
+		{
+			canChangeMenu = true;
+			
+			AddHistorique({'action':'edit_area', 'data':{'index':currentAreaIndex, 'old':saveCurrentArea, 'new':JSON.stringify(areas[currentAreaIndex])}});
+			
+			RemoveClass('.active', 'active');
+			
+			currentAction = '';
+			currentStep = '';
+			
+			$('#boutonsArea').hide();
+			$('#boutonsStandard').show();
+			blockZoom = false;
+			
+			$('body').addClass('no_current');
+			
+			SetModeSelect();
+		}
+    });
+	$('#bAreaCancel').click(function(e) {
+        e.preventDefault();
+		
+		canChangeMenu = true;
+		
+		$('.area_elem_current').remove();
+		RemoveClass('.active', 'active');
+	
+		$('body').addClass('no_current');
+		
+		if (currentAction == 'addArea')
+		{
+			$('.area_elem_0').remove();
+		}
+		else if (currentAction == 'editArea')
+		{
+			areas[currentAreaIndex] = JSON.parse(saveCurrentArea);
+			TraceArea(currentAreaIndex);
+		}
+		currentAction = '';
+		currentStep = '';
+		
+		$('#boutonsArea').hide();
+        $('#boutonsStandard').show();
+		blockZoom = false;
+		
+		SetModeSelect();
+	});
+	
+	$('#bSaveMap').click(function(e) {
+        
+		jQuery.ajax({
+				url: 'ajax/saveMap.php',
+				type: "post",
+				dataType: "json",
+				data: { 
+						'id_plan':id_plan,
+						'gommes':JSON.stringify(gommes),
+						'forbiddens':JSON.stringify(forbiddens),
+						'areas':JSON.stringify(areas),
+						'docks':JSON.stringify(docks),
+						'pois':JSON.stringify(pois)
+					},
+				error: function(jqXHR, textStatus, errorThrown) {
+					},
+				success: function(data, textStatus, jqXHR) {
+					
+					}
+			});
+		
+    });
+	
+	$('#bDockCreateFromPose').click(function(e) {
+		nextIdDock++;
+		
+		d = {'id_station_recharge':nextIdDock, 'id_plan':id_plan, 'x_ros':0, 'y_ros':0, 't_ros':0, 'num':0};
+		AddHistorique({'action':'add_dock', 'data':d});
+        docks.push(d);
+		TraceDock(docks.length-1);
+		console.error('Create dock: get real pose of robot');
+    });
+	$('#bDockCreateFromMap').click(function(e) {
+        if (canChangeMenu)
+		{
+			blockZoom = true;
+			
+			$('#boutonsDock').show();
+            $('#boutonsStandard').hide();
+			
+			$('#boutonsDock #bDockSave').hide();
+			$('#boutonsDock #bDockDelete').hide();
+			$('#boutonsDock #bDockDirection').hide();
+			
+			currentAction = 'addDock';	
+			currentStep = 'setPose';
+			
+			$('body').removeClass('no_current');
+			$('body').addClass('addDock');
+			
+			$('#message_aide').html(textClickOnMapPose);
+			$('#message_aide').show();
+		}
+		else
+			AvertCantChange();
+    });
+	$('#bDockSave').click(function(e) {
+        e.preventDefault();
+		
+		$('.dock_elem_current').remove();
+		
+		if (currentAction == 'addDock')
+		{
+			canChangeMenu = true;
+			
+			nextIdDock++;
+			d = {'id_station_recharge':nextIdDock, 'id_plan':id_plan, 'x_ros':currentDockPose.x_ros, 'y_ros':currentDockPose.y_ros, 't_ros':currentDockPose.t_ros, 'num':0};
+			AddHistorique({'action':'add_dock', 'data':d});
+			
+			docks.push(d);
+			TraceDock(docks.length-1);
+			
+			RemoveClass('.active', 'active');
+			
+			currentAction = '';
+			currentStep = '';
+			
+			$('#boutonsRotate').hide();
+		
+			$('#boutonsDock').hide();
+			$('#boutonsStandard').show();
+			$('#message_aide').hide();
+			blockZoom = false;
+			
+			$('body').addClass('no_current');
+			
+			SetModeSelect();
+		}
+		else if (currentAction == 'editDock')
+		{	
+			canChangeMenu = true;
+			
+			
+			dock = docks[currentDockIndex];
+			RemoveClass('.dock_elem_'+dock.id_station_recharge, 'movable');
+			
+			AddHistorique({'action':'edit_dock', 'data':{'index':currentDockIndex, 'old':saveCurrentDock, 'new':JSON.stringify(docks[currentDockIndex])}});
+			
+			RemoveClass('.active', 'active');
+			
+			currentAction = '';
+			currentStep = '';
+			
+			$('#boutonsRotate').hide();
+			
+			$('#boutonsDock').hide();
+			$('#boutonsStandard').show();
+			$('#message_aide').hide();
+			blockZoom = false;
+			
+			$('body').addClass('no_current');
+			
+			SetModeSelect();
+		}
+    });
+	$('#bDockCancel').click(function(e) {
+        e.preventDefault();
+		
+		canChangeMenu = true;
+		
+		$('.dock_elem_current').remove();
+		RemoveClass('.active', 'active');
+	
+		$('body').addClass('no_current');
+		
+		if (currentAction == 'addDock')
+		{
+			$('.dock_elem_0').remove();
+		}
+		else if (currentAction == 'editDock')
+		{
+			dock = docks[currentDockIndex];
+			RemoveClass('.dock_elem_'+dock.id_station_recharge, 'movable');
+			
+			docks[currentDockIndex] = JSON.parse(saveCurrentDock);
+			TraceDock(currentDockIndex);
+		}
+		currentAction = '';
+		currentStep = '';
+		
+		$('#boutonsRotate').hide();
+		
+		$('#boutonsDock').hide();
+        $('#boutonsStandard').show();
+		$('#message_aide').hide();
+		blockZoom = false;
+		
+		SetModeSelect();
+	});
+	$('#bDockDelete').click(function(e) {
+        if (confirm('Are you sure you want to delete this docking station?'))
+		{
+			DeleteDock(currentDockIndex);
+		}
+    });
+	$('#bDockDirection').click(function(e) {
+        e.preventDefault();
+		
+		if ($('#boutonsRotate').is(':visible'))
+		{
+			$('#boutonsRotate').hide();
+		}
+		else
+		{
+			dock = docks[currentDockIndex];
+			
+			zoom = ros_largeur / $('#svg').width() / window.panZoom.getZoom();		
+			p = $('#svg image').position();
+			
+			
+			x = dock.x_ros * 100 / 5;
+			y = dock.y_ros * 100 / 5;
+			
+			x = x / zoom;
+			y = (ros_hauteur - y) / zoom;
+			
+			x = x + p.left;
+			y = y + p.top;
+			
+			$('#boutonsRotate').css('left', x - $('#boutonsRotate').width()/2);
+			$('#boutonsRotate').css('top', y - 60);
+			$('#boutonsRotate').show();
+		}
+	});
+	
+	$('#bPoiCreateFromPose').click(function(e) {
+		nextIdPoi++;
+		p = {'id_poi':nextIdPoi, 'id_plan':id_plan, 'x_ros':0, 'y_ros':0, 't_ros':0, 'name':'POI'};
+		AddHistorique({'action':'add_poi', 'data':p});
+        pois.push(p);
+		TracePoi(pois.length-1);
+		console.error('Create POI: get real pose of robot');
+        
+    });
+	$('#bPoiCreateFromMap').click(function(e) {
+        if (canChangeMenu)
+		{
+			blockZoom = true;
+			
+			$('#boutonsPoi').show();
+            $('#boutonsStandard').hide();
+			
+			$('#boutonsPoi #bPoiSave').hide();
+			$('#boutonsPoi #bPoiDelete').hide();
+			$('#boutonsPoi #bPoiDirection').hide();
+			
+			currentAction = 'addPoi';	
+			currentStep = 'setPose';
+			
+			$('body').removeClass('no_current');
+			$('body').addClass('addPoi');
+			
+			$('#message_aide').html(textClickOnMapPose);
+			$('#message_aide').show();
+		}
+		else
+			AvertCantChange();
+    });
+	$('#bPoiSave').click(function(e) {
+        e.preventDefault();
+		
+		if (currentAction == 'addPoi')
+		{
+			canChangeMenu = true;
+			
+			nextIdPoi++;
+			p = {'id_poi':nextIdPoi, 'id_plan':id_plan, 'x_ros':currentDockPose.x_ros, 'y_ros':currentDockPose.y_ros, 't_ros':currentDockPose.y_ros, 'name':'POI'};
+			AddHistorique({'action':'add_poi', 'data':p});
+			
+			pois.push(d);
+			TracePoi(pois.length-1);
+			
+			RemoveClass('.active', 'active');
+			
+			currentAction = '';
+			currentStep = '';
+			
+			$('#boutonsRotate').hide();
+			
+			$('#boutonsPoi').hide();
+			$('#boutonsStandard').show();
+			$('#message_aide').hide();
+			blockZoom = false;
+			
+			$('body').addClass('no_current');
+			
+			SetModeSelect();
+		}
+		else if (currentAction == 'editPoi')
+		{	
+			canChangeMenu = true;
+			
+			poi = pois[currentPoiIndex];
+			RemoveClass('.poi_elem_'+poi.id_poi, 'movable');
+			
+			AddHistorique({'action':'edit_poi', 'data':{'index':currentPoiIndex, 'old':saveCurrentPoi, 'new':JSON.stringify(pois[currentPoiIndex])}});
+			
+			RemoveClass('.active', 'active');
+			
+			currentAction = '';
+			currentStep = '';
+			
+			$('#boutonsRotate').hide();
+			
+			$('#boutonsPoi').hide();
+			$('#boutonsStandard').show();
+			$('#message_aide').hide();
+			blockZoom = false;
+			
+			$('body').addClass('no_current');
+			
+			SetModeSelect();
+		}
+    });
+	$('#bPoiCancel').click(function(e) {
+        e.preventDefault();
+		
+		canChangeMenu = true;
+		
+		$('.poi_elem_current').remove();
+		RemoveClass('.active', 'active');
+	
+		$('body').addClass('no_current');
+		
+		if (currentAction == 'addPoi')
+		{
+			$('.poi_elem_0').remove();
+		}
+		else if (currentAction == 'editPoi')
+		{
+			poi = pois[currentPoiIndex];
+			RemoveClass('.poi_elem_'+poi.id_poi, 'movable');
+			
+			pois[currentPoiIndex] = JSON.parse(saveCurrentPoi);
+			TracePoi(currentPoiIndex);
+		}
+		currentAction = '';
+		currentStep = '';
+		
+		$('#boutonsRotate').hide();
+		
+		$('#boutonsPoi').hide();
+        $('#boutonsStandard').show();
+		$('#message_aide').hide();
+		blockZoom = false;
+		
+		SetModeSelect();
+	});
+	$('#bPoiDelete').click(function(e) {
+        if (confirm('Are you sure you want to delete this POI?'))
+		{
+			DeletePoi(currentPoiIndex);
+		}
+    });
+	$('#bPoiDirection').click(function(e) {
+        e.preventDefault();
+		
+		if ($('#boutonsRotate').is(':visible'))
+		{
+			$('#boutonsRotate').hide();
+		}
+		else
+		{
+			poi = pois[currentPoiIndex];
+			
+			zoom = ros_largeur / $('#svg').width() / window.panZoom.getZoom();		
+			p = $('#svg image').position();
+			
+			
+			x = poi.x_ros * 100 / 5;
+			y = poi.y_ros * 100 / 5;
+			
+			x = x / zoom;
+			y = (ros_hauteur - y) / zoom;
+			
+			x = x + p.left;
+			y = y + p.top;
+			
+			$('#boutonsRotate').css('left', x - $('#boutonsRotate').width()/2);
+			$('#boutonsRotate').css('top', y - 60);
+			$('#boutonsRotate').show();
+		}
+	});
+	
+	window.oncontextmenu = function(event) {
+		 event.preventDefault();
+		 event.stopPropagation();
+		 return false;
+	};
+	
+	$(document).on('touchstart', '#bRotateRight', function(e) {
+		canChangeMenu = false;
+		if (timerRotate != null)
+		{
+			clearInterval(timerRotate);
+			timerRotate = null;
+		}
+		timerRotate = setInterval(function() { 
+			if (currentAction == 'editPoi')
+			{
+				poi = pois[currentPoiIndex];
+				poi.t_ros = parseFloat(poi.t_ros) + Math.PI / 90;
+				TracePoi(currentPoiIndex);			
+			}
+			else if (currentAction == 'editDock')
+			{
+				dock = docks[currentDockIndex];
+				dock.t_ros = parseFloat(dock.t_ros) + Math.PI / 90;
+				TraceDock(currentDockIndex);		
+			}
+		}, 100);
+    });
+	$(document).on('touchend', '#bRotateRight', function(e) {
+		if (timerRotate != null)
+		{
+			clearInterval(timerRotate);
+			timerRotate = null;
+		}
+    });
+	$('#bRotateRight').click(function(e) {
+		canChangeMenu = false;
+		 if (currentAction == 'editPoi')
+		{
+			poi = pois[currentPoiIndex];
+			poi.t_ros = parseFlot(poi.t_ros) + Math.PI / 90;
+			TracePoi(currentPoiIndex);			
+		}
+		else if (currentAction == 'editDock')
+		{
+			dock = docks[currentDockIndex];
+			dock.t_ros = parseFloat(dock.t_ros) + Math.PI / 90;
+			TraceDock(currentDockIndex);
+		}
+    });
+	$(document).on('touchstart', '#bRotateLeft', function(e) {
+		canChangeMenu = false;
+		if (timerRotate != null)
+		{
+			clearInterval(timerRotate);
+			timerRotate = null;
+		}
+		timerRotate = setInterval(function() { 
+			if (currentAction == 'editPoi')
+			{
+				poi = pois[currentPoiIndex];
+				poi.t_ros = parseFloat(poi.t_ros) - Math.PI / 90;
+				TracePoi(currentPoiIndex);			
+			}
+			else if (currentAction == 'editDock')
+			{
+				dock = docks[currentDockIndex];
+				dock.t_ros = parseFloat(dock.t_ros) - Math.PI / 90;
+				TraceDock(currentDockIndex);
+			}
+		}, 100);
+    });
+	$(document).on('touchend', '#bRotateLeft', function(e) {
+		if (timerRotate != null)
+		{
+			clearInterval(timerRotate);
+			timerRotate = null;
+		}
+    });
+	$('#bRotateLeft').click(function(e) {
+		canChangeMenu = false;
+        if (currentAction == 'editPoi')
+		{
+			poi = pois[currentPoiIndex];
+			poi.t_ros = parseFloat(poi.t_ros) - Math.PI / 90;
+			TracePoi(currentPoiIndex);			
+		}
+		else if (currentAction == 'editDock')
+		{
+			dock = docks[currentDockIndex];
+			dock.t_ros = parseFloat(dock.t_ros) - Math.PI / 90;
+			TraceDock(currentDockIndex);
+		}        
+    });
+		
 	InitTaille();
     
     var offsetMap;
@@ -999,70 +1357,555 @@ $(document).ready(function() {
     AppliquerZoom();
 	
 	SetModeSelect();
+	
+	$('#svg').on('touchstart', function(e) {
+		touchStarted = true;
+		
+		zoom = ros_largeur / $('#svg').width() / window.panZoom.getZoom();
+		
+		if (currentAction == 'gomme' && currentStep=='')
+		{
+			currentStep='trace';
+			if (gommes.length == 0 || gommes[gommes.length-1].length > 0)
+			{
+				gommes[gommes.length] = Array();
+				gommes[gommes.length-1].push({x:0, y:0}); // Point du curseur
+			}
+		}
+		else if (currentAction == 'addDock' && currentStep=='setPose')
+		{
+			p = $('#svg image').position();
+			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
+			y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+			x = x * zoom;
+			y = ros_hauteur - (y * zoom);
+			
+			xRos = x * ros_resolution / 100;
+			yRos = y * ros_resolution / 100;
+			
+			currentDockPose.x_ros = xRos;
+			currentDockPose.y_ros = yRos;
+			currentDockPose.t_ros = 0;
+			
+			TraceCurrentDock(currentDockPose);
+		}
+		else if (currentAction == 'addDock' && currentStep=='setDir')
+		{
+			p = $('#svg image').position();
+			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
+			y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+			x = x * zoom;
+			y = ros_hauteur - (y * zoom);
+			
+			xRos = x * ros_resolution / 100;
+			yRos = y * ros_resolution / 100;
+			
+			currentDockPose.t_ros = GetAngleRadian(currentDockPose.x_ros, currentDockPose.y_ros, xRos, yRos) + Math.PI;
+							
+			TraceCurrentDock(currentDockPose);
+		}
+		else if (currentAction == 'addPoi' && currentStep=='setPose')
+		{
+			p = $('#svg image').position();
+			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
+			y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+			x = x * zoom;
+			y = ros_hauteur - (y * zoom);
+			
+			xRos = x * ros_resolution / 100;
+			yRos = y * ros_resolution / 100;
+			
+			currentPoiPose.x_ros = xRos;
+			currentPoiPose.y_ros = yRos;
+			currentPoiPose.t_ros = 0;
+			
+			TraceCurrentPoi(currentPoiPose);
+		}
+		else if (currentAction == 'addDock' && currentStep=='setDir')
+		{
+			p = $('#svg image').position();
+			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
+			y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+			x = x * zoom;
+			y = ros_hauteur - (y * zoom);
+			
+			xRos = x * ros_resolution / 100;
+			yRos = y * ros_resolution / 100;
+			
+			currentPoiPose.t_ros = GetAngleRadian(currentPoiPose.x_ros, currentPoiPose.y_ros, xRos, yRos) + Math.PI;
+							
+			TraceCurrentPoi(currentPoiPose);
+		}
+		else if (currentAction == 'addForbiddenArea' && currentStep=='trace')
+		{
+			e.preventDefault();
+			
+			//x = e.offsetX;
+			//y = $('#mapBox').height() - e.offsetY;
+			p = $('#svg image').position();
+			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
+			y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+			x = x * zoom;
+			y = ros_hauteur - (y * zoom);
+			
+			xRos = x * ros_resolution / 100;
+			yRos = y * ros_resolution / 100;
+			
+			currentForbiddenPoints.pop(); // Point du curseur
+			currentForbiddenPoints.push({x:xRos, y:yRos});
+			//currentForbiddenPoints.push({x:xRos, y:yRos}); // Point du curseur
+			TraceCurrentForbidden(currentForbiddenPoints);
+		}
+		else if (currentAction == 'addArea' && currentStep=='trace')
+		{
+			e.preventDefault();
+			
+			//x = e.offsetX;
+			//y = $('#mapBox').height() - e.offsetY;
+			p = $('#svg image').position();
+			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
+			y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+			x = x * zoom;
+			y = ros_hauteur - (y * zoom);
+			
+			xRos = x * ros_resolution / 100;
+			yRos = y * ros_resolution / 100;
+		
+			currentAreaPoints.pop(); // Point du curseur
+			currentAreaPoints.push({x:xRos, y:yRos});
+			//currentAreaPoints.push({x:xRos, y:yRos}); // Point du curseur
+			TraceCurrentArea(currentAreaPoints);
+		}
+	});
+	
+	$('#svg').on('touchmove', function(e) {
+		if (touchStarted)
+		{
+			//zoom = 1;
+			zoom = ros_largeur / $('#svg').width() / window.panZoom.getZoom();
+			if (downOnMovable)
+			{
+				console.log('touchmove mobable', movableDown.data('element_type'));
+			   if (movableDown.data('element_type') == 'dock')
+			   {
+				   e.preventDefault();
+				    
+				   dock = GetDockFromID(movableDown.data('id_station_recharge'));
+				   
+				   pageX = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX);
+				   pageY = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY);
+				  
+				  	x = dock.x_ros * 100 / ros_resolution;
+					y = ros_hauteur - (dock.y_ros * 100 / ros_resolution);
+				  
+					$('#dock_'+movableDown.data('id_station_recharge')).attr('transform', 'rotate('+0+', '+x+', '+y+')');
+					$('#dock_connect_'+movableDown.data('id_station_recharge')).attr('transform', 'rotate('+0+', '+x+', '+y+')');
+				  
+					delta = (downOnSVG_x - pageX) * zoom * ros_resolution / 100;
+					dock.x_ros = parseFloat(dock.x_ros) - delta;
+					delta = (downOnSVG_y - pageY) * zoom * ros_resolution / 100;
+					dock.y_ros = parseFloat(dock.y_ros) + delta;
+					
+					//movableDown.attr('x', dock.x_ros * 100 / ros_resolution - 5);
+					//movableDown.attr('y', ros_hauteur - (dock.y_ros * 100 / ros_resolution) - 5); 
+					
+					
+					$('#dock_'+movableDown.data('id_station_recharge')).attr('x', dock.x_ros * 100 / ros_resolution - 5);
+					$('#dock_'+movableDown.data('id_station_recharge')).attr('y', ros_hauteur - (dock.y_ros * 100 / ros_resolution) - 1); 
+					
+					$('#dock_connect_'+movableDown.data('id_station_recharge')).attr('x1', dock.x_ros * 100 / ros_resolution - 1);
+					$('#dock_connect_'+movableDown.data('id_station_recharge')).attr('y1', ros_hauteur - (dock.y_ros * 100 / ros_resolution) - 1); 
+					$('#dock_connect_'+movableDown.data('id_station_recharge')).attr('x2', dock.x_ros * 100 / ros_resolution + 1);
+					$('#dock_connect_'+movableDown.data('id_station_recharge')).attr('y2', ros_hauteur - (dock.y_ros * 100 / ros_resolution) - 1); 
+					
+					x = dock.x_ros * 100 / ros_resolution;
+					y = ros_hauteur - (dock.y_ros * 100 / ros_resolution);	
+					angle = 0 - dock.t_ros * 180 / Math.PI - 90;
+					
+					$('#dock_'+movableDown.data('id_station_recharge')).attr('transform', 'rotate('+angle+', '+x+', '+y+')');
+					$('#dock_connect_'+movableDown.data('id_station_recharge')).attr('transform', 'rotate('+angle+', '+x+', '+y+')');
+					
+					//TraceDock(GetDockIndexFromID(movableDown.data('id_station_recharge')));
+				    
+					downOnSVG_x = pageX;
+					downOnSVG_y = pageY;
+			   }
+			   else if (movableDown.data('element_type') == 'poi')
+			   {
+				   e.preventDefault();
+				    
+				   poi = GetPoiFromID(movableDown.data('id_poi'));
+				   
+				   pageX = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX);
+				   pageY = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY);
+				  
+				  	x = poi.x_ros * 100 / ros_resolution;
+					y = ros_hauteur - (poi.y_ros * 100 / ros_resolution);
+				  
+					$('#poi_sens_'+movableDown.data('id_poi')).attr('transform', 'rotate('+0+', '+x+', '+y+')');
+				  
+					delta = (downOnSVG_x - pageX) * zoom * ros_resolution / 100;
+					poi.x_ros = parseFloat(poi.x_ros) - delta;
+					delta = (downOnSVG_y - pageY) * zoom * ros_resolution / 100;
+					poi.y_ros = parseFloat(poi.y_ros) + delta;
+					
+					//movableDown.attr('x', dock.x_ros * 100 / ros_resolution - 5);
+					//movableDown.attr('y', ros_hauteur - (dock.y_ros * 100 / ros_resolution) - 5); 
+					
+					x = poi.x_ros * 100 / ros_resolution;
+					y = ros_hauteur - (poi.y_ros * 100 / ros_resolution);	
+					angle = 0 - poi.t_ros * 180 / Math.PI;
+					
+					$('#poi_secure_'+movableDown.data('id_poi')).attr('cx', x);
+					$('#poi_secure_'+movableDown.data('id_poi')).attr('cy', y); 
+					
+					$('#poi_robot_'+movableDown.data('id_poi')).attr('cx', x);
+					$('#poi_robot_'+movableDown.data('id_poi')).attr('cy', y);
+										
+					$('#poi_sens_'+movableDown.data('id_poi')).attr('points', (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2));
+					$('#poi_sens_'+movableDown.data('id_poi')).attr('transform', 'rotate('+angle+', '+x+', '+y+')');
+					
+					//TraceDock(GetDockIndexFromID(movableDown.data('id_station_recharge')));
+				    
+					downOnSVG_x = pageX;
+					downOnSVG_y = pageY;
+			   }
+			   else if (movableDown.data('element_type') == 'forbidden')
+			   {
+				   e.preventDefault();
+				    
+				   forbidden = GetForbiddenFromID(movableDown.data('id_area'));
+				   
+				   pageX = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX);
+				   pageY = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY);
+				  
+					delta = (downOnSVG_x - pageX) * zoom * ros_resolution / 100;
+					forbidden.points[movableDown.data('index_point')].x = parseFloat(forbidden.points[movableDown.data('index_point')].x) - delta;
+					delta = (downOnSVG_y - pageY) * zoom * ros_resolution / 100;
+					forbidden.points[movableDown.data('index_point')].y = parseFloat(forbidden.points[movableDown.data('index_point')].y) + delta;
+					
+					movableDown.attr('x', forbidden.points[movableDown.data('index_point')].x * 100 / ros_resolution - 5);
+					movableDown.attr('y', ros_hauteur - (forbidden.points[movableDown.data('index_point')].y * 100 / ros_resolution) - 5); 
+				
+					TraceForbidden(GetForbiddenIndexFromID(movableDown.data('id_area')));
+				    
+					downOnSVG_x = pageX;
+					downOnSVG_y = pageY;
+			   }
+			   else if (movableDown.data('element_type') == 'area')
+			   {
+				   e.preventDefault();
+				    
+				   area = GetAreaFromID(movableDown.data('id_area'));
+				   
+				   pageX = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX);
+				   pageY = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY);
+				  
+					delta = (downOnSVG_x - pageX) * zoom * ros_resolution / 100;
+					area.points[movableDown.data('index_point')].x = parseFloat(area.points[movableDown.data('index_point')].x) - delta;
+					delta = (downOnSVG_y - pageY) * zoom * ros_resolution / 100;
+					area.points[movableDown.data('index_point')].y = parseFloat(area.points[movableDown.data('index_point')].y) + delta;
+					
+					movableDown.attr('x', area.points[movableDown.data('index_point')].x * 100 / ros_resolution - 5);
+					movableDown.attr('y', ros_hauteur - (area.points[movableDown.data('index_point')].y * 100 / ros_resolution) - 5); 
+				
+					TraceArea(GetAreaIndexFromID(movableDown.data('id_area')));
+				    
+					downOnSVG_x = pageX;
+					downOnSVG_y = pageY;
+			   }
+			}
+			else if (clickSelectSVG && currentAction == 'select')
+			{
+				e.preventDefault();
+				
+				//clickSelectSVG_x_last = e.offsetX;
+				//clickSelectSVG_y_last = e.offsetY;
+				p = $('#svg image').position();
+				clickSelectSVG_x_last = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
+				clickSelectSVG_y_last = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+				
+				TraceSection(clickSelectSVG_x, clickSelectSVG_y, clickSelectSVG_x_last, clickSelectSVG_y_last);
+			}
+			else if (currentAction == 'gomme' && (currentStep=='trace' || currentStep=='traced'))
+			{
+				e.preventDefault();
+				currentStep ='traced';
+				
+				//x = e.offsetX;
+				//y = $('#mapBox').height() - e.offsetY;
+				p = $('#svg image').position();
+				x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
+				y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+				x = x * zoom;
+				y = ros_hauteur - (y * zoom);
+				
+				xRos = x * ros_resolution / 100;
+				yRos = y * ros_resolution / 100;
+								
+				gommes[gommes.length-1].pop(); // Point du curseur
+				gommes[gommes.length-1].push({x:xRos, y:yRos});
+				gommes[gommes.length-1].push({x:xRos, y:yRos}); // Point du curseur
+				TraceCurrentGomme(gommes[gommes.length-1], gommes.length-1);
+			}
+			else if (currentAction == 'addDock' && currentStep=='setPose')
+			{
+				p = $('#svg image').position();
+				x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
+				y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+				x = x * zoom;
+				y = ros_hauteur - (y * zoom);
+				
+				xRos = x * ros_resolution / 100;
+				yRos = y * ros_resolution / 100;
+				
+				currentDockPose.x_ros = xRos;
+				currentDockPose.y_ros = yRos;
+				currentDockPose.t_ros = 0;
+				
+				TraceCurrentDock(currentDockPose);
+			}
+			else if (currentAction == 'addDock' && currentStep=='setDir')
+			{
+				p = $('#svg image').position();
+				x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
+				y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+				x = x * zoom;
+				y = ros_hauteur - (y * zoom);
+				
+				xRos = x * ros_resolution / 100;
+				yRos = y * ros_resolution / 100;
+				
+				currentDockPose.t_ros = GetAngleRadian(currentDockPose.x_ros, currentDockPose.y_ros, xRos, yRos) + Math.PI;
+								
+				TraceCurrentDock(currentDockPose);
+			}
+			else if (currentAction == 'addPoi' && currentStep=='setPose')
+			{
+				p = $('#svg image').position();
+				x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
+				y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+				x = x * zoom;
+				y = ros_hauteur - (y * zoom);
+				
+				xRos = x * ros_resolution / 100;
+				yRos = y * ros_resolution / 100;
+				
+				currentPoiPose.x_ros = xRos;
+				currentPoiPose.y_ros = yRos;
+				currentPoiPose.t_ros = 0;
+				
+				TraceCurrentPoi(currentPoiPose);
+			}
+			else if (currentAction == 'addPoi' && currentStep=='setDir')
+			{
+				p = $('#svg image').position();
+				x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
+				y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+				x = x * zoom;
+				y = ros_hauteur - (y * zoom);
+				
+				xRos = x * ros_resolution / 100;
+				yRos = y * ros_resolution / 100;
+				
+				currentPoiPose.t_ros = GetAngleRadian(currentPoiPose.x_ros, currentPoiPose.y_ros, xRos, yRos) + Math.PI;
+								
+				TraceCurrentPoi(currentPoiPose);
+			}
+			else if (currentAction == 'addForbiddenArea' && currentStep=='trace')
+			{
+				e.preventDefault();
+				
+				//x = e.offsetX;
+				//y = $('#mapBox').height() - e.offsetY;
+				p = $('#svg image').position();
+				x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
+				y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+				x = x * zoom;
+				y = ros_hauteur - (y * zoom);
+				
+				xRos = x * ros_resolution / 100;
+				yRos = y * ros_resolution / 100;
+				
+				/*
+				currentGommePoints[currentGommePoints.length-1].x = xRos;
+				currentGommePoints[currentGommePoints.length-1].y = yRos;
+				TraceCurrentGomme(currentGommePoints);
+				*/
+				
+				currentForbiddenPoints.pop(); // Point du curseur
+				currentForbiddenPoints.push({x:xRos, y:yRos});
+				TraceCurrentForbidden(currentForbiddenPoints);
+			}
+			else if (currentAction == 'addArea' && currentStep=='trace')
+			{
+				e.preventDefault();
+				
+				//x = e.offsetX;
+				//y = $('#mapBox').height() - e.offsetY;
+				p = $('#svg image').position();
+				x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
+				y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+				x = x * zoom;
+				y = ros_hauteur - (y * zoom);
+				
+				xRos = x * ros_resolution / 100;
+				yRos = y * ros_resolution / 100;
+				
+				currentAreaPoints.pop(); // Point du curseur
+				currentAreaPoints.push({x:xRos, y:yRos});
+				TraceCurrentArea(currentAreaPoints);
+			}
+		}
+	});
+	
+	$('#svg').on('touchend', function(e) {
+		touchStarted = false;
+		if (downOnMovable)
+		{
+			downOnMovable = false;
+			if (movableDown.data('element_type') == 'forbidden')
+			{
+				TraceForbidden(GetForbiddenIndexFromID(movableDown.data('id_area')));
+			}
+			else if (movableDown.data('element_type') == 'area')
+			{
+				TraceArea(GetAreaIndexFromID(movableDown.data('id_area')));
+			}
+		}
+		if (currentAction == 'gomme' && currentStep=='traced')
+		{
+			currentStep='';
+			AddHistorique({'action':'gomme', 'data':gommes[gommes.length-1]});
+		}
+		else if (currentAction == 'addDock' && currentStep=='setPose')
+		{
+			p = $('#svg image').position();
+			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
+			y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+			x = x * zoom;
+			y = ros_hauteur - (y * zoom);
+			
+			xRos = x * ros_resolution / 100;
+			yRos = y * ros_resolution / 100;
+			
+			currentDockPose.x_ros = xRos;
+			currentDockPose.y_ros = yRos;
+			currentDockPose.t_ros = 0;
+			
+			TraceCurrentDock(currentDockPose);
+			
+			currentStep='setDir';
+			$('#message_aide').html(textClickOnMapDir);
+			
+		}
+		else if (currentAction == 'addDock' && currentStep=='setDir')
+		{
+			p = $('#svg image').position();
+			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
+			y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+			x = x * zoom;
+			y = ros_hauteur - (y * zoom);
+			
+			xRos = x * ros_resolution / 100;
+			yRos = y * ros_resolution / 100;
+			
+			currentDockPose.t_ros = GetAngleRadian(currentDockPose.x_ros, currentDockPose.y_ros, xRos, yRos) + Math.PI;
+							
+			TraceCurrentDock(currentDockPose);
+			
+			$('#boutonsDock #bDockSave').show();
+		}
+		else if (currentAction == 'addPoi' && currentStep=='setPose')
+		{
+			p = $('#svg image').position();
+			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
+			y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+			x = x * zoom;
+			y = ros_hauteur - (y * zoom);
+			
+			xRos = x * ros_resolution / 100;
+			yRos = y * ros_resolution / 100;
+			
+			currentPoiPose.x_ros = xRos;
+			currentPoiPose.y_ros = yRos;
+			currentPoiPose.t_ros = 0;
+			
+			TraceCurrentPoi(currentPoiPose);
+			
+			currentStep='setDir';
+			$('#message_aide').html(textClickOnMapDir);
+		}
+		else if (currentAction == 'addPoi' && currentStep=='setDir')
+		{
+			p = $('#svg image').position();
+			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
+			y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+			x = x * zoom;
+			y = ros_hauteur - (y * zoom);
+			
+			xRos = x * ros_resolution / 100;
+			yRos = y * ros_resolution / 100;
+			
+			currentPoiPose.t_ros = GetAngleRadian(currentPoiPose.x_ros, currentPoiPose.y_ros, xRos, yRos) + Math.PI;
+							
+			TraceCurrentPoi(currentPoiPose);
+			
+			$('#boutonsPoi #bPoiSave').show();
+		}
+		else if (currentAction == 'addForbiddenArea' && currentStep=='trace')
+		{
+			e.preventDefault();
+			
+			//x = e.offsetX;
+			//y = $('#mapBox').height() - e.offsetY;
+			p = $('#svg image').position();
+			
+			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
+			y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+
+			x = x * zoom;
+			y = ros_hauteur - (y * zoom);
+			
+			xRos = x * ros_resolution / 100;
+			yRos = y * ros_resolution / 100;
+			
+			currentForbiddenPoints.pop(); // Point du curseur
+			currentForbiddenPoints.push({x:xRos, y:yRos});
+			currentForbiddenPoints.push({x:xRos, y:yRos}); // Point du curseur
+			TraceCurrentForbidden(currentForbiddenPoints);
+		}
+		else if (currentAction == 'addArea' && currentStep=='trace')
+		{
+			e.preventDefault();
+			
+			//x = e.offsetX;
+			//y = $('#mapBox').height() - e.offsetY;
+			p = $('#svg image').position();
+			
+			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
+			y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+
+			x = x * zoom;
+			y = ros_hauteur - (y * zoom);
+			
+			xRos = x * ros_resolution / 100;
+			yRos = y * ros_resolution / 100;
+			
+			
+			currentAreaPoints.pop(); // Point du curseur
+			currentAreaPoints.push({x:xRos, y:yRos});
+			currentAreaPoints.push({x:xRos, y:yRos}); // Point du curseur
+			TraceCurrentArea(currentAreaPoints);
+		}
+	});
 });
+
+var touchStarted = false;
+
 
 function InitTaille()
 {
-	// Save scroll
-	saveScrollLeft = document.getElementById('container_all').scrollLeft;
-	saveScrollTop = document.getElementById('container_all').scrollTop;
-	
-	
-	saveHeight = $('body').height();
-	$('#all').width('auto');
-    saveWidth = $('#all').width()-40;
-    
-    rotation = false;
-	
-    if (rotation)
-    {
-        t = hauteurSlam;
-        hauteurSlam = largeurSlam;
-        largeurSlam = t;
-        $('#mapBoxRotate').show();
-        $('#mapBox').hide();
-    }
-    else
-    {
-        $('#mapBoxRotate').hide();
-        $('#mapBox').show();
-    }
-    
-	/*
-    $('#map_navigation').height($('#map_navigation').width() * hauteurSlam / largeurSlam);
-
-    if (rotation)
-    {
-        if (saveHeight < $('#map_navigation').height())
-        {
-            $('#map_navigation').height(saveHeight);	
-            $('#boxsmap').width($('#map_navigation').height() * largeurSlam / hauteurSlam);
-            $('#boxsmap').height($('#map_navigation').height());
-        }
-        else
-        {
-            $('#boxsmap').width($('#map_navigation').width());
-            $('#boxsmap').height($('#map_navigation').width() * hauteurSlam / largeurSlam);
-        }
-    }
-    else
-    {
-        if (saveHeight < $('#map_navigation').height())
-        {
-            $('#map_navigation').height(saveHeight);	
-            $('#boxsmap').width($('#map_navigation').height() * largeurSlam / hauteurSlam);
-            $('#boxsmap').height($('#map_navigation').height());
-        }
-        else
-        {
-            $('#boxsmap').width($('#map_navigation').width());
-            $('#boxsmap').height($('#map_navigation').width() * hauteurSlam / largeurSlam);
-        }
-    }
-	
-	document.getElementById('container_all').scrollLeft = saveScrollLeft;
-	document.getElementById('container_all').scrollTop = saveScrollTop;
-	*/
 }
 
 function RefreshAllPath()
@@ -1071,28 +1914,41 @@ function RefreshAllPath()
 
 function RefreshZoomView()
 {
-	w = $('#zoom_carte').width();
-	h = $('#zoom_carte').height();
+	pSVG = $('#svg').position();
+	pImg = $('#svg image').position();
+	pImg.left -= pSVG.left;
+	pImg.top -= pSVG.top;
 	
-	wAll = $('#all').width();
-	hAll = $('#all').height();
+	zoom = ros_largeur / $('#svg').width() / window.panZoom.getZoom();
 	
-	wOver = $('#container_all').width();
-	hOver = $('#container_all').height();
+	wZoom = $('#zoom_carte').width();
+	hZoom = $('#zoom_carte').height();
 	
-	wNew = w * wOver/wAll;
-	if (wNew > w) wNew = w;
-	hNew = h * hOver/hAll;
-	if (hNew > h) hNew = h;
+	wNew = 0;
+	hNew = 0;
+	tNew = 0;
+	lNew = 0;
 	
+	if (pImg.left > 0)
+		lNew = 0;
+	else
+		lNew = -(pImg.left*zoom) / ros_largeur * wZoom;
+	if (pImg.top > 0)
+		tNew = 0;
+	else
+		tNew = -(pImg.top*zoom) / ros_largeur * wZoom;
+	
+	hNew = $('#svg').height() * zoom  / ros_largeur * wZoom;
+	wNew = $('#svg').width() * zoom  / ros_largeur * wZoom;
+	
+	if (tNew + hNew > hZoom) hNew = hZoom - tNew;
+	if (lNew + wNew > wZoom) wNew = wZoom - lNew;
+		
 	$('#zone_zoom').width(wNew);
 	$('#zone_zoom').height(hNew);
-	
-	t = document.getElementById('container_all').scrollTop;
-	l = document.getElementById('container_all').scrollLeft;
-			
-	$('#zone_zoom').css('top', t/hAll * h - 1);
-	$('#zone_zoom').css('left', l/wAll * w -1);
+				
+	$('#zone_zoom').css('top', tNew - 1);
+	$('#zone_zoom').css('left', lNew - 1);
 	
 }
 
@@ -1131,13 +1987,16 @@ function sortUL(selector) {
 }
 
 
-function DeletePoly(indexInArray)
+function DeleteForbidden(indexInArray)
 {
 	if ($('.cancel:visible').length > 0) $('.cancel:visible').click();
 	
-	data = polys[indexInArray];
+	forbiddens[indexInArray].deleted = 1;
 	
-	DeletePolyIHM(indexInArray);
+	AddHistorique({'action':'delete_forbidden', 'data':indexInArray});
+	
+	data = forbiddens[indexInArray];
+	$('.forbidden_elem_'+data.id_area).remove();
 	
 	RemoveClass('.active', 'active');
 	
@@ -1147,58 +2006,193 @@ function DeletePoly(indexInArray)
 	$('.btn-mode-gene').removeClass('btn-primary');
 	$('.btn-mode-gene').addClass('btn-default');
 	
+	
+	$('#boutonsForbidden').hide();
+    $('#boutonsStandard').show();
+	blockZoom = false;
+	
 	SetModeSelect();
-	
-	jQuery.ajax({
-		url: 'ajax/deleteArea.php',
-		type: "post",
-		dataType: "json",
-		data: { 
-				'id_plan':id_plan,
-				'indexInArray':indexInArray,
-				'id_area':data.id_area,
-			},
-		error: function(jqXHR, textStatus, errorThrown) {
-			},
-		success: function(data, textStatus, jqXHR) {
-			
-			
-			}
-	});
 }
-
-function DeletePolyIHM(index)
-{
-	data = polys[index];
-	
-	$('.poly_elem_'+data.id_area).remove();
-	$('#li_poly_'+data.id_area).remove();
-	
-	polys.splice(index, 1);
-}
-
-function GetPolyFromID(id)
+function GetForbiddenFromID(id)
 {
 	ret = null;
-	$.each(polys, function(indexInArray, poly){
-		if (poly.id_area == id)
+	$.each(forbiddens, function(indexInArray, forbidden){
+		if (forbidden.id_area == id)
 		{
-			ret = poly;
+			ret = forbidden;
 			return ret;
 		}
 	});
 	return ret;
 }
-
-function GetPolyIndexFromID(id)
+function GetForbiddenIndexFromID(id)
 {
 	ret = null;
-	$.each(polys, function(indexInArray, poly){
-		if (poly.id_area == id)
+	$.each(forbiddens, function(indexInArray, forbidden){
+		if (forbidden.id_area == id)
 		{
 			ret = indexInArray;
 			return ret;
 		}
 	});
 	return ret;
+}
+
+function DeleteArea(indexInArray)
+{
+	if ($('.cancel:visible').length > 0) $('.cancel:visible').click();
+	
+	areas[indexInArray].deleted = 1;
+	
+	AddHistorique({'action':'delete_area', 'data':indexInArray});
+	
+	data = areas[indexInArray];
+	$('.area_elem_'+data.id_area).remove();
+	
+	RemoveClass('.active', 'active');
+	
+	currentAction = '';
+	currentStep = '';
+	
+	$('.btn-mode-gene').removeClass('btn-primary');
+	$('.btn-mode-gene').addClass('btn-default');
+	
+	$('#boutonsArea').hide();
+    $('#boutonsStandard').show();
+	blockZoom = false;
+	
+	SetModeSelect();
+}
+function GetAreaFromID(id)
+{
+	ret = null;
+	$.each(areas, function(indexInArray, area){
+		if (area.id_area == id)
+		{
+			ret = area;
+			return ret;
+		}
+	});
+	return ret;
+}
+function GetAreaIndexFromID(id)
+{
+	ret = null;
+	$.each(areas, function(indexInArray, area){
+		if (area.id_area == id)
+		{
+			ret = indexInArray;
+			return ret;
+		}
+	});
+	return ret;
+}
+
+function DeleteDock(indexInArray)
+{
+	if ($('.cancel:visible').length > 0) $('.cancel:visible').click();
+	
+	docks[indexInArray].deleted = 1;
+	
+	AddHistorique({'action':'delete_dock', 'data':indexInArray});
+	
+	data = docks[indexInArray];
+	$('.dock_elem_'+data.id_station_recharge).remove();
+	
+	RemoveClass('.active', 'active');
+	
+	currentAction = '';
+	currentStep = '';
+	
+	$('.btn-mode-gene').removeClass('btn-primary');
+	$('.btn-mode-gene').addClass('btn-default');
+	
+	$('#boutonsDock').hide();
+    $('#boutonsStandard').show();
+	blockZoom = false;
+	
+	SetModeSelect();
+}
+function GetDockFromID(id)
+{
+	ret = null;
+	$.each(docks, function(indexInArray, dock){
+		if (dock.id_station_recharge == id)
+		{
+			ret = dock;
+			return ret;
+		}
+	});
+	return ret;
+}
+function GetDockIndexFromID(id)
+{
+	ret = null;
+	$.each(docks, function(indexInArray, dock){
+		if (dock.id_station_recharge == id)
+		{
+			ret = indexInArray;
+			return ret;
+		}
+	});
+	return ret;
+}
+
+function DeletePoi(indexInArray)
+{
+	if ($('.cancel:visible').length > 0) $('.cancel:visible').click();
+	
+	pois[indexInArray].deleted = 1;
+	
+	AddHistorique({'action':'delete_poi', 'data':indexInArray});
+	
+	data = pois[indexInArray];
+	$('.poi_elem_'+data.id_poi).remove();
+	
+	RemoveClass('.active', 'active');
+	
+	currentAction = '';
+	currentStep = '';
+	
+	$('.btn-mode-gene').removeClass('btn-primary');
+	$('.btn-mode-gene').addClass('btn-default');
+	
+	$('#boutonsPoi').hide();
+    $('#boutonsStandard').show();
+	blockZoom = false;
+	
+	SetModeSelect();
+}
+function GetPoiFromID(id)
+{
+	ret = null;
+	$.each(pois, function(indexInArray, poi){
+		if (poi.id_poi == id)
+		{
+			ret = poi;
+			return ret;
+		}
+	});
+	return ret;
+}
+function GetPoiIndexFromID(id)
+{
+	ret = null;
+	$.each(pois, function(indexInArray, poi){
+		if (poi.id_poi == id)
+		{
+			ret = indexInArray;
+			return ret;
+		}
+	});
+	return ret;
+}
+
+function GetAngleRadian(x1, y1, x2, y2) {
+	var dx = x2 - x1;
+	var dy = y2 - y1;
+	return Math.atan2(dy, dx);
+}
+function GetAngleDegre(x1, y1, x2, y2) {
+	return GetAngleRadian(x1, y1, x2, y2) * (180 / Math.PI);
 }

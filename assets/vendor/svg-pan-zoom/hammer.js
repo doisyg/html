@@ -975,7 +975,7 @@ inherit(TouchInput, Input, {
 function getTouches(ev, type) {
     var allTouches = toArray(ev.touches);
     var targetIds = this.targetIds;
-
+	
     // when there is only one touch, the process can be simplified
     if (type & (INPUT_START | INPUT_MOVE) && allTouches.length === 1) {
         targetIds[allTouches[0].identifier] = true;
@@ -1156,7 +1156,7 @@ TouchAction.prototype = {
 
         // if the touch action did prevented once this session
         if (this.manager.session.prevented) {
-            srcEvent.preventDefault();
+            //srcEvent.preventDefault();
             return;
         }
 
@@ -1178,7 +1178,7 @@ TouchAction.prototype = {
      */
     preventSrc: function(srcEvent) {
         this.manager.session.prevented = true;
-        srcEvent.preventDefault();
+        //srcEvent.preventDefault();
     }
 };
 
@@ -2192,6 +2192,8 @@ Manager.prototype = {
         if (session.stopped) {
             return;
         }
+		if (blockZoom != undefined && blockZoom)
+			return;
 
         // run the touch-action polyfill
         this.touchAction.preventDefaults(inputData);

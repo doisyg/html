@@ -5,6 +5,10 @@ class AreaCore
 	public $id_plan = -1;
 	public $nom = "";
 	public $comment = "";
+	public $couleur_r = 0;
+	public $couleur_g = 0;
+	public $couleur_b = 0;
+	public $is_forbidden = 0;
 	public $deleted = 0;
 
 	public function __construct( $id_area = null, $byrow=false ) 
@@ -29,6 +33,10 @@ class AreaCore
 		$this->id_plan = $object->id_plan;
 		$this->nom = $object->nom;
 		$this->comment = $object->comment;
+		$this->couleur_r = $object->couleur_r;
+		$this->couleur_g = $object->couleur_g;
+		$this->couleur_b = $object->couleur_b;
+		$this->is_forbidden = $object->is_forbidden;
 		$this->deleted = $object->deleted;
 	}
 
@@ -54,11 +62,15 @@ class AreaCore
 	public function Insert()
 	{
 		global $_CONFIG;
-		$query = "INSERT INTO area ( id_plan, nom, comment, deleted ) VALUES ( 
+		$query = "INSERT INTO area ( id_plan, nom, comment, couleur_r, couleur_g, couleur_b, is_forbidden, deleted ) VALUES ( 
 
 			'". mysqli_real_escape_string(DB::$connexion, $this->id_plan) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->nom) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->comment) ."', 
+			'". mysqli_real_escape_string(DB::$connexion, $this->couleur_r) ."', 
+			'". mysqli_real_escape_string(DB::$connexion, $this->couleur_g) ."', 
+			'". mysqli_real_escape_string(DB::$connexion, $this->couleur_b) ."', 
+			'". mysqli_real_escape_string(DB::$connexion, $this->is_forbidden) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->deleted) ."'
 			) ";
 		$insert=mysqli_query(DB::$connexion, $query) or die ('ERREUR Insert Area : '.$query.'<br />'.mysqli_error(DB::$connexion).'<br /><br />');
@@ -73,6 +85,10 @@ class AreaCore
 			id_plan = '". mysqli_real_escape_string(DB::$connexion,  $this->id_plan )."', 
 			nom = '". mysqli_real_escape_string(DB::$connexion,  $this->nom )."', 
 			comment = '". mysqli_real_escape_string(DB::$connexion,  $this->comment )."', 
+			couleur_r = '". mysqli_real_escape_string(DB::$connexion,  $this->couleur_r )."', 
+			couleur_g = '". mysqli_real_escape_string(DB::$connexion,  $this->couleur_g )."', 
+			couleur_b = '". mysqli_real_escape_string(DB::$connexion,  $this->couleur_b )."', 
+			is_forbidden = '". mysqli_real_escape_string(DB::$connexion,  $this->is_forbidden )."', 
 			deleted = '". mysqli_real_escape_string(DB::$connexion,  $this->deleted )."'
 		WHERE id_area = '". mysqli_real_escape_string(DB::$connexion, $this->id_area)."'";
 		$update=mysqli_query(DB::$connexion, $query) or die ('ERREUR Update Area : '.$query.'<br />'.mysqli_error(DB::$connexion).'<br /><br />');
@@ -86,7 +102,7 @@ class AreaCore
 
 	public static function GetAreas($order = "", $order_sens = "")
 	{
-		$query = "SELECT * FROM area WHERE deleted=0 ";
+		$query = "SELECT * FROM area WHERE deleted=0";
 		if ($order!="")
 			$query .= " ORDER BY ".mysqli_real_escape_string(DB::$connexion, $order)." ".mysqli_real_escape_string(DB::$connexion, $order_sens);
 		else 

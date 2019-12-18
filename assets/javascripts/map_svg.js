@@ -1,14 +1,14 @@
 
 function AppliquerZoom()
 {
-	$('#all').width(saveWidth * zoom_carte);
-	Resize();
-	$('#boxsmap').resize();
+	//$('#all').width(saveWidth * zoom_carte);
+	//Resize();
+	//$('#boxsmap').resize();
 	
 	ResizeSVG();
 	
-	RefreshZoomView();
-	setTimeout(RefreshZoomView, 100);
+	//RefreshZoomView();
+	//setTimeout(RefreshZoomView, 100);
 }
 
 function InitSVG()
@@ -34,40 +34,68 @@ function TraceSection(x1, y1, x2, y2)
 	svg.appendChild(path);
 }
 
-function TraceCurrentPoly(points)
+function TraceCurrentGomme(points, index)
 {
-	$('.poly_elem_current').remove();
+	$('.gomme_elem_current_'+index).remove();
 	
 	if (points.length > 1)
 	{
-		poly_point = '';
+		gomme_point = '';
 		$.each(points, function( indexPoint, point ) {
-			if (poly_point != '') poly_point += ' ';
+			if (gomme_point != '') gomme_point += ' ';
 			
-			x = (point.x * 100 / ros_resolution) / largeurRos * $('#mapBox').width();
-			y = $('#mapBox').height() - ((point.y * 100 / ros_resolution) / largeurRos * $('#mapBox').width());
+			x = (point.x * 100 / ros_resolution);
+			y = ros_hauteur - ((point.y * 100 / ros_resolution));
 			
-			poly_point += x+','+y;
+			gomme_point += x+','+y;
 		});
 		
-		path = makeSVGElement('polygon', { points: poly_point,
-								   'stroke-width': minStokeWidth,
-								   'class':'poly poly_elem_current',
+		path = makeSVGElement('polyline', { points: gomme_point,
+								   'stroke-width': 2,
+								   'stroke': '#FFF',
+								   'fill': 'none',
+								   'class':'gomme_elem_current_'+index,
 								   'data-index': 'current'
 								  });
 		svg.appendChild(path);
 	}
 }
 
-function GetCenterPoly(indexPoly)
+function TraceCurrentForbidden(points)
 {
-	poly = polys[indexPoly];
+	$('.forbidden_elem_current').remove();
+	
+	if (points.length > 1)
+	{
+		forbidden_point = '';
+		$.each(points, function( indexPoint, point ) {
+			if (forbidden_point != '') forbidden_point += ' ';
+			
+			x = (point.x * 100 / ros_resolution);
+			y = ros_hauteur - ((point.y * 100 / ros_resolution));
+			
+			forbidden_point += x+','+y;
+		});
+		
+		path = makeSVGElement('polygon', { points: forbidden_point,
+								   'stroke-width': minStokeWidth,
+								   'class':'poly forbidden_elem_current',
+								   'data-index': 'current'
+								  });
+		svg.appendChild(path);
+	}
+}
+
+function GetCenterForbidden(indexForbidden)
+{
+	forbidden = forbiddens[indexForbidden];
 	
 	minX = 10000;
 	minY = 10000;
 	maxX = 0;
 	maxY = 0;
 	
+	points = forbidden.points;
 	$.each(points, function( indexPoint, point ) {
 		if (point.x < minX) minX = point.x;
 		if (point.x > maxX) maxX = point.x;
@@ -80,43 +108,48 @@ function GetCenterPoly(indexPoly)
 	
 	return { "x":x, "y":y};
 }
-function TracePoly(indexPoly)
+function TraceForbidden(indexForbidden)
 {
-	poly = polys[indexPoly];
+	forbidden = forbiddens[indexForbidden];
+	if (forbidden.deleted == 1) { $('.forbidden_elem_'+forbidden.id_area).remove(); return; }
+	
 	is_active = false;
-	if ($('.poly_elem_'+poly.id_area).length > 0)
+	if ($('.forbidden_elem_'+forbidden.id_area).length > 0)
 	{
-		t = $('.poly_elem_'+poly.id_area);
+		t = $('.forbidden_elem_'+forbidden.id_area);
 		if (t.attr('class') != t.attr('class').replace('active', ''))
 		{
 			is_active = true;
 		}
 	}
+		
+	if (downOnMovable && movableDown.data('element_type') == 'forbidden')
+	{
+		index_point_movable = movableDown.data('index_point');
+	}
+	else
+		$('.forbidden_elem_'+forbidden.id_area).remove();		  
 	
-	$('.poly_elem_'+poly.id_area).remove();
-	
-	points = poly.points;
+	points = forbidden.points;
 	if (points.length > 1)
 	{
-		poly_point = '';
+		forbidden_point = '';
 		$.each(points, function( indexPoint, point ) {
-			if (poly_point != '') poly_point += ' ';
+			if (forbidden_point != '') forbidden_point += ' ';
 			
-			/*
-			x = (point.x * 100 / ros_resolution) / largeurRos * $('#mapBox').width();
-			y = $('#mapBox').height() - ((point.y * 100 / ros_resolution) / largeurRos * $('#mapBox').width());
-			*/
-			x = point.x * 100;
-			y = 2515 - (point.y * 100);
+			x = point.x * 100 / ros_resolution;
+			y = ros_hauteur - (point.y * 100 / ros_resolution);
 			
-			poly_point += x+','+y;
+			forbidden_point += x+','+y;
 		});
 		
-		path = makeSVGElement('polygon', { points: poly_point,
+		$('#forbidden_'+forbidden.id_area).remove();
+		
+		path = makeSVGElement('polygon', { points: forbidden_point,
 							   'stroke-width': 0,
-							   'class':'poly poly_elem poly_elem_'+poly.id_area,
-							   'id':'poly_'+poly.id_area,
-							   'data-id_area': poly.id_area
+							   'class':'poly forbidden poly_elem forbidden_elem forbidden_elem_'+forbidden.id_area,
+							   'id':'forbidden_'+forbidden.id_area,
+							   'data-id_area': forbidden.id_area
 							  });
 		path.style.fill = 'rgba(0,0,0,0.5)'
 		svg.appendChild(path);
@@ -127,30 +160,355 @@ function TracePoly(indexPoly)
 			x = (point.x * 100 / ros_resolution) / largeurRos * $('#mapBox').width();
 			y = $('#mapBox').height() - ((point.y * 100 / ros_resolution) / largeurRos * $('#mapBox').width());
 			*/
-			x = point.x * 100;
-			y = 2515 - (point.y * 100);
 			
-			path = makeSVGElement('rect', { x: x-5, y:y-5, height:10, width:10,
-						   'stroke-width': minStokeWidth,
-						   'class':'movable poly_elem poly_elem_'+poly.id_area,
-						   'id': 'poly_'+poly.id_area+'_'+indexPoint,
-						   'data-id_area': poly.id_area,
-						   'data-index_point': indexPoint,
-						   'data-element_type': 'poly',
-						   'data-element': 'poly'
-						  });
-			svg.appendChild(path);
+			if (!downOnMovable || index_point_movable != indexPoint)
+			{
+				$('#forbidden_'+forbidden.id_area+'_'+indexPoint).remove();
+				
+				x = point.x * 100 / ros_resolution;
+				y = ros_hauteur - (point.y * 100 / ros_resolution);
+				
+				path = makeSVGElement('rect', { x: x-5, y:y-5, height:10, width:10,
+							   'stroke-width': minStokeWidth,
+							   'class':'movable poly_elem forbidden_elem forbidden_elem_'+forbidden.id_area,
+							   'id': 'forbidden_'+forbidden.id_area+'_'+indexPoint,
+							   'data-id_area': forbidden.id_area,
+							   'data-index_point': indexPoint,
+							   'data-element_type': 'forbidden',
+							   'data-element': 'forbidden'
+							  });
+				svg.appendChild(path);
+			}
 		});
 		
 		if (is_active)
-			AddClass('.poly_elem_'+poly.id_area, 'active');
+			AddClass('.forbidden_elem_'+forbidden.id_area, 'active');
 	}
+}
+
+function TraceCurrentArea(points)
+{
+	$('.area_elem_current').remove();
+	
+	if (points.length > 1)
+	{
+		area_point = '';
+		$.each(points, function( indexPoint, point ) {
+			if (area_point != '') area_point += ' ';
+			
+			x = (point.x * 100 / ros_resolution);
+			y = ros_hauteur - ((point.y * 100 / ros_resolution));
+			
+			area_point += x+','+y;
+		});
+		
+		path = makeSVGElement('polygon', { points: area_point,
+								   'stroke-width': minStokeWidth,
+								   'class':'poly area_elem_current',
+								   'data-index': 'current'
+								  });
+		svg.appendChild(path);
+	}
+}
+
+function GetCenterArea(indexArea)
+{
+	area = areas[indexArea];
+	
+	minX = 10000;
+	minY = 10000;
+	maxX = 0;
+	maxY = 0;
+	
+	points = area.points;
+	$.each(points, function( indexPoint, point ) {
+		if (point.x < minX) minX = point.x;
+		if (point.x > maxX) maxX = point.x;
+		if (point.y < minY) minY = point.y;
+		if (point.y > maxY) maxY = point.y;
+	});
+	
+	x = minX + (maxX-minX)/2;
+	y = minY + (maxY-minY)/2;
+	
+	return { "x":x, "y":y};
+}
+function TraceArea(indexArea)
+{
+	area = areas[indexArea];
+	if (area.deleted == 1) { $('.area_elem_'+area.id_area).remove(); return; }
+	
+	is_active = false;
+	if ($('.area_elem_'+area.id_area).length > 0)
+	{
+		t = $('.area_elem_'+area.id_area);
+		if (t.attr('class') != t.attr('class').replace('active', ''))
+		{
+			is_active = true;
+		}
+	}
+	
+	if (downOnMovable && movableDown.data('element_type') == 'area')
+	{
+		index_point_movable = movableDown.data('index_point');
+	}
+	else
+		$('.area_elem_'+area.id_area).remove();
+	
+	points = area.points;
+	if (points.length > 1)
+	{
+		area_point = '';
+		$.each(points, function( indexPoint, point ) {
+			if (area_point != '') area_point += ' ';
+			
+			x = point.x * 100 / ros_resolution;
+			y = ros_hauteur - (point.y * 100 / ros_resolution);
+			
+			area_point += x+','+y;
+		});
+		
+		$('#area_'+area.id_area).remove();
+		
+		path = makeSVGElement('polygon', { points: area_point,
+							   'stroke-width': 0,
+							   'class':'poly area poly_elem area_elem area_elem_'+area.id_area,
+							   'id':'area_'+area.id_area,
+							   'data-id_area': area.id_area
+							  });
+		path.style.fill = 'rgba('+area.couleur_r+','+area.couleur_g+','+area.couleur_b+',0.5)'
+		svg.appendChild(path);
+		
+		$.each(points, function( indexPoint, point ) {
+			
+			if (!downOnMovable || index_point_movable != indexPoint)
+			{
+				$('#area_'+area.id_area+'_'+indexPoint).remove();
+				
+				x = point.x * 100 / ros_resolution;
+				y = ros_hauteur - (point.y * 100 / ros_resolution);
+				
+				path = makeSVGElement('rect', { x: x-5, y:y-5, height:10, width:10,
+							   'stroke-width': minStokeWidth,
+							   'class':'movable poly_elem area_elem area_elem_'+area.id_area,
+							   'id': 'area_'+area.id_area+'_'+indexPoint,
+							   'data-id_area': area.id_area,
+							   'data-index_point': indexPoint,
+							   'data-element_type': 'area',
+							   'data-element': 'area'
+							  });
+				svg.appendChild(path);
+			}
+		});
+		
+		if (is_active)
+			AddClass('.area_elem_'+area.id_area, 'active');
+	}
+}
+
+function TraceCurrentDock(pose)
+{
+	$('.dock_elem_current').remove();
+	
+	x = pose.x_ros * 100 / ros_resolution;
+	y = ros_hauteur - (pose.y_ros * 100 / ros_resolution);
+	
+	angle = 0 - pose.t_ros * 180 / Math.PI - 90;
+	
+	path = makeSVGElement('rect', { x: x-5, y:y-1, height:2, width:10,
+				   'stroke-width': minStokeWidth,
+				   'fill':'yellow',
+				   'transform':'rotate('+angle+', '+x+', '+y+')',
+				   'class':'movable dock_elem dock_elem_current'
+				  });
+	svg.appendChild(path);
+	
+	path = makeSVGElement('line', { 'x1': x-1, 'y1':y-1, 'x2': x+1, 'y2':y-1,
+				   'stroke-width': 1,
+				   'stroke-linecap':'square',
+				   'stroke':'orange',
+				   'transform':'rotate('+angle+', '+x+', '+y+')',
+				   'class':'dock_elem dock_elem_current'
+				  });
+	svg.appendChild(path);
+}
+function TraceDock(indexDock)
+{
+	dock = docks[indexDock];
+	if (dock.deleted != undefined && dock.deleted == 1) { $('.dock_elem_'+dock.id_station_recharge).remove(); return; }
+	
+	is_active = false;
+	if ($('.dock_elem_'+dock.id_station_recharge).length > 0)
+	{
+		t = $('.dock_elem_'+dock.id_station_recharge);
+		if (t.attr('class') != t.attr('class').replace('active', ''))
+		{
+			is_active = true;
+		}
+	}
+	
+	if (downOnMovable && movableDown.data('element_type') == 'dock')
+	{
+		index_point_movable = movableDown.data('index_point');
+	}
+	else
+		$('.dock_elem_'+dock.id_station_recharge).remove();
+	
+	x = dock.x_ros * 100 / ros_resolution;
+	y = ros_hauteur - (dock.y_ros * 100 / ros_resolution);
+	
+	angle = 0 - dock.t_ros * 180 / Math.PI - 90;
+	
+	path = makeSVGElement('rect', { x: x-5, y:y-1, height:2, width:10,
+				   'stroke-width': minStokeWidth,
+				   'fill':'yellow',
+				   'transform':'rotate('+angle+', '+x+', '+y+')',
+				   'class':'dock_elem dock_elem_fond dock_elem_'+dock.id_station_recharge,
+				   'id': 'dock_'+dock.id_station_recharge,
+				   'data-id_station_recharge': dock.id_station_recharge,
+				   'data-element_type': 'dock',
+				   'data-element': 'dock'
+				  });
+	svg.appendChild(path);
+	
+	path = makeSVGElement('line', { 'x1': x-1, 'y1':y-1, 'x2': x+1, 'y2':y-1,
+				   'stroke-width': 1,
+				   'stroke-linecap':'square',
+				   'stroke':'orange',
+				   'transform':'rotate('+angle+', '+x+', '+y+')',
+				   'class':'dock_elem dock_elem_'+dock.id_station_recharge,
+				   'id': 'dock_connect_'+dock.id_station_recharge,
+				   'data-id_station_recharge': dock.id_station_recharge,
+				   'data-element_type': 'dock',
+				   'data-element': 'dock'
+				  });
+	svg.appendChild(path);
+	
+	if (is_active)
+		AddClass('.dock_elem_'+dock.id_station_recharge, 'active');
+}
+
+function TraceCurrentPoi(pose)
+{
+	$('.dock_elem_current').remove();
+	
+	x = pose.x_ros * 100 / ros_resolution;
+	y = ros_hauteur - (pose.y_ros * 100 / ros_resolution);
+	angle = 0 - pose.t_ros * 180 / Math.PI - 90;
+	
+	rayonRobot = (26 / ros_resolution);
+	rayonRobotSecure = ((26+15) / ros_resolution);
+	
+	path = makeSVGElement('circle', { cx: x,
+									cy: y,
+								   r: rayonRobotSecure,
+								   'class': 'poi_elem poi_elem_current',
+								   });
+	path.style.fill = '#AAAAAA';
+	svg.appendChild(path);
+	
+	path = makeSVGElement('circle', { cx: x,
+									cy: y,
+								   r: rayonRobot,
+								   'class': 'poi_elem poi_elem_current',
+								   });
+	path.style.fill = '#589FB1';
+	svg.appendChild(path);
+	
+	path = makeSVGElement('polyline', { 'points': (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2),
+									'stroke':'#FFFFFF',
+									'stroke-width':1,
+									'fill':'none',
+									'stroke-linejoin':'round',
+									'stroke-linecap':'round',
+								   'class': 'poi_elem poi_elem_current',
+								   'transform':'rotate('+angle+', '+x+', '+y+')',
+								   });
+	svg.appendChild(path);
+}
+function TracePoi(indexPoi)
+{
+	poi = pois[indexPoi];
+	if (poi.deleted != undefined && poi.deleted == 1) { $('.poi_elem_'+poi.id_poi).remove(); return; }
+	
+	is_active = false;
+	if ($('.poi_elem_'+poi.id_poi).length > 0)
+	{
+		t = $('.poi_elem_'+poi.id_poi);
+		if (t.attr('class') != t.attr('class').replace('active', ''))
+		{
+			is_active = true;
+		}
+	}
+	
+	if (downOnMovable && movableDown.data('element_type') == 'poi')
+	{
+		index_point_movable = movableDown.data('index_point');
+	}
+	else
+		$('.poi_elem_'+poi.id_poi).remove();
+	
+	x = poi.x_ros * 100 / ros_resolution;
+	y = ros_hauteur - (poi.y_ros * 100 / ros_resolution);	
+	angle = 0 - poi.t_ros * 180 / Math.PI;
+	
+	rayonRobot = (26 / ros_resolution);
+	rayonRobotSecure = ((26+15) / ros_resolution);
+	
+	path = makeSVGElement('circle', { cx: x,
+									cy: y,
+								   r: rayonRobotSecure,
+								   'class': 'poi_elem poi_elem_secure poi_elem_'+poi.id_poi,
+								   'id': 'poi_secure_'+poi.id_poi,
+								   'data-id_poi': poi.id_poi,
+								   'data-element_type': 'poi',
+								   'data-element': 'poi'
+								   });
+	svg.appendChild(path);
+	
+	path = makeSVGElement('circle', { cx: x,
+									cy: y,
+								   r: rayonRobot,
+								   'class': 'poi_elem poi_elem_fond poi_elem_'+poi.id_poi,
+								   'id': 'poi_robot_'+poi.id_poi,
+								   'data-id_poi': poi.id_poi,
+								   'data-element_type': 'poi',
+								   'data-element': 'poi'
+								   });
+	svg.appendChild(path);
+	
+	path = makeSVGElement('polyline', { 'points': (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2),
+									'stroke':'#FFFFFF',
+									'stroke-width':1,
+									'fill':'none',
+									'stroke-linejoin':'round',
+									'stroke-linecap':'round',
+								   'class': 'poi_elem poi_elem_'+poi.id_poi,
+								   'transform':'rotate('+angle+', '+x+', '+y+')',
+								   'id': 'poi_sens_'+poi.id_poi,
+								   'data-id_poi': poi.id_poi,
+								   'data-element_type': 'poi',
+								   'data-element': 'poi'
+								   });
+	svg.appendChild(path);
+	
+	if (is_active)
+		AddClass('.poi_elem_'+poi.id_poi, 'active');
 }
 
 function ResizeSVG()
 {
-	$.each(polys, function( index, route ) {
-		TracePoly(index);
+	$.each(forbiddens, function( index, forbidden ) {
+		TraceForbidden(index);
+	});
+	$.each(areas, function( index, area ) {
+		TraceArea(index);
+	});
+	$.each(docks, function( index, dock ) {
+		TraceDock(index);
+	});
+	$.each(pois, function( index, poi ) {
+		TracePoi(index);
 	});
 }
 
@@ -194,7 +552,6 @@ function ExportSVG() {
 function SaveImg()
 {
 	var myCanvas = document.getElementById("canvas_export_svg");
-	console.log(canvas.toDataURL());
 }
 
 function svg_to_png_data(target) {
