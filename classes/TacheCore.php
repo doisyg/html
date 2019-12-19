@@ -3,6 +3,7 @@ class TacheCore
 {
 	public $id_tache = -1;
 	public $id_site = -1;
+	public $id_plan = -1;
 	public $name = "";
 	public $action_fin = 0;
 
@@ -26,6 +27,7 @@ class TacheCore
 	{
 		$this->id_tache = $object->id_tache;
 		$this->id_site = $object->id_site;
+		$this->id_plan = $object->id_plan;
 		$this->name = $object->name;
 		$this->action_fin = $object->action_fin;
 	}
@@ -52,9 +54,10 @@ class TacheCore
 	public function Insert()
 	{
 		global $_CONFIG;
-		$query = "INSERT INTO tache ( id_site, name, action_fin ) VALUES ( 
+		$query = "INSERT INTO tache ( id_site, id_plan, name, action_fin ) VALUES ( 
 
 			'". mysqli_real_escape_string(DB::$connexion, $this->id_site) ."', 
+			'". mysqli_real_escape_string(DB::$connexion, $this->id_plan) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->name) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->action_fin) ."'
 			) ";
@@ -68,6 +71,7 @@ class TacheCore
 		$query = "UPDATE tache SET
 
 			id_site = '". mysqli_real_escape_string(DB::$connexion,  $this->id_site )."', 
+			id_plan = '". mysqli_real_escape_string(DB::$connexion,  $this->id_plan )."', 
 			name = '". mysqli_real_escape_string(DB::$connexion,  $this->name )."', 
 			action_fin = '". mysqli_real_escape_string(DB::$connexion,  $this->action_fin )."'
 		WHERE id_tache = '". mysqli_real_escape_string(DB::$connexion, $this->id_tache)."'";
