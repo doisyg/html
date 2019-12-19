@@ -8,6 +8,19 @@ $sectionSousMenu = "";
 
 if (!$userConnected->CanDo($sectionMenu, $sectionSousMenu, 'view')) { header('location:index.php?notallow=1'); exit; }
 
+if (isset($_GET['um']))
+{
+	$plan = new Plan($_GET['um']);
+	if ($plan->id_plan > 0 && $plan->id_site == $currentSite->id_site)
+	{
+		$cm = Configuration::GetFromVariable('CURRENT_MAP');
+		$cm->valeur = $_GET['um'];
+		$cm->Save();
+		$plan->SetAsActive();
+		header('location:maps.php');
+	}
+}
+
 $titre = __('Maps tool');
 
 $canEditAdmin = $userConnected->CanDo($sectionMenu, $sectionSousMenu, 'delete');
@@ -70,12 +83,15 @@ include ('template/header.php');
 					
                     foreach ($maps as $plan)
 					{
+						$current = $currentIdPlan == $plan->id_plan;
 						?>
 						<tr>
 	                        <td><img src="data:image/png;base64,<?php echo $plan->image;?>" style="max-height:40px; max-width:150px;" /></td>
 							<td><?php echo $plan->nom;?></td>
 							<td>
 								<?php if ($canEdit) {?><a href="map.php?id_plan=<?php echo $plan->id_plan;?>" class="btn btn-primary" title="<?php echo __('Edit map');?>"><i class="fa fa-map-marker"></i></a><?php }?>
+                                <?php if (!$current) {?><a href="#" class="btn btn-xs btn-primary bUseThisMap" data-id_plan="<?php echo $plan->id_plan;?>" title="<?php echo __('Use this map on robot');?>"><i class="fa fa-upload"></i> <?php echo __('Use this');?></a><?php }?>
+                                <?php if ($canDelete && !$current){?><a href="#" class="btn btn-xs btn-danger" title="<?php echo __('Delete');?>"><i class="fa fa-times"></i></a><?php }?>
 							</td>
 						</tr>
 						<?php
@@ -93,6 +109,29 @@ include ('template/header.php');
 </div>		
 
 </section>
+
+
+<div id="modalUseMap" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="actions" style="min-height:calc(100vh - 110px);">
+                    <div style="text-align:center; font-size:26px;">
+                    
+                        <h2><?php echo __('Use this map ?');?></h2>
+                        
+                        <p class="aide"><?php echo __('Change the configuration of the robot to use this map.');?></p>
+                        
+                    </div>
+                    <div style="clear:both;"></div>
+                    
+                    <a href="#" id="bUseMap" data-id_plan="" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Yes');?></a>
+                    <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('No');?></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <?php if ($userConnected->CanDo($sectionMenu, $sectionSousMenu, 'add')){?>
 <div id="modalCreateMap" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
@@ -141,6 +180,16 @@ include ('template/footer.php');
 (function( $ ) {
 
 	'use strict';
+	
+	$('.bUseThisMap').click(function(e) {
+        e.preventDefault();
+		$('#bUseMap').data('id_plan', $(this).data('id_plan'));
+		$('#modalUseMap').modal('show');
+    });
+	
+	$('#bUseMap').click(function(e) {
+		location.href = 'maps.php?um=' + $('#bUseMap').data('id_plan');
+	});
 
 	var datatableInit = function() {
 

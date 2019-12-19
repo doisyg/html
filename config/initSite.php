@@ -41,6 +41,8 @@ if (isset($_SESSION["id_user"]))
 	$userConnected->Save();
 	
 	$currentIdSite = Configuration::GetValue('CURRENT_SITE');
+	$currentIdPlan = Configuration::GetValue('CURRENT_MAP');
+	$currentIdMap = $currentIdPlan;
 	$currentSite = new Site($currentIdSite);
 }
 

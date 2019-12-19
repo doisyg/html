@@ -137,5 +137,7 @@ $_LANG['086247a9b57fde6eefee2a0c4752242d'] = 'Automatic';
 $_LANG['dcf2f795be7488744af263e328d660c5'] = 'Click on map to set the position';
 $_LANG['5b9989837de6bf32ff1183034913b37f'] = 'Click on map to set the direction';
 $_LANG['a54fc6eff584d2938ecd2c1b59908214'] = 'POI Name';
+$_LANG['d5ee00dfa6defab1a35f054c3ae92d1f'] = 'Use this map ?';
+$_LANG['bab5479c626cd93dc8bd0aee8e5db6fb'] = 'Change the configuration of the robot to use this map.';
 
 ?>
