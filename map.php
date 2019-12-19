@@ -71,7 +71,7 @@ include ('template/header.php');
         
         <div id="message_aide"></div>
         
-        <div id="boutonsRotate" style="position:absolute; display:none;">
+        <div id="boutonsRotate" style="position:absolute; display:none; min-width:76px;">
         	<a href="#" id="bRotateLeft" style="margin-right:6px;"><img src="assets/images/rotate_bl.png" /></a>
             <a href="#" id="bRotateRight" style="margin-left:6px;"><img src="assets/images/rotate_br.png" /></a>
         </div>
@@ -85,8 +85,9 @@ include ('template/header.php');
         <div id="boutonsPoi" style="display:none;">
             <a href="#" id="bPoiSave" class="btn btn-default btn-circle" style="position:absolute; bottom:40px; left:10px;"><i class="fa fa-save"></i></a>
             <a href="#" id="bPoiCancel" class="btn btn-default btn-circle" style="position:absolute; bottom:40px; left:45px;"><i class="fa fa-times"></i></a>
-            <a href="#" id="bPoiDirection" class="btn btn-default btn-circle" style="position:absolute; bottom:40px; left:80px;"><i class="fa fa-rotate-right"></i></a>
-            <a href="#" id="bPoiDelete" class="btn btn-default btn-circle" style="position:absolute; bottom:40px; left:130px;"><i class="fa fa-trash"></i></a>
+            <a href="#" id="bPoiEditName" class="btn btn-default btn-circle" style="position:absolute; bottom:40px; left:80px;" data-toggle="modal" data-target="#modalPoiEditName"><i class="fa fa-pencil"></i></a>
+            <a href="#" id="bPoiDirection" class="btn btn-default btn-circle" style="position:absolute; bottom:40px; left:115px;"><i class="fa fa-rotate-right"></i></a>
+            <a href="#" id="bPoiDelete" class="btn btn-default btn-circle" style="position:absolute; bottom:40px; left:175px;"><i class="fa fa-trash"></i></a>
         </div>	
         <div id="boutonsForbidden" style="display:none;">
             <a href="#" id="bForbiddenSave" class="btn btn-default btn-circle" style="position:absolute; bottom:40px; left:10px;"><i class="fa fa-save"></i></a>
@@ -123,6 +124,32 @@ include ('template/header.php');
 </div>		
 
 </section>
+
+<div id="modalPoiEditName" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="actions" style="min-height:calc(100vh - 110px);">
+                	<div style="height:calc(100vh - 160px); overflow:auto">
+                    	<form>
+                        	<div class="form-group">
+                                <label class="col-xs-4 control-label" for="inputSuccess"><?php echo __('POI Name');?></label>
+                                <div class="col-xs-8">
+                                    <input type="text" id="poi_name" name="poi_name" class="form-control input-sm mb-md" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <div style="clear:both;"></div>
+                   
+                    <a href="#" id="bPoiEditSaveConfig" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
+                    <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div id="modalAreaOptions" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog" role="dialog">
@@ -192,7 +219,7 @@ include ('template/header.php');
                             </div>
                         </form>
                     </div>
-                    </div>
+                    
                     <div style="clear:both;"></div>
                    
                     <a href="#" id="bAreaSaveConfig" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>

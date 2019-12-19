@@ -70,6 +70,10 @@ var info_to_open_y = -1;
 
 var intervalRefreshConn = null;
 
+var savedCanClose = true;
+
+
+
 var timerCantChange = null;
 function AvertCantChange()
 {
@@ -117,6 +121,8 @@ var historiqueIndex = -1;
 
 function Undo()
 {
+	savedCanClose = false;
+	
 	elem = historiques[historiqueIndex];
 	switch(elem.action)
 	{
@@ -180,6 +186,8 @@ function Undo()
 
 function Redo()
 {
+	savedCanClose = false;
+	
 	historiqueIndex++;
 	
 	elem = historiques[historiqueIndex];
@@ -244,6 +252,7 @@ function Redo()
 
 function AddHistorique(elem)
 {
+	savedCanClose = false;
 	
 	while (historiqueIndex < historiques.length-1)
 		historiques.pop();
@@ -274,6 +283,13 @@ function SetModeSelect()
 
 $(document).ready(function() {
 	
+	window.addEventListener('beforeunload', function(e){
+		if (savedCanClose)
+		{
+			(e || window.event).returnValue = 'Are you sure you want to leave?';
+			return 'Are you sure you want to leave?';
+		}
+	});
 	
 	if ($( window ).width() > 1920)
 	{
@@ -501,6 +517,7 @@ $(document).ready(function() {
             $('#boutonsStandard').hide();
 			
 			$('#boutonsArea #bAreaDelete').show();
+			$('#boutonsArea #bAreaOptions').show();
 			
 			$('body').removeClass('no_current select');
 			$('.select').css("strokeWidth", minStokeWidth);
@@ -574,8 +591,8 @@ $(document).ready(function() {
 		{
 			RemoveClass('.active', 'active');
 			RemoveClass('.activ_select', 'activ_select'); 
-			
-			
+			RemoveClass('.poi_elem', 'movable');
+						
 			currentSelectedItem = Array();
 			currentSelectedItem.push({'type':'poi', 'id':$(this).data('id_poi')});	
 			HideCurrentMenuNotSelect();
@@ -771,6 +788,7 @@ $(document).ready(function() {
             $('#boutonsStandard').hide();
 			
 			$('#boutonsArea #bAreaDelete').hide();
+			$('#boutonsArea #bAreaOptions').hide();
 			
 			currentAction = 'addArea';	
 			currentStep = 'trace';
@@ -843,7 +861,7 @@ $(document).ready(function() {
 			nextIdArea++;
 			
 			currentAreaPoints.pop();
-			a = {'id_area':nextIdArea, 'id_plan':id_plan, 'nom':'', 'comment':'', 'is_forbidden':0, 'couleur_r':87, 'couleur_g':159, 'couleur_b':177, 'deleted':0, 'points':currentAreaPoints};
+			a = {'id_area':nextIdArea, 'id_plan':id_plan, 'nom':'', 'comment':'', 'is_forbidden':0, 'couleur_r':87, 'couleur_g':159, 'couleur_b':177, 'deleted':0, 'points':currentAreaPoints, 'configs':Array()};
 			AddHistorique({'action':'add_area', 'data':a});
 			
 			areas.push(a);
@@ -928,7 +946,7 @@ $(document).ready(function() {
 				error: function(jqXHR, textStatus, errorThrown) {
 					},
 				success: function(data, textStatus, jqXHR) {
-					
+					savedCanClose = true;
 					}
 			});
 		
@@ -985,6 +1003,9 @@ $(document).ready(function() {
 			
 			RemoveClass('.active', 'active');
 			
+			$('.dock_elem_0').remove();
+			$('.dock_elem_current').remove();
+			
 			currentAction = '';
 			currentStep = '';
 			
@@ -1039,6 +1060,7 @@ $(document).ready(function() {
 		if (currentAction == 'addDock')
 		{
 			$('.dock_elem_0').remove();
+			$('.dock_elem_current').remove();
 		}
 		else if (currentAction == 'editDock')
 		{
@@ -1087,7 +1109,7 @@ $(document).ready(function() {
 			x = x / zoom;
 			y = (ros_hauteur - y) / zoom;
 			
-			x = x + p.left;
+			x = x + p.left*1.006;
 			y = y + p.top;
 			
 			$('#boutonsRotate').css('left', x - $('#boutonsRotate').width()/2);
@@ -1116,6 +1138,7 @@ $(document).ready(function() {
 			$('#boutonsPoi #bPoiSave').hide();
 			$('#boutonsPoi #bPoiDelete').hide();
 			$('#boutonsPoi #bPoiDirection').hide();
+			$('#boutonsPoi #bPoiEditName').hide();
 			
 			currentAction = 'addPoi';	
 			currentStep = 'setPose';
@@ -1129,19 +1152,21 @@ $(document).ready(function() {
 		else
 			AvertCantChange();
     });
-	$('#bPoiSave').click(function(e) {
-        e.preventDefault();
-		
+	
+	
+	$('#bPoiEditSaveConfig').click(function(e) {
 		if (currentAction == 'addPoi')
 		{
 			canChangeMenu = true;
 			
 			nextIdPoi++;
-			p = {'id_poi':nextIdPoi, 'id_plan':id_plan, 'x_ros':currentDockPose.x_ros, 'y_ros':currentDockPose.y_ros, 't_ros':currentDockPose.y_ros, 'name':'POI'};
+			p = {'id_poi':nextIdPoi, 'id_plan':id_plan, 'x_ros':currentPoiPose.x_ros, 'y_ros':currentPoiPose.y_ros, 't_ros':currentPoiPose.t_ros, 'name':$('#poi_name').val()};
 			AddHistorique({'action':'add_poi', 'data':p});
 			
-			pois.push(d);
+			pois.push(p);
 			TracePoi(pois.length-1);
+			
+			$('.poi_elem_current').remove();
 			
 			RemoveClass('.active', 'active');
 			
@@ -1158,6 +1183,25 @@ $(document).ready(function() {
 			$('body').addClass('no_current');
 			
 			SetModeSelect();
+			
+			
+		}
+		else
+		{
+			poi = pois[currentPoiIndex];
+			poi.name = $('#poi_name').val();
+			if (poi.name == '') poi.name = 'POI';
+		}
+		
+	});
+	
+	$('#bPoiSave').click(function(e) {
+        e.preventDefault();
+		
+		if (currentAction == 'addPoi')
+		{
+			$('#poi_name').val('');
+			$('#modalPoiEditName').modal('show');
 		}
 		else if (currentAction == 'editPoi')
 		{	
@@ -1225,6 +1269,10 @@ $(document).ready(function() {
 			DeletePoi(currentPoiIndex);
 		}
     });
+	$('#bPoiEditName').click(function(e) {
+   		poi = pois[currentPoiIndex];
+		$('#poi_name').val(poi.name);
+	});
 	$('#bPoiDirection').click(function(e) {
         e.preventDefault();
 		
@@ -1238,17 +1286,25 @@ $(document).ready(function() {
 			
 			zoom = ros_largeur / $('#svg').width() / window.panZoom.getZoom();		
 			p = $('#svg image').position();
-			
+			console.log('p', p);
 			
 			x = poi.x_ros * 100 / 5;
 			y = poi.y_ros * 100 / 5;
 			
+			
+			console.log('x1', x);
+			
 			x = x / zoom;
+			
+			console.log('x2', x);
 			y = (ros_hauteur - y) / zoom;
 			
-			x = x + p.left;
+			x = x + p.left*1.006;
 			y = y + p.top;
 			
+			
+			console.log('x3', x);
+			console.log('x3', x- $('#boutonsRotate').width()/2);
 			$('#boutonsRotate').css('left', x - $('#boutonsRotate').width()/2);
 			$('#boutonsRotate').css('top', y - 60);
 			$('#boutonsRotate').show();
@@ -1269,7 +1325,19 @@ $(document).ready(function() {
 			timerRotate = null;
 		}
 		timerRotate = setInterval(function() { 
-			if (currentAction == 'editPoi')
+			if (currentAction == 'addPoi')
+			{
+				currentPoiPose.t_ros = parseFloat(currentPoiPose.t_ros) + Math.PI / 90;;
+				
+				TraceCurrentPoi(currentPoiPose);
+			}
+			else if (currentAction == 'addDock')
+			{
+				currentDockPose.t_ros = parseFloat(currentDockPose.t_ros) + Math.PI / 90;;
+				
+				TraceCurrentDock(currentDockPose);
+			}
+			else if (currentAction == 'editPoi')
 			{
 				poi = pois[currentPoiIndex];
 				poi.t_ros = parseFloat(poi.t_ros) + Math.PI / 90;
@@ -1292,10 +1360,22 @@ $(document).ready(function() {
     });
 	$('#bRotateRight').click(function(e) {
 		canChangeMenu = false;
-		 if (currentAction == 'editPoi')
+		if (currentAction == 'addPoi')
+		{
+			currentPoiPose.t_ros = parseFloat(currentPoiPose.t_ros) + Math.PI / 90;;
+			
+			TraceCurrentPoi(currentPoiPose);
+		}
+		else if (currentAction == 'addDock')
+		{
+			currentDockPose.t_ros = parseFloat(currentDockPose.t_ros) + Math.PI / 90;;
+			
+			TraceCurrentDock(currentDockPose);
+		}
+		else if (currentAction == 'editPoi')
 		{
 			poi = pois[currentPoiIndex];
-			poi.t_ros = parseFlot(poi.t_ros) + Math.PI / 90;
+			poi.t_ros = parseFloat(poi.t_ros) + Math.PI / 90;
 			TracePoi(currentPoiIndex);			
 		}
 		else if (currentAction == 'editDock')
@@ -1313,7 +1393,19 @@ $(document).ready(function() {
 			timerRotate = null;
 		}
 		timerRotate = setInterval(function() { 
-			if (currentAction == 'editPoi')
+			if (currentAction == 'addPoi')
+			{
+				currentPoiPose.t_ros = parseFloat(currentPoiPose.t_ros) - Math.PI / 90;;
+				
+				TraceCurrentPoi(currentPoiPose);
+			}
+			else if (currentAction == 'addDock')
+			{
+				currentDockPose.t_ros = parseFloat(currentDockPose.t_ros) - Math.PI / 90;;
+				
+				TraceCurrentDock(currentDockPose);
+			}
+			else if (currentAction == 'editPoi')
 			{
 				poi = pois[currentPoiIndex];
 				poi.t_ros = parseFloat(poi.t_ros) - Math.PI / 90;
@@ -1336,7 +1428,19 @@ $(document).ready(function() {
     });
 	$('#bRotateLeft').click(function(e) {
 		canChangeMenu = false;
-        if (currentAction == 'editPoi')
+        if (currentAction == 'addPoi')
+		{
+			currentPoiPose.t_ros = parseFloat(currentPoiPose.t_ros) - Math.PI / 90;;
+			
+			TraceCurrentPoi(currentPoiPose);
+		}
+		else if (currentAction == 'addDock')
+		{
+			currentDockPose.t_ros = parseFloat(currentDockPose.t_ros) - Math.PI / 90;;
+			
+			TraceCurrentDock(currentDockPose);
+		}
+		else if (currentAction == 'editPoi')
 		{
 			poi = pois[currentPoiIndex];
 			poi.t_ros = parseFloat(poi.t_ros) - Math.PI / 90;
@@ -1389,6 +1493,7 @@ $(document).ready(function() {
 			
 			TraceCurrentDock(currentDockPose);
 		}
+		/*
 		else if (currentAction == 'addDock' && currentStep=='setDir')
 		{
 			p = $('#svg image').position();
@@ -1404,6 +1509,7 @@ $(document).ready(function() {
 							
 			TraceCurrentDock(currentDockPose);
 		}
+		*/
 		else if (currentAction == 'addPoi' && currentStep=='setPose')
 		{
 			p = $('#svg image').position();
@@ -1421,6 +1527,7 @@ $(document).ready(function() {
 			
 			TraceCurrentPoi(currentPoiPose);
 		}
+		/*
 		else if (currentAction == 'addDock' && currentStep=='setDir')
 		{
 			p = $('#svg image').position();
@@ -1436,6 +1543,7 @@ $(document).ready(function() {
 							
 			TraceCurrentPoi(currentPoiPose);
 		}
+		*/
 		else if (currentAction == 'addForbiddenArea' && currentStep=='trace')
 		{
 			e.preventDefault();
@@ -1479,6 +1587,91 @@ $(document).ready(function() {
 	});
 	
 	$('#svg').on('touchmove', function(e) {
+		
+		if ($('#boutonsRotate').is(':visible'))
+		{
+			 if (currentAction == 'addDock')
+			 {
+				zoom = ros_largeur / $('#svg').width() / window.panZoom.getZoom();		
+				p = $('#svg image').position();
+				
+				
+				x = currentDockPose.x_ros * 100 / 5;
+				y = currentDockPose.y_ros * 100 / 5;
+				
+				x = x / zoom;
+				y = (ros_hauteur - y) / zoom;
+				
+				x = x + p.left*1.006;
+				y = y + p.top;
+				
+				$('#boutonsRotate').css('left', x - $('#boutonsRotate').width()/2);
+				$('#boutonsRotate').css('top', y - 60);
+				$('#boutonsRotate').show();
+			 }
+			 else if (currentAction == 'addPoi')
+			 {
+				zoom = ros_largeur / $('#svg').width() / window.panZoom.getZoom();		
+				p = $('#svg image').position();
+				
+				
+				x = currentPoiPose.x_ros * 100 / 5;
+				y = currentPoiPose.y_ros * 100 / 5;
+				
+				x = x / zoom;
+				y = (ros_hauteur - y) / zoom;
+				
+				x = x + p.left*1.006;
+				y = y + p.top;
+				
+				$('#boutonsRotate').css('left', x - $('#boutonsRotate').width()/2);
+				$('#boutonsRotate').css('top', y - 60);
+				$('#boutonsRotate').show();
+			 }
+			 else if (currentAction == 'editDock')
+			 {
+				dock = docks[currentDockIndex];
+				
+				zoom = ros_largeur / $('#svg').width() / window.panZoom.getZoom();		
+				p = $('#svg image').position();
+				
+				
+				x = dock.x_ros * 100 / 5;
+				y = dock.y_ros * 100 / 5;
+				
+				x = x / zoom;
+				y = (ros_hauteur - y) / zoom;
+				
+				x = x + p.left*1.006;
+				y = y + p.top;
+				
+				$('#boutonsRotate').css('left', x - $('#boutonsRotate').width()/2);
+				$('#boutonsRotate').css('top', y - 60);
+				$('#boutonsRotate').show();
+			 }
+			 else if (currentAction == 'editPoi')
+			 {
+				poi = pois[currentPoiIndex];
+				
+				zoom = ros_largeur / $('#svg').width() / window.panZoom.getZoom();		
+				p = $('#svg image').position();
+				
+				
+				x = poi.x_ros * 100 / 5;
+				y = poi.y_ros * 100 / 5;
+				
+				x = x / zoom;
+				y = (ros_hauteur - y) / zoom;
+				
+				x = x + p.left*1.006;
+				y = y + p.top;
+				
+				$('#boutonsRotate').css('left', x - $('#boutonsRotate').width()/2);
+				$('#boutonsRotate').css('top', y - 60);
+				$('#boutonsRotate').show();
+			 }
+		}
+		
 		if (touchStarted)
 		{
 			//zoom = 1;
@@ -1665,6 +1858,7 @@ $(document).ready(function() {
 				
 				TraceCurrentDock(currentDockPose);
 			}
+			/*
 			else if (currentAction == 'addDock' && currentStep=='setDir')
 			{
 				p = $('#svg image').position();
@@ -1680,6 +1874,7 @@ $(document).ready(function() {
 								
 				TraceCurrentDock(currentDockPose);
 			}
+			*/
 			else if (currentAction == 'addPoi' && currentStep=='setPose')
 			{
 				p = $('#svg image').position();
@@ -1697,6 +1892,7 @@ $(document).ready(function() {
 				
 				TraceCurrentPoi(currentPoiPose);
 			}
+			/*
 			else if (currentAction == 'addPoi' && currentStep=='setDir')
 			{
 				p = $('#svg image').position();
@@ -1712,6 +1908,7 @@ $(document).ready(function() {
 								
 				TraceCurrentPoi(currentPoiPose);
 			}
+			*/
 			else if (currentAction == 'addForbiddenArea' && currentStep=='trace')
 			{
 				e.preventDefault();
@@ -1795,10 +1992,26 @@ $(document).ready(function() {
 			
 			TraceCurrentDock(currentDockPose);
 			
-			currentStep='setDir';
-			$('#message_aide').html(textClickOnMapDir);
+			
+			x = currentDockPose.x_ros * 100 / 5;
+			y = currentDockPose.y_ros * 100 / 5;
+			
+			x = x / zoom;
+			y = (ros_hauteur - y) / zoom;
+			
+			x = x + p.left*1.006;
+			y = y + p.top;
+			
+			$('#boutonsRotate').css('left', x - $('#boutonsRotate').width()/2);
+			$('#boutonsRotate').css('top', y - 60);
+			$('#boutonsRotate').show();
+			$('#bDockSave').show();
+			
+			//currentStep='setDir';
+			//$('#message_aide').html(textClickOnMapDir);
 			
 		}
+		/*
 		else if (currentAction == 'addDock' && currentStep=='setDir')
 		{
 			p = $('#svg image').position();
@@ -1816,6 +2029,7 @@ $(document).ready(function() {
 			
 			$('#boutonsDock #bDockSave').show();
 		}
+		*/
 		else if (currentAction == 'addPoi' && currentStep=='setPose')
 		{
 			p = $('#svg image').position();
@@ -1833,9 +2047,28 @@ $(document).ready(function() {
 			
 			TraceCurrentPoi(currentPoiPose);
 			
-			currentStep='setDir';
-			$('#message_aide').html(textClickOnMapDir);
+			zoom = ros_largeur / $('#svg').width() / window.panZoom.getZoom();		
+			p = $('#svg image').position();
+			
+			
+			x = currentPoiPose.x_ros * 100 / 5;
+			y = currentPoiPose.y_ros * 100 / 5;
+			
+			x = x / zoom;
+			y = (ros_hauteur - y) / zoom;
+			
+			x = x + p.left*1.006;
+			y = y + p.top;
+			
+			$('#boutonsRotate').css('left', x - $('#boutonsRotate').width()/2);
+			$('#boutonsRotate').css('top', y - 60);
+			$('#boutonsRotate').show();
+			$('#bPoiSave').show();
+			
+			//currentStep='setDir';
+			//$('#message_aide').html(textClickOnMapDir);
 		}
+		/*
 		else if (currentAction == 'addPoi' && currentStep=='setDir')
 		{
 			p = $('#svg image').position();
@@ -1853,6 +2086,7 @@ $(document).ready(function() {
 			
 			$('#boutonsPoi #bPoiSave').show();
 		}
+		*/
 		else if (currentAction == 'addForbiddenArea' && currentStep=='trace')
 		{
 			e.preventDefault();

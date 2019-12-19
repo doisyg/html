@@ -40,6 +40,7 @@ body { min-height:100vh; }
 .text.text_elem, .route_elem_num {  dominant-baseline:middle; text-anchor:middle; cursor:default; }
 
 body .poly, body.addForbidden .forbidden_elem_current, body.addArea .area_elem_current, body.addPoly .poly_elem_current {  fill:rgba(204,102,0, 0.5); stroke:#00CCFF; display:block; }
+body.addForbidden rect.forbidden_elem_current, body.addArea rect.area_elem_current { fill:#000; stroke:#000; display:block; }
 body .text, body.no_current .text.movable {  display:block !important; }
 body .info, body.no_current .info.movable {  display:block !important; }
 

@@ -65,24 +65,40 @@ function TraceCurrentForbidden(points)
 {
 	$('.forbidden_elem_current').remove();
 	
-	if (points.length > 1)
+	if (points.length >= 1)
 	{
-		forbidden_point = '';
-		$.each(points, function( indexPoint, point ) {
-			if (forbidden_point != '') forbidden_point += ' ';
-			
+		if (points.length <= 2)
+		{
+			point = points[0];
 			x = (point.x * 100 / ros_resolution);
 			y = ros_hauteur - ((point.y * 100 / ros_resolution));
+				
+			path = makeSVGElement('rect', { x: x-5, y:y-5, height:10, width:10,
+							   'stroke-width': minStokeWidth,
+							   'class':'poly forbidden_elem_current',
+							   'data-index': 'current'
+							  });
+			svg.appendChild(path);
+		}
+		else
+		{
+			forbidden_point = '';
+			$.each(points, function( indexPoint, point ) {
+				if (forbidden_point != '') forbidden_point += ' ';
+				
+				x = (point.x * 100 / ros_resolution);
+				y = ros_hauteur - ((point.y * 100 / ros_resolution));
+				
+				forbidden_point += x+','+y;
+			});
 			
-			forbidden_point += x+','+y;
-		});
-		
-		path = makeSVGElement('polygon', { points: forbidden_point,
-								   'stroke-width': minStokeWidth,
-								   'class':'poly forbidden_elem_current',
-								   'data-index': 'current'
-								  });
-		svg.appendChild(path);
+			path = makeSVGElement('polygon', { points: forbidden_point,
+									   'stroke-width': minStokeWidth,
+									   'class':'poly forbidden_elem_current',
+									   'data-index': 'current'
+									  });
+			svg.appendChild(path);
+		}
 	}
 }
 
@@ -190,24 +206,41 @@ function TraceCurrentArea(points)
 {
 	$('.area_elem_current').remove();
 	
-	if (points.length > 1)
+	if (points.length >= 1)
 	{
-		area_point = '';
-		$.each(points, function( indexPoint, point ) {
-			if (area_point != '') area_point += ' ';
-			
+		
+		if (points.length <= 2)
+		{
+			point = points[0];
 			x = (point.x * 100 / ros_resolution);
 			y = ros_hauteur - ((point.y * 100 / ros_resolution));
+				
+			path = makeSVGElement('rect', { x: x-5, y:y-5, height:10, width:10,
+							   'stroke-width': minStokeWidth,
+							   'class':'poly forbidden_elem_current',
+							   'data-index': 'current'
+							  });
+			svg.appendChild(path);
+		}
+		else
+		{
+			area_point = '';
+			$.each(points, function( indexPoint, point ) {
+				if (area_point != '') area_point += ' ';
+				
+				x = (point.x * 100 / ros_resolution);
+				y = ros_hauteur - ((point.y * 100 / ros_resolution));
+				
+				area_point += x+','+y;
+			});
 			
-			area_point += x+','+y;
-		});
-		
-		path = makeSVGElement('polygon', { points: area_point,
-								   'stroke-width': minStokeWidth,
-								   'class':'poly area_elem_current',
-								   'data-index': 'current'
-								  });
-		svg.appendChild(path);
+			path = makeSVGElement('polygon', { points: area_point,
+									   'stroke-width': minStokeWidth,
+									   'class':'poly area_elem_current',
+									   'data-index': 'current'
+									  });
+			svg.appendChild(path);
+		}
 	}
 }
 
@@ -390,11 +423,11 @@ function TraceDock(indexDock)
 
 function TraceCurrentPoi(pose)
 {
-	$('.dock_elem_current').remove();
+	$('.poi_elem_current').remove();
 	
 	x = pose.x_ros * 100 / ros_resolution;
 	y = ros_hauteur - (pose.y_ros * 100 / ros_resolution);
-	angle = 0 - pose.t_ros * 180 / Math.PI - 90;
+	angle = 0 - pose.t_ros * 180 / Math.PI;
 	
 	rayonRobot = (26 / ros_resolution);
 	rayonRobotSecure = ((26+15) / ros_resolution);

@@ -136,5 +136,6 @@ $_LANG['d6b6b668dbca9d4fe774bb654226ebe3'] = 'Animation';
 $_LANG['086247a9b57fde6eefee2a0c4752242d'] = 'Automatic';
 $_LANG['dcf2f795be7488744af263e328d660c5'] = 'Click on map to set the position';
 $_LANG['5b9989837de6bf32ff1183034913b37f'] = 'Click on map to set the direction';
+$_LANG['a54fc6eff584d2938ecd2c1b59908214'] = 'POI Name';
 
 ?>

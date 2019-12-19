@@ -85,7 +85,7 @@ include ('template/header.php');
 						<li class="col-xs-6 col-md-3">
 							<a class="btn btn-primary" href="<?php echo $_CONFIG['URL'];?>export.php">
 								<i class="fa fa-upload" aria-hidden="true"></i>
-								<span><?php echo __('Import / Export');?></span>
+								<span><?php echo __('Import / Export');?><br />&nbsp;</span>
 							</a>
 						</li>
 						<?php }?>
