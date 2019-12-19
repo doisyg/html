@@ -139,5 +139,11 @@ $_LANG['5b9989837de6bf32ff1183034913b37f'] = 'Click on map to set the direction'
 $_LANG['a54fc6eff584d2938ecd2c1b59908214'] = 'POI Name';
 $_LANG['d5ee00dfa6defab1a35f054c3ae92d1f'] = 'Use this map ?';
 $_LANG['bab5479c626cd93dc8bd0aee8e5db6fb'] = 'Change the configuration of the robot to use this map.';
+$_LANG['0f68101772bd5397ef8eb1b632798652'] = 'Wait';
+$_LANG['e62799c208ad55d9b2de35c3a929e425'] = 'seconde';
+$_LANG['729161051feba3ed45b3b90e9a96b11e'] = 'You must provide a name for the task.';
+$_LANG['c9e76333cf62217ed7744c459f7eb249'] = 'You must provide a time to wait.';
+$_LANG['007adb8c2975a2e85176eb01335ae837'] = 'Go to<br />POI';
+$_LANG['0557fa923dcee4d0f86b1409f5c2167f'] = 'Back';
 
 ?>

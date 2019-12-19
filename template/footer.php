@@ -111,6 +111,10 @@
 			if (confirm('<?php echo __('Etes vous sûr de vouloir supprimer cet élément ?');?>'))
 				location.href = lien;
 		}
+		$('.confirmDelete').click(function(e) {
+			if (!confirm('<?php echo __('Etes vous sûr de vouloir supprimer cet élément ?');?>'))
+				e.preventDefault();
+		});
 		$(document).ready(function(e) {
             setTimeout(function(){ $(".alert-success button").click(); }, 3000);
 		});

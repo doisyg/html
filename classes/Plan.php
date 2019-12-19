@@ -73,5 +73,22 @@ class Plan extends PlanCore
 		@mysqli_free_result( $result );
 		return $array;
 	}
+	
+	public function GetTaches($order = "", $order_sens = "")
+	{
+		$query = "SELECT * FROM tache WHERE id_plan=".(int)$this->id_plan;
+		if ($order!="")
+			$query .= " ORDER BY ".mysqli_real_escape_string(DB::$connexion, $order)." ".mysqli_real_escape_string(DB::$connexion, $order_sens);
+		else 
+			$query .= " ORDER BY id_tache ASC";
+		$result = mysqli_query(DB::$connexion, $query);
+		$array = array();
+		while ($row = @mysqli_fetch_object( $result ) )
+		{
+			$array[] = new Tache($row, true);
+		}
+		@mysqli_free_result( $result );
+		return $array;
+	}
 }
 ?>

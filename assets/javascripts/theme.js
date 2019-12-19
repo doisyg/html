@@ -3669,7 +3669,7 @@ window.theme = {};
 				$check = this.$el.find('.todo-check'),
 				$window = $( window );
 
-			$remove.on('click.widget-todo-list', function( ev ) {
+			$(document).on('click.widget-todo-list', '.todo-remove', function(ev) {
 				ev.preventDefault();
 				$(this).closest("li").remove();
 			});

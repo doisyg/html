@@ -8,7 +8,7 @@ $sectionSousMenu = "";
 
 if (!$userConnected->CanDo($sectionMenu, $sectionSousMenu, 'view')) { header('location:index.php?notallow=1'); exit; }
 
-$titre = __('Maps tool');
+$titre = __('Tasks');
 
 $canEditAdmin = $userConnected->CanDo($sectionMenu, $sectionSousMenu, 'delete');
 
@@ -48,7 +48,7 @@ include ('template/header.php');
                 <div class="panel-body">
                 
                     <?php if ($userConnected->CanDo($sectionMenu, $sectionSousMenu, 'add')){?>
-                    <a class="btn btn-primary btn-sm btn-grad" href="task_add.php" data-toggle="modal" data-target="#modalCreateTask" title="<?php echo __('Add task');?>"><i class="fa fa-plus"></i> <?php echo __('Add task');?></a>
+                    <a class="btn btn-primary btn-sm btn-grad" href="task_edit.php?id_tache=-1" title="<?php echo __('Add task');?>"><i class="fa fa-plus"></i> <?php echo __('Add task');?></a>
                     <div style="clear:both; height:20px;"></div>
                     <?php }?>
                         
@@ -63,36 +63,22 @@ include ('template/header.php');
                     <?php
 					$canEdit = $userConnected->CanDo($sectionMenu, $sectionSousMenu, 'edit');
 					$canDelete = $userConnected->CanDo($sectionMenu, $sectionSousMenu, 'delete');
+					
+					$taches = $currentMap->GetTaches();
 					?>
                     <tbody>
+                    	<?php foreach($taches as $tache)
+						{
+							?>
                     	<tr>
-                        	<td>Task 1</td>
+                        	<td><?php echo $tache->name;?></td>
                             <td>
-                            	<?php if ($canEdit){?><a href="#" class="btn btn-xs btn-success" title="<?php echo __('Edit');?>"><i class="fa fa-pencil"></i></a><?php }?>
-                                <?php if ($canDelete){?><a href="#" class="btn btn-xs btn-danger" title="<?php echo __('Delete');?>"><i class="fa fa-times"></i></a><?php }?>
+                            	<?php if ($canEdit){?><a href="task_edit.php?id_tache=<?php echo $tache->id_tache;?>" class="btn btn-xs btn-success" title="<?php echo __('Edit');?>"><i class="fa fa-pencil"></i></a><?php }?>
+                                <?php if ($canDelete){?><a href="tasks.php?delete=<?php echo $tache->id_tache;?>" class="btn btn-xs btn-danger confirmDelete" title="<?php echo __('Delete');?>"><i class="fa fa-times"></i></a><?php }?>
                             </td>
                         </tr>
-                    	<tr>
-                        	<td>Task 2</td>
-                            <td>
-                            	<?php if ($canEdit){?><a href="#" class="btn btn-xs btn-success" title="<?php echo __('Edit');?>"><i class="fa fa-pencil"></i></a><?php }?>
-                                <?php if ($canDelete){?><a href="#" class="btn btn-xs btn-danger" title="<?php echo __('Delete');?>"><i class="fa fa-times"></i></a><?php }?>
-                            </td>
-                        </tr>
-                    	<tr>
-                        	<td>Task 3</td>
-                            <td>
-                            	<?php if ($canEdit){?><a href="#" class="btn btn-xs btn-success" title="<?php echo __('Edit');?>"><i class="fa fa-pencil"></i></a><?php }?>
-                                <?php if ($canDelete){?><a href="#" class="btn btn-xs btn-danger" title="<?php echo __('Delete');?>"><i class="fa fa-times"></i></a><?php }?>
-                            </td>
-                        </tr>
-                    	<tr>
-                        	<td>Task 4</td>
-                            <td>
-                            	<?php if ($canEdit){?><a href="#" class="btn btn-xs btn-success" title="<?php echo __('Edit');?>"><i class="fa fa-pencil"></i></a><?php }?>
-                                <?php if ($canDelete){?><a href="#" class="btn btn-xs btn-danger" title="<?php echo __('Delete');?>"><i class="fa fa-times"></i></a><?php }?>
-                            </td>
-                        </tr>
+                        	<?php
+						}?>
                     </tbody>
                     </table>
                 </div>

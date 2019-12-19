@@ -2,6 +2,7 @@
 class TacheActionCore
 {
 	public $id_tache_action = -1;
+	public $id_tache = -1;
 	public $action_type = -1;
 	public $action_detail = "";
 	public $position = -1;
@@ -25,6 +26,7 @@ class TacheActionCore
 	protected function Copy($object)
 	{
 		$this->id_tache_action = $object->id_tache_action;
+		$this->id_tache = $object->id_tache;
 		$this->action_type = $object->action_type;
 		$this->action_detail = $object->action_detail;
 		$this->position = $object->position;
@@ -52,8 +54,9 @@ class TacheActionCore
 	public function Insert()
 	{
 		global $_CONFIG;
-		$query = "INSERT INTO tache_action ( action_type, action_detail, position ) VALUES ( 
+		$query = "INSERT INTO tache_action ( id_tache, action_type, action_detail, position ) VALUES ( 
 
+			'". mysqli_real_escape_string(DB::$connexion, $this->id_tache) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->action_type) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->action_detail) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->position) ."'
@@ -67,6 +70,7 @@ class TacheActionCore
 		global $_CONFIG;
 		$query = "UPDATE tache_action SET
 
+			id_tache = '". mysqli_real_escape_string(DB::$connexion,  $this->id_tache )."', 
 			action_type = '". mysqli_real_escape_string(DB::$connexion,  $this->action_type )."', 
 			action_detail = '". mysqli_real_escape_string(DB::$connexion,  $this->action_detail )."', 
 			position = '". mysqli_real_escape_string(DB::$connexion,  $this->position )."'

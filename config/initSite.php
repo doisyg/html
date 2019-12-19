@@ -44,6 +44,7 @@ if (isset($_SESSION["id_user"]))
 	$currentIdPlan = Configuration::GetValue('CURRENT_MAP');
 	$currentIdMap = $currentIdPlan;
 	$currentSite = new Site($currentIdSite);
+	$currentMap = new Plan($currentIdPlan);
 }
 
 
@@ -85,4 +86,6 @@ if (isset($_GET['lang']))
 $translate = new Translate($_COOKIE['lang']);
 
 if (!isset($notCloseSession)) session_write_close();
+
+
 ?>
