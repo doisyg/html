@@ -4,6 +4,8 @@ class TacheQueueCore
 	public $id_tache_queue = -1;
 	public $id_tache = -1;
 	public $position = -1;
+	public $state = "";
+	public $progress = "";
 
 	public function __construct( $id_tache_queue = null, $byrow=false ) 
 	{
@@ -26,6 +28,8 @@ class TacheQueueCore
 		$this->id_tache_queue = $object->id_tache_queue;
 		$this->id_tache = $object->id_tache;
 		$this->position = $object->position;
+		$this->state = $object->state;
+		$this->progress = $object->progress;
 	}
 
 	public static function getTacheQueue( $id_tache_queue )
@@ -50,10 +54,12 @@ class TacheQueueCore
 	public function Insert()
 	{
 		global $_CONFIG;
-		$query = "INSERT INTO tache_queue ( id_tache, position ) VALUES ( 
+		$query = "INSERT INTO tache_queue ( id_tache, position, state, progress ) VALUES ( 
 
 			'". mysqli_real_escape_string(DB::$connexion, $this->id_tache) ."', 
-			'". mysqli_real_escape_string(DB::$connexion, $this->position) ."'
+			'". mysqli_real_escape_string(DB::$connexion, $this->position) ."', 
+			'". mysqli_real_escape_string(DB::$connexion, $this->state) ."', 
+			'". mysqli_real_escape_string(DB::$connexion, $this->progress) ."'
 			) ";
 		$insert=mysqli_query(DB::$connexion, $query) or die ('ERREUR Insert TacheQueue : '.$query.'<br />'.mysqli_error(DB::$connexion).'<br /><br />');
 		$this->id_tache_queue = mysqli_insert_id(DB::$connexion);
@@ -65,7 +71,9 @@ class TacheQueueCore
 		$query = "UPDATE tache_queue SET
 
 			id_tache = '". mysqli_real_escape_string(DB::$connexion,  $this->id_tache )."', 
-			position = '". mysqli_real_escape_string(DB::$connexion,  $this->position )."'
+			position = '". mysqli_real_escape_string(DB::$connexion,  $this->position )."', 
+			state = '". mysqli_real_escape_string(DB::$connexion,  $this->state )."', 
+			progress = '". mysqli_real_escape_string(DB::$connexion,  $this->progress )."'
 		WHERE id_tache_queue = '". mysqli_real_escape_string(DB::$connexion, $this->id_tache_queue)."'";
 		$update=mysqli_query(DB::$connexion, $query) or die ('ERREUR Update TacheQueue : '.$query.'<br />'.mysqli_error(DB::$connexion).'<br /><br />');
 	}

@@ -247,3 +247,9 @@ ul.listBoutons li a { width:100%; }
 #listBoutonHome li i { font-size:40px; display:block; margin:10px 0; }
 
 p.aide { font-size:14px; font-style:italic; }
+
+ul.widget-todo-list li .todo-actions a {
+	font-size: 10px;
+	vertical-align: middle;
+	color: #999999;
+}

@@ -145,5 +145,6 @@ $_LANG['729161051feba3ed45b3b90e9a96b11e'] = 'You must provide a name for the ta
 $_LANG['c9e76333cf62217ed7744c459f7eb249'] = 'You must provide a time to wait.';
 $_LANG['007adb8c2975a2e85176eb01335ae837'] = 'Go to<br />POI';
 $_LANG['0557fa923dcee4d0f86b1409f5c2167f'] = 'Back';
+$_LANG['865925c45f73e82c541b2150e54c40e5'] = 'No task currently';
 
 ?>

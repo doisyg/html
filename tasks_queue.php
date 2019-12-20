@@ -5,6 +5,27 @@ if (!isset($_SESSION["id_user"])) { header("location:login.php"); }
 $sectionMenu = "home";
 $sectionSousMenu = "";
 
+if (isset($_GET['add_task']))
+{
+	$task = new TacheQueue();
+	$task->id_tache = $_GET['add_task'];
+	$task->position = TacheQueue::GetLastPosition();;
+	$task->state = '';
+	$task->Save();
+	
+	header('location:tasks_queue.php');
+}
+
+if (isset($_GET['delete']))
+{
+	$task = new TacheQueue($_GET['delete']);
+	$task->Supprimer();
+	
+	die();
+	header('location:tasks_queue.php');
+}
+
+
 $titre = __('Dashboard');
 
 include ('template/header.php');
@@ -49,20 +70,39 @@ include ('template/header.php');
 					<?php
 				}?>
                 
+                <?php
+				$currentTaskQ = TacheQueue::GetCurrentTask();
+				if ($currentTaskQ->id_tache_queue > 0)
+					$currentTache = new Tache($currentTaskQ->id_tache);
+				?>
+                
                 <div class="col-md-12 col-lg-6 col-xl-6">
                     <section class="panel panel-featured-left panel-featured-tertiary">
                         <div class="panel-body">
                             <div class="widget-summary">
                                 <div class="widget-summary-col widget-summary-col-icon">
-                                    <div class="summary-icon bg-tertiary">
-                                        <a href="#" style="color:#FFFFFF;"><i class="fa fa-pause"></i></a>
-                                    </div>
+                                
+                                    <?php
+                                    if (isset($currentTache))
+                                    {
+                                        if ($currentTaskQ->state == 'in_progress')
+                                        {
+                                            ?><a href="#" class="summary-icon bg-tertiary" style="color:#FFFFFF; display:block;"><i class="fa fa-pause"></i></a><?php
+                                        }
+                                        else
+                                        {
+                                            ?><a href="#" class="summary-icon bg-tertiary" style="color:#FFFFFF; display:block;"><i class="fa fa-play"></i></a><?php
+                                        }
+                                    }
+                                    ?>
+                                    
                                 </div>
                                 <div class="widget-summary-col">
                                     <div class="summary">
                                         <h4 class="title"><?php echo __('Current task');?></h4>
                                         <div class="info">
-                                            <strong class="amount">Task 1</strong>
+                                            <strong class="amount" style="font-size:1.8rem;"><?php echo isset($currentTache)?$currentTache->name:__('No task currently');?></strong><br />
+                                            <?php echo isset($currentTache)?$currentTaskQ->progress:'';?>
                                         </div>
                                     </div>
                                 </div>
@@ -78,30 +118,29 @@ include ('template/header.php');
             <section class="panel">
                 <header class="panel-heading panel-heading-transparent">
                     <div class="panel-actions" style="float:right;">
+                    	<!--
 	                    <a href="#" class="fa fa-play"></a>
                         <a href="#" class="fa fa-pause"></a>
+                        -->
                         <!--<a href="#" class="fa fa-times"></a>-->
                     </div>
                     <h2 class="panel-title"><?php echo __('Task Queue');?></h2>
                 </header>
                 <div class="panel-body" style="padding-top:0; padding-bottom:0; min-height:calc(100vh - 400px);">
-                    <ul class="widget-todo-list">
+                    <ul id="list_taches" class="widget-todo-list">
+                    	<?php
+						$taches = TacheQueue::GetTasks();
+						foreach($taches as $tache)
+						{
+							$t = new Tache($tache->id_tache);
+							?>
                         <li>
-                            <div class="">Task 2</div>
-                            <div class="todo-actions"><a class="todo-remove" href="#"><i class="fa fa-times"></i></a></div>
+                            <div class=""><?php echo $t->name;?></div>
+                            <div class="todo-actions"><a href="tasks_queue.php?delete=<?php echo $tache->id_tache_queue;?>"><i class="fa fa-times"></i></a></div>
                         </li>
-                        <li>
-                            <div class="">Task 3</div>
-                            <div class="todo-actions"><a class="todo-remove" href="#"><i class="fa fa-times"></i></a></div>
-                        </li>
-                        <li>
-                            <div class="">Task 4</div>
-                            <div class="todo-actions"><a class="todo-remove" href="#"><i class="fa fa-times"></i></a></div>
-                        </li>
-                        <li>
-                            <div class="">Task 5</div>
-                            <div class="todo-actions"><a class="todo-remove" href="#"><i class="fa fa-times"></i></a></div>
-                        </li>
+                        	<?php
+						}
+						?>
                     </ul>
                 </div>
                 <footer>
@@ -124,16 +163,20 @@ include ('template/header.php');
                         <h3>Add task</h3>
                     
                     	<ul class="listBoutons">
-                        	<li><a href="#" class="btn btn-primary" data-dismiss="modal">Task 1</a></li>
-                        	<li><a href="#" class="btn btn-primary" data-dismiss="modal">Task 2</a></li>
-                        	<li><a href="#" class="btn btn-primary" data-dismiss="modal">Task 3</a></li>
-                        	<li><a href="#" class="btn btn-primary" data-dismiss="modal">Task 4</a></li>
+                        	<?php $taches = Tache::GetTaches('name', 'ASC');
+							foreach ($taches as $tache)
+							{
+								?>
+                        	<li><a href="tasks_queue.php?add_task=<?php echo $tache->id_tache;?>" class="btn btn-primary" data-id_tache="<?php echo $tache->id_tache;?>"><?php echo $tache->name;?></a></li>
+                            	<?php
+							}
+							?>
                         </ul>
                         
                     </div>
                     <div style="clear:both; height:50px;"></div>
                     
-                    <a href="#" class="btn btn-primary" data-dismiss="modal" style="width:100%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Close');?></a>
+                    <a href="#" class="btn btn-primary" data-dismiss="modal" style="width:100%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
                 </div>
             </div>
         </div>
@@ -145,8 +188,28 @@ include ('template/footer.php');
 ?>
 
 <script>
-  $( function() {
-    $( ".sortable_task" ).sortable();
-    $( ".sortable_task" ).disableSelection();
-  } );
+  
+  function RefreshQueue()
+  {
+	  jQuery.ajax({
+			url: 'ajax/get_queue_info.php',
+			type: "post",
+			timeout: 15000,
+			data: { 
+				},
+			error: function(jqXHR, textStatus, errorThrown) {
+				},
+			success: function(data) {
+				
+				}
+		});
+  }
+  
+  $(document).ready(function(e) {
+	 
+	 
+	//setInterval(RefreshQueue, 1000);
+	
+  });
+  
 </script>
