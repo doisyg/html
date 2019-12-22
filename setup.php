@@ -56,6 +56,15 @@ include ('template/header.php');
                 <div class="panel-body" style="padding-top:0; padding-bottom:0; min-height:calc(100vh - 400px);">
                     <ul id="listBoutonHome">                        
                         <?php 
+						if ($userConnected->CanDo('setup', '', 'edit')){?>
+						<li class="col-xs-6 col-md-3">
+							<a class="btn btn-primary" href="<?php echo $_CONFIG['URL'];?>robot_setup.php">
+								<i class="fa fa-android" aria-hidden="true"></i>
+								<span><?php echo __('Robot');?><br />&nbsp;</span>
+							</a>
+						</li>
+						<?php
+						}
 						if ($userConnected->CanDo('setup', 'sites', 'view')){?>
 						<li class="col-xs-6 col-md-3">
 							<a class="btn btn-primary" href="<?php echo $_CONFIG['URL'];?>sites.php">

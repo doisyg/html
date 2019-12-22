@@ -5,6 +5,7 @@ $droits = array();
 $droits['tasks'] = 1;
 $droits['maps'] = 1;
 $droits['setup'] = array();
+$droits['setup']['robot'] = 1;
 $droits['setup']['sites'] = 1;
 $droits['setup']['users'] = 1;
 $droits['setup']['user_groups'] = 1;

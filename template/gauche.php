@@ -48,6 +48,15 @@
                             </a>
                             <ul class="nav nav-children">
                             	<?php 
+								if ($userConnected->CanDo('setup', 'robot', 'view')){?>
+                                <li class="<?php echo  $sectionMenu=='setup' && $sectionSousMenu=='robot'?'nav-active':'';?>">
+                                    <a href="<?php echo $_CONFIG['URL'];?>robot_setup.php">
+                                    	<i class="fa fa-android" aria-hidden="true"></i>
+	                                	<span><?php echo __('Robot');?></span>
+                                    </a>
+                                </li>
+                                <?php
+								}
 								if ($userConnected->CanDo('setup', 'sites', 'view')){?>
                                 <li class="<?php echo  $sectionMenu=='setup' && $sectionSousMenu=='sites'?'nav-active':'';?>">
                                     <a href="<?php echo $_CONFIG['URL'];?>sites.php">

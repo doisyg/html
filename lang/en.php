@@ -146,5 +146,9 @@ $_LANG['c9e76333cf62217ed7744c459f7eb249'] = 'You must provide a time to wait.';
 $_LANG['007adb8c2975a2e85176eb01335ae837'] = 'Go to<br />POI';
 $_LANG['0557fa923dcee4d0f86b1409f5c2167f'] = 'Back';
 $_LANG['865925c45f73e82c541b2150e54c40e5'] = 'No task currently';
+$_LANG['5d1eca158c00250d9c4c32d947b7c433'] = 'Robot';
+$_LANG['63308096ed49b8f1d97c3cb6aa474268'] = 'Robot setup';
+$_LANG['f6ef0c52b57aaa0db2314ae7f610a1e6'] = 'Battery min before return to charge';
+$_LANG['903790b8eadcbe9423ae86bf37a15a40'] = 'Battery min to do task';
 
 ?>

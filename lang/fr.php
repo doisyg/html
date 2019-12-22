@@ -59,5 +59,11 @@ $_LANG['eaeb30f9f18e0c50b178676f3eaef45f'] = 'Task';
 $_LANG['7dce122004969d56ae2e0245cb754d35'] = 'Edit';
 $_LANG['f2a6c498fb90ee345d997f888fce3b18'] = 'Delete';
 $_LANG['651fc669421f4a6c5e1a13d6c7463db8'] = 'Create new map';
+$_LANG['70d3349dba0e8ec8090bafa01772b453'] = 'Battery level';
+$_LANG['45fe68805fcc3794a0bed34b6c22285d'] = 'Connection to the robot';
+$_LANG['c7df7f53e3d452b37c036a76d04fce88'] = 'Emergency stop';
+$_LANG['f6e9084e348f277dbfcc87a2c989ae7f'] = 'Control robot';
+$_LANG['b61541208db7fa7dba42c85224405911'] = 'Menu';
+$_LANG['25429fc7760f8cc61b43239a97577e6d'] = 'Tasks queue';
 
 ?>
