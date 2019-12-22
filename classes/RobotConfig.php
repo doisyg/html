@@ -216,5 +216,18 @@ class RobotConfig extends RobotConfigCore
 		@mysqli_free_result( $result );
 		return $config;
 	}
+	
+	public static function GetLastConfig()
+	{
+		$query='SELECT * FROM robot_config WHERE 1 ORDER BY date DESC LIMIT 1';
+		$result = mysqli_query(DB::$connexion, $query);
+		$config = null;
+		if ($row = @mysqli_fetch_object( $result ) )
+		{
+			$config = new RobotConfig($row, true);
+		}
+		@mysqli_free_result( $result );
+		return $config;
+	}
 }
 ?>

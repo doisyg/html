@@ -1,0 +1,2 @@
+dock1: {theta: [DOCK_T], x: [DOCK_X], y: [DOCK_Y]}
+start1: {theta: [START_T], x: [START_X], y: [START_Y]}

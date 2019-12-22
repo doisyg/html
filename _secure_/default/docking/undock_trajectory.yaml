@@ -1,0 +1,30 @@
+# config.yaml
+
+parameters:
+ control_loop_freq: 20
+ goal_linear_threshold: 0.02
+ goal_angular_threshold: 0.02
+ max_linear_velocity: 0.2
+ max_angular_velocity: 0.7
+ max_linear_acceleration: 0.01
+ max_angular_acceleration: 0.7
+ loop_indefinitly: false
+ US_sensor_int_threshold: 0.2
+ US_sensor_ext_threshold: 0.15
+ obstacle_pause_duration: 2.0 
+ #set 0 for infinite consecutive iteration 
+ obstacle_pause_max_consecutive_iterations: 0
+ control_linear_P_gain: 1.0 
+ control_angular_P_gain: 2.0 
+
+goals:
+- id: 0
+  x: -0.35
+  y: 0
+  theta: 0
+  direction: -1
+- id: 1
+  x: 0
+  y: 0
+  theta: -2.5
+  direction: -1
