@@ -71,7 +71,7 @@ include ('template/header.php');
                         </div>
                               
                         <div class="form-group">
-                            <label for="level_min_dotask" class="control-label col-xs-8"><?php echo __('Battery min to do task');?></label>
+                            <label for="level_min_dotask" class="control-label col-xs-8"><?php echo __('Battery min to leave the charge');?></label>
                             <div class="col-xs-4">
                                 <div class="input-group">
                                     <input type="number" min="10" max="80" name="level_min_dotask" value="<?php echo Configuration::GetValue('level_min_dotask');?>" class="form-control" />
