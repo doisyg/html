@@ -6,6 +6,7 @@ class TacheQueueCore
 	public $position = -1;
 	public $state = "";
 	public $progress = "";
+	public $step = -1;
 
 	public function __construct( $id_tache_queue = null, $byrow=false ) 
 	{
@@ -30,6 +31,7 @@ class TacheQueueCore
 		$this->position = $object->position;
 		$this->state = $object->state;
 		$this->progress = $object->progress;
+		$this->step = $object->step;
 	}
 
 	public static function getTacheQueue( $id_tache_queue )
@@ -54,12 +56,13 @@ class TacheQueueCore
 	public function Insert()
 	{
 		global $_CONFIG;
-		$query = "INSERT INTO tache_queue ( id_tache, position, state, progress ) VALUES ( 
+		$query = "INSERT INTO tache_queue ( id_tache, position, state, progress, step ) VALUES ( 
 
 			'". mysqli_real_escape_string(DB::$connexion, $this->id_tache) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->position) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->state) ."', 
-			'". mysqli_real_escape_string(DB::$connexion, $this->progress) ."'
+			'". mysqli_real_escape_string(DB::$connexion, $this->progress) ."', 
+			'". mysqli_real_escape_string(DB::$connexion, $this->step) ."'
 			) ";
 		$insert=mysqli_query(DB::$connexion, $query) or die ('ERREUR Insert TacheQueue : '.$query.'<br />'.mysqli_error(DB::$connexion).'<br /><br />');
 		$this->id_tache_queue = mysqli_insert_id(DB::$connexion);
@@ -73,7 +76,8 @@ class TacheQueueCore
 			id_tache = '". mysqli_real_escape_string(DB::$connexion,  $this->id_tache )."', 
 			position = '". mysqli_real_escape_string(DB::$connexion,  $this->position )."', 
 			state = '". mysqli_real_escape_string(DB::$connexion,  $this->state )."', 
-			progress = '". mysqli_real_escape_string(DB::$connexion,  $this->progress )."'
+			progress = '". mysqli_real_escape_string(DB::$connexion,  $this->progress )."', 
+			step = '". mysqli_real_escape_string(DB::$connexion,  $this->step )."'
 		WHERE id_tache_queue = '". mysqli_real_escape_string(DB::$connexion, $this->id_tache_queue)."'";
 		$update=mysqli_query(DB::$connexion, $query) or die ('ERREUR Update TacheQueue : '.$query.'<br />'.mysqli_error(DB::$connexion).'<br /><br />');
 	}

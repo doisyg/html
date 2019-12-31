@@ -10,13 +10,19 @@ if (!$userConnected->CanDo($sectionMenu, $sectionSousMenu, 'edit')) { header('lo
 
 if (isset($_POST['save_setup']))
 {
+	
 	$c = Configuration::GetFromVariable('level_min_gotodock');
 	$c->valeur = $_POST['level_min_gotodock'];
+	$c->Save();	
+	
+	$c = Configuration::GetFromVariable('level_min_gotodock_aftertask');
+	$c->valeur = $_POST['level_min_gotodock_aftertask'];
 	$c->Save();	
 		
 	$c = Configuration::GetFromVariable('level_min_dotask');
 	$c->valeur = $_POST['level_min_dotask'];
 	$c->Save();	
+	
 		
 	header('location:robot_setup.php?ok=1');
 }
@@ -69,6 +75,17 @@ include ('template/header.php');
                                 </div>
                             </div>
                         </div>
+                              
+                          
+                        <div class="form-group">
+                            <label for="level_min_gotodock_aftertask" class="control-label col-xs-8"><?php echo __('Battery min before return to charge after a task');?></label>
+                            <div class="col-xs-4">
+                                <div class="input-group">
+                                    <input type="number" min="10" max="80" name="level_min_gotodock_aftertask" value="<?php echo Configuration::GetValue('level_min_gotodock_aftertask');?>" class="form-control" />
+                                    <span class="input-group-addon">%</span>
+                                </div>
+                            </div>
+                        </div>    
                               
                         <div class="form-group">
                             <label for="level_min_dotask" class="control-label col-xs-8"><?php echo __('Battery min to leave the charge');?></label>
