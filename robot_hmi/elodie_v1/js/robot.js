@@ -74,6 +74,10 @@ $(document).ready(function(e) {
 		onBatteryStateChange: function(data){
 			initBatteryState(data);
 		},
+		onRobotMoveToResult: function(data){
+			queueState = 'done';
+			NextStepCurrentTask();
+		},
 		/*
 		onCaptureJobFeedback: function(data){
 		},
@@ -134,6 +138,7 @@ $(document).ready(function(e) {
 	
 	$('#bNextWaitClick').click(function(e) {
         e.preventDefault();
+		queueState = 'done';
 		$('#waitClick').hide();
 		NextStepCurrentTask();
     });
@@ -223,6 +228,7 @@ function initBatteryState(volt)
 		if (!robotMoveToDock && robotCurrentState == 'undocked')
 		{
 			// On stop tout et on envoi le robot se docker
+			queueState = 'pause';
 			robotMoveToDock = true; 
 			wycaApi.RobotMoveToDock(1,	ResultSendToDock);
 		}
@@ -305,7 +311,12 @@ function GetCurrentTask()
 var queueState = '';
 function NextStepCurrentTask()
 {
-	if (queueState == '')
+	if (queueState == 'pause')
+	{
+		// On reprend la tache
+		ExecAction ( currentTask.actions[currentTask.step] );
+	}
+	else if (queueState == '' || queueState == 'done')
 	{
 		queueState = 'processing';
 		currentTask.step++;
@@ -331,6 +342,7 @@ function NextStepCurrentTask()
 					},
 				success: function(data, textStatus, jqXHR) {
 						// Fin de l'action, on passe à la suivante si on peux
+						/*
 						if (currentBatteryState <= configs.level_min_gotodock_aftertask)
 						{
 							robotMoveToDock = true; 
@@ -340,6 +352,7 @@ function NextStepCurrentTask()
 						{
 							NextStepCurrentTask();
 						}
+						*/
 					}
 			});
 			
@@ -359,11 +372,13 @@ function NextStepCurrentTask()
 						// Fin de l'action, on passe à la suivante si on peux
 						if (currentBatteryState <= configs.level_min_gotodock_aftertask)
 						{
+							queueState = '';
 							robotMoveToDock = true; 
 							wycaApi.RobotMoveToDock(1,	ResultSendToDock);
 						}
 						else
 						{
+							queueState = '';
 							NextStepCurrentTask();
 						}
 					}
@@ -384,10 +399,9 @@ function ExecAction(action)
 	switch(action.action_type)
 	{
 		case TYPE_GotoPOI:
-		
-		
-		
-		
+			poi = configs.pois[action.action_detail];
+			wycaApi.RobotMoveTo({x:poi.x_ros, y:poi.y_ros, theta:poi.t_ros});
+			
 			break;
 		case TYPE_WaitClick:
 			$('#waitClick').show();
@@ -401,7 +415,7 @@ function ExecAction(action)
 			}
 			
 			$('#waitTime em').html(waitTimeRemaining);
-			if (waitTimeRemaining < 2) $('#waitTime .plutiel').hide(); else $('#waitTime .plutiel').show();
+			if (waitTimeRemaining < 2) $('#waitTime .pluriel').hide(); else $('#waitTime .pluriel').show();
 			$('#waitTime').show();
 			
 			waitInterval = setInterval(NextTimeRemaining, 1000);
@@ -413,7 +427,7 @@ function NextTimeRemaining()
 {
 	waitTimeRemaining--;
 	$('#waitTime em').html(waitTimeRemaining);
-	if (waitTimeRemaining < 2) $('#waitTime .plutiel').hide(); else $('#waitTime .plutiel').show();
+	if (waitTimeRemaining < 2) $('#waitTime .pluriel').hide(); else $('#waitTime .pluriel').show();
 	
 	if (waitTimeRemaining == 0)
 	{
@@ -421,6 +435,7 @@ function NextTimeRemaining()
 		waitInterval = null;
 		$('#waitTime').hide();
 		
+		queueState = 'done';
 		NextStepCurrentTask();
 	}
 }

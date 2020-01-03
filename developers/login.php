@@ -1,4 +1,5 @@
 <?php 
+$notCloseSession = 1;
 require_once ('../config/initSite.php');
 $sectionMenu = "login";
 
@@ -8,29 +9,17 @@ if (isset($_POST['email']))
 	{
 		$_SESSION["id_developer"] = User::GetIdConnexion($_POST['email'], $_POST['password']);
 		$_SESSION["IP"] = $_SERVER['REMOTE_ADDR'];
+		session_write_close();
 		header('location:index.php');
 	}
 	else
 	{
-		$ip_trace = new IpErrorTrace();
-		$ip_trace->IP = $_SERVER['REMOTE_ADDR'];
-		$ip_trace->type = 'Connect';
-		$ip_trace->date = date('Y-m-d H:i:s');
-		$ip_trace->Save();
-		
-		if (IpErrorTrace::CheckIP($_SERVER['REMOTE_ADDR'])>=3)
-		{
-			// On block l'IP
-			$ipb = new IpBlocked();
-			$ipb->IP = $_SERVER['REMOTE_ADDR'];
-			$ipb->date = date('Y-m-d H:i:s');
-			$ipb->Insert();
-		}
-		
 		$message = __('Adresse email ou mot de passe invalide.');
 		$erreur = true;
 	}
 }
+
+session_write_close();
 
 $msgOk = '';
 $erreurMdp = '';
@@ -43,20 +32,6 @@ if (isset($_POST['email_lost']))
 		$erreur = true;
 		$affForgotPwd = true;
 		
-		$ip_trace = new IpErrorTrace();
-		$ip_trace->IP = $_SERVER['REMOTE_ADDR'];
-		$ip_trace->type = 'Connect';
-		$ip_trace->date = date('Y-m-d H:i:s');
-		$ip_trace->Save();
-		
-		if (IpErrorTrace::CheckIP($_SERVER['REMOTE_ADDR'])>=3)
-		{
-			// On block l'IP
-			$ipb = new IpBlocked();
-			$ipb->IP = $_SERVER['REMOTE_ADDR'];
-			$ipb->date = date('Y-m-d H:i:s');
-			$ipb->Insert();
-		}
 	}
 	else
 	{

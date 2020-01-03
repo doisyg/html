@@ -15,7 +15,8 @@ var angle = 0;
 var nbCall = 0;
 
 var isDown = false;
-	
+
+/*	
 function RefreshJoystickOn()
 {
 	if ($('.bToggleJosytick i').hasClass('fa-toggle-off'))
@@ -36,11 +37,13 @@ function StopJoystickEnable()
 		$('.bToggleJosytick i').addClass('fa-toggle-off')
 	}
 }
+*/
 
 $(document).ready(function(e) {
     
 	SetCurseurV2(xCentre, yCentre);
 	
+	/*
 	$('.bToggleJosytick').click(function(e) {
         e.preventDefault();
 		
@@ -60,6 +63,7 @@ $(document).ready(function(e) {
 		}
 		
     });
+	*/
 		
 	$('.joystickDiv .curseur').mousedown(function(e){
 		e.preventDefault();
@@ -104,7 +108,7 @@ $(document).ready(function(e) {
 		}
 	});
 	
-	//setInterval(SendCommande, 200);
+	setInterval(SendCommande, 200);
 	//setInterval(RefreshJoystickOn, 300);
 	
 });	
@@ -181,20 +185,18 @@ var lastValueY = 0;
 nbCall0 = 0;
 function SendCommande()
 {
-	if (robotCurrentState != 'undocked' || jobInProgress || (lastValueX == 0 && lastValueY == 0))
+	if (robotCurrentState != 'undocked' || (lastValueX == 0 && lastValueY == 0))
 	{
 		if (nbCall0 < 5)
 		{
 			nbCall0++;
-			if (in_visio)
-				wycaApi.TeleopRobot(lastValueX * -0.3, lastValueY * -0.4);
+			wycaApi.TeleopRobot(lastValueX * -0.3, lastValueY * -0.4);
 		}
 	}
 	else
 	{
 		nbCall0 = 0;
-		if (in_visio)
-			wycaApi.TeleopRobot(lastValueX * -0.3, lastValueY * -0.4);
+		wycaApi.TeleopRobot(lastValueX * -0.3, lastValueY * -0.4);
 	}
 }
 

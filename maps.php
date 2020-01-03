@@ -64,7 +64,7 @@ include ('template/header.php');
                 <div class="panel-body">
                 
                 	<?php if ($userConnected->CanDo($sectionMenu, $sectionSousMenu, 'add')){?>
-                    <a class="btn btn-primary btn-sm btn-grad" href="#" data-toggle="modal" data-target="#modalCreateMap" title="<?php echo __('Create new map');?>"><i class="fa fa-plus"></i> <?php echo __('Create new map');?></a>
+                    <a id="bOpenModalCreateMap" class="btn btn-primary btn-sm btn-grad" href="#" data-toggle="modal" data-target="#modalCreateMap" title="<?php echo __('Create new map');?>"><i class="fa fa-plus"></i> <?php echo __('Create new map');?></a>
                     <div style="clear:both; height:20px;"></div>
                     <?php }?>
                 
@@ -150,7 +150,7 @@ include ('template/header.php');
                     
                         <img src="assets/images/map.png" style="max-height:150px; max-width:80%; margin:10px 0;" />
                         
-                        <?php echo __('Enable joystick');?> <a href="#" class="bToggleJosytick"><i class="ico_jotick fa fa-toggle-off" style="font-size:30px;"></i></a>
+                        <!--<?php echo __('Enable joystick');?> <a href="#" class="bToggleJosytick"><i class="ico_jotick fa fa-toggle-off" style="font-size:30px;"></i></a>-->
                         
                         <div style="clear:both; height:10px;"></div>
                         
@@ -163,8 +163,8 @@ include ('template/header.php');
                     </div>
                     <div style="clear:both;"></div>
                     
-                    <a href="#" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
-                    <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+                    <a href="#" class="btn btn-primary bCloseModalCreateMap" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
+                    <a href="#" class="btn btn-warning bCloseModalCreateMap" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
                 </div>
             </div>
         </div>
