@@ -185,5 +185,6 @@ $_LANG['6c630a7bd787b97c36c225f6af5869ba'] = 'Code invalide';
 $_LANG['7258e7251413465e0a3eb58094430bde'] = 'Administration';
 $_LANG['b1dd7f51ec5af7cdcc5c09e05585f266'] = 'Battery min to leave the charge';
 $_LANG['16b6ea9438dc1749bdf5bb1dd70691b1'] = 'Battery min before return to charge after a task';
+$_LANG['075fdd1e9ea19cf4ff53a991de636530'] = 'Adresse email ou mot de passe invalide.';
 
 ?>
