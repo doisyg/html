@@ -185,7 +185,8 @@ var lastValueY = 0;
 nbCall0 = 0;
 function SendCommande()
 {
-	if (robotCurrentState != 'undocked' || (lastValueX == 0 && lastValueY == 0))
+	//if (robotCurrentState != 'undocked' || (lastValueX == 0 && lastValueY == 0))
+	if ((lastValueX == 0 && lastValueY == 0))
 	{
 		if (nbCall0 < 5)
 		{
