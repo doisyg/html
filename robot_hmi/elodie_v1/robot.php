@@ -51,7 +51,7 @@ $_CONFIG['URL_API'] = 'https://elodie.wyca-solutions.com/API/';
     <div id="waitClick" style="font-size:68px; position:fixed; top:0; left:0; width:100%; height:100vh; background-color:rgba(255,255,255,0.5);">
     	<a id="bNextWaitClick" href="#" class="btn btn-primary" style="font-size:100px; text-align:center; margin-top:32vh; border-radius:50px; padding:100px;"><i style="" class="fa fa-forward"></i> Next step</a>
     </div>
-    <div id="waitTime" style="font-size:68px; display:none; ">Wait <em></em> seconde<span class="plutiel">s</span></div>
+    <div id="waitTime" style="font-size:68px; display:none; ">Wait <em></em> seconde<span class="pluriel">s</span></div>
 	
 </body>
 </html>

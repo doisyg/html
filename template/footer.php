@@ -5,7 +5,7 @@
                     <div class="modal-header">
                         <div class="actions" style="min-height:calc(100vh - 110px);">
                             <div style="text-align:center; font-size:26px;">
-	                            <?php echo __('Enable joystick');?> <a href="#" id="bToggleJosytick"><i class="ico_jotick fa fa-toggle-off" style="font-size:30px;"></i></a>
+	                            <!--<?php echo __('Enable joystick');?> <a href="#" id="bToggleJosytick"><i class="ico_jotick fa fa-toggle-off" style="font-size:30px;"></i></a>-->
                                 
                                 
                                 <div style="clear:both; height:50px;"></div>
@@ -17,7 +17,11 @@
                             </div>
                             <div style="clear:both; height:50px;"></div>
                             
-                            <a href="#" class="btn btn-primary" data-dismiss="modal" style="width:100%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Close');?></a>
+                            
+                            <a href="#" id="bUndockJoystick" class="btn btn-warning" style="width:100%; display:none; position:absolute; left:0; bottom:55px; font-size:30px;"><?php echo __('Undock');?></a>
+                            <a href="#" id="bDockJoystick" class="btn btn-warning" style="width:100%; display:none; position:absolute; left:0; bottom:55px; font-size:30px;"><?php echo __('Dock');?></a>
+                            
+                            <a href="#" id="bCloseJoystickPanel" class="btn btn-primary" data-dismiss="modal" style="width:100%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Close');?></a>
                         </div>
                     </div>
                 </div>

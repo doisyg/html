@@ -82,7 +82,7 @@
                    <div class="icone_header safety_stop" style="display:none;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="<?php echo __('Emergency stop');?>"><i class="fa fa-exclamation-circle battery-ko"></i></div>
                     
                     
-					<div class="visible-xs gamepad-left" data-toggle="modal" data-target="#modalJoystick" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="<?php echo __('Control robot');?>">
+					<div id="bJoystickPanel" class="visible-xs gamepad-left" data-toggle="modal" data-target="#modalJoystick" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="<?php echo __('Control robot');?>">
 						<i class="fa fa-gamepad"></i>
 					</div>
 					<div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="<?php echo __('Menu');?>">

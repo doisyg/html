@@ -1,6 +1,6 @@
 <?php 
 require_once ('../config/initSite.php');
-if (!isset($_SESSION["id_developer"])) { header("location:login.php"); }
+if (!isset($_SESSION["id_developer"])) { die(print_r($_SESSION)); header("location:login.php"); }
 
 $sectionMenu = "home";
 

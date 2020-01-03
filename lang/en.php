@@ -185,5 +185,27 @@ $_LANG['6c630a7bd787b97c36c225f6af5869ba'] = 'Code invalide';
 $_LANG['7258e7251413465e0a3eb58094430bde'] = 'Administration';
 $_LANG['b1dd7f51ec5af7cdcc5c09e05585f266'] = 'Battery min to leave the charge';
 $_LANG['16b6ea9438dc1749bdf5bb1dd70691b1'] = 'Battery min before return to charge after a task';
+$_LANG['075fdd1e9ea19cf4ff53a991de636530'] = 'Adresse email ou mot de passe invalide.';
+$_LANG['6bb7b7985eae0116fc26f8d1828b85cf'] = 'Wyca - Developers';
+$_LANG['b3ab5348a176e195f74950b4d6221345'] = 'Calling';
+$_LANG['b403a9ec06f9d789e61767465af7f210'] = 'Not Connected';
+$_LANG['54f664c70c22054ea0d8d26fc3997ce7'] = 'Online';
+$_LANG['8d9da4bc0e49a50e09ac9f7e56789d39'] = 'Offline';
+$_LANG['8cf04a9734132302f96da8e113e80ce5'] = 'Home';
+$_LANG['f0258b6685684c113bad94d91b8fa02a'] = 'Demo';
+$_LANG['5b6cf869265c13af8566f192b4ab3d2a'] = 'Documentation';
+$_LANG['4ec3ffcc9a869f96d949de8eb835c846'] = 'Support technique';
+$_LANG['70ccadaab6ea03076bd67d3e4d53d3be'] = 'Entrez votre email et mot de passe';
+$_LANG['74948338b9de261e04fac173cf737210'] = 'Entrez votre adresse email';
+$_LANG['21e48ea258b5b5b10813a333b0364b09'] = 'Recevoir mon mot de passe';
+$_LANG['6f25ceed9a692de57d4433e31bafa3f9'] = 'Mot de passe oubliÃ© ?';
+$_LANG['cb2132b27a9bd0be75ddb1358078c7cf'] = 'L\'utilisation du navigateur Google Chrome est fortement recommandée pour l\'utilisation de Wyca et la communication avec les robots.';
+$_LANG['d1fd2f24e58171dc0bd3605b9d97eabe'] = 'Merci de relancer le site sous Google Chrome';
+$_LANG['6879d9cee4ba90f94f8bac2543992979'] = 'API Configuration';
+$_LANG['e123788ee28dd825dbfa22776dea15d2'] = 'User Configuration';
+$_LANG['34ac805c9077c5ca6ae3565dab6ce723'] = 'Topics';
+$_LANG['04a08db19db13994de2294ae70e4d03a'] = 'Topic Publishers';
+$_LANG['992a0f0542384f1ee5ef51b7cf4ae6c4'] = 'Services';
+$_LANG['f6eba8ebe37a46bd2935035945c63c94'] = 'Action in progress';
 
 ?>

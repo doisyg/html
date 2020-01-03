@@ -23,7 +23,7 @@ $(document).ready(function(e) {
 	wycaApi = new WycaAPI({
 		api_key:'5LGU.LaYMMncJaA0i42HwsX9ZX-RCNgj-9V17ROFXt71st',
 		id_robot:3,
-		host:'192.168.100.245:9090', // host:'192.168.100.245:9090',
+		host:'elodie.wyca-solutions.com:9090', //192.168.1.32:9090', // host:'192.168.100.245:9090',
 		video_element_id:'webcam_local',
 		webcam_name: 'r200 nav',
 		nick:'robot',
@@ -107,7 +107,56 @@ $(document).ready(function(e) {
 	
 	wycaApi.init();	
 	
+	$('#bJoystickPanel').click(function(e) {
+        EnableJoystick(true);
+    });
+	$('#bCloseJoystickPanel').click(function(e) {
+        EnableJoystick(false);
+    });
+	$('#bOpenModalCreateMap').click(function(e) {
+        EnableJoystick(true);
+    });
+	$('.bCloseModalCreateMap').click(function(e) {
+        EnableJoystick(true);
+    });
+	$('#bUndockJoystick').click(function(e) {
+        e.preventDefault();
+		wycaApi.RobotUndock( function (r) { console.log(r);});
+    });
+	$('#bDockJoystick').click(function(e) {
+        e.preventDefault();
+		wycaApi.RobotDock( function (r) { console.log(r);});
+    });
+	
 });
+
+var intervalJoystickEnable = null;
+function EnableJoystick(enable)
+{
+	if (enable)
+	{
+		if (intervalJoystickEnable == null)
+		{
+			intervalJoystickEnable = setInterval(SendJoystickOn, 300);
+		}
+	}
+	else
+	{
+		if (intervalJoystickEnable != null)
+		{
+			clearInterval(intervalJoystickEnable);
+			intervalJoystickEnable = null;
+		}
+	}
+	
+}
+
+function SendJoystickOn()
+{
+	if (robotCurrentState == 'undocked')
+		wycaApi.JoystickIsSafeOff(false);
+}
+
 
 function initPersonnes(data)
 {
@@ -196,6 +245,19 @@ function initStateRobot(etat)
 {
 	console.log('Robot state', etat);
 	robotCurrentState = etat;
+	
+	$('#bUndockJoystick').hide();
+	$('#bDockJoystick').hide();
+	
+	if (robotCurrentState == 'docked')
+	{
+		$('#bUndockJoystick').show();
+	}
+	else if (robotCurrentState == 'undocked')
+	{
+		$('#bDockJoystick').show();
+	}
+	
 }
 
 function initBatteryState(data)
