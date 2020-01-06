@@ -98,7 +98,7 @@
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/theme.init.js"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/joystick.js?v=20200103_2"></script>
         
-        <script src="<?php echo $_CONFIG['URL_API'];?>extern/roslib.js"></script>
+		<script src="<?php echo $_CONFIG['URL_API'];?>extern/roslib.js"></script>
         <script src="<?php echo $_CONFIG['URL_API'];?>webrtc.wyca2.min.js"></script>
         <script src="<?php echo $_CONFIG['URL_API'];?>wyca_api.latest.min.php?api_key=5LGU.LaYMMncJaA0i42HwsX9ZX-RCNgj-9V17ROFXt71st&v=20191127"></script>
         

@@ -2,6 +2,7 @@
 if (!isset($_GET['api_key'])) { echo 'alert("WycaAPI - API KEY is needed");'; exit; }
 require_once ('../config/initSite.php');
 
+
 $topics_interne = array('onArrivedToDestination', 'onArrivedToPOI', 'onArrivedToBox', 'onMapBoxClick', 'onMapRouteClick', 'onMapIsLoaded');
 $services_interne = array('MapGetHTML', 'MapInit', 'GetPOIs', 'GetBoxs', 'RobotMoveToDock', 'RobotMoveToPOI', 'RobotMoveToBox', 'InitDynamicsTopics', 'InitDynamicServices', 'TakePhotoCamNav', 'TakePhotoCamCustomer');
 $actions_interne = array();
@@ -22,6 +23,50 @@ $topics = $user->GetApiTopics();
 $topic_pubs = $user->GetApiTopicPubs();
 $services = $user->GetApiServices();
 $actions = $user->GetApiActions();
+
+$issetMappingServices = false;
+foreach($services as $service)
+	if ($service->nom == '/wyca_mapping/start') { $issetMappingServices = true; break; }
+
+if (!$issetMappingServices)
+{
+	$query = "INSERT INTO `api_service` (`groupe`, `nom`, `messageType`, `function_name`, `details`) VALUES ('Mapping', '/wyca_mapping/start', 'std_srvs/Trigger', 'MappingStart', '---\r\nbool success   # indicate successful run of triggered service\r\nstring message # informational, e.g. for error messages')";
+	$r = mysqli_query(DB::$connexion, $query);
+	$id = mysqli_insert_id(DB::$connexion);
+	
+	$query = "INSERT INTO `api_service_user` (`id_service`, `id_user`) VALUES (".$id.", 1)";
+	$r = mysqli_query(DB::$connexion, $query);
+	
+	
+	$query = "INSERT INTO `api_service` (`groupe`, `nom`, `messageType`, `function_name`, `details`) VALUES ('Mapping', '/wyca_mapping/stop', 'std_srvs/Trigger', 'MappingStop', '---\r\nbool success   # indicate successful run of triggered service\r\nstring message # informational, e.g. for error messages')";
+	$r = mysqli_query(DB::$connexion, $query);
+	$id = mysqli_insert_id(DB::$connexion);
+	
+	$query = "INSERT INTO `api_service_user` (`id_service`, `id_user`) VALUES (".$id.", 1)";
+	$r = mysqli_query(DB::$connexion, $query);
+	
+	$services = $user->GetApiServices();
+	
+		
+	$query = "INSERT INTO `api_topic` (`groupe`, `nom`, `messageType`, `event_name`, `publish_name`, `id_service_update`) VALUES
+	('Mapping', '/wyca_mapping/robot_pose_in_building_map', 'geometry_msgs/Pose2D', 'onMappingRobotPoseChange', '', 0)";
+	$r = mysqli_query(DB::$connexion, $query);
+	$id = mysqli_insert_id(DB::$connexion);
+	
+	$query = "INSERT INTO `api_topic_user` (`id_topic`, `id_user`) VALUES (".$id.", 1)";
+	$r = mysqli_query(DB::$connexion, $query);
+	
+	$query = "INSERT INTO `api_topic` (`groupe`, `nom`, `messageType`, `event_name`, `publish_name`, `id_service_update`) VALUES
+	('Mapping', '/map_saved', 'nav_msgs/OccupancyGrid', 'onMappingMapSaved', '', 0)";
+	$r = mysqli_query(DB::$connexion, $query);
+	$id = mysqli_insert_id(DB::$connexion);
+	
+	$query = "INSERT INTO `api_topic_user` (`id_topic`, `id_user`) VALUES (".$id.", 1)";
+	$r = mysqli_query(DB::$connexion, $query);
+	
+	$topics = $user->GetApiTopics();
+}
+
 
 $topics_by_id = array();
 foreach($topics as $topic)
@@ -652,7 +697,7 @@ function WycaAPI(options){
 					<?php if ($topic->event_name != 'onGetPhotoCamCustomer' && $topic->event_name != 'onGetPhotoCamNav') // subscribe on demand
 					{
 						?>
-					this.ros_topics[<?php echo $topic->id_topic;?>].subscribe(jQuery.proxy(function(message) { data = message; if (message.data != undefined) data = message.data; if(_this.ros_topics_subscribed_by_pc[<?php echo $topic->id_topic;?>]) _this.ROSMessageSendToPC({ topic: <?php echo $topic->id_topic;?>, data: data });  <?php if ($topic->nom == '/keylo_api/navigation/robot_pose'){?>_this.PositionneRobot(data);<?php }?> <?php if ($topic->nom == '/keylo_api/navigation/current_goal'){?>_this.SaveCurrentGoal(data);<?php }?> <?php if ($topic->nom == '/keylo_arduino/current_floor'){?>_this.SaveCurrentFloor(data);<?php }?> <?php if ($topic->nom == '/keylo_api/navigation/robot_state'){?>_this.SaveRobotState(data);<?php }?> if (_this.options.<?php echo $topic->event_name;?> != undefined) _this.options.<?php echo $topic->event_name;?>(data);}, this));
+					this.ros_topics[<?php echo $topic->id_topic;?>].subscribe(jQuery.proxy(function(message) { data = message; if (message.data != undefined && '<?php echo $topic->messageType;?>' != 'nav_msgs/OccupancyGrid') data = message.data; if(_this.ros_topics_subscribed_by_pc[<?php echo $topic->id_topic;?>]) _this.ROSMessageSendToPC({ topic: <?php echo $topic->id_topic;?>, data: data });  <?php if ($topic->nom == '/keylo_api/navigation/robot_pose'){?>_this.PositionneRobot(data);<?php }?> <?php if ($topic->nom == '/keylo_api/navigation/current_goal'){?>_this.SaveCurrentGoal(data);<?php }?> <?php if ($topic->nom == '/keylo_arduino/current_floor'){?>_this.SaveCurrentFloor(data);<?php }?> <?php if ($topic->nom == '/keylo_api/navigation/robot_state'){?>_this.SaveRobotState(data);<?php }?> if (_this.options.<?php echo $topic->event_name;?> != undefined) _this.options.<?php echo $topic->event_name;?>(data);}, this));
 						<?php
 					}
 					else

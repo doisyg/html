@@ -18,12 +18,16 @@ var lastEStop = false;
 
 var timeoutStopFollow = null;
 
+var mappingLastPose = null;
+var mappingLastInfo = null;
+
 $(document).ready(function(e) {
 	
 	wycaApi = new WycaAPI({
 		api_key:'5LGU.LaYMMncJaA0i42HwsX9ZX-RCNgj-9V17ROFXt71st',
 		id_robot:3,
-		host:'elodie.wyca-solutions.com:9090', //192.168.1.32:9090', // host:'192.168.100.245:9090',
+		//host:'elodie.wyca-solutions.com:9090', //192.168.1.32:9090', // host:'192.168.100.245:9090',
+		host:'192.168.100.170:9090',
 		video_element_id:'webcam_local',
 		webcam_name: 'r200 nav',
 		nick:'robot',
@@ -102,6 +106,71 @@ $(document).ready(function(e) {
 				$('.safety_stop').hide();
 				
 			lastEStop = data.is_safety_stop_button;
+		},
+		onMappingRobotPoseChange: function(data){
+			mappingLastPose = data;
+			//InitPosCarteMapping();
+		},
+		onMappingMapSaved: function(message){
+			//console.log(data);
+			if ($('#mapping_view').length > 0)
+			{
+				mappingLastInfo = message.info;
+				
+				var canvas = document.createElement("canvas");
+				canvas.width = message.info.width;
+				canvas.height = message.info.height;
+				var ctx = canvas.getContext("2d");
+				
+				var imageData = ctx.createImageData(message.info.width, message.info.height);
+				for ( var row = 0; row < message.info.height; row++)
+				{
+					for ( var col = 0; col < message.info.width; col++)
+					{
+						// determine the index into the map data
+						var mapI = col + ((message.info.height - row - 1) * message.info.width);
+						// determine the value
+						var data = message.data[mapI];
+						
+						var val;
+						if (data === 100) {
+						val = 0;
+						} else if (data === 0) {
+						val = 255;
+						} else {
+						val = 127;
+						}
+						
+						
+						// determine the index into the image data array
+						var i = (col + (row * message.info.width)) * 4;
+						// r
+						imageData.data[i] = val;
+						// g
+						imageData.data[++i] = val;
+						// b
+						imageData.data[++i] = val;
+						// a
+						imageData.data[++i] = 255;
+					}
+				}
+				
+				ctx.putImageData(imageData, 0, 0);
+				
+				
+				//$('#img_map_saved').remove();
+				//var img = $(' <img id="img_map_saved" src="" style="position:absolute; z-index:200" />'); //Equivalent: $(document.createElement('img'))
+				//img.appendTo('#mapping_view');
+				
+				$('#form_mapping_ros_largeur').val(message.info.width);
+				$('#form_mapping_ros_hauteur').val(message.info.height);
+				
+				var img = document.getElementById("img_map_saved");
+				img.src = canvas.toDataURL("image/png");
+				//document.body.appendChild(img);
+				
+				//InitPosCarteMapping();				
+			}
 		}
 	});
 	
@@ -117,7 +186,7 @@ $(document).ready(function(e) {
         EnableJoystick(true);
     });
 	$('.bCloseModalCreateMap').click(function(e) {
-        EnableJoystick(true);
+        EnableJoystick(false);
     });
 	$('#bUndockJoystick').click(function(e) {
         e.preventDefault();
@@ -129,6 +198,57 @@ $(document).ready(function(e) {
     });
 	
 });
+
+/*
+mappingLastPose
+mappingLastInfo
+*/
+function InitPosCarteMapping()
+{
+	// On affiche 15 metre sur les 150pixels visible = 1px pour 10cm
+	if (mappingLastInfo != null)
+	{
+		hauteurCm = mappingLastInfo.height * 5;
+		hauteurM = hauteurCm / 100;
+		
+		$('#img_map_saved').height(mappingLastInfo.height / 2);
+		
+		if (mappingLastPose != null)
+		{
+			posLeft = mappingLastPose.x - mappingLastInfo.origin.position.x ;
+			posBottom = mappingLastInfo.origin.position.y - mappingLastPose.y;
+			
+			posLeft = posLeft * 10; // 1px pour 10cm
+			posBottom = posBottom * 10; // 1px pour 10cm
+			
+			centreVueLeft = $('#mapping_view').width() / 2;
+			centreVueBottom = 50;
+		
+			console.log('mappingLastPose.y', mappingLastPose.y);
+			console.log('mappingLastInfo.origin.position.y', mappingLastInfo.origin.position.y);
+			console.log('posBottom', posBottom);
+	
+			decallageLeft  = centreVueLeft - posLeft;
+			decallageBottom  = posBottom - centreVueBottom;
+			
+			console.log('decallageBottom', decallageBottom);
+			
+			$('#img_map_saved').css('left', decallageLeft);
+			$('#img_map_saved').css('bottom', decallageBottom);
+			
+			deg = mappingLastPose.theta * 180 / Math.PI - 90;
+			
+			/*
+			$('#img_map_saved').css({
+		        "-webkit-transform": "rotate("+deg+"deg)",
+				"-moz-transform": "rotate("+deg+"deg)",
+				"transform": "rotate("+deg+"deg)",
+				"transform-origin":posLeft+" "+(mappingLastInfo.height/2 - posBottom)
+			});
+			*/
+		}
+	}
+}
 
 var intervalJoystickEnable = null;
 function EnableJoystick(enable)

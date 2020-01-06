@@ -8,6 +8,19 @@ $sectionSousMenu = "";
 
 if (!$userConnected->CanDo($sectionMenu, $sectionSousMenu, 'view')) { header('location:index.php?notallow=1'); exit; }
 
+if (isset($_POST['todo']) && $_POST['todo'] == 'saveMapping')
+{
+	$plan = new Plan();
+	$plan->id_site = $currentIdSite;
+	if (strlen($_POST['image']) > 22)
+		$plan->image = substr($_POST['image'], 22);
+	$plan->nom = $_POST['nom'];
+	$plan->ros_resolution = 5;
+	$plan->ros_hauteur = $_POST['ros_hauteur'];
+	$plan->ros_largeur = $_POST['ros_largeur'];
+	$plan->Save();
+}
+
 if (isset($_GET['um']))
 {
 	$plan = new Plan($_GET['um']);
@@ -141,14 +154,23 @@ include ('template/header.php');
                 <div class="actions" style="min-height:calc(100vh - 110px);">
                     <div style="text-align:center; font-size:26px;">
                     
-                    	<input type="text" placeholder="<?php echo __('Map name')?>" class="form-control" style="margin-bottom:20px;" />
-                    
+                    	<form id="form_mapping" method="post">
+                        	<input type="hidden" name="todo" value="saveMapping" />
+                            <input type="hidden" id="form_mapping_image" name="image" value="" />
+                            <input type="hidden" id="form_mapping_ros_hauteur" name="ros_hauteur" value="" />
+                            <input type="hidden" id="form_mapping_ros_largeur" name="ros_largeur" value="" />
+	                    	<input type="text" id="form_mapping_name" name="nom" placeholder="<?php echo __('Map name')?>" class="form-control" style="margin-bottom:20px;" />
+                    	</form>
                     	<div class="row" style="margin-bottom:20px;">
-                            <a href="#" class="btn btn-i btn-primary col-md-6"><i class="fa fa-play"></i><?php echo __('Start mapping');?></a>
-                            <a href="#" class="btn btn-i btn-primary col-md-6"><i class="fa fa-stop"></i><?php echo __('Stop mapping');?></a>
+                            <a href="#" id="bMappingStart" class="btn btn-primary"><i class="fa fa-play"></i> <?php echo __('Start mapping');?></a>
+                            <a href="#" id="bMappingStop" class="btn btn-primary" style="display:none;"><i class="fa fa-stop"></i> <?php echo __('Stop mapping');?></a>
                         </div>
                     
-                        <img src="assets/images/map.png" style="max-height:150px; max-width:80%; margin:10px 0;" />
+                    	<div id="mapping_view" style="height:152px; width:100%; margin:10px 0; border:1px solid #EFEFEF; position:relative; overflow:hidden;">
+                            <!--<img id="mapping_robot" src="assets/images/robot-dessus.png" width="5" style="position:absolute; bottom:50px; z-index:300;" />
+	                        <img id="img_map_saved" src="" style="position:absolute; z-index:200" />-->
+                            <img id="img_map_saved" src="" height="150" />
+                        </div>
                         
                         <!--<?php echo __('Enable joystick');?> <a href="#" class="bToggleJosytick"><i class="ico_jotick fa fa-toggle-off" style="font-size:30px;"></i></a>-->
                         
@@ -163,8 +185,8 @@ include ('template/header.php');
                     </div>
                     <div style="clear:both;"></div>
                     
-                    <a href="#" class="btn btn-primary bCloseModalCreateMap" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
-                    <a href="#" class="btn btn-warning bCloseModalCreateMap" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+                    <a href="#" id="bMappingSaveMap" class="btn btn-primary bCloseModalCreateMap" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px; display:none;"><?php echo __('Save');?></a>
+                    <a href="#" id="bMappingCancelMap" class="btn btn-warning bCloseModalCreateMap" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
                 </div>
             </div>
         </div>
@@ -177,6 +199,11 @@ include ('template/header.php');
 include ('template/footer.php');
 ?>
 <script>
+var mappingStarted = false;
+var intervalMap = null;
+
+var viewer;
+var gridClient;
 (function( $ ) {
 
 	'use strict';
@@ -189,6 +216,59 @@ include ('template/footer.php');
 	
 	$('#bUseMap').click(function(e) {
 		location.href = 'maps.php?um=' + $('#bUseMap').data('id_plan');
+	});
+	
+	$("img").on("load", function() {
+       console.log('map loaded');
+    })
+	
+	$('#bMappingSaveMap').click(function(e) {
+		if ($('#form_mapping_name').val() == '')
+		{
+			alert('<?php echo __('You must indicate a name');?>');
+			e.preventDefault();
+		}
+		else
+		{
+			$('#form_mapping_image').val($('#img_map_saved').attr('src'));
+			$('#form_mapping').submit();
+			
+			$('#modalCreateMap').modal('hide');
+		}
+	});
+	
+	$('#bMappingStart').click(function(e) {
+		e.preventDefault();
+		
+		wycaApi.MappingStart(function(r) { });
+		mappingStarted = true;
+		$('#bMappingStart').hide();
+		$('#bMappingStop').show();
+		
+		if (intervalMap != null)
+		{
+			clearInterval(intervalMap);
+			intervalMap = null;
+		}
+		//intervalMap = setInterval(GetMap, 1000);
+		
+	});
+	$('#bMappingStop').click(function(e) {
+		e.preventDefault();
+		
+		wycaApi.MappingStop(function(r) {});
+		mappingStarted = false;
+		$('#bMappingStop').hide();
+		$('#bMappingStart').show();
+		
+		$('#bMappingSaveMap').show();
+		$('#bMappingCancelMap').show();
+		
+		if (intervalMap != null)
+		{
+			clearInterval(intervalMap);
+			intervalMap = null;
+		}
 	});
 
 	var datatableInit = function() {
@@ -207,7 +287,12 @@ include ('template/footer.php');
 	$(function() {
 		datatableInit();
 	});
-
 }).apply( this, [ jQuery ]);
+
+function GetMap()
+{
+	//$('#map_mapping').attr('src', 'get_mapping.php?v=' + Date.now());
+	$('#map_mapping').attr('src', 'http://192.168.100.170/get_mapping.php?v=' + Date.now());	
+}
 </script>
 
