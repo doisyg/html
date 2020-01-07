@@ -184,9 +184,10 @@ include ('template/header.php');
                         
                     </div>
                     <div style="clear:both;"></div>
-                    
-                    <a href="#" id="bMappingSaveMap" class="btn btn-primary bCloseModalCreateMap" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px; display:none;"><?php echo __('Save');?></a>
-                    <a href="#" id="bMappingCancelMap" class="btn btn-warning bCloseModalCreateMap" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+         
+         			
+                    <a href="#" id="bMappingCancelMap" class="btn btn-warning bCloseModalCreateMap" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>           
+                    <a href="#" id="bMappingSaveMap" class="btn btn-primary bCloseModalCreateMap" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px; display:none;"><?php echo __('Save');?></a>
                 </div>
             </div>
         </div>
