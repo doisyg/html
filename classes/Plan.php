@@ -211,9 +211,9 @@ class Plan extends PlanCore
 				if ($i == count($points)-1) $ip1 = 0;
 				
 				$x1 = $points[$i]->x / 5 * 100;
-				$y1 = $plan->hauteur - $points[$i]->y / 5 * 100;
+				$y1 = $this->ros_hauteur - $points[$i]->y / 5 * 100;
 				$x2 = $points[$ip1]->x / 5 * 100;
-				$y2 = $plan->hauteur - $points[$ip1]->y / 5 * 100;
+				$y2 = $this->ros_hauteur - $points[$ip1]->y / 5 * 100;
 				
 				imageline($image, $x1, $y1, $x2, $y2, $noir);
 			}
@@ -308,7 +308,7 @@ class Plan extends PlanCore
 					for ($i=0; $i<count($points); $i++)
 					{	
 						$x1 = $points[$i]->x / 5 * 100;
-						$y1 = $plan->hauteur - $points[$i]->y / 5 * 100;
+						$y1 = $this->ros_hauteur - $points[$i]->y / 5 * 100;
 						
 						$point_img[] = array('x' => $x1, 'y' => $y1);
 					}
