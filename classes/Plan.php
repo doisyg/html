@@ -370,10 +370,11 @@ class Plan extends PlanCore
 		
 		$file->data = '';
 		
+		$polys = $this->GetAreas();
 		$index_color = 1;
 		foreach($polys as $poly)
 		{
-			$cs = $area->GetConfigs();
+			$cs = $poly->GetConfigs();
 			
 			$max_speed_mode = 'Automatic';
 			$max_speed = 0;
