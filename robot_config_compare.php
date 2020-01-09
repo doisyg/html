@@ -87,7 +87,8 @@ h5 { font-weight:bold; }
 				{
 					if (isset($confs[0]) && isset($confs[1]))
 					{
-						$extension = array_pop(explode('.', $confs[0]->file));
+						$t = explode('.', $confs[0]->file);
+						$extension = array_pop($t);
 						if ($extension != 'png')
 						{
 							// Compare

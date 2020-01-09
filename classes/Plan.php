@@ -96,7 +96,7 @@ class Plan extends PlanCore
 		$config = RobotConfig::GetLastConfig();
 		$config->Dupliquer();
 		$config->update_by = 'Server';
-		$config->modifications = 'Update forbidden area';
+		$config->modifications = 'Update map data';
 		$config->Save();
 		
 		$this->ExportMap($config);
@@ -278,18 +278,15 @@ class Plan extends PlanCore
 			
 		$image = imagecreatefromstring(base64_decode($this->image));
 		
-		imagesetthickness($image, 2);
-		
-		ob_start();
-		imagepng($image);
-		$contents = ob_get_contents();
-		ob_end_clean();
-		
 		try
 		{
 			if (class_exists('Imagick'))
 			{
+				$backgroundColor = new \ImagickPixel();
+				$backgroundColor->setColor('rgba(255,255,255,1)');
+				
 				$imagick = new Imagick();
+				$imagick->newImage(imagesx($image), imagesy($image), $backgroundColor);
 				$imagick->readImageBlob($contents);
 				
 				$draw = new \ImagickDraw();
