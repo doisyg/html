@@ -258,7 +258,7 @@ class Plan extends PlanCore
 		$file = null;
 		foreach($fichiers as $f)
 		{
-			if ($f->directory == '/map' && $f->file == 'map_zones.png')
+			if ($f->directory == '/map' && $f->file == 'map_areas.png')
 			{
 				$map_found = true;
 				$file = $f;
@@ -270,7 +270,7 @@ class Plan extends PlanCore
 		{
 			$file = new RobotConfigValue();
 			$file->directory = '/map';
-			$file->file = 'map_zones.png';
+			$file->file = 'map_areas.png';
 			$file->id_robot_config = $config->id_robot_config;
 			$file->is_file = 0;
 			$file->name = '';
@@ -287,6 +287,7 @@ class Plan extends PlanCore
 				
 				$imagick = new Imagick();
 				$imagick->newImage(imagesx($image), imagesy($image), $backgroundColor);
+				$imagick->readImageBlob($contents);
 				
 				$draw = new \ImagickDraw();
 				
@@ -336,16 +337,14 @@ class Plan extends PlanCore
 		$file->date_upd_server = date('Y-m-d H:i:s');
 		$file->date_upd_robot = '0000-00-00 00:00:00';
 		$file->Save();
-	}
-	
-	public function ExportYamlZones($config)
-	{
-		$fichiers = $config->GetListByFile();
+		
+
+
 		$map_found = false;
 		$file = null;
 		foreach($fichiers as $f)
 		{
-			if ($f->directory == '/map' && $f->file == 'zones.yaml')
+			if ($f->directory == '/map' && $f->file == 'map_areas.yaml')
 			{
 				$map_found = true;
 				$file = $f;
@@ -357,7 +356,47 @@ class Plan extends PlanCore
 		{
 			$file = new RobotConfigValue();
 			$file->directory = '/map';
-			$file->file = 'zones.yaml';
+			$file->file = 'map_areas.yaml';
+			$file->id_robot_config = $config->id_robot_config;
+			$file->is_file = 0;
+			$file->name = '';
+		}
+			
+		
+		$file->data = 'image: map_areas.png
+resolution: 0.05
+origin: [0.0, 0.0, 0.0]
+occupied_thresh: 0.65
+free_thresh: 0.196
+negate: 0
+mode: raw
+';	
+		
+		$file->date_upd_server = date('Y-m-d H:i:s');
+		$file->date_upd_robot = '0000-00-00 00:00:00';
+		$file->Save();
+	}
+	
+	public function ExportYamlZones($config)
+	{
+		$fichiers = $config->GetListByFile();
+		$map_found = false;
+		$file = null;
+		foreach($fichiers as $f)
+		{
+			if ($f->directory == '/map' && $f->file == 'areas.yaml')
+			{
+				$map_found = true;
+				$file = $f;
+				break;
+			}
+		}
+		
+		if (!$map_found)
+		{
+			$file = new RobotConfigValue();
+			$file->directory = '/map';
+			$file->file = 'areas.yaml';
 			$file->id_robot_config = $config->id_robot_config;
 			$file->is_file = 0;
 			$file->name = '';
@@ -394,25 +433,17 @@ class Plan extends PlanCore
 			
 			$led_R = 0;
 			$led_G = 0;
-			$led_B = 0;
+			$led_B = 255;
 			if ($led_color_mode != 'Automatic')
 			{
 				$t = substr($led_color, 4, -1);
 				$t = explode(',', $t);
 				$led_R = isset($t[0])?((int)$t[0]):0;
 				$led_G = isset($t[1])?((int)$t[1]):0;
-				$led_B = isset($t[2])?((int)$t[2]):0;
-
-				if ($led_R + $led_G + $led_B == 0)
-				{
-					// Forcer une couleur
-					$led_R = 1; 
-					$led_G = 1; 
-					$led_B = 1; 
-				}
+				$led_B = isset($t[2])?((int)$t[2]):255;
 			}
 			
-			$file->data .= '- zone_couleur: '.$index_color.'
+			$file->data .= '- area_color: '.$index_color.'
   led_anim: '.( ($led_animation_mode == 'Automatic')?0:$led_animation ).'
   led_R: '.$led_R.'
   led_G: '.$led_G.'
