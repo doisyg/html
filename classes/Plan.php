@@ -287,7 +287,6 @@ class Plan extends PlanCore
 				
 				$imagick = new Imagick();
 				$imagick->newImage(imagesx($image), imagesy($image), $backgroundColor);
-				$imagick->readImageBlob($contents);
 				
 				$draw = new \ImagickDraw();
 				
@@ -395,14 +394,22 @@ class Plan extends PlanCore
 			
 			$led_R = 0;
 			$led_G = 0;
-			$led_B = 255;
+			$led_B = 0;
 			if ($led_color_mode != 'Automatic')
 			{
 				$t = substr($led_color, 4, -1);
 				$t = explode(',', $t);
 				$led_R = isset($t[0])?((int)$t[0]):0;
 				$led_G = isset($t[1])?((int)$t[1]):0;
-				$led_B = isset($t[2])?((int)$t[2]):255;
+				$led_B = isset($t[2])?((int)$t[2]):0;
+
+				if ($led_R + $led_G + $led_B == 0)
+				{
+					// Forcer une couleur
+					$led_R = 1; 
+					$led_G = 1; 
+					$led_B = 1; 
+				}
 			}
 			
 			$file->data .= '- zone_couleur: '.$index_color.'

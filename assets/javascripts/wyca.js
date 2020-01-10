@@ -273,7 +273,7 @@ function EnableJoystick(enable)
 
 function SendJoystickOn()
 {
-	if (robotCurrentState == 'undocked')
+	if (robotCurrentState == 'undocked' || robotCurrentState == '')
 		wycaApi.JoystickIsSafeOff(false);
 }
 
