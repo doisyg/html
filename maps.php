@@ -167,9 +167,9 @@ include ('template/header.php');
                         </div>
                     
                     	<div id="mapping_view" style="height:152px; width:100%; margin:10px 0; border:1px solid #EFEFEF; position:relative; overflow:hidden;">
-                            <img id="mapping_robot" src="assets/images/robot-dessus.png" width="5" style="position:absolute; bottom:50px; z-index:300;" />
-	                        <img id="img_map_saved" src="" style="position:absolute; z-index:200" />
-                            <!--<img id="img_map_saved" src="" height="150" />-->
+                            <img id="mapping_robot" src="assets/images/robot-dessus.png" width="6" style="position:absolute; bottom:50px; margin-left:-3px; z-index:300;" />
+                            <!--<div id="img_map_div" style="position:absolute; z-index:200"><img id="img_map_saved" src="" /></div>-->
+                            <img id="img_map_saved" src="" style="position:absolute; z-index:200" />
                         </div>
                         
                         <!--<?php echo __('Enable joystick');?> <a href="#" class="bToggleJosytick"><i class="ico_jotick fa fa-toggle-off" style="font-size:30px;"></i></a>-->

@@ -20,6 +20,7 @@ var timeoutStopFollow = null;
 
 var mappingLastPose = null;
 var mappingLastInfo = null;
+var mappingLastOrigin = {'x':0, 'y':0 };
 
 $(document).ready(function(e) {
 	
@@ -108,12 +109,23 @@ $(document).ready(function(e) {
 			lastEStop = data.is_safety_stop_button;
 		},
 		onMappingRobotPoseChange: function(data){
-			mappingLastPose = data;
-			InitPosCarteMapping();
+            mappingLastPose = data;
+            InitPosCarteMapping();
 		},
+        onMapInConstruction: function(data){
+            var img = document.getElementById("img_map_saved");
+            img.src = 'data:image/png;base64,' + data.map.data;
+            mappingLastOrigin = {'x':data.x_origin, 'y':data.y_origin };
+            InitPosCarteMapping();
+        },
+        /*
 		onMappingMapSaved: function(message){
-			//console.log(data);
-			if ($('#mapping_view').length > 0)
+            console.log('onMappingMapSaved');
+            return;
+            doRefresh++;
+            if (doRefresh == 5) doRefresh = 1;
+
+            if (doRefresh == 1 && $('#mapping_view').length > 0)
 			{
 				mappingLastInfo = message.info;
 				
@@ -122,7 +134,7 @@ $(document).ready(function(e) {
 				canvas.height = message.info.height;
 				var ctx = canvas.getContext("2d");
 				
-				var imageData = ctx.createImageData(message.info.width, message.info.height);
+                var imageData = ctx.createImageData(message.info.width, message.info.height);
 				for ( var row = 0; row < message.info.height; row++)
 				{
 					for ( var col = 0; col < message.info.width; col++)
@@ -139,19 +151,19 @@ $(document).ready(function(e) {
 						val = 255;
 						} else {
 						val = 127;
-						}
-						
-						
-						// determine the index into the image data array
-						var i = (col + (row * message.info.width)) * 4;
-						// r
-						imageData.data[i] = val;
-						// g
-						imageData.data[++i] = val;
-						// b
-						imageData.data[++i] = val;
-						// a
-						imageData.data[++i] = 255;
+                        }
+
+
+                        // determine the index into the image data array
+                        var i = (col + (row * message.info.width)) * 4;
+                        // r
+                        imageData.data[i] = val;
+                        // g
+                        imageData.data[++i] = val;
+                        // b
+                        imageData.data[++i] = val;
+                        // a
+                        imageData.data[++i] = 255;
 					}
 				}
 				
@@ -169,9 +181,9 @@ $(document).ready(function(e) {
 				img.src = canvas.toDataURL("image/png");
 				//document.body.appendChild(img);
 				
-				InitPosCarteMapping();				
+                InitPosCarteMapping();
 			}
-		}
+        }*/
 	});
 	
 	wycaApi.init();	
@@ -199,6 +211,8 @@ $(document).ready(function(e) {
 	
 });
 
+var doRefresh = 0;
+
 /*
 mappingLastPose
 mappingLastInfo
@@ -206,46 +220,48 @@ mappingLastInfo
 function InitPosCarteMapping()
 {
 	// On affiche 15 metre sur les 150pixels visible = 1px pour 10cm
-	if (mappingLastInfo != null)
-	{
-		hauteurCm = mappingLastInfo.height * 5;
+    originWidth = $('#img_map_saved').prop('naturalWidth');
+    originHeight = $('#img_map_saved').prop('naturalHeight');
+    if (originWidth > 0 && originHeight > 0) //mappingLastInfo != null)
+    {
+        hauteurCm = originHeight * 5;
 		hauteurM = hauteurCm / 100;
 		
-		$('#img_map_saved').height(mappingLastInfo.height / 2);
-		
+        $('#img_map_saved').height(originHeight / 2); // 1px pour 10cm
+
 		if (mappingLastPose != null)
 		{
-			posLeft = mappingLastPose.x - mappingLastInfo.origin.position.x ;
-			posBottom = mappingLastInfo.origin.position.y - mappingLastPose.y;
+            //console.log('Robot pose ', mappingLastPose.x, ' ', mappingLastPose.y);
+            posLeft = mappingLastPose.x - mappingLastOrigin.x;
+            posBottom = - mappingLastPose.y + mappingLastOrigin.y;
 			
 			posLeft = posLeft * 10; // 1px pour 10cm
 			posBottom = posBottom * 10; // 1px pour 10cm
 			
 			centreVueLeft = $('#mapping_view').width() / 2;
 			centreVueBottom = 50;
-		
-			console.log('mappingLastPose.y', mappingLastPose.y);
-			console.log('mappingLastInfo.origin.position.y', mappingLastInfo.origin.position.y);
-			console.log('posBottom', posBottom);
-	
+
 			decallageLeft  = centreVueLeft - posLeft;
-			decallageBottom  = posBottom - centreVueBottom;
+            decallageBottom  = posBottom + centreVueBottom + 3;
 			
-			console.log('decallageBottom', decallageBottom);
+            //console.log('decallageBottom', decallageBottom);
 			
-			$('#img_map_saved').css('left', decallageLeft);
-			$('#img_map_saved').css('bottom', decallageBottom);
+            //$('#img_map_saved_div').css('left', decallageLeft);
+            //$('#img_map_saved_div').css('bottom', decallageBottom);
+
+            $('#img_map_saved').css('left', decallageLeft);
+            $('#img_map_saved').css('bottom', decallageBottom);
+
 			
 			deg = mappingLastPose.theta * 180 / Math.PI - 90;
+            //deg = 180;
 			
-			/*
-			$('#img_map_saved').css({
+            $('#img_map_saved').css({
 		        "-webkit-transform": "rotate("+deg+"deg)",
 				"-moz-transform": "rotate("+deg+"deg)",
 				"transform": "rotate("+deg+"deg)",
-				"transform-origin":posLeft+" "+(mappingLastInfo.height/2 - posBottom)
-			});
-			*/
+                "transform-origin":(mappingLastPose.x - mappingLastOrigin.x)*10 + "px " + (originHeight/2 - ((mappingLastPose.y - mappingLastOrigin.y) * 10))+"px"
+            });
 		}
 	}
 }
