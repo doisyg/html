@@ -22,6 +22,8 @@ var mappingLastPose = null;
 var mappingLastInfo = null;
 var mappingLastOrigin = {'x':0, 'y':0 };
 
+var drawLaserInProgress = false;
+
 $(document).ready(function(e) {
 	
 	wycaApi = new WycaAPI({
@@ -118,6 +120,34 @@ $(document).ready(function(e) {
             mappingLastOrigin = {'x':data.x_origin, 'y':data.y_origin };
             InitPosCarteMapping();
         },
+        onSensorsLaserScan: function(data)
+        {
+            if (!drawLaserInProgress)
+            {
+                drawLaserInProgress = true;
+
+                var canvas = document.getElementById('laser_scan');
+                var ctx = canvas.getContext('2d');
+                var zoom = 10;
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#0088CC';
+                angle = data.angle_min;
+                i = 0;
+                while (angle <= data.angle_max)
+                {
+                    x = Math.cos(data.angle_max + data.angle_min - angle + Math.PI/2) * data.ranges[i] * zoom;
+                    y = Math.sin(data.angle_max + data.angle_min - angle + Math.PI/2) * data.ranges[i] * zoom;
+                    ctx.fillRect(canvas.width/2 + x, canvas.height - 50 - 4 - y, 1, 1);
+                    i++;
+                    angle += data.angle_increment;
+                }
+
+                drawLaserInProgress = false;
+            }
+
+        }
+
         /*
 		onMappingMapSaved: function(message){
             console.log('onMappingMapSaved');
