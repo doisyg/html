@@ -26,5 +26,16 @@ class ApiTopic extends ApiTopicCore
 		@mysqli_free_result( $result );
 		return $array;
 	}
+	
+	public function Supprimer()
+	{
+		$query="DELETE FROM api_topic WHERE id_topic = '".mysqli_real_escape_string(DB::$connexion, $this->id_topic)."'";
+		$delete=mysqli_query(DB::$connexion, $query) or die ('ERREUR Delete ApiTopic : '.$query.'<br />'.mysqli_error(DB::$connexion).'<br /><br />');
+		
+		$query="DELETE FROM api_topic_user WHERE id_topic = '".mysqli_real_escape_string(DB::$connexion, $this->id_topic)."'";
+		$delete=mysqli_query(DB::$connexion, $query) or die ('ERREUR Delete ApiTopic : '.$query.'<br />'.mysqli_error(DB::$connexion).'<br /><br />');
+	}
+	
+	
 }
 ?>

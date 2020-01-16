@@ -1,6 +1,6 @@
 <?php 
 require_once ('../config/initSite.php');
-if (!isset($_SESSION["id_developer"])) { die(print_r($_SESSION)); header("location:login.php"); }
+if (!isset($_SESSION["id_developer"])) { header("location:login.php"); }
 
 $sectionMenu = "home";
 
@@ -27,39 +27,6 @@ if (isset($_POST['prenom']))
 
 $hideColonneDroite = true;
 require_once (dirname(__FILE__).'/template/header.php');
-
-
-$plans = Plan::GetPlansFromUser($userConnected->id_user);					
-$id_robots = $userConnected->GetIdsRobot();
-
-if (count($plans)>1)
-{
-	?>
-<script>
-$(document).ready(function(e) {
-    
-	$('.select_plan').change(function(e) {
-        
-		jQuery.ajax({
-			url: 'ajax/saveCarte.php',
-			type: "post",
-			data: { 
-					'id_plan':$(this).val(),
-					'id_site':$(this).data('id_site')
-				},
-			error: function(jqXHR, textStatus, errorThrown) {
-				},
-			success: function(job, textStatus, jqXHR) {
-				
-				}
-		});
-		
-    });
-	
-});
-</script>
-	<?php
-}
 ?>
 
 <div class="col-md-6" style="padding:40px;">
@@ -135,50 +102,7 @@ $(document).ready(function(e) {
 </div>	
 </div>		
 
-
-<div class="col-md-12" style="padding:40px;">
-<div class="row call-panel" style="padding:40px;">
-
-<div class="panel-content">
-
-<h3><i class="fa fa-exchange" aria-hidden="true"></i> <?php echo __('Robots');?></h3>
-<hr>
-    <div class="row">
-        
-        <div class="col-md-12">
-            <table class="table">
-            	<thead>
-                	<tr>
-                        <th><?php echo __('ID Robot');?></th>
-                        <th><?php echo __('Name');?></th>
-                    </tr>
-                </thead>
-                <tbody>
-                	<?php
-					foreach($id_robots as $id)
-					{
-						$r = new Robot($id);
-						?>
-						<tr>
-							<th><?php echo $r->id_robot;?></th>
-							<td><?php echo $r->company;?></td>
-						</tr>
-						<?php
-					}
-					?>
-                </tbody>
-            </table>
-            
-        </div>
-    
-    </div>
-
-</div>
-        	
-</div>	
-</div>		
-
-        	
+      	
 		
 
 <?php require_once (dirname(__FILE__).'/template/footer.php');?>

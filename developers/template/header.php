@@ -82,10 +82,6 @@
   
   	<ul class="nav navbar-nav">
         <li><a href="<?php echo $_CONFIG['URL'];?>developers/"><i class="fa fa-home" aria-hidden="true"></i> <?php echo __('Home');?></a></li>
-        
-	    <li><a href="<?php echo $_CONFIG['URL'];?>developers/api_demo.php"><i class="fa fa-gamepad" aria-hidden="true"></i> <?php echo __('Demo');?></a></li>
-        <li><a href="<?php echo $_CONFIG['URL'];?>developers/documentation/index.php"><i class="fa fa-question-circle " aria-hidden="true"></i> <?php echo __('Documentation');?></a></li>
-        
         <?php
 		if ($userConnected->id_groupe_user == 1)
 		{

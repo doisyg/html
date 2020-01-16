@@ -5,6 +5,27 @@ if ($userConnected->id_groupe_user != 1) { header("location:index.php"); }
 
 $sectionMenu = "api_configuration";
 
+if (isset($_GET['delete_topic']))
+{
+	$topic = new ApiTopic($_GET['delete_topic']);
+	$topic->Supprimer();
+}
+if (isset($_GET['delete_topic_pub']))
+{
+	$topic_pub = new ApiTopicPub($_GET['delete_topic_pub']);
+	$topic_pub->Supprimer();
+}
+if (isset($_GET['delete_service']))
+{
+	$service = new ApiService($_GET['delete_service']);
+	$service->Supprimer();
+}
+if (isset($_GET['delete_action']))
+{
+	$action = new ApiAction($_GET['delete_action']);
+	$action->Supprimer();
+}
+
 $hideColonneDroite = true;
 require_once (dirname(__FILE__).'/template/header.php');
 
@@ -71,7 +92,9 @@ $(document).ready(function(e) {
                                 <td><?php echo $topic->event_name;?></td>
                                 <td><?php echo $topic->publish_name;?></td>
                                 <td><?php echo isset($services_by_id[$topic->id_service_update])?$services_by_id[$topic->id_service_update]->nom:'';?></td>
-                                <td><a href="topic_edit.php?id_topic=<?php echo $topic->id_topic;?>" title="<?php echo __('Modifier');?>" class="btn btn-success btn-sm btn-circle btn-grad" style="margin-right:10px;"><i class="fa fa-pencil "></i></a></td>
+                                <td><a href="topic_edit.php?id_topic=<?php echo $topic->id_topic;?>" title="<?php echo __('Modifier');?>" class="btn btn-success btn-sm btn-circle btn-grad" style="margin-right:10px;"><i class="fa fa-pencil "></i></a>
+                                <a href="api_configuration.php?delete_topic=<?php echo $topic->id_topic;?>" title="<?php echo __('Supprimer');?>" class="btn btn-danger btn-sm btn-circle btn-grad" style="margin-right:10px;"><i class="fa fa-times "></i></a>
+                                </td>
                             </tr>
                             <?php
                         }
@@ -108,7 +131,8 @@ $(document).ready(function(e) {
                                 <td><?php echo $topic_pub->messageType;?></td>
                                 <td><?php echo $topic_pub->function_name;?></td>
                                 <td><?php echo nl2br($topic_pub->details);?></td>
-                                <td><a href="topic_pub_edit.php?id_topic_pub=<?php echo $topic_pub->id_topic_pub;?>" title="<?php echo __('Modifier');?>" class="btn btn-success btn-sm btn-circle btn-grad" style="margin-right:10px;"><i class="fa fa-pencil "></i></a></td>
+                                <td><a href="topic_pub_edit.php?id_topic_pub=<?php echo $topic_pub->id_topic_pub;?>" title="<?php echo __('Modifier');?>" class="btn btn-success btn-sm btn-circle btn-grad" style="margin-right:10px;"><i class="fa fa-pencil "></i></a>
+                                <a href="api_configuration.php?delete_topic_pub=<?php echo $topic_pub->id_topic_pub;?>" title="<?php echo __('Supprimer');?>" class="btn btn-danger btn-sm btn-circle btn-grad" style="margin-right:10px;"><i class="fa fa-times "></i></a></td>
                             </tr>
                             <?php
                         }
@@ -145,7 +169,8 @@ $(document).ready(function(e) {
                                 <td><?php echo $service->messageType;?></td>
                                 <td><?php echo $service->function_name;?></td>
                                 <td><?php echo nl2br($service->details);?></td>
-                                <td><a href="service_edit.php?id_service=<?php echo $service->id_service;?>" title="<?php echo __('Modifier');?>" class="btn btn-success btn-sm btn-circle btn-grad" style="margin-right:10px;"><i class="fa fa-pencil "></i></a></td>
+                                <td><a href="service_edit.php?id_service=<?php echo $service->id_service;?>" title="<?php echo __('Modifier');?>" class="btn btn-success btn-sm btn-circle btn-grad" style="margin-right:10px;"><i class="fa fa-pencil "></i></a>
+                                <a href="api_configuration.php?delete_service=<?php echo $service->id_service;?>" title="<?php echo __('Supprimer');?>" class="btn btn-danger btn-sm btn-circle btn-grad" style="margin-right:10px;"><i class="fa fa-times "></i></a></td>
                             </tr>
                             <?php
                         }
@@ -183,7 +208,8 @@ $(document).ready(function(e) {
                                 <td><?php echo $action->messageType;?></td>
                                 <td><?php echo $action->function_name;?></td>
                                 <td><?php echo nl2br($action->details);?></td>
-                                <td><a href="action_edit.php?id_action=<?php echo $action->id_action;?>" title="<?php echo __('Modifier');?>" class="btn btn-success btn-sm btn-circle btn-grad" style="margin-right:10px;"><i class="fa fa-pencil "></i></a></td>
+                                <td><a href="action_edit.php?id_action=<?php echo $action->id_action;?>" title="<?php echo __('Modifier');?>" class="btn btn-success btn-sm btn-circle btn-grad" style="margin-right:10px;"><i class="fa fa-pencil "></i></a>
+                                <a href="api_configuration.php?delete_action=<?php echo $action->id_action;?>" title="<?php echo __('Supprimer');?>" class="btn btn-danger btn-sm btn-circle btn-grad" style="margin-right:10px;"><i class="fa fa-times "></i></a></td>
                             </tr>
                             <?php
                         }

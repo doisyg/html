@@ -42,5 +42,17 @@ class ApiService extends ApiServiceCore
 		
 		return array('entree' => $params_entree, 'sortie' => $params_sortie);
 	}
+	
+	public function Supprimer()
+	{
+		$query="DELETE FROM api_service WHERE id_service = '".mysqli_real_escape_string(DB::$connexion, $this->id_service)."'";
+		$delete=mysqli_query(DB::$connexion, $query) or die ('ERREUR Delete api_service : '.$query.'<br />'.mysqli_error(DB::$connexion).'<br /><br />');
+		
+		$query="DELETE FROM api_service_user WHERE id_service = '".mysqli_real_escape_string(DB::$connexion, $this->id_service)."'";
+		$delete=mysqli_query(DB::$connexion, $query) or die ('ERREUR Delete api_service_user : '.$query.'<br />'.mysqli_error(DB::$connexion).'<br /><br />');
+		
+		$query="UPDATE api_topic WHERE id_service_update = -1 WHERE id_service_update = '".mysqli_real_escape_string(DB::$connexion, $this->id_service)."'";
+		$delete=mysqli_query(DB::$connexion, $query) or die ('ERREUR Update api_topic : '.$query.'<br />'.mysqli_error(DB::$connexion).'<br /><br />');
+	}
 }
 ?>
