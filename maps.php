@@ -197,6 +197,50 @@ include ('template/header.php');
 <?php
 }?>
 
+<script>
+optionsWyca = {
+		onMappingRobotPoseChange: function(data){
+            mappingLastPose = data;
+            InitPosCarteMapping();
+		},
+        onMapInConstruction: function(data){
+            var img = document.getElementById("img_map_saved");
+            img.src = 'data:image/png;base64,' + data.map.data;
+            mappingLastOrigin = {'x':data.x_origin, 'y':data.y_origin };
+            InitPosCarteMapping();
+        },
+        /*
+        onSensorsLaserScan: function(data)
+        {
+            if ($('#laser_scan:visible').length > 0)
+            if (!drawLaserInProgress)
+            {
+                drawLaserInProgress = true;
+
+                var canvas = document.getElementById('laser_scan');
+                var ctx = canvas.getContext('2d');
+                var zoom = 10;
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#0088CC';
+                angle = data.angle_min;
+                i = 0;
+                while (angle <= data.angle_max)
+                {
+                    x = Math.cos(data.angle_max + data.angle_min - angle + Math.PI/2) * data.ranges[i] * zoom;
+                    y = Math.sin(data.angle_max + data.angle_min - angle + Math.PI/2) * data.ranges[i] * zoom;
+                    ctx.fillRect(canvas.width/2 + x, canvas.height - 50 - 4 - y, 1, 1);
+                    i++;
+                    angle += data.angle_increment;
+                }
+
+                drawLaserInProgress = false;
+            }
+
+        }
+        */
+	};
+</script>
 <?php 
 include ('template/footer.php');
 ?>

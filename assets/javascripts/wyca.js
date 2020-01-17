@@ -26,7 +26,7 @@ var drawLaserInProgress = false;
 
 $(document).ready(function(e) {
 	
-	wycaApi = new WycaAPI({
+	var optionsDefault = {
 		api_key:'5LGU.LaYMMncJaA0i42HwsX9ZX-RCNgj-9V17ROFXt71st',
 		id_robot:3,
 		host:'elodie.wyca-solutions.com:9090', //192.168.1.32:9090', // host:'192.168.100.245:9090',
@@ -104,47 +104,12 @@ $(document).ready(function(e) {
 			initStateRobot(data);
 		},
         */
-		onMappingRobotPoseChange: function(data){
-            mappingLastPose = data;
-            InitPosCarteMapping();
-		},
-        onMapInConstruction: function(data){
-            var img = document.getElementById("img_map_saved");
-            img.src = 'data:image/png;base64,' + data.map.data;
-            mappingLastOrigin = {'x':data.x_origin, 'y':data.y_origin };
-            InitPosCarteMapping();
-        },
-        /*
-        onSensorsLaserScan: function(data)
-        {
-            if ($('#laser_scan:visible').length > 0)
-            if (!drawLaserInProgress)
-            {
-                drawLaserInProgress = true;
-
-                var canvas = document.getElementById('laser_scan');
-                var ctx = canvas.getContext('2d');
-                var zoom = 10;
-
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = '#0088CC';
-                angle = data.angle_min;
-                i = 0;
-                while (angle <= data.angle_max)
-                {
-                    x = Math.cos(data.angle_max + data.angle_min - angle + Math.PI/2) * data.ranges[i] * zoom;
-                    y = Math.sin(data.angle_max + data.angle_min - angle + Math.PI/2) * data.ranges[i] * zoom;
-                    ctx.fillRect(canvas.width/2 + x, canvas.height - 50 - 4 - y, 1, 1);
-                    i++;
-                    angle += data.angle_increment;
-                }
-
-                drawLaserInProgress = false;
-            }
-
-        }
-        */
-	});
+	};
+	
+	if (optionsWyca == undefined)
+		$.extend(true, optionsDefault, optionsDefault, optionsWyca);
+	
+	wycaApi = new WycaAPI(optionsDefault);
 	
 	wycaApi.init();	
 	
