@@ -199,7 +199,7 @@ include ('template/header.php');
 
 <script>
 optionsWyca = {
-		onMappingRobotPoseChange: function(data){
+        onMappingRobotPoseChange: function(data){
             mappingLastPose = data;
             InitPosCarteMapping();
 		},
@@ -207,7 +207,6 @@ optionsWyca = {
             var img = document.getElementById("img_map_saved");
             img.src = 'data:image/png;base64,' + data.map.data;
             mappingLastOrigin = {'x':data.x_origin, 'y':data.y_origin };
-            InitPosCarteMapping();
         },
         /*
         onSensorsLaserScan: function(data)
@@ -265,8 +264,8 @@ var gridClient;
 	});
 	
 	$("img").on("load", function() {
-       //console.log('map loaded');
-    })
+           InitPosCarteMapping();
+        })
 	
 	$('#bMappingSaveMap').click(function(e) {
 		if ($('#form_mapping_name').val() == '')
@@ -277,6 +276,8 @@ var gridClient;
 		else
 		{
 			$('#form_mapping_image').val($('#img_map_saved').attr('src'));
+                        $('#form_mapping_ros_largeur').val($('#img_map_saved').prop('naturalWidth'));
+                        $('#form_mapping_ros_hauteur').val($('#img_map_saved').prop('naturalHeight'));
 			$('#form_mapping').submit();
 			
 			$('#modalCreateMap').modal('hide');
