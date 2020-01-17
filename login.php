@@ -1,4 +1,7 @@
 <?php $notCloseSession = true; include_once('./config/initSite.php');
+
+Update::CheckUpdate();
+
 if (isset($_POST['email']))
 {
 	if (User::CheckConnexion($_POST['email'], $_POST['password']))

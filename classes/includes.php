@@ -3,6 +3,7 @@ require_once(dirname(__FILE__).'/DB.php');
 require_once(dirname(__FILE__).'/Email.php');
 require_once(dirname(__FILE__).'/Translate.php');
 require_once(dirname(__FILE__).'/Crypt.php');
+require_once(dirname(__FILE__).'/Update.php');
 require_once(dirname(__FILE__).'/ApiActionCore.php');
 require_once(dirname(__FILE__).'/ApiAction.php');
 require_once(dirname(__FILE__).'/ApiActionUserCore.php');
