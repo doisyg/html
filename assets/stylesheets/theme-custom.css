@@ -167,15 +167,16 @@ pre.normal {
 .joystickDiv .curseur { background-image:url(../images/bouton.png); width:104px; height:104px; position:absolute; top:62px; left:58px; z-index:200; }
 
 
-.battery-ok{
-	color:#6cb877; margin-right:10px;
+.battery-mid{
+	color:#d78e54; margin-right:10px;
 }
 .battery-ko{
 	color:#cc0000; margin-right:10px;
 }
-.battery-mid{
-	color:#d78e54; margin-right:10px;
+.battery-ok{
+	color:#6cb877; margin-right:10px;
 }
+
 .blinking{
 	animation: blinker 1s linear infinite;
 }

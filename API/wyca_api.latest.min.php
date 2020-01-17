@@ -3,8 +3,8 @@ if (!isset($_GET['api_key'])) { echo 'alert("WycaAPI - API KEY is needed");'; ex
 require_once ('../config/initSite.php');
 
 
-$topics_interne = array('onArrivedToDestination', 'onArrivedToPOI', 'onArrivedToBox', 'onMapBoxClick', 'onMapRouteClick', 'onMapIsLoaded');
-$services_interne = array('MapGetHTML', 'MapInit', 'GetPOIs', 'GetBoxs', 'RobotMoveToDock', 'RobotMoveToPOI', 'RobotMoveToBox', 'InitDynamicsTopics', 'InitDynamicServices', 'TakePhotoCamNav', 'TakePhotoCamCustomer');
+$topics_interne = array('onMapBoxClick', 'onMapRouteClick', 'onMapIsLoaded');
+$services_interne = array('MapGetHTML', 'MapInit', 'GetPOIs', 'RobotMoveToDock', 'RobotMoveToPOI', 'InitDynamicsTopics', 'InitDynamicServices');
 $actions_interne = array();
 $topic_pubs_interne = array();
 		
@@ -23,50 +23,6 @@ $topics = $user->GetApiTopics();
 $topic_pubs = $user->GetApiTopicPubs();
 $services = $user->GetApiServices();
 $actions = $user->GetApiActions();
-
-$issetMappingServices = false;
-foreach($services as $service)
-	if ($service->nom == '/wyca_mapping/start') { $issetMappingServices = true; break; }
-
-if (!$issetMappingServices)
-{
-	$query = "INSERT INTO `api_service` (`groupe`, `nom`, `messageType`, `function_name`, `details`) VALUES ('Mapping', '/wyca_mapping/start', 'std_srvs/Trigger', 'MappingStart', '---\r\nbool success   # indicate successful run of triggered service\r\nstring message # informational, e.g. for error messages')";
-	$r = mysqli_query(DB::$connexion, $query);
-	$id = mysqli_insert_id(DB::$connexion);
-	
-	$query = "INSERT INTO `api_service_user` (`id_service`, `id_user`) VALUES (".$id.", 1)";
-	$r = mysqli_query(DB::$connexion, $query);
-	
-	
-	$query = "INSERT INTO `api_service` (`groupe`, `nom`, `messageType`, `function_name`, `details`) VALUES ('Mapping', '/wyca_mapping/stop', 'std_srvs/Trigger', 'MappingStop', '---\r\nbool success   # indicate successful run of triggered service\r\nstring message # informational, e.g. for error messages')";
-	$r = mysqli_query(DB::$connexion, $query);
-	$id = mysqli_insert_id(DB::$connexion);
-	
-	$query = "INSERT INTO `api_service_user` (`id_service`, `id_user`) VALUES (".$id.", 1)";
-	$r = mysqli_query(DB::$connexion, $query);
-	
-	$services = $user->GetApiServices();
-	
-		
-	$query = "INSERT INTO `api_topic` (`groupe`, `nom`, `messageType`, `event_name`, `publish_name`, `id_service_update`) VALUES
-	('Mapping', '/wyca_mapping/robot_pose_in_building_map', 'geometry_msgs/Pose2D', 'onMappingRobotPoseChange', '', 0)";
-	$r = mysqli_query(DB::$connexion, $query);
-	$id = mysqli_insert_id(DB::$connexion);
-	
-	$query = "INSERT INTO `api_topic_user` (`id_topic`, `id_user`) VALUES (".$id.", 1)";
-	$r = mysqli_query(DB::$connexion, $query);
-	
-	$query = "INSERT INTO `api_topic` (`groupe`, `nom`, `messageType`, `event_name`, `publish_name`, `id_service_update`) VALUES
-	('Mapping', '/map_saved', 'nav_msgs/OccupancyGrid', 'onMappingMapSaved', '', 0)";
-	$r = mysqli_query(DB::$connexion, $query);
-	$id = mysqli_insert_id(DB::$connexion);
-	
-	$query = "INSERT INTO `api_topic_user` (`id_topic`, `id_user`) VALUES (".$id.", 1)";
-	$r = mysqli_query(DB::$connexion, $query);
-	
-	$topics = $user->GetApiTopics();
-}
-
 
 $topics_by_id = array();
 foreach($topics as $topic)
@@ -392,91 +348,7 @@ function WycaAPI(options){
 	}
 	
 	
-	<?php
-	$topicArrived = ApiTopic::GetByEventName('onArrivedToDestination');
-	$topicArrivedPoi = ApiTopic::GetByEventName('onArrivedToPOI');
-	$topicArrivedBox = ApiTopic::GetByEventName('onArrivedToBox');
-	
-	$serviceTakePhotoCamNav = ApiService::GetByFunctionName('TakePhotoCamNav');
-	$serviceTakePhotoCamCustomer = ApiService::GetByFunctionName('TakePhotoCamCustomer');
-	?>
-	
-	this._compteurPhotoNav = 0;
-	this._topicImageCamNavIndex = -1;
-	this._topicImageCamNavAlreadyInit = false;
-	this.TakePhotoCamNav = function()
-	{
-		if (_this._topicImageCamNavIndex > -1)
-		{
-			if (_this.options.nick != 'robot')
-			{
-				//this.ros_services[<?php echo $serviceTakePhotoCamNav->id_service;?>] = function_return;
-				msg = { action: 'callService', name: '<?php echo $serviceTakePhotoCamNav->id_service;?>', params : {}};
-				_this.webrtc.sendToAll('ros', {message: msg, nick: _this.webrtc.config.nick});
-			}
-			else
-			{
-				if (_this._topicImageCamNavAlreadyInit)
-				{
-					_this.ros_topics[_this._topicImageCamNavIndex].subscribe();
-				}
-				else
-				{
-					_this._topicImageCamNavAlreadyInit = true;
-					_this.ros_topics[_this._topicImageCamNavIndex].subscribe(jQuery.proxy(function(message) { 
-						_this._compteurPhotoNav++;
-						if (_this._compteurPhotoNav >= 2)
-						{
-							_this._compteurPhotoNav=0;
-							data = message; if (message.data != undefined) data = message.data; 
-							if(_this.ros_topics_subscribed_by_pc[_this._topicImageCamNavIndex]) _this.ROSMessageSendToPC({ topic: _this._topicImageCamNavIndex, data: data });
-							if (_this.options.onGetPhotoCamNav != undefined) _this.options.onGetPhotoCamNav(data);
-							_this.ros_topics[_this._topicImageCamNavIndex].unsubscribe();
-						}
-					}, this));	
-				}
-			}
-		}
-	}
-	this._compteurPhotoCustomer = 0;
-	this._topicImageCamCustomerIndex = -1;
-	this._topicImageCamCustomerAlreadyInit = false;
-	this.TakePhotoCamCustomer = function()
-	{
-		if (_this._topicImageCamCustomerIndex > -1)
-		{	
-			if (_this.options.nick != 'robot')
-			{
-				//this.ros_services[<?php echo $serviceTakePhotoCamCustomer->id_service;?>] = function_return;
-				msg = { action: 'callService', name: '<?php echo $serviceTakePhotoCamCustomer->id_service;?>', params : {}};
-				_this.webrtc.sendToAll('ros', {message: msg, nick: _this.webrtc.config.nick});
-			}
-			else
-			{	
-				if (_this._topicImageCamCustomerAlreadyInit)
-				{
-					_this.ros_topics[_this._topicImageCamCustomerIndex].subscribe();
-				}
-				else
-				{
-					_this._topicImageCamCustomerAlreadyInit = true;
-					_this.ros_topics[_this._topicImageCamCustomerIndex].subscribe(jQuery.proxy(function(message) { 
-						_this._compteurPhotoCustomer++;
-						if (_this._compteurPhotoCustomer >= 2)
-						{
-							_this._compteurPhotoCustomer=0;
-							data = message; if (message.data != undefined) data = message.data; 
-							if(_this.ros_topics_subscribed_by_pc[_this._topicImageCamCustomerIndex]) _this.ROSMessageSendToPC({ topic: _this._topicImageCamCustomerIndex, data: data });
-							if (_this.options.onGetPhotoCamCustomer != undefined) _this.options.onGetPhotoCamCustomer(data);
-							_this.ros_topics[_this._topicImageCamCustomerIndex].unsubscribe();
-						}
-					}, this));
-				}
-			}
-		}
-	}
-	
-	this._call_stop = false;
+        this._call_stop = false;
 	this._robot_state = '';
 	this._current_goal = '';
 	
@@ -497,155 +369,14 @@ function WycaAPI(options){
 			if (_this._call_stop)
 			{
 				_this._call_stop = false;
-			}
-			else
-			{
-				if (this._current_goal != '')
-				{
-					// On calcul la distance entre le robot et le poi1
-					dMin =  Math.sqrt((this._current_goal.x - this.lastCoordRobot.x) * (this._current_goal.x - this.lastCoordRobot.x) + (this._current_goal.y - this.lastCoordRobot.y) * (this._current_goal.y - this.lastCoordRobot.y) );
-					if (dMin < _this.options.distance_max_arrived)
-					{
-						if(_this.ros_topics_subscribed_by_pc[<?php echo $topicArrived->id_topic;?>]) _this.ROSMessageSendToPC({ topic: <?php echo $topicArrived->id_topic;?>, data: true });
-						this.options.onArrivedToDestination(true);
-					}
-					else
-					{
-						if(_this.ros_topics_subscribed_by_pc[<?php echo $topicArrived->id_topic;?>]) _this.ROSMessageSendToPC({ topic: <?php echo $topicArrived->id_topic;?>, data: false });
-						this.options.onArrivedToDestination(false);
-					}
-				}
-			
-				// On calcul la distance entre le robot et le poi1
-				if (_this._lastPoi != '')
-				{
-					dMin = 999999;
-					idMin = -1;
-					for(var i= 0; i < this.plans.length; i++)
-					{
-						if (this.plans[i].floor == _this.current_floor)
-						{
-							for(var j= 0; j < this.plans[i].pois.length; j++)
-							{
-								poi = this.plans[i].pois[j];
-								if (_this.lastPoi == poi.name)
-								{							
-									d =  Math.sqrt((poi.position.x - this.lastCoordRobot.x) * (poi.position.x - this.lastCoordRobot.x) + (poi.position.y - this.lastCoordRobot.y) * (poi.position.y - this.lastCoordRobot.y) );
-									if (d < dMin)
-									{
-										dMin = d;
-										idMin = poi.num;
-									}
-								}
-							}
-						}
-					}
-					
-					if (dMin < _this.options.distance_max_arrived)
-					{
-						if(_this.ros_topics_subscribed_by_pc[<?php echo $topicArrivedPoi->id_topic;?>]) _this.ROSMessageSendToPC({ topic: <?php echo $topicArrivedPoi->id_topic;?>, data: jQuery.parseJSON('{"arrived":true,"poi_name":"poi'+idMin+'"}') });
-						this.options.onArrivedToPOI(jQuery.parseJSON('{"arrived":true,"poi_name":"poi'+idMin+'"}'));
-					}
-					else
-					{
-						//if(_this.ros_topics_subscribed_by_pc[<?php echo $topicArrivedPoi->id_topic;?>]) _this.ROSMessageSendToPC({ topic: <?php echo $topicArrivedPoi->id_topic;?>, data: true });
-						//this.options.onArrivedToPOI(false, -1);
-					}
-				}
-				
-				// On calcul la distance entre le robot et le poi1
-				if (_this._lastBox != '')
-				{
-					dMin = 999999;
-					idMin = -1;
-					for(var i= 0; i < this.plans.length; i++)
-					{
-						if (this.plans[i].floor == _this.current_floor)
-						{
-							//console.log(this.plans[i].boxs);
-							for(var j= 0; j < this.plans[i].boxs.length; j++)
-							{
-								box = this.plans[i].boxs[j];
-								if (_this.lastBox == box.name)
-								{
-									d =  Math.sqrt((box.position.x - this.lastCoordRobot.x) * (box.position.x - this.lastCoordRobot.x) + (box.position.y - this.lastCoordRobot.y) * (box.position.y - this.lastCoordRobot.y) );
-									if (d < dMin)
-									{
-										dMin = d;
-										idMin = box.numbox;
-									}
-								}
-							}
-						}
-					}
-					
-					if (dMin < _this.options.distance_max_arrived)
-					{
-						if(_this.ros_topics_subscribed_by_pc[<?php echo $topicArrivedBox->id_topic;?>]) _this.ROSMessageSendToPC({ topic: <?php echo $topicArrivedBox->id_topic;?>, data: jQuery.parseJSON('{"arrived":true,"box_name":"box'+idMin+'"}') });
-						this.options.onArrivedToBox(jQuery.parseJSON('{"arrived":true,"box_name":"box'+idMin+'"}'));
-					}
-					else
-					{
-						//if(_this.ros_topics_subscribed_by_pc[<?php echo $topicArrivedBox->id_topic;?>]) _this.ROSMessageSendToPC({ topic: <?php echo $topicArrivedBox->id_topic;?>, data: true });
-						//this.options.onArrivedToPOI(false, -1);
-					}
-				}
-			}
-			
-			_this._lastPoi = '';
-			_this._lastBox = '';
-			_this._lastPoint = '';
+                        }
 		}
 		
 		this._robot_state = data;
 	}
 	
 	this.SubscribeData = function() {
-		this.ros_topics_subscribed_by_pc[<?php echo $topicArrived->id_topic;?>] = false;
-		if (this.options.<?php echo $topicArrived->event_name;?> != undefined)
-		{
-			if (this.options.nick != 'robot')
-			{
-				msg = { action: 'addTopic', name: '<?php echo $topicArrived->id_topic;?>'};
-				this.webrtc.sendToAll('ros', {message: msg, nick: _this.webrtc.config.nick});
-			}
-			else
-			{
-				this.ros_topics_subscribed[<?php echo $topicArrived->id_topic;?>] = true;
-			}
-		}
-		else this.ros_topics_subscribed[<?php echo $topicArrived->id_topic;?>] = false;
-		
-		this.ros_topics_subscribed_by_pc[<?php echo $topicArrivedPoi->id_topic;?>] = false;
-		if (this.options.<?php echo $topicArrivedPoi->event_name;?> != undefined)
-		{
-			if (this.options.nick != 'robot')
-			{
-				msg = { action: 'addTopic', name: '<?php echo $topicArrivedPoi->id_topic;?>'};
-				this.webrtc.sendToAll('ros', {message: msg, nick: _this.webrtc.config.nick});
-			}
-			else
-			{
-				this.ros_topics_subscribed[<?php echo $topicArrivedPoi->id_topic;?>] = true;
-			}
-		}
-		else this.ros_topics_subscribed[<?php echo $topicArrivedPoi->id_topic;?>] = false;
-		
-		this.ros_topics_subscribed_by_pc[<?php echo $topicArrivedBox->id_topic;?>] = false;
-		if (this.options.<?php echo $topicArrivedBox->event_name;?> != undefined)
-		{
-			if (this.options.nick != 'robot')
-			{
-				msg = { action: 'addTopic', name: '<?php echo $topicArrivedBox->id_topic;?>'};
-				this.webrtc.sendToAll('ros', {message: msg, nick: _this.webrtc.config.nick});
-			}
-			else
-			{
-				this.ros_topics_subscribed[<?php echo $topicArrivedBox->id_topic;?>] = true;
-			}
-		}
-		else this.ros_topics_subscribed[<?php echo $topicArrivedBox->id_topic;?>] = false;
-		<?php
+                <?php
 		foreach($topics as $topic)
 		{
 			if (in_array($topic->event_name, $topics_interne)) continue;
@@ -665,27 +396,12 @@ function WycaAPI(options){
 				}
 				?>
 			}
-			if (this.options.<?php echo $topic->event_name;?> != undefined <?php if ($topic->nom == '/keylo_arduino/current_floor' || $topic->nom == '/keylo_api/navigation/robot_pose' || $topic->nom == '/keylo_api/navigation/current_goal' || $topic->nom == '/keylo_api/navigation/robot_state'){?>|| this.ros_topics_subscribed[<?php echo $topicArrived->id_topic;?>] || this.ros_topics_subscribed[<?php echo $topicArrivedPoi->id_topic;?>] || this.ros_topics_subscribed[<?php echo $topicArrivedBox->id_topic;?>]<?php }?>)
+                        if (this.options.<?php echo $topic->event_name;?> != undefined)
 			{
 				if (this.options.nick != 'robot')
 				{
 					if ('<?php echo $topic->event_name;?>' != 'onJoystickInput')
-					{
-						<?php
-						if ($topic->event_name == 'onGetPhotoCamNav')
-						{
-							?>
-							this._topicImageCamNavIndex = <?php echo $topic->id_topic;?>;
-							<?php
-						}
-						elseif ($topic->event_name == 'onGetPhotoCamCustomer')
-						{
-							 ?>
-							 this._topicImageCamCustomerIndex = <?php echo $topic->id_topic;?>;
-							 <?php
-						}
-						?>
-						 
+                                        {
 						msg = { action: 'addTopic', name: '<?php echo $topic->id_topic;?>'};
 						this.webrtc.sendToAll('ros', {message: msg, nick: _this.webrtc.config.nick});
 					}
@@ -694,52 +410,12 @@ function WycaAPI(options){
 				{
 					this.ros_topics_subscribed[<?php echo $topic->id_topic;?>] = true;
 					
-					<?php if ($topic->event_name != 'onGetPhotoCamCustomer' && $topic->event_name != 'onGetPhotoCamNav') // subscribe on demand
-					{
-						?>
-					this.ros_topics[<?php echo $topic->id_topic;?>].subscribe(jQuery.proxy(function(message) { data = message; if (message.data != undefined && '<?php echo $topic->messageType;?>' != 'nav_msgs/OccupancyGrid') data = message.data; if(_this.ros_topics_subscribed_by_pc[<?php echo $topic->id_topic;?>]) _this.ROSMessageSendToPC({ topic: <?php echo $topic->id_topic;?>, data: data });  <?php if ($topic->nom == '/keylo_api/navigation/robot_pose'){?>_this.PositionneRobot(data);<?php }?> <?php if ($topic->nom == '/keylo_api/navigation/current_goal'){?>_this.SaveCurrentGoal(data);<?php }?> <?php if ($topic->nom == '/keylo_arduino/current_floor'){?>_this.SaveCurrentFloor(data);<?php }?> <?php if ($topic->nom == '/keylo_api/navigation/robot_state'){?>_this.SaveRobotState(data);<?php }?> if (_this.options.<?php echo $topic->event_name;?> != undefined) _this.options.<?php echo $topic->event_name;?>(data);}, this));
-						<?php
-					}
-					else
-					{
-						if ($topic->event_name == 'onGetPhotoCamNav')
-						{
-							?>
-							this._topicImageCamNavIndex = <?php echo $topic->id_topic;?>;
-							<?php
-						}
-						elseif ($topic->event_name == 'onGetPhotoCamCustomer')
-						{
-							 ?>
-							 this._topicImageCamCustomerIndex = <?php echo $topic->id_topic;?>;
-							 <?php
-						}
-						elseif ($topic->nom == '/scan_filtered')
-						{
-							?>
-						this.ros_topics_nb[<?php echo $topic->id_topic;?>] = 0;
-						this.ros_topics[<?php echo $topic->id_topic;?>].subscribe(jQuery.proxy(function(message) { this.ros_topics_nb[<?php echo $topic->id_topic;?>]++; if (this.ros_topics_nb[<?php echo $topic->id_topic;?>]%4 == 0) { this.ros_topics_nb[<?php echo $topic->id_topic;?>]=0; return; }  data = message; if (message.data != undefined) data = message.data; if(_this.ros_topics_subscribed_by_pc[<?php echo $topic->id_topic;?>]) _this.ROSMessageSendToPC({ topic: <?php echo $topic->id_topic;?>, data: data });  _this.options.<?php echo $topic->event_name;?>(data);}, this));
-							<?php
-						}
-					}
-					?>
+                                        this.ros_topics[<?php echo $topic->id_topic;?>].subscribe(jQuery.proxy(function(message) { data = message; if (message.data != undefined && '<?php echo $topic->messageType;?>' != 'nav_msgs/OccupancyGrid') data = message.data; if(_this.ros_topics_subscribed_by_pc[<?php echo $topic->id_topic;?>]) _this.ROSMessageSendToPC({ topic: <?php echo $topic->id_topic;?>, data: data });  <?php if ($topic->nom == '/keylo_api/navigation/robot_pose'){?>_this.PositionneRobot(data);<?php }?> <?php if ($topic->nom == '/keylo_api/navigation/current_goal'){?>_this.SaveCurrentGoal(data);<?php }?> <?php if ($topic->nom == '/keylo_arduino/current_floor'){?>_this.SaveCurrentFloor(data);<?php }?> <?php if ($topic->nom == '/keylo_api/navigation/robot_state'){?>_this.SaveRobotState(data);<?php }?> if (_this.options.<?php echo $topic->event_name;?> != undefined) _this.options.<?php echo $topic->event_name;?>(data);}, this));
 				}
 			}
 			else this.ros_topics_subscribed[<?php echo $topic->id_topic;?>] = false;
 			<?php
-			}
-			elseif($topic->publish_name != '')
-			{
-				/*
-				?>
-				if (this.options.nick != 'robot')
-				{
-					msg = { action: 'addTopic', name: '<?php echo $topic->id_topic;?>'};
-					this.webrtc.sendToAll('ros', {message: msg, nick: _this.webrtc.config.nick});
-				}
-				<?php
-				*/
-			}
+                        }
 		}
 		
 		$topic = new ApiTopicPub();
@@ -2589,24 +2265,11 @@ function WycaAPI(options){
 					_this.ros_topics_subscribed_by_pc[message.name] = true;
 				break;
 			case 'callService':
-				if (message.name == <?php echo $serviceTakePhotoCamNav->id_service;?>)
-				{
-					_this.TakePhotoCamNav();
-				}
-				else if (message.name == <?php echo $serviceTakePhotoCamCustomer->id_service;?>)
-				{
-					_this.TakePhotoCamCustomer();
-				}
-				else
-					_this.ros_services[message.name].callService(message.params, function (result) { _this.ROSMessageSendToPC({ service: message.name, result: result }); });
+                                _this.ros_services[message.name].callService(message.params, function (result) { _this.ROSMessageSendToPC({ service: message.name, result: result }); });
 				break;
 			case 'callAction':
 				func = '_this.'+message.fname;
-				eval(func);
-				/*
-				_this.ros_goal_actions[message.name].goalMessage = message.params;
-				_this.ros_goal_actions[message.name].send();
-				*/
+                                eval(func);
 				break;
 			case 'callActionCancel':
 				_this.ros_goal_actions[message.name].cancel();

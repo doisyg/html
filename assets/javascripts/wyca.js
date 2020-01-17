@@ -85,31 +85,25 @@ $(document).ready(function(e) {
 		},
 		onInitialized: function(){
 		},
-		onBatteryStateChange: function(data){
+        onIsPoweredChange: function(data){
+            initPoweredState(data);
+        },
+        onSOCChange: function(data){
 			initBatteryState(data);
-		},
-		onCameraCustomerDetectionChange: function(data){	
-			initPersonnes(data);
-		},
-		onFollowMeStateChange: function(data){	
-			if (robotFollowState != data)
-			{ 
-				robotFollowState = data;
-				initFollowState(data);
-			}
-		},
+        },
+        onIsSafetyStopChange: function(data){
+            console.log('safety', data);
+            if (data)
+                $('.safety_stop').show();
+            else
+                $('.safety_stop').hide();
+            lastEStop = data;
+        },
+        /*
 		onNavigationRobotStateChange: function(data){
 			initStateRobot(data);
 		},
-		onSafetyDataChange: function(data){
-			console.log('safety', data);
-			if (data.is_safety_stop_button || data.is_safety_stop_ir || data.is_safety_logical)
-				$('.safety_stop').show();
-			else
-				$('.safety_stop').hide();
-				
-			lastEStop = data.is_safety_stop_button;
-		},
+        */
 		onMappingRobotPoseChange: function(data){
             mappingLastPose = data;
             InitPosCarteMapping();
@@ -120,8 +114,10 @@ $(document).ready(function(e) {
             mappingLastOrigin = {'x':data.x_origin, 'y':data.y_origin };
             InitPosCarteMapping();
         },
+        /*
         onSensorsLaserScan: function(data)
         {
+            if ($('#laser_scan:visible').length > 0)
             if (!drawLaserInProgress)
             {
                 drawLaserInProgress = true;
@@ -147,73 +143,7 @@ $(document).ready(function(e) {
             }
 
         }
-
-        /*
-		onMappingMapSaved: function(message){
-            console.log('onMappingMapSaved');
-            return;
-            doRefresh++;
-            if (doRefresh == 5) doRefresh = 1;
-
-            if (doRefresh == 1 && $('#mapping_view').length > 0)
-			{
-				mappingLastInfo = message.info;
-				
-				var canvas = document.createElement("canvas");
-				canvas.width = message.info.width;
-				canvas.height = message.info.height;
-				var ctx = canvas.getContext("2d");
-				
-                var imageData = ctx.createImageData(message.info.width, message.info.height);
-				for ( var row = 0; row < message.info.height; row++)
-				{
-					for ( var col = 0; col < message.info.width; col++)
-					{
-						// determine the index into the map data
-						var mapI = col + ((message.info.height - row - 1) * message.info.width);
-						// determine the value
-						var data = message.data[mapI];
-						
-						var val;
-						if (data === 100) {
-						val = 0;
-						} else if (data === 0) {
-						val = 255;
-						} else {
-						val = 127;
-                        }
-
-
-                        // determine the index into the image data array
-                        var i = (col + (row * message.info.width)) * 4;
-                        // r
-                        imageData.data[i] = val;
-                        // g
-                        imageData.data[++i] = val;
-                        // b
-                        imageData.data[++i] = val;
-                        // a
-                        imageData.data[++i] = 255;
-					}
-				}
-				
-				ctx.putImageData(imageData, 0, 0);
-				
-				
-				//$('#img_map_saved').remove();
-				//var img = $(' <img id="img_map_saved" src="" style="position:absolute; z-index:200" />'); //Equivalent: $(document.createElement('img'))
-				//img.appendTo('#mapping_view');
-				
-				$('#form_mapping_ros_largeur').val(message.info.width);
-				$('#form_mapping_ros_hauteur').val(message.info.height);
-				
-				var img = document.getElementById("img_map_saved");
-				img.src = canvas.toDataURL("image/png");
-				//document.body.appendChild(img);
-				
-                InitPosCarteMapping();
-			}
-        }*/
+        */
 	});
 	
 	wycaApi.init();	
@@ -426,34 +356,39 @@ function initStateRobot(etat)
 	
 }
 
+function initPoweredState(data)
+{
+    $('#icoBattery').removeClass('battery-ok battery-mid');
+    if (data)
+        $('#icoBattery').addClass('battery-ok');
+    else
+        $('#icoBattery').addClass('battery-mid');
+}
+
 function initBatteryState(data)
 {
 	$('#icoBattery i').removeClass('fa-battery-0 fa-battery-1 fa-battery-2 fa-battery-3 fa-battery-4');
-	$('#icoBattery').removeClass('battery-ko battery-ok battery-mid');
-	if (data < 15)
+    $('#icoBattery').removeClass('battery-ko');
+    if (data < 15)
 	{
 		$('#icoBattery i').addClass('fa-battery-0');
 		$('#icoBattery').addClass('battery-ko');
 	}
 	else if (data <= 25)
 	{
-		$('#icoBattery i').addClass('fa-battery-1');
-		$('#icoBattery').addClass('battery-ko');
+        $('#icoBattery i').addClass('fa-battery-1');
 	}
 	else if (data <= 50)
 	{
-		$('#icoBattery i').addClass('fa-battery-2');
-		$('#icoBattery').addClass('battery-mid');
+        $('#icoBattery i').addClass('fa-battery-2');
 	}
 	else if (data <= 75)
 	{
-		$('#icoBattery i').addClass('fa-battery-3');
-		$('#icoBattery').addClass('battery-ok');
+        $('#icoBattery i').addClass('fa-battery-3');
 	}
 	else
 	{
-		$('#icoBattery i').addClass('fa-battery-4');
-		$('#icoBattery').addClass('battery-ok');
+        $('#icoBattery i').addClass('fa-battery-4');
 	}
 	$('#icoBattery span').html(data+'%');
 }
