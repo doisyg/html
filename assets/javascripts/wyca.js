@@ -92,7 +92,6 @@ $(document).ready(function(e) {
 			initBatteryState(data);
         },
         onIsSafetyStopChange: function(data){
-            console.log('safety', data);
             if (data)
                 $('.safety_stop').show();
             else
@@ -106,7 +105,7 @@ $(document).ready(function(e) {
         */
 	};
 	
-	if (optionsWyca == undefined)
+	if (typeof optionsWyca !== 'undefined')
 		$.extend(true, optionsDefault, optionsDefault, optionsWyca);
 	
 	wycaApi = new WycaAPI(optionsDefault);
