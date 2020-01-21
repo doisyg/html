@@ -175,12 +175,21 @@ function InitPosCarteMapping()
 
             $('#img_map_saved').css('left', decallageLeft);
             $('#img_map_saved').css('bottom', decallageBottom);
+			
+			$('#img_map_trinary_saved').css('left', decallageLeft);
+            $('#img_map_trinary_saved').css('bottom', decallageBottom);
 
 			
 			deg = mappingLastPose.theta * 180 / Math.PI - 90;
             //deg = 180;
 			
             $('#img_map_saved').css({
+		        "-webkit-transform": "rotate("+deg+"deg)",
+				"-moz-transform": "rotate("+deg+"deg)",
+				"transform": "rotate("+deg+"deg)",
+                "transform-origin":(mappingLastPose.x - mappingLastOrigin.x)*10 + "px " + (originHeight/2 - ((mappingLastPose.y - mappingLastOrigin.y) * 10))+"px"
+            });
+            $('#img_map_trinary_saved').css({
 		        "-webkit-transform": "rotate("+deg+"deg)",
 				"-moz-transform": "rotate("+deg+"deg)",
 				"transform": "rotate("+deg+"deg)",

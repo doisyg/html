@@ -170,7 +170,13 @@ include ('template/header.php');
                             <img id="mapping_robot" src="assets/images/robot-dessus.png" width="6" style="position:absolute; bottom:50px; margin-left:-3px; z-index:300;" />
                             <!--<div id="img_map_div" style="position:absolute; z-index:200"><img id="img_map_saved" src="" /></div>-->
                             <canvas id="laser_scan" style="position:absolute; left:0px; bottom:0px; z-index:250; width:100%; height:150px;"></canvas>
-                            <img id="img_map_saved" src="" style="position:absolute; z-index:200" />
+                            <img class="map_dyn" id="img_map_saved" src="" style="position:absolute; z-index:200" />
+                        </div>
+                        
+                        
+                    	<div id="mapping_trinary_view" style="height:152px; width:100%; margin:10px 0; border:1px solid #EFEFEF; position:relative; overflow:hidden;">
+                            <img id="mapping_trinary_robot" src="assets/images/robot-dessus.png" width="6" style="position:absolute; bottom:50px; margin-left:-3px; z-index:300;" />
+                            <img class="map_dyn" id="img_map_trinary_saved" src="" style="position:absolute; z-index:200" />
                         </div>
                         
                         <!--<?php echo __('Enable joystick');?> <a href="#" class="bToggleJosytick"><i class="ico_jotick fa fa-toggle-off" style="font-size:30px;"></i></a>-->
@@ -207,6 +213,10 @@ optionsWyca = {
             var img = document.getElementById("img_map_saved");
             img.src = 'data:image/png;base64,' + data.map.data;
             mappingLastOrigin = {'x':data.x_origin, 'y':data.y_origin };
+			
+			
+            var img = document.getElementById("img_map_trinary_saved");
+            img.src = 'data:image/png;base64,' + data.map_trinary.data;
         },
         /*
         onSensorsLaserScan: function(data)
@@ -263,7 +273,7 @@ var gridClient;
 		location.href = 'maps.php?um=' + $('#bUseMap').data('id_plan');
 	});
 	
-	$("img").on("load", function() {
+	$(".map_dyn").on("load", function() {
            InitPosCarteMapping();
         })
 	
