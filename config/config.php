@@ -8,7 +8,7 @@ $_CONFIG['DIR_SECURE'] = dirname(__FILE__).'/../_secure_/';
 
 $_CONFIG['BD_HOST'] = "127.0.0.1";
 $_CONFIG['BD_USER'] = "root";
-$_CONFIG['BD_PASSWORD'] = "wyca_mysql";
+$_CONFIG['BD_PASSWORD'] = ""; //wyca_mysql";
 $_CONFIG['BD_BD'] = "wyca_elodie";
 
 $_CONFIG['KEY'] = '&xTYhx+r.C|G/cK&o,9s-JXE|:EZ)IWF6481FKMN&*E(OAYK-%LOR-eM#2=1-<oN';

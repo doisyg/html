@@ -1109,7 +1109,7 @@ $(document).ready(function() {
 			x = x / zoom;
 			y = (ros_hauteur - y) / zoom;
 			
-			x = x + p.left*1.006;
+			x = x + p.left;
 			y = y + p.top;
 			
 			$('#boutonsRotate').css('left', x - $('#boutonsRotate').width()/2);
@@ -1299,7 +1299,7 @@ $(document).ready(function() {
 			console.log('x2', x);
 			y = (ros_hauteur - y) / zoom;
 			
-			x = x + p.left*1.006;
+			x = x + p.left;
 			y = y + p.top;
 			
 			
@@ -1473,7 +1473,21 @@ $(document).ready(function() {
 			if (gommes.length == 0 || gommes[gommes.length-1].length > 0)
 			{
 				gommes[gommes.length] = Array();
-				gommes[gommes.length-1].push({x:0, y:0}); // Point du curseur
+				//gommes[gommes.length-1].push({x:0, y:0}); // Point du curseur
+				
+				p = $('#svg image').position();
+				x = (e.originalEvent.targetTouches[0] ? e.originalEvent.targetTouches[0].pageX : e.originalEvent.changedTouches[e.changedTouches.length-1].pageX) - p.left;
+				y = (e.originalEvent.targetTouches[0] ? e.originalEvent.targetTouches[0].pageY : e.originalEvent.changedTouches[e.changedTouches.length-1].pageY) - p.top;
+				x = x * zoom;
+				y = ros_hauteur - (y * zoom);
+				
+				xRos = x * ros_resolution / 100;
+				yRos = y * ros_resolution / 100;
+								
+				gommes[gommes.length-1].push({x:xRos, y:yRos});
+				gommes[gommes.length-1].push({x:xRos+0.01, y:yRos+0.01}); // Point du curseur
+				TraceCurrentGomme(gommes[gommes.length-1], gommes.length-1);
+				
 			}
 		}
 		else if (currentAction == 'addDock' && currentStep=='setPose')
@@ -1602,7 +1616,7 @@ $(document).ready(function() {
 				x = x / zoom;
 				y = (ros_hauteur - y) / zoom;
 				
-				x = x + p.left*1.006;
+				x = x + p.left;
 				y = y + p.top;
 				
 				$('#boutonsRotate').css('left', x - $('#boutonsRotate').width()/2);
@@ -1621,7 +1635,7 @@ $(document).ready(function() {
 				x = x / zoom;
 				y = (ros_hauteur - y) / zoom;
 				
-				x = x + p.left*1.006;
+				x = x + p.left;
 				y = y + p.top;
 				
 				$('#boutonsRotate').css('left', x - $('#boutonsRotate').width()/2);
@@ -1642,7 +1656,7 @@ $(document).ready(function() {
 				x = x / zoom;
 				y = (ros_hauteur - y) / zoom;
 				
-				x = x + p.left*1.006;
+				x = x + p.left;
 				y = y + p.top;
 				
 				$('#boutonsRotate').css('left', x - $('#boutonsRotate').width()/2);
@@ -1663,7 +1677,7 @@ $(document).ready(function() {
 				x = x / zoom;
 				y = (ros_hauteur - y) / zoom;
 				
-				x = x + p.left*1.006;
+				x = x + p.left;
 				y = y + p.top;
 				
 				$('#boutonsRotate').css('left', x - $('#boutonsRotate').width()/2);
@@ -1999,7 +2013,7 @@ $(document).ready(function() {
 			x = x / zoom;
 			y = (ros_hauteur - y) / zoom;
 			
-			x = x + p.left*1.006;
+			x = x + p.left;
 			y = y + p.top;
 			
 			$('#boutonsRotate').css('left', x - $('#boutonsRotate').width()/2);
@@ -2057,7 +2071,7 @@ $(document).ready(function() {
 			x = x / zoom;
 			y = (ros_hauteur - y) / zoom;
 			
-			x = x + p.left*1.006;
+			x = x + p.left;
 			y = y + p.top;
 			
 			$('#boutonsRotate').css('left', x - $('#boutonsRotate').width()/2);

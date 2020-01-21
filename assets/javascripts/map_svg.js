@@ -54,10 +54,23 @@ function TraceCurrentGomme(points, index)
 								   'stroke-width': 2,
 								   'stroke': '#FFF',
 								   'fill': 'none',
-								   'class':'gomme_elem_current_'+index,
+								   'class':'gomme_elem gomme_elem_current_'+index,
 								   'data-index': 'current'
 								  });
+								  
 		svg.appendChild(path);
+		$('.gomme_elem_current_'+index).insertAfter($('#svg image'));
+		
+		path = makeSVGElement('polyline', { points: gomme_point,
+								   'stroke-width': 2,
+								   'stroke': '#FFF',
+								   'fill': 'none',
+								   'class':'gomme_elem gomme_elem_current_'+index,
+								   'data-index': 'current'
+								  });
+								  
+		svg.appendChild(path);
+		$('.gomme_elem_current_'+index).insertAfter($('#svg image'));
 	}
 }
 

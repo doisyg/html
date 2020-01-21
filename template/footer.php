@@ -72,7 +72,6 @@
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/jqvmap/maps/continents/jquery.vmap.north-america.js"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/jqvmap/maps/continents/jquery.vmap.south-america.js"></script>
         
-        
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/select2/select2.js"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/jquery-datatables/extras/TableTools/js/dataTables.tableTools.min.js"></script>

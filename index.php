@@ -82,9 +82,14 @@ include ('template/header.php');
                             </a>
                         </li>
                         <?php 
-                        }
+                        }?>         
                         
-                        ?>
+                        <li class="col-xs-6 col-md-3">
+                            <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#modalJoystick">
+                                <i class="fa fa-gamepad" aria-hidden="true"></i>
+                                <span><?php echo __('Control robot');?></span>
+                            </a>
+                        </li>
                         
                         <?php 
                         if ($userConnected->CanDo('traduction', '', 'view')){?>

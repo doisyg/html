@@ -254,3 +254,30 @@ ul.widget-todo-list li .todo-actions a {
 	vertical-align: middle;
 	color: #999999;
 }
+
+svg *{ z-index:200; }
+svg image { z-index:1; }
+.gomme_elem { z-index:100; }
+
+.btn_big_popup { font-size:22px; padding:30px; margin-bottom:30px; }
+.btn_big_popup i { font-size:60px; display:block; margin:10px 0; }
+
+@media only screen and (max-width: 767px)
+{
+	html.mobile-device .sidebar-left { overflow-y: auto; }
+	.sidebar-left {
+		min-width: 80%;
+		min-width: 80vw;
+		padding-bottom:0; 
+		box-shadow:none;
+	}
+	
+	.sidebar-left.sidebar-left-fond {
+		min-width: 100%;
+		min-width: 100vw;
+		height:100vh;
+		background-color:rgba(0,0,0,0.2);
+		left:-100%;	
+	}
+	.sidebar-header { display:none; }
+}

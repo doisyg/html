@@ -64,8 +64,10 @@ include ('template/header.php');
             </div>
         </div>
         
-        <div id="zoom_popup" style="position:absolute; top:20px; left:20px; width:100px; height:100px; border:1px solid #000; overflow:hidden; display:none; z-index:8000;">
-        	<img id="img_svg" style="position:absolute; top:0; left:0;" width="<?php echo $plan->ros_largeur*10;?>" />
+        <div id="zoom_popup" style="position:absolute; top:20px; left:20px; width:101px; height:101px; border:1px solid #000; overflow:hidden; display:none; z-index:8000;">
+        	<!--<img id="img_svg" style="position:absolute; top:0; left:0;" width="<?php echo $plan->ros_largeur*10;?>" />-->
+            <div id="zoom_popup_content" style="position:absolute; top:0; height:0;"></div>
+            <div id="zoom_popup_mire" style="position:absolute; width:101px; height:101px; top:0; left:0; background-image:url(assets/images/mire.png);"></div>
         </div>
         
         
@@ -239,8 +241,8 @@ include ('template/header.php');
                     <div style="text-align:center;">
                     
                     	<ul class="listBoutons">
-                            <li><a class="btn btn-primary" id="bDockCreateFromPose" data-dismiss="modal" href="#"><?php echo __('At the current robot pose');?></a></li>
-                            <li><a class="btn btn-primary" id="bDockCreateFromMap" data-dismiss="modal" href="#"><?php echo __('By clicking on the map');?></a></li>
+                            <li><a class="btn btn-primary btn_big_popup" id="bDockCreateFromPose" data-dismiss="modal" href="#"><i class="fa fa-android"></i><?php echo __('At the current robot pose');?></a></li>
+                            <li><a class="btn btn-primary btn_big_popup" id="bDockCreateFromMap" data-dismiss="modal" href="#"><i class="fa fa-map-marker"></i><?php echo __('By clicking on the map');?></a></li>
                         </ul>
                         
                     </div>
@@ -262,8 +264,8 @@ include ('template/header.php');
                     <div style="text-align:center;">
                     
                     	<ul class="listBoutons">
-                            <li><a class="btn btn-primary" id="bPoiCreateFromPose" data-dismiss="modal" href="#"><?php echo __('At the current robot pose');?></a></li>
-                            <li><a class="btn btn-primary" id="bPoiCreateFromMap" data-dismiss="modal" href="#"><?php echo __('By clicking on the map');?></a></li>
+                            <li><a class="btn btn-primary btn_big_popup" id="bPoiCreateFromPose" data-dismiss="modal" href="#"><i class="fa fa-android"></i><?php echo __('At the current robot pose');?></a></li>
+                            <li><a class="btn btn-primary btn_big_popup" id="bPoiCreateFromMap" data-dismiss="modal" href="#"><i class="fa fa-map-marker"></i><?php echo __('By clicking on the map');?></a></li>
                         </ul>
                         
                     </div>
@@ -399,59 +401,83 @@ function diff(x, y) {
 var svgTemp;
 var svgData;
 var imgForSVG;
+
+function DisplayBlockZoom()
+{
+	console.log('DisplayBlockZoom');
+	if (blockZoom)
+	{
+	console.log('blockZoom ok');
+		//svgData = new XMLSerializer().serializeToString(svgTemp);
+		//imgForSVG.setAttribute("src", "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svgData))));
+		p = document.getElementById("svg"); 
+		p_prime = p.cloneNode(true);
+		p_prime.id = "svg_clone";
+		$('#zoom_popup_content').html('');
+		document.getElementById('zoom_popup_content').appendChild(p_prime);
+		
+		$('#svg_clone').width(<?php echo $plan->ros_largeur;?>);
+		$('#svg_clone').height(<?php echo $plan->ros_hauteur;?>);
+					
+		p = $('#svg image').position();
+		x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
+		y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+		console.log(event);
+		zoom = ros_largeur / $('#svg').width() / window.panZoom.getZoom();
+		/*
+		$('#img_svg').css('left',(-x*zoom) * 10 + 50);
+		$('#img_svg').css('top', (-y*zoom) * 10 + 50);
+		*/
+		$('#svg_clone').css('left', -event.targetTouches[0].pageX + 50 - 14);
+		$('#svg_clone').css('top', -event.targetTouches[0].pageY + 50 + 73);
+		
+		l = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) + 50;
+		if (l + 101 > $('#all').width() - 20) l -= 200;
+		t = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - 150;
+		if (t + 101 > $('#all').height() - 20) t -= 300;
+		if (t < 20) t = 20;
+		$('#zoom_popup').css('left', l);
+		$('#zoom_popup').css('top', t);
+		$('#zoom_popup').show();
+		/*
+		
+		$('#svg_copy').html($('#svg .svg-pan-zoom_viewport').html());
+		
+		p = $('#svg image').position();
+		x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
+		y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+		
+		zoom = ros_largeur / $('#svg').width() / window.panZoom.getZoom();
+				
+		$('#svg_copy').css('left', -x*zoom + 50);
+		$('#svg_copy').css('top', -y*zoom + 50);
+		
+		$('#zoom_popup').css('left', (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) + 50);
+		$('#zoom_popup').css('top', (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - 150);
+		$('#zoom_popup').show();
+		*/
+	}
+	else
+	{
+		$('#zoom_popup').hide();
+	}
+}
+
 $(document).ready(function(e) {
 		
+	/*
 	svgTemp = document.getElementById("svg");
 	svgData = new XMLSerializer().serializeToString(svgTemp);
 	var imgForSVG = document.getElementById("img_svg");
 	imgForSVG.setAttribute("src", "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svgData))));
+	*/
 	
 	$('#svg').on('touchend', function(e) { $('#zoom_popup').hide(); });
+	$('#svg').on('touchstart', function(e) {
+		DisplayBlockZoom();
+	});
     $('#svg').on('touchmove', function(e) {
-		if (blockZoom)
-		{
-			//svgData = new XMLSerializer().serializeToString(svgTemp);
-			//imgForSVG.setAttribute("src", "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svgData))));
-						
-			p = $('#svg image').position();
-			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
-			y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
-			
-			zoom = ros_largeur / $('#svg').width() / window.panZoom.getZoom();
-			
-			$('#img_svg').css('left',(-x*zoom) * 10 + 50);
-			$('#img_svg').css('top', (-y*zoom) * 10 + 50);
-			
-			l = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) + 50;
-			if (l + 100 > $('#all').width()) l -= 200;
-			t = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - 150;
-			if (t + 100 > $('#all').height()) t -= 300;
-			if (t < 20) t = 20;
-			$('#zoom_popup').css('left', l);
-			$('#zoom_popup').css('top', t);
-			$('#zoom_popup').show();
-			/*
-			
-			$('#svg_copy').html($('#svg .svg-pan-zoom_viewport').html());
-			
-			p = $('#svg image').position();
-			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
-			y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
-			
-			zoom = ros_largeur / $('#svg').width() / window.panZoom.getZoom();
-					
-			$('#svg_copy').css('left', -x*zoom + 50);
-			$('#svg_copy').css('top', -y*zoom + 50);
-			
-			$('#zoom_popup').css('left', (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) + 50);
-			$('#zoom_popup').css('top', (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - 150);
-			$('#zoom_popup').show();
-			*/
-		}
-		else
-		{
-			$('#zoom_popup').hide();
-		}
+		DisplayBlockZoom();
 	});
 	
 	
@@ -525,6 +551,7 @@ $(document).ready(function(e) {
 	window.panZoom = svgPanZoom('#svg', {
 	  zoomEnabled: true
 	, controlIconsEnabled: false
+	, maxZoom: 20
 	, fit: 1
 	, center: 1
 	, customEventsHandler: eventsHandler
