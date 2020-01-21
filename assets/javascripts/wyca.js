@@ -152,6 +152,7 @@ function InitPosCarteMapping()
 		hauteurM = hauteurCm / 100;
 		
         $('#img_map_saved').height(originHeight / 2); // 1px pour 10cm
+        $('#img_map_trinary_saved').height(originHeight / 2); // 1px pour 10cm
 
 		if (mappingLastPose != null)
 		{

@@ -218,7 +218,6 @@ optionsWyca = {
             var img = document.getElementById("img_map_trinary_saved");
             img.src = 'data:image/png;base64,' + data.map_trinary.data;
         },
-        /*
         onSensorsLaserScan: function(data)
         {
             if ($('#laser_scan:visible').length > 0)
@@ -247,8 +246,7 @@ optionsWyca = {
             }
 
         }
-        */
-	};
+};
 </script>
 <?php 
 include ('template/footer.php');
