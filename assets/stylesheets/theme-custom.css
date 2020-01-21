@@ -262,6 +262,8 @@ svg image { z-index:1; }
 .btn_big_popup { font-size:22px; padding:30px; margin-bottom:30px; }
 .btn_big_popup i { font-size:60px; display:block; margin:10px 0; }
 
+.sidebar-left.sidebar-left-fond { display:none; }
+
 @media only screen and (max-width: 767px)
 {
 	html.mobile-device .sidebar-left { overflow-y: auto; }
@@ -273,6 +275,7 @@ svg image { z-index:1; }
 	}
 	
 	.sidebar-left.sidebar-left-fond {
+		display:block;
 		min-width: 100%;
 		min-width: 100vw;
 		height:100vh;
