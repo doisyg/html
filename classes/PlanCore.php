@@ -5,6 +5,7 @@ class PlanCore
 	public $id_site = -1;
 	public $nom = "";
 	public $image = "";
+	public $image_tri = "";
 	public $ros_resolution = -1;
 	public $ros_largeur = -1;
 	public $ros_hauteur = -1;
@@ -31,6 +32,7 @@ class PlanCore
 		$this->id_site = $object->id_site;
 		$this->nom = $object->nom;
 		$this->image = $object->image;
+		$this->image_tri = $object->image_tri;
 		$this->ros_resolution = $object->ros_resolution;
 		$this->ros_largeur = $object->ros_largeur;
 		$this->ros_hauteur = $object->ros_hauteur;
@@ -58,11 +60,12 @@ class PlanCore
 	public function Insert()
 	{
 		global $_CONFIG;
-		$query = "INSERT INTO plan ( id_site, nom, image, ros_resolution, ros_largeur, ros_hauteur ) VALUES ( 
+		$query = "INSERT INTO plan ( id_site, nom, image, image_tri, ros_resolution, ros_largeur, ros_hauteur ) VALUES ( 
 
 			'". mysqli_real_escape_string(DB::$connexion, $this->id_site) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->nom) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->image) ."', 
+			'". mysqli_real_escape_string(DB::$connexion, $this->image_tri) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->ros_resolution) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->ros_largeur) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->ros_hauteur) ."'
@@ -79,6 +82,7 @@ class PlanCore
 			id_site = '". mysqli_real_escape_string(DB::$connexion,  $this->id_site )."', 
 			nom = '". mysqli_real_escape_string(DB::$connexion,  $this->nom )."', 
 			image = '". mysqli_real_escape_string(DB::$connexion,  $this->image )."', 
+			image_tri = '". mysqli_real_escape_string(DB::$connexion,  $this->image_tri )."', 
 			ros_resolution = '". mysqli_real_escape_string(DB::$connexion,  $this->ros_resolution )."', 
 			ros_largeur = '". mysqli_real_escape_string(DB::$connexion,  $this->ros_largeur )."', 
 			ros_hauteur = '". mysqli_real_escape_string(DB::$connexion,  $this->ros_hauteur )."'

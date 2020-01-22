@@ -14,6 +14,9 @@ if (isset($_POST['todo']) && $_POST['todo'] == 'saveMapping')
 	$plan->id_site = $currentIdSite;
 	if (strlen($_POST['image']) > 22)
 		$plan->image = substr($_POST['image'], 22);
+	
+	if (strlen($_POST['image']) > 22)
+		$plan->image = substr($_POST['image_tri'], 22);
 	$plan->nom = $_POST['nom'];
 	$plan->ros_resolution = 5;
 	$plan->ros_hauteur = $_POST['ros_hauteur'];
@@ -157,6 +160,7 @@ include ('template/header.php');
                     	<form id="form_mapping" method="post">
                         	<input type="hidden" name="todo" value="saveMapping" />
                             <input type="hidden" id="form_mapping_image" name="image" value="" />
+                            <input type="hidden" id="form_mapping_image_tri" name="image_tri" value="" />
                             <input type="hidden" id="form_mapping_ros_hauteur" name="ros_hauteur" value="" />
                             <input type="hidden" id="form_mapping_ros_largeur" name="ros_largeur" value="" />
 	                    	<input type="text" id="form_mapping_name" name="nom" placeholder="<?php echo __('Map name')?>" class="form-control" style="margin-bottom:20px;" />
@@ -284,8 +288,9 @@ var gridClient;
 		else
 		{
 			$('#form_mapping_image').val($('#img_map_saved').attr('src'));
-                        $('#form_mapping_ros_largeur').val($('#img_map_saved').prop('naturalWidth'));
-                        $('#form_mapping_ros_hauteur').val($('#img_map_saved').prop('naturalHeight'));
+			$('#form_mapping_image_tri').val($('#img_map_trinary_saved').attr('src'));
+			$('#form_mapping_ros_largeur').val($('#img_map_saved').prop('naturalWidth'));
+			$('#form_mapping_ros_hauteur').val($('#img_map_saved').prop('naturalHeight'));
 			$('#form_mapping').submit();
 			
 			$('#modalCreateMap').modal('hide');
