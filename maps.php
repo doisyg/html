@@ -15,8 +15,8 @@ if (isset($_POST['todo']) && $_POST['todo'] == 'saveMapping')
 	if (strlen($_POST['image']) > 22)
 		$plan->image = substr($_POST['image'], 22);
 	
-	if (strlen($_POST['image']) > 22)
-		$plan->image = substr($_POST['image_tri'], 22);
+	if (strlen($_POST['image_tri']) > 22)
+		$plan->image_tri = substr($_POST['image_tri'], 22);
 	$plan->nom = $_POST['nom'];
 	$plan->ros_resolution = 5;
 	$plan->ros_hauteur = $_POST['ros_hauteur'];
@@ -102,12 +102,14 @@ include ('template/header.php');
 						$current = $currentIdPlan == $plan->id_plan;
 						?>
 						<tr>
-	                        <td><img src="data:image/png;base64,<?php echo $plan->image;?>" style="max-height:40px; max-width:150px;" /></td>
+	                        <td><img src="data:image/png;base64,<?php echo $plan->image_tri;?>" style="max-height:40px; max-width:150px;" /></td>
 							<td><?php echo $plan->nom;?></td>
 							<td>
 								<?php if ($canEdit) {?><a href="map.php?id_plan=<?php echo $plan->id_plan;?>" class="btn btn-primary" title="<?php echo __('Edit map');?>"><i class="fa fa-map-marker"></i></a><?php }?>
                                 <?php if (!$current) {?><a href="#" class="btn btn-xs btn-primary bUseThisMap" data-id_plan="<?php echo $plan->id_plan;?>" title="<?php echo __('Use this map on robot');?>"><i class="fa fa-upload"></i> <?php echo __('Use this');?></a><?php }?>
                                 <?php if ($canDelete && !$current){?><a href="#" class="btn btn-xs btn-danger" title="<?php echo __('Delete');?>"><i class="fa fa-times"></i></a><?php }?>
+          
+                                <?php if ($canEdit) {?><a href="map_tri.php?id_plan=<?php echo $plan->id_plan;?>" class="btn btn-primary" title="<?php echo __('Set map trinary');?>"><i class="fa fa-tasks"></i></a><?php }?>
 							</td>
 						</tr>
 						<?php

@@ -47,7 +47,7 @@ include ('template/header.php');
             
                 <div id="zoom_carte_container">
                     <div id="zoom_carte">
-                        <img src="data:image/png;base64,<?php echo $plan->image;?>"  class="img-responsive" style="max-width:100%; max-height:100%;" />
+                        <img src="data:image/png;base64,<?php echo $plan->image_tri;?>"  class="img-responsive" style="max-width:100%; max-height:100%;" />
                         <div id="zone_zoom" style="position:absolute; border:1px solid #00F;"></div>
                         <div id="zone_zoom_click" style="position:absolute; width:100%; height:100%; top:0; left:0; cursor:pointer;"></div>
                     </div>
@@ -56,7 +56,7 @@ include ('template/header.php');
                 <div id="all" style="position:relative; margin:auto; width:100%; height:calc(100vh - 100px);">
                     <div id="map_navigation" class="zoom" style="position:relative; width:100%; height:calc(100vh - 100px); margin:auto; border:1px solid #000;">
                         <svg id="svg" width="<?php echo $plan->ros_largeur;?>" height="<?php echo $plan->ros_hauteur;?>" style="position:absolute; top:0; left:0; width:100%; height:100%;">
-                            <image  xlink:href="data:image/png;base64,<?php echo $plan->image;?>" x="0" y="0" height="<?php echo $plan->ros_hauteur;?>" width="<?php echo $plan->ros_largeur;?>" />
+                            <image  xlink:href="data:image/png;base64,<?php echo $plan->image_tri;?>" x="0" y="0" height="<?php echo $plan->ros_hauteur;?>" width="<?php echo $plan->ros_largeur;?>" />
                         </svg>
                     </div>
                     <div style="clear:both;"></div>

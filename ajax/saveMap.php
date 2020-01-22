@@ -102,7 +102,7 @@ foreach($pois as $poi)
 		$p->Save();
 	}
 }
-$image = imagecreatefromstring(base64_decode($plan->image));
+$image = imagecreatefromstring(base64_decode($plan->image_tri));
 
 $blanc = imagecolorallocate($image, 255,255,255);
 
@@ -153,7 +153,7 @@ catch(Excepion $e)
 {
 }
 
-$plan->image = base64_encode($contents);
+$plan->image_tri = base64_encode($contents);
 $plan->save();
 
 ?>

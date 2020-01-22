@@ -131,7 +131,7 @@ class Plan extends PlanCore
 			$file->name = '';
 		}
 		
-		$image = imagecreatefromstring(base64_decode($this->image));
+		$image = imagecreatefromstring(base64_decode($this->image_tri));
 		
 		$noir = imagecolorallocate($image, 0, 0, 0);
 		
@@ -195,7 +195,7 @@ class Plan extends PlanCore
 			$file->name = '';
 		}
 			
-		$image = imagecreatefromstring(base64_decode($this->image));
+		$image = imagecreatefromstring(base64_decode($this->image_tri));
 		
 		$noir = imagecolorallocate($image, 0, 0, 0);
 		
@@ -276,7 +276,7 @@ class Plan extends PlanCore
 			$file->name = '';
 		}
 			
-		$image = imagecreatefromstring(base64_decode($this->image));
+		$image = imagecreatefromstring(base64_decode($this->image_tri));
 		
 		try
 		{

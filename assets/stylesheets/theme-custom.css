@@ -283,4 +283,9 @@ svg image { z-index:1; }
 		left:-100%;	
 	}
 	.sidebar-header { display:none; }
+	
+	#divResult { z-index:200; }
+	#divOption { position:absolute; bottom:30px; right:10px; width:60%; z-index:300; }
+	#divOption .panel-body { background-color:rgba(255,255,255,0.5); }
+	#divOption h3 { display:none; }
 }
