@@ -172,7 +172,7 @@ include ('template/header.php');
                             <a href="#" id="bMappingStop" class="btn btn-primary" style="display:none;"><i class="fa fa-stop"></i> <?php echo __('Stop mapping');?></a>
                         </div>
                     
-                    	<div id="mapping_view" style="height:152px; width:100%; margin:10px 0; border:1px solid #EFEFEF; position:relative; overflow:hidden;">
+                        <div id="mapping_view" style="height:152px; width:100%; margin:10px 0; border:1px solid #EFEFEF; position:relative; overflow:hidden; background-color:lightblue;">
                             <img id="mapping_robot" src="assets/images/robot-dessus.png" width="6" style="position:absolute; bottom:50px; margin-left:-3px; z-index:300;" />
                             <!--<div id="img_map_div" style="position:absolute; z-index:200"><img id="img_map_saved" src="" /></div>-->
                             <canvas id="laser_scan" style="position:absolute; left:0px; bottom:0px; z-index:250; width:100%; height:150px;"></canvas>
