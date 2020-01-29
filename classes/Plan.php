@@ -3,7 +3,18 @@ class Plan extends PlanCore
 {
 	public function SetAsActive()
 	{
-		die('TODO plan->SetAsActive()');
+		$cm = Configuration::GetFromVariable('CURRENT_MAP');
+		
+		if ($cm->valeur != $plan->id_plan)
+		{
+			$cm->valeur = $plan->id_plan;
+			$cm->Save();
+			
+			// On vide les taches en cours
+			TacheQueue::ClearQueue();
+			
+			$this->ExportToConfig();
+		}		
 	}
 	
 	public function GetAreas($order = "", $order_sens = "")

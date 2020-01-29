@@ -164,7 +164,7 @@ $(document).ready(function(e) {
 			currentPoiIndex = AnGetPoiIndexFromID($(this).data('id_poi'));
 			poi = an_pois[currentPoiIndex];
 			
-			wycaApi.RobotMoveTo({x:parseFloat(poi.x_ros), y:parseFloat(poi.t_ros), theta:parseFloat(poi.t_ros)});
+			wycaApi.RobotMoveTo({x:parseFloat(poi.x_ros), y:parseFloat(poi.y_ros), theta:parseFloat(poi.t_ros)});
 		}
 	});
 	
@@ -174,6 +174,7 @@ $(document).ready(function(e) {
 		
 		if (confirm('Are you sure you want to send the robot to this pose?'))
 		{
+			alert('Not available for the moment');
 		}
 	});
 	
@@ -187,6 +188,16 @@ $(document).ready(function(e) {
 		{
 			if (confirm('Are you sure you want to send the robot to this pose?'))
 			{
+				p = $('#an_svg image').position();
+				x = (e.originalEvent.targetTouches[0] ? e.originalEvent.targetTouches[0].pageX : e.originalEvent.changedTouches[e.changedTouches.length-1].pageX) - p.left;
+				y = (e.originalEvent.targetTouches[0] ? e.originalEvent.targetTouches[0].pageY : e.originalEvent.changedTouches[e.changedTouches.length-1].pageY) - p.top;
+				x = x * zoom;
+				y = an_ros_hauteur - (y * zoom);
+				
+				xRos = x * an_ros_resolution / 100;
+				yRos = y * an_ros_resolution / 100;
+				
+				wycaApi.RobotMoveTo({x:parseFloat(xRos), y:parseFloat(yRos), theta:parseFloat(0)});
 			}
 		}
 	});

@@ -36,12 +36,6 @@ if (isset($_GET['um']))
 	$plan = new Plan($_GET['um']);
 	if ($plan->id_plan > 0 && $plan->id_site == $currentSite->id_site)
 	{
-		$cm = Configuration::GetFromVariable('CURRENT_MAP');
-		if ($cm->valeur != $_GET['um'])
-			TacheQueue::ClearQueue();
-			
-		$cm->valeur = $_GET['um'];
-		$cm->Save();
 		$plan->SetAsActive();
 		header('location:sites.php');
 	}
@@ -65,11 +59,6 @@ if (isset($_GET['us']))
 			header('location:maps.php?create=1');
 		else
 		{
-			$cm = Configuration::GetFromVariable('CURRENT_MAP');
-			$cm->valeur = $plans[0]->id_plan;
-			if ($cm->valeur != $plans[0]->id_plan)
-				TacheQueue::ClearQueue();
-			$cm->Save();
 			$plans[0]->SetAsActive();
 			header('location:sites.php?select_map='.$_GET['us']);
 		}

@@ -10,13 +10,7 @@ if (!$userConnected->CanDo($sectionMenu, $sectionSousMenu, 'add')) { echo json_e
 $plan = new Plan((int)$_POST['id_plan']);
 if ($plan->id_plan > 0)
 {
-	$cm = Configuration::GetFromVariable('CURRENT_MAP');
-	$cm->valeur = $plan->id_plan;
-	$cm->Save();
-	$plan->SetAsActive();
-	
-	$plan->ExportToConfig();
-	
+	$plan->SetAsActive();	
 	
 	// A REVOIR
 	// On sauve les images directement dans le dossier de config sur le robot

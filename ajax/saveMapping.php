@@ -42,7 +42,7 @@ if (isset($_POST['nom']))
 		{
 		}
 
-		$plan->image = $contents;
+		$plan->image = base64_encode($contents);
 	}
 	
 	if (strlen($_POST['image_tri']) > 22)
@@ -76,7 +76,7 @@ if (isset($_POST['nom']))
 		{
 		}
 
-		$plan->image_tri = $contents;
+		$plan->image_tri = base64_encode($contents);
 	}
 	$plan->nom = $_POST['nom'];
 	$plan->ros_resolution = 5;
