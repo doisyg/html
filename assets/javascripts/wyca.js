@@ -156,7 +156,7 @@ $(document).ready(function(e) {
 	$(document).on('click', '#an_svg .poi_elem', function(e) {
 		console.log('click poi');
 		anClickOnElement = true;
-		wycaApi.NavigationStart(true, function(e) { console.log(e); });
+		wycaApi.NavigationStart(true, function(e) { console.log(e); }); // Pour test
 		if (confirm('Are you sure you want to send the robot to this pose?'))
 		{
 			console.log('id_poi', $(this).data('id_poi'));
@@ -186,6 +186,7 @@ $(document).ready(function(e) {
 		}
 		else
 		{
+			wycaApi.NavigationStart(true, function(e) { console.log(e); }); // Pour test
 			if (confirm('Are you sure you want to send the robot to this pose?'))
 			{
 				p = $('#an_svg image').position();

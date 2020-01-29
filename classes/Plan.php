@@ -163,6 +163,7 @@ class Plan extends PlanCore
 				$imagick->setImageType(Imagick::IMGTYPE_GRAYSCALE);
 				$imagick->setImageFormat('png32');
 				
+
 				ob_start();
 				echo $imagick;
 				$contents = ob_get_contents();

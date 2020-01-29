@@ -485,6 +485,7 @@ var id_map_last = -1;
 			  	wycaApi.NavigationStart(true, function(r) {
 					if (!r.success) alert(r.message);
 					$('#modalUseThisMapNow').modal('hide');
+					location.href = location.href;
 				});
 			},
 			error: function(e) {
