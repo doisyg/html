@@ -1,0 +1,68 @@
+# config.yaml
+
+parameters:
+ control_loop_freq: 20
+ goal_linear_threshold: 0.02
+ goal_angular_threshold: 0.02
+ max_linear_velocity: 0.2
+ max_angular_velocity: 0.7
+ max_linear_acceleration: 0.01
+ max_angular_acceleration: 0.7
+ loop_indefinitly: false
+ US_sensor_int_threshold: 0.5
+ US_sensor_ext_threshold: 0.15
+ obstacle_pause_duration: 2.0 
+ #set 0 for infinite consecutive iteration 
+ obstacle_pause_max_consecutive_iterations: 0
+
+goals:
+- id: 0
+  x: -0.35
+  y: 0
+  theta: 0
+  direction: -1
+- id: 1
+  x: -0.5
+  y: 0
+  theta: 0
+  direction: -1
+- id: 2
+  x: 0
+  y: 0
+  theta: 0.78539816339744830962
+  direction: -1
+- id: 3
+  x: 5
+  y: 0
+  theta: 0
+  direction: 0
+- id: 4
+  x: 0
+  y: 0
+  theta: -1.57079632679489661923
+  direction: -1
+- id: 5
+  x: 5
+  y: 0
+  theta: 0
+  direction: 0
+- id: 6
+  x: 0
+  y: 0
+  theta: 1.57079632679489661923
+  direction: -1
+- id: 7
+  x: 5
+  y: 0
+  theta: 0
+  direction: 0
+- id: 8
+  x: 0
+  y: 0
+  theta: -1.57079632679489661923
+  direction: -1
+- id: 9
+  x: 0
+  y: 0
+  theta: 0.78539816339744830962
+  direction: -1
