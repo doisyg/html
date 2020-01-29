@@ -15,7 +15,7 @@ $plan = new Plan((int)$_GET['id_plan']);
 include ('template/header.php');
 ?>
 
-<div class="inner-wrapper">
+<div class="inner-wrapper map_all_content">
 
 	<?php include ('template/gauche.php');?>
 

@@ -29,8 +29,8 @@ $(document).ready(function(e) {
 	var optionsDefault = {
 		api_key:'5LGU.LaYMMncJaA0i42HwsX9ZX-RCNgj-9V17ROFXt71st',
 		id_robot:3,
-		//host:'elodie.wyca-solutions.com:9090', //192.168.1.32:9090', // host:'192.168.100.245:9090',
-		host:'192.168.100.165:9090',
+		host:'elodie.wyca-solutions.com:9090', //192.168.1.32:9090', // host:'192.168.100.245:9090',
+		//host:'192.168.0.17:9090',
 		video_element_id:'webcam_local',
 		webcam_name: 'r200 nav',
 		nick:'robot',
@@ -135,10 +135,65 @@ $(document).ready(function(e) {
 	$('#bGotoAutonomousNavigation').click(function(e) {
         e.preventDefault();
 		$('#modalAutonomousNavigation').modal('show');
+		
+		setTimeout(function() {
+		window.panZoomAn = svgPanZoom('#an_svg', {
+			  zoomEnabled: true
+			, controlIconsEnabled: false
+			, maxZoom: 20
+			, fit: 1
+			, center: 1
+			, customEventsHandler: an_eventsHandler
+			, RefreshMap: function() { setTimeout(an_RefreshZoomView, 10); }
+			});
+		an_svg = document.querySelector('#an_svg .svg-pan-zoom_viewport');
+		an_AppliquerZoom();
+		an_RefreshZoomView();
+		}, 200);
+		
     });
 	
+	$(document).on('click', '#an_svg .poi_elem', function(e) {
+		console.log('click poi');
+		anClickOnElement = true;
+		wycaApi.NavigationStart(true, function(e) { console.log(e); });
+		if (confirm('Are you sure you want to send the robot to this pose?'))
+		{
+			console.log('id_poi', $(this).data('id_poi'));
+			
+			currentPoiIndex = AnGetPoiIndexFromID($(this).data('id_poi'));
+			poi = an_pois[currentPoiIndex];
+			
+			wycaApi.RobotMoveTo({x:parseFloat(poi.x_ros), y:parseFloat(poi.t_ros), theta:parseFloat(poi.t_ros)});
+		}
+	});
+	
+	$(document).on('click', '#svg .dock_elem', function(e) {
+		console.log('click dock');
+		anClickOnElement = true;
+		
+		if (confirm('Are you sure you want to send the robot to this pose?'))
+		{
+		}
+	});
+	
+	$(document).on('click', '#an_svg', function(e) {
+		console.log('click svg');
+		if (anClickOnElement)
+		{
+			anClickOnElement = false;
+		}
+		else
+		{
+			if (confirm('Are you sure you want to send the robot to this pose?'))
+			{
+			}
+		}
+	});
 	
 });
+
+var anClickOnElement
 
 var doRefresh = 0;
 

@@ -128,11 +128,11 @@ function Undo()
 	{
 		case 'gomme':
 			gommes.pop();
-			$('.gomme_elem_current_'+gommes.length).remove();
+			$('#svg .gomme_elem_current_'+gommes.length).remove();
 			break;
 		case 'add_forbidden':
 			forbiddens.pop();
-			$('.forbidden_elem_'+elem.data.id_area).remove();
+			$('#svg .forbidden_elem_'+elem.data.id_area).remove();
 			break;
 		case 'edit_forbidden':
 			forbiddens[elem.data.index] = JSON.parse(elem.data.old);
@@ -144,7 +144,7 @@ function Undo()
 			break;
 		case 'add_area':
 			areas.pop();
-			$('.area_elem_'+elem.data.id_area).remove();
+			$('#svg .area_elem_'+elem.data.id_area).remove();
 			break;
 		case 'edit_area':
 			areas[elem.data.index] = JSON.parse(elem.data.old);
@@ -156,7 +156,7 @@ function Undo()
 			break;
 		case 'add_dock':
 			docks.pop();
-			$('.dock_elem_'+elem.data.id_station_recharge).remove();
+			$('#svg .dock_elem_'+elem.data.id_station_recharge).remove();
 			break;
 		case 'edit_dock':
 			docks[elem.data.index] = JSON.parse(elem.data.old);
@@ -168,7 +168,7 @@ function Undo()
 			break;
 		case 'add_poi':
 			pois.pop();
-			$('.poi_elem_'+elem.data.id_poi).remove();
+			$('#svg .poi_elem_'+elem.data.id_poi).remove();
 			break;
 		case 'edit_poi':
 			pois[elem.data.index] = JSON.parse(elem.data.old);
@@ -282,9 +282,9 @@ function SetModeSelect()
 }
 
 $(document).ready(function() {
-	
+
 	window.addEventListener('beforeunload', function(e){
-		if (savedCanClose)
+		if (!savedCanClose)
 		{
 			(e || window.event).returnValue = 'Are you sure you want to leave?';
 			return 'Are you sure you want to leave?';
@@ -325,7 +325,7 @@ $(document).ready(function() {
 			Redo();
 	});
 	
-	$(document).on('touchstart', '.movable', function(e) {
+	$(document).on('touchstart', '#svg .movable', function(e) {
 		if (currentAction != 'gomme')
 		{
 			console.log('touchstart movable');
@@ -454,7 +454,7 @@ $(document).ready(function() {
 	   }
     });
 	
-	$(document).on('click', '.forbidden_elem', function(e) {
+	$(document).on('click', '#svg .forbidden_elem', function(e) {
 		e.preventDefault();
 		
 		if ((currentAction == 'addArea' || currentAction == 'addForbiddenArea') && currentStep == 'trace')
@@ -465,8 +465,8 @@ $(document).ready(function() {
 		}
 		else if (canChangeMenu)
 		{
-			RemoveClass('.active', 'active');
-			RemoveClass('.activ_select', 'activ_select'); 
+			RemoveClass('#svg .active', 'active');
+			RemoveClass('#svg .activ_select', 'activ_select'); 
 			
 			
 			currentSelectedItem = Array();
@@ -488,13 +488,13 @@ $(document).ready(function() {
 			forbidden = forbiddens[currentForbiddenIndex];
 			saveCurrentForbidden = JSON.stringify(forbidden);
 			
-			AddClass('.forbidden_elem_'+forbidden.id_area, 'active');
+			AddClass('#svg .forbidden_elem_'+forbidden.id_area, 'active');
 		}
 		else
 			AvertCantChange();
 	});
 	
-	$(document).on('click', '.area_elem', function(e) {
+	$(document).on('click', '#svg .area_elem', function(e) {
 		e.preventDefault();
 		
 		if ((currentAction == 'addArea' || currentAction == 'addForbiddenArea') && currentStep == 'trace')
@@ -505,8 +505,8 @@ $(document).ready(function() {
 		}
 		else if (canChangeMenu)
 		{
-			RemoveClass('.active', 'active');
-			RemoveClass('.activ_select', 'activ_select'); 
+			RemoveClass('#svg .active', 'active');
+			RemoveClass('#svg .activ_select', 'activ_select'); 
 			
 			
 			currentSelectedItem = Array();
@@ -529,13 +529,13 @@ $(document).ready(function() {
 			area = areas[currentAreaIndex];
 			saveCurrentArea = JSON.stringify(area);
 			
-			AddClass('.area_elem_'+area.id_area, 'active');
+			AddClass('#svg .area_elem_'+area.id_area, 'active');
 		}
 		else
 			AvertCantChange();
 	});
 	
-	$(document).on('click', '.dock_elem', function(e) {
+	$(document).on('click', '#svg .dock_elem', function(e) {
 		e.preventDefault();
 		
 		if (currentAction == 'addDock')
@@ -546,8 +546,8 @@ $(document).ready(function() {
 		}
 		else if (canChangeMenu)
 		{
-			RemoveClass('.active', 'active');
-			RemoveClass('.activ_select', 'activ_select'); 
+			RemoveClass('#svg .active', 'active');
+			RemoveClass('#svg .activ_select', 'activ_select'); 
 			
 			
 			currentSelectedItem = Array();
@@ -569,8 +569,8 @@ $(document).ready(function() {
 			dock = docks[currentDockIndex];
 			saveCurrentDock = JSON.stringify(dock);
 			
-			AddClass('.dock_elem_'+dock.id_station_recharge, 'active');
-			AddClass('.dock_elem_'+dock.id_station_recharge, 'movable');
+			AddClass('#svg .dock_elem_'+dock.id_station_recharge, 'active');
+			AddClass('#svg .dock_elem_'+dock.id_station_recharge, 'movable');
 			
 		}
 		else
@@ -578,7 +578,7 @@ $(document).ready(function() {
 	});
 	
 	
-	$(document).on('click', '.poi_elem', function(e) {
+	$(document).on('click', '#svg .poi_elem', function(e) {
 		e.preventDefault();
 		
 		if (currentAction == 'addPoi')
@@ -589,9 +589,9 @@ $(document).ready(function() {
 		}
 		else if (canChangeMenu)
 		{
-			RemoveClass('.active', 'active');
-			RemoveClass('.activ_select', 'activ_select'); 
-			RemoveClass('.poi_elem', 'movable');
+			RemoveClass('#svg .active', 'active');
+			RemoveClass('#svg .activ_select', 'activ_select'); 
+			RemoveClass('#svg .poi_elem', 'movable');
 						
 			currentSelectedItem = Array();
 			currentSelectedItem.push({'type':'poi', 'id':$(this).data('id_poi')});	
@@ -613,8 +613,8 @@ $(document).ready(function() {
 			poi = pois[currentPoiIndex];
 			saveCurrentPoi = JSON.stringify(poi);
 			
-			AddClass('.poi_elem_'+poi.id_poi, 'active');
-			AddClass('.poi_elem_'+poi.id_poi, 'movable');
+			AddClass('#svg .poi_elem_'+poi.id_poi, 'active');
+			AddClass('#svg .poi_elem_'+poi.id_poi, 'movable');
 		}
 		else
 			AvertCantChange();
@@ -715,7 +715,7 @@ $(document).ready(function() {
 			forbiddens.push(f);
 			TraceForbidden(forbiddens.length-1);
 			
-			RemoveClass('.active', 'active');
+			RemoveClass('#svg .active', 'active');
 			
 			currentAction = '';
 			currentStep = '';
@@ -734,7 +734,7 @@ $(document).ready(function() {
 			
 			AddHistorique({'action':'edit_forbidden', 'data':{'index':currentForbiddenIndex, 'old':saveCurrentForbidden, 'new':JSON.stringify(forbiddens[currentForbiddenIndex])}});
 			
-			RemoveClass('.active', 'active');
+			RemoveClass('#svg .active', 'active');
 			
 			currentAction = '';
 			currentStep = '';
@@ -753,14 +753,14 @@ $(document).ready(function() {
 		
 		canChangeMenu = true;
 		
-		$('.forbidden_elem_current').remove();
-		RemoveClass('.active', 'active');
+		$('#svg .forbidden_elem_current').remove();
+		RemoveClass('#svg .active', 'active');
 	
 		$('body').addClass('no_current');
 		
 		if (currentAction == 'addForbiddenArea')
 		{
-			$('.forbidden_elem_0').remove();
+			$('#svg .forbidden_elem_0').remove();
 		}
 		else if (currentAction == 'editForbiddenArea')
 		{
@@ -852,7 +852,7 @@ $(document).ready(function() {
 	$('#bAreaSave').click(function(e) {
         e.preventDefault();
 		
-		$('.area_elem_current').remove();
+		$('#svg .area_elem_current').remove();
 		
 		if (currentAction == 'addArea')
 		{
@@ -867,7 +867,7 @@ $(document).ready(function() {
 			areas.push(a);
 			TraceArea(areas.length-1);
 			
-			RemoveClass('.active', 'active');
+			RemoveClass('#svg .active', 'active');
 			
 			currentAction = '';
 			currentStep = '';
@@ -886,7 +886,7 @@ $(document).ready(function() {
 			
 			AddHistorique({'action':'edit_area', 'data':{'index':currentAreaIndex, 'old':saveCurrentArea, 'new':JSON.stringify(areas[currentAreaIndex])}});
 			
-			RemoveClass('.active', 'active');
+			RemoveClass('#svg .active', 'active');
 			
 			currentAction = '';
 			currentStep = '';
@@ -905,14 +905,14 @@ $(document).ready(function() {
 		
 		canChangeMenu = true;
 		
-		$('.area_elem_current').remove();
-		RemoveClass('.active', 'active');
+		$('#svg .area_elem_current').remove();
+		RemoveClass('#svg .active', 'active');
 	
 		$('body').addClass('no_current');
 		
 		if (currentAction == 'addArea')
 		{
-			$('.area_elem_0').remove();
+			$('#svg .area_elem_0').remove();
 		}
 		else if (currentAction == 'editArea')
 		{
@@ -988,7 +988,7 @@ $(document).ready(function() {
 	$('#bDockSave').click(function(e) {
         e.preventDefault();
 		
-		$('.dock_elem_current').remove();
+		$('#svg .dock_elem_current').remove();
 		
 		if (currentAction == 'addDock')
 		{
@@ -1001,10 +1001,10 @@ $(document).ready(function() {
 			docks.push(d);
 			TraceDock(docks.length-1);
 			
-			RemoveClass('.active', 'active');
+			RemoveClass('#svg .active', 'active');
 			
-			$('.dock_elem_0').remove();
-			$('.dock_elem_current').remove();
+			$('#svg .dock_elem_0').remove();
+			$('#svg .dock_elem_current').remove();
 			
 			currentAction = '';
 			currentStep = '';
@@ -1026,11 +1026,11 @@ $(document).ready(function() {
 			
 			
 			dock = docks[currentDockIndex];
-			RemoveClass('.dock_elem_'+dock.id_station_recharge, 'movable');
+			RemoveClass('#svg .dock_elem_'+dock.id_station_recharge, 'movable');
 			
 			AddHistorique({'action':'edit_dock', 'data':{'index':currentDockIndex, 'old':saveCurrentDock, 'new':JSON.stringify(docks[currentDockIndex])}});
 			
-			RemoveClass('.active', 'active');
+			RemoveClass('#svg .active', 'active');
 			
 			currentAction = '';
 			currentStep = '';
@@ -1052,20 +1052,20 @@ $(document).ready(function() {
 		
 		canChangeMenu = true;
 		
-		$('.dock_elem_current').remove();
-		RemoveClass('.active', 'active');
+		$('#svg .dock_elem_current').remove();
+		RemoveClass('#svg .active', 'active');
 	
 		$('body').addClass('no_current');
 		
 		if (currentAction == 'addDock')
 		{
-			$('.dock_elem_0').remove();
-			$('.dock_elem_current').remove();
+			$('#svg .dock_elem_0').remove();
+			$('#svg .dock_elem_current').remove();
 		}
 		else if (currentAction == 'editDock')
 		{
 			dock = docks[currentDockIndex];
-			RemoveClass('.dock_elem_'+dock.id_station_recharge, 'movable');
+			RemoveClass('#svg .dock_elem_'+dock.id_station_recharge, 'movable');
 			
 			docks[currentDockIndex] = JSON.parse(saveCurrentDock);
 			TraceDock(currentDockIndex);
@@ -1166,9 +1166,9 @@ $(document).ready(function() {
 			pois.push(p);
 			TracePoi(pois.length-1);
 			
-			$('.poi_elem_current').remove();
+			$('#svg .poi_elem_current').remove();
 			
-			RemoveClass('.active', 'active');
+			RemoveClass('#svg .active', 'active');
 			
 			currentAction = '';
 			currentStep = '';
@@ -1208,11 +1208,11 @@ $(document).ready(function() {
 			canChangeMenu = true;
 			
 			poi = pois[currentPoiIndex];
-			RemoveClass('.poi_elem_'+poi.id_poi, 'movable');
+			RemoveClass('#svg .poi_elem_'+poi.id_poi, 'movable');
 			
 			AddHistorique({'action':'edit_poi', 'data':{'index':currentPoiIndex, 'old':saveCurrentPoi, 'new':JSON.stringify(pois[currentPoiIndex])}});
 			
-			RemoveClass('.active', 'active');
+			RemoveClass('#svg .active', 'active');
 			
 			currentAction = '';
 			currentStep = '';
@@ -1234,19 +1234,19 @@ $(document).ready(function() {
 		
 		canChangeMenu = true;
 		
-		$('.poi_elem_current').remove();
-		RemoveClass('.active', 'active');
+		$('#svg .poi_elem_current').remove();
+		RemoveClass('#svg .active', 'active');
 	
 		$('body').addClass('no_current');
 		
 		if (currentAction == 'addPoi')
 		{
-			$('.poi_elem_0').remove();
+			$('#svg .poi_elem_0').remove();
 		}
 		else if (currentAction == 'editPoi')
 		{
 			poi = pois[currentPoiIndex];
-			RemoveClass('.poi_elem_'+poi.id_poi, 'movable');
+			RemoveClass('#svg .poi_elem_'+poi.id_poi, 'movable');
 			
 			pois[currentPoiIndex] = JSON.parse(saveCurrentPoi);
 			TracePoi(currentPoiIndex);
@@ -2244,9 +2244,9 @@ function DeleteForbidden(indexInArray)
 	AddHistorique({'action':'delete_forbidden', 'data':indexInArray});
 	
 	data = forbiddens[indexInArray];
-	$('.forbidden_elem_'+data.id_area).remove();
+	$('#svg .forbidden_elem_'+data.id_area).remove();
 	
-	RemoveClass('.active', 'active');
+	RemoveClass('#svg .active', 'active');
 	
 	currentAction = '';
 	currentStep = '';
@@ -2295,9 +2295,9 @@ function DeleteArea(indexInArray)
 	AddHistorique({'action':'delete_area', 'data':indexInArray});
 	
 	data = areas[indexInArray];
-	$('.area_elem_'+data.id_area).remove();
+	$('#svg .area_elem_'+data.id_area).remove();
 	
-	RemoveClass('.active', 'active');
+	RemoveClass('#svg .active', 'active');
 	
 	currentAction = '';
 	currentStep = '';
@@ -2345,9 +2345,9 @@ function DeleteDock(indexInArray)
 	AddHistorique({'action':'delete_dock', 'data':indexInArray});
 	
 	data = docks[indexInArray];
-	$('.dock_elem_'+data.id_station_recharge).remove();
+	$('#svg .dock_elem_'+data.id_station_recharge).remove();
 	
-	RemoveClass('.active', 'active');
+	RemoveClass('#svg .active', 'active');
 	
 	currentAction = '';
 	currentStep = '';
@@ -2395,9 +2395,9 @@ function DeletePoi(indexInArray)
 	AddHistorique({'action':'delete_poi', 'data':indexInArray});
 	
 	data = pois[indexInArray];
-	$('.poi_elem_'+data.id_poi).remove();
+	$('#svg .poi_elem_'+data.id_poi).remove();
 	
-	RemoveClass('.active', 'active');
+	RemoveClass('#svg .active', 'active');
 	
 	currentAction = '';
 	currentStep = '';

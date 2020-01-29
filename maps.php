@@ -265,7 +265,7 @@ include ('template/header.php');
                     <div style="text-align:center;">
                     
                     <h2 id="modalUseThisMapNowTitle1"><?php echo 'Do you want to use this map now ?';?></h2>
-                    <h2 id="modalUseThisMapNowTitle2"><?php echo 'Configure map on robot';?></h2>
+                    <h2 id="modalUseThisMapNowTitle2" style="display:none;"><?php echo 'Configure map on robot';?></h2>
                     
                     <div id="modalUseThisMapNowContent" style="display:none;">
                     	<i style="font-size:60px;" class="fa fa-spinner fa-pulse"></i>
@@ -601,8 +601,6 @@ var id_map_last = -1;
 	$(function() {
 		datatableInit();
 	});
-	
-	$('#modalUseThisMapNow').modal('show');
 	
 }).apply( this, [ jQuery ]);
 

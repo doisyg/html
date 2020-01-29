@@ -2192,7 +2192,7 @@ Manager.prototype = {
         if (session.stopped) {
             return;
         }
-		if (blockZoom != undefined && blockZoom)
+		if (typeof blockZoom !== 'undefined' && blockZoom != undefined && blockZoom)
 			return;
 
         // run the touch-action polyfill

@@ -1,3 +1,6 @@
+var downOnMovable = false;
+var minStokeWidth = 1;
+var maxStokeWidth = 5;
 
 function an_AppliquerZoom()
 {
@@ -56,8 +59,8 @@ function an_TraceForbidden(indexForbidden)
 		$.each(points, function( indexPoint, point ) {
 			if (forbidden_point != '') forbidden_point += ' ';
 			
-			x = point.x * 100 / ros_resolution;
-			y = ros_hauteur - (point.y * 100 / ros_resolution);
+			x = point.x * 100 / an_ros_resolution;
+			y = an_ros_hauteur - (point.y * 100 / an_ros_resolution);
 			
 			forbidden_point += x+','+y;
 		});
@@ -71,21 +74,21 @@ function an_TraceForbidden(indexForbidden)
 							   'data-id_area': forbidden.id_area
 							  });
 		path.style.fill = 'rgba(0,0,0,0.5)'
-		svg.appendChild(path);
+		an_svg.appendChild(path);
 		
 		$.each(points, function( indexPoint, point ) {
 			
 			/*
-			x = (point.x * 100 / ros_resolution) / largeurRos * $('#an_svg #mapBox').width();
-			y = $('#an_svg #mapBox').height() - ((point.y * 100 / ros_resolution) / largeurRos * $('#an_svg #mapBox').width());
+			x = (point.x * 100 / an_ros_resolution) / largeurRos * $('#an_svg #mapBox').width();
+			y = $('#an_svg #mapBox').height() - ((point.y * 100 / an_ros_resolution) / largeurRos * $('#an_svg #mapBox').width());
 			*/
 			
 			if (!downOnMovable || index_point_movable != indexPoint)
 			{
 				$('#an_svg #forbidden_'+forbidden.id_area+'_'+indexPoint).remove();
 				
-				x = point.x * 100 / ros_resolution;
-				y = ros_hauteur - (point.y * 100 / ros_resolution);
+				x = point.x * 100 / an_ros_resolution;
+				y = an_ros_hauteur - (point.y * 100 / an_ros_resolution);
 				
 				path = an_makeSVGElement('rect', { x: x-5, y:y-5, height:10, width:10,
 							   'stroke-width': minStokeWidth,
@@ -96,7 +99,7 @@ function an_TraceForbidden(indexForbidden)
 							   'data-element_type': 'forbidden',
 							   'data-element': 'forbidden'
 							  });
-				svg.appendChild(path);
+				an_svg.appendChild(path);
 			}
 		});
 	}
@@ -144,8 +147,8 @@ function an_TraceArea(indexArea)
 		$.each(points, function( indexPoint, point ) {
 			if (area_point != '') area_point += ' ';
 			
-			x = point.x * 100 / ros_resolution;
-			y = ros_hauteur - (point.y * 100 / ros_resolution);
+			x = point.x * 100 / an_ros_resolution;
+			y = an_ros_hauteur - (point.y * 100 / an_ros_resolution);
 			
 			area_point += x+','+y;
 		});
@@ -159,7 +162,7 @@ function an_TraceArea(indexArea)
 							   'data-id_area': area.id_area
 							  });
 		path.style.fill = 'rgba('+area.couleur_r+','+area.couleur_g+','+area.couleur_b+',0.5)'
-		svg.appendChild(path);
+		an_svg.appendChild(path);
 		
 		$.each(points, function( indexPoint, point ) {
 			
@@ -167,8 +170,8 @@ function an_TraceArea(indexArea)
 			{
 				$('#an_svg #area_'+area.id_area+'_'+indexPoint).remove();
 				
-				x = point.x * 100 / ros_resolution;
-				y = ros_hauteur - (point.y * 100 / ros_resolution);
+				x = point.x * 100 / an_ros_resolution;
+				y = an_ros_hauteur - (point.y * 100 / an_ros_resolution);
 				
 				path = an_makeSVGElement('rect', { x: x-5, y:y-5, height:10, width:10,
 							   'stroke-width': minStokeWidth,
@@ -179,7 +182,7 @@ function an_TraceArea(indexArea)
 							   'data-element_type': 'area',
 							   'data-element': 'area'
 							  });
-				svg.appendChild(path);
+				an_svg.appendChild(path);
 			}
 		});
 	}
@@ -197,8 +200,8 @@ function an_TraceDock(indexDock)
 	else
 		$('#an_svg .dock_elem_'+dock.id_station_recharge).remove();
 	
-	x = dock.x_ros * 100 / ros_resolution;
-	y = ros_hauteur - (dock.y_ros * 100 / ros_resolution);
+	x = dock.x_ros * 100 / an_ros_resolution;
+	y = an_ros_hauteur - (dock.y_ros * 100 / an_ros_resolution);
 	
 	angle = 0 - dock.t_ros * 180 / Math.PI - 90;
 	
@@ -212,7 +215,7 @@ function an_TraceDock(indexDock)
 				   'data-element_type': 'dock',
 				   'data-element': 'dock'
 				  });
-	svg.appendChild(path);
+	an_svg.appendChild(path);
 	
 	path = an_makeSVGElement('line', { 'x1': x-1, 'y1':y-1, 'x2': x+1, 'y2':y-1,
 				   'stroke-width': 1,
@@ -225,7 +228,7 @@ function an_TraceDock(indexDock)
 				   'data-element_type': 'dock',
 				   'data-element': 'dock'
 				  });
-	svg.appendChild(path);
+	an_svg.appendChild(path);
 }
 
 function an_TracePoi(indexPoi)
@@ -240,12 +243,12 @@ function an_TracePoi(indexPoi)
 	else
 		$('#an_svg .poi_elem_'+poi.id_poi).remove();
 	
-	x = poi.x_ros * 100 / ros_resolution;
-	y = ros_hauteur - (poi.y_ros * 100 / ros_resolution);	
+	x = poi.x_ros * 100 / an_ros_resolution;
+	y = an_ros_hauteur - (poi.y_ros * 100 / an_ros_resolution);	
 	angle = 0 - poi.t_ros * 180 / Math.PI;
 	
-	rayonRobot = (26 / ros_resolution);
-	rayonRobotSecure = ((26+15) / ros_resolution);
+	rayonRobot = (26 / an_ros_resolution);
+	rayonRobotSecure = ((26+15) / an_ros_resolution);
 	
 	path = an_makeSVGElement('circle', { cx: x,
 									cy: y,
@@ -256,7 +259,7 @@ function an_TracePoi(indexPoi)
 								   'data-element_type': 'poi',
 								   'data-element': 'poi'
 								   });
-	svg.appendChild(path);
+	an_svg.appendChild(path);
 	
 	path = an_makeSVGElement('circle', { cx: x,
 									cy: y,
@@ -267,7 +270,7 @@ function an_TracePoi(indexPoi)
 								   'data-element_type': 'poi',
 								   'data-element': 'poi'
 								   });
-	svg.appendChild(path);
+	an_svg.appendChild(path);
 	
 	path = an_makeSVGElement('polyline', { 'points': (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2),
 									'stroke':'#FFFFFF',
@@ -282,7 +285,7 @@ function an_TracePoi(indexPoi)
 								   'data-element_type': 'poi',
 								   'data-element': 'poi'
 								   });
-	svg.appendChild(path);
+	an_svg.appendChild(path);
 	
 }
 
@@ -316,4 +319,94 @@ function an_makeSVGElement(tag, attrs, texte='')
 	}
 	
     return el;
+}
+
+function an_RefreshZoomView()
+{
+	pSVG = $('#an_svg').position();
+	pImg = $('#an_svg image').position();
+	pImg.left -= pSVG.left;
+	pImg.top -= pSVG.top;
+	
+	zoom = an_ros_largeur / $('#an_svg').width() / window.panZoomAn.getZoom();
+	
+	wZoom = $('#an_zoom_carte').width();
+	hZoom = $('#an_zoom_carte').height();
+	
+	wNew = 0;
+	hNew = 0;
+	tNew = 0;
+	lNew = 0;
+	
+	if (pImg.left > 0)
+		lNew = 0;
+	else
+		lNew = -(pImg.left*zoom) / an_ros_largeur * wZoom;
+	if (pImg.top > 0)
+		tNew = 0;
+	else
+		tNew = -(pImg.top*zoom) / an_ros_largeur * wZoom;
+	
+	hNew = $('#an_svg').height() * zoom  / an_ros_largeur * wZoom;
+	wNew = $('#an_svg').width() * zoom  / an_ros_largeur * wZoom;
+	
+	if (tNew + hNew > hZoom) hNew = hZoom - tNew;
+	if (lNew + wNew > wZoom) wNew = wZoom - lNew;
+		
+	$('#an_zone_zoom').width(wNew);
+	$('#an_zone_zoom').height(hNew);
+				
+	$('#an_zone_zoom').css('top', tNew - 1);
+	$('#an_zone_zoom').css('left', lNew - 1);
+	
+}
+
+function AnGetDockFromID(id)
+{
+	ret = null;
+	$.each(an_docks, function(indexInArray, dock){
+		if (dock.id_station_recharge == id)
+		{
+			ret = dock;
+			return ret;
+		}
+	});
+	return ret;
+}
+function AnGetDockIndexFromID(id)
+{
+	ret = null;
+	$.each(an_docks, function(indexInArray, dock){
+		if (dock.id_station_recharge == id)
+		{
+			ret = indexInArray;
+			return ret;
+		}
+	});
+	return ret;
+}
+
+function AnGetPoiFromID(id)
+{
+	ret = null;
+	$.each(an_pois, function(indexInArray, poi){
+		if (poi.id_poi == id)
+		{
+			ret = poi;
+			return ret;
+		}
+	});
+	return ret;
+}
+function AnGetPoiIndexFromID(id)
+{
+	ret = null;
+	$.each(an_pois, function(indexInArray, poi){
+		if (poi.id_poi == id)
+		{
+			ret = indexInArray;
+			return ret;
+		}
+	});
+	return ret;
 }

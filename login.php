@@ -43,7 +43,6 @@ if (isset($_POST['email_lost']))
 <html class="fixed">
 	<head>
 
-		<!-- Basic -->
 		<meta charset="UTF-8">
 
 		<title>Login | Wyca Robotics</title>
@@ -65,33 +64,25 @@ if (isset($_POST['email_lost']))
         <meta name="msapplication-TileImage" content="<?php echo $_CONFIG['URL'];?>/assets/images/favicon/favicon-144.png">
         <meta name="msapplication-TileColor" content="#FFFFFF"> 
 
-		<!-- Mobile Metas -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-		<!-- Web Fonts  -->
-		<link href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/fonts/opensans/opensans.css" rel="stylesheet" type="text/css">-->
+		<link href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/fonts/opensans/opensans.css" rel="stylesheet" type="text/css">
 
-		<!-- Vendor CSS -->
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/vendor/bootstrap/css/bootstrap.css" />
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/vendor/font-awesome/css/font-awesome.css" />
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/vendor/magnific-popup/magnific-popup.css" />
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
 
-		<!-- Theme CSS -->
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/theme.css" />
 
-		<!-- Skin CSS -->
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/skins/default.css" />
 
-		<!-- Theme Custom CSS -->
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/theme-custom.css">
 
-		<!-- Head Libs -->
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/modernizr/modernizr.js"></script>
 
 	</head>
 	<body>
-		<!-- start: page -->
 		<section class="body-sign">
 			<div class="center-sign">
 				<a href="/" class="logo pull-left">
@@ -150,39 +141,12 @@ if (isset($_POST['email_lost']))
 					</div>
 				</div>
                 
-                <!--
-                <div id="divLostPassword" class="panel panel-sign" style="display:none;">
-					<div class="panel-title-sign mt-xl text-right">
-						<h2 class="title text-uppercase text-bold m-none"><i class="fa fa-user mr-xs"></i> <?php echo __('Recover Password');?></h2>
-					</div>
-					<div class="panel-body">
-						<div class="alert alert-info">
-							<p class="m-none text-semibold h6"><?php echo __('Enter your e-mail below and we will send you reset instructions!');?></p>
-						</div>
-
-						<form method="post">
-							<div class="form-group mb-none">
-								<div class="input-group">
-									<input name="email_lost" type="email" placeholder="<?php echo __('Email');?>" class="form-control input-lg" />
-									<span class="input-group-btn">
-										<button class="btn btn-primary btn-lg" type="submit"><?php echo __('Reset!');?></button>
-									</span>
-								</div>
-							</div>
-
-							<p class="text-center mt-lg"><?php echo __('Remembered?')?> <a href="#" id="bLogin"><?php echo __('Sign In!');?></a>
-						</form>
-					</div>
-				</div>
-                -->
 
 				<p class="text-center text-muted mt-md mb-md">&copy; Copyright <?php echo date('Y');?>. <?php echo __('All rights reserved.');?></p>
 			</div>
 		</section>
-		<!-- end: page -->
-
-		<!-- Vendor -->
-		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/jquery/jquery.js"></script>
+		
+        <script src="<?php echo $_CONFIG['URL'];?>assets/vendor/jquery/jquery.js"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/bootstrap/js/bootstrap.js"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/nanoscroller/nanoscroller.js"></script>
@@ -190,13 +154,10 @@ if (isset($_POST['email_lost']))
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/magnific-popup/magnific-popup.js"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
 		
-		<!-- Theme Base, Components and Settings -->
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/theme.js"></script>
 		
-		<!-- Theme Custom -->
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/theme.custom.js"></script>
 		
-		<!-- Theme Initialization Files -->
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/theme.init.js"></script>
         
         

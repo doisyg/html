@@ -34,8 +34,8 @@
         <div id="modalAutonomousNavigation" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog" role="dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <div class="actions" style="min-height:calc(100vh - 160px);">
+                    <div class="modal-header" style="padding-top:0;">
+                        <div class="actions" style="min-height:calc(100vh - 100px);">
                            	<div class="row" style=" position:relative;">
                                 <div class="" style="height:calc(100vh - 170px);">
                                     <div id="an_container_all" class="" style="position:relative; height:calc(100vh - 170px);">
@@ -169,10 +169,10 @@
         <script>
 		var an_isDown = false;
 		
-		var an_largeurSlam = <?php echo $plan->ros_largeur;?>;
-		var an_hauteurSlam = <?php echo $plan->ros_hauteur;?>;
-		var an_largeurRos = <?php echo $plan->ros_largeur;?>;
-		var an_hauteurRos = <?php echo $plan->ros_hauteur;?>;
+		var an_largeurSlam = <?php echo $currentMap->ros_largeur;?>;
+		var an_hauteurSlam = <?php echo $currentMap->ros_hauteur;?>;
+		var an_largeurRos = <?php echo $currentMap->ros_largeur;?>;
+		var an_hauteurRos = <?php echo $currentMap->ros_hauteur;?>;
 		
 		var an_start = true;
 		
@@ -189,11 +189,11 @@
 		var an_canvasData;
 		var an_zoom = 1.5;
 		
-		var an_ros_largeur = <?php echo $plan->ros_largeur;?>;
-		var an_ros_hauteur = <?php echo $plan->ros_hauteur;?>;
-		var an_ros_resolution = <?php echo $plan->ros_resolution;?>;
+		var an_ros_largeur = <?php echo $currentMap->ros_largeur;?>;
+		var an_ros_hauteur = <?php echo $currentMap->ros_hauteur;?>;
+		var an_ros_resolution = <?php echo $currentMap->ros_resolution;?>;
 		
-		var an_id_plan = <?php echo $plan->id_plan;?>;
+		var an_id_plan = <?php echo $currentMap->id_plan;?>;
 		
 		var an_positions = Array();
 		
@@ -208,14 +208,14 @@
 		var an_pois = Array();
 		
 		<?php 
-		$forbiddens = $plan->GetForbiddenAreas();
+		$forbiddens = $currentMap->GetForbiddenAreas();
 		foreach($forbiddens as $forbidden)
 		{
 			$forbidden->GetPoints();
 			?>an_forbiddens.push(<?php echo json_encode($forbidden);?>);
 		<?php
 		}
-		$areas = $plan->GetAreas();
+		$areas = $currentMap->GetAreas();
 		foreach($areas as $area)
 		{
 			$area->GetPoints();
@@ -223,13 +223,13 @@
 			?>an_areas.push(<?php echo json_encode($area);?>);
 		<?php
 		}
-		$docks = $plan->GetStationRecharges();
+		$docks = $currentMap->GetStationRecharges();
 		foreach($docks as $dock)
 		{
 			?>an_docks.push(<?php echo json_encode($dock);?>);
 		<?php
 		}
-		$pois = $plan->GetPois();
+		$pois = $currentMap->GetPois();
 		foreach($pois as $poi)
 		{
 			?>an_pois.push(<?php echo json_encode($poi);?>);
@@ -248,13 +248,14 @@
 		</script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/svg-pan-zoom/svg-pan-zoom.js"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/svg-pan-zoom/hammer.js"></script>
-		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/map_actions.js?v=20191214"></script>
-		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/map_svg.js?v=20191214"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/an_map_svg.js?v=20191214"></script>
 		
 		<script>
 		  // Don't use window.onLoad like this in production, because it can only listen to one function.
+		  var an_eventsHandler;
+		  var an_svg;
 		  window.onload = function() {
-			var an_eventsHandler;
+			
 		
 			an_eventsHandler = {
 			  haltEventListeners: ['touchstart', 'touchend', 'touchmove', 'touchleave', 'touchcancel']
@@ -311,23 +312,6 @@
 			  }
 			}
 		
-			// Expose to window namespace for testing purposes
-			
-			window.panZoom2 = svgPanZoom('#an_svg', {
-			  zoomEnabled: true
-			, controlIconsEnabled: false
-			, maxZoom: 20
-			, fit: 1
-			, center: 1
-			, customEventsHandler: an_eventsHandler
-			, RefreshMap: function() { setTimeout(an_RefreshZoomView, 10); }
-			});
-			
-			svg = document.querySelector('.svg-pan-zoom_viewport');
-			
-			//window.panZoom2 = {};
-			//window.panZoom2.getZoom = function () { return 1; }
-			an_RefreshZoomView();
 		  };
 		</script>
 

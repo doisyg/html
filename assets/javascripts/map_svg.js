@@ -17,7 +17,7 @@ function InitSVG()
 
 function TraceSection(x1, y1, x2, y2)
 {
-	$('.selection').remove();
+	$('#svg .selection').remove();
 	
 	if (x1 < x2){	x = x1; w = x2-x1; }
 	else { x = x2; w = x1-x2; }
@@ -36,7 +36,7 @@ function TraceSection(x1, y1, x2, y2)
 
 function TraceCurrentGomme(points, index)
 {
-	$('.gomme_elem_current_'+index).remove();
+	$('#svg .gomme_elem_current_'+index).remove();
 	
 	if (points.length > 1)
 	{
@@ -59,7 +59,7 @@ function TraceCurrentGomme(points, index)
 								  });
 								  
 		svg.appendChild(path);
-		$('.gomme_elem_current_'+index).insertAfter($('#svg image'));
+		$('#svg .gomme_elem_current_'+index).insertAfter($('#svg image'));
 		
 		path = makeSVGElement('polyline', { points: gomme_point,
 								   'stroke-width': 2,
@@ -70,13 +70,13 @@ function TraceCurrentGomme(points, index)
 								  });
 								  
 		svg.appendChild(path);
-		$('.gomme_elem_current_'+index).insertAfter($('#svg image'));
+		$('#svg .gomme_elem_current_'+index).insertAfter($('#svg image'));
 	}
 }
 
 function TraceCurrentForbidden(points)
 {
-	$('.forbidden_elem_current').remove();
+	$('#svg .forbidden_elem_current').remove();
 	
 	if (points.length >= 1)
 	{
@@ -140,12 +140,12 @@ function GetCenterForbidden(indexForbidden)
 function TraceForbidden(indexForbidden)
 {
 	forbidden = forbiddens[indexForbidden];
-	if (forbidden.deleted == 1) { $('.forbidden_elem_'+forbidden.id_area).remove(); return; }
+	if (forbidden.deleted == 1) { $('#svg .forbidden_elem_'+forbidden.id_area).remove(); return; }
 	
 	is_active = false;
-	if ($('.forbidden_elem_'+forbidden.id_area).length > 0)
+	if ($('#svg .forbidden_elem_'+forbidden.id_area).length > 0)
 	{
-		t = $('.forbidden_elem_'+forbidden.id_area);
+		t = $('#svg .forbidden_elem_'+forbidden.id_area);
 		if (t.attr('class') != t.attr('class').replace('active', ''))
 		{
 			is_active = true;
@@ -157,7 +157,7 @@ function TraceForbidden(indexForbidden)
 		index_point_movable = movableDown.data('index_point');
 	}
 	else
-		$('.forbidden_elem_'+forbidden.id_area).remove();		  
+		$('#svg .forbidden_elem_'+forbidden.id_area).remove();		  
 	
 	points = forbidden.points;
 	if (points.length > 1)
@@ -172,7 +172,7 @@ function TraceForbidden(indexForbidden)
 			forbidden_point += x+','+y;
 		});
 		
-		$('#forbidden_'+forbidden.id_area).remove();
+		$('#svg #forbidden_'+forbidden.id_area).remove();
 		
 		path = makeSVGElement('polygon', { points: forbidden_point,
 							   'stroke-width': 0,
@@ -192,7 +192,7 @@ function TraceForbidden(indexForbidden)
 			
 			if (!downOnMovable || index_point_movable != indexPoint)
 			{
-				$('#forbidden_'+forbidden.id_area+'_'+indexPoint).remove();
+				$('#svg #forbidden_'+forbidden.id_area+'_'+indexPoint).remove();
 				
 				x = point.x * 100 / ros_resolution;
 				y = ros_hauteur - (point.y * 100 / ros_resolution);
@@ -211,13 +211,13 @@ function TraceForbidden(indexForbidden)
 		});
 		
 		if (is_active)
-			AddClass('.forbidden_elem_'+forbidden.id_area, 'active');
+			AddClass('#svg .forbidden_elem_'+forbidden.id_area, 'active');
 	}
 }
 
 function TraceCurrentArea(points)
 {
-	$('.area_elem_current').remove();
+	$('#svg .area_elem_current').remove();
 	
 	if (points.length >= 1)
 	{
@@ -282,12 +282,12 @@ function GetCenterArea(indexArea)
 function TraceArea(indexArea)
 {
 	area = areas[indexArea];
-	if (area.deleted == 1) { $('.area_elem_'+area.id_area).remove(); return; }
+	if (area.deleted == 1) { $('#svg .area_elem_'+area.id_area).remove(); return; }
 	
 	is_active = false;
-	if ($('.area_elem_'+area.id_area).length > 0)
+	if ($('#svg .area_elem_'+area.id_area).length > 0)
 	{
-		t = $('.area_elem_'+area.id_area);
+		t = $('#svg .area_elem_'+area.id_area);
 		if (t.attr('class') != t.attr('class').replace('active', ''))
 		{
 			is_active = true;
@@ -299,7 +299,7 @@ function TraceArea(indexArea)
 		index_point_movable = movableDown.data('index_point');
 	}
 	else
-		$('.area_elem_'+area.id_area).remove();
+		$('#svg .area_elem_'+area.id_area).remove();
 	
 	points = area.points;
 	if (points.length > 1)
@@ -314,7 +314,7 @@ function TraceArea(indexArea)
 			area_point += x+','+y;
 		});
 		
-		$('#area_'+area.id_area).remove();
+		$('#svg #area_'+area.id_area).remove();
 		
 		path = makeSVGElement('polygon', { points: area_point,
 							   'stroke-width': 0,
@@ -329,7 +329,7 @@ function TraceArea(indexArea)
 			
 			if (!downOnMovable || index_point_movable != indexPoint)
 			{
-				$('#area_'+area.id_area+'_'+indexPoint).remove();
+				$('#svg #area_'+area.id_area+'_'+indexPoint).remove();
 				
 				x = point.x * 100 / ros_resolution;
 				y = ros_hauteur - (point.y * 100 / ros_resolution);
@@ -348,13 +348,13 @@ function TraceArea(indexArea)
 		});
 		
 		if (is_active)
-			AddClass('.area_elem_'+area.id_area, 'active');
+			AddClass('#svg .area_elem_'+area.id_area, 'active');
 	}
 }
 
 function TraceCurrentDock(pose)
 {
-	$('.dock_elem_current').remove();
+	$('#svg .dock_elem_current').remove();
 	
 	x = pose.x_ros * 100 / ros_resolution;
 	y = ros_hauteur - (pose.y_ros * 100 / ros_resolution);
@@ -381,12 +381,12 @@ function TraceCurrentDock(pose)
 function TraceDock(indexDock)
 {
 	dock = docks[indexDock];
-	if (dock.deleted != undefined && dock.deleted == 1) { $('.dock_elem_'+dock.id_station_recharge).remove(); return; }
+	if (dock.deleted != undefined && dock.deleted == 1) { $('#svg .dock_elem_'+dock.id_station_recharge).remove(); return; }
 	
 	is_active = false;
-	if ($('.dock_elem_'+dock.id_station_recharge).length > 0)
+	if ($('#svg .dock_elem_'+dock.id_station_recharge).length > 0)
 	{
-		t = $('.dock_elem_'+dock.id_station_recharge);
+		t = $('#svg .dock_elem_'+dock.id_station_recharge);
 		if (t.attr('class') != t.attr('class').replace('active', ''))
 		{
 			is_active = true;
@@ -398,7 +398,7 @@ function TraceDock(indexDock)
 		index_point_movable = movableDown.data('index_point');
 	}
 	else
-		$('.dock_elem_'+dock.id_station_recharge).remove();
+		$('#svg .dock_elem_'+dock.id_station_recharge).remove();
 	
 	x = dock.x_ros * 100 / ros_resolution;
 	y = ros_hauteur - (dock.y_ros * 100 / ros_resolution);
@@ -431,12 +431,12 @@ function TraceDock(indexDock)
 	svg.appendChild(path);
 	
 	if (is_active)
-		AddClass('.dock_elem_'+dock.id_station_recharge, 'active');
+		AddClass('#svg .dock_elem_'+dock.id_station_recharge, 'active');
 }
 
 function TraceCurrentPoi(pose)
 {
-	$('.poi_elem_current').remove();
+	$('#svg .poi_elem_current').remove();
 	
 	x = pose.x_ros * 100 / ros_resolution;
 	y = ros_hauteur - (pose.y_ros * 100 / ros_resolution);
@@ -475,12 +475,12 @@ function TraceCurrentPoi(pose)
 function TracePoi(indexPoi)
 {
 	poi = pois[indexPoi];
-	if (poi.deleted != undefined && poi.deleted == 1) { $('.poi_elem_'+poi.id_poi).remove(); return; }
+	if (poi.deleted != undefined && poi.deleted == 1) { $('#svg .poi_elem_'+poi.id_poi).remove(); return; }
 	
 	is_active = false;
-	if ($('.poi_elem_'+poi.id_poi).length > 0)
+	if ($('#svg .poi_elem_'+poi.id_poi).length > 0)
 	{
-		t = $('.poi_elem_'+poi.id_poi);
+		t = $('#svg .poi_elem_'+poi.id_poi);
 		if (t.attr('class') != t.attr('class').replace('active', ''))
 		{
 			is_active = true;
@@ -492,7 +492,7 @@ function TracePoi(indexPoi)
 		index_point_movable = movableDown.data('index_point');
 	}
 	else
-		$('.poi_elem_'+poi.id_poi).remove();
+		$('#svg .poi_elem_'+poi.id_poi).remove();
 	
 	x = poi.x_ros * 100 / ros_resolution;
 	y = ros_hauteur - (poi.y_ros * 100 / ros_resolution);	
@@ -539,7 +539,7 @@ function TracePoi(indexPoi)
 	svg.appendChild(path);
 	
 	if (is_active)
-		AddClass('.poi_elem_'+poi.id_poi, 'active');
+		AddClass('#svg .poi_elem_'+poi.id_poi, 'active');
 }
 
 function ResizeSVG()
@@ -685,7 +685,7 @@ function DrawFond()
 	ctx = canvas.getContext("2d");
 	
 	imgFond = document.createElement("img");
-	imgFond.setAttribute("src", $('#mapBox').attr('src'));
+	imgFond.setAttribute("src", $('#svg #mapBox').attr('src'));
 	imgFond.onload = function() {
 		ctx.globalAlpha = 0.4;
 		ctx.drawImage(imgFond, 0, 0, svgSize.width*3, svgSize.height*3);
