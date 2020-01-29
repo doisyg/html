@@ -189,8 +189,8 @@ $(document).ready(function(e) {
 			if (confirm('Are you sure you want to send the robot to this pose?'))
 			{
 				p = $('#an_svg image').position();
-				x = (e.originalEvent.targetTouches[0] ? e.originalEvent.targetTouches[0].pageX : e.originalEvent.changedTouches[e.changedTouches.length-1].pageX) - p.left;
-				y = (e.originalEvent.targetTouches[0] ? e.originalEvent.targetTouches[0].pageY : e.originalEvent.changedTouches[e.changedTouches.length-1].pageY) - p.top;
+				x = e.pageX - p.left;
+				y = e.pageY - p.top;
 				x = x * zoom;
 				y = an_ros_hauteur - (y * zoom);
 				

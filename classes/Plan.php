@@ -5,9 +5,9 @@ class Plan extends PlanCore
 	{
 		$cm = Configuration::GetFromVariable('CURRENT_MAP');
 		
-		if ($cm->valeur != $plan->id_plan)
+		if ($cm->valeur != $this->id_plan)
 		{
-			$cm->valeur = $plan->id_plan;
+			$cm->valeur = $this->id_plan;
 			$cm->Save();
 			
 			// On vide les taches en cours
