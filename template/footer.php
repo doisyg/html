@@ -8,20 +8,60 @@
 	                            <!--<?php echo __('Enable joystick');?> <a href="#" id="bToggleJosytick"><i class="ico_jotick fa fa-toggle-off" style="font-size:30px;"></i></a>-->
                                 
                                 
-                                <div style="clear:both; height:50px;"></div>
+                                <div style="clear:both; height:30px;"></div>
                                 
                                 <div class="joystickDiv" draggable="false" style="margin:auto;">
                                     <div class="fond"></div>
                                     <div class="curseur"></div>
                                 </div>
                             </div>
-                            <div style="clear:both; height:50px;"></div>
+                            <div style="clear:both; height:30px;"></div>
+                            
+                            
+                            <a href="#" id="bGotoAutonomousNavigation" data-dismiss="modal" class="btn btn-default btn_big_popup"><i class="fa fa-map-o"></i><span>Autonomous navigation</span></a>
                             
                             
                             <a href="#" id="bUndockJoystick" class="btn btn-warning" style="width:100%; display:none; position:absolute; left:0; bottom:55px; font-size:30px;"><?php echo __('Undock');?></a>
                             <a href="#" id="bDockJoystick" class="btn btn-warning" style="width:100%; display:none; position:absolute; left:0; bottom:55px; font-size:30px;"><?php echo __('Dock');?></a>
                             
                             <a href="#" id="bCloseJoystickPanel" class="btn btn-primary" data-dismiss="modal" style="width:100%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Close');?></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="modalAutonomousNavigation" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog" role="dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="actions" style="min-height:calc(100vh - 160px);">
+                           	<div class="row" style=" position:relative;">
+                                <div class="" style="height:calc(100vh - 170px);">
+                                    <div id="an_container_all" class="" style="position:relative; height:calc(100vh - 170px);">
+                                    
+                                        <div id="an_zoom_carte_container">
+                                            <div id="an_zoom_carte">
+                                                <img src="data:image/png;base64,<?php echo $currentMap->image_tri;?>"  class="img-responsive" style="max-width:100%; max-height:100%;" />
+                                                <div id="an_zone_zoom" style="position:absolute; border:1px solid #00F;"></div>
+                                                <div id="an_zone_zoom_click" style="position:absolute; width:100%; height:100%; top:0; left:0; cursor:pointer;"></div>
+                                            </div>
+                                        </div>
+                                    
+                                        <div id="an_all" style="position:relative; margin:auto; width:100%; height:calc(100vh - 100px);">
+                                            <div id="an_map_navigation" class="zoom" style="position:relative; width:100%; height:calc(100vh - 100px); margin:auto;">
+                                                <svg id="an_svg" width="<?php echo $currentMap->ros_largeur;?>" height="<?php echo $currentMap->ros_hauteur;?>" style="position:absolute; top:0; left:0; width:100%; height:100%;">
+                                                    <image  xlink:href="data:image/png;base64,<?php echo $currentMap->image_tri;?>" x="0" y="0" height="<?php echo $currentMap->ros_hauteur;?>" width="<?php echo $currentMap->ros_largeur;?>" />
+                                                </svg>
+                                            </div>
+                                            <div style="clear:both;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
+                            <a href="#" id="bCloseAutonomousNavigation" class="btn btn-primary" data-dismiss="modal" style="width:100%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Close');?></a>
                         </div>
                     </div>
                 </div>
@@ -123,6 +163,173 @@
 		});
 		
 		</script> 
+
+
+		<?php /********* AUTONOMOUS NAV *********/ ?>
+        <script>
+		var an_isDown = false;
+		
+		var an_largeurSlam = <?php echo $plan->ros_largeur;?>;
+		var an_hauteurSlam = <?php echo $plan->ros_hauteur;?>;
+		var an_largeurRos = <?php echo $plan->ros_largeur;?>;
+		var an_hauteurRos = <?php echo $plan->ros_hauteur;?>;
+		
+		var an_start = true;
+		
+		function an_distance(x1, y1, x2, y2)
+		{
+			return Math.sqrt( (x2-x1)*(x2-x1) + (y2-y1)*(y2-y1));
+		}
+		
+		
+		var an_canvas;
+		var an_canvasWidth;
+		var an_canvasHeight;
+		var an_ctx;
+		var an_canvasData;
+		var an_zoom = 1.5;
+		
+		var an_ros_largeur = <?php echo $plan->ros_largeur;?>;
+		var an_ros_hauteur = <?php echo $plan->ros_hauteur;?>;
+		var an_ros_resolution = <?php echo $plan->ros_resolution;?>;
+		
+		var an_id_plan = <?php echo $plan->id_plan;?>;
+		
+		var an_positions = Array();
+		
+		var an_xObject = 0;
+		var an_yObject = 0;
+		
+		var an_zoom_carte = 1;
+		
+		var an_forbiddens = Array();
+		var an_areas = Array();
+		var an_docks = Array();
+		var an_pois = Array();
+		
+		<?php 
+		$forbiddens = $plan->GetForbiddenAreas();
+		foreach($forbiddens as $forbidden)
+		{
+			$forbidden->GetPoints();
+			?>an_forbiddens.push(<?php echo json_encode($forbidden);?>);
+		<?php
+		}
+		$areas = $plan->GetAreas();
+		foreach($areas as $area)
+		{
+			$area->GetPoints();
+			$area->GetConfigs();
+			?>an_areas.push(<?php echo json_encode($area);?>);
+		<?php
+		}
+		$docks = $plan->GetStationRecharges();
+		foreach($docks as $dock)
+		{
+			?>an_docks.push(<?php echo json_encode($dock);?>);
+		<?php
+		}
+		$pois = $plan->GetPois();
+		foreach($pois as $poi)
+		{
+			?>an_pois.push(<?php echo json_encode($poi);?>);
+		<?php
+		}
+		?>
+		
+		function an_diff(x, y) {
+			var centerItem = $('#robotDestination'),Fin
+				centerLoc = centerItem.offset();
+			var dx = x - (centerLoc.left + (centerItem.width() / 2));
+				dy = y - (centerLoc.top + (centerItem.height() / 2));
+			return Math.atan2(dy, dx) * (180 / Math.PI);
+		}
+		
+		</script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/svg-pan-zoom/svg-pan-zoom.js"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/svg-pan-zoom/hammer.js"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/map_actions.js?v=20191214"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/map_svg.js?v=20191214"></script>
+		
+		<script>
+		  // Don't use window.onLoad like this in production, because it can only listen to one function.
+		  window.onload = function() {
+			var an_eventsHandler;
+		
+			an_eventsHandler = {
+			  haltEventListeners: ['touchstart', 'touchend', 'touchmove', 'touchleave', 'touchcancel']
+			, init: function(options) {
+				var instance = options.instance
+				  , initialScale = 1
+				  , pannedX = 0
+				  , pannedY = 0
+		
+				// Init Hammer
+				// Listen only for pointer and touch events
+				this.hammer = Hammer(options.svgElement, {
+				  inputClass: Hammer.SUPPORT_POINTER_EVENTS ? Hammer.PointerEventInput : Hammer.TouchInput
+				})
+		
+				// Enable pinch
+				this.hammer.get('pinch').set({enable: true})
+		
+				// Handle double tap
+				this.hammer.on('doubletap', function(ev){
+				  instance.zoomIn()
+				})
+		
+				// Handle pan
+				this.hammer.on('panstart panmove', function(ev){
+				  // On pan start reset panned variables
+				  if (ev.type === 'panstart') {
+					pannedX = 0
+					pannedY = 0
+				  }
+		
+				  // Pan only the difference
+				  instance.panBy({x: ev.deltaX - pannedX, y: ev.deltaY - pannedY})
+				  pannedX = ev.deltaX
+				  pannedY = ev.deltaY
+				})
+		
+				// Handle pinch
+				this.hammer.on('pinchstart pinchmove', function(ev){
+				  // On pinch start remember initial zoom
+				  if (ev.type === 'pinchstart') {
+					initialScale = instance.getZoom()
+					instance.zoomAtPoint(initialScale * ev.scale, {x: ev.center.x, y: ev.center.y})
+				  }
+		
+				  instance.zoomAtPoint(initialScale * ev.scale, {x: ev.center.x, y: ev.center.y})
+				})
+				// Prevent moving the page on some devices when panning over SVG
+				options.svgElement.addEventListener('touchmove', function(e){ /*e.preventDefault(); */ });
+			  }
+		
+			, destroy: function(){
+				this.hammer.destroy()
+			  }
+			}
+		
+			// Expose to window namespace for testing purposes
+			
+			window.panZoom2 = svgPanZoom('#an_svg', {
+			  zoomEnabled: true
+			, controlIconsEnabled: false
+			, maxZoom: 20
+			, fit: 1
+			, center: 1
+			, customEventsHandler: an_eventsHandler
+			, RefreshMap: function() { setTimeout(an_RefreshZoomView, 10); }
+			});
+			
+			svg = document.querySelector('.svg-pan-zoom_viewport');
+			
+			//window.panZoom2 = {};
+			//window.panZoom2.getZoom = function () { return 1; }
+			an_RefreshZoomView();
+		  };
+		</script>
 
 	</body>
 </html>

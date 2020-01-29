@@ -221,9 +221,9 @@ ul.listBoutons li a { width:100%; }
 
 .widget-todo-list li { cursor:pointer; }
 
-#container_zoom { height: 100%; margin: 0 auto 0 auto; max-width: 100%; width: 100%; }
-#container_zoom .zoom{ background-color: #DDD; height: 100%; margin: auto; overflow: hidden; width: 100%; }
-#container_zoom .zoom .media{ bottom: 0; display: block; left: 0; margin: auto; max-height: 100%; max-width: 100%; position: absolute; right: 0; top: 0; 
+#an_container_zoom, #container_zoom { height: 100%; margin: 0 auto 0 auto; max-width: 100%; width: 100%; }
+#an_container_zoom .zoom, #container_zoom .zoom{ background-color: #DDD; height: 100%; margin: auto; overflow: hidden; width: 100%; }
+#an_container_zoom .zoom .media, #container_zoom .zoom .media{ bottom: 0; display: block; left: 0; margin: auto; max-height: 100%; max-width: 100%; position: absolute; right: 0; top: 0; 
   -moz-transform-style: preserve-3d;
   -ms-transform-style: preserve-3d;
   -o-transform-style: preserve-3d;
@@ -246,6 +246,10 @@ ul.listBoutons li a { width:100%; }
 #listBoutonHome li { text-align:center; }
 #listBoutonHome li a { width:100%; margin:20px 0; }
 #listBoutonHome li i { font-size:40px; display:block; margin:10px 0; }
+
+@media only screen and (max-width: 335px) {
+	#listBoutonHome li a span { display:block; min-height:40px; }
+}
 
 p.aide { font-size:14px; font-style:italic; }
 

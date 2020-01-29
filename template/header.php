@@ -59,6 +59,7 @@
 		<!-- Theme Custom CSS -->
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/theme-custom.css?v=20191210">
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/map.css?v=20191214">
+		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/an_map.css?v=20191214">
         
 		<!-- Head Libs -->
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/modernizr/modernizr.js"></script>

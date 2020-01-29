@@ -1,0 +1,14 @@
+/* CSS Document */
+#an_container_all .active { display:block !important; visibility:visible; }
+
+#an_zoom_zone { z-index:1002; position:absolute; bottom:-50px; right:30px; width:300px; }
+#an_zoom_zone .label { color:#000000; display:inline-block; font-weight:normal; margin-right:5px; margin-bottom:15px; }
+#an_zoom_slider_contener { width:200px; display:inline-block; }
+#an_zoom_slider-handle { width: 2em; height: 1.4em; top: 50%; margin-top: -.8em; text-align: center; line-height: 1.2em; font-size:0.6em; background-color:#FFFFFF; color:#67A1B7; border-color:#67A1B7; background-image:none; }
+
+#an_fond_opacite_slider { width:calc(100% - 60px); display:inline-block; }
+#an_fond_opacite_slider-handle { width: 2em; height: 1.4em; top: 50%; margin-top: -.8em; text-align: center; line-height: 1.2em; font-size:0.6em; background-color:#FFFFFF; color:#67A1B7; border-color:#67A1B7; background-image:none; }
+
+#an_zoom_carte_container { z-index:1000; background-color:#FFF; position:absolute; top:0px; right:20px; }
+#main_row.hide_element #an_zoom_carte_container { right:50px; }
+#an_zoom_carte { position:relative; width:100px; border:1px solid #000; }

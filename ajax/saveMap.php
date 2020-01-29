@@ -10,7 +10,6 @@ if (!$userConnected->CanDo($sectionMenu, $sectionSousMenu, 'edit')) { header('lo
 
 $plan = new Plan((int)$_POST['id_plan']);
 
-
 $_POST['forbiddens'] = str_replace('&#34;', '"', $_POST['forbiddens']);
 $forbiddens = json_decode($_POST['forbiddens']);
 foreach($forbiddens as $forbidden)

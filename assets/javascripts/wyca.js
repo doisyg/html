@@ -29,8 +29,8 @@ $(document).ready(function(e) {
 	var optionsDefault = {
 		api_key:'5LGU.LaYMMncJaA0i42HwsX9ZX-RCNgj-9V17ROFXt71st',
 		id_robot:3,
-		host:'elodie.wyca-solutions.com:9090', //192.168.1.32:9090', // host:'192.168.100.245:9090',
-		//host:'192.168.100.165:9090',
+		//host:'elodie.wyca-solutions.com:9090', //192.168.1.32:9090', // host:'192.168.100.245:9090',
+		host:'192.168.100.165:9090',
 		video_element_id:'webcam_local',
 		webcam_name: 'r200 nav',
 		nick:'robot',
@@ -132,6 +132,11 @@ $(document).ready(function(e) {
         e.preventDefault();
 		wycaApi.RobotDock( function (r) { console.log(r);});
     });
+	$('#bGotoAutonomousNavigation').click(function(e) {
+        e.preventDefault();
+		$('#modalAutonomousNavigation').modal('show');
+    });
+	
 	
 });
 
