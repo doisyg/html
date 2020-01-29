@@ -15,7 +15,9 @@ if (isset($_POST['nom']))
 	{
 		
 		ob_start();
-		imagepng(substr($_POST['image'], 22));
+		$image = imagecreatefromstring(base64_decode(substr($_POST['image'], 22)));
+		imagesetthickness($image, 2);
+		imagepng($image);
 		$contents = ob_get_contents();
 		ob_end_clean();
 		
@@ -47,7 +49,9 @@ if (isset($_POST['nom']))
 	{
 		
 		ob_start();
-		imagepng(substr($_POST['image_tri'], 22));
+		$image = imagecreatefromstring(base64_decode(substr($_POST['image_tri'], 22)));
+		imagesetthickness($image, 2);
+		imagepng($image);
 		$contents = ob_get_contents();
 		ob_end_clean();
 		
