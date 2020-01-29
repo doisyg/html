@@ -200,8 +200,8 @@ include ('template/header.php');
                     </div>
                     <div style="clear:both;"></div>
                     
-                    <a href="#" id="bUseSite" data-id_site="<?php echo isset($_GET['added'])?$_GET['added']:'';?>" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Yes');?></a>
-                    <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('No');?></a>
+                    <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('No');?></a>
+                    <a href="#" id="bUseSite" data-id_site="<?php echo isset($_GET['added'])?$_GET['added']:'';?>" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Yes');?></a>
                 </div>
             </div>
         </div>

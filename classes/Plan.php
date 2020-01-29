@@ -299,34 +299,38 @@ class Plan extends PlanCore
 				$imagick = new Imagick();
 				$imagick->newImage(imagesx($image), imagesy($image), $backgroundColor);
 				
-				$draw = new \ImagickDraw();
-				
 				$polys = $this->GetAreas();
-				$index_color = 1;
-				foreach($polys as $poly)
+				
+				if (count($polys)>0)
 				{
-					$fillColor = new \ImagickPixel();
-				    $fillColor->setColor('rgba('.$index_color.', '.$index_color.', '.$index_color.', 1)');
+					$draw = new \ImagickDraw();
 					
-					$draw->setFillColor($fillColor);
-
-					$points = $poly->GetPoints();
-					$point_img = array();
-					for ($i=0; $i<count($points); $i++)
-					{	
-						$x1 = $points[$i]->x / 5 * 100;
-						$y1 = $this->ros_hauteur - $points[$i]->y / 5 * 100;
+					
+					$index_color = 1;
+					foreach($polys as $poly)
+					{
+						$fillColor = new \ImagickPixel();
+						$fillColor->setColor('rgba('.$index_color.', '.$index_color.', '.$index_color.', 1)');
 						
-						$point_img[] = array('x' => $x1, 'y' => $y1);
+						$draw->setFillColor($fillColor);
+	
+						$points = $poly->GetPoints();
+						$point_img = array();
+						for ($i=0; $i<count($points); $i++)
+						{	
+							$x1 = $points[$i]->x / 5 * 100;
+							$y1 = $this->ros_hauteur - $points[$i]->y / 5 * 100;
+							
+							$point_img[] = array('x' => $x1, 'y' => $y1);
+						}
+						
+						$draw->polygon($point_img);
+						
+						$index_color++;
 					}
 					
-					$draw->polygon($point_img);
-					
-					$index_color++;
+					$imagick->drawImage($draw);
 				}
-				
-				$imagick->drawImage($draw);
-				
 				
 				$imagick->transformImageColorspace(Imagick::COLORSPACE_TRANSPARENT);
 				$imagick->setImageType(Imagick::IMGTYPE_GRAYSCALE);

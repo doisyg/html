@@ -142,9 +142,11 @@ include ('template/header.php');
                         
                     </div>
                     <div style="clear:both;"></div>
-                    
-                    <a href="#" id="bUseMap" data-id_plan="" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Yes');?></a>
-                    <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('No');?></a>
+ 
+ 
+                    <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('No');?></a>
+                                       
+                    <a href="#" id="bUseMap" data-id_plan="" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Yes');?></a>
                 </div>
             </div>
         </div>
@@ -263,13 +265,14 @@ include ('template/header.php');
             <div class="modal-header">
                 <div class="actions" style="min-height:calc(100vh - 110px);">
                     <div style="text-align:center;">
-                    
-                    <h2 id="modalUseThisMapNowTitle1"><?php echo 'Do you want to use this map now ?';?></h2>
-                    <h2 id="modalUseThisMapNowTitle2" style="display:none;"><?php echo 'Configure map on robot';?></h2>
-                    
-                    <div id="modalUseThisMapNowContent" style="display:none;">
-                    	<i style="font-size:60px;" class="fa fa-spinner fa-pulse"></i>
-                        <div id="modalUseThisMapNowContentDetails" style="font-size:18px;"></div>
+                        
+                        <h2 id="modalUseThisMapNowTitle1"><?php echo 'Do you want to use this map now ?';?></h2>
+                        <h2 id="modalUseThisMapNowTitle2" style="display:none;"><?php echo 'Configure map on robot';?></h2>
+                        
+                        <div id="modalUseThisMapNowContent" style="display:none;">
+                            <i style="font-size:60px;" class="fa fa-spinner fa-pulse"></i>
+                            <div id="modalUseThisMapNowContentDetails" style="font-size:18px;"></div>
+                        </div>
                     </div>
          			
                     <a href="#" id="bUseThisMapNowNo" class="btn btn-warning" data-dismiss="modal" style="position:absolute; width:50%; left:0; bottom:0px; font-size:30px;"><?php echo __('No');?></a>           
