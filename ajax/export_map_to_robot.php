@@ -20,13 +20,13 @@ if ($plan->id_plan > 0)
 	$last_config = RobotConfig::GetLastConfig();
 	
 	$value = $last_config->GetValue('/map', 'map_amcl.png');
-	if (isset($value->data)) file_put_contents($dossier_config.'map/map_amcl.png', $value->data);
+	if (isset($value->data)) file_put_contents($dossier_config.'map/map_amcl.png', base64_decode($value->data));
 	
 	$value = $last_config->GetValue('/map', 'map_forbidden.png');
-	if (isset($value->data)) file_put_contents($dossier_config.'map/map_forbidden.png', $value->data);
+	if (isset($value->data)) file_put_contents($dossier_config.'map/map_forbidden.png', base64_decode($value->data));
 	
 	$value = $last_config->GetValue('/map', 'map_areas.png');
-	if (isset($value->data)) file_put_contents($dossier_config.'map/map_areas.png', $value->data);
+	if (isset($value->data)) file_put_contents($dossier_config.'map/map_areas.png', base64_decode($value->data));
 	
 	$value = $last_config->GetValue('/map', 'map_areas.yaml');
 	if (isset($value->data)) file_put_contents($dossier_config.'map/map_areas.yaml', $value->data);
@@ -34,5 +34,9 @@ if ($plan->id_plan > 0)
 	$value = $last_config->GetValue('/map', 'areas.yaml');
 	if (isset($value->data)) file_put_contents($dossier_config.'map/areas.yaml', $value->data);
 	
+	
+	 echo json_encode(array('error' => ''));
 }
+else
+	 echo json_encode(array('error' => 'not allow'));
 ?>
