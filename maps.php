@@ -29,10 +29,31 @@ if (isset($_GET['um']))
 	$plan = new Plan($_GET['um']);
 	if ($plan->id_plan > 0 && $plan->id_site == $currentSite->id_site)
 	{
-		$cm = Configuration::GetFromVariable('CURRENT_MAP');
-		$cm->valeur = $_GET['um'];
-		$cm->Save();
 		$plan->SetAsActive();
+		
+		// A REVOIR
+		// On sauve les images directement dans le dossier de config sur le robot
+		
+		$dossier_config = $_CONFIG['CONFIG_PATH'];
+		
+		$last_config = RobotConfig::GetLastConfig();
+		
+		$value = $last_config->GetValue('/map', 'map_amcl.png');
+		if (isset($value->data)) file_put_contents($dossier_config.'map/map_amcl.png', base64_decode($value->data));
+		
+		$value = $last_config->GetValue('/map', 'map_forbidden.png');
+		if (isset($value->data)) file_put_contents($dossier_config.'map/map_forbidden.png', base64_decode($value->data));
+		
+		$value = $last_config->GetValue('/map', 'map_areas.png');
+		if (isset($value->data)) file_put_contents($dossier_config.'map/map_areas.png', base64_decode($value->data));
+		
+		$value = $last_config->GetValue('/map', 'map_areas.yaml');
+		if (isset($value->data)) file_put_contents($dossier_config.'map/map_areas.yaml', $value->data);
+		
+		$value = $last_config->GetValue('/map', 'areas.yaml');
+		if (isset($value->data)) file_put_contents($dossier_config.'map/areas.yaml', $value->data);
+		
+		
 		header('location:maps.php');
 	}
 }
@@ -468,7 +489,7 @@ var id_map_last = -1;
 			},
 			error: function(e) {
 				alert(e.responseText);
-				$('#modalFinCreateMap').modal('hide');
+				$('#modalUseThisMapNowContentDetails').modal('hide');
 			}
 		});
 		
@@ -476,6 +497,9 @@ var id_map_last = -1;
 		
     });
 	
+	$('#form_mapping').submit(function(e) {
+        e.preventDefault();
+    });
 	
 	$('#bMappingSaveMap').click(function(e) {
 		if ($('#form_mapping_name').val() == '')
