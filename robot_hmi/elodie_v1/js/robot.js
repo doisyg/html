@@ -31,10 +31,10 @@ $(document).ready(function(e) {
 	
 	wycaApi = new WycaAPI({
 		api_key:'5LGU.LaYMMncJaA0i42HwsX9ZX-RCNgj-9V17ROFXt71st',
-		host:'192.168.100.245:9090', // host:'192.168.100.245:9090',
+		host:'192.168.100.165:9090', // host:'192.168.100.245:9090',
 		video_element_id:'webcam_local',
-		webcam_name: 'r200 nav',
-		nick:'robot',
+		/*webcam_name: 'r200 nav',*/
+		nick:'robot_phy',
 		delay_no_reply : 30,
 		delay_lost_connexion : 30,
 		with_audio: true,
@@ -79,52 +79,6 @@ $(document).ready(function(e) {
 			NextStepCurrentTask();
 		},
 		/*
-		onCaptureJobFeedback: function(data){
-		},
-		onCaptureJobStatus: function(data){
-			switch(data.status)
-			{
-				case wycaApi.ACTION_STATUS_PENDING: break;
-				case wycaApi.ACTION_STATUS_ACTIVE: break;
-				case wycaApi.ACTION_STATUS_PREEMPTED: break;
-				case wycaApi.ACTION_STATUS_SUCCEEDED: break;
-				case wycaApi.ACTION_STATUS_ABORTED: break;
-				case wycaApi.ACTION_STATUS_REJECTED: break;
-				case wycaApi.ACTION_STATUS_PREEMPTING: break;
-				case wycaApi.ACTION_STATUS_RECALLING: break;
-				case wycaApi.ACTION_STATUS_RECALLED: break;
-				case wycaApi.ACTION_STATUS_LOST: break;
-			}
-		},
-		onCaptureJobResult: function(data){
-			
-			console.log(data);
-			if (!data.success) { $('#erreur').html(data.message); $('#erreur').show(); }
-			
-			jobInProgress = false;
-			
-			if(!demandeStop)
-				GoToPage('home');
-			else
-				demandeStop = false;
-				
-			if (stopFromServer != '')
-			{
-				wycaApi.SendServerMessageToServer(stopFromServer, 'JOB_FINISHED');
-				stopFromServer = '';
-			}
-			else
-			{
-				if (gotoDockAfterJob && !in_visio)
-				{
-					robotMoveToDock = true;
-					RefreshDisplayRobotMoveToDock();
-					wycaApi.RobotMoveToDock(1,	ResultSendToDock);
-				}
-			}
-			gotoDockAfterJob = false;
-		},
-		*/
 		onNavigationRobotStateChange: function(data){
 			initStateRobot(data);
 		},
@@ -132,6 +86,7 @@ $(document).ready(function(e) {
 		},
 		onRobotActionStarted: function(data){
 		}
+		*/
 	});
 	
 	wycaApi.init();	

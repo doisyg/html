@@ -544,5 +544,31 @@ start'.$i.': {theta: '.$dock->t_ros.', x: '.$dock->x_ros.', y: '.$dock->y_ros.'}
 		$file->date_upd_robot = '0000-00-00 00:00:00';
 		$file->Save();
 	}
+	
+	public function SendToRobot()
+	{
+		global $_CONFIG;
+		
+		$dossier_config = $_CONFIG['CONFIG_PATH'];
+		$last_config = RobotConfig::GetLastConfig();
+		
+		$value = $last_config->GetValue('/map', 'map_amcl.png');
+		if (isset($value->data)) file_put_contents($dossier_config.'map/map_amcl.png', base64_decode($value->data));
+		
+		$value = $last_config->GetValue('/map', 'map_forbidden.png');
+		if (isset($value->data)) file_put_contents($dossier_config.'map/map_forbidden.png', base64_decode($value->data));
+		
+		$value = $last_config->GetValue('/map', 'map_areas.png');
+		if (isset($value->data)) file_put_contents($dossier_config.'map/map_areas.png', base64_decode($value->data));
+		
+		$value = $last_config->GetValue('/map', 'map_areas.yaml');
+		if (isset($value->data)) file_put_contents($dossier_config.'map/map_areas.yaml', $value->data);
+		
+		$value = $last_config->GetValue('/map', 'areas.yaml');
+		if (isset($value->data)) file_put_contents($dossier_config.'map/areas.yaml', $value->data);
+		
+		$value = $last_config->GetValue('/poses', 'poses.yaml');
+		if (isset($value->data)) file_put_contents($dossier_config.'poses/poses.yaml', $value->data);
+	}
 }
 ?>

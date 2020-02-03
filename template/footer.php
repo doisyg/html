@@ -168,6 +168,7 @@
 
 		<?php /********* AUTONOMOUS NAV *********/ ?>
         <script>
+		var current_id_plan = <?php echo $currentIdPlan;?>;
 		var an_isDown = false;
 		
 		var an_largeurSlam = <?php echo $currentMap->ros_largeur;?>;

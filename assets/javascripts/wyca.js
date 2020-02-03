@@ -34,8 +34,8 @@ $(document).ready(function(e) {
 	var optionsDefault = {
 		api_key:'5LGU.LaYMMncJaA0i42HwsX9ZX-RCNgj-9V17ROFXt71st',
 		id_robot:3,
-		host:'elodie.wyca-solutions.com:9090', //192.168.1.32:9090', // host:'192.168.100.245:9090',
-		//host:'192.168.0.17:9090',
+		//host:'elodie.wyca-solutions.com:9090', //192.168.1.32:9090', // host:'192.168.100.245:9090',
+		host:'192.168.100.165:9090',
 		video_element_id:'webcam_local',
 		webcam_name: 'r200 nav',
 		nick:'robot',
@@ -107,10 +107,12 @@ $(document).ready(function(e) {
 			navLaunched = data;
 			if (data)
 			{
+				$('.no_navigation').hide();
 				$('.only_navigation').show();
 			}
 			else
 			{
+				$('.no_navigation').show();
 				$('.only_navigation').hide();
 			}
 		},
@@ -118,6 +120,7 @@ $(document).ready(function(e) {
 			mappingLaunched = data;
 		},
 		onRobotPoseChange:function(pose){
+			lastRobotPose = pose;
 			InitRobotPose(pose);
 		}
         /*
@@ -133,6 +136,13 @@ $(document).ready(function(e) {
 	wycaApi = new WycaAPI(optionsDefault);
 	
 	wycaApi.init();	
+	
+	$('#bDevStartNav').click(function(e) {
+        e.preventDefault();
+		wycaApi.NavigationStart(false, function(r) {
+			if (!r.success) alert(r.message);
+		});
+    });
 	
 	$('#bJoystickPanel').click(function(e) {
         EnableJoystick(true);
@@ -188,7 +198,7 @@ $(document).ready(function(e) {
 		}
 	});
 	
-	$(document).on('click', '#svg .dock_elem', function(e) {
+	$(document).on('click', '#an_svg .dock_elem', function(e) {
 		console.log('TODO click dock');
 		anClickOnElement = true;
 		if (confirm('Are you sure you want to send the robot to this pose?'))
@@ -235,8 +245,16 @@ mappingLastInfo
 console.log('Init pose theta');
 function InitRobotPose(pose)
 {
-	$('#an_robot').attr('x', pose.x * 100 / 5);
-	$('#an_robot').attr('y', pose.y * 100 / 5);
+	x =  (pose.x - 0.25) * 100 / 5;
+	y = an_ros_hauteur - (pose.y + 0.25) * 100 / 5;
+	
+	x2 =  (pose.x) * 100 / 5;
+	y2 = an_ros_hauteur - (pose.y) * 100 / 5;
+	
+	$('#an_robot').attr('x', x);
+	$('#an_robot').attr('y', y);
+	$('#an_robot').attr('transform', 'rotate('+(180 - pose.theta *  180 / Math.PI - 90) +', '+x2+', '+y2+')');
+	
 }
 
 function InitPosCarteMapping()

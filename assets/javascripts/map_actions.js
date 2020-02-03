@@ -946,7 +946,11 @@ $(document).ready(function() {
 				error: function(jqXHR, textStatus, errorThrown) {
 					},
 				success: function(data, textStatus, jqXHR) {
-					savedCanClose = true;
+						savedCanClose = true;
+						if (navLaunched && id_plan == current_id_plan)
+						{
+							wycaApi.NavigationReloadMaps(function(e) { if (!e.success) console.error(e.error); });	
+						}
 					}
 			});
 		
@@ -955,11 +959,12 @@ $(document).ready(function() {
 	$('#bDockCreateFromPose').click(function(e) {
 		nextIdDock++;
 		
-		d = {'id_station_recharge':nextIdDock, 'id_plan':id_plan, 'x_ros':lastRobotPose.x, 'y_ros':lastRobotPose.y, 't_ros':lastRobotPose.theta, 'num':0};
+		dockPosition = GetDockPosition(lastRobotPose);
+		
+		d = {'id_station_recharge':nextIdDock, 'id_plan':id_plan, 'x_ros':dockPosition.x, 'y_ros':dockPosition.y, 't_ros':dockPosition.theta, 'num':0};
 		AddHistorique({'action':'add_dock', 'data':d});
         docks.push(d);
 		TraceDock(docks.length-1);
-		console.error('Create dock: get real pose of robot');
     });
 	$('#bDockCreateFromMap').click(function(e) {
         if (canChangeMenu)
@@ -1124,7 +1129,6 @@ $(document).ready(function() {
 		AddHistorique({'action':'add_poi', 'data':p});
         pois.push(p);
 		TracePoi(pois.length-1);
-		console.error('Create POI: get real pose of robot');
         
     });
 	$('#bPoiCreateFromMap').click(function(e) {
@@ -2443,4 +2447,11 @@ function GetAngleRadian(x1, y1, x2, y2) {
 }
 function GetAngleDegre(x1, y1, x2, y2) {
 	return GetAngleRadian(x1, y1, x2, y2) * (180 / Math.PI);
+}
+
+function GetDockPosition(pose)
+{
+	dockPose = {'x': pose.x + Math.cos(pose.theta) * 0.26 , 'y': pose.y + Math.sin(pose.theta) * 0.26, 'theta':pose.theta};
+	
+	return dockPose;
 }

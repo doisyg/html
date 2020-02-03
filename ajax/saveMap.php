@@ -155,4 +155,11 @@ catch(Excepion $e)
 $plan->image_tri = base64_encode($contents);
 $plan->save();
 
+if ($plan->id_plan == $currentIdPlan)
+{
+	// On seuvegarde sur le robot
+	$plan->ExportToConfig();
+	
+}
+
 ?>
