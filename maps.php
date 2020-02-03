@@ -552,7 +552,9 @@ var id_map_last = -1;
 	
 	$('#bMappingStart').click(function(e) {
 		e.preventDefault();
-		
+		if (navLaunched) 
+			wycaApi.NavigationStop();
+			
 		wycaApi.MappingStart(function(r) { });
 		mappingStarted = true;
 		$('#bMappingStart').hide();

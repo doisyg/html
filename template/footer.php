@@ -18,7 +18,7 @@
                             <div style="clear:both; height:30px;"></div>
                             
                             
-                            <a href="#" id="bGotoAutonomousNavigation" data-dismiss="modal" class="btn btn-default btn_big_popup"><i class="fa fa-map-o"></i><span>Autonomous navigation</span></a>
+                            <a href="#" id="bGotoAutonomousNavigation" data-dismiss="modal" class="btn btn-default btn_big_popup only_navigation"><i class="fa fa-map-o"></i><span>Autonomous navigation</span></a>
                             
                             
                             <a href="#" id="bUndockJoystick" class="btn btn-warning" style="width:100%; display:none; position:absolute; left:0; bottom:55px; font-size:30px;"><?php echo __('Undock');?></a>
@@ -51,7 +51,8 @@
                                         <div id="an_all" style="position:relative; margin:auto; width:100%; height:calc(100vh - 100px);">
                                             <div id="an_map_navigation" class="zoom" style="position:relative; width:100%; height:calc(100vh - 100px); margin:auto;">
                                                 <svg id="an_svg" width="<?php echo $currentMap->ros_largeur;?>" height="<?php echo $currentMap->ros_hauteur;?>" style="position:absolute; top:0; left:0; width:100%; height:100%;">
-                                                    <image  xlink:href="data:image/png;base64,<?php echo $currentMap->image_tri;?>" x="0" y="0" height="<?php echo $currentMap->ros_hauteur;?>" width="<?php echo $currentMap->ros_largeur;?>" />
+                                                    <image xlink:href="data:image/png;base64,<?php echo $currentMap->image_tri;?>" x="0" y="0" height="<?php echo $currentMap->ros_hauteur;?>" width="<?php echo $currentMap->ros_largeur;?>" />
+													<image id="an_robot" xlink:href="assets/images/robot-dessus.png" x="0" y="0" height="10" width="10" />
                                                 </svg>
                                             </div>
                                             <div style="clear:both;"></div>

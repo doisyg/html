@@ -24,6 +24,11 @@ var mappingLastOrigin = {'x':0, 'y':0 };
 
 var drawLaserInProgress = false;
 
+var navLaunched = false;
+var mappingLaunched = false;
+
+var lastRobotPose = { 'x':0, 'y':0, 'theta':0 }
+
 $(document).ready(function(e) {
 	
 	var optionsDefault = {
@@ -98,6 +103,23 @@ $(document).ready(function(e) {
                 $('.safety_stop').hide();
             lastEStop = data;
         },
+		onNavigationStateChange: function(data) {
+			navLaunched = data;
+			if (data)
+			{
+				$('.only_navigation').show();
+			}
+			else
+			{
+				$('.only_navigation').hide();
+			}
+		},
+		onMappingStateChange: function(data) {
+			mappingLaunched = data;
+		},
+		onRobotPoseChange:function(pose){
+			InitRobotPose(pose);
+		}
         /*
 		onNavigationRobotStateChange: function(data){
 			initStateRobot(data);
@@ -154,10 +176,8 @@ $(document).ready(function(e) {
     });
 	
 	$(document).on('click', '#an_svg .poi_elem', function(e) {
-		console.log('click poi');
 		anClickOnElement = true;
-		wycaApi.NavigationStart(true, function(e) { console.log(e); }); // Pour test
-		if (confirm('Are you sure you want to send the robot to this pose?'))
+		if (confirm('Are you sure you want to send the robot to this POI?'))
 		{
 			console.log('id_poi', $(this).data('id_poi'));
 			
@@ -169,9 +189,8 @@ $(document).ready(function(e) {
 	});
 	
 	$(document).on('click', '#svg .dock_elem', function(e) {
-		console.log('click dock');
+		console.log('TODO click dock');
 		anClickOnElement = true;
-		
 		if (confirm('Are you sure you want to send the robot to this pose?'))
 		{
 			alert('Not available for the moment');
@@ -186,7 +205,6 @@ $(document).ready(function(e) {
 		}
 		else
 		{
-			wycaApi.NavigationStart(true, function(e) { console.log(e); }); // Pour test
 			if (confirm('Are you sure you want to send the robot to this pose?'))
 			{
 				p = $('#an_svg image').position();
@@ -213,6 +231,14 @@ var doRefresh = 0;
 mappingLastPose
 mappingLastInfo
 */
+
+console.log('Init pose theta');
+function InitRobotPose(pose)
+{
+	$('#an_robot').attr('x', pose.x * 100 / 5);
+	$('#an_robot').attr('y', pose.y * 100 / 5);
+}
+
 function InitPosCarteMapping()
 {
 	// On affiche 15 metre sur les 150pixels visible = 1px pour 10cm

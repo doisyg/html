@@ -241,7 +241,7 @@ include ('template/header.php');
                     <div style="text-align:center;">
                     
                     	<ul class="listBoutons">
-                            <li><a class="btn btn-primary btn_big_popup" id="bDockCreateFromPose" data-dismiss="modal" href="#"><i class="fa fa-android"></i><?php echo __('At the current robot pose');?></a></li>
+                            <li><a class="btn btn-primary btn_big_popup only_navigation" id="bDockCreateFromPose" data-dismiss="modal" href="#"><i class="fa fa-android"></i><?php echo __('At the current robot pose');?></a></li>
                             <li><a class="btn btn-primary btn_big_popup" id="bDockCreateFromMap" data-dismiss="modal" href="#"><i class="fa fa-map-marker"></i><?php echo __('By clicking on the map');?></a></li>
                         </ul>
                         
@@ -264,7 +264,7 @@ include ('template/header.php');
                     <div style="text-align:center;">
                     
                     	<ul class="listBoutons">
-                            <li><a class="btn btn-primary btn_big_popup" id="bPoiCreateFromPose" data-dismiss="modal" href="#"><i class="fa fa-android"></i><?php echo __('At the current robot pose');?></a></li>
+                            <li><a class="btn btn-primary btn_big_popup only_navigation" id="bPoiCreateFromPose" data-dismiss="modal" href="#"><i class="fa fa-android"></i><?php echo __('At the current robot pose');?></a></li>
                             <li><a class="btn btn-primary btn_big_popup" id="bPoiCreateFromMap" data-dismiss="modal" href="#"><i class="fa fa-map-marker"></i><?php echo __('By clicking on the map');?></a></li>
                         </ul>
                         

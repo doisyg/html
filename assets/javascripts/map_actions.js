@@ -955,7 +955,7 @@ $(document).ready(function() {
 	$('#bDockCreateFromPose').click(function(e) {
 		nextIdDock++;
 		
-		d = {'id_station_recharge':nextIdDock, 'id_plan':id_plan, 'x_ros':0, 'y_ros':0, 't_ros':0, 'num':0};
+		d = {'id_station_recharge':nextIdDock, 'id_plan':id_plan, 'x_ros':lastRobotPose.x, 'y_ros':lastRobotPose.y, 't_ros':lastRobotPose.theta, 'num':0};
 		AddHistorique({'action':'add_dock', 'data':d});
         docks.push(d);
 		TraceDock(docks.length-1);
@@ -1120,7 +1120,7 @@ $(document).ready(function() {
 	
 	$('#bPoiCreateFromPose').click(function(e) {
 		nextIdPoi++;
-		p = {'id_poi':nextIdPoi, 'id_plan':id_plan, 'x_ros':0, 'y_ros':0, 't_ros':0, 'name':'POI'};
+		p = {'id_poi':nextIdPoi, 'id_plan':id_plan, 'x_ros':lastRobotPose.x, 'y_ros':lastRobotPose.y, 't_ros':lastRobotPose.theta, 'name':'POI'};
 		AddHistorique({'action':'add_poi', 'data':p});
         pois.push(p);
 		TracePoi(pois.length-1);
