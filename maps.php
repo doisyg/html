@@ -492,11 +492,11 @@ var id_map_last = -1;
 			success: function(data) {
 				id_map_last = data.id_map;
 			  
-				$('#modalUseThisMapNowContentDetails').html('Start autonmous navigation');
+				$('#modalUseThisMapNowContentDetails').html('Start autonomous navigation');
 			  	wycaApi.NavigationStart(true, function(r) {
 					if (!r.success) alert(r.message);
 					$('#modalUseThisMapNow').modal('hide');
-					location.href = location.href;
+					window.location.href = window.location.href;
 				});
 			},
 			error: function(e) {
