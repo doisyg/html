@@ -32,6 +32,9 @@ var lastRobotPose = { 'x':0, 'y':0, 'theta':0 }
 var an_confirm_action = '';
 var an_confirm_details = '';
 
+var canvas_an_plan = null;
+		
+
 var vh = window.innerHeight * 0.01;
 document.documentElement.style.setProperty('--vh', vh+'px');
 
@@ -46,8 +49,8 @@ $(document).ready(function(e) {
 	var optionsDefault = {
 		api_key:'5LGU.LaYMMncJaA0i42HwsX9ZX-RCNgj-9V17ROFXt71st',
 		id_robot:3,
-		host:'elodie.wyca-solutions.com:9090', //192.168.1.32:9090', // host:'192.168.100.245:9090',
-		//host:'192.168.0.17:9090',
+		//host:'elodie.wyca-solutions.com:9090', //192.168.1.32:9090', // host:'192.168.100.245:9090',
+		host:'192.168.100.165:9090',
 		video_element_id:'webcam_local',
 		webcam_name: 'r200 nav',
 		nick:'robot',
@@ -231,7 +234,6 @@ $(document).ready(function(e) {
 	});
 	
 	$(document).on('click', '#an_svg', function(e) {
-		console.log('click svg');
 		if (anClickOnElement)
 		{
 			anClickOnElement = false;
@@ -240,25 +242,31 @@ $(document).ready(function(e) {
 		{
 			an_confirm_action = 'goto_pose';
 			
-			p = $('#an_svg image').position();
+			p = $('#an_svg #an_plan').position();
 			x = e.pageX - p.left;
 			y = e.pageY - p.top;
+			
+			x_in_map = parseInt(x * zoom);
+			y_in_map = parseInt(y * zoom);
+			
 			x = x * zoom;
 			y = an_ros_hauteur - (y * zoom);
 			
 			xRos = x * an_ros_resolution / 100;
 			yRos = y * an_ros_resolution / 100;
 			
+			console.log('check');
+			not_allow = !CheckAllowPose(x_in_map, y_in_map);
+			if (not_allow) console.log('not allow');
+			
+			
 			an_confirm_details = {x:parseFloat(xRos), y:parseFloat(yRos), theta:parseFloat(0)};
-			console.log(an_confirm_details);
+			
 			x =  (an_confirm_details.x - 0.25) * 100 / 5;
 			y = an_ros_hauteur - (an_confirm_details.y + 0.25) * 100 / 5;
 			
 			x2 =  (an_confirm_details.x) * 100 / 5;
 			y2 = an_ros_hauteur - (an_confirm_details.y) * 100 / 5;
-			
-			
-			console.log(x, y);
 			
 			$('#an_robot_dest').attr('x', x);
 			$('#an_robot_dest').attr('y', y);
@@ -312,6 +320,69 @@ var doRefresh = 0;
 mappingLastPose
 mappingLastInfo
 */
+
+function CheckAllowPose(x_img, y_img)
+{
+	if (canvas_an_plan == null)
+	{
+		img = document.getElementById('an_plan_fond');
+		canvas_an_plan = document.createElement('canvas');
+		canvas_an_plan.width = img.width;
+		canvas_an_plan.height = img.height;
+		console.log(img.width);
+		canvas_an_plan.getContext('2d').drawImage(img, 0, 0, img.width, img.height);    
+	}
+	
+	// On checl un carré de 12 sur 12 (60cm par 60cm
+	console.log(x_img, y_img);
+	not_allow = false;
+	
+	for(i = x_img - 7; i<= x_img + 7; i++)
+	{
+		for(j = y_img - 7; j<= y_img + 7; j++)
+		{
+			if (i <= x_img - 7) 
+			{
+				if (j < y_img - 4) continue;
+				if (j > y_img + 4) continue;
+			}
+			if (i <= x_img - 6) 
+			{
+				if (j < y_img - 5) continue;
+				if (j > y_img + 5) continue;
+			}
+			if (i <= x_img - 5) 
+			{
+				if (j < y_img - 6) continue;
+				if (j > y_img + 6) continue;
+			}
+			
+			if (i <= x_img + 7) 
+			{
+				if (j < y_img - 4) continue;
+				if (j > y_img + 4) continue;
+			}
+			if (i <= x_img + 6) 
+			{
+				if (j < y_img - 5) continue;
+				if (j > y_img + 5) continue;
+			}
+			if (i <= x_img + 5) 
+			{
+				if (j < y_img - 6) continue;
+				if (j > y_img + 6) continue;
+			}
+			pixelData = canvas_an_plan.getContext('2d').getImageData(i, j, 1, 1).data;
+			if (pixelData[0] == 0)
+			{
+				console.log(i, j, pixelData);
+				return false;
+			}
+		}
+	}
+	
+	return true;
+}
 
 console.log('Init pose theta');
 function InitRobotPose(pose)

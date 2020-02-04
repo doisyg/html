@@ -53,7 +53,7 @@
                                                 <svg id="an_svg" width="<?php echo $currentMap->ros_largeur;?>" height="<?php echo $currentMap->ros_hauteur;?>" style="position:absolute; top:0; left:0; width:100%; height:100%;">
                                                     <image id="an_plan" xlink:href="data:image/png;base64,<?php echo $currentMap->image_tri;?>" x="0" y="0" height="<?php echo $currentMap->ros_hauteur;?>" width="<?php echo $currentMap->ros_largeur;?>" />
 													<image id="an_robot" style="z-index:20000;" xlink:href="assets/images/robot-dessus-green.png" x="0" y="0" height="10" width="10" />
-													<image id="an_robot_dest" style="display:none; z-index:20001;" xlink:href="assets/images/robot-dessus-red.png" x="0" y="0" height="10" width="10" />
+													<image id="an_robot_dest" style="display:none; z-index:20001;" xlink:href="assets/images/robot-dessus-red-secure.png" x="0" y="0" height="15" width="15" />
                                                 </svg>
                                             </div>
                                             <div style="clear:both;"></div>
@@ -67,8 +67,8 @@
                             
                             <div id="an_confirm" style="background-color:#FFF; position:absolute; bottom:0; left:0; width:100%; font-size:30px; display:none;">
                             	<div class="col-xs-6" style="line-height:56px;"><?php echo __('Confirm?');?></div>
-                                <a href="#" id="an_confirm_no" style=" font-size:30px;" class="col-xs-3 btn btn-danger"><i class="fa fa-times"></i></a>
-                                <a href="#" id="an_confirm_yes" style=" font-size:30px;" class="col-xs-3 btn btn-success"><i class="fa fa-check"></i></a>
+                                <a href="#" id="an_confirm_no" style=" font-size:30px;" class="col-xs-3 btn btn-danger btn-left" ><i class="fa fa-times"></i></a>
+                                <a href="#" id="an_confirm_yes" style=" font-size:30px;" class="col-xs-3 btn btn-success btn-right"><i class="fa fa-check"></i></a>
                             </div>
                         </div>
                     </div>
@@ -76,6 +76,8 @@
             </div>
         </div>
         
+        
+        <img id="an_plan_fond" src="data:image/png;base64,<?php echo $currentMap->image_tri;?>" style="display:none;" />
         
         <script>
 		var lang = '<?php echo $_COOKIE['lang'];?>';
@@ -253,7 +255,7 @@
 				dy = y - (centerLoc.top + (centerItem.height() / 2));
 			return Math.atan2(dy, dx) * (180 / Math.PI);
 		}
-		
+
 		</script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/svg-pan-zoom/svg-pan-zoom.js"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/svg-pan-zoom/hammer.js"></script>

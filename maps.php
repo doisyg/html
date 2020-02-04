@@ -185,11 +185,11 @@ include ('template/header.php');
                     <div style="text-align:center; font-size:26px;">
                     
                     	<div class="row" style="margin-bottom:20px;">
-                            <a href="#" id="bMappingStart" class="btn btn-primary"><i class="fa fa-play"></i> <?php echo __('Start mapping');?></a>
+                            <a href="#" id="bMappingStart" class="btn btn-primary btn_big_popup"><i class="fa fa-play"></i> <?php echo __('Start mapping');?></a>
                             <a href="#" id="bMappingStop" data-dismiss="modal" class="btn btn-primary bCloseModalCreateMap" style="display:none;"><i class="fa fa-stop"></i> <?php echo __('Stop mapping');?></a>
                         </div>
                     
-                        <div id="mapping_view" style="height:152px; width:100%; margin:10px 0; border:1px solid #EFEFEF; position:relative; overflow:hidden; background-color:lightblue;">
+                        <div id="mapping_view" style="height:152px; width:100%; margin:10px 0; border:1px solid #EFEFEF; position:relative; overflow:hidden; background-color:lightblue; display:none;">
                             <img id="mapping_robot" src="assets/images/robot-dessus.png" width="6" style="position:absolute; bottom:50px; margin-left:-3px; z-index:300;" />
                             <!--<div id="img_map_div" style="position:absolute; z-index:200"><img id="img_map_saved" src="" /></div>-->
                             <canvas id="laser_scan" style="position:absolute; left:0px; bottom:0px; z-index:250; width:100%; height:150px;"></canvas>
@@ -275,7 +275,7 @@ include ('template/header.php');
                     <div style="clear:both;"></div>
          
          			
-                    <a href="#" id="bMappingCancelMap" class="btn btn-warning" data-dismiss="modal" style="position:absolute; width:50%; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>           
+                    <a href="#" id="bMappingCancelMap2" class="btn btn-warning" data-dismiss="modal" style="position:absolute; width:50%; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>           
                     <a href="#" id="bMappingSaveMap" class="btn btn-primary" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
                 </div>
             </div>
@@ -521,8 +521,8 @@ var id_map_last = -1;
 		{
 			var canvasDessin = document.getElementById('canvas_result');
 		
-			$('bMappingCancelMap').hide();
-			$('bMappingSaveMap').hide();
+			$('#bMappingCancelMap2').hide();
+			$('#bMappingSaveMap').hide();
 		
 			$('#form_mapping_image').val(finalMapData);
 			$('#form_mapping_image_tri').val(canvasDessin.toDataURL());
@@ -548,8 +548,14 @@ var id_map_last = -1;
 					
 					$('#modalUseThisMapNow').modal('show');
 				  
+				  	var img = document.getElementById("img_fin_map_saved");
+        			img.src = "assets/images/vide.png";
 				},
 				error: function(e) {
+					
+					var img = document.getElementById("img_fin_map_saved");
+        			img.src = "assets/images/vide.png";
+					
 					alert(e.responseText);
 					$('#modalFinCreateMap').modal('hide');
 				}
@@ -566,8 +572,13 @@ var id_map_last = -1;
 			
 		wycaApi.MappingStart(function(r) { });
 		mappingStarted = true;
+		$('#bMappingCancelMap').hide();
 		$('#bMappingStart').hide();
 		$('#bMappingStop').show();
+		$('#mapping_view').show();
+		
+		img = document.getElementById("img_map_saved");
+        img.src = "assets/images/vide.png";
 		
 		if (intervalMap != null)
 		{
@@ -581,8 +592,9 @@ var id_map_last = -1;
 		e.preventDefault();
 		
 		$('#loading_fin_create_map').show();
+		
 		img = document.getElementById("img_fin_map_saved");
-        img.src = "";
+        img.src = 'assets/images/vide.png';
 		
 		wycaApi.MappingStop(function(data) {
 			$('#loading_fin_create_map').hide();
@@ -611,12 +623,13 @@ var id_map_last = -1;
 		});
 		mappingStarted = false;
 		$('#bMappingStop').hide();
+		$('#mapping_view').hide();
 		$('#bMappingStart').show();
 		
 		$('#bMappingCancelMap').show();
 		
 		$('#modalFinCreateMap').modal('show');
-		
+				
 		if (intervalMap != null)
 		{
 			clearInterval(intervalMap);

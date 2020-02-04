@@ -191,13 +191,13 @@ function SendCommande()
 		if (nbCall0 < 5)
 		{
 			nbCall0++;
-			wycaApi.TeleopRobot(lastValueX * -0.5, lastValueY * -0.8);
+			wycaApi.TeleopRobot(lastValueX * -0.5, lastValueY * -1.2);
 		}
 	}
 	else if (isDown)
 	{
 		nbCall0 = 0;
-		wycaApi.TeleopRobot(lastValueX * -0.5, lastValueY * -0.8);
+		wycaApi.TeleopRobot(lastValueX * -0.5, lastValueY * -1.2);
 	}
 }
 
