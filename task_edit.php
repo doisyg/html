@@ -182,8 +182,8 @@ include ('template/header.php');
                     <div style="clear:both; height:50px;"></div>
                     
                     <div class="row">
-                        <a href="#" id="bSaveTask" class="btn btn-primary" style="width:50%; float:left; font-size:30px; border-radius:0;"><?php echo __('Save');?></a>
                         <a href="tasks.php" class="btn btn-warning" style="width:50%; float:left; font-size:30px; border-radius:0;"><?php echo __('Back');?></a>
+                        <a href="#" id="bSaveTask" class="btn btn-primary" style="width:50%; float:left; font-size:30px; border-radius:0;"><?php echo __('Save');?></a>
                     </div>
                     <div style="clear:both;"></div>
                 </div>
