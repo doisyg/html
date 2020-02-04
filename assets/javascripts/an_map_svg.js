@@ -2,6 +2,8 @@ var downOnMovable = false;
 var minStokeWidth = 1;
 var maxStokeWidth = 5;
 
+var lastElementAdded = null;
+
 function an_AppliquerZoom()
 {
 	//$('#all').width(saveWidth * zoom_carte);
@@ -75,6 +77,8 @@ function an_TraceForbidden(indexForbidden)
 							  });
 		path.style.fill = 'rgba(0,0,0,0.5)'
 		an_svg.appendChild(path);
+		$('#an_svg #forbidden_'+forbidden.id_area).insertAfter(lastElementAdded);
+		lastElementAdded = $('#an_svg #forbidden_'+forbidden.id_area);
 		
 		$.each(points, function( indexPoint, point ) {
 			
@@ -100,6 +104,9 @@ function an_TraceForbidden(indexForbidden)
 							   'data-element': 'forbidden'
 							  });
 				an_svg.appendChild(path);
+				$('#an_svg #forbidden_'+forbidden.id_area+'_'+indexPoint).insertAfter(lastElementAdded);
+				lastElementAdded = $('#an_svg #forbidden_'+forbidden.id_area+'_'+indexPoint);
+				
 			}
 		});
 	}
@@ -163,6 +170,8 @@ function an_TraceArea(indexArea)
 							  });
 		path.style.fill = 'rgba('+area.couleur_r+','+area.couleur_g+','+area.couleur_b+',0.5)'
 		an_svg.appendChild(path);
+		$('#an_svg #area_'+area.id_area).insertAfter(lastElementAdded);
+		lastElementAdded = $('#an_svg #area_'+area.id_area);
 		
 		$.each(points, function( indexPoint, point ) {
 			
@@ -183,6 +192,8 @@ function an_TraceArea(indexArea)
 							   'data-element': 'area'
 							  });
 				an_svg.appendChild(path);
+				$('#an_svg #area_'+area.id_area+'_'+indexPoint).insertAfter(lastElementAdded);
+				lastElementAdded = $('#an_svg #area_'+area.id_area+'_'+indexPoint);
 			}
 		});
 	}
@@ -216,6 +227,8 @@ function an_TraceDock(indexDock)
 				   'data-element': 'dock'
 				  });
 	an_svg.appendChild(path);
+	$('#an_svg #dock_'+dock.id_station_recharge).insertAfter(lastElementAdded);
+	lastElementAdded = $('#an_svg #dock_'+dock.id_station_recharge);
 	
 	path = an_makeSVGElement('line', { 'x1': x-1, 'y1':y-1, 'x2': x+1, 'y2':y-1,
 				   'stroke-width': 1,
@@ -229,6 +242,8 @@ function an_TraceDock(indexDock)
 				   'data-element': 'dock'
 				  });
 	an_svg.appendChild(path);
+	$('#an_svg #dock_connect_'+dock.id_station_recharge).insertAfter(lastElementAdded);
+	lastElementAdded = $('#an_svg #dock_connect_'+dock.id_station_recharge);
 }
 
 function an_TracePoi(indexPoi)
@@ -260,6 +275,8 @@ function an_TracePoi(indexPoi)
 								   'data-element': 'poi'
 								   });
 	an_svg.appendChild(path);
+	$('#an_svg #poi_secure_'+poi.id_poi).insertAfter(lastElementAdded);
+	lastElementAdded = $('#an_svg #poi_secure_'+poi.id_poi);
 	
 	path = an_makeSVGElement('circle', { cx: x,
 									cy: y,
@@ -271,6 +288,8 @@ function an_TracePoi(indexPoi)
 								   'data-element': 'poi'
 								   });
 	an_svg.appendChild(path);
+	$('#an_svg #poi_robot_'+poi.id_poi).insertAfter(lastElementAdded);
+	lastElementAdded = $('#an_svg #poi_robot_'+poi.id_poi);
 	
 	path = an_makeSVGElement('polyline', { 'points': (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2),
 									'stroke':'#FFFFFF',
@@ -286,11 +305,15 @@ function an_TracePoi(indexPoi)
 								   'data-element': 'poi'
 								   });
 	an_svg.appendChild(path);
+	$('#an_svg #poi_sens_'+poi.id_poi).insertAfter(lastElementAdded);
+	lastElementAdded = $('#an_svg #poi_sens_'+poi.id_poi);
 	
 }
 
 function an_ResizeSVG()
 {
+	lastElementAdded = $('#an_svg #an_plan');
+	
 	$.each(an_forbiddens, function( index, forbidden ) {
 		an_TraceForbidden(index);
 	});

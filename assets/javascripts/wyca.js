@@ -29,13 +29,16 @@ var mappingLaunched = false;
 
 var lastRobotPose = { 'x':0, 'y':0, 'theta':0 }
 
+var an_confirm_action = '';
+var an_confirm_details = '';
+
 $(document).ready(function(e) {
 	
 	var optionsDefault = {
 		api_key:'5LGU.LaYMMncJaA0i42HwsX9ZX-RCNgj-9V17ROFXt71st',
 		id_robot:3,
-		host:'elodie.wyca-solutions.com:9090', //192.168.1.32:9090', // host:'192.168.100.245:9090',
-		//host:'192.168.100.165:9090',
+		//host:'elodie.wyca-solutions.com:9090', //192.168.1.32:9090', // host:'192.168.100.245:9090',
+		host:'192.168.0.17:9090',
 		video_element_id:'webcam_local',
 		webcam_name: 'r200 nav',
 		nick:'robot',
@@ -187,24 +190,35 @@ $(document).ready(function(e) {
 	
 	$(document).on('click', '#an_svg .poi_elem', function(e) {
 		anClickOnElement = true;
-		if (confirm('Are you sure you want to send the robot to this POI?'))
-		{
-			console.log('id_poi', $(this).data('id_poi'));
-			
-			currentPoiIndex = AnGetPoiIndexFromID($(this).data('id_poi'));
-			poi = an_pois[currentPoiIndex];
-			
-			wycaApi.RobotMoveTo({x:parseFloat(poi.x_ros), y:parseFloat(poi.y_ros), theta:parseFloat(poi.t_ros)});
-		}
+		
+		currentPoiIndex = AnGetPoiIndexFromID($(this).data('id_poi'));
+		poi = an_pois[currentPoiIndex];
+		
+		an_confirm_action = 'goto_poi';
+		an_confirm_details = {x:parseFloat(poi.x_ros), y:parseFloat(poi.y_ros), theta:parseFloat(poi.t_ros)};
+		console.log(an_confirm_details);
+		x =  (an_confirm_details.x - 0.25) * 100 / 5;
+		y = an_ros_hauteur - (an_confirm_details.y + 0.25) * 100 / 5;
+		
+		x2 =  (an_confirm_details.x) * 100 / 5;
+		y2 = an_ros_hauteur - (an_confirm_details.y) * 100 / 5;
+		console.log(x, y);
+		$('#an_robot_dest').attr('x', x);
+		$('#an_robot_dest').attr('y', y);
+		$('#an_robot_dest').attr('transform', 'rotate('+(180 - an_confirm_details.theta *  180 / Math.PI - 90) +', '+x2+', '+y2+')');
+		$('#an_robot_dest').show();
+		
+		$('#an_confirm').show();
 	});
 	
 	$(document).on('click', '#an_svg .dock_elem', function(e) {
 		console.log('TODO click dock');
 		anClickOnElement = true;
-		if (confirm('Are you sure you want to send the robot to this pose?'))
-		{
-			alert('Not available for the moment');
-		}
+		
+		an_confirm_action = 'goto_dock';
+		an_confirm_details = '';
+		
+		$('#an_confirm').show();
 	});
 	
 	$(document).on('click', '#an_svg', function(e) {
@@ -215,21 +229,69 @@ $(document).ready(function(e) {
 		}
 		else
 		{
-			if (confirm('Are you sure you want to send the robot to this pose?'))
-			{
-				p = $('#an_svg image').position();
-				x = e.pageX - p.left;
-				y = e.pageY - p.top;
-				x = x * zoom;
-				y = an_ros_hauteur - (y * zoom);
-				
-				xRos = x * an_ros_resolution / 100;
-				yRos = y * an_ros_resolution / 100;
-				
-				wycaApi.RobotMoveTo({x:parseFloat(xRos), y:parseFloat(yRos), theta:parseFloat(0)});
-			}
+			an_confirm_action = 'goto_pose';
+			
+			p = $('#an_svg image').position();
+			x = e.pageX - p.left;
+			y = e.pageY - p.top;
+			x = x * zoom;
+			y = an_ros_hauteur - (y * zoom);
+			
+			xRos = x * an_ros_resolution / 100;
+			yRos = y * an_ros_resolution / 100;
+			
+			an_confirm_details = {x:parseFloat(xRos), y:parseFloat(yRos), theta:parseFloat(0)};
+			console.log(an_confirm_details);
+			x =  (an_confirm_details.x - 0.25) * 100 / 5;
+			y = an_ros_hauteur - (an_confirm_details.y + 0.25) * 100 / 5;
+			
+			x2 =  (an_confirm_details.x) * 100 / 5;
+			y2 = an_ros_hauteur - (an_confirm_details.y) * 100 / 5;
+			
+			
+			console.log(x, y);
+			
+			$('#an_robot_dest').attr('x', x);
+			$('#an_robot_dest').attr('y', y);
+			$('#an_robot_dest').attr('transform', 'rotate('+(180 - an_confirm_details.theta *  180 / Math.PI - 90) +', '+x2+', '+y2+')');
+			$('#an_robot_dest').show();
+			
+			$('#an_confirm').show();
 		}
 	});
+	
+	$('#an_confirm_no').click(function(e) {
+        e.preventDefault();
+		
+		an_confirm_action = '';
+		an_confirm_details = '';
+		
+		$('#an_robot_dest').hide();
+		$('#an_confirm').hide();
+    });
+	
+	$('#an_confirm_yes').click(function(e) {
+        e.preventDefault();
+		
+		switch(an_confirm_action)
+		{
+			case 'goto_poi':
+				wycaApi.RobotMoveTo(an_confirm_details);
+				break;
+			case 'goto_dock':
+				alert('Not available for the moment');
+				break;
+			case 'goto_pose':
+				wycaApi.RobotMoveTo(an_confirm_details);
+				break;
+		}
+		
+		an_confirm_action = '';
+		an_confirm_details = '';
+		
+		$('#an_robot_dest').hide();
+		$('#an_confirm').hide();
+    });
 	
 });
 

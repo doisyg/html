@@ -51,8 +51,9 @@
                                         <div id="an_all" style="position:relative; margin:auto; width:100%; height:calc(100vh - 100px);">
                                             <div id="an_map_navigation" class="zoom" style="position:relative; width:100%; height:calc(100vh - 100px); margin:auto;">
                                                 <svg id="an_svg" width="<?php echo $currentMap->ros_largeur;?>" height="<?php echo $currentMap->ros_hauteur;?>" style="position:absolute; top:0; left:0; width:100%; height:100%;">
-                                                    <image xlink:href="data:image/png;base64,<?php echo $currentMap->image_tri;?>" x="0" y="0" height="<?php echo $currentMap->ros_hauteur;?>" width="<?php echo $currentMap->ros_largeur;?>" />
-													<image id="an_robot" xlink:href="assets/images/robot-dessus.png" x="0" y="0" height="10" width="10" />
+                                                    <image id="an_plan" xlink:href="data:image/png;base64,<?php echo $currentMap->image_tri;?>" x="0" y="0" height="<?php echo $currentMap->ros_hauteur;?>" width="<?php echo $currentMap->ros_largeur;?>" />
+													<image id="an_robot" style="z-index:20000;" xlink:href="assets/images/robot-dessus-green.png" x="0" y="0" height="10" width="10" />
+													<image id="an_robot_dest" style="display:none; z-index:20001;" xlink:href="assets/images/robot-dessus-red.png" x="0" y="0" height="10" width="10" />
                                                 </svg>
                                             </div>
                                             <div style="clear:both;"></div>
@@ -63,6 +64,12 @@
                             </div>
                             
                             <a href="#" id="bCloseAutonomousNavigation" class="btn btn-primary" data-dismiss="modal" style="width:100%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Close');?></a>
+                            
+                            <div id="an_confirm" style="background-color:#FFF; position:absolute; bottom:0; left:0; width:100%; font-size:30px; display:none;">
+                            	<div class="col-xs-6" style="line-height:56px;"><?php echo __('Confirm?');?></div>
+                                <a href="#" id="an_confirm_no" style=" font-size:30px;" class="col-xs-3 btn btn-danger"><i class="fa fa-times"></i></a>
+                                <a href="#" id="an_confirm_yes" style=" font-size:30px;" class="col-xs-3 btn btn-success"><i class="fa fa-check"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>

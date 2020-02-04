@@ -31,10 +31,10 @@ $(document).ready(function(e) {
 	
 	wycaApi = new WycaAPI({
 		api_key:'5LGU.LaYMMncJaA0i42HwsX9ZX-RCNgj-9V17ROFXt71st',
-		host:'192.168.100.165:9090', // host:'192.168.100.245:9090',
+		host:'192.168.0.17:9090', // host:'192.168.100.245:9090',
 		video_element_id:'webcam_local',
 		/*webcam_name: 'r200 nav',*/
-		nick:'robot_phy',
+		nick:'robot',
 		delay_no_reply : 30,
 		delay_lost_connexion : 30,
 		with_audio: true,
@@ -63,6 +63,11 @@ $(document).ready(function(e) {
 		   
 			$('.voyant').hide();
 			$('#voyany_vert').show();
+			
+			setTimeout(function() {
+				if (currentTask != null)
+					NextStepCurrentTask();
+			}, 5000);
 		},
 		onRobotConnexionClose: function(data){
 			connectedToTheRobot = false;
@@ -71,22 +76,42 @@ $(document).ready(function(e) {
 		},
 		onInitialized: function(){
 		},
-		onBatteryStateChange: function(data){
-			initBatteryState(data);
-		},
 		onRobotMoveToResult: function(data){
 			queueState = 'done';
 			NextStepCurrentTask();
 		},
-		/*
-		onNavigationRobotStateChange: function(data){
-			initStateRobot(data);
+        onIsPoweredChange: function(data){
+            initPoweredState(data);
+        },
+        onSOCChange: function(data){
+			initBatteryState(data);
+        },
+        onIsSafetyStopChange: function(data){
+            if (data)
+                $('.safety_stop').show();
+            else
+                $('.safety_stop').hide();
+            lastEStop = data;
+        },
+		onNavigationStateChange: function(data) {
+			navLaunched = data;
+			if (data)
+			{
+				$('.no_navigation').hide();
+				$('.only_navigation').show();
+			}
+			else
+			{
+				$('.no_navigation').show();
+				$('.only_navigation').hide();
+			}
 		},
 		onRobotActionFinished: function(data){
+			console.error('onRobotActionFinished');
 		},
 		onRobotActionStarted: function(data){
+			console.error('onRobotActionStarted');
 		}
-		*/
 	});
 	
 	wycaApi.init();	
@@ -155,26 +180,45 @@ function ResultSendToDock(result)
 		
 }
 
-function initStateRobot(etat)
+var currentBatteryState = 0;
+
+
+function initPoweredState(data)
 {
-	// docking undocking docked undocked
-	var save_state = robotCurrentState;
-	console.log('Robot state', etat);
-	robotCurrentState = etat;
-	
-	
+    $('#icoBattery').removeClass('battery-ok battery-mid');
+    if (data)
+	{
+		robotCurrentState = 'docked';
+        $('#icoBattery').addClass('battery-ok');
+	}
+    else
+	{
+		robotCurrentState = 'undocked';
+        $('#icoBattery').addClass('battery-mid');
+	}
 }
 
-var currentBatteryState = 0;
+
 function initBatteryState(volt)
 {
 	currentBatteryState = volt;
-	if (volt > configs.level_min_dotask &&  robotCurrentState == 'docked')
+	if (volt > configs.level_min_dotask && robotCurrentState == 'docked')
 	{
 		if (currentTask != null)
 		{
 			// On continue la tache
 			NextStepCurrentTask();
+		}
+		else
+		{
+			GetCurrentTask();
+		}
+	}
+	else
+	{
+		if (volt < configs.level_min_dotask && robotCurrentState == 'docked')
+		{
+			$('#current_action').html('Low battery for new task, charging');
 		}
 	}
 	
@@ -182,40 +226,43 @@ function initBatteryState(volt)
 	{
 		if (!robotMoveToDock && robotCurrentState == 'undocked')
 		{
+			$('#current_action').html('Low battery, go to dock');
 			// On stop tout et on envoi le robot se docker
 			queueState = 'pause';
 			robotMoveToDock = true; 
 			wycaApi.RobotMoveToDock(1,	ResultSendToDock);
 		}
+		else
+		{
+			if (robotCurrentState == 'docked')
+				$('#current_action').html('Low battery, charging');
+		}
 	}
 	
-	$('#battery i').removeClass('fa-battery-0 fa-battery-1 fa-battery-2 fa-battery-3 fa-battery-4');
-	$('#battery').removeClass('battery-ko blinking battery-ok battery-mid');
-	if (volt < 15)
+	$('#icoBattery i').removeClass('fa-battery-0 fa-battery-1 fa-battery-2 fa-battery-3 fa-battery-4');
+    $('#icoBattery').removeClass('battery-ko');
+    if (data < 15)
 	{
-		$('#battery i').addClass('fa-battery-0');
-		$('#battery').addClass('battery-ko blinking');
+		$('#icoBattery i').addClass('fa-battery-0');
+		$('#icoBattery').addClass('battery-ko');
 	}
-	else if (volt <= 25)
+	else if (data <= 25)
 	{
-		$('#battery i').addClass('fa-battery-1');
-		$('#battery').addClass('battery-ko');
+        $('#icoBattery i').addClass('fa-battery-1');
 	}
-	else if (volt <= 50)
+	else if (data <= 50)
 	{
-		$('#battery i').addClass('fa-battery-2');
-		$('#battery').addClass('battery-mid');
+        $('#icoBattery i').addClass('fa-battery-2');
 	}
-	else if (volt <= 75)
+	else if (data <= 75)
 	{
-		$('#battery i').addClass('fa-battery-3');
-		$('#battery').addClass('battery-ok');
+        $('#icoBattery i').addClass('fa-battery-3');
 	}
 	else
 	{
-		$('#battery i').addClass('fa-battery-4');
-		$('#battery').addClass('battery-ok');
+        $('#icoBattery i').addClass('fa-battery-4');
 	}
+	$('#icoBattery span').html(data+'%');
 }
 
 var configs = null;
@@ -256,9 +303,17 @@ function GetCurrentTask()
 			success: function(data, textStatus, jqXHR) {
 					loaded = true;
 					if (data != 'no_task')
+					{
 						currentTask = data;
+						if (connectedToTheRobot)
+							NextStepCurrentTask();
+					}
 					else
+					{
+						$('#current_action').html('No task currently');
 						currentTask = null;
+						setTimeout(GetCurrentTask, 5000);
+					}
 				}
 		});
 }
@@ -266,6 +321,7 @@ function GetCurrentTask()
 var queueState = '';
 function NextStepCurrentTask()
 {
+	console.log('NextStepCurrentTask');
 	if (queueState == 'pause')
 	{
 		// On reprend la tache
@@ -276,7 +332,8 @@ function NextStepCurrentTask()
 		queueState = 'processing';
 		currentTask.step++;
 		currentTask.state = 'in_progress';
-		currentTask.progress = 'Executing step '+ (currentTask+1);
+		currentTask.progress = 'Executing step '+ (currentTask.step+1);
+		$('#current_action').html(currentTask.progress);
 		
 		if (currentTask.step < currentTask.actions.length)
 		{
@@ -300,14 +357,16 @@ function NextStepCurrentTask()
 						/*
 						if (currentBatteryState <= configs.level_min_gotodock_aftertask)
 						{
+							$('#current_action').html('Low battery for new task, go to dock');
 							robotMoveToDock = true; 
 							wycaApi.RobotMoveToDock(1,	ResultSendToDock);
 						}
 						else
 						{
-							NextStepCurrentTask();
+							
 						}
 						*/
+						NextStepCurrentTask();
 					}
 			});
 			
@@ -327,6 +386,7 @@ function NextStepCurrentTask()
 						// Fin de l'action, on passe à la suivante si on peux
 						if (currentBatteryState <= configs.level_min_gotodock_aftertask)
 						{
+							$('#current_action').html('Low battery for new task, go to dock');
 							queueState = '';
 							robotMoveToDock = true; 
 							wycaApi.RobotMoveToDock(1,	ResultSendToDock);
@@ -334,7 +394,7 @@ function NextStepCurrentTask()
 						else
 						{
 							queueState = '';
-							NextStepCurrentTask();
+							GetCurrentTask();
 						}
 					}
 			});
@@ -351,18 +411,19 @@ var waitInterval = null;
 
 function ExecAction(action)
 {
-	switch(action.action_type)
+	switch(parseInt(action.action_type))
 	{
 		case TYPE_GotoPOI:
 			poi = configs.pois[action.action_detail];
-			wycaApi.RobotMoveTo({x:poi.x_ros, y:poi.y_ros, theta:poi.t_ros});
+			console.log({x:parseFloat(poi.x_ros), y:parseFloat(poi.y_ros), theta:parseFloat(poi.t_ros)});
+			wycaApi.RobotMoveTo({x:parseFloat(poi.x_ros), y:parseFloat(poi.y_ros), theta:parseFloat(poi.t_ros)}, function(e){ console.log(e); });
 			
 			break;
 		case TYPE_WaitClick:
 			$('#waitClick').show();
 			break;
 		case TYPE_WaitTime:
-			waitTimeRemaining = action.action_detail
+			waitTimeRemaining = parseInt(action.action_detail);
 			if (waitInterval != null)
 			{
 				clearInterval(waitInterval);
@@ -375,6 +436,8 @@ function ExecAction(action)
 			
 			waitInterval = setInterval(NextTimeRemaining, 1000);
 			break;
+		default:
+			console.error('Invalid action type '+action.action_type);
 	}
 }
 

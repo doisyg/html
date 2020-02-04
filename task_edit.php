@@ -60,7 +60,7 @@ if (isset($_POST['id_tache']))
 		}
 	}
 	
-	header('location:task_edit.php?id_tache='.$tache->id_tache);
+	header('location:tasks.php?ok=1');
 	die();
 }
 

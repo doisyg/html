@@ -97,6 +97,14 @@ include ('template/header.php');
 								<span><?php echo __('Import / Export');?><br />&nbsp;</span>
 							</a>
 						</li>
+						<?php }
+						if ($userConnected->CanDo('setup', 'export', 'view')){?>
+						<li class="col-xs-6 col-md-3">
+							<a id="bDevStartNav" class="btn btn-primary" href="#">
+								<i class="fa fa-map" aria-hidden="true"></i>
+								<span><?php echo __('Start navigation');?><br />&nbsp;</span>
+							</a>
+						</li>
 						<?php }?>
                     </ul>
                 </div>

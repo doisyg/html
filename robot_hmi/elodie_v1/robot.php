@@ -27,7 +27,7 @@ $_CONFIG['URL_API'] = 'https://elodie.wyca-solutions.com/API/';
     <script src="<?php echo $_CONFIG['URL_API'];?>extern/jquery-1.11.3.min.js"></script>
 	<script src="<?php echo $_CONFIG['URL_API'];?>extern/roslib.js"></script>
     <script src="<?php echo $_CONFIG['URL_API'];?>webrtc.wyca2.min.js"></script>
-    <script src="<?php echo $_CONFIG['URL_API'];?>wyca_api.latest.min.php?api_key=5LGU.LaYMMncJaA0i42HwsX9ZX-RCNgj-9V17ROFXt71st&v=<?php echo date('YmdHis');?>"></script>
+    <script src="<?php echo $_CONFIG['URL_API'];?>wyca_api.latest.min.php?api_key=5LGU.LaYMMncJaA0i42HwsX9ZX-RCNgj-9V17ROFXt71st<?php /*&v=<?php echo date('YmdHis');*/?>"></script>
     
     <script src="<?php echo $_CONFIG['URL'];?>js/bootstrap.js"></script>
     
@@ -36,19 +36,20 @@ $_CONFIG['URL_API'] = 'https://elodie.wyca-solutions.com/API/';
 	var delayBeforeRetryDock = 30000;
 	</script>
     
-    <script src="<?php echo $_CONFIG['URL'];?>js/robot.js?v=<?php echo date('YmdHis');?>"></script>
+    <script src="<?php echo $_CONFIG['URL'];?>js/robot.js<?php /*?v=<?php echo date('YmdHis');*/?>"></script>
 
 </head>
 
 <body>
 
 	<span id="connection" class=""><i class="fa fa-exchange fa-rotate-90"></i></span>
-	<span id="battery" class="battery-ko blinking"><i class="fa fa-battery-0" aria-hidden="true"></i></span>
+	<span id="icoBattery" class="battery-ko blinking"><i class="fa fa-battery-0" aria-hidden="true"></i></span>
     	
+    <div id="current_action" style="margin-top:200px; font-size:60px; text-align:center; min-height:85px;"></div>
     
-    <div id="logo" style="margin-top:300px; width:100%; padding:50px; margin-bottom:100px;"><img src="images/wyca-robotics.png" width="1500" /></div>
+    <div id="logo" style="margin-top:100px; width:100%; padding:50px; margin-bottom:100px;"><img src="images/wyca-robotics.png" width="1500" /></div>
     
-    <div id="waitClick" style="font-size:68px; position:fixed; top:0; left:0; width:100%; height:100vh; background-color:rgba(255,255,255,0.5);">
+    <div id="waitClick" style="font-size:68px; position:fixed; display:none; top:0; left:0; width:100%; height:100vh; background-color:rgba(255,255,255,0.5);">
     	<a id="bNextWaitClick" href="#" class="btn btn-primary" style="font-size:100px; text-align:center; margin-top:32vh; border-radius:50px; padding:100px;"><i style="" class="fa fa-forward"></i> Next step</a>
     </div>
     <div id="waitTime" style="font-size:68px; display:none; ">Wait <em></em> seconde<span class="pluriel">s</span></div>

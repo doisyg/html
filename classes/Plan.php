@@ -513,30 +513,39 @@ mode: raw
 		$docks = $this->GetStationRecharges();
 		$dock = new StationRecharge();
 		$i = 1;
-		foreach($docks as $dock)
+		if (count($docks) == 0)
 		{
-			$d = 0.5;
-			
-			$equation_a = tan($dock->t_ros);
-			
-			$angle_perpendiculaire = atan($equation_a);
-			
-			if ( (0 <= $dock->t_ros && $dock->t_ros <= pi()/2) || (pi()*1.5 <= $dock->t_ros) )
+			$file->data .= 'dock'.$i.': {theta: 0, x: 0, y: 0}
+start'.$i.': {theta: 0, x: 0, y: 0}
+';
+		}
+		else
+		{
+			foreach($docks as $dock)
 			{
-				$sx = $dock->x_ros - cos($angle_perpendiculaire) * $d;
-				$sy = $dock->y_ros - sin($angle_perpendiculaire) * $d;
-			}
-			else
-			{
-				$sx = $dock->x_ros + cos($angle_perpendiculaire) * $d;
-				$sy = $dock->y_ros + sin($angle_perpendiculaire) * $d;
-			}
+				$d = 0.5;
 				
-			
-			$file->data .= 'dock'.$i.': {theta: '.$dock->t_ros.', x: '.$sx.', y: '.$sy.'}
+				$equation_a = tan($dock->t_ros);
+				
+				$angle_perpendiculaire = atan($equation_a);
+				
+				if ( (0 <= $dock->t_ros && $dock->t_ros <= pi()/2) || (pi()*1.5 <= $dock->t_ros) )
+				{
+					$sx = $dock->x_ros - cos($angle_perpendiculaire) * $d;
+					$sy = $dock->y_ros - sin($angle_perpendiculaire) * $d;
+				}
+				else
+				{
+					$sx = $dock->x_ros + cos($angle_perpendiculaire) * $d;
+					$sy = $dock->y_ros + sin($angle_perpendiculaire) * $d;
+				}
+					
+				
+				$file->data .= 'dock'.$i.': {theta: '.$dock->t_ros.', x: '.$sx.', y: '.$sy.'}
 start'.$i.': {theta: '.$dock->t_ros.', x: '.$dock->x_ros.', y: '.$dock->y_ros.'}
 ';
-			$i++;
+				$i++;
+			}
 		}
 		
 		

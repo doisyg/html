@@ -271,6 +271,8 @@ svg image { z-index:1; }
 td.actions_buttons { white-space:normal !important; }
 td.actions_buttons a { margin-bottom:5px; }
 
+#an_svg g > * { z-index:1000; }
+
 @media only screen and (max-width: 767px)
 {
 	html.mobile-device .sidebar-left { overflow-y: auto; }

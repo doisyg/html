@@ -161,7 +161,7 @@ a.big i { display:block; color:#FFF; font-size:100px; margin-bottom:20px; }
 
 
 #connection { position:absolute; right:50px; top:50px; font-size:48px; }
-#battery { position:absolute; right:100px; top:50px; font-size:48px; }
+#icoBattery { position:absolute; right:150px; top:50px; font-size:48px; }
 .battery-ok{ color:#6cb877; margin-right:10px;}
 .battery-ko{ color:#cc0000; margin-right:10px;}
 .battery-mid{ color:#d78e54; margin-right:10px;}

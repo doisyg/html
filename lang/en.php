@@ -219,5 +219,7 @@ $_LANG['89e469b4f696190c993fb663e05ab9e0'] = 'Demo on robot';
 $_LANG['51eb4a3eac7c507320392a679323b31d'] = 'ID Robot';
 $_LANG['2df16b098792baa55e0fe75a89a0d1b1'] = 'Open these pages on the robot';
 $_LANG['39f4ebc23bb8ad347a14da2bbbad672e'] = 'Set map trinary';
+$_LANG['d13c27ede3361492eda1fb6c8d140e56'] = 'Confirm?';
+$_LANG['263cee057add143ced8cd867d7c1f353'] = 'Start navigation';
 
 ?>

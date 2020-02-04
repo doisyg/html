@@ -21,7 +21,6 @@ if (isset($_GET['delete']))
 	$task = new TacheQueue($_GET['delete']);
 	$task->Supprimer();
 	
-	die();
 	header('location:tasks_queue.php');
 }
 
@@ -76,7 +75,7 @@ include ('template/header.php');
 					$currentTache = new Tache($currentTaskQ->id_tache);
 				?>
                 
-                <div class="col-md-12 col-lg-6 col-xl-6">
+                <div id="blockCurrent" class="col-md-12 col-lg-6 col-xl-6">
                     <section class="panel panel-featured-left panel-featured-tertiary">
                         <div class="panel-body">
                             <div class="widget-summary">
@@ -194,13 +193,15 @@ include ('template/footer.php');
 	  jQuery.ajax({
 			url: 'ajax/get_queue_info.php',
 			type: "post",
+			dataType: 'json',
 			timeout: 15000,
 			data: { 
 				},
 			error: function(jqXHR, textStatus, errorThrown) {
 				},
 			success: function(data) {
-				
+				$('#blockCurrent').html(data.current);
+				$('#list_taches').html(data.list_taches);
 				}
 		});
   }
@@ -208,7 +209,7 @@ include ('template/footer.php');
   $(document).ready(function(e) {
 	 
 	 
-	//setInterval(RefreshQueue, 1000);
+	setInterval(RefreshQueue, 3000);
 	
   });
   

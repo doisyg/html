@@ -12,7 +12,7 @@ class TacheQueue extends TacheQueueCore
 		$query="DELETE FROM tache_queue WHERE id_tache_queue = '".mysqli_real_escape_string(DB::$connexion, $this->id_tache_queue)."'";
 		$delete=mysqli_query(DB::$connexion, $query) or die ('ERREUR Delete TacheQueue : '.$query.'<br />'.mysqli_error(DB::$connexion).'<br /><br />');
 		
-		$query="UPDATE tache_queue WHERE position=position-1 WHERE position > '".((int)$this->position)."'";
+		$query="UPDATE tache_queue SET position=position-1 WHERE position > '".((int)$this->position)."'";
 		$delete=mysqli_query(DB::$connexion, $query) or die ('ERREUR Delete TacheQueue : '.$query.'<br />'.mysqli_error(DB::$connexion).'<br /><br />');
 	}
 
