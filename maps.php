@@ -330,6 +330,7 @@ optionsWyca = {
             img.src = 'data:image/png;base64,' + data.map_trinary.data;
 			*/
         },
+		/*
         onSensorsLaserScan: function(data)
         {
             if ($('#laser_scan:visible').length > 0)
@@ -357,6 +358,7 @@ optionsWyca = {
                 drawLaserInProgress = false;
             }
         }
+		*/
 };
 </script>
 <?php 
