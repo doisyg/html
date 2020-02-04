@@ -128,7 +128,7 @@ include ('template/header.php');
                 <div class="panel-body" style="padding-top:0; padding-bottom:0; min-height:calc(100vh - 400px);">
                     <ul id="list_taches" class="widget-todo-list">
                     	<?php
-						$taches = TacheQueue::GetTasks();
+						$taches = $currentMap->GetTaches();
 						foreach($taches as $tache)
 						{
 							$t = new Tache($tache->id_tache);
