@@ -151,7 +151,7 @@
         <script src="<?php echo $_CONFIG['URL_API'];?>webrtc.wyca2.min.js"></script>
         <script src="<?php echo $_CONFIG['URL_API'];?>wyca_api.latest.min.php?api_key=5LGU.LaYMMncJaA0i42HwsX9ZX-RCNgj-9V17ROFXt71st&v=20191127"></script>
         
-		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/wyca.js?v=20200106"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/wyca.js?v=20200204"></script>
         
         <script>
 			var api_key_user = '<?php echo $userConnected->api_key;?>';
