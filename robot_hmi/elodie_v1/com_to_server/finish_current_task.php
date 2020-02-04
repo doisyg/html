@@ -4,9 +4,23 @@ require_once ('../config/config.php');
 
 if (!isset($_SESSION['is_robot'])) die();
 
+$taches = TacheQueue::GetTasks();
 $currentTask = TacheQueue::GetCurrentTask();
-if ($currentTask->id_tache_queue > 0)
-	$currentTask->Supprimer();
+$currentTask->tache = new Tache($currentTask->id_tache);
+
+if (count($taches) == 1 && $currentTask->tache->action_fin == TacheAction::$FIN_Redo)
+{
+	// On se supprime pas et on refet la tache
+	$currentTask->step = -1;
+	$currentTask->progress = '';
+	$currentTask->state = '';
+	$currentTask->Save();
+}
+else
+{
+	if ($currentTask->id_tache_queue > 0)
+		$currentTask->Supprimer();
+}
 
 $currentTask = TacheQueue::GetCurrentTask();    
 if ($currentTask->id_tache_queue > 0)
