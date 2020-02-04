@@ -32,6 +32,15 @@ var lastRobotPose = { 'x':0, 'y':0, 'theta':0 }
 var an_confirm_action = '';
 var an_confirm_details = '';
 
+var vh = window.innerHeight * 0.01;
+document.documentElement.style.setProperty('--vh', vh+'px');
+
+window.addEventListener('resize', () => {
+  // We execute the same script as before
+  vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', vh+'px');
+});
+
 $(document).ready(function(e) {
 	
 	var optionsDefault = {

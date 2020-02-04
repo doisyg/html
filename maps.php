@@ -196,11 +196,12 @@ include ('template/header.php');
                             <img class="map_dyn" id="img_map_saved" src="" style="position:absolute; z-index:200" />
                         </div>
                         
-                        
+                        <!--
                     	<div id="mapping_trinary_view" style="height:152px; width:100%; margin:10px 0; border:1px solid #EFEFEF; position:relative; overflow:hidden;">
                             <img id="mapping_trinary_robot" src="assets/images/robot-dessus.png" width="6" style="position:absolute; bottom:50px; margin-left:-3px; z-index:300;" />
                             <img class="map_dyn" id="img_map_trinary_saved" src="" style="position:absolute; z-index:200" />
                         </div>
+                        -->
                         
                         <!--<?php echo __('Enable joystick');?> <a href="#" class="bToggleJosytick"><i class="ico_jotick fa fa-toggle-off" style="font-size:30px;"></i></a>-->
                         
@@ -316,12 +317,18 @@ optionsWyca = {
 		},
         onMapInConstruction: function(data){
             var img = document.getElementById("img_map_saved");
+            img.src = 'data:image/png;base64,' + data.map_trinary.data;
+            mappingLastOrigin = {'x':data.x_origin, 'y':data.y_origin };
+			
+			/*
+            var img = document.getElementById("img_map_saved");
             img.src = 'data:image/png;base64,' + data.map.data;
             mappingLastOrigin = {'x':data.x_origin, 'y':data.y_origin };
 			
 			
             var img = document.getElementById("img_map_trinary_saved");
             img.src = 'data:image/png;base64,' + data.map_trinary.data;
+			*/
         },
         onSensorsLaserScan: function(data)
         {

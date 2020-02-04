@@ -42,8 +42,8 @@ include ('template/header.php');
 
     <!-- start: page -->
     <div class="row" style=" position:relative;">
-        <div class="" style="height:calc(100vh - 100px);">
-            <div id="container_all" class="row" style="position:relative; height:calc(100vh - 100px);">
+        <div class="h100vh_100">
+            <div id="container_all" class="row h100vh_100" style="position:relative;">
             
                 <div id="zoom_carte_container">
                     <div id="zoom_carte">
@@ -53,8 +53,8 @@ include ('template/header.php');
                     </div>
                 </div>
             
-                <div id="all" style="position:relative; margin:auto; width:100%; height:calc(100vh - 100px);">
-                    <div id="map_navigation" class="zoom" style="position:relative; width:100%; height:calc(100vh - 100px); margin:auto; border:1px solid #000;">
+                <div id="all" class="h100vh_100" style="position:relative; margin:auto; width:100%;">
+                    <div id="map_navigation" class="zoom h100vh_100" style="position:relative; width:100%; margin:auto; border:1px solid #000;">
                         <svg id="svg" width="<?php echo $plan->ros_largeur;?>" height="<?php echo $plan->ros_hauteur;?>" style="position:absolute; top:0; left:0; width:100%; height:100%;">
                             <image  xlink:href="data:image/png;base64,<?php echo $plan->image_tri;?>" x="0" y="0" height="<?php echo $plan->ros_hauteur;?>" width="<?php echo $plan->ros_largeur;?>" />
                         </svg>
@@ -131,8 +131,8 @@ include ('template/header.php');
     <div class="modal-dialog" role="dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="actions" style="min-height:calc(100vh - 110px);">
-                	<div style="height:calc(100vh - 160px); overflow:auto">
+                <div class="actions mh100vh_110" style="">
+                	<div class="h100vh_160" style="overflow:auto">
                     	<form>
                         	<div class="form-group">
                                 <label class="col-xs-4 control-label" for="inputSuccess"><?php echo __('POI Name');?></label>
@@ -157,8 +157,8 @@ include ('template/header.php');
     <div class="modal-dialog" role="dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="actions" style="min-height:calc(100vh - 110px);">
-                	<div style="height:calc(100vh - 160px); overflow:auto">
+                <div class="actions mh100vh_110">
+                	<div class="h100vh_160" style="overflow:auto">
                     	<form>
                         	<div class="form-group">
                                 <label class="col-xs-4 control-label" for="inputSuccess"><?php echo __('LED Color');?></label>
@@ -237,7 +237,7 @@ include ('template/header.php');
     <div class="modal-dialog" role="dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="actions" style="min-height:calc(100vh - 110px);">
+                <div class="actions mh100vh_110">
                     <div style="text-align:center;">
                     
                     	<ul class="listBoutons">
@@ -260,7 +260,7 @@ include ('template/header.php');
     <div class="modal-dialog" role="dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="actions" style="min-height:calc(100vh - 110px);">
+                <div class="actions mh100vh_110">
                     <div style="text-align:center;">
                     
                     	<ul class="listBoutons">
