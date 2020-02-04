@@ -1,0 +1,37 @@
+###########################################################
+fixed_frame: "map"
+localised_frame: "base_footprint"
+odom_frame: "odom"
+internal_laser_processing: true # use /scan instead of /cloud
+publish_particles: false
+post_date_transform: 0.2 #should be similar to delta between scans
+# Robot motion model
+motion_model_alpha_1: 0.01 #expected noise in odometry's rotation estimate from the rotational component of the robot's motion
+motion_model_alpha_2: 0.03 #expected noise in odometry's rotation estimate from translational component of the robot's motion
+motion_model_alpha_3: 0.03 #expected noise in odometry's translation estimate from the translational component of the robot's motion.
+motion_model_alpha_4: 0.01 #expected noise in odometry's translation estimate from the rotational component of the robot's motion
+# min distnace to update
+motion_model_min_trans: 0.05
+motion_model_min_rot: 0.05
+# Particules params
+particle_filter_particle_count_min: 500
+particle_filter_particle_count_max: 5000
+particle_filter_resample_count: 2
+# Resample type: low_variance, adaptive, kld are valid
+particle_filter_resample_type: kld
+particle_filter_alpha_fast: 0.0
+particle_filter_alpha_slow: 0.0
+particle_filter_kld_epsilon: 0.05
+particle_filter_kld_z: 0.95
+space_partitioning_resolution_xy: 0.5
+space_partitioning_resolution_theta": 0.05
+# Parameters for sensor model (likelihood map)
+# values should add up to 1, being "mixing factors"
+likelihood_z_hit: 0.95
+likelihood_z_rand: 0.05
+likelihood_max_laser_distance: 30.0
+likelihood_max_obstacle_distance: 2.0
+likelihood_sigma_hit: 0.2
+# Number of laser beams to use from the scan. This is a sub-sampling Set to 0 to use all
+likelihood_num_beams: 30
+
