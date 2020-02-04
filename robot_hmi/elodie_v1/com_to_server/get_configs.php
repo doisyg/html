@@ -4,6 +4,9 @@ require_once ('../config/config.php');
 
 if (!isset($_SESSION['is_robot'])) die();
 
+$currentIdPlan = Configuration::GetValue('CURRENT_MAP');
+$currentMap = new Plan($currentIdPlan);
+
 $configs = array();
 $configs['level_min_gotodock'] = Configuration::GetValue('level_min_gotodock');
 $configs['level_min_gotodock_aftertask'] = Configuration::GetValue('level_min_gotodock_aftertask');
