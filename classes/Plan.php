@@ -1,6 +1,17 @@
 <?php
 class Plan extends PlanCore
 {
+	public function Supprimer()
+	{
+		$query="DELETE FROM plan WHERE id_plan = '".mysqli_real_escape_string(DB::$connexion, $this->id_plan)."'";
+		$delete=mysqli_query(DB::$connexion, $query) or die ('ERREUR Delete Plan : '.$query.'<br />'.mysqli_error(DB::$connexion).'<br /><br />');
+		
+		$query="DELETE FROM area WHERE id_plan = '".mysqli_real_escape_string(DB::$connexion, $this->id_plan)."'";
+		$delete=mysqli_query(DB::$connexion, $query) or die ('ERREUR Delete Plan : '.$query.'<br />'.mysqli_error(DB::$connexion).'<br /><br />');
+		
+		die('NOT FINISHED');
+	}
+	
 	public function SetAsActive()
 	{
 		$cm = Configuration::GetFromVariable('CURRENT_MAP');
@@ -290,6 +301,7 @@ class Plan extends PlanCore
 			
 		$image = imagecreatefromstring(base64_decode($this->image_tri));
 		
+		$contents = '';
 		try
 		{
 			if (class_exists('Imagick'))
@@ -346,8 +358,11 @@ class Plan extends PlanCore
 		catch(Excepion $e)
 		{
 		}
-			
-		$file->data = base64_encode($contents);
+		
+		if ($contents == '')
+			$file->data = '';
+		else
+			$file->data = base64_encode($contents);
 		
 		$file->date_upd_server = date('Y-m-d H:i:s');
 		$file->date_upd_robot = '0000-00-00 00:00:00';

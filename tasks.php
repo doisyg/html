@@ -97,7 +97,7 @@ include ('template/header.php');
     <div class="modal-dialog" role="dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="actions" style="min-height:calc(100vh - 110px);">
+                <div class="actions mh100vh_55">
                     <div style="text-align:center;">
                     
                     	<input type="text" placeholder="<?php echo __('Task name')?>" class="form-control" style="margin-bottom:20px;" />
@@ -143,7 +143,7 @@ include ('template/header.php');
     <div class="modal-dialog" role="dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="actions" style="min-height:calc(100vh - 110px);">
+                <div class="actions mh100vh_55">
                     <div style="text-align:center;">
                     
                     	<ul class="listBoutons">
@@ -167,7 +167,7 @@ include ('template/header.php');
     <div class="modal-dialog" role="dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="actions" style="min-height:calc(100vh - 110px);">
+                <div class="actions mh100vh_55">
                     <div style="text-align:center;">
                     
                     	<input type="number" placeholder="<?php echo __('Number of secondes to wait')?>" class="form-control" style="margin-bottom:20px;" />

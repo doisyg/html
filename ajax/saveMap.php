@@ -157,8 +157,9 @@ $plan->save();
 
 if ($plan->id_plan == $currentIdPlan)
 {
-	// On seuvegarde sur le robot
+	// On sauvegarde sur le robot
 	$plan->ExportToConfig();
+	$plan->SendToRobot();
 	
 }
 

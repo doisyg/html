@@ -1129,6 +1129,35 @@ $(document).ready(function() {
 		AddHistorique({'action':'add_poi', 'data':p});
         pois.push(p);
 		TracePoi(pois.length-1);
+		
+		RemoveClass('#svg .active', 'active');
+		RemoveClass('#svg .activ_select', 'activ_select'); 
+		RemoveClass('#svg .poi_elem', 'movable');
+					
+		currentSelectedItem = Array();
+		currentSelectedItem.push({'type':'poi', 'id':$(this).data('id_poi')});	
+		HideCurrentMenuNotSelect();
+		
+		$('#boutonsPoi').show();
+		
+		$('#boutonsStandard').hide();
+		
+		$('#boutonsPoi a').show();
+		
+		$('body').removeClass('no_current select');
+		$('.select').css("strokeWidth", minStokeWidth);
+		
+		currentAction = 'editPoi';	
+		currentStep = '';
+		
+		currentPoiIndex = GetPoiIndexFromID(nextIdPoi);
+		poi = pois[currentPoiIndex];
+		saveCurrentPoi = JSON.stringify(poi);
+		
+		AddClass('#svg .poi_elem_'+nextIdPoi, 'active');
+		AddClass('#svg .poi_elem_'+nextIdPoi, 'movable');
+		
+		$('#bPoiEditName').click();
         
     });
 	$('#bPoiCreateFromMap').click(function(e) {
