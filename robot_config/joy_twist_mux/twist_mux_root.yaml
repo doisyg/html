@@ -18,7 +18,7 @@ topics:
   priority: 40
 -
   name    : teleop
-  topic   : /twist_mux_root/twist_teleop
+  topic   : /twist_mux_root/twist_teleop_smoothed
   timeout : 0.15
   priority: 50
 
