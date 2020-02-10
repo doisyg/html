@@ -8,10 +8,10 @@ $_CONFIG['DIR_SECURE'] = dirname(__FILE__).'/../_secure_/';
 
 $_CONFIG['BD_HOST'] = "127.0.0.1";
 $_CONFIG['BD_USER'] = "root";
-$_CONFIG['BD_PASSWORD'] = ""; //wyca_mysql";
+$_CONFIG['BD_PASSWORD'] = "wyca_mysql"; //wyca_mysql";
 $_CONFIG['BD_BD'] = "wyca_elodie";
 
-$_CONFIG['CONFIG_PATH'] = "/home/elodie/Elodie_ws/src/elodie_config/ROS/aucamville/";
+$_CONFIG['CONFIG_PATH'] = "/var/www/html/robot_config/";
 
 $_CONFIG['KEY'] = '&xTYhx+r.C|G/cK&o,9s-JXE|:EZ)IWF6481FKMN&*E(OAYK-%LOR-eM#2=1-<oN';
 $_CONFIG['WS_KEY'] = 'Q5rd9`#4<VqP0|b4^f%jSUk(1L`DCqEE40lASD9px+r~Wqp.DZ8eiRz*UP2gXF0*';
