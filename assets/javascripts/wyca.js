@@ -49,8 +49,8 @@ $(document).ready(function(e) {
 	var optionsDefault = {
 		api_key:'5LGU.LaYMMncJaA0i42HwsX9ZX-RCNgj-9V17ROFXt71st',
 		id_robot:3,
-		host:'elodie.wyca-solutions.com:9090', //192.168.1.32:9090', // host:'192.168.100.245:9090',
-		//host:'192.168.100.165:9090',
+		//host:'elodie.wyca-solutions.com:9090', //192.168.1.32:9090', // host:'192.168.100.245:9090',
+		host:'192.168.0.17:9090',
 		video_element_id:'webcam_local',
 		webcam_name: 'r200 nav',
 		nick:'robot',
@@ -422,7 +422,7 @@ function InitPosCarteMapping()
 			posBottom = posBottom * 10; // 1px pour 10cm
 			
 			centreVueLeft = $('#mapping_view').width() / 2;
-			centreVueBottom = 50;
+			centreVueBottom = 400;
 
 			decallageLeft  = centreVueLeft - posLeft;
             decallageBottom  = posBottom + centreVueBottom + 3;
@@ -434,10 +434,6 @@ function InitPosCarteMapping()
 
             $('#img_map_saved').css('left', decallageLeft);
             $('#img_map_saved').css('bottom', decallageBottom);
-			
-			$('#img_map_trinary_saved').css('left', decallageLeft);
-            $('#img_map_trinary_saved').css('bottom', decallageBottom);
-
 			
 			deg = mappingLastPose.theta * 180 / Math.PI - 90;
             //deg = 180;

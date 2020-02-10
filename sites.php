@@ -160,7 +160,7 @@ include ('template/header.php');
     <div class="modal-dialog" role="dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="actions" style="min-height:calc(100vh - 110px);">
+                <div class="actions mh100vh_55">
                     <div style="text-align:center; font-size:26px;">
                     
                         <h2><?php echo __('Select map to use');?></h2>
@@ -190,7 +190,7 @@ include ('template/header.php');
     <div class="modal-dialog" role="dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="actions" style="min-height:calc(100vh - 110px);">
+                <div class="actions mh100vh_55">
                     <div style="text-align:center; font-size:26px;">
                     
                         <h2><?php echo __('Use this site ?');?></h2>
@@ -213,7 +213,7 @@ include ('template/header.php');
     <div class="modal-dialog" role="dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="actions" style="min-height:calc(100vh - 110px);">
+                <div class="actions mh100vh_55">
                     <div style="text-align:center; font-size:26px;">
                     
                     	<input type="text" id="inputNomEditSite" placeholder="<?php echo __('Site name')?>" class="form-control" style="margin-bottom:20px;" />
@@ -235,7 +235,7 @@ include ('template/header.php');
     <div class="modal-dialog" role="dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="actions" style="min-height:calc(100vh - 110px);">
+                <div class="actions mh100vh_55">
                     <div style="text-align:center; font-size:26px;">
                     
                     	<input type="text" id="inputNomSite" placeholder="<?php echo __('Site name')?>" class="form-control" style="margin-bottom:20px;" />

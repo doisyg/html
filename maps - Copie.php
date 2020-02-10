@@ -188,7 +188,7 @@ include ('template/header.php');
 <div id="modalCreateMap" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog" role="dialog">
         <div class="modal-content">
-            <div class="modal-header" style="background-color:#F0F0F0;">
+            <div class="modal-header">
                 <div class="actions mh100vh_55">
                     <div style="text-align:center; font-size:26px;">
                     
@@ -202,9 +202,12 @@ include ('template/header.php');
                             </div>
                         </div>
                     
-                        <div id="mapping_view" style="position:absolute; top:0; left:0; right:0; bottom:0; overflow:hidden; display:none; z-index:1000;">
-                            <img id="mapping_robot" src="assets/images/robot-dessus.png" width="6" style="position:absolute; bottom:400px; margin-left:-3px; z-index:300;" />
-                            <img class="map_dyn" id="img_map_saved" src="" style="position:absolute; z-index:200" />
+                        <div id="mapping_view" style="overflow:hidden; display:none; position:absolute; top:0; left:0; right:0; bottom:0">
+	                        <svg id="svg_mapping" width="" height="" style="position:absolute; top:0; left:0; width:100%; height:100%; background-color:#F0F0F0;">
+								<image id="img_map_saved" xlink:href="" x="0" y="0" height="" width="" />
+								<image id="mapping_robot" style="z-index:20000;" xlink:href="assets/images/robot-dessus-green.png" x="0" y="0" height="10" width="10" />
+							</svg>
+                            <img id="img_map_saved_hidden" src="" style="display:none;" />
                         </div>
                         
                         <!--
@@ -214,7 +217,7 @@ include ('template/header.php');
                         </div>
                         -->
                         
-                        <div style=" position:absolute; bottom:50px; left:0; width:100%; z-index:2000;">
+                        <div style=" position:absolute; bottom:50px; left:0; width:100%;">
                             <div class="joystickDiv" draggable="false" style="margin:auto;">
                                 <div class="fond"></div>
                                 <div class="curseur"></div>
@@ -225,7 +228,7 @@ include ('template/header.php');
                     </div>         
          			
                     <a href="#" id="bMappingCancelMap" class="btn btn-warning bCloseModalCreateMap btn-left" data-dismiss="modal" style="position:absolute; left:0; bottom:0px; width:100%; font-size:30px;">Cancel</a>
-                    <a href="#" id="bMappingStop" data-dismiss="modal" class="btn btn-primary bCloseModalCreateMap btn-right" style="display:none; position:absolute; right:0; bottom:0px; width:100%; z-index:2001; font-size:30px;"><i class="fa fa-stop"></i> <?php echo __('Mapping done');?></a>
+                    <a href="#" id="bMappingStop" data-dismiss="modal" class="btn btn-primary bCloseModalCreateMap btn-right" style="display:none; position:absolute; right:0; bottom:0px; width:100%; font-size:30px;"><i class="fa fa-stop"></i> <?php echo __('Mapping done');?></a>
                 </div>
             </div>
         </div>
@@ -248,20 +251,25 @@ include ('template/header.php');
 	                    	<input type="text" id="form_mapping_name" name="nom" placeholder="<?php echo __('Map name')?>" class="form-control" style="margin-bottom:20px;" />
                     	</form>
                     
-                        <div id="fin_mapping_view" style="height:65vh; width:100%; margin:10px 0; border:1px solid #EFEFEF; position:relative; background-color:#F0F0F0;">
+                        <div id="fin_mapping_view" style="height:65vh; width:100%; margin:10px 0; border:1px solid #EFEFEF; position:relative;">
 	                        <img id="img_fin_map_saved" src="" style="z-index:200; display:none; max-width:100%;" />
                             <div id="divOption">
-                                <div id="threshold_free_slider_elem" class="mt-lg mb-lg slider-primary" data-plugin-slider data-plugin-options='{ "value": 25, "range": "min", "max": 100 }' data-plugin-slider-output="#threshold_free_slider">
-                                    <input id="threshold_free_slider" type="hidden" value="25" />
-                                </div>
-                                <p id="threshold_free_output">Threshold free: <b>25</b></p>
-                                                    
-                                <div id="threshold_occupied_slider_elem" class="mt-lg mb-lg slider-primary" data-plugin-slider data-plugin-options='{ "value": 65, "range": "min", "max": 100 }' data-plugin-slider-output="#threshold_occupied_slider">
-                                    <input id="threshold_occupied_slider" type="hidden" value="65" />
-                                </div>
-                                <p id="threshold_occupied_output">Threshold occupied: <b>65</b></p>
+                                <h3>Options</h3>
                                 
-                                <a href="#" class="btn btn-xs btn-primary" id="bResetValueThreshold"><?php echo __('Reset values');?></a>
+                                <section class="panel">
+                                    <div class="panel-body">
+                    
+                                        <div class="mt-lg mb-lg slider-primary" data-plugin-slider data-plugin-options='{ "value": 25, "range": "min", "max": 100 }' data-plugin-slider-output="#threshold_free_slider">
+                                            <input id="threshold_free_slider" type="hidden" value="25" />
+                                        </div>
+                                        <p id="threshold_free_output">Threshold free: <b>25</b></p>
+                                                            
+                                        <div class="mt-lg mb-lg slider-primary" data-plugin-slider data-plugin-options='{ "value": 65, "range": "min", "max": 100 }' data-plugin-slider-output="#threshold_occupied_slider">
+                                            <input id="threshold_occupied_slider" type="hidden" value="65" />
+                                        </div>
+                                        <p id="threshold_occupied_output">Threshold occupied: <b>65</b></p>
+                                    </div>
+                                </section>
                                 
                             </div>
                             <div id="divResult">
@@ -316,12 +324,25 @@ include ('template/header.php');
 optionsWyca = {
         onMappingRobotPoseChange: function(data){
             mappingLastPose = data;
-            InitPosCarteMapping();
+            InitPosCarteMapping2();
 		},
         onMapInConstruction: function(data){
-            var img = document.getElementById("img_map_saved");
+			
+			var img = document.getElementById("img_map_saved_hidden");
             img.src = 'data:image/png;base64,' + data.map_trinary.data;
+			
             mappingLastOrigin = {'x':data.x_origin, 'y':data.y_origin };
+			
+			$('#img_map_saved').attr('xlink:href', 'data:image/png;base64,' + data.map_trinary.data);
+			$('#img_map_saved').attr('width', $('#img_map_saved_hidden').width());
+			$('#img_map_saved').attr('height', $('#img_map_saved_hidden').height());
+			
+			/*
+			<svg id="an_svg" width="" height="" style="position:absolute; top:0; left:0; width:100%; height:100%;">
+				<image id="img_map_saved" xlink:href="" x="0" y="0" height="" width="" />
+				<image id="mapping_robot" style="z-index:20000;" xlink:href="assets/images/robot-dessus-green.png" x="0" y="0" height="10" width="10" />
+			</svg>
+			*/
 			
 			/*
             var img = document.getElementById("img_map_saved");
@@ -362,6 +383,66 @@ optionsWyca = {
         }
 		*/
 };
+
+function InitPosCarteMapping2()
+{
+	// On affiche 15 metre sur les 150pixels visible = 1px pour 10cm
+    originWidth = $('#img_map_saved_hidden').width();
+    originHeight = $('#img_map_saved_hidden').height();
+    if (originWidth > 0 && originHeight > 0) //mappingLastInfo != null)
+    {
+        hauteurCm = originHeight * 5;
+		hauteurM = hauteurCm / 100;
+		
+        //$('#img_map_saved').height(originHeight / 2); // 1px pour 10cm
+        //$('#img_map_trinary_saved').height(originHeight / 2); // 1px pour 10cm
+
+		if (mappingLastPose != null)
+		{
+			mappingLastPose.x
+			
+            //console.log('Robot pose ', mappingLastPose.x, ' ', mappingLastPose.y);
+            posLeft = mappingLastPose.x - mappingLastOrigin.x;
+            posBottom = - mappingLastPose.y + mappingLastOrigin.y;
+			
+			
+			$('#mapping_robot').attr('x', posLeft * 100 / 5);
+			$('#mapping_robot').attr('y', originHeight + posBottom * 100 / 5);
+			
+			centreVueLeft = $('#mapping_view').width() / 2;
+			centreVueBottom = 300;
+
+			decallageLeft  = centreVueLeft - posLeft;
+            decallageBottom  = posBottom + centreVueBottom + 3;
+			
+            /*
+			$('#img_map_saved').css('left', decallageLeft);
+            $('#img_map_saved').css('bottom', decallageBottom);
+			
+			$('#img_map_trinary_saved').css('left', decallageLeft);
+            $('#img_map_trinary_saved').css('bottom', decallageBottom);
+			*/
+			
+			$('#svg_mapping').css('left', decallageLeft);
+            $('#svg_mapping').css('top', decallageBottom);
+
+			
+			deg = mappingLastPose.theta * 180 / Math.PI - 90;
+            //deg = 180;
+			
+			transform="translate(30,40) rotate(45)"
+			
+			/*
+            $('#svg_mapping').css({
+		        "-webkit-transform": "rotate("+deg+"deg)",
+				"-moz-transform": "rotate("+deg+"deg)",
+				"transform": "rotate("+deg+"deg)",
+                "transform-origin":(mappingLastPose.x - mappingLastOrigin.x)*10 + "px " + (originHeight/2 - ((mappingLastPose.y - mappingLastOrigin.y) * 10))+"px"
+            });
+			*/
+		}
+	}
+}
 </script>
 <?php 
 include ('template/footer.php');
@@ -426,10 +507,7 @@ function CalculateMapDo()
 			buffer[pos  ] = color;           // some R value [0, 255]
 			buffer[pos+1] = color;           // some G value
 			buffer[pos+2] = color;           // some B value
-			if (color == color_unknow)
-				buffer[pos+3] = 0;           // set alpha channel
-			else
-				buffer[pos+3] = 255;           // set alpha channel
+			buffer[pos+3] = 255;           // set alpha channel
 		}
 	}
 	
@@ -509,21 +587,6 @@ function NextTimerCreateMap()
 
 	'use strict';
 	
-	$('#bResetValueThreshold').click(function(e) {
-        e.preventDefault();
-		
-		$("#threshold_free_slider").val(25);
-		$("#threshold_free_slider_elem").slider('value',25);
-		$('#threshold_free_output b').text( 25 );
-		threshold_free = 25;
-		
-		$("#threshold_occupied_slider").val(65);
-		$("#threshold_occupied_slider_elem").slider('value',65);
-		$('#threshold_occupied_output b').text( 65 );
-		threshold_occupied = 65;
-		
-		CalculateMap();
-    });
 	
 	$('.bUseThisMap').click(function(e) {
         e.preventDefault();
@@ -536,8 +599,8 @@ function NextTimerCreateMap()
 	});
 	
 	$(".map_dyn").on("load", function() {
-           InitPosCarteMapping();
-        })
+	   InitPosCarteMapping();
+	})
 	
 	$('#bUseThisMapNowYes').click(function(e) {
         

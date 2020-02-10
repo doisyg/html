@@ -142,7 +142,6 @@ include ('template/header.php');
 <?php 
 include ('template/footer.php');
 ?>
-
 <script>
   $( function() {
     $( ".sortable_task" ).sortable();

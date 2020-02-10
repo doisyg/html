@@ -280,39 +280,59 @@ td.actions_buttons a { margin-bottom:5px; }
 .mh100vh {
 	min-height: 100vh;
   	min-height: calc(var(--vh, 1vh) * 100);
+	padding:1px;
+}
+
+.mh100vh_55 {
+	min-height: calc(100vh - 55px);
+  	min-height: calc(var(--vh, 1vh) * 100 - 55px);
+	padding:1px;
 }
 
 .mh100vh_100 {
 	min-height: calc(100vh - 100px);
   	min-height: calc(var(--vh, 1vh) * 100 - 100px);
+	padding:1px;
 }
 
 .mh100vh_110 {
 	min-height: calc(100vh - 110px);
   	min-height: calc(var(--vh, 1vh) * 100 - 110px);
+	padding:1px;
 }
 .mh100vh_160 {
 	min-height: calc(100vh - 160px);
   	min-height: calc(var(--vh, 1vh) * 100 - 160px);
+	padding:1px;
 }
 
 .h100vh {
 	height: 100vh;
   	height: calc(var(--vh, 1vh) * 100);
+	padding:1px;
+}
+
+.h100vh_55 {
+	height: calc(100vh - 55px);
+  	height: calc(var(--vh, 1vh) * 100 - 55px);
+	padding:1px;
 }
 
 .h100vh_100 {
 	height: calc(100vh - 100px);
   	height: calc(var(--vh, 1vh) * 100 - 100px);
+	padding:1px;
 }
 
 .h100vh_110 {
 	height: calc(100vh - 110px);
   	height: calc(var(--vh, 1vh) * 100 - 110px);
+	padding:1px;
 }
 .h100vh_160 {
 	height: calc(100vh - 160px);
   	height: calc(var(--vh, 1vh) * 100 - 160px);
+	padding:1px;
 }
 
 .btn-right { border-radius:0 4px 4px 0; }
@@ -342,7 +362,7 @@ td.actions_buttons a { margin-bottom:5px; }
 	.sidebar-header { display:none; }
 	
 	#divResult { z-index:200; }
-	#divOption { position:absolute; bottom:30px; right:10px; width:60%; z-index:300; }
+	#divOption { position:absolute; bottom:30px; left:5%; width:90%; z-index:300; color:#0088cc; text-align:left; }
 	#divOption .panel-body { background-color:rgba(255,255,255,0.5); }
 	#divOption h3 { display:none; }
 }

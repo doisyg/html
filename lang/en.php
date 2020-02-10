@@ -221,5 +221,8 @@ $_LANG['2df16b098792baa55e0fe75a89a0d1b1'] = 'Open these pages on the robot';
 $_LANG['39f4ebc23bb8ad347a14da2bbbad672e'] = 'Set map trinary';
 $_LANG['d13c27ede3361492eda1fb6c8d140e56'] = 'Confirm?';
 $_LANG['263cee057add143ced8cd867d7c1f353'] = 'Start navigation';
+$_LANG['0d963aa669603e06afa41afca9110b6b'] = 'Mapping done';
+$_LANG['a8d5e84c8f661800e972d2c9dd98e9f1'] = 'Stop navigation';
+$_LANG['dd4a136dbb7505fde8695081b235a0b6'] = 'Reset values';
 
 ?>

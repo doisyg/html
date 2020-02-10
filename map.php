@@ -131,7 +131,7 @@ include ('template/header.php');
     <div class="modal-dialog" role="dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="actions mh100vh_110" style="">
+                <div class="actions mh100vh_55">
                 	<div class="h100vh_160" style="overflow:auto">
                     	<form>
                         	<div class="form-group">
@@ -157,7 +157,7 @@ include ('template/header.php');
     <div class="modal-dialog" role="dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="actions mh100vh_110">
+                <div class="actions mh100vh_55">
                 	<div class="h100vh_160" style="overflow:auto">
                     	<form>
                         	<div class="form-group">
@@ -237,7 +237,7 @@ include ('template/header.php');
     <div class="modal-dialog" role="dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="actions mh100vh_110">
+                <div class="actions mh100vh_55">
                     <div style="text-align:center;">
                     
                     	<ul class="listBoutons">
@@ -260,7 +260,7 @@ include ('template/header.php');
     <div class="modal-dialog" role="dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="actions mh100vh_110">
+                <div class="actions mh100vh_55">
                     <div style="text-align:center;">
                     
                     	<ul class="listBoutons">
@@ -404,10 +404,8 @@ var imgForSVG;
 
 function DisplayBlockZoom()
 {
-	console.log('DisplayBlockZoom');
 	if (blockZoom)
 	{
-	console.log('blockZoom ok');
 		//svgData = new XMLSerializer().serializeToString(svgTemp);
 		//imgForSVG.setAttribute("src", "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svgData))));
 		p = document.getElementById("svg"); 
