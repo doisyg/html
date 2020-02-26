@@ -248,7 +248,7 @@ include ('template/header.php');
 	                    	<input type="text" id="form_mapping_name" name="nom" placeholder="<?php echo __('Map name')?>" class="form-control" style="margin-bottom:20px;" />
                     	</form>
                     
-                        <div id="fin_mapping_view" style="height:65vh; width:100%; margin:10px 0; border:1px solid #EFEFEF; position:relative; background-color:#F0F0F0; display:none;">
+                        <div id="fin_mapping_view" style="height:65vh; width:100%; margin:10px 0; border:1px solid #EFEFEF; position:relative; background-color:#F0F0F0;">
 	                        <img id="img_fin_map_saved" src="" style="z-index:200; display:none; max-width:100%;" />
                             <div id="divOption">
                                 <div id="threshold_free_slider_elem" class="mt-lg mb-lg slider-primary" data-plugin-slider data-plugin-options='{ "value": 25, "range": "min", "max": 100 }' data-plugin-slider-output="#threshold_free_slider">
@@ -401,7 +401,6 @@ function CalculateMap()
 
 function CalculateMapDo()
 {
-	/*
 	threshold_free_255 = 255 - threshold_free / 100 * 255;
 	threshold_occupied_255 = 255 - threshold_occupied / 100 * 255;
 	
@@ -440,7 +439,6 @@ function CalculateMapDo()
 	var idata = ctx.createImageData(width, height);
 	idata.data.set(buffer);
 	ctx.putImageData(idata, 0, 0);
-	*/
 }
 
 (function() {
@@ -596,8 +594,8 @@ function NextTimerCreateMap()
 			$('#bMappingSaveMap').hide();
 		
 			$('#form_mapping_image').val(finalMapData);
-			$('#form_mapping_image_tri').val(finalMapData);
-			//$('#form_mapping_image_tri').val(canvasDessin.toDataURL());
+			//$('#form_mapping_image_tri').val(finalMapData);
+			$('#form_mapping_image_tri').val(canvasDessin.toDataURL());
 			$('#form_mapping_ros_largeur').val($('#img_fin_map_saved').prop('naturalWidth'));
 			$('#form_mapping_ros_hauteur').val($('#img_fin_map_saved').prop('naturalHeight'));
 			//$('#form_mapping').submit();
