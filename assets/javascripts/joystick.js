@@ -108,8 +108,7 @@ $(document).ready(function(e) {
 		}
 	});
 	
-	SendCommande();
-	//setInterval(SendCommande, 200);
+	setInterval(SendCommande, 200);
 	//setInterval(RefreshJoystickOn, 300);
 	
 });	
@@ -186,7 +185,6 @@ var lastValueY = 0;
 nbCall0 = 0;
 function SendCommande()
 {
-	setTimeout(SendCommande, 200);
 	//if (robotCurrentState != 'undocked' || (lastValueX == 0 && lastValueY == 0))
 	if ((lastValueX == 0 && lastValueY == 0))
 	{
