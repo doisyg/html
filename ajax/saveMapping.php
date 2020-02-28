@@ -5,7 +5,7 @@ if (!isset($_SESSION["id_user"])) { header("location:login.php"); }
 $sectionMenu = "maps";
 $sectionSousMenu = "";
 
-if (!$userConnected->CanDo($sectionMenu, $sectionSousMenu, 'add')) { echo json_encode(array('id_plan' => $plan->id_plan, 'error' => 'not allow')); exit; }
+if (!$userConnected->CanDo($sectionMenu, $sectionSousMenu, 'add')) { echo json_encode(array('id_plan' => -1, 'error' => 'not allow')); exit; }
 
 if (isset($_POST['nom']))
 {
@@ -50,6 +50,21 @@ if (isset($_POST['nom']))
 		
 		$image = imagecreatefromstring(base64_decode(substr($_POST['image_tri'], 22)));
 		imagesetthickness($image, 2);
+		
+		$gris =  imagecolorallocate ( $image , 200, 200, 200 );
+		
+		for($x = 0; $x < $width; $x++) {
+			for($y = 0; $y < $height; $y++) {
+				// pixel color at (x, y)
+				$rgb = imagecolorat($image, $x, $y);
+				$colors = imagecolorsforindex($im, $rgb);
+				if ($colors['alpha'] == 0)
+				{
+					 imagesetpixel ($image , $x , $y , $gris );
+				}
+			}
+		}
+		
 		ob_start();
 		imagepng($image);
 		$contents = ob_get_contents();
