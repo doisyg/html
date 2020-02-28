@@ -53,11 +53,14 @@ if (isset($_POST['nom']))
 		
 		$gris =  imagecolorallocate ( $image , 200, 200, 200 );
 		
+		$width = imagesx($image);
+    	$height = imagesy($image);
+		
 		for($x = 0; $x < $width; $x++) {
 			for($y = 0; $y < $height; $y++) {
 				// pixel color at (x, y)
 				$rgb = imagecolorat($image, $x, $y);
-				$colors = imagecolorsforindex($im, $rgb);
+				$colors = imagecolorsforindex($image, $rgb);
 				if ($colors['alpha'] == 0)
 				{
 					 imagesetpixel ($image , $x , $y , $gris );
