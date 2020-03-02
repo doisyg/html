@@ -59,9 +59,9 @@ if (isset($_POST['nom']))
 		for($x = 0; $x < $width; $x++) {
 			for($y = 0; $y < $height; $y++) {
 				// pixel color at (x, y)
-				$rgb = imagecolorat($image, $x, $y);
-				$colors = imagecolorsforindex($image, $rgb);
-				if ($colors['alpha'] == 0)
+				$rgba = imagecolorat($image, $x, $y);
+				$alpha     = ($rgba & 0x7F000000) >> 24;
+				if ($alpha == 127)
 				{
 					 imagesetpixel ($image , $x , $y , $gris );
 				}
