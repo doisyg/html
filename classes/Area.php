@@ -4,6 +4,12 @@ class Area extends AreaCore
 	public $points = array();
 	public $configs = array();
 	
+	public function Supprimer()
+	{
+		$this->deleted=1;
+		$this->Save();
+	}
+	
 	public function GetPoints()
 	{
 		if (count($this->points) == 0)

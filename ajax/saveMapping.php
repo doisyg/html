@@ -14,7 +14,9 @@ if (isset($_POST['nom']))
 	if (strlen($_POST['image']) > 22)
 	{
 		
-		$image = imagecreatefromstring(base64_decode(substr($_POST['image'], 22)));
+		$plan->image = substr($_POST['image'], 22);
+		/*
+		$image = imagecreatefromstring(base64_decode());
 		imagesetthickness($image, 2);
 		ob_start();
 		imagepng($image);
@@ -43,6 +45,7 @@ if (isset($_POST['nom']))
 		}
 
 		$plan->image = base64_encode($contents);
+		*/
 	}
 	
 	if (strlen($_POST['image_tri']) > 22)

@@ -101,52 +101,47 @@ foreach($pois as $poi)
 		$p->Save();
 	}
 }
-$image = imagecreatefromstring(base64_decode($plan->image_tri));
-
-$blanc = imagecolorallocate($image, 255,255,255);
-
-imagesetthickness($image, 2);
 
 $_POST['gommes'] = str_replace('&#34;', '"', $_POST['gommes']);
 $gommes = json_decode($_POST['gommes']);
 
-foreach($gommes as $points)
-{
-	for ($i=0; $i<count($points); $i++)
-	{
-		$ip1 = $i+1;
-		if ($i == count($points)-1) $ip1 = 0;
-		
-		$x1 = $points[$i]->x / 5 * 100;
-		$y1 = $plan->ros_hauteur - $points[$i]->y / 5 * 100;
-		$x2 = $points[$ip1]->x / 5 * 100;
-		$y2 = $plan->ros_hauteur - $points[$ip1]->y / 5 * 100;
-		
-		imageline($image, $x1, $y1, $x2, $y2, $blanc);
-	}
-}
-
-ob_start();
-imagepng($image);
-$contents = ob_get_contents();
-ob_end_clean();
-
 try
 {
-	if (class_exists('Imagick'))
-	{
-		$imagick = new Imagick();
-		$imagick->readImageBlob($contents);
-		$imagick->transformImageColorspace(Imagick::COLORSPACE_TRANSPARENT);
-		$imagick->setImageType(Imagick::IMGTYPE_GRAYSCALE);
-		$imagick->setImageFormat('png32');
-		//$imagick->setImageAlphaChannel(Imagick::ALPHACHANNEL_ACTIVATE );		
-				
-		ob_start();
-		echo $imagick;
-		$contents = ob_get_contents();
-		ob_end_clean();
-	}
+    if (class_exists('Imagick'))
+    {
+    
+        $draw = new \ImagickDraw(); 
+        
+        $draw->setFillColor('white'); 
+        $draw->setStrokeWidth(1);
+        $draw->setStrokeAntialias(false);
+        
+        foreach($gommes as $points)
+        {
+            for ($i=0; $i<count($points); $i++)
+            {
+                $ip1 = $i+1;
+                if ($i == count($points)-1) $ip1 = 0;
+                
+                $x1 = $points[$i]->x / 5 * 100;
+                $y1 = $plan->ros_hauteur - $points[$i]->y / 5 * 100;
+                $x2 = $points[$ip1]->x / 5 * 100;
+                $y2 = $plan->ros_hauteur - $points[$ip1]->y / 5 * 100;
+                
+                $draw->line($x1, $y1, $x2, $y2); 
+            }
+        }
+        
+    
+        $imagick = new Imagick();
+        $imagick->readImageBlob(base64_decode($plan->image_tri));
+        $imagick->drawImage($draw); 
+        
+        ob_start();
+        echo $imagick;
+        $contents = ob_get_contents();
+        ob_end_clean();
+    }
 }
 catch(Excepion $e)
 {

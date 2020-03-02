@@ -6,10 +6,21 @@ class Plan extends PlanCore
 		$query="DELETE FROM plan WHERE id_plan = '".mysqli_real_escape_string(DB::$connexion, $this->id_plan)."'";
 		$delete=mysqli_query(DB::$connexion, $query) or die ('ERREUR Delete Plan : '.$query.'<br />'.mysqli_error(DB::$connexion).'<br /><br />');
 		
-		$query="DELETE FROM area WHERE id_plan = '".mysqli_real_escape_string(DB::$connexion, $this->id_plan)."'";
-		$delete=mysqli_query(DB::$connexion, $query) or die ('ERREUR Delete Plan : '.$query.'<br />'.mysqli_error(DB::$connexion).'<br /><br />');
+        $areas = $this->GetAreas();
+		foreach($areas as $area) $area->Supprimer();
 		
-		die('NOT FINISHED');
+		$forbiddens = $this->GetForbiddenAreas();
+		foreach($forbiddens as $forbidden) $forbidden->Supprimer();
+        
+        $srs = $this->GetStationRecharges();
+        foreach($srs as $sr) $sr->Supprimer();
+        
+        $pois = $this->GetPois();
+        foreach($poi as $poi) $poi->Supprimer();
+        
+        $taches = $this->GetTaches();
+        foreach($taches as $tache) $tache->Supprimer();
+        
 	}
 	
 	public function SetAsActive()
@@ -153,39 +164,7 @@ class Plan extends PlanCore
 			$file->name = '';
 		}
 		
-		$image = imagecreatefromstring(base64_decode($this->image_tri));
-		
-		$noir = imagecolorallocate($image, 0, 0, 0);
-		
-		imagesetthickness($image, 2);
-		
-		ob_start();
-		imagepng($image);
-		$contents = ob_get_contents();
-		ob_end_clean();
-		
-		try
-		{
-			if (class_exists('Imagick'))
-			{
-				$imagick = new Imagick();
-				$imagick->readImageBlob($contents);
-				$imagick->transformImageColorspace(Imagick::COLORSPACE_TRANSPARENT);
-				$imagick->setImageType(Imagick::IMGTYPE_GRAYSCALE);
-				$imagick->setImageFormat('png32');
-				
-
-				ob_start();
-				echo $imagick;
-				$contents = ob_get_contents();
-				ob_end_clean();
-			}
-		}
-		catch(Excepion $e)
-		{
-		}
-			
-		$file->data = base64_encode($contents);
+		$file->data = $this->image_tri;
 		
 		$file->date_upd_server = date('Y-m-d H:i:s');
 		$file->date_upd_robot = '0000-00-00 00:00:00';
@@ -218,44 +197,40 @@ class Plan extends PlanCore
 			$file->name = '';
 		}
 			
-		$image = imagecreatefromstring(base64_decode($this->image_tri));
-		
-		$noir = imagecolorallocate($image, 0, 0, 0);
-		
-		imagesetthickness($image, 2);
-		
-		$polys = $this->GetForbiddenAreas();
-		foreach($polys as $poly)
-		{
-			$points = $poly->GetPoints();
-			for ($i=0; $i<count($points); $i++)
-			{
-				$ip1 = $i+1;
-				if ($i == count($points)-1) $ip1 = 0;
-				
-				$x1 = $points[$i]->x / 5 * 100;
-				$y1 = $this->ros_hauteur - $points[$i]->y / 5 * 100;
-				$x2 = $points[$ip1]->x / 5 * 100;
-				$y2 = $this->ros_hauteur - $points[$ip1]->y / 5 * 100;
-				
-				imageline($image, $x1, $y1, $x2, $y2, $noir);
-			}
-		}
-		
-		ob_start();
-		imagepng($image);
-		$contents = ob_get_contents();
-		ob_end_clean();
-		
 		try
 		{
 			if (class_exists('Imagick'))
 			{
+			
+                $draw = new \ImagickDraw(); 
+                 
+                $draw->setFillColor('black'); 
+                $draw->setStrokeColor('black');
+                $draw->setStrokeWidth(2);
+                $draw->setStrokeAntialias(false);
+                
+                $polys = $this->GetForbiddenAreas();
+                foreach($polys as $poly)
+                {
+                    $points = $poly->GetPoints();
+                    for ($i=0; $i<count($points); $i++)
+                    {
+                        $ip1 = $i+1;
+                        if ($i == count($points)-1) $ip1 = 0;
+                        
+                        $x1 = $points[$i]->x / 5 * 100;
+                        $y1 = $this->ros_hauteur - $points[$i]->y / 5 * 100;
+                        $x2 = $points[$ip1]->x / 5 * 100;
+                        $y2 = $this->ros_hauteur - $points[$ip1]->y / 5 * 100;
+                        
+                        $draw->line($x1, $y1, $x2, $y2); 
+                    }
+                }
+                
+			
 				$imagick = new Imagick();
-				$imagick->readImageBlob($contents);
-				$imagick->transformImageColorspace(Imagick::COLORSPACE_TRANSPARENT);
-				$imagick->setImageType(Imagick::IMGTYPE_GRAYSCALE);
-				$imagick->setImageFormat('png32');
+				$imagick->readImageBlob(base64_decode($this->image_tri));
+				$imagick->drawImage($draw); 
 				
 				ob_start();
 				echo $imagick;
