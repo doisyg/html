@@ -83,7 +83,7 @@ class User extends UserCore
 			$mail = new Email();
 			$mail->destinataire = $user->email;
 			$mail->objet = utf8_decode(__m($user->id_lang, 'Nouveau mot de passe'));
-			$mail->message = utf8_decode(__m($user->id_lang, 'Suite Ã  votre demande, vous trouverez ci-dessous votre nouveau mot de passe :').'<br />'.$newMdp.'<br /><br />'.__m($user->id_lang, 'Bonne journÃ©e.'));
+			$mail->message = utf8_decode(__m($user->id_lang, 'Suite à votre demande, vous trouverez ci-dessous votre nouveau mot de passe :').'<br />'.$newMdp.'<br /><br />'.__m($user->id_lang, 'Bonne journée.'));
 			$mail->Send();
 		
 			return true;
@@ -112,14 +112,6 @@ class User extends UserCore
 		return $this->nom." ".$this->prenom;
 	}
 	
-	private $_groupe = null;
-	public function CanDo($menu, $sousmenu='', $action='')
-	{
-		if ($this->_groupe == null) $this->_groupe = new GroupeUser($this->id_groupe_user);
-	
-		return $this->_groupe->CanDo($menu, $sousmenu, $action);
-	}
-	
 	public static function GetUserFromApiKey ($api_key)
 	{
 		$query = "SELECT * FROM user u WHERE u.deleted=0 AND api_key = '".mysqli_real_escape_string(DB::$connexion, $api_key)."'";
@@ -132,27 +124,10 @@ class User extends UserCore
 		@mysqli_free_result( $result );
 		return $user;
 	}
-		
-	public static function GetUsersSuivi ($order = "nom ASC, prenom", $order_sens = "ASC")
-	{	
-		$query = "SELECT * FROM user WHERE deleted=0 AND acces_suivi=1";
-		if ($order!="")
-			$query .= " ORDER BY ".mysqli_real_escape_string(DB::$connexion, $order)." ".mysqli_real_escape_string(DB::$connexion, $order_sens);
-		else 
-			$query .= " ORDER BY id_user ASC";
-		$result = mysqli_query(DB::$connexion, $query);
-		$array = array();
-		while ($row = @mysqli_fetch_object( $result ) )
-		{
-			$array[] = new User($row, true);
-		}
-		@mysqli_free_result( $result );
-		return $array;
-	}
 	
 	public function GetApiTopicIds()
 	{
-		$query = "SELECT * FROM api_topic_user WHERE id_user=".(int)$this->id_user;
+		$query = "SELECT * FROM api_topic_groupe WHERE id_groupe_user=".(int)$this->id_groupe_user;
 		$result = mysqli_query(DB::$connexion, $query);
 		$array = array();
 		while ($row = @mysqli_fetch_object( $result ) )
@@ -162,8 +137,8 @@ class User extends UserCore
 	}
 	public function GetApiTopicPubIds()
 	{
-		$query = "SELECT * FROM api_topic_pub_user WHERE id_user=".(int)$this->id_user;
-		$result = mysqli_query(DB::$connexion, $query);
+		$query = "SELECT * FROM api_topic_pub_groupe WHERE id_groupe_user=".(int)$this->id_groupe_user;
+		$result = mysqli_query(DB::$connexion, $query) or die ('DB ERROR');
 		$array = array();
 		while ($row = @mysqli_fetch_object( $result ) )
 			$array[$row->id_topic_pub] = $row->id_topic_pub;
@@ -172,8 +147,8 @@ class User extends UserCore
 	}
 	public function GetApiServiceIds()
 	{
-		$query = "SELECT * FROM api_service_user WHERE id_user=".(int)$this->id_user;
-		$result = mysqli_query(DB::$connexion, $query);
+		$query = "SELECT * FROM api_service_groupe WHERE id_groupe_user=".(int)$this->id_groupe_user;
+		$result = mysqli_query(DB::$connexion, $query) or die ('DB ERROR');
 		$array = array();
 		while ($row = @mysqli_fetch_object( $result ) )
 			$array[$row->id_service] = $row->id_service;
@@ -182,8 +157,8 @@ class User extends UserCore
 	}
 	public function GetApiActionIds()
 	{
-		$query = "SELECT * FROM api_action_user WHERE id_user=".(int)$this->id_user;
-		$result = mysqli_query(DB::$connexion, $query);
+		$query = "SELECT * FROM api_action_groupe WHERE id_groupe_user=".(int)$this->id_groupe_user;
+		$result = mysqli_query(DB::$connexion, $query) or die ('DB ERROR');
 		$array = array();
 		while ($row = @mysqli_fetch_object( $result ) )
 			$array[$row->id_action] = $row->id_action;
@@ -193,12 +168,12 @@ class User extends UserCore
 	
 	public function GetApiTopics($order = "", $order_sens = "")
 	{
-		$query = "SELECT t.* FROM api_topic t, api_topic_user tu WHERE t.id_topic=tu.id_topic AND tu.id_user=".(int)$this->id_user;
+		$query = "SELECT t.* FROM api_topic t, api_topic_groupe tu WHERE t.id_topic=tu.id_topic AND tu.id_groupe_user=".(int)$this->id_groupe_user;
 		if ($order!="")
 			$query .= " ORDER BY ".mysqli_real_escape_string(DB::$connexion, $order)." ".mysqli_real_escape_string(DB::$connexion, $order_sens);
 		else 
 			$query .= " ORDER BY t.id_topic ASC";
-		$result = mysqli_query(DB::$connexion, $query);
+		$result = mysqli_query(DB::$connexion, $query) or die ('DB ERROR');
 		$array = array();
 		while ($row = @mysqli_fetch_object( $result ) )
 		{
@@ -209,7 +184,7 @@ class User extends UserCore
 	}
 	public function GetApiTopicPubs($order = "", $order_sens = "")
 	{
-		$query = "SELECT s.* FROM api_topic_pub s, api_topic_pub_user su WHERE s.id_topic_pub=su.id_topic_pub AND su.id_user=".(int)$this->id_user;
+		$query = "SELECT s.* FROM api_topic_pub s, api_topic_pub_groupe su WHERE s.id_topic_pub=su.id_topic_pub AND su.id_groupe_user=".(int)$this->id_groupe_user;
 		if ($order!="")
 			$query .= " ORDER BY ".mysqli_real_escape_string(DB::$connexion, $order)." ".mysqli_real_escape_string(DB::$connexion, $order_sens);
 		else 
@@ -225,12 +200,12 @@ class User extends UserCore
 	}
 	public function GetApiServices($order = "", $order_sens = "")
 	{
-		$query = "SELECT s.* FROM api_service s, api_service_user su WHERE s.id_service=su.id_service AND su.id_user=".(int)$this->id_user;
+		$query = "SELECT s.* FROM api_service s, api_service_groupe su WHERE s.id_service=su.id_service AND su.id_groupe_user=".(int)$this->id_groupe_user;
 		if ($order!="")
 			$query .= " ORDER BY ".mysqli_real_escape_string(DB::$connexion, $order)." ".mysqli_real_escape_string(DB::$connexion, $order_sens);
 		else 
 			$query .= " ORDER BY s.id_service ASC";
-		$result = mysqli_query(DB::$connexion, $query);
+		$result = mysqli_query(DB::$connexion, $query) or die ('DB ERROR');
 		$array = array();
 		while ($row = @mysqli_fetch_object( $result ) )
 		{
@@ -241,12 +216,12 @@ class User extends UserCore
 	}
 	public function GetApiActions($order = "", $order_sens = "")
 	{
-		$query = "SELECT s.* FROM api_action s, api_action_user su WHERE s.id_action=su.id_action AND su.id_user=".(int)$this->id_user;
+		$query = "SELECT s.* FROM api_action s, api_action_groupe su WHERE s.id_action=su.id_action AND su.id_groupe_user=".(int)$this->id_groupe_user;
 		if ($order!="")
 			$query .= " ORDER BY ".mysqli_real_escape_string(DB::$connexion, $order)." ".mysqli_real_escape_string(DB::$connexion, $order_sens);
 		else 
 			$query .= " ORDER BY s.id_action ASC";
-		$result = mysqli_query(DB::$connexion, $query);
+		$result = mysqli_query(DB::$connexion, $query) or die ('DB ERROR');
 		$array = array();
 		while ($row = @mysqli_fetch_object( $result ) )
 		{
@@ -258,8 +233,8 @@ class User extends UserCore
 	
 	public function GetIdServicesAndTopicsToInit()
 	{
-		$query = "SELECT t.id_service_update, t.id_topic FROM api_topic t , api_topic_user tu WHERE t.id_topic=tu.id_topic AND tu.id_user=".((int)$this->id_user)." AND id_service_update > 0";
-		$result = mysqli_query(DB::$connexion, $query);
+		$query = "SELECT t.id_service_update, t.id_topic FROM api_topic t , api_topic_groupe tu WHERE t.id_topic=tu.id_topic AND tu.id_groupe_user=".((int)$this->id_groupe_user)." AND id_service_update > 0";
+		$result = mysqli_query(DB::$connexion, $query) or die ('DB ERROR');
 		$array = array();
 		while ($row = @mysqli_fetch_object( $result ) )
 		{
@@ -273,8 +248,8 @@ class User extends UserCore
 	
 	public function GetIdActionsAndTopicsToInit()
 	{
-		$query = "SELECT t.id_action_update, t.id_topic FROM api_topic t , api_topic_user tu WHERE t.id_topic=tu.id_topic AND tu.id_user=".((int)$this->id_user)." AND id_action_update > 0";
-		$result = mysqli_query(DB::$connexion, $query);
+		$query = "SELECT t.id_action_update, t.id_topic FROM api_topic t , api_topic_groupe tu WHERE t.id_topic=tu.id_topic AND tu.id_groupe_user=".((int)$this->id_groupe_user)." AND id_action_update > 0";
+		$result = mysqli_query(DB::$connexion, $query) or die ('DB ERROR');
 		$array = array();
 		while ($row = @mysqli_fetch_object( $result ) )
 		{

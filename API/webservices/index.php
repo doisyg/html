@@ -6,22 +6,17 @@ require_once(dirname(__FILE__).'/config/initWS.php');
 require 'Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
 
+if (!isset($userConnected)) die();
+
 $app = new \Slim\Slim();
 $app->config(array(
 	'debug' => true
 ));
 
-/*
-if($app->request->isOptions()) {
-   return true;
-   die();
-}
-*/
-
-
 $app->add(new \Slim\Middleware\SessionCookie(array('secret' => $_CONFIG['WS_KEY'])));
 
 
+/*
 function authenticate ($app) {
     return function () use ($app) {
 		
@@ -52,6 +47,7 @@ function authenticate ($app) {
 
     };
 };
+*/
 
 $app->get('/', function () use($app) {
 	echo ('<h1>Hello to Wyca Webservice</h1>');
@@ -70,7 +66,7 @@ $app->group('/v1.0', function () use ($app){
 				$email->destinataire = 'stephane.morillon@smorillon.com';
 				$email->Send();
 			});
-		$app->get('/pcConfig', authenticate($app), function () use($app) {
+		$app->get('/pcConfig', function () use($app) {
 				
 				echo '{"iceServers": 
 						[
@@ -79,60 +75,42 @@ $app->group('/v1.0', function () use ($app){
 						]
 					  }';
 			});
-		$app->get('/plans_contenu', authenticate($app), function () use($app) {
+		$app->get('/map_contenu', function () use($app) {
 			
-			$plan = new Plan(Configuration::GetValue('CURRENT_MAP'));
+			$map = new Map(Configuration::GetValue('CURRENT_MAP'));
 			
 			$contenuCarte = array();
 			$contenuCarteRotate = array();
 						
 			$contenuCarte = array();
-			$contenuCarte['width'] = $plan->largeur;
-			$contenuCarte['height'] = $plan->hauteur;
+			$contenuCarte['width'] = $map->ros_width;
+			$contenuCarte['height'] = $map->ros_height;
 			$contenuCarte['paths'] = array();
 				
 			$contenuCarteRotate = array();
-			$contenuCarteRotate['width'] = $plan->hauteur;
-			$contenuCarteRotate['height'] = $plan->largeur;
+			$contenuCarteRotate['width'] = $map->ros_width;
+			$contenuCarteRotate['height'] = $map->ros_height;
 			$contenuCarteRotate['paths'] = array();
 				
 			$index = 0;
 			
-			$routes = $plan->GetRoutes();
-			$i = 0;
-			foreach($routes as $route)
-			{
-				$contenuCarte['paths'][$index] = array('path' => $route->path, 'name' => 'route'.$i );
-				$contenuCarteRotate['paths'][$index] = array('path' => $route->path_rotate, 'name' => 'route'.$i );
-				$index++;
-				$i++;
-			}
-			
-			$zones = $plan->GetZones();
-			foreach($zones as $zone)
-			{
-				$contenuCarte['paths'][$index] = array('path' => $zone->path, 'name' => $index.'|'.$zone->position_robot.'|'.$zone->id_zone, 'numbox' => $zone->numero );
-				$contenuCarteRotate['paths'][$index] = array('path' => $zone->path_rotate, 'name' => $index.'|'.$zone->position_robot.'|'.$zone->id_zone, 'numbox' => $zone->numero );
-				$index++;
-			}
-						
 			$data = array('contenuCarte' => $contenuCarte, 'contenuCarteRotate' => $contenuCarteRotate);
 			echo json_encode($data);
 		});
-		$app->get('/plans', authenticate($app), function () use($app) {
+		$app->get('/map', function () use($app) {
 				
-				$plan = new Plan(Configuration::GetValue('CURRENT_MAP'));
+				$map = new Map(Configuration::GetValue('CURRENT_MAP'));
 			
 				$p = array();
-				$p['image'] = $plan->image;
-				$p['ros_largeur'] = $plan->ros_largeur;
-				$p['ros_hauteur'] = $plan->ros_hauteur;
-				$p['ros_resolution'] = $plan->ros_resolution;
+				$p['image'] = $map ->image_tri;
+				$p['ros_width'] = $map ->ros_width;
+				$p['ros_height'] = $map ->ros_height;
+				$p['ros_resolution'] = $map ->ros_resolution;
 				
 				echo json_encode($p);
 			});
 		$app->group('/robot', function () use ($app){
-			$app->get('/getHash', authenticate($app), function () use($app) {
+			$app->get('/getHash', function () use($app) {
 				
 				$site = new Site(Configuration::GetValue('CURRENT_SITE'));
 				$last_config = $site->GetLastConfig();

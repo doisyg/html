@@ -1,5 +1,4 @@
 <?php
-if (!isset($_GET['api_key'])) { echo 'alert("WycaAPI - API KEY is needed");'; exit; }
 require_once ('../config/initSite.php');
 
 
@@ -7,22 +6,20 @@ $topics_interne = array('onMapBoxClick', 'onMapRouteClick', 'onMapIsLoaded');
 $services_interne = array('MapGetHTML', 'MapInit', 'GetPOIs', 'RobotMoveToDock', 'RobotMoveToPOI', 'InitDynamicsTopics', 'InitDynamicServices');
 $actions_interne = array();
 $topic_pubs_interne = array();
-		
 
-$_GET['api_key'] = str_replace(' ', '+', $_GET['api_key']);
+if (!isset($userConnected)) die();
 
-$user = User::GetUserFromApiKey($_GET['api_key']);
-if ($user == null)
+if ($userConnected == null)
 {
-	echo 'alert("WycaAPI - Invalid parameters");'; exit;
+	echo 'alert("WycaAPI - Invalid user");'; exit;
 }
 
 $URL_WYCA = 'https://elodie.wyca-solutions.com/';
 
-$topics = $user->GetApiTopics();
-$topic_pubs = $user->GetApiTopicPubs();
-$services = $user->GetApiServices();
-$actions = $user->GetApiActions();
+$topics = $userConnected->GetApiTopics();
+$topic_pubs = $userConnected->GetApiTopicPubs();
+$services = $userConnected->GetApiServices();
+$actions = $userConnected->GetApiActions();
 
 $topics_by_id = array();
 foreach($topics as $topic)
@@ -46,7 +43,8 @@ if (false) // Pour rendre l'IDE plus firendly
 }
 else
 {
-	?>// JavaScript Document<?php
+	?>// JavaScript Document
+<?php
 }
 
 /*
@@ -69,6 +67,8 @@ window.onerror = function(messageOrEvent, source, noligne) {
 
 }
 */
+
+include(__DIR__.'/extern/roslib.js');
 ?>
 var couleurs;
 
@@ -106,11 +106,6 @@ function WycaAPI(options){
    	if (typeof jQuery === 'undefined') {
 	  throw new Error('WycaAPI requires jQuery')
 	}
-	
-	if (typeof ROSLIB === 'undefined') {
-	  throw new Error('WycaAPI requires Roslib')
-	}
-	
 	var defaults = {
         webcam_name : 'default',
 		with_audio : true,
@@ -123,12 +118,11 @@ function WycaAPI(options){
 		serveurWyca : '<?php echo $URL_WYCA;?>',
 		on_error_webcam_try_without : true,
 		host : '127.0.0.1:9090',
-		distance_max_arrived:0.5
+		distance_max_arrived:0.5,
+		api_key:''
     };
     this.options = $.extend({}, defaults, options || {});
    	
-	if (this.options.api_key == undefined || this.options.api_key == '')
-		throw new Error('WycaAPI - requires API KEY');
 	if (this.options.nick == '')
 		this.options.nick = 'server';
 	
@@ -151,6 +145,8 @@ function WycaAPI(options){
 	
 	var audioVideoBlobs = {};
 	var recordingInterval = 0;
+	
+	var timeoutReconnect = null;
 	
 	var container;
 	var index = 1;
@@ -175,7 +171,7 @@ function WycaAPI(options){
 	this.ros_actions_status = Array();
 	this.ros_params_result = Array();
 	
-	this.plans = Array();
+	this.maps = Array();
 	this.current_floor = 0;
 	
 	this.posesDock = Array();
@@ -216,26 +212,26 @@ function WycaAPI(options){
 	this.init = function (){
 		
 		jQuery.ajax({
-			url: _this.options.serveurWyca+'API/webservices/v1.0/json/plans',
+			url: _this.options.serveurWyca+'API/webservices/v1.0/json/map',
 			type: "get",
 			timeout: 15000,
 			beforeSend: function(x) {
 				x.setRequestHeader ("Authorization", "Basic " + btoa(_this.options.api_key + ':'));
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
-				throw new Error('WycaAPI get plans error')
+				throw new Error('WycaAPI get map error')
 			},
 			success: function(data, textStatus, jqXHR) {
 				if (data != '')
 				{
-					_this.plans = jQuery.parseJSON(data);
-					if (_this.plans.length > 0 && _this.plans[0] != undefined)
+					_this.maps = jQuery.parseJSON(data);
+					if (_this.maps.length > 0 && _this.maps[0] != undefined)
 					{
-						_this.plan_ros_resolution = parseInt(_this.plans[0].ros_resolution);
-						_this.largeurRos = parseInt(_this.plans[0].ros_largeur);
-						_this.hauteurRos = parseInt(_this.plans[0].ros_hauteur);
-						_this.largeurSVG = parseInt(_this.plans[0].largeur);
-						_this.hauteurSVG = parseInt(_this.plans[0].hauteur);
+						_this.map_ros_resolution = parseInt(_this.maps[0].ros_resolution);
+						_this.largeurRos = parseInt(_this.maps[0].ros_width);
+						_this.hauteurRos = parseInt(_this.maps[0].ros_height);
+						_this.largeurSVG = parseInt(_this.maps[0].ros_width);
+						_this.hauteurSVG = parseInt(_this.maps[0].ros_height);
 					}
 					
 					if (_this.options.onMapIsLoaded != undefined)
@@ -261,6 +257,10 @@ function WycaAPI(options){
 				{
 					this.options.onRobotConnexionError();
 				}
+				
+				if (timeoutReconnect == null)
+					timeoutReconnect = setTimeout(_this.RosReconnect, 1000);
+				
 			}, this));
 			
 			// Find out exactly when we made a connection.
@@ -280,6 +280,9 @@ function WycaAPI(options){
 				{
 					this.options.onRobotConnexionClose();
 				}
+				
+				if (timeoutReconnect == null)
+					timeoutReconnect = setTimeout(_this.RosReconnect, 1000);
 			}, this));
 			
 			jQuery.ajax({
@@ -307,7 +310,7 @@ function WycaAPI(options){
 					
 					<?php
 					// Init sur demande
-					$id_services_topics = $user->GetIdServicesAndTopicsToInit();
+					$id_services_topics = $userConnected->GetIdServicesAndTopicsToInit();
 					foreach($id_services_topics as $id_service => $id_topics)
 					{
 						if (isset($services_by_id[$id_service]))
@@ -328,6 +331,53 @@ function WycaAPI(options){
 	};
 	
 	var _this = this;
+	
+	this.RosReconnect = function()
+	{
+		timeoutReconnect = null;
+		jQuery.ajax({
+			url: _this.options.serveurWyca+'API/webservices/v1.0/json/robot/getHash',
+			type: "get",
+			timeout: 15000,
+			beforeSend: function(x) {
+				x.setRequestHeader ("Authorization", "Basic " + btoa(_this.options.api_key + ':'));
+			},
+			async: true,
+			data: { },
+			error: function(jqXHR, textStatus, errorThrown) {
+				if (_this.options.onRobotConnexionError != undefined)
+				{
+					_this.options.onRobotConnexionError();
+				}
+			},
+			success: jQuery.proxy(function(data, textStatus, jqXHR) {
+				donnees = JSON.parse(data);
+			
+				ros.authenticate(donnees.mac, donnees.client, donnees.dest, donnees.rand, donnees.t, donnees.level, donnees.end);
+				ros.connect('wss://'+_this.options.host+'/');
+			
+				_this.SubscribeData();
+				
+				<?php
+				// Init sur demande
+				$id_services_topics = $userConnected->GetIdServicesAndTopicsToInit();
+				foreach($id_services_topics as $id_service => $id_topics)
+				{
+					if (isset($services_by_id[$id_service]))
+					{
+						$conds = array();
+						foreach($id_topics as $id_topic)
+						{
+							$conds[] = '_this.options.'.$topics_by_id[$id_topic]->event_name.' != undefined';
+						}
+						echo 'if ('.implode(' || ', $conds).') _this.'.$services_by_id[$id_service]->function_name.'();';
+					}
+				}
+				?>
+					
+			}, _this)
+		});
+	}
 	
 	/*** FUNCTIONS MESSAGING ***/
 	
@@ -1061,7 +1111,7 @@ function WycaAPI(options){
 	this.rotation = false;
 	this.alreadyInitCarte = false;
 	this.nb_floor = 0;
-	this.plan_ros_resolution = 0;
+	this.map_ros_resolution = 0;
 	this.largeurRos = 0;
 	this.hauteurRos = 0;
 	this.largeurSVG = 0;
@@ -1079,35 +1129,18 @@ function WycaAPI(options){
 	{
 		if (_this.pois.length == 0)
 		{
-			for(var i= 0; i < _this.plans.length; i++)
+			for(var i= 0; i < _this.maps.length; i++)
 			{
-				for(var j= 0; j < _this.plans[i].pois.length; j++)
+				for(var j= 0; j < _this.maps[i].pois.length; j++)
 				{
-					poi = _this.plans[i].pois[j];
-					p = { "name":"poi"+poi.num, "position":poi.position, "floor":_this.plans[i].floor }
+					poi = _this.maps[i].pois[j];
+					p = { "name":"poi"+poi.num, "position":poi.position, "floor":0 }
 					_this.pois.push(p);
 				}
 			}
 		}
 		
 		return _this.pois;
-	}
-	this.GetBoxs = function()
-	{
-		if (_this.boxs.length == 0)
-		{
-			for(var i= 0; i < _this.plans.length; i++)
-			{
-				for(var j= 0; j < _this.plans[i].boxs.length; j++)
-				{
-					box = _this.plans[i].boxs[j];
-					b = { "name":"box"+box.numbox, "position":box.position, "floor":_this.plans[i].floor }
-					_this.boxs.push(b);
-				}
-			}
-		}
-		
-		return _this.boxs;
 	}
 	this.RobotMoveToDockExecute = function(num_dock)
 	{
@@ -1150,641 +1183,12 @@ function WycaAPI(options){
 		
 		return_function({"success":false, "message":"Unknown poi name"});
 	}
-	this.RobotMoveToBox = function(box_name, return_function)
-	{
-		_this.GetBoxs();
-		for(var i= 0; i < _this.boxs.length; i++)
-		{
-			if (box_name == _this.boxs[i].name)
-			{
-				_this._lastPoi = '';
-				_this._lastBox = box_name;
-				_this._lastPoint = '';
-				//console.log('box trouve', _this.boxs[i]);
-				//console.log('call', {"x":parseFloat(_this.boxs[i].position.x), "y":parseFloat(_this.boxs[i].position.y), "theta":parseFloat(_this.boxs[i].position.t) });
-				_this.RobotMoveTo({"x":parseFloat(_this.boxs[i].position.x), "y":parseFloat(_this.boxs[i].position.y), "theta":parseFloat(_this.boxs[i].position.t) }, return_function);
-				return;
-			}
-		}
-		
-		return_function({"success":false, "message":"Unknown box name"});
-	}
 	
-	this.MapGetHTML = function(return_function)
-	{
-		jQuery.ajax({
-			url: _this.options.serveurWyca+'API/webservices/v1.0/json/plans_contenu',
-			type: "get",
-			timeout: 5000,
-			beforeSend: function(x) {
-				x.setRequestHeader ("Authorization", "Basic " + btoa(_this.options.api_key + ':'));
-			},
-			error: function(jqXHR, textStatus, errorThrown) {
-				throw new Error('WycaAPI get plans error')
-			},
-			success: function(data, textStatus, jqXHR) {
-				if (data != '')
-				{
-					d = jQuery.parseJSON(data);
-					
-					_this.contenuCarte = {};
-					_this.contenuCarteRotate = {};
-
-					for (i=0; i<d.contenuCarte.length; i++)
-					{
-						if (d.contenuCarte[i] != '')
-						{
-							_this.nb_floor++;
-							_this.contenuCarte[i] = d.contenuCarte[i];
-							jQuery.fn.vectorMap('addMap','planjson'+i, _this.contenuCarte[i]);
-						}
-					}
-					for (i=0; i<d.contenuCarteRotate.length; i++)
-					{
-						if (d.contenuCarteRotate[i] != '')
-						{
-							_this.contenuCarteRotate[i] = d.contenuCarteRotate[i];
-							jQuery.fn.vectorMap('addMap','planjsonRotate'+i, _this.contenuCarteRotate[i]);
-						}
-					}
-					
-					html = '<div id="map_wyca">';
-					html += '<div id="boutons_zoom"><a id="zoom_plus" href="#" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i></a><a id="zoom_moins" href="#" class="btn btn-sm btn-primary"><i class="fa fa-minus"></i></a></div>';
-					if (_this.plans.length > 1)
-					{
-						html += '<div id="list_etage"><ul><li><a href="#" id="btn_floor_up"><i class="fa fa-chevron-up"></i></a></li>';
-						$.each(_this.plans, function( index, plan ) {
-							html += '<li><a href="#" class="btn_etage btn_etage_'+plan.floor+'" data-floor="'+plan.floor+'"><i class="fa fa-square-o fa-2x" style="transform:scale(1, 0.5) rotate(45deg);"></i> <span>'+plan.floor_name+'</span></a></li>';
-						});
-						html += '<li><a href="#" id="btn_floor_down"><i class="fa fa-chevron-down"></i></a></li></ul></div>';
-					}
-					
-					html += '<div id="zoom_carte">';
-					first = true;
-					$.each(_this.plans, function( index, plan ) {
-						html += '<div id="zoom_carte_'+plan.floor+'" class="element_floor element_floor_'+plan.floor+'" style="';
-						if (!first) html += 'display:none;';
-						html +='">';
-						html +='<img src="<?php echo $URL_WYCA;?>/plans/'+plan.image+'" id="zoom_carte_mapBox_'+plan.floor+'" class="img-responsive"/>';
-						html +='<img src="<?php echo $URL_WYCA;?>/plans/rotate_'+plan.image+'" id="zoom_carte_mapBoxRotate_'+plan.floor+'" class="img-responsive" />';
-						html +='<div id="zone_zoom_'+plan.floor+'" class="zone_zoom"></div>';
-						html +='<div id="zone_zoom_click_'+plan.floor+'" class="zone_zoom_click"></div>';
-						html +='</div>';
-						first = false;
-					});
-					html +='</div>';
-					
-					first = true;
-					$.each(_this.plans, function( index, plan ) {
-						html +='<div id="overflow_div_'+plan.floor+'" class="overflow_div element_floor element_floor_'+plan.floor+'"';
-						if (!first) html += 'display:none;';
-						html +='">';
-						html +='<div id="all_map_'+plan.floor+'" class="all_map">';
-						html +='<div class="map_navigation" id="map_navigation_'+plan.floor+'">';
-						html +='<img src="<?php echo $URL_WYCA;?>/plans/'+plan.image+'" id="mapBox_'+plan.floor+'" class="img-responsive mapBox" />';
-						html +='<img src="<?php echo $URL_WYCA;?>/plans/rotate_'+plan.image+'" id="mapBoxRotate_'+plan.floor+'" class="img-responsive mapBox" />';
-						html +='<div id="robotOnMap_'+plan.floor+'" class="robotOnMap"><i class="fa fa-map-marker fa-2x"></i></div>';
-						html +='<div id="robotDestination_'+plan.floor+'" class="robotDestination hidden battery-ok"><i class="fa fa-map-marker"></i></div>';
-						html +='<div id="boxsmap_'+plan.floor+'" class="boxsmap"></div>';
-						html +='</div>';
-						html +='<div style="clear:both;"></div>';
-						html +='</div>';
-						html +='</div>';
-						first = false;
-					});
-					
-					return_function(html);
-				}
-			}
-		});
-	}
-	this.MapInit = function(maxWidth, maxHeight)
-	{
-		if ($('#map_wyca').length == 0)
-		{
-			throw new Error('WycaAPI - you need to add HTML on your page before call init')
-			return;
-		}
-		
-		$('#map_wyca').css('max-width', maxWidth+'px');
-		$('#map_wyca').css('max-height', maxHeight+'px');
-		$('#map_wyca .overflow_div').css('max-width', maxWidth+'px');
-		$('#map_wyca .overflow_div').css('max-height', maxHeight+'px');
-		
-		$('#map_wyca #zoom_plus').click(function(e) { e.preventDefault(); z = _this.zoom_carte;	if (z < 1) z = z*2; else z++; _this.zoom_carte = z; _this.AppliquerZoom(); });
-		$('#map_wyca #zoom_moins').click(function(e) { e.preventDefault(); z = _this.zoom_carte; if (z <= 1) z = 1; else z--; if (_this.zoom_carte != z) { _this.zoom_carte = z; _this.AppliquerZoom(); }});
-		
-		$('#map_wyca #btn_floor_up').click(function(e) { e.preventDefault();	if (_this.current_floor_view+1<_this.nb_floor) { _this.current_floor_view++; 	_this.RefreshFloor(); } });
-		$('#map_wyca #btn_floor_down').click(function(e) { e.preventDefault(); if (_this.current_floor_view>0) { _this.current_floor_view--; _this.RefreshFloor(); } });
-		$('#map_wyca .btn_etage').click(function(e) { e.preventDefault(); _this.current_floor_view = $(this).data('floor'); _this.RefreshFloor(); });
-		
-		$('#map_wyca .overflow_div').scroll(function(e) { _this.RefreshZoomView(); });
-		$('#map_wyca .zone_zoom_click').click(function(e) {
-            e.preventDefault();
-			
-			w = $('#map_wyca #zoom_carte_'+_this.current_floor_view).width();
-			h = $('#map_wyca #zoom_carte_'+_this.current_floor_view).height();
-			
-			wAll = $('#map_wyca #all_map_'+_this.current_floor_view).width();
-			hAll = $('#map_wyca #all_map_'+_this.current_floor_view).height();
-			
-			wOver = $('#map_wyca #overflow_div_'+_this.current_floor_view).width();
-			hOver = $('#map_wyca #overflow_div_'+_this.current_floor_view).height();
-			
-			wZoom = $('#map_wyca #zone_zoom_'+_this.current_floor_view).width();
-			hZoom = $('#map_wyca #zone_zoom_'+_this.current_floor_view).height();
-			
-			x = e.offsetX - wZoom / 2;
-			y = e.offsetY - hZoom / 2;
-			
-			$('#overflow_div_'+_this.current_floor_view).scrollLeft(x / w * wAll);
-			$('#overflow_div_'+_this.current_floor_view).scrollTop(y / h * hAll);
-			
-        });
-		
-		for (i=0; i < this.nb_floor; i++)
-		{
-			this.couleursMap[i] = {};
-			if (this.contenuCarte[i] != undefined)
-			{
-				for(var p in this.contenuCarte[i].paths)
-				{
-					if (this.contenuCarte[i].paths[p].name.substr(0,5) == "route")
-					{
-						this.couleursMap[i][p] = "#EEEEEE";
-					}
-				}
-			}
-		}
-		
-		this.current_floor_view = this.current_floor;
-		$('.element_floor').hide();
-		$('.element_floor_'+this.current_floor_view).show();
-		
-		if (!this.alreadyInitCarte)
-			this.alreadyInitCarte = true; 
-		else
-		{
-			this.couleursTemp = {};
-			
-			for (i=0; i < this.nb_floor; i++)
-			{
-				$('#map_wyca #boxsmap_'+i+' path').each(function(index, element) {
-					$(this).attr('fill',$(this).attr('original')); 
-				});
-			}
-			
-			this.RefreshFloor();
-			return;
-		}
-		
-		if (this.largeurSVG > this.hauteurSVG)
-		{
-			if (maxWidth > maxHeight)
-				this.rotation = false;
-			else
-				this.rotation = true;
-		}
-		else
-		{
-			if (maxWidth < maxHeight)
-				this.rotation = false;
-			else
-				this.rotation = true;
-		}
-		
-		if (this.rotation)
-		{
-			t = this.hauteurSVG;
-			this.hauteurSVG = this.largeurSVG;
-			this.largeurSVG = t;
-			
-			for (i=0; i < this.nb_floor; i++)
-			{
-				$('#map_wyca #mapBoxRotate_'+i).show();
-				$('#map_wyca #mapBox_'+i).hide();
-				$('#map_wyca #zoom_carte_mapBoxRotate_'+i).show();
-				$('#map_wyca #zoom_carte_mapBox_'+i).hide();	
-			}
-		}
-		else
-		{
-			for (i=0; i < this.nb_floor; i++)
-			{
-				$('#map_wyca #mapBoxRotate_'+i).hide();
-				$('#map_wyca #mapBox_'+i).show();
-				$('#map_wyca #zoom_carte_mapBoxRotate_'+i).hide();
-				$('#map_wyca #zoom_carte_mapBox_'+i).show();	
-			}
-		}
-		
-		this.saveWidth = maxWidth; //$('#map_wyca').width();
-		this.saveHeight = this.saveWidth * this.hauteurSVG / this.largeurSVG;
-		
-		if (this.saveWidth * this.hauteurSVG / this.largeurSVG > maxHeight)
-		{
-			this.saveHeight = maxHeight;
-			this.saveWidth = this.saveHeight * this.largeurSVG / this.hauteurSVG;
-		}
-		
-		for (i=0; i < this.nb_floor; i++)
-			$('#map_wyca #map_navigation_'+i).height($('#map_wyca #map_navigation_'+i).width() * this.hauteurSVG / this.largeurSVG);
-		
-		if (this.rotation)
-		{
-			for (i=0; i < this.nb_floor; i++)
-			{
-				if (this.saveHeight < $('#map_wyca #map_navigation_'+i).height())
-				{
-					
-					$('#map_wyca #map_navigation_'+i).height(this.saveHeight);	
-					$('#map_wyca #mapBoxRotate_'+i).height(this.saveHeight);	
-					$('#map_wyca #boxsmap_'+i).width($('#map_wyca #map_navigation_'+i).height() * this.largeurSVG / this.hauteurSVG);
-					$('#map_wyca #boxsmap_'+i).height($('#map_wyca #map_navigation_'+i).height());
-				}
-				else
-				{
-					$('#map_wyca #boxsmap_'+i).width($('#map_wyca #map_navigation_'+i).width());
-					$('#map_wyca #boxsmap_'+i).height($('#map_wyca #map_navigation_'+i).width() * this.hauteurSVG / this.largeurSVG);
-				}
-			}
-		}
-		else
-		{
-			for (i=0; i < this.nb_floor; i++)
-			{
-				if (this.saveHeight < $('#map_wyca #map_navigation_'+i).height())
-				{	
-					$('#map_wyca #mapBox_'+i).height(this.saveHeight);	
-					$('#map_wyca #map_navigation_'+i).height(this.saveHeight);	
-					$('#map_wyca #boxsmap_'+i).width($('#map_wyca #map_navigation_'+i).height() * this.largeurSVG / this.hauteurSVG);
-					$('#map_wyca #boxsmap_'+i).height($('#map_wyca #map_navigation_'+i).height());
-				}
-				else
-				{
-					$('#map_wyca #boxsmap_'+i).width($('#map_wyca #map_navigation_'+i).width());
-					$('#map_wyca #boxsmap_'+i).height($('#map_wyca #map_navigation_'+i).width() * this.hauteurSVG / this.largeurSVG);
-				}
-			}
-		}
-		
-		var offsetMap;
-		
-		for (f=0; f < this.nb_floor; f++)
-		{
-			var mapToLoad = 'planjson'+f;
-			if (this.rotation) mapToLoad = 'planjsonRotate'+f;
-			
-			this.indexMap++;
-			
-			couleurs = this.couleursMap[f];
-			
-			$('#map_wyca #boxsmap_'+f).vectorMap({
-				map: mapToLoad,
-				hoverOpacity: 0,
-				hoverColor: "#B7BF0D",
-				backgroundColor: "transparent",
-				color: "#F5F0EA",
-				colors: this.couleursMap[f],
-				borderColor: "#000000",
-				borderWidth: 1,
-				selectedColor: "#F0802E",
-				enableZoom: false,
-				showTooltip: false,
-				showLabels: false,
-				onLoad: function (event, map) {
-					
-					offsetMap= $('#map_wyca #map_navigation_'+f).offset();
-					var availableTags = [];
-					
-					nbTailleOK = 0;
-					nbTailleKO = 0;
-					
-					jQuery.each(_this.contenuCarte[f].paths, function(i, val) {
-					  
-					  if (val.numbox != undefined)
-					  {
-						l = jQuery('<div/>').addClass('jqvmap-nom jqvmap-nom').appendTo($('#map_navigation_'+f))
-						
-						l.attr('id', 'jqvmap-nom-'+i);
-						
-						path = $('#map_wyca #boxsmap_'+f+' #jqvmap'+_this.indexMap+'_'+i);
-						offsetRegion = $('#boxsmap_'+f+' #jqvmap'+_this.indexMap+'_'+i).position();
-						
-						l.html(val.numbox);
-						
-						bc = $('#map_wyca #boxsmap_'+f+' #jqvmap'+_this.indexMap+'_'+i)[0].getBoundingClientRect();
-					
-						w = bc.width;
-						h = bc.height;
-						
-						bcl = l[0].getBoundingClientRect();
-						
-						l.css('left', offsetRegion.left - offsetMap.left + w / 2 - bcl.width / 2 );
-						l.css('top', offsetRegion.top - offsetMap.top + h / 2 - bcl.height / 2);
-						
-						if (l.width() > w && l.height() > h)
-							_this.nbTailleKO++;
-						else
-							_this.nbTailleOK++;
-						
-						availableTags.push(val.numbox);
-					  }
-					  
-					});
-					
-					if (_this.nbTailleOK > _this.nbTailleKO)
-					  $('#map_wyca #map_navigation_'+f+' .jqvmap-nom').show();
-					else
-					  $('#map_wyca #map_navigation_'+f+' .jqvmap-nom').hide();
-					
-					_this.InitNomMap(f);
-					
-				},
-				onRegionOver: function (event, code, region) {
-					if (region.length >= 5 && region.substr(0, 5) == "route") event.preventDefault();
-				},
-				onRegionOut: function (event, code, region) {
-					if (region.length >= 5 && region.substr(0, 5) == "route") event.preventDefault();				
-				},
-				onRegionClick: function (element, events, code, region) {
-					
-					jQuery('#map_wyca #boxsmap_'+_this.current_floor_view).vectorMap('set', 'selectedRegions', '');
-					
-					// route
-					events.preventDefault();
-					
-					var offset = $('#map_wyca #map_navigation_'+_this.current_floor_view).offset();
-					
-					if (events.pageX != undefined)
-					{
-						x = events.pageX - offset.left;
-						y = events.pageY - offset.top;
-					}
-					else
-					{
-						offsetMap= $('#map_wyca #map_navigation_'+_this.current_floor_view).offset();
-						offsetRegion = $('#map_wyca #boxsmap_'+_this.current_floor_view+' #jqvmap'+(_this.current_floor_view+1)+'_'+code).position();
-						
-						x = offsetRegion.left - offsetMap.left + $('#map_wyca #boxsmap_'+_this.current_floor_view+' #jqvmap'+(_this.current_floor_view+1)+'_'+code)[0].getBoundingClientRect().width / 2;
-						y = offsetRegion.top - offsetMap.top + $('#map_wyca #boxsmap_'+_this.current_floor_view+' #jqvmap'+(_this.current_floor_view+1)+'_'+code)[0].getBoundingClientRect().height / 2;
-					}
-					
-					$('#map_wyca #robotDestination_'+_this.current_floor_view).css('left', x - 7);
-					$('#map_wyca #robotDestination_'+_this.current_floor_view).css('bottom', $('#map_navigation_'+_this.current_floor_view).height() - y);
-					$('#map_wyca #robotDestination_'+_this.current_floor_view).removeClass('hidden');
-					
-					if (_this.rotation)
-					{	
-						//x = $('#mapBox_'+_this.current_floor_view).width() - x;
-										
-						yt = x / $('#boxsmap_'+_this.current_floor_view).width() * _this.hauteurRos;
-						xt = y / $('#boxsmap_'+_this.current_floor_view).width() * _this.hauteurRos;
-						
-						x = xt;
-						y = yt;
-					}
-					else
-					{
-						y = $('#mapBox_'+_this.current_floor_view).height() - y;
-
-						x = x / $('#boxsmap_'+_this.current_floor_view).width() * _this.largeurRos;
-						y = y / $('#boxsmap_'+_this.current_floor_view).width() * _this.largeurRos;
-					}
-					
-					x = x * _this.plan_ros_resolution / 100;
-					y = y * _this.plan_ros_resolution / 100;
-					
-					if (region.substr(0,5) == 'route')
-					{
-						if (_this.options.onMapRouteClick != undefined)
-						{
-							_this.options.onMapRouteClick({'x':x, 'y':y});
-						}
-					}
-					else
-					{
-						if (_this.options.onMapBoxClick != undefined)
-						{
-							numbox = $('#map_navigation_'+_this.current_floor_view+' #jqvmap-nom-'+code).html();
-							_this.options.onMapBoxClick('box'+numbox);
-						}
-					}
-				},
-				onRegionSelect: function (event, code, region) {
-					event.preventDefault();
-				},
-				onLabelShow: function (event, label, code)
-				{
-					event.preventDefault();
-				}
-			});
-		}
-		
-		couleurs = _this.couleursMap[_this.current_floor];
-		
-		this.saveWidth = 0;
-		this.RefreshFloor();
-	}
-	this.InitNomMap = function(i)
-	{
-		$('#map_wyca #map_navigation_'+i+' .jqvmap-nom').hover(function(e)
-		{
-			index = $(this).attr('id').split('-');
-			index = index[index.length-1];
-			$('#map_wyca #boxsmap_'+i+' #jqvmap'+(i+1)+'_'+index).mouseenter();
-		}, function (e)
-		{
-			index = $(this).attr('id').split('-');
-			index = index[index.length-1];
-			$('#map_wyca #boxsmap_'+i+' #jqvmap'+(i+1)+'_'+index).mouseleave();
-		});
-		
-		$('#map_wyca #map_navigation_'+i+' .jqvmap-nom').click(function(e) {
-			index = $(this).attr('id').split('-');
-			index = index[index.length-1];
-			$('#map_wyca #boxsmap_'+i+' #jqvmap'+(i+1)+'_'+index).click();
-		});
-	}
-	this.RefreshFloor = function()
-	{
-		$('#map_wyca .element_floor').hide();
-		$('#map_wyca .element_floor_'+this.current_floor_view).show();
-		
-		this.zoom_carte = 1;
-		this.AppliquerZoom();
-		
-		$('#map_wyca #btn_floor_up').removeClass('disabled');
-		$('#map_wyca #btn_floor_down').removeClass('disabled');
-		if (this.current_floor_view == 0) $('#map_wyca #btn_floor_down').addClass('disabled');
-		if (this.current_floor_view+1 == this.nb_floor) $('#map_wyca #btn_floor_up').addClass('disabled');
-		
-		$('#map_wyca .btn_etage').removeClass('current_floor');
-		$('#map_wyca .btn_etage_'+this.current_floor_view).addClass('current_floor');
-		
-	}
-	this.AppliquerZoom = function()
-	{
-		$('#map_wyca .jqvmap-nom').hide();
-		
-		if (this.saveWidth == 0)
-		{
-			this.saveWidth = $('#map_wyca #boxsmap_'+this.current_floor_view).width();
-			if ($('#map_wyca #boxsmap_'+this.current_floor_view).height() > $('#map_wyca #overflow_div_'+this.current_floor_view).height())		
-			{
-				$('#map_wyca #boxsmap_'+this.current_floor_view).height($('#map_wyca #overflow_div_'+this.current_floor_view).height())
-				$('#map_wyca #boxsmap_'+this.current_floor_view).width( $('#map_wyca #overflow_div_'+this.current_floor_view).height() * this.largeurSVG / this.hauteurSVG);
-				
-				this.saveWidth = $('#boxsmap_'+this.current_floor_view).width();
-			}
-		}
-		
-		$('#map_wyca #all_map_'+this.current_floor_view).width(this.saveWidth * this.zoom_carte);
-		$('#map_wyca #map_navigation_'+this.current_floor_view).width(this.saveWidth * this.zoom_carte);
-		$('#map_wyca #map_navigation_'+this.current_floor_view).height($('#map_wyca #map_navigation_'+this.current_floor_view).width() * this.hauteurSVG / this.largeurSVG);
-		$('#map_wyca #mapBox_'+this.current_floor_view).width(this.saveWidth * this.zoom_carte);
-		$('#map_wyca #mapBox_'+this.current_floor_view).height('auto');
-		$('#map_wyca #mapBoxRotate_'+this.current_floor_view).width(this.saveWidth * this.zoom_carte);
-		$('#map_wyca #mapBoxRotate_'+this.current_floor_view).height('auto');
-		
-		$('#map_wyca #boxsmap_'+this.current_floor_view).width(this.saveWidth * this.zoom_carte);
-		$('#map_wyca #boxsmap_'+this.current_floor_view).height($('#map_wyca #map_navigation_'+this.current_floor_view).width() * this.hauteurSVG / this.largeurSVG);
-		
-		$('#map_wyca #boxsmap_'+this.current_floor_view).resize();
-		
-		this.PositionneRobot(this.lastCoordRobot);
-		this.RefreshZoomView();
-		this.ReplaceNumBox();
-		
-		setTimeout(function() { $('#map_wyca #boxsmap_'+_this.current_floor_view).resize(); }, 500);
-		setTimeout(function() { _this.ReplaceNumBox(); }, 200);
-		setTimeout(function() { _this.ReplaceNumBox(); }, 500);
-	}
-	
-	this.RefreshZoomView = function()
-	{
-		w = $('#map_wyca #zoom_carte_'+this.current_floor_view).width();
-		h = $('#map_wyca #zoom_carte_'+this.current_floor_view).height();
-		
-		wAll = $('#map_wyca #all_map_'+this.current_floor_view).width();
-		hAll = $('#map_wyca #all_map_'+this.current_floor_view).height();
-		
-		wOver = $('#map_wyca #overflow_div_'+this.current_floor_view).width();
-		hOver = $('#map_wyca #overflow_div_'+this.current_floor_view).height();
-		
-		wNew = w * wOver/wAll;
-		if (wNew > w) wNew = w;
-		hNew = h * hOver/hAll;
-		if (hNew > h) hNew = h;
-		
-		$('#map_wyca #zone_zoom_'+this.current_floor_view).width(wNew - 2);
-		$('#map_wyca #zone_zoom_'+this.current_floor_view).height(hNew - 2);
-		
-		t = document.getElementById('overflow_div_'+this.current_floor_view).scrollTop;
-		l = document.getElementById('overflow_div_'+this.current_floor_view).scrollLeft;
-				
-		$('#map_wyca #zone_zoom_'+this.current_floor_view).css('top', t/hAll * h - 1);
-		$('#map_wyca #zone_zoom_'+this.current_floor_view).css('left', l/wAll * w -1);
-		
-	}
 	this.lastCoordRobot = '';
 	this.PositionneRobot = function (coord)
 	{
 		if (coord == undefined || coord.x == undefined) return;
 		this.lastCoordRobot = coord;
-		
-		$('#map_wyca .robotOnMap').hide();
-		
-		if (_this.rotation)
-		{
-			x = (coord.y * 100 / this.plan_ros_resolution) / this.largeurRos * $('#map_wyca #boxsmap_'+this.current_floor).height() - 8;
-			y = (coord.x * 100 / this.plan_ros_resolution) / this.largeurRos * $('#map_wyca #boxsmap_'+this.current_floor).height();
-			//x = $('#boxsmap').width() - x;
-			y = $('#map_wyca #boxsmap_'+i).height() - y;
-		}
-		else
-		{
-			x = (coord.x * 100 / this.plan_ros_resolution) / this.largeurRos * $('#map_wyca #boxsmap_'+this.current_floor).width() - 8;
-			y = (coord.y * 100 / this.plan_ros_resolution) / this.largeurRos * $('#map_wyca #boxsmap_'+this.current_floor).width();
-		}
-		
-		$('#map_wyca #robotOnMap_'+this.current_floor).css('left', x);
-		$('#map_wyca #robotOnMap_'+this.current_floor).css('bottom', y);
-		
-		y = $('#map_wyca #boxsmap_'+this.current_floor).height() - y;
-		
-		$('#map_wyca #robotOnMap_'+this.current_floor).show();
-		
-		if (!$('#map_wyca #robotDestination_'+this.current_floor).hasClass('hidden'))
-		{
-			if ($('#map_wyca #robotDestination_'+this.current_floor).length > 0)
-			{
-				p = $('#map_wyca #robotDestination_'+this.current_floor).position();
-				p.top += 24;
-				if (x-15 <= p.left && p.left <= x+15
-				&& y-15 <= p.top && p.top <= y+15)
-				{
-					$('#map_wyca #robotDestination_'+this.current_floor).addClass('hidden');
-				}
-			}
-		}
-	}
-	this.replaceIndex = 0;
-	this.ReplaceNumBox = function()
-	{
-		this.replaceIndex++;
-		var replaceIndexLocal = this.replaceIndex;
-		offsetMap= $('#map_wyca #map_navigation_'+this.current_floor_view).offset();
-		
-		$('#map_wyca .jqvmap-pin').hide();
-		
-		this.nbTailleOK = 0;
-		this.nbTailleKO = 0;
-		//$('.jqvmap-nom').hide();
-		
-		w = 20;
-		h = 12;
-		
-		jQuery.each(this.contenuCarte[this.current_floor_view].paths, function(i, val) {
-		  if (replaceIndexLocal == _this.replaceIndex)
-		  {
-			  if (val.numbox != undefined)
-			  {
-				l = $('#map_wyca #map_navigation_'+_this.current_floor_view+' #jqvmap-nom-'+i);
-				
-				path = $('#map_wyca #map_navigation_'+_this.current_floor_view+' #jqvmap'+(_this.current_floor_view+1)+'_'+i);
-				offsetRegion = $('#map_wyca #map_navigation_'+_this.current_floor_view+' #jqvmap'+(_this.current_floor_view+1)+'_'+i).position();
-				
-				if ($('#map_wyca #map_navigation_'+_this.current_floor_view+' #jqvmap'+(_this.current_floor_view+1)+'_'+i).length > 0)
-				{
-					bc = $('#map_wyca #map_navigation_'+_this.current_floor_view+' #jqvmap'+(_this.current_floor_view+1)+'_'+i)[0].getBoundingClientRect();
-					w = bc.width;
-					h = bc.height;
-				}
-				
-				bcl = l[0].getBoundingClientRect();
-				
-				if (bcl.width == 0) bcl.width = l.html().lenght * 3.812 + 1.876;
-				if (bcl.height == 0) bcl.height = 14;
-				
-				l.css('left', offsetRegion.left - offsetMap.left + w / 2 - bcl.width / 2 );
-				l.css('top', offsetRegion.top - offsetMap.top + h / 2 - bcl.height / 2);
-				
-				if (l.width() > w && l.height() > h)
-					_this.nbTailleKO++;
-				else
-					_this.nbTailleOK++;
-				
-			  }
-		  }
-		  else return false
-		  	
-		});
-	  
-	  if (this.nbTailleOK > this.nbTailleKO)
-	  	$('.jqvmap-nom').show();
-	  else
-	  	$('.jqvmap-nom').hide();
 	}
 	
 	
@@ -1931,7 +1335,7 @@ function WycaAPI(options){
 					
 					<?php
 					// Init sur demande
-					$id_services_topics = $user->GetIdServicesAndTopicsToInit();
+					$id_services_topics = $userConnected->GetIdServicesAndTopicsToInit();
 					foreach($id_services_topics as $id_service => $id_topics)
 					{
 						if (isset($services_by_id[$id_service]))

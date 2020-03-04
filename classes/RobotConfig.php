@@ -1,6 +1,7 @@
 <?php
 class RobotConfig extends RobotConfigCore
 {
+
 	private static function TraiterDossier($id_config, $robot, $dir, $parent = '')
 	{
 		$modifications = '';

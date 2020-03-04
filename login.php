@@ -8,36 +8,50 @@ if (isset($_POST['email']))
 	{
 		$_SESSION["id_user"] = User::GetIdConnexion($_POST['email'], $_POST['password']);
 		$_SESSION["IP"] = $_SERVER['REMOTE_ADDR'];
-
+		
 		session_write_close();
 
 		header('location:index.php');
 	}
 	else
 	{
+		$ip_trace = new IpErrorTrace();
+		$ip_trace->IP = $_SERVER['REMOTE_ADDR'];
+		$ip_trace->type = 'Connect';
+		$ip_trace->date = date('Y-m-d H:i:s');
+		$ip_trace->Save();
+	
+		$log = new LogSystem();
+		$log->date = date('Y-m-d H:i:s');
+		$log->level = 'MEDIUM';
+		$log->type = 'Connection';
+		$log->detail = 'IP '.$_SERVER['REMOTE_ADDR'].' connection error with '.$_POST['email'].' login';
+		$log->Save();
+		
+		if (IpErrorTrace::CheckIP($_SERVER['REMOTE_ADDR'])>=10)
+		{
+			// On block l'IP
+			$ipb = new IpBlocked();
+			$ipb->IP = $_SERVER['REMOTE_ADDR'];
+			$ipb->date = date('Y-m-d H:i:s');
+			$ipb->Insert();
+			
+			$log = new LogSystem();
+			$log->date = date('Y-m-d H:i:s');
+			$log->level = 'HIGH';
+			$log->type = 'Connection';
+			$log->detail = 'IP '.$_SERVER['REMOTE_ADDR'].' blocked after 10 connection attempts.';
+			$log->Save();			
+			
+			header('location:login.php');
+		}		
+		
 		session_write_close();
-		$message = __('Adresse email ou mot de passe invalide.');
+		$message = __('Invalid login or password.');
 		$erreur = true;
 	}
 }
 
-$msgOk = '';
-$erreurMdp = '';
-$affForgotPwd = false;
-if (isset($_POST['email_lost']))
-{
-	if (!User::EmailIsUsed($_POST['email_lost']))
-	{
-		$message = __('Adresse email inconnue.');
-		$erreur = true;
-		$affForgotPwd = true;
-	}
-	else
-	{
-		User::SendNewPassword($_POST['email_lost']);
-		$message = __('Votre nouveau mot de passe vient de vous &ecirc;tre envoy&eacute; par email.');
-	}
-}
 ?>
 <!doctype html>
 <html class="fixed">
@@ -70,16 +84,8 @@ if (isset($_POST['email_lost']))
 
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/vendor/bootstrap/css/bootstrap.css" />
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/vendor/font-awesome/css/font-awesome.css" />
-		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/vendor/magnific-popup/magnific-popup.css" />
-		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
 
-		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/theme.css" />
-
-		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/skins/default.css" />
-
-		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/theme-custom.css">
-
-		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/modernizr/modernizr.js"></script>
+		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/login.css" />
 
 	</head>
 	<body>
@@ -104,7 +110,7 @@ if (isset($_POST['email_lost']))
                         }?>
 						<form method="post">
 							<div class="form-group mb-lg">
-								<label><?php echo __('Email');?></label>
+								<label><?php echo __('Login');?></label>
 								<div class="input-group input-group-icon">
 									<input name="email" type="text" class="form-control input-lg" />
 									<span class="input-group-addon">
@@ -140,41 +146,10 @@ if (isset($_POST['email_lost']))
 						</form>
 					</div>
 				</div>
-                
-
-				<p class="text-center text-muted mt-md mb-md">&copy; Copyright <?php echo date('Y');?>. <?php echo __('All rights reserved.');?></p>
 			</div>
 		</section>
 		
         <script src="<?php echo $_CONFIG['URL'];?>assets/vendor/jquery/jquery.js"></script>
-		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/bootstrap/js/bootstrap.js"></script>
-		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/nanoscroller/nanoscroller.js"></script>
-		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/magnific-popup/magnific-popup.js"></script>
-		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
-		
-		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/theme.js"></script>
-		
-		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/theme.custom.js"></script>
-		
-		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/theme.init.js"></script>
-        
-        
-        <script>
-			$(document).ready(function(e) {
-                $('#bLostPassword').click(function(e) {
-                    e.preventDefault();
-					$('#divLostPassword').show();
-					$('#divLogin').hide();
-                });
-                $('#bLogin').click(function(e) {
-                    e.preventDefault();
-					$('#divLogin').show();
-					$('#divLostPassword').hide();
-                });
-            });
-		</script>
-
 	</body>
 </html>

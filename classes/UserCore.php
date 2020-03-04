@@ -6,24 +6,13 @@ class UserCore
 	public $pass = "";
 	public $nom = "";
 	public $prenom = "";
-	public $adresse_1 = "";
-	public $adresse_2 = "";
-	public $codepostal = "";
-	public $ville = "";
 	public $societe = "";
-	public $tel = "";
-	public $portable = "";
 	public $id_groupe_user = -1;
 	public $actif = 0;
 	public $deleted = 0;
-	public $tel_sip = -1;
-	public $photo = "";
 	public $last_connection = "";
-	public $online = -1;
 	public $api_key = "";
-	public $id_lang = -1;
-	public $acces_suivi = 0;
-	public $trax_options = "";
+	public $pin = "";
 
 	public function __construct( $id_user = null, $byrow=false ) 
 	{
@@ -48,24 +37,13 @@ class UserCore
 		$this->pass = $object->pass;
 		$this->nom = $object->nom;
 		$this->prenom = $object->prenom;
-		$this->adresse_1 = $object->adresse_1;
-		$this->adresse_2 = $object->adresse_2;
-		$this->codepostal = $object->codepostal;
-		$this->ville = $object->ville;
 		$this->societe = $object->societe;
-		$this->tel = $object->tel;
-		$this->portable = $object->portable;
 		$this->id_groupe_user = $object->id_groupe_user;
 		$this->actif = $object->actif;
 		$this->deleted = $object->deleted;
-		$this->tel_sip = $object->tel_sip;
-		$this->photo = $object->photo;
 		$this->last_connection = $object->last_connection;
-		$this->online = $object->online;
 		$this->api_key = $object->api_key;
-		$this->id_lang = $object->id_lang;
-		$this->acces_suivi = $object->acces_suivi;
-		$this->trax_options = $object->trax_options;
+		$this->pin = $object->pin;
 	}
 
 	public static function getUser( $id_user )
@@ -90,30 +68,19 @@ class UserCore
 	public function Insert()
 	{
 		global $_CONFIG;
-		$query = "INSERT INTO user ( email, pass, nom, prenom, adresse_1, adresse_2, codepostal, ville, societe, tel, portable, id_groupe_user, actif, deleted, tel_sip, photo, last_connection, online, api_key, id_lang, acces_suivi, trax_options ) VALUES ( 
+		$query = "INSERT INTO user ( email, pass, nom, prenom, societe, id_groupe_user, actif, deleted, last_connection, api_key, pin ) VALUES ( 
 
 			'". mysqli_real_escape_string(DB::$connexion, $this->email) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->pass) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->nom) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->prenom) ."', 
-			'". mysqli_real_escape_string(DB::$connexion, $this->adresse_1) ."', 
-			'". mysqli_real_escape_string(DB::$connexion, $this->adresse_2) ."', 
-			'". mysqli_real_escape_string(DB::$connexion, $this->codepostal) ."', 
-			'". mysqli_real_escape_string(DB::$connexion, $this->ville) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->societe) ."', 
-			'". mysqli_real_escape_string(DB::$connexion, $this->tel) ."', 
-			'". mysqli_real_escape_string(DB::$connexion, $this->portable) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->id_groupe_user) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->actif) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->deleted) ."', 
-			'". mysqli_real_escape_string(DB::$connexion, $this->tel_sip) ."', 
-			'". mysqli_real_escape_string(DB::$connexion, $this->photo) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->last_connection) ."', 
-			'". mysqli_real_escape_string(DB::$connexion, $this->online) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->api_key) ."', 
-			'". mysqli_real_escape_string(DB::$connexion, $this->id_lang) ."', 
-			'". mysqli_real_escape_string(DB::$connexion, $this->acces_suivi) ."', 
-			'". mysqli_real_escape_string(DB::$connexion, $this->trax_options) ."'
+			'". mysqli_real_escape_string(DB::$connexion, $this->pin) ."'
 			) ";
 		$insert=mysqli_query(DB::$connexion, $query) or die ('ERREUR Insert User : '.$query.'<br />'.mysqli_error(DB::$connexion).'<br /><br />');
 		$this->id_user = mysqli_insert_id(DB::$connexion);
@@ -128,24 +95,13 @@ class UserCore
 			pass = '". mysqli_real_escape_string(DB::$connexion,  $this->pass )."', 
 			nom = '". mysqli_real_escape_string(DB::$connexion,  $this->nom )."', 
 			prenom = '". mysqli_real_escape_string(DB::$connexion,  $this->prenom )."', 
-			adresse_1 = '". mysqli_real_escape_string(DB::$connexion,  $this->adresse_1 )."', 
-			adresse_2 = '". mysqli_real_escape_string(DB::$connexion,  $this->adresse_2 )."', 
-			codepostal = '". mysqli_real_escape_string(DB::$connexion,  $this->codepostal )."', 
-			ville = '". mysqli_real_escape_string(DB::$connexion,  $this->ville )."', 
 			societe = '". mysqli_real_escape_string(DB::$connexion,  $this->societe )."', 
-			tel = '". mysqli_real_escape_string(DB::$connexion,  $this->tel )."', 
-			portable = '". mysqli_real_escape_string(DB::$connexion,  $this->portable )."', 
 			id_groupe_user = '". mysqli_real_escape_string(DB::$connexion,  $this->id_groupe_user )."', 
 			actif = '". mysqli_real_escape_string(DB::$connexion,  $this->actif )."', 
 			deleted = '". mysqli_real_escape_string(DB::$connexion,  $this->deleted )."', 
-			tel_sip = '". mysqli_real_escape_string(DB::$connexion,  $this->tel_sip )."', 
-			photo = '". mysqli_real_escape_string(DB::$connexion,  $this->photo )."', 
 			last_connection = '". mysqli_real_escape_string(DB::$connexion,  $this->last_connection )."', 
-			online = '". mysqli_real_escape_string(DB::$connexion,  $this->online )."', 
 			api_key = '". mysqli_real_escape_string(DB::$connexion,  $this->api_key )."', 
-			id_lang = '". mysqli_real_escape_string(DB::$connexion,  $this->id_lang )."', 
-			acces_suivi = '". mysqli_real_escape_string(DB::$connexion,  $this->acces_suivi )."', 
-			trax_options = '". mysqli_real_escape_string(DB::$connexion,  $this->trax_options )."'
+			pin = '". mysqli_real_escape_string(DB::$connexion,  $this->pin )."'
 		WHERE id_user = '". mysqli_real_escape_string(DB::$connexion, $this->id_user)."'";
 		$update=mysqli_query(DB::$connexion, $query) or die ('ERREUR Update User : '.$query.'<br />'.mysqli_error(DB::$connexion).'<br /><br />');
 	}

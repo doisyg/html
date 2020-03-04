@@ -2,7 +2,8 @@
 class SiteCore
 {
 	public $id_site = -1;
-	public $nom = "";
+	public $name = "";
+	public $comment = "";
 
 	public function __construct( $id_site = null, $byrow=false ) 
 	{
@@ -23,7 +24,8 @@ class SiteCore
 	protected function Copy($object)
 	{
 		$this->id_site = $object->id_site;
-		$this->nom = $object->nom;
+		$this->name = $object->name;
+		$this->comment = $object->comment;
 	}
 
 	public static function getSite( $id_site )
@@ -48,9 +50,10 @@ class SiteCore
 	public function Insert()
 	{
 		global $_CONFIG;
-		$query = "INSERT INTO site ( nom ) VALUES ( 
+		$query = "INSERT INTO site ( name, comment ) VALUES ( 
 
-			'". mysqli_real_escape_string(DB::$connexion, $this->nom) ."'
+			'". mysqli_real_escape_string(DB::$connexion, $this->name) ."', 
+			'". mysqli_real_escape_string(DB::$connexion, $this->comment) ."'
 			) ";
 		$insert=mysqli_query(DB::$connexion, $query) or die ('ERREUR Insert Site : '.$query.'<br />'.mysqli_error(DB::$connexion).'<br /><br />');
 		$this->id_site = mysqli_insert_id(DB::$connexion);
@@ -61,7 +64,8 @@ class SiteCore
 		global $_CONFIG;
 		$query = "UPDATE site SET
 
-			nom = '". mysqli_real_escape_string(DB::$connexion,  $this->nom )."'
+			name = '". mysqli_real_escape_string(DB::$connexion,  $this->name )."', 
+			comment = '". mysqli_real_escape_string(DB::$connexion,  $this->comment )."'
 		WHERE id_site = '". mysqli_real_escape_string(DB::$connexion, $this->id_site)."'";
 		$update=mysqli_query(DB::$connexion, $query) or die ('ERREUR Update Site : '.$query.'<br />'.mysqli_error(DB::$connexion).'<br /><br />');
 	}

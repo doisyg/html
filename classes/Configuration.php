@@ -44,7 +44,7 @@ class Configuration extends ConfigurationCore
 			$c->nom = $variable;
 			return $c;			
 			//debug_print_backtrace();
-			//die ($variable." non dÃ©finie en base");
+			//die ($variable." non définie en base");
 		}
 	}
 }

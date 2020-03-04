@@ -1,0 +1,54 @@
+body{color:#777;font-family:"Open Sans",Arial,sans-serif;line-height:22px;margin:0;font-size:13px;overflow-x:hidden;overflow-y:scroll; background-image:url(../images/elodie.png); background-position:right bottom; background-size:80%; background-repeat:no-repeat; height:100vh;}
+.icone_header { margin-left: 5px; font-size: 16px; display: inline-block; line-height:14px; text-align:center; vertical-align:middle; }
+.icone_header i { display:block; }
+.icone_header span { font-size:12px; }
+body > header { background-color:#589FB2; padding:5px; color:#FFFFFF; }
+
+#contentAll { position:relative; }
+.global_page { position:absolute; top:0; left:0; display:none; min-height:calc(100vh - 45px); width:100%; }
+.global_page.active { display:block; }
+
+section.page { min-height:calc(100vh - 45px); display:none; position:absolute; top:0; left:0; width:100%; }
+section.page.active { display:block; }
+section.page header { text-align:right; border-bottom:2px solid #589FB2; }
+#pages_wyca section.page header { border-color:#d9534f; }
+#pages_install section.page header { border-color:#f0ad4e; }
+#pages_manager section.page header { border-color:#589FB2; }
+#pages_user section.page header { border-color:#5cb85c; }
+
+section.page header h2 { margin:0; padding:10px; font-size:24px }
+section.page header img { height:50px; padding:10px; }
+section.page header:after{clear:both;display:block;content:''}
+
+section > contenu { max-height:calc(100vh  - 100px); overflow:auto; }
+section.with_footer > contenu { max-height:calc(100vh  - 134px); overflow:auto; }
+section footer a.btn { width:100%; border-radius:0; position:absolute; bottom:0; left:0;  }
+
+ul.tuiles { list-style:none; margin:0; padding:5px; }
+ul.tuiles li { padding-top:33.33333333%; position:relative; }
+ul.tuiles li a { display:block; background-color:#589FB2; position:absolute; top:5px; left:5px; bottom:5px; right:5px; color:#FFFFFF; padding:10px; text-align:center; vertical-align:middle; font-size:11px; perspective:'outerWidth'; transition:"all .2s ease-out"; }
+ul.tuiles li a:hover { text-decoration:none; }
+ul.tuiles li a i { font-size:40px; padding-top:10%; display:block; padding-bottom:10px; }
+
+.btn-wyca {
+  color: #ffffff;
+  background-color: #589FB2;
+  border-color: #4B8C9A;
+}
+.btn-wyca:hover,
+.btn-wyca:focus,
+.btn-wyca.focus,
+.btn-wyca:active,
+.btn-wyca.active,
+.open > .dropdown-toggle.btn-wyca {
+  color: #ffffff;
+  background-color: #5094A3;
+  border-color: #396A75;
+}
+
+#connexion_robot { position:fixed; width:100%; height:100vh; top:0; left:0; z-index:50000; background-color:rgba(255,255,255,0.9); color:#333333; text-align:center; padding:40px 20px; }
+#connexion_robot i { font-size:60px; display:block; margin-top:40px; }
+
+#install_by_step_lang .content { text-align:center; }
+#install_by_step_lang .content a { margin:auto; margin-top:30px; display:block; }
+#install_by_step_lang .content a img { max-width:200px; }

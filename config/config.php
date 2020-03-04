@@ -8,7 +8,7 @@ $_CONFIG['DIR_SECURE'] = dirname(__FILE__).'/../_secure_/';
 
 $_CONFIG['BD_HOST'] = "127.0.0.1";
 $_CONFIG['BD_USER'] = "elodie";
-$_CONFIG['BD_PASSWORD'] = "Elodie@31Www"; //wyca_mysql";
+$_CONFIG['BD_PASSWORD'] = "Elodie@31Www";
 $_CONFIG['BD_BD'] = "wyca_elodie";
 
 $_CONFIG['CONFIG_PATH'] = "/var/www/html/robot_config/";
