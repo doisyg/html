@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mar. 03 mars 2020 à 15:50
+-- Généré le :  lun. 09 mars 2020 à 09:38
 -- Version du serveur :  5.7.23
 -- Version de PHP :  7.2.10
 
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `api_action_groupe` (
   PRIMARY KEY (`id_action_groupe`),
   KEY `id_service` (`id_action`),
   KEY `id_user` (`id_groupe_user`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `api_action_groupe`
@@ -76,12 +76,13 @@ INSERT INTO `api_action_groupe` (`id_action_groupe`, `id_action`, `id_groupe_use
 (4, 4, 1),
 (5, 5, 1),
 (6, 3, 1),
-(7, 4, 2),
-(8, 5, 2),
-(9, 3, 2),
-(10, 4, 3),
-(11, 5, 3),
-(12, 3, 3);
+(24, 3, 2),
+(18, 3, 3),
+(17, 5, 3),
+(16, 4, 3),
+(19, 4, 6),
+(20, 5, 6),
+(21, 3, 6);
 
 -- --------------------------------------------------------
 
@@ -154,7 +155,7 @@ CREATE TABLE IF NOT EXISTS `api_service_groupe` (
   PRIMARY KEY (`id_service_groupe`),
   KEY `id_service` (`id_service`),
   KEY `id_user` (`id_groupe_user`)
-) ENGINE=MyISAM AUTO_INCREMENT=85 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=143 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `api_service_groupe`
@@ -227,24 +228,32 @@ INSERT INTO `api_service_groupe` (`id_service_groupe`, `id_service`, `id_groupe_
 (64, 65, 1),
 (65, 22, 1),
 (66, 57, 1),
-(67, 70, 2),
-(68, 63, 2),
-(69, 64, 2),
-(70, 58, 2),
-(71, 12, 2),
-(72, 14, 2),
-(73, 69, 2),
-(74, 67, 2),
-(75, 68, 2),
-(76, 66, 2),
-(77, 65, 2),
-(78, 70, 3),
-(79, 58, 3),
-(80, 12, 3),
-(81, 14, 3),
-(82, 69, 3),
-(83, 67, 3),
-(84, 65, 3);
+(142, 65, 2),
+(141, 66, 2),
+(140, 68, 2),
+(139, 67, 2),
+(138, 69, 2),
+(137, 12, 2),
+(136, 58, 2),
+(135, 64, 2),
+(134, 63, 2),
+(133, 70, 2),
+(102, 65, 3),
+(101, 67, 3),
+(100, 69, 3),
+(99, 14, 3),
+(98, 12, 3),
+(97, 58, 3),
+(96, 70, 3),
+(103, 70, 6),
+(104, 58, 6),
+(105, 12, 6),
+(106, 14, 6),
+(107, 69, 6),
+(108, 67, 6),
+(109, 68, 6),
+(110, 66, 6),
+(111, 65, 6);
 
 -- --------------------------------------------------------
 
@@ -261,6 +270,7 @@ CREATE TABLE IF NOT EXISTS `api_topic` (
   `event_name` varchar(255) NOT NULL,
   `publish_name` varchar(255) NOT NULL,
   `id_service_update` int(10) NOT NULL,
+  `throttle_rate` int(5) NOT NULL,
   PRIMARY KEY (`id_topic`),
   KEY `groupe` (`groupe`),
   KEY `update_service` (`id_service_update`)
@@ -270,38 +280,38 @@ CREATE TABLE IF NOT EXISTS `api_topic` (
 -- Déchargement des données de la table `api_topic`
 --
 
-INSERT INTO `api_topic` (`id_topic`, `groupe`, `nom`, `messageType`, `event_name`, `publish_name`, `id_service_update`) VALUES
-(4, 'Other', '/keylo_api/email', 'std_msgs/String', 'onLogEmailNew', 'LogSendEmail', 0),
-(16, 'Other', '/keylo_api/log_msg', 'std_msgs/String', 'onLogMsg', 'LogSendMsg', 0),
-(20, 'Navigation', '/docking/docking_state', 'std_msgs/String', 'onNavigationRobotStateChange', '', 58),
-(22, 'Other', '/keylo_api/sms', 'std_msgs/String', 'onLogSMSNew', 'LogSendSMS', 0),
-(23, 'Navigation', '/sensors/current_floor', 'std_msgs/Int8', 'onNavigationCurrentFloorChange', '', 0),
-(24, 'Leds', '/elodie_api/leds/current_led_animation_mode', 'std_msgs/Int8', 'onLedsCurrentAnimationModeChange', '', 0),
-(25, 'Leds', '/elodie_api/leds/current_led_robot_state_mode', 'std_msgs/Int8', 'onLedsCurrentRobotStateModeChange', '', 0),
-(26, 'Leds', '/elodie_api/leds/is_light_mode', 'std_msgs/Bool', 'onLedsIsLightModeChange', '', 20),
-(27, 'Leds', '/elodie_api/leds/is_manual_mode', 'std_msgs/Bool', 'onLedsIsManualModeChange', '', 21),
-(28, 'Sensors', '/sensors/BMP280_values', 'elodie_u_controller/SensorsObject', 'onSensorsAltimeterChange', '', 0),
-(29, 'Leds', '/keylo_arduino/set_anim_led', 'keylo_arduino/AnimLedObject', 'onLedsSetAnimLedChange', '', 0),
-(77, 'BMS', '/bms/relative_SOC_percentage', 'std_msgs/UInt8', 'onSOCChange', '', 0),
-(78, 'BMS', '/bms/currentA', 'std_msgs/Float32', 'onCurrentAChange', '', 0),
-(79, 'BMS', '/bms/is_powered', 'std_msgs/Bool', 'onIsPoweredChange', '', 0),
-(80, 'BMS', '/bms/remaining_capacity_Wh', 'std_msgs/UInt16', 'onRemainingCapacityWhChange', '', 0),
-(81, 'BMS', '/bms/time_remaining_to_empty_min', 'std_msgs/UInt16', 'onTimeRemainingToEmptyMinChange', '', 0),
-(82, 'BMS', '/bms/time_remaining_to_full_min', 'std_msgs/UInt16', 'onTimeRemainingToFullMinChange', '', 0),
-(83, 'Safety', '/sensors/safety_stop/is_safety_stop', 'std_msgs/Bool', 'onIsSafetyStopChange', '', 65),
-(84, 'Safety', '/sensors/freewheel_state/is_freewheel', 'std_msgs/Bool', 'onIsFreewheelChange', '', 66),
-(62, 'Map', '', 'std_msg/String', 'onMapBoxClick', '', 0),
-(63, 'Map', '', 'geometry_msgs/Pose2D', 'onMapRouteClick', '', 0),
-(64, 'Map', '', 'void', 'onMapIsLoaded', '', 0),
-(65, 'Sensors', '/scan_throttled', 'sensor_msgs/LaserScan', 'onSensorsLaserScan', '', 0),
-(68, 'Log', '/logs/capture', 'std_msgs/String', 'onCaptureLog', '', 0),
-(71, 'Log', '/logs/nav', 'std_msgs/String', 'onNavLog', '', 0),
-(74, 'Mapping', '/wyca_mapping/robot_pose_in_building_map', 'geometry_msgs/Pose2D', 'onMappingRobotPoseChange', '', 0),
-(76, 'Mapping', '/wyca_mapping/map_in_construction', 'wyca_mapping/MapInConstruction', 'onMapInConstruction', '', 0),
-(85, 'Navigation', '/wyca_api/navigation/is_started', 'std_msgs/Bool', 'onNavigationStateChange', '', 69),
-(86, 'Mapping', '/wyca_mapping/is_started', 'std_msgs/Bool', 'onMappingStateChange', '', 70),
-(87, 'Navigation', '/wyca_api/navigation/robot_pose', 'geometry_msgs/Pose2D', 'onRobotPoseChange', '', 14),
-(88, 'Latency', '/wyca_api/latency_return', 'std_msgs/Int16', 'onLatencyReturn', '', 0);
+INSERT INTO `api_topic` (`id_topic`, `groupe`, `nom`, `messageType`, `event_name`, `publish_name`, `id_service_update`, `throttle_rate`) VALUES
+(4, 'Other', '/keylo_api/email', 'std_msgs/String', 'onLogEmailNew', 'LogSendEmail', 0, 0),
+(16, 'Other', '/keylo_api/log_msg', 'std_msgs/String', 'onLogMsg', 'LogSendMsg', 0, 0),
+(20, 'Navigation', '/docking/docking_state', 'std_msgs/String', 'onNavigationRobotStateChange', '', 58, 1000),
+(22, 'Other', '/keylo_api/sms', 'std_msgs/String', 'onLogSMSNew', 'LogSendSMS', 0, 0),
+(23, 'Navigation', '/sensors/current_floor', 'std_msgs/Int8', 'onNavigationCurrentFloorChange', '', 0, 1000),
+(24, 'Leds', '/elodie_api/leds/current_led_animation_mode', 'std_msgs/Int8', 'onLedsCurrentAnimationModeChange', '', 0, 1000),
+(25, 'Leds', '/elodie_api/leds/current_led_robot_state_mode', 'std_msgs/Int8', 'onLedsCurrentRobotStateModeChange', '', 0, 1000),
+(26, 'Leds', '/elodie_api/leds/is_light_mode', 'std_msgs/Bool', 'onLedsIsLightModeChange', '', 20, 1000),
+(27, 'Leds', '/elodie_api/leds/is_manual_mode', 'std_msgs/Bool', 'onLedsIsManualModeChange', '', 21, 1000),
+(28, 'Sensors', '/sensors/BMP280_values', 'elodie_u_controller/SensorsObject', 'onSensorsAltimeterChange', '', 0, 1000),
+(29, 'Leds', '/keylo_arduino/set_anim_led', 'keylo_arduino/AnimLedObject', 'onLedsSetAnimLedChange', '', 0, 1000),
+(77, 'BMS', '/bms/relative_SOC_percentage', 'std_msgs/UInt8', 'onSOCChange', '', 0, 1000),
+(78, 'BMS', '/bms/currentA', 'std_msgs/Float32', 'onCurrentAChange', '', 0, 1000),
+(79, 'BMS', '/bms/is_powered', 'std_msgs/Bool', 'onIsPoweredChange', '', 0, 1000),
+(80, 'BMS', '/bms/remaining_capacity_Wh', 'std_msgs/UInt16', 'onRemainingCapacityWhChange', '', 0, 1000),
+(81, 'BMS', '/bms/time_remaining_to_empty_min', 'std_msgs/UInt16', 'onTimeRemainingToEmptyMinChange', '', 0, 1000),
+(82, 'BMS', '/bms/time_remaining_to_full_min', 'std_msgs/UInt16', 'onTimeRemainingToFullMinChange', '', 0, 1000),
+(83, 'Safety', '/sensors/safety_stop/is_safety_stop', 'std_msgs/Bool', 'onIsSafetyStopChange', '', 65, 1000),
+(84, 'Safety', '/sensors/freewheel_state/is_freewheel', 'std_msgs/Bool', 'onIsFreewheelChange', '', 66, 1000),
+(62, 'Map', '', 'std_msg/String', 'onMapBoxClick', '', 0, 0),
+(63, 'Map', '', 'geometry_msgs/Pose2D', 'onMapRouteClick', '', 0, 0),
+(64, 'Map', '', 'void', 'onMapIsLoaded', '', 0, 0),
+(65, 'Sensors', '/scan_throttled', 'sensor_msgs/LaserScan', 'onSensorsLaserScan', '', 0, 200),
+(68, 'Log', '/logs/capture', 'std_msgs/String', 'onCaptureLog', '', 0, 0),
+(71, 'Log', '/logs/nav', 'std_msgs/String', 'onNavLog', '', 0, 0),
+(74, 'Mapping', '/wyca_mapping/robot_pose_in_building_map', 'geometry_msgs/Pose2D', 'onMappingRobotPoseChange', '', 0, 0),
+(76, 'Mapping', '/wyca_mapping/map_in_construction', 'wyca_mapping/MapInConstruction', 'onMapInConstruction', '', 0, 0),
+(85, 'Navigation', '/wyca_api/navigation/is_started', 'std_msgs/Bool', 'onNavigationStateChange', '', 69, 0),
+(86, 'Mapping', '/wyca_mapping/is_started', 'std_msgs/Bool', 'onMappingStateChange', '', 70, 0),
+(87, 'Navigation', '/wyca_api/navigation/robot_pose', 'geometry_msgs/Pose2D', 'onRobotPoseChange', '', 14, 0),
+(88, 'Latency', '/wyca_api/latency_return', 'std_msgs/Int16', 'onLatencyReturn', '', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -317,7 +327,7 @@ CREATE TABLE IF NOT EXISTS `api_topic_groupe` (
   PRIMARY KEY (`id_topic_groupe`),
   KEY `id_topic` (`id_topic`),
   KEY `id_user` (`id_groupe_user`)
-) ENGINE=MyISAM AUTO_INCREMENT=75 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=123 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `api_topic_groupe`
@@ -386,18 +396,30 @@ INSERT INTO `api_topic_groupe` (`id_topic_groupe`, `id_topic`, `id_groupe_user`)
 (60, 83, 1),
 (61, 65, 1),
 (62, 28, 1),
-(63, 77, 2),
-(64, 86, 2),
-(65, 85, 2),
-(66, 87, 2),
-(67, 84, 2),
-(68, 83, 2),
-(69, 65, 2),
-(70, 77, 3),
-(71, 20, 3),
-(72, 85, 3),
-(73, 84, 3),
-(74, 83, 3);
+(120, 84, 2),
+(119, 87, 2),
+(118, 85, 2),
+(117, 74, 2),
+(116, 76, 2),
+(115, 86, 2),
+(114, 77, 2),
+(87, 84, 3),
+(86, 85, 3),
+(85, 20, 3),
+(84, 77, 3),
+(83, 79, 3),
+(113, 79, 2),
+(88, 83, 3),
+(89, 79, 6),
+(90, 77, 6),
+(91, 86, 6),
+(92, 20, 6),
+(93, 85, 6),
+(94, 87, 6),
+(95, 84, 6),
+(96, 83, 6),
+(121, 83, 2),
+(122, 65, 2);
 
 -- --------------------------------------------------------
 
@@ -441,7 +463,7 @@ CREATE TABLE IF NOT EXISTS `api_topic_pub_groupe` (
   PRIMARY KEY (`id_topic_pub_groupe`),
   KEY `id_topic_pub` (`id_topic_pub`),
   KEY `id_user` (`id_groupe_user`)
-) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `api_topic_pub_groupe`
@@ -456,12 +478,15 @@ INSERT INTO `api_topic_pub_groupe` (`id_topic_pub_groupe`, `id_topic_pub`, `id_g
 (6, 3, 1),
 (7, 2, 1),
 (8, 1, 1),
-(9, 4, 2),
-(10, 3, 2),
-(11, 1, 2),
-(12, 4, 3),
-(13, 3, 3),
-(14, 1, 3);
+(32, 1, 2),
+(31, 3, 2),
+(30, 4, 2),
+(20, 1, 3),
+(19, 3, 3),
+(18, 4, 3),
+(21, 4, 6),
+(22, 3, 6),
+(23, 1, 6);
 
 -- --------------------------------------------------------
 
@@ -548,8 +573,8 @@ INSERT INTO `configuration` (`id_configuration`, `nom`, `description`, `valeur`)
 (6, 'level_min_dotask', '', '53'),
 (7, 'level_min_gotodock_aftertask', '', '50'),
 (8, 'LAST_UPDATE', '', ''),
-(10, 'INSTALL_STEP', '', '0'),
-(9, 'ID_LANG', '', '1');
+(10, 'INSTALL_STEP', '', '1'),
+(9, 'ID_LANG', '', '2');
 
 -- --------------------------------------------------------
 
@@ -890,7 +915,7 @@ CREATE TABLE IF NOT EXISTS `site` (
 --
 
 INSERT INTO `site` (`id_site`, `name`, `comment`) VALUES
-(1, 'Default', '');
+(1, 'test', '');
 
 -- --------------------------------------------------------
 
@@ -975,6 +1000,44 @@ CREATE TABLE IF NOT EXISTS `task_queue` (
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `top`
+--
+
+DROP TABLE IF EXISTS `top`;
+CREATE TABLE IF NOT EXISTS `top` (
+  `id_top` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `manufacturer` varchar(255) NOT NULL,
+  `size_x` int(5) NOT NULL,
+  `size_y` int(5) NOT NULL,
+  `size_z` int(5) NOT NULL,
+  `have_3d_cam` tinyint(1) NOT NULL DEFAULT '0',
+  `pos_x` int(5) NOT NULL,
+  `pos_y` int(5) NOT NULL,
+  `pos_z` int(5) NOT NULL,
+  `image_name` text NOT NULL,
+  `have_cpu` tinyint(1) NOT NULL DEFAULT '0',
+  `available` tinyint(1) NOT NULL DEFAULT '0',
+  `active` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id_top`)
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `top`
+--
+
+INSERT INTO `top` (`id_top`, `name`, `manufacturer`, `size_x`, `size_y`, `size_z`, `have_3d_cam`, `pos_x`, `pos_y`, `pos_z`, `image_name`, `have_cpu`, `available`, `active`) VALUES
+(1, 'No top', 'Wyca', 0, 0, 0, 0, 0, 0, 0, 'no_top.png', 0, 1, 1),
+(2, 'Cameras', 'Wyca', 0, 0, 0, 1, 0, 0, 0, 'camera.png', 1, 0, 0),
+(3, 'Shelf', 'Wyca', 0, 0, 0, 0, 0, 0, 0, 'shelf.png', 0, 0, 0),
+(4, 'Roller', 'Wyca', 0, 0, 0, 0, 0, 0, 0, 'roller.png', 0, 0, 0),
+(5, 'Security', 'Wyca', 0, 0, 0, 0, 0, 0, 0, 'security.png', 0, 1, 0),
+(6, 'RFID', 'Wyca', 0, 0, 0, 0, 0, 0, 0, 'rfid.png', 0, 0, 0),
+(7, 'Interactive', 'Wyca', 0, 0, 0, 0, 0, 0, 0, 'interactive.png', 0, 1, 0);
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `user`
 --
 
@@ -1005,8 +1068,8 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`id_user`, `email`, `pass`, `nom`, `prenom`, `societe`, `id_groupe_user`, `actif`, `deleted`, `last_connection`, `api_key`, `pin`) VALUES
-(1, 'team@wyca.fr', '89d3dbf0cda2ac5bcc2f571a0bb3a828', 'Wyca', '', '', 1, 1, 0, '2020-03-03 16:49:06', '5LGU.LaYMMncJaA0i42HwsX9ZX-RCNgj-9V17ROFXt71st', ''),
-(60, 'distributor', '751b823926d1ea5b9e4a4678d6ee70c8', 'Distributor', '', '', 2, 1, 0, '2020-03-03 16:49:24', 'Jnt.kK2nXB15jhVkCEGLA3NssidZWLpsdgmt4bx8GkTZL5', '');
+(1, 'team@wyca.fr', '89d3dbf0cda2ac5bcc2f571a0bb3a828', 'Wyca', '', '', 1, 1, 0, '2020-03-05 16:30:54', '5LGU.LaYMMncJaA0i42HwsX9ZX-RCNgj-9V17ROFXt71st', ''),
+(60, 'distributor', '751b823926d1ea5b9e4a4678d6ee70c8', 'Distributor', '', '', 2, 1, 0, '2020-03-06 16:27:37', 'Jnt.kK2nXB15jhVkCEGLA3NssidZWLpsdgmt4bx8GkTZL5', '');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
