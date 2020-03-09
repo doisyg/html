@@ -536,7 +536,7 @@ function InitInstallWifiPage()
 			{
 				$('#install_by_step_wifi tr').hide();
 				$.each(data.list,function(index, value){
-					signal = parseInt(value.signal/5);
+					signal = parseInt(value.signal/20);
 					if ($('#install_by_step_wifi .wifi'+value.bssid).length > 0)
 					{
 						$('#install_by_step_wifi tr').show();
@@ -549,7 +549,7 @@ function InitInstallWifiPage()
 					}
 					else
 					{
-						$('.tbody_wifi').append('<tr data-ssid="'+value.bssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td>'+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
+						$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td>'+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
 					}
 				});
 			}

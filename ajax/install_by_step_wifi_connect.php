@@ -5,7 +5,7 @@ if ($userConnected->id_groupe_user > 2) die();
 
 $result = Wifi::Connect($_POST['ssid'], $_POST['passwd']);
 
-if (!$result['error']))
+if (!$result['error'])
 {
 	$confStep = Configuration::GetFromVariable('INSTALL_STEP');
 	$confStep->valeur = 2;
