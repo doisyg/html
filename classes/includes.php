@@ -3,6 +3,7 @@ require_once(dirname(__FILE__).'/DB.php');
 require_once(dirname(__FILE__).'/Email.php');
 require_once(dirname(__FILE__).'/Translate.php');
 require_once(dirname(__FILE__).'/Crypt.php');
+require_once(dirname(__FILE__).'/Wifi.php');
 require_once(dirname(__FILE__).'/Update.php');
 require_once(dirname(__FILE__).'/IpBlockedCore.php');
 require_once(dirname(__FILE__).'/IpBlocked.php');
@@ -68,4 +69,6 @@ require_once(dirname(__FILE__).'/TaskQueueCore.php');
 require_once(dirname(__FILE__).'/TaskQueue.php');
 require_once(dirname(__FILE__).'/UserCore.php');
 require_once(dirname(__FILE__).'/User.php');
+require_once(dirname(__FILE__).'/TopCore.php');
+require_once(dirname(__FILE__).'/Top.php');
 ?>

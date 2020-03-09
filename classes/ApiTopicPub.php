@@ -48,7 +48,7 @@ class ApiTopicPub extends ApiTopicPubCore
 		$query="DELETE FROM api_topic_pub WHERE id_topic_pub = '".mysqli_real_escape_string(DB::$connexion, $this->id_topic_pub)."'";
 		$delete=mysqli_query(DB::$connexion, $query) or die ('ERREUR Delete api_topic_pub : '.$query.'<br />'.mysqli_error(DB::$connexion).'<br /><br />');
 		
-		$query="DELETE FROM api_topic_pub_user WHERE id_topic_pub = '".mysqli_real_escape_string(DB::$connexion, $this->id_topic_pub)."'";
+		$query="DELETE FROM api_topic_pub_groupe WHERE id_topic_pub = '".mysqli_real_escape_string(DB::$connexion, $this->id_topic_pub)."'";
 		$delete=mysqli_query(DB::$connexion, $query) or die ('ERREUR Delete api_topic_pub_user : '.$query.'<br />'.mysqli_error(DB::$connexion).'<br /><br />');
 	}
 }

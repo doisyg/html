@@ -441,12 +441,12 @@ function WycaAPI(options){
 				if ($topic->nom != '')
 				{
 					?>
-					this.ros_topics[<?php echo $topic->id_topic;?>] = new ROSLIB.Topic({ ros : ros,	name : '<?php echo $topic->nom;?>', messageType : '<?php echo $topic->messageType;?>'});
+					this.ros_topics[<?php echo $topic->id_topic;?>] = new ROSLIB.Topic({ ros : ros,	name : '<?php echo $topic->nom;?>', messageType : '<?php echo $topic->messageType;?>', throttle_rate  : <?php echo $topic->throttle_rate;?>});
 					<?php
 				}
 				?>
 			}
-                        if (this.options.<?php echo $topic->event_name;?> != undefined)
+            if (this.options.<?php echo $topic->event_name;?> != undefined)
 			{
 				if (this.options.nick != 'robot')
 				{

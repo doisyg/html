@@ -35,5 +35,9 @@ $_LANG['075fdd1e9ea19cf4ff53a991de636530'] = 'Adresse email ou mot de passe inva
 $_LANG['99dea78007133396a7b8ed70578ac6ae'] = 'Login';
 $_LANG['4994a8ffeba4ac3140beb89e8d41f174'] = 'Language';
 $_LANG['653777801f96237326d65205bc9129e3'] = 'Select language';
+$_LANG['dbbd91fb2aed7056f4aeac45a5452357'] = 'Wifi';
+$_LANG['28402132a9bd2f2050d5a8980d96ac65'] = 'Configure Wifi';
+$_LANG['44749712dbec183e983dcd78a7736c41'] = 'Date';
+$_LANG['91fba062375a3990d2119c03ca0ea70b'] = 'Configure date';
 
 ?>

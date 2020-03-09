@@ -78,6 +78,8 @@ if (isset($_SESSION["id_user"]))
 	$currentMap = new Map($currentIdMap);
 }
 
+$activeTop = Top::GetActiveTop();
+
 foreach ($_GET as $key => $value)
 	$_GET[$key] = xss_clean($value); 
 	

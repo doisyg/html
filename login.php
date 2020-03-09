@@ -88,7 +88,7 @@ if (isset($_POST['email']))
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/login.css" />
 
 	</head>
-	<body>
+	<body style="background-image:url(../assets/images/tops/<?php echo $activeTop->image_name;?>);">
 		<section class="body-sign">
 			<div class="center-sign">
 				<a href="/" class="logo pull-left">

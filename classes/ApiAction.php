@@ -54,5 +54,14 @@ class ApiAction extends ApiActionCore
 		
 		return array('entree' => $params_entree, 'sortie' => $params_sortie, 'feedback' => $params_feedback);
 	}
+	
+	public function Supprimer()
+	{
+		$query="DELETE FROM api_action WHERE id_action = '".mysqli_real_escape_string(DB::$connexion, $this->id_action)."'";
+		$delete=mysqli_query(DB::$connexion, $query) or die ('ERREUR Delete api_action : '.$query.'<br />'.mysqli_error(DB::$connexion).'<br /><br />');
+		
+		$query="DELETE FROM api_action_groupe WHERE id_action = '".mysqli_real_escape_string(DB::$connexion, $this->id_action)."'";
+		$delete=mysqli_query(DB::$connexion, $query) or die ('ERREUR Delete api_action_groupe : '.$query.'<br />'.mysqli_error(DB::$connexion).'<br /><br />');
+	}
 }
 ?>

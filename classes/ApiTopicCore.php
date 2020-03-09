@@ -8,6 +8,7 @@ class ApiTopicCore
 	public $event_name = "";
 	public $publish_name = "";
 	public $id_service_update = -1;
+	public $throttle_rate = 0;
 
 	public function __construct( $id_topic = null, $byrow=false ) 
 	{
@@ -34,6 +35,7 @@ class ApiTopicCore
 		$this->event_name = $object->event_name;
 		$this->publish_name = $object->publish_name;
 		$this->id_service_update = $object->id_service_update;
+		$this->throttle_rate = $object->throttle_rate;
 	}
 
 	public static function getApiTopic( $id_topic )
@@ -58,14 +60,15 @@ class ApiTopicCore
 	public function Insert()
 	{
 		global $_CONFIG;
-		$query = "INSERT INTO api_topic ( groupe, nom, messageType, event_name, publish_name, id_service_update ) VALUES ( 
+		$query = "INSERT INTO api_topic ( groupe, nom, messageType, event_name, publish_name, id_service_update, throttle_rate ) VALUES ( 
 
 			'". mysqli_real_escape_string(DB::$connexion, $this->groupe) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->nom) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->messageType) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->event_name) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->publish_name) ."', 
-			'". mysqli_real_escape_string(DB::$connexion, $this->id_service_update) ."'
+			'". mysqli_real_escape_string(DB::$connexion, $this->id_service_update) ."', 
+			'". mysqli_real_escape_string(DB::$connexion, $this->throttle_rate) ."'
 			) ";
 		$insert=mysqli_query(DB::$connexion, $query) or die ('ERREUR Insert ApiTopic : '.$query.'<br />'.mysqli_error(DB::$connexion).'<br /><br />');
 		$this->id_topic = mysqli_insert_id(DB::$connexion);
@@ -81,7 +84,8 @@ class ApiTopicCore
 			messageType = '". mysqli_real_escape_string(DB::$connexion,  $this->messageType )."', 
 			event_name = '". mysqli_real_escape_string(DB::$connexion,  $this->event_name )."', 
 			publish_name = '". mysqli_real_escape_string(DB::$connexion,  $this->publish_name )."', 
-			id_service_update = '". mysqli_real_escape_string(DB::$connexion,  $this->id_service_update )."'
+			id_service_update = '". mysqli_real_escape_string(DB::$connexion,  $this->id_service_update )."', 
+			throttle_rate = '". mysqli_real_escape_string(DB::$connexion,  $this->throttle_rate )."'
 		WHERE id_topic = '". mysqli_real_escape_string(DB::$connexion, $this->id_topic)."'";
 		$update=mysqli_query(DB::$connexion, $query) or die ('ERREUR Update ApiTopic : '.$query.'<br />'.mysqli_error(DB::$connexion).'<br /><br />');
 	}
