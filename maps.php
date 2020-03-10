@@ -16,20 +16,43 @@ if (isset($_GET['delete']))
 	$plan->Supprimer();
 }
 
-if (isset($_POST['todo']) && $_POST['todo'] == 'saveMapping')
+
+if ($userConnected->CanDo($sectionMenu, $sectionSousMenu, 'add'))
 {
-	$plan = new Plan();
-	$plan->id_site = $currentIdSite;
-	if (strlen($_POST['image']) > 22)
-		$plan->image = substr($_POST['image'], 22);
-	
-	if (strlen($_POST['image_tri']) > 22)
-		$plan->image_tri = substr($_POST['image_tri'], 22);
-	$plan->nom = $_POST['nom'];
-	$plan->ros_resolution = 5;
-	$plan->ros_hauteur = $_POST['ros_hauteur'];
-	$plan->ros_largeur = $_POST['ros_largeur'];
-	$plan->Save();
+	if (isset($_POST['todo']) && $_POST['todo'] == 'uplaodMap')
+	{
+		$plan = new Plan();
+		$plan->id_site = $currentIdSite;
+		
+		$image_info = getimagesize($_FILES['image_upload']['tmp_name']);
+		
+		$image = base64_encode(file_get_contents($_FILES['image_upload']['tmp_name']));
+		
+		$plan->image = $image;
+		$plan->image_tri = $image;
+		
+		$plan->nom = $_POST['nom'];
+		$plan->ros_resolution = 5;
+		$plan->ros_hauteur = $image_info[1];
+		$plan->ros_largeur = $image_info[0];
+		$plan->Save();
+	}         			
+
+	if (isset($_POST['todo']) && $_POST['todo'] == 'saveMapping')
+	{
+		$plan = new Plan();
+		$plan->id_site = $currentIdSite;
+		if (strlen($_POST['image']) > 22)
+			$plan->image = substr($_POST['image'], 22);
+		
+		if (strlen($_POST['image_tri']) > 22)
+			$plan->image_tri = substr($_POST['image_tri'], 22);
+		$plan->nom = $_POST['nom'];
+		$plan->ros_resolution = 5;
+		$plan->ros_hauteur = $_POST['ros_hauteur'];
+		$plan->ros_largeur = $_POST['ros_largeur'];
+		$plan->Save();
+	}
 }
 
 if (isset($_GET['um']))
@@ -110,6 +133,8 @@ include ('template/header.php');
                 
                 	<?php if ($userConnected->CanDo($sectionMenu, $sectionSousMenu, 'add')){?>
                     <a id="bOpenModalCreateMap" class="btn btn-primary btn-sm btn-grad" href="#" data-toggle="modal" data-target="#modalCreateMap" title="<?php echo __('Create new map');?>"><i class="fa fa-plus"></i> <?php echo __('Create new map');?></a>
+                    
+                    <a id="bOpenModalUploadMap" class="btn btn-primary btn-sm btn-grad" href="#" data-toggle="modal" data-target="#modalUploadMap" title="<?php echo __('Upload new map');?>"><i class="fa fa-plus"></i> <?php echo __('Upload new map');?></a>
                     <div style="clear:both; height:20px;"></div>
                     <?php }?>
                 
@@ -185,6 +210,31 @@ include ('template/header.php');
 </div>
 
 <?php if ($userConnected->CanDo($sectionMenu, $sectionSousMenu, 'add')){?>
+
+<div id="modalUploadMap" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#F0F0F0;">
+                <div class="actions mh100vh_55">
+                    <div style="text-align:center; font-size:26px;">
+                    
+                    	 <form method="post" enctype="multipart/form-data">
+                        	<input type="hidden" name="todo" value="uplaodMap" />
+                            <input type="text" id="form_mapping_name" required="required" name="nom" placeholder="<?php echo __('Map name')?>" class="form-control" style="margin-bottom:20px;" />
+                            <input type="file" class="form-control" name="image_upload" />
+                            
+                            <button type="submit" class="btn btn-primary" style="margin-top:30px;">Upload</button>
+                    	</form>                     
+                        
+                    </div>         
+         			
+                    <a href="#" id="bMappingCancelUploadMap" class="btn btn-warning btn-left" data-dismiss="modal" style="position:absolute; left:0; bottom:0px; width:100%; font-size:30px;">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="modalCreateMap" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog" role="dialog">
         <div class="modal-content">
