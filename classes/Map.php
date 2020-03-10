@@ -3,7 +3,7 @@ class Map extends MapCore
 {
 	public function Supprimer()
 	{
-		$query="DELETE FROM plan WHERE id_plan = '".mysqli_real_escape_string(DB::$connexion, $this->id_plan)."'";
+		$query="DELETE FROM plan WHERE id_map = '".mysqli_real_escape_string(DB::$connexion, $this->id_map)."'";
 		$delete=mysqli_query(DB::$connexion, $query) or die ('ERREUR Delete Plan : '.$query.'<br />'.mysqli_error(DB::$connexion).'<br /><br />');
 		
         $areas = $this->GetAreas();
@@ -27,13 +27,13 @@ class Map extends MapCore
 	{
 		$cm = Configuration::GetFromVariable('CURRENT_MAP');
 		
-		if ($cm->valeur != $this->id_plan)
+		if ($cm->valeur != $this->id_map)
 		{
-			$cm->valeur = $this->id_plan;
+			$cm->valeur = $this->id_map;
 			$cm->Save();
 			
 			// On vide les taches en cours
-			TacheQueue::ClearQueue();
+			TaskQueue::ClearQueue();
 			
 			$this->ExportToConfig();
 		}		
@@ -41,7 +41,7 @@ class Map extends MapCore
 	
 	public function GetAreas($order = "", $order_sens = "")
 	{
-		$query = "SELECT * FROM area WHERE deleted=0 AND is_forbidden=0 AND id_plan=".(int)$this->id_plan;
+		$query = "SELECT * FROM area WHERE deleted=0 AND is_forbidden=0 AND id_map=".(int)$this->id_map;
 		if ($order!="")
 			$query .= " ORDER BY ".mysqli_real_escape_string(DB::$connexion, $order)." ".mysqli_real_escape_string(DB::$connexion, $order_sens);
 		else 
@@ -58,7 +58,7 @@ class Map extends MapCore
 	
 	public function GetForbiddenAreas($order = "", $order_sens = "")
 	{
-		$query = "SELECT * FROM area WHERE deleted=0 AND is_forbidden=1 AND id_plan=".(int)$this->id_plan;
+		$query = "SELECT * FROM area WHERE deleted=0 AND is_forbidden=1 AND id_map=".(int)$this->id_map;
 		if ($order!="")
 			$query .= " ORDER BY ".mysqli_real_escape_string(DB::$connexion, $order)." ".mysqli_real_escape_string(DB::$connexion, $order_sens);
 		else 
@@ -75,7 +75,7 @@ class Map extends MapCore
 
 	public function GetStationRecharges($order = "", $order_sens = "")
 	{
-		$query = "SELECT * FROM station_recharge WHERE id_plan=".(int)$this->id_plan;
+		$query = "SELECT * FROM station_recharge WHERE id_map=".(int)$this->id_map;
 		if ($order!="")
 			$query .= " ORDER BY ".mysqli_real_escape_string(DB::$connexion, $order)." ".mysqli_real_escape_string(DB::$connexion, $order_sens);
 		else 
@@ -92,7 +92,7 @@ class Map extends MapCore
 
 	public function GetPois($order = "", $order_sens = "")
 	{
-		$query = "SELECT * FROM poi WHERE id_plan=".(int)$this->id_plan;
+		$query = "SELECT * FROM poi WHERE id_map=".(int)$this->id_map;
 		if ($order!="")
 			$query .= " ORDER BY ".mysqli_real_escape_string(DB::$connexion, $order)." ".mysqli_real_escape_string(DB::$connexion, $order_sens);
 		else 
@@ -109,7 +109,7 @@ class Map extends MapCore
 	
 	public function GetTaches($order = "", $order_sens = "")
 	{
-		$query = "SELECT * FROM tache WHERE id_plan=".(int)$this->id_plan;
+		$query = "SELECT * FROM tache WHERE id_map=".(int)$this->id_map;
 		if ($order!="")
 			$query .= " ORDER BY ".mysqli_real_escape_string(DB::$connexion, $order)." ".mysqli_real_escape_string(DB::$connexion, $order_sens);
 		else 
@@ -196,7 +196,8 @@ class Map extends MapCore
 			$file->is_file = 0;
 			$file->name = '';
 		}
-			
+		
+		$contents = base64_decode($this->image_tri);
 		try
 		{
 			if (class_exists('Imagick'))

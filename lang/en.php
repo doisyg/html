@@ -64,5 +64,12 @@ $_LANG['31c7d33dc2e4a7806647ce71d2604f71'] = 'Map name';
 $_LANG['dd4a136dbb7505fde8695081b235a0b6'] = 'Reset values';
 $_LANG['ea4788705e6873b424c65e91c2846b19'] = 'Cancel';
 $_LANG['c9cc8cce247e49bae79f15173ce97354'] = 'Save';
+$_LANG['14cde4fe0a43e2d9a0cdb1042d9b9d3b'] = 'Set password';
+$_LANG['bafd7322c6e97d25b6299b5d6fe8920b'] = 'No';
+$_LANG['93cba07454f06a4a960172bbd6e2a435'] = 'Yes';
+$_LANG['5c23f6988f6514c3ed88e8c9bb9f82f9'] = 'Edit map';
+$_LANG['0cbc6611f5540bd0809a388dc95a615b'] = 'Test';
+$_LANG['75e8eca7439a4fbf36a7a159baf87074'] = 'Building the map';
+$_LANG['fbbf4fcb0c90883760d453c1b2835faf'] = 'Start autonomous navigation';
 
 ?>

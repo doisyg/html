@@ -101,3 +101,19 @@ ul.tuiles li .tuile_img.is_checkbox.checked i.fa-spinner.fa-pulse { display:none
 .table_wifi tr.active { background-color:#FEFEFE; }
 
 .wifi_connexion_progress { text-align:center; font-size:40px; display:none; }
+
+#install_by_step_edit_map_container_all { position:relative; margin:-20px; height:calc(100vh - 152px); }
+#install_by_step_edit_map_all { height:100%; }
+#install_by_step_edit_map_map_navigation { height:100%; }
+
+#install_by_step_edit_map_zoom_carte_container { z-index:1000; background-color:#FFF; position:absolute; top:0px; right:20px; }
+#main_row.hide_element #install_by_step_edit_map_zoom_carte_container { right:50px; }
+#install_by_step_edit_map_zoom_carte { position:relative; width:100px; border:1px solid #000; }
+
+#install_by_step_edit_map_menu { position:absolute; display:none; }
+#install_by_step_edit_map_menu ul { list-style:none; padding:0; margin:0; }
+#install_by_step_edit_map_menu li { padding:0; margin:0; position:absolute; }
+
+.btn-circle { width: 30px; height: 30px; text-align: center; padding: 6px 0; font-size: 12px; line-height: 1.428571429; border-radius: 15px; }
+.btn-circle.btn-lg { width: 50px; height: 50px; padding: 10px 16px; font-size: 18px; line-height: 1.33; border-radius: 25px; }
+.btn-circle.btn-xl { width: 70px; height: 70px; padding: 10px 16px; font-size: 24px; line-height: 1.33; border-radius: 35px; }

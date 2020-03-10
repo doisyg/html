@@ -29,7 +29,7 @@ var mappingLastOrigin = {'x':0, 'y':0 };
 
 $(document).ready(function(e) {
 	wycaApi = new WycaAPI({
-		host:'elodie.wyca-solutions.com:9090', //192.168.1.32:9090', // host:'192.168.100.245:9090',
+		host:robot_host, //192.168.1.32:9090', // host:'192.168.100.245:9090',
 		//host:'10.0.0.23:9090',
 		video_element_id:'webcam_local',
 		webcam_name: 'r200 nav',

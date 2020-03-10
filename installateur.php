@@ -13,12 +13,12 @@ $INSTALL_STEP = Configuration::GetValue('INSTALL_STEP');
             <div class="content">
             	<ul class="tuiles heightauto row">
                 	<li class="col-xs-4">
-                        <a class="select_langue button_goto anim_tuiles tuile_img tuile1" data-goto="install_by_step_wifi" data-id_lang="1" href="#">
+                        <a href="#" class="select_langue button_goto anim_tuiles tuile_img tuile1" data-goto="install_by_step_wifi" data-id_lang="1">
                             <img src="assets/images/lang/fr_big.jpg" />
                         </a>
                     </li>
                 	<li class="col-xs-4">
-                        <a class="select_langue button_goto anim_tuiles tuile_img tuile2" data-goto="install_by_step_wifi" data-id_lang="2" href="#">
+                        <a href="#" class="select_langue button_goto anim_tuiles tuile_img tuile2" data-goto="install_by_step_wifi" data-id_lang="2">
                             <img src="assets/images/lang/en_big.jpg" />
                         </a>
                     </li>
@@ -41,10 +41,10 @@ $INSTALL_STEP = Configuration::GetValue('INSTALL_STEP');
                     </tbody>
                 </table>
                 
-                <a class="refresh_wifi btn btn-default pull-left" href="#"><i class="fa fa-refresh"></i></a>
+                <a href="#" class="refresh_wifi btn btn-default pull-left"><i class="fa fa-refresh"></i></a>
                 
-                <a class="skip_wifi button_goto btn btn-default pull-right" data-goto="install_by_step_date" href="#">Skip <i class="fa fa-chevron-right"></i></a>
-                <a class="set_passwd_wifi button_goto" data-goto="install_by_step_wifi_password" href="#" style="display:none;"></a>
+                <a href="#" class="skip_wifi button_goto btn btn-default pull-right" data-goto="install_by_step_date">Skip <i class="fa fa-chevron-right"></i></a>
+                <a href="#" class="set_passwd_wifi button_goto" data-goto="install_by_step_wifi_password" style="display:none;"></a>
                 
             </div>
         </section>
@@ -67,7 +67,7 @@ $INSTALL_STEP = Configuration::GetValue('INSTALL_STEP');
                 
                 <div class="wifi_connexion_progress"><i class="fa fa fa-spinner fa-pulse"></i></div>
                 
-                <a class="skip_wifi button_goto btn btn-default pull-right" data-goto="install_by_step_date" href="#">Skip <i class="fa fa-chevron-right"></i></a>
+                <a href="#" class="skip_wifi button_goto btn btn-default pull-right" data-goto="install_by_step_date">Skip <i class="fa fa-chevron-right"></i></a>
             </div>
         </section>
         
@@ -84,7 +84,7 @@ $INSTALL_STEP = Configuration::GetValue('INSTALL_STEP');
                 
                 <h4>A FAIRE</h4>
                 
-                <a class="save_date button_goto btn btn-default pull-right" data-goto="install_by_step_tops" href="#">OK <i class="fa fa-chevron-right"></i></a>
+                <a href="#" class="save_date button_goto btn btn-default pull-right" data-goto="install_by_step_tops">OK <i class="fa fa-chevron-right"></i></a>
                 
             </div>
         </section>
@@ -113,9 +113,9 @@ $INSTALL_STEP = Configuration::GetValue('INSTALL_STEP');
 					?>
                 </ul>
                 
-                <a class="save_tops btn btn-default pull-right" href="#">Next <i class="fa fa-chevron-right"></i></a>   
-                <a class="save_tops_next_select button_goto" data-goto="install_by_step_top" style="display:none;" data-goto="install_by_step_top" href="#"></a>   
-                <a class="save_tops_next_check button_goto" data-goto="install_by_step_check" style="display:none;" data-goto="install_by_step_top" href="#"></a>   
+                <a href="#" class="save_tops btn btn-default pull-right">Next <i class="fa fa-chevron-right"></i></a>   
+                <a href="#" class="save_tops_next_select button_goto" data-goto="install_by_step_top" style="display:none;" data-goto="install_by_step_top"></a>   
+                <a href="#" class="save_tops_next_check button_goto" data-goto="install_by_step_check" style="display:none;" data-goto="install_by_step_top"></a>   
             </div>
         </section>
         
@@ -134,7 +134,7 @@ $INSTALL_STEP = Configuration::GetValue('INSTALL_STEP');
 					{
 						$i++;
                     	?><li class="col-xs-4 bTop<?php echo $top->id_top;?>" style="display:<?php echo $top->available==1?'block':'none';?>">
-                        	<a class="set_top button_goto anim_tuiles tuile_img tuile<?php echo $i;?>" data-id_top="<?php echo $top->id_top;?>" data-goto="install_by_step_check" href="#">
+                        	<a href="#" class="set_top button_goto anim_tuiles tuile_img tuile<?php echo $i;?>" data-id_top="<?php echo $top->id_top;?>" data-goto="install_by_step_check">
                             	<img src="assets/images/tops/<?php echo $top->image_name;?>" /><?php echo __($top->name);?>
                             </a>
                         </li><?php
@@ -202,7 +202,7 @@ $INSTALL_STEP = Configuration::GetValue('INSTALL_STEP');
                     </li>
                 </ul>   
                 
-                <a class="install_by_step_check_next button_goto btn btn-default pull-right" data-goto="install_by_step_site" style="display:none;" href="#">Next <i class="fa fa-chevron-right"></i></a>
+                <a href="#" class="install_by_step_check_next button_goto btn btn-default pull-right" data-goto="install_by_step_site" style="display:none;">Next <i class="fa fa-chevron-right"></i></a>
             </div>
         </section>
         <section id="install_by_step_site" class="page <?php echo $INSTALL_STEP == 6?'active':'';?>">
@@ -220,7 +220,7 @@ $INSTALL_STEP = Configuration::GetValue('INSTALL_STEP');
 	                <button type="submit" class="install_by_step_site_save btn btn-default pull-right" style="margin-top:20px;">Next <i class="fa fa-chevron-right"></i></button>
                 </form>
                 
-                <a class="install_by_step_site_next button_goto" data-goto="install_by_step_mapping" style="display:none;" data-goto="install_by_step_top" href="#"></a>   
+                <a href="#" class="install_by_step_site_next button_goto" data-goto="install_by_step_mapping" style="display:none;"></a>   
             </div>
         </section>
         <section id="install_by_step_mapping" class="page <?php echo $INSTALL_STEP == 7?'active':'';?> hide_photo_back with_footer">
@@ -271,12 +271,14 @@ $INSTALL_STEP = Configuration::GetValue('INSTALL_STEP');
                 
                 <div style="text-align:center;">
                 
-                    <form id="install_by_step_mapping_from" method="post">
+                    <form id="install_by_step_mapping_form" method="post">
                         <input type="hidden" name="todo" value="saveMapping" />
                         <input type="hidden" id="install_by_step_mapping_from_image" name="image" value="" />
                         <input type="hidden" id="install_by_step_mapping_from_image_tri" name="image_tri" value="" />
                         <input type="hidden" id="install_by_step_mapping_from_ros_hauteur" name="ros_hauteur" value="" />
                         <input type="hidden" id="install_by_step_mapping_from_ros_largeur" name="ros_largeur" value="" />
+                        <input type="hidden" id="install_by_step_mapping_from_threshold_free" name="threshold_free" value="" />
+                        <input type="hidden" id="install_by_step_mapping_from_threshold_occupied" name="threshold_occupied" value="" />
                         <input type="text" id="install_by_step_mapping_from_name" name="nom" placeholder="<?php echo __('Map name')?>" class="form-control" style="margin-bottom:20px;" />
                     </form>
                 
@@ -309,8 +311,83 @@ $INSTALL_STEP = Configuration::GetValue('INSTALL_STEP');
                 </div>         
             </div>
             <footer>
-            	<a href="#" class="btn btn-warning button_goto bMappingCancelMap2"  data-goto="install_by_step_mapping" style="position:absolute; width:50%; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>           
-                <a href="#" class="btn btn-primary bMappingSaveMap" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
+            	<a href="#" class="btn btn-warning button_goto bMappingCancelMap2" data-goto="install_by_step_mapping" style="position:absolute; width:50%; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>           
+                <a href="#" class="btn btn-primary bMappingSaveMap" style="width:50%; position:absolute; right:0; bottom:0px; left:auto; font-size:30px;"><?php echo __('Save');?></a>
+                <a href="#" class="install_by_step_mapping_fin_next button_goto" data-goto="install_by_step_mapping_use" style="display:none;"></a>   
+            </footer>
+        </section>
+        <section id="install_by_step_mapping_use" class="page hide_photo_back with_footer">
+        	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_mapping"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Mapping config');?></h2>
+            </header>
+            <div class="content">
+                
+                <div style="text-align:center;">
+                    
+                    <h2 class="modalUseThisMapNowTitle1"><?php echo 'Do you want to use this map now ?';?></h2>
+                    <h2 class="modalUseThisMapNowTitle2" style="display:none;"><?php echo 'Configure map on robot';?></h2>
+                    
+                    <div class="modalUseThisMapNowContent" style="display:none;">
+                        <i style="font-size:60px;" class="fa fa-spinner fa-pulse"></i>
+                        <div class="modalUseThisMapNowContentDetails" style="font-size:18px;"></div>
+                    </div>
+                </div>
+                
+            </div>
+            <footer>
+            	<a href="#" class="btn btn-warning button_goto bUseThisMapNowNo" data-goto="install_by_step_edit_map" style="position:absolute; width:50%; left:0; bottom:0px; font-size:30px;"><?php echo __('No');?></a>           
+                <a href="#" class="btn btn-primary bUseThisMapNowYes" style="width:50%; position:absolute; right:0; left:auto; bottom:0px; font-size:30px;"><?php echo __('Yes');?></a>
+                <a href="#" class="install_by_step_mapping_use_next button_goto" data-goto="install_by_step_edit_map" style="display:none;"></a>                   
+            </footer>
+        </section>
+        
+        <section id="install_by_step_edit_map" class="page <?php echo $INSTALL_STEP == 8?'active':'';?> hide_photo_back with_footer">
+        	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_mapping"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Edit map');?></h2>
+            </header>
+            <div class="content">
+                
+                <div id="install_by_step_edit_map_container_all">
+                    <div id="install_by_step_edit_map_zoom_carte_container">
+                        <div id="install_by_step_edit_map_zoom_carte">
+                            <img src=""  class="img-responsive" style="max-width:100%; max-height:100%;" />
+                            <div id="install_by_step_edit_map_zone_zoom" style="position:absolute; border:1px solid #00F;"></div>
+                            <div id="install_by_step_edit_map_zone_zoom_click" style="position:absolute; width:100%; height:100%; top:0; left:0; cursor:pointer;"></div>
+                        </div>
+                    </div>
+                
+                    <div id="install_by_step_edit_map_all" style="position:relative; margin:auto; width:100%;">
+                        <div id="install_by_step_edit_map_map_navigation" class="zoom" style="position:relative; width:100%; margin:auto; border:1px solid #000;">
+                            <svg id="install_by_step_edit_map_svg" width="0" height="0" style="position:absolute; top:0; left:0; width:100%; height:100%;">
+                                <image id="install_by_step_edit_map_image" xlink:href="" x="0" y="0" height="0" width="0" />
+                            </svg>
+                        </div>
+                        <div style="clear:both;"></div>
+                    </div>
+                    
+                    <div id="install_by_step_edit_map_menu" style="position:absolute; left:50%; top:50%;">
+                    	<ul>
+                        	<li><a href="#" class="btn btn-circle btn-default"><i class="fa fa-ban"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default"><i class="fa fa-square"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default"><i class="fa fa-map-marker"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default"><i class="fa fa-flash"></i></a></li>
+                        </ul>
+                    </div>
+                    
+                    
+                </div>
+                
+                <div id="zoom_popup" style="position:absolute; top:20px; left:20px; width:101px; height:101px; border:1px solid #000; overflow:hidden; display:none; z-index:8000;">
+                    <div id="zoom_popup_content" style="position:absolute; top:0; height:0;"></div>
+                    <div id="zoom_popup_mire" style="position:absolute; width:101px; height:101px; top:0; left:0; background-image:url(assets/images/mire.png);"></div>
+                </div>
+            </div>
+            <footer>
+            	<a href="#" class="btn btn-warning button_goto bSaveEditMap" data-goto="install_by_step_test_map" style="position:absolute; width:100%; left:0; bottom:0px; font-size:30px;"><?php echo __('Test');?></a>
             </footer>
         </section>
     </div>
