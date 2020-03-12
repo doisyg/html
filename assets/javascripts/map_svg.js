@@ -183,8 +183,37 @@ function TraceForbidden(indexForbidden)
 		path.style.fill = 'rgba(0,0,0,0.5)'
 		svg.appendChild(path);
 		
+		lastPointIndex = points.length-1;
+		lastPoint = points[lastPointIndex];
 		$.each(points, function( indexPoint, point ) {
 			
+			if (!downOnMovable || (index_point_movable != indexPoint || index_point_movable != lastPointIndex))
+			{
+				$('#install_by_step_edit_map_svg #forbidden_trait_'+forbidden.id_area+'_'+indexPoint).remove();
+				
+				x = point.x * 100 / ros_resolution;
+				y = ros_hauteur - (point.y * 100 / ros_resolution);
+				
+				x2 = lastPoint.x * 100 / ros_resolution;
+				y2 = ros_hauteur - (lastPoint.y * 100 / ros_resolution);
+				
+				path = makeSVGElement('line', { x1: x, y1:y, x2:x2, y2:y2,
+							   'stroke-width': downOnMovable?1:5,
+							   'class':'secable poly_elem forbidden_elem forbidden_elem_'+forbidden.id_area,
+							   'id': 'forbidden_trait_'+forbidden.id_area+'_'+indexPoint,
+							   'data-id_area': forbidden.id_area,
+							   'data-index_point': indexPoint,
+							   'data-element_type': 'forbidden',
+							   'data-element': 'forbidden'
+							  });
+				svg.appendChild(path);
+			}
+			
+			lastPointIndex = indexPoint;
+			lastPoint = point;
+		});
+		
+		$.each(points, function( indexPoint, point ) {
 			/*
 			x = (point.x * 100 / ros_resolution) / largeurRos * $('#mapBox').width();
 			y = $('#mapBox').height() - ((point.y * 100 / ros_resolution) / largeurRos * $('#mapBox').width());
@@ -208,6 +237,8 @@ function TraceForbidden(indexForbidden)
 							  });
 				svg.appendChild(path);
 			}
+			
+			lastPoint = point;
 		});
 		
 		if (is_active)
@@ -324,6 +355,37 @@ function TraceArea(indexArea)
 							  });
 		path.style.fill = 'rgba('+area.couleur_r+','+area.couleur_g+','+area.couleur_b+',0.5)'
 		svg.appendChild(path);
+		
+		lastPointIndex = points.length-1;
+		lastPoint = points[lastPointIndex];
+		$.each(points, function( indexPoint, point ) {
+			
+			if (!downOnMovable || (index_point_movable != indexPoint || index_point_movable != lastPointIndex))
+			{
+				$('#install_by_step_edit_map_svg #area_trait_'+area.id_area+'_'+indexPoint).remove();
+				
+				x = point.x * 100 / ros_resolution;
+				y = ros_hauteur - (point.y * 100 / ros_resolution);
+				
+				x2 = lastPoint.x * 100 / ros_resolution;
+				y2 = ros_hauteur - (lastPoint.y * 100 / ros_resolution);
+				
+				path = makeSVGElement('line', { x1: x, y1:y, x2:x2, y2:y2,
+							   'stroke-width': downOnMovable?1:5,
+							   'class':'secable poly_elem area_elem area_elem_'+area.id_area,
+							   'id': 'area_trait_'+area.id_area+'_'+indexPoint,
+							   'data-id_area': area.id_area,
+							   'data-index_point': indexPoint,
+							   'data-element_type': 'area',
+							   'data-element': 'area'
+							  });
+				svg.appendChild(path);
+			}
+			
+			lastPointIndex = indexPoint;
+			lastPoint = point;
+		});
+		
 		
 		$.each(points, function( indexPoint, point ) {
 			

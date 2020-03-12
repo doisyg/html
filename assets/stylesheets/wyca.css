@@ -117,3 +117,18 @@ ul.tuiles li .tuile_img.is_checkbox.checked i.fa-spinner.fa-pulse { display:none
 .btn-circle { width: 30px; height: 30px; text-align: center; padding: 6px 0; font-size: 12px; line-height: 1.428571429; border-radius: 15px; }
 .btn-circle.btn-lg { width: 50px; height: 50px; padding: 10px 16px; font-size: 18px; line-height: 1.33; border-radius: 25px; }
 .btn-circle.btn-xl { width: 70px; height: 70px; padding: 10px 16px; font-size: 24px; line-height: 1.33; border-radius: 35px; }
+
+.menu_icon_touch .btn-circle.btn-lg { padding:0; }
+.menu_icon_touch .btn-lg i { font-size:30px; line-height:50px; }
+.menu_icon_touch .description { position: absolute; left: 60px; font-size: 14px; top: 10px; display: none; padding: 5px; background-color: rgba(255,255,255,0.5); border-radius:2px; }
+
+#install_by_step_edit_map_menu { z-index:1100; }
+#install_by_step_edit_map_zoom_carte { overflow:hidden; }
+
+.popupHelp { position:absolute; z-index:20000; background-color:rgba(255,255,255,0.8); top:0; left:0; right:0; bottom:0; display:none; padding:20px; }
+.popupHelp ul { list-style:none; margin:0; padding:50px 20px; }
+.popupHelp ul li { font-size:18px; padding:10px 0; border-bottom:1px solid #CCC; }
+.popupHelp ul li;first-child { border-top:1px solid #EEEEEE; }
+.popupHelp ul li i { font-size:24px; min-width:40px; }
+
+.secable { stroke:#589FB2; }

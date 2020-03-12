@@ -410,6 +410,7 @@ $(document).ready(function(e) {
 				dataType: 'json',
 				success: function(data) {
 					id_map_last = data.id_map;
+					id_map = data.id_map;
 									
 					forbiddens = data.forbiddens;
 					areas = data.areas;
@@ -481,6 +482,7 @@ $(document).ready(function(e) {
 			dataType: 'json',
 			success: function(data) {
 				id_map_last = data.id_map;
+				id_map = data.id_map;
 			  
 				$('#install_by_step_mapping_use .modalUseThisMapNowContentDetails').html(textStartAutonomous);
 			  	wycaApi.NavigationStart(true, function(r) {

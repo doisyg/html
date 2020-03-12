@@ -328,7 +328,6 @@ $(document).ready(function() {
 	$(document).on('touchstart', '#install_by_step_edit_map_svg .movable', function(e) {
 		if (currentAction != 'gomme')
 		{
-			console.log('touchstart movable');
 			touchStarted = true;
 			downOnMovable = true;
 			movableDown = $(this);
@@ -338,6 +337,45 @@ $(document).ready(function() {
 			canChangeMenu = false;
 			
 			blockZoom = true;
+		}
+    });
+	
+	$(document).on('touchstart', '#install_by_step_edit_map_svg .secable', function(e) {
+		if (currentAction = 'editForbiddenArea')
+		{
+			p = $('#install_by_step_edit_map_svg image').position();
+			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[e.changedTouches.length-1].pageX) - p.left;
+			y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[e.changedTouches.length-1].pageY) - p.top;
+			x = x * zoom;
+			y = ros_hauteur - (y * zoom);
+			
+			xRos = x * ros_resolution / 100;
+			yRos = y * ros_resolution / 100;
+			
+			tailleArea = 1*zoom;
+			tailleArea = 1;
+			
+			
+			forbiddens[currentForbiddenIndex].points.splice($(this).data('index_point'), 0, {x:xRos, y:yRos});
+			TraceForbidden(currentForbiddenIndex);
+		}
+		else if (currentAction = 'editArea')
+		{
+			p = $('#install_by_step_edit_map_svg image').position();
+			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[e.changedTouches.length-1].pageX) - p.left;
+			y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[e.changedTouches.length-1].pageY) - p.top;
+			x = x * zoom;
+			y = ros_hauteur - (y * zoom);
+			
+			xRos = x * ros_resolution / 100;
+			yRos = y * ros_resolution / 100;
+			
+			tailleArea = 1*zoom;
+			tailleArea = 1;
+			
+			
+			areas[currentAreaIndex].points.splice($(this).data('index_point'), 0, {x:xRos, y:yRos});
+			TraceArea(currentAreaIndex);
 		}
     });
 	
@@ -420,6 +458,30 @@ $(document).ready(function() {
 	$('#install_by_step_edit_map_zone_zoom_click').on('touchstart', function(e) {
        e.preventDefault();
 	   downOnZoomClick = true;
+	   
+	    w = $('#install_by_step_edit_map_zoom_carte').width();
+		h = $('#install_by_step_edit_map_zoom_carte').height();
+		
+		wZoom = $('#install_by_step_edit_map_zone_zoom').width();
+		hZoom = $('#install_by_step_edit_map_zone_zoom').height();
+		
+		r = document.getElementById("install_by_step_edit_map_zoom_carte_container").getBoundingClientRect();
+		
+		x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - r.left;
+		y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - r.top;
+		
+		x = x - wZoom / 2;
+		y = y - hZoom / 2;
+				
+		zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();
+		
+		largeur_img = ros_largeur / zoom
+		
+		x = - x / w * largeur_img;
+		y = - y / w * largeur_img;
+		
+		window.panZoom.pan({'x':x, 'y':y});
+	   
     });
 	$('#install_by_step_edit_map_zone_zoom_click').on('touchend', function(e) {
        e.preventDefault();
@@ -429,17 +491,17 @@ $(document).ready(function() {
        e.preventDefault();
 	   if (downOnZoomClick)
 	   {
-		   w = $('#install_by_step_edit_map_zoom_carte').width();
+		    w = $('#install_by_step_edit_map_zoom_carte').width();
 			h = $('#install_by_step_edit_map_zoom_carte').height();
 			
 			wZoom = $('#install_by_step_edit_map_zone_zoom').width();
 			hZoom = $('#install_by_step_edit_map_zone_zoom').height();
 			
-			p = $('#install_by_step_edit_map_zoom_carte_container').position();
-			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left + 15;
-			p = $('#install_by_step_edit_map_container_all').position();
-			y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top - 6;
-						
+			r = document.getElementById("install_by_step_edit_map_zoom_carte_container").getBoundingClientRect();
+		
+			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - r.left;
+			y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - r.top;
+			
 			x = x - wZoom / 2;
 			y = y - hZoom / 2;
 					
@@ -621,9 +683,9 @@ $(document).ready(function() {
 	});
 	
 	
-	$('#bGomme').click(function(e) {
+	$('#install_by_step_edit_map_menu .bGomme').click(function(e) {
         e.preventDefault();
-		
+		HideMenuPrincipal();
 		if ($('#bGomme').hasClass('btn-primary'))
 		{
 			blockZoom = false;
@@ -666,12 +728,63 @@ $(document).ready(function() {
 		}
     });
 	
-	$('#bAddForbiddenArea').click(function(e) {
+	$('#install_by_step_edit_map_menu .bAddForbiddenArea').click(function(e) {
         e.preventDefault();
+		HideMenuPrincipal();
 		if (canChangeMenu)
 		{
-			blockZoom = true;
+			//blockZoom = true;
+			nextIdArea++;
 			
+			p = $('#install_by_step_edit_map_svg image').position();
+			x = (eventTouchStart.originalEvent.targetTouches[0] ? eventTouchStart.originalEvent.targetTouches[0].pageX : eventTouchStart.originalEvent.changedTouches[e.changedTouches.length-1].pageX) - p.left;
+			y = (eventTouchStart.originalEvent.targetTouches[0] ? eventTouchStart.originalEvent.targetTouches[0].pageY : eventTouchStart.originalEvent.changedTouches[e.changedTouches.length-1].pageY) - p.top;
+			x = x * zoom;
+			y = ros_hauteur - (y * zoom);
+			
+			xRos = x * ros_resolution / 100;
+			yRos = y * ros_resolution / 100;
+			
+			tailleArea = 1*zoom;
+			tailleArea = 1;
+			
+			currentForbiddenPoints = Array();
+			currentForbiddenPoints.push({x:xRos - tailleArea, y:yRos - tailleArea});
+			currentForbiddenPoints.push({x:xRos + tailleArea, y:yRos - tailleArea});
+			currentForbiddenPoints.push({x:xRos + tailleArea, y:yRos + tailleArea});
+			currentForbiddenPoints.push({x:xRos - tailleArea, y:yRos + tailleArea});
+			
+			f = {'id_area':nextIdArea, 'id_map':id_map, 'nom':'', 'comment':'', 'is_forbidden':1, 'couleur_r':0, 'couleur_g':0, 'couleur_b':0, 'deleted':0, 'points':currentForbiddenPoints};
+			AddHistorique({'action':'add_forbidden', 'data':f});
+			
+			forbiddens.push(f);
+			TraceForbidden(forbiddens.length-1);
+			
+			RemoveClass('#install_by_step_edit_map_svg .active', 'active');
+			RemoveClass('#install_by_step_edit_map_svg .activ_select', 'activ_select'); 
+			
+			currentSelectedItem = Array();
+			currentSelectedItem.push({'type':'forbidden', 'id':nextIdArea});	
+			HideCurrentMenuNotSelect();			
+			
+			$('#boutonsForbidden').show();
+            $('#boutonsStandard').hide();
+			
+			$('#boutonsForbidden #bForbiddenDelete').show();
+			
+			$('body').removeClass('no_current select');
+			$('.select').css("strokeWidth", minStokeWidth);
+			
+			currentAction = 'editForbiddenArea';
+			currentStep = '';
+			
+			currentForbiddenIndex = GetForbiddenIndexFromID(nextIdArea);
+			forbidden = forbiddens[currentForbiddenIndex];
+			saveCurrentForbidden = JSON.stringify(forbidden);
+			
+			AddClass('#install_by_step_edit_map_svg .forbidden_elem_'+forbidden.id_area, 'active');
+			
+			/*
 			$('#boutonsForbidden').show();
             $('#boutonsStandard').hide();
 			
@@ -685,6 +798,7 @@ $(document).ready(function() {
 			
 			currentForbiddenPoints = Array();
 			currentForbiddenPoints.push({x:0, y:0}); // Point du curseur
+			*/
 		}
 		else
 			AvertCantChange();
@@ -709,7 +823,7 @@ $(document).ready(function() {
 			
 			currentForbiddenPoints.pop();
 			
-			f = {'id_area':nextIdArea, 'id_plan':id_plan, 'nom':'', 'comment':'', 'is_forbidden':1, 'couleur_r':0, 'couleur_g':0, 'couleur_b':0, 'deleted':0, 'points':currentForbiddenPoints};
+			f = {'id_area':nextIdArea, 'id_map':id_map, 'nom':'', 'comment':'', 'is_forbidden':1, 'couleur_r':0, 'couleur_g':0, 'couleur_b':0, 'deleted':0, 'points':currentForbiddenPoints};
 			AddHistorique({'action':'add_forbidden', 'data':f});
 			
 			forbiddens.push(f);
@@ -778,8 +892,9 @@ $(document).ready(function() {
 	});
 	
 	
-	$('#bAddArea').click(function(e) {
+	$('#install_by_step_edit_map_menu .bAddArea').click(function(e) {
         e.preventDefault();
+		HideMenuPrincipal();
 		if (canChangeMenu)
 		{
 			blockZoom = true;
@@ -861,7 +976,7 @@ $(document).ready(function() {
 			nextIdArea++;
 			
 			currentAreaPoints.pop();
-			a = {'id_area':nextIdArea, 'id_plan':id_plan, 'nom':'', 'comment':'', 'is_forbidden':0, 'couleur_r':87, 'couleur_g':159, 'couleur_b':177, 'deleted':0, 'points':currentAreaPoints, 'configs':Array()};
+			a = {'id_area':nextIdArea, 'id_map':id_map, 'nom':'', 'comment':'', 'is_forbidden':0, 'couleur_r':87, 'couleur_g':159, 'couleur_b':177, 'deleted':0, 'points':currentAreaPoints, 'configs':Array()};
 			AddHistorique({'action':'add_area', 'data':a});
 			
 			areas.push(a);
@@ -936,7 +1051,7 @@ $(document).ready(function() {
 				type: "post",
 				dataType: "json",
 				data: { 
-						'id_plan':id_plan,
+						'id_map':id_map,
 						'gommes':JSON.stringify(gommes),
 						'forbiddens':JSON.stringify(forbiddens),
 						'areas':JSON.stringify(areas),
@@ -947,7 +1062,7 @@ $(document).ready(function() {
 					},
 				success: function(data, textStatus, jqXHR) {
 						savedCanClose = true;
-						if (navLaunched && id_plan == current_id_plan)
+						if (navLaunched && id_map == current_id_map)
 						{
 							wycaApi.NavigationReloadMaps(function(e) { if (!e.success) console.error(e.error); });	
 						}
@@ -956,12 +1071,23 @@ $(document).ready(function() {
 		
     });
 	
+	$('#install_by_step_edit_map_menu .bAddDock').click(function(e) {
+        e.preventDefault();
+		HideMenuPrincipal();
+		if (canChangeMenu)
+		{
+			alert('disoplay choix form pose ou click');
+		}
+		else
+			AvertCantChange();
+	});
+	
 	$('#bDockCreateFromPose').click(function(e) {
 		nextIdDock++;
 		
 		dockPosition = GetDockPosition(lastRobotPose);
 		
-		d = {'id_station_recharge':nextIdDock, 'id_plan':id_plan, 'x_ros':dockPosition.x, 'y_ros':dockPosition.y, 't_ros':dockPosition.theta, 'num':0};
+		d = {'id_station_recharge':nextIdDock, 'id_map':id_map, 'x_ros':dockPosition.x, 'y_ros':dockPosition.y, 't_ros':dockPosition.theta, 'num':0};
 		AddHistorique({'action':'add_dock', 'data':d});
         docks.push(d);
 		TraceDock(docks.length-1);
@@ -1000,7 +1126,7 @@ $(document).ready(function() {
 			canChangeMenu = true;
 			
 			nextIdDock++;
-			d = {'id_station_recharge':nextIdDock, 'id_plan':id_plan, 'x_ros':currentDockPose.x_ros, 'y_ros':currentDockPose.y_ros, 't_ros':currentDockPose.t_ros, 'num':0};
+			d = {'id_station_recharge':nextIdDock, 'id_map':id_map, 'x_ros':currentDockPose.x_ros, 'y_ros':currentDockPose.y_ros, 't_ros':currentDockPose.t_ros, 'num':0};
 			AddHistorique({'action':'add_dock', 'data':d});
 			
 			docks.push(d);
@@ -1123,9 +1249,20 @@ $(document).ready(function() {
 		}
 	});
 	
+	$('#install_by_step_edit_map_menu .bAddPOI').click(function(e) {
+        e.preventDefault();
+		HideMenuPrincipal();
+		if (canChangeMenu)
+		{
+			alert('disoplay choix form pose ou click');
+		}
+		else
+			AvertCantChange();
+	});
+	
 	$('#bPoiCreateFromPose').click(function(e) {
 		nextIdPoi++;
-		p = {'id_poi':nextIdPoi, 'id_plan':id_plan, 'x_ros':lastRobotPose.x, 'y_ros':lastRobotPose.y, 't_ros':lastRobotPose.theta, 'name':'POI'};
+		p = {'id_poi':nextIdPoi, 'id_map':id_map, 'x_ros':lastRobotPose.x, 'y_ros':lastRobotPose.y, 't_ros':lastRobotPose.theta, 'name':'POI'};
 		AddHistorique({'action':'add_poi', 'data':p});
         pois.push(p);
 		TracePoi(pois.length-1);
@@ -1193,7 +1330,7 @@ $(document).ready(function() {
 			canChangeMenu = true;
 			
 			nextIdPoi++;
-			p = {'id_poi':nextIdPoi, 'id_plan':id_plan, 'x_ros':currentPoiPose.x_ros, 'y_ros':currentPoiPose.y_ros, 't_ros':currentPoiPose.t_ros, 'name':$('#poi_name').val()};
+			p = {'id_poi':nextIdPoi, 'id_map':id_map, 'x_ros':currentPoiPose.x_ros, 'y_ros':currentPoiPose.y_ros, 't_ros':currentPoiPose.t_ros, 'name':$('#poi_name').val()};
 			AddHistorique({'action':'add_poi', 'data':p});
 			
 			pois.push(p);
@@ -1319,25 +1456,16 @@ $(document).ready(function() {
 			
 			zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();		
 			p = $('#install_by_step_edit_map_svg image').position();
-			console.log('p', p);
 			
 			x = poi.x_ros * 100 / 5;
 			y = poi.y_ros * 100 / 5;
 			
-			
-			console.log('x1', x);
-			
 			x = x / zoom;
-			
-			console.log('x2', x);
 			y = (ros_hauteur - y) / zoom;
 			
 			x = x + p.left;
 			y = y + p.top;
 			
-			
-			console.log('x3', x);
-			console.log('x3', x- $('#boutonsRotate').width()/2);
 			$('#boutonsRotate').css('left', x - $('#boutonsRotate').width()/2);
 			$('#boutonsRotate').css('top', y - 60);
 			$('#boutonsRotate').show();
@@ -1725,7 +1853,6 @@ $(document).ready(function() {
 			zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();
 			if (downOnMovable)
 			{
-				console.log('touchmove mobable', movableDown.data('element_type'));
 			   if (movableDown.data('element_type') == 'dock')
 			   {
 				   e.preventDefault();
@@ -2202,19 +2329,19 @@ function RefreshZoomView()
 	
 	zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();
 	
-	wZoom = $('#zoom_carte').width();
-	hZoom = $('#zoom_carte').height();
+	wZoom = $('#install_by_step_edit_map_zoom_carte').width();
+	hZoom = $('#install_by_step_edit_map_zoom_carte').height();
 	
 	wNew = 0;
 	hNew = 0;
 	tNew = 0;
 	lNew = 0;
 	
-	if (pImg.left > 0)
+	if (false && pImg.left > 0)
 		lNew = 0;
 	else
 		lNew = -(pImg.left*zoom) / ros_largeur * wZoom;
-	if (pImg.top > 0)
+	if (false && pImg.top > 0)
 		tNew = 0;
 	else
 		tNew = -(pImg.top*zoom) / ros_largeur * wZoom;
@@ -2222,14 +2349,14 @@ function RefreshZoomView()
 	hNew = $('#install_by_step_edit_map_svg').height() * zoom  / ros_largeur * wZoom;
 	wNew = $('#install_by_step_edit_map_svg').width() * zoom  / ros_largeur * wZoom;
 	
-	if (tNew + hNew > hZoom) hNew = hZoom - tNew;
-	if (lNew + wNew > wZoom) wNew = wZoom - lNew;
+	//if (tNew + hNew > hZoom) hNew = hZoom - tNew;
+	//if (lNew + wNew > wZoom) wNew = wZoom - lNew;
 		
-	$('#zone_zoom').width(wNew);
-	$('#zone_zoom').height(hNew);
+	$('#install_by_step_edit_map_zone_zoom').width(wNew);
+	$('#install_by_step_edit_map_zone_zoom').height(hNew);
 				
-	$('#zone_zoom').css('top', tNew - 1);
-	$('#zone_zoom').css('left', lNew - 1);
+	$('#install_by_step_edit_map_zone_zoom').css('top', tNew - 1);
+	$('#install_by_step_edit_map_zone_zoom').css('left', lNew - 1);
 	
 }
 

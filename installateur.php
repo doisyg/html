@@ -369,13 +369,27 @@ $INSTALL_STEP = Configuration::GetValue('INSTALL_STEP');
                         <div style="clear:both;"></div>
                     </div>
                     
-                    <div id="install_by_step_edit_map_menu" style="position:absolute; left:50%; top:50%;">
+                    <div id="install_by_step_edit_map_menu" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
-                        	<li><a href="#" class="btn btn-circle btn-default"><i class="fa fa-ban"></i></a></li>
-                        	<li><a href="#" class="btn btn-circle btn-default"><i class="fa fa-square"></i></a></li>
-                        	<li><a href="#" class="btn btn-circle btn-default"><i class="fa fa-map-marker"></i></a></li>
-                        	<li><a href="#" class="btn btn-circle btn-default"><i class="fa fa-flash"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddForbiddenArea"><i class="fa fa-ban"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddArea"><i class="fa fa-square"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddPOI"><i class="fa fa-map-marker"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddDock"><i class="fa fa-flash"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bGomme"><i class="fa fa-eraser"></i></a></li>
                         </ul>
+                    </div>
+                    
+                    <div class="popupHelp">
+                    	<h2>Help</h2>
+                    	<ul>
+                        	<li><i class="fa fa-ban"></i><span class="description">Add forbidden area</span></li>
+                        	<li><i class="fa fa-square"></i><span class="description">Add custom area</span></li>
+                        	<li><i class="fa fa-map-marker"></i><span class="description">Add POI</span></li>
+                        	<li><i class="fa fa-flash"></i><span class="description">Add docking station</span></li>
+                        	<li><i class="fa fa-eraser"></i><span class="description">Erase pixel</span></li>
+                        </ul>
+                        
+                        <p>Click to hide</p>
                     </div>
                     
                     
