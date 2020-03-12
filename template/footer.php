@@ -25,13 +25,15 @@
         <script src="<?php echo $_CONFIG['URL'];?>assets/vendor/svg-pan-zoom/svg-pan-zoom.js"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/svg-pan-zoom/hammer.js"></script>
 
-		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/plugins.js?v=20200204"></script>
-		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/joystick.js?v=20200204"></script>
-		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/robot.js?v=20200204"></script>
-		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/wyca.js?v=20200304"></script>
-		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/map.js?v=20200304"></script>
-		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/map_actions.js?v=20200304"></script>
-		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/map_svg.js?v=20200304"></script>
+		<?php $lastUpdate = '20200312';?>
+
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/plugins.js?v=<?php echo $lastUpdate;?>"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/joystick.js?v=<?php echo $lastUpdate;?>"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/robot.js?v=<?php echo $lastUpdate;?>"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/wyca.js?v=<?php echo $lastUpdate;?>"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/map.js?v=<?php echo $lastUpdate;?>"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/map_actions.js?v=<?php echo $lastUpdate;?>"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/map_svg.js?v=<?php echo $lastUpdate;?>"></script>
         
         <script>
 		$(document).ready(function(e) {
