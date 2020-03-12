@@ -2135,6 +2135,9 @@ $(document).ready(function() {
 		if (downOnMovable)
 		{
 			downOnMovable = false;
+			touchStarted = false;
+			blockZoom = false;
+			
 			if (movableDown.data('element_type') == 'forbidden')
 			{
 				TraceForbidden(GetForbiddenIndexFromID(movableDown.data('id_area')));

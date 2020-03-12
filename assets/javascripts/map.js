@@ -189,6 +189,18 @@ $(document).ready(function(e) {
 		}
 	});
 	$('#install_by_step_edit_map_svg').on('touchstart', function(e) {
+		
+		if (timerLongPress != null)
+		{
+			clearTimeout(timerLongPress);
+			timerLongPress = null;
+		}
+		if (timerVeryLongPress != null)
+		{
+			clearTimeout(timerVeryLongPress);
+			timerVeryLongPress = null;
+		}
+		
 		if (currentAction == 'select' || currentAction == '')
 		{
 			timerLongPress = setTimeout(LongPressSVG, 500);
@@ -219,6 +231,7 @@ $(document).ready(function(e) {
 function HideMenuPrincipal()
 {
 	$('#install_by_step_edit_map_menu li').hide();
+	$('.popupHelp').hide();
 }
 
 function LongVeryPressSVG()
