@@ -10,9 +10,9 @@
 
 
 <a href="#" id="bTestLatency">Test latency</a>
-<a href="#" id="bTestLatencyHigh">Test High</a>
+<a href="#" id="bTestLatencyWait">Test Wait</a>
 
-<div id="log">
+<div id="log" style="max-height:500px; overflow:auto;">
 
 </div>
 
@@ -37,31 +37,12 @@ var nbTest = 0;
 var totalTest = 0;
 var minTest = 100000;
 var maxTest = 0;
-
-var indexHigh = 0;
-function High()
-{
-	indexHigh++;
-	if (indexHigh > 100)
-	{
-		setTimeout(function() {
-			$('#log').html($('#log').html() + 'Min : ' + minTest + ' ms<br />');
-			$('#log').html($('#log').html() + 'Max : ' + maxTest + ' ms<br />');
-			moy = (totalTest / nbTest);
-			$('#log').html($('#log').html() + 'Moyenne : ' + moy  + ' ms<br />');
-		}, 1000);
-	}
-	else
-	{
-		StartLantency();
-		setTimeout(High, 10);
-	}
-}
+var started = false;
 
 
 $(document).ready(function(e) {
 	wycaApi = new WycaAPI({
-		host:'192.168.0.18:9095', // host:'192.168.100.245:9090',
+		host:'elodie.wyca-solutions.com:9095', // host:'192.168.100.245:9090',
 		nick:'robot',
 		onRobotConnexionError: function(data){
 			connectedToTheRobot = false;
@@ -77,11 +58,7 @@ $(document).ready(function(e) {
 		},
 		onLatencyReturn: function(data){
 			var timeReturn = new Date().getTime();
-			console.log(timeReturn);
 			data = parseInt(data/1000000);
-			console.log(data);
-			
-			console.log("toto");
 			elapse = timeReturn - data;
 			nbTest++;
 			totalTest += elapse;
@@ -141,14 +118,30 @@ $(document).ready(function(e) {
 	wycaApi.init();	
 	
 	$('#bTestLatency').click(function(e) {
-        e.preventDefault();
+        	e.preventDefault();
 		StartLantency();
-    });
+
+		if (!started)
+		{
+			started = true;
+			nbTest = 0;
+			totalTest = 0;
+			minTest = 100000;
+			maxTest = 0;
+		}
+		else
+		{
+			setTimeout(function() {
+				$('#log').html($('#log').html() + 'Min : ' + minTest + ' ms<br />');
+				$('#log').html($('#log').html() + 'Max : ' + maxTest + ' ms<br />');
+				moy = (totalTest / nbTest);
+				$('#log').html($('#log').html() + 'Moyenne : ' + moy  + ' ms<br />');
+			}, 1000);
+		}
+	 });
 	
-	$('#bTestLatencyHigh').click(function(e) {
-        e.preventDefault();
-		indexHigh = 0;
-		High();
-    });
+	$('#bTestLatencyWait').click(function(e) {
+        	wycaApi.LatencyWait(function(e) { console.log('retour_service', e);});
+	});
 });
 </script>

@@ -208,7 +208,7 @@ function WycaAPI(options){
 	
 	this.Subscribe = function()
 	{
-		if (_this.options.onLatencyReturn != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: 'latency_return'}; _this.ws.send(JSON.stringify(subscribe)); }
+		if (_this.options.onLatencyReturn != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'latency_return', throttle_rate:1 }}; _this.ws.send(JSON.stringify(subscribe)); }
 		
 		
 		
@@ -265,4 +265,16 @@ function WycaAPI(options){
 		};
 		_this.ws.send(JSON.stringify(action));
 	}
+
+	this.LatencyWait = function(callback){
+		this.idMessage++;
+		if (callback != undefined)
+			this.callbacks[this.idMessage] = callback;
+		var action = {
+			op: 'LatencyWait',
+			id : _this.idMessage
+		};
+		_this.ws.send(JSON.stringify(action));
+	}
+
 }
