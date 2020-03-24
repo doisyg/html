@@ -220,7 +220,7 @@ include ('template/header.php');
                     
                     	 <form method="post" enctype="multipart/form-data">
                         	<input type="hidden" name="todo" value="uplaodMap" />
-                            <input type="text" id="form_mapping_name" required="required" name="nom" placeholder="<?php echo __('Map name')?>" class="form-control" style="margin-bottom:20px;" />
+                            <input type="text" required="required" name="nom" placeholder="<?php echo __('Map name')?>" class="form-control" style="margin-bottom:20px;" />
                             <input type="file" class="form-control" name="image_upload" />
                             
                             <button type="submit" class="btn btn-primary" style="margin-top:30px;">Upload</button>
@@ -364,13 +364,13 @@ include ('template/header.php');
 
 <script>
 optionsWyca = {
-        onMappingRobotPoseChange: function(data){
+        onMappingRobotPoseInBuildingMap: function(data){
             mappingLastPose = data;
             InitPosCarteMapping();
 		},
-        onMapInConstruction: function(data){
+        onMappingMapInConstruction: function(data){
             var img = document.getElementById("img_map_saved");
-            img.src = 'data:image/png;base64,' + data.map_trinary.data;
+            img.src = 'data:image/png;base64,' + data.map_trinary;
             mappingLastOrigin = {'x':data.x_origin, 'y':data.y_origin };
 			
 			/*
@@ -743,9 +743,9 @@ function NextTimerCreateMap()
 		wycaApi.MappingStop(function(data) {
 			$('#loading_fin_create_map').hide();
 			var img = document.getElementById("img_fin_map_saved");
-            img.src = 'data:image/png;base64,' + data.final_map.data;
+            img.src = 'data:image/png;base64,' + data.final_map;
 			
-			finalMapData = 'data:image/png;base64,' + data.final_map.data;
+			finalMapData = 'data:image/png;base64,' + data.final_map;
 			
 			setTimeout(function() {
 				canvas = document.createElement('canvas');

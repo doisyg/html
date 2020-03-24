@@ -47,47 +47,9 @@ window.addEventListener('resize', () => {
 $(document).ready(function(e) {
 	
 	var optionsDefault = {
-		api_key:'5LGU.LaYMMncJaA0i42HwsX9ZX-RCNgj-9V17ROFXt71st',
-		id_robot:3,
-		host:'elodie.wyca-solutions.com:9090', //192.168.1.32:9090', // host:'192.168.100.245:9090',
-		//host:'192.168.0.17:9090',
-		video_element_id:'webcam_local',
-		webcam_name: 'r200 nav',
+		host:robot_host, //192.168.1.32:9090', // host:'192.168.100.245:9090',
+		api_key:user_api_key,
 		nick:'robot',
-		delay_no_reply : 30,
-		delay_lost_connexion : 30,
-		with_audio: true,
-		with_video: true,
-		onSessionClosed: function (){
-			in_visio = false;
-		},
-		onNewServerMessage: function (message){
-			if (message != '' && message.message != undefined)
-			{
-				if (message.message.substr(0,3) != 'ACK') wycaApi.SendServerMessageToServer(message.from, 'ACK_'+message.message);
-				
-				data = message.message.split('|')
-				switch(data[0])
-				{
-					case 'StartCall':
-						if (!in_visio)
-						{
-							$('#popupRemoteControl').show();
-							wycaApi.SetRoom(data[1]);
-							in_visio = true;
-							initStateRobot(robotCurrentState);
-							wycaApi.StartWebRTC(true);
-						}
-						break;
-					case 'CloseSession':
-						break;
-				}
-			}
-		},
-		onEquipmentError: function(){
-			wycaApi.StartCloseWebRTC();
-			alert('No webcam or microphone');
-		},
 		onRobotConnexionError: function(data){
 			console.log('erreur');
 			$('#icoConnected i').removeClass('battery-ok battery-mid battery-ko blinking');
@@ -105,20 +67,20 @@ $(document).ready(function(e) {
 		},
 		onInitialized: function(){
 		},
-        onIsPoweredChange: function(data){
+        onIsPowered: function(data){
             initPoweredState(data);
         },
-        onSOCChange: function(data){
+        onRelativeSOCPercentage: function(data){
 			initBatteryState(data);
         },
-        onIsSafetyStopChange: function(data){
+        onIsSafetyStop: function(data){
             if (data)
                 $('.safety_stop').show();
             else
                 $('.safety_stop').hide();
             lastEStop = data;
         },
-		onNavigationStateChange: function(data) {
+		onNavigationIsStarted: function(data) {
 			navLaunched = data;
 			if (data)
 			{
@@ -131,10 +93,10 @@ $(document).ready(function(e) {
 				$('.only_navigation').hide();
 			}
 		},
-		onMappingStateChange: function(data) {
+		onMappingIsStarted: function(data) {
 			mappingLaunched = data;
 		},
-		onRobotPoseChange:function(pose){
+		onNavigationRobotPose:function(pose){
 			lastRobotPose = pose;
 			InitRobotPose(pose);
 		}
@@ -173,11 +135,11 @@ $(document).ready(function(e) {
     });
 	$('#bUndockJoystick').click(function(e) {
         e.preventDefault();
-		wycaApi.RobotUndock( function (r) { console.log(r);});
+		wycaApi.Undock( function (r) { console.log(r);});
     });
 	$('#bDockJoystick').click(function(e) {
         e.preventDefault();
-		wycaApi.RobotDock( function (r) { console.log(r);});
+		wycaApi.Dock(-1, function (r) { console.log(r);});
     });
 	$('#bGotoAutonomousNavigation').click(function(e) {
         e.preventDefault();
@@ -293,13 +255,13 @@ $(document).ready(function(e) {
 		switch(an_confirm_action)
 		{
 			case 'goto_poi':
-				wycaApi.RobotMoveTo(an_confirm_details);
+				wycaApi.GoToPose(an_confirm_details.x, an_confirm_details.y, an_confirm_details.theta);
 				break;
 			case 'goto_dock':
 				alert('Not available for the moment');
 				break;
 			case 'goto_pose':
-				wycaApi.RobotMoveTo(an_confirm_details);
+				wycaApi.GoToPose(an_confirm_details.x, an_confirm_details.y, an_confirm_details.theta);
 				break;
 		}
 		
@@ -478,7 +440,7 @@ function EnableJoystick(enable)
 function SendJoystickOn()
 {
 	if (robotCurrentState == 'undocked' || robotCurrentState == '')
-		wycaApi.JoystickIsSafeOff(false);
+		wycaApi.TeleopOff(false);
 }
 
 

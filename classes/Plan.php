@@ -196,7 +196,8 @@ class Plan extends PlanCore
 			$file->is_file = 0;
 			$file->name = '';
 		}
-			
+		
+		$content = base64_decode($this->image_tri);
 		try
 		{
 			if (class_exists('Imagick'))

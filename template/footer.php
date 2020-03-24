@@ -81,6 +81,8 @@
         
         <script>
 		var lang = '<?php echo $_COOKIE['lang'];?>';
+		var robot_host = '<?php echo (file_exists('C:\\'))?'192.168.0.30:9095':'elodie.wyca-solutions.com:9095';?>';
+		var user_api_key = '<?php echo $userConnected->api_key;?>';
 		</script>
 
 		<!-- Vendor -->
@@ -147,9 +149,12 @@
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/theme.init.js"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/joystick.js?v=20200227"></script>
         
+        <!--
 		<script src="<?php echo $_CONFIG['URL_API'];?>extern/roslib.js"></script>
         <script src="<?php echo $_CONFIG['URL_API'];?>webrtc.wyca2.min.js"></script>
         <script src="<?php echo $_CONFIG['URL_API'];?>wyca_api.latest.min.php?api_key=5LGU.LaYMMncJaA0i42HwsX9ZX-RCNgj-9V17ROFXt71st&v=20191127"></script>
+        -->
+        <script src="<?php echo $_CONFIG['URL_API'];?>wyca_socket_api.js"></script>
         
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/wyca.js?v=20200204"></script>
         

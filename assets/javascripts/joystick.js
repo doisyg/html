@@ -16,55 +16,10 @@ var nbCall = 0;
 
 var isDown = false;
 
-/*	
-function RefreshJoystickOn()
-{
-	if ($('.bToggleJosytick i').hasClass('fa-toggle-off'))
-	{
-		//wycaApi.JoystickIsSafeOff(true); Retour auto
-	}
-	else
-	{
-		wycaApi.JoystickIsSafeOff(false);
-	}
-}
-
-function StopJoystickEnable()
-{
-	if ($('.bToggleJosytick i').hasClass('fa-toggle-on'))
-	{
-		$('.bToggleJosytick i').removeClass('fa-toggle-on')
-		$('.bToggleJosytick i').addClass('fa-toggle-off')
-	}
-}
-*/
-
 $(document).ready(function(e) {
     
 	SetCurseurV2(xCentre, yCentre);
 	
-	/*
-	$('.bToggleJosytick').click(function(e) {
-        e.preventDefault();
-		
-		if ($('.bToggleJosytick i').hasClass('fa-toggle-off'))
-		{
-			$('.bToggleJosytick i').removeClass('fa-toggle-off')
-			$('.bToggleJosytick i').addClass('fa-toggle-on')
-			
-			//wycaApi.SetJoystickOn(true);
-		}
-		else
-		{
-			$('.bToggleJosytick i').removeClass('fa-toggle-on')
-			$('.bToggleJosytick i').addClass('fa-toggle-off')
-			
-			//wycaApi.SetJoystickOn(false);
-		}
-		
-    });
-	*/
-		
 	$('.joystickDiv .curseur').mousedown(function(e){
 		e.preventDefault();
 		isDown = true;
@@ -78,19 +33,6 @@ $(document).ready(function(e) {
 		if(isDown)
 			SetCurseurV2(e.pageX, e.pageY);
 	});
-	/*
-	$('.joystickDiv').mousemove(function(e) {
-		if(isDown)
-		{
-			SetCurseurV2(e.pageX, e.pageY);
-		}
-	});
-	/*
-	$('.joystickDiv').mouseout(function(){
-		isDown = false;
-		SetCurseurV2(xCentre, yCentre);
-	});
-	*/
 	
 	$('.joystickDiv .curseur').on('touchmove', function(e){
 		isDown = true;
@@ -191,13 +133,13 @@ function SendCommande()
 		if (nbCall0 < 5)
 		{
 			nbCall0++;
-			wycaApi.TeleopRobot(lastValueX * -0.5, lastValueY * -1.2);
+			wycaApi.Teleop(lastValueX * -0.5, lastValueY * -1.2);
 		}
 	}
 	else if (isDown)
 	{
 		nbCall0 = 0;
-		wycaApi.TeleopRobot(lastValueX * -0.5, lastValueY * -1.2);
+		wycaApi.Teleop(lastValueX * -0.5, lastValueY * -1.2);
 	}
 }
 

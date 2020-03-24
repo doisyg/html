@@ -949,7 +949,7 @@ $(document).ready(function() {
 						savedCanClose = true;
 						if (navLaunched && id_plan == current_id_plan)
 						{
-							wycaApi.NavigationReloadMaps(function(e) { if (!e.success) console.error(e.error); });	
+							wycaApi.ReloadMaps(function(e) { if (!e.success) console.error(e.error); });	
 						}
 					}
 			});
