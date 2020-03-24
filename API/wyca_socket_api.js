@@ -62,12 +62,13 @@ function WycaAPI(options){
 	this.timeoutReconnect = null;
 	this.idMessage = 0;
 	this.callbacks = Array();
+	this.authentificated = false;
 	
 	_this = this;
 	
 	jQuery.ajax({
-		url: _this.options.serveurWyca+'API/webservices/v1.0/json/pcConfig',
-		type: "get",
+		url: _this.options.serveurWyca+'API/webservices/v1.0/json/connection',
+		type: "post",
 		timeout: 15000,
 		beforeSend: function(x) {
 			x.setRequestHeader ("Authorization", "Basic " + btoa(_this.options.api_key + ':'));
@@ -76,34 +77,64 @@ function WycaAPI(options){
 			throw new Error('WycaAPI check API KEY error')
 			},
 		success: function(data, textStatus, jqXHR) {
-				if (data != '')
-				{
-					pc_config = jQuery.parseJSON(data);
-					//if (isStarted) _this.StartWebRTC();
+				authentificated = true;
+				if (_this.socketStarted)
+				{	
+					jQuery.ajax({
+						url: 'https://elodie.wyca-solutions.com/API/webservices/v1.0/json/robot/getHash',
+						type: "get",
+						timeout: 15000,
+						beforeSend: function(x) {
+							x.setRequestHeader ("Authorization", "Basic " + btoa(_this.options.api_key + ':'));
+						},
+						async: true,
+						data: { },
+						error: function(jqXHR, textStatus, errorThrown) {
+						},
+						success: jQuery.proxy(function(data, textStatus, jqXHR) {
+							donnees = JSON.parse(data);
+						
+							var auth = {
+								op : 'auth',
+								id : ++_this.idMessage,
+								data: donnees
+							  };		
+							
+							_this.ws.send(JSON.stringify(auth));					
+						}, this)
+					});
 				}
-				else
-				{
-					throw new Error('WycaAPI API KEY not valid')
-				}
+				
+				jQuery.ajax({
+					url: _this.options.serveurWyca+'API/webservices/v1.0/json/pcConfig',
+					type: "get",
+					timeout: 15000,
+					beforeSend: function(x) {
+						x.setRequestHeader ("Authorization", "Basic " + btoa(_this.options.api_key + ':'));
+					},
+					error: function(jqXHR, textStatus, errorThrown) {
+						throw new Error('WycaAPI check API KEY error')
+						},
+					success: function(data, textStatus, jqXHR) {
+							if (data != '')
+							{
+								pc_config = jQuery.parseJSON(data);
+								//if (isStarted) _this.StartWebRTC();
+							}
+							else
+							{
+								throw new Error('WycaAPI API KEY not valid')
+							}
+						}
+				});
 			}
 	});
 	
+	
+	
 	this.init = function (){
 		
-		if (this.options.nick == 'robot')
-		{
-			if ("WebSocket" in window) {
-				this.ws = new WebSocket('wss://'+this.options.host);
-			} else if ("MozWebSocket" in window) {
-				this.ws = new MozWebSocket('wss://'+this.options.host);
-			} else {
-				throw new Error('This Browser does not support WebSockets')
-			}
-			this.ws.onopen = jQuery.proxy(this.wsOnOpen, this);
-			this.ws.onerror = jQuery.proxy(this.wsOnError, this);
-			this.ws.onclose = jQuery.proxy(this.wsOnClose , this);
-			this.ws.onmessage = jQuery.proxy(this.wsOnMessage , this);
-		}
+		this.Connect();
 	};
 	
 	this.wsOnOpen = function(e)
@@ -115,26 +146,32 @@ function WycaAPI(options){
 			this.options.onRobotConnexionOpen();
 		}
 		
-		jQuery.ajax({
-			url: 'https://elodie.wyca-solutions.com/API/webservices/v1.0/json/robot/getHash',
-			type: "get",
-			timeout: 15000,
-			async: true,
-			data: { },
-			error: function(jqXHR, textStatus, errorThrown) {
-			},
-			success: jQuery.proxy(function(data, textStatus, jqXHR) {
-				donnees = JSON.parse(data);
-			
-				var auth = {
-					op : 'auth',
-					id : ++_this.idMessage,
-					params: donnees
-				  };		
+		if (authentificated)
+		{	
+			jQuery.ajax({
+				url: 'https://elodie.wyca-solutions.com/API/webservices/v1.0/json/robot/getHash',
+				type: "get",
+				timeout: 15000,
+				beforeSend: function(x) {
+					x.setRequestHeader ("Authorization", "Basic " + btoa(_this.options.api_key + ':'));
+				},
+				async: true,
+				data: { },
+				error: function(jqXHR, textStatus, errorThrown) {
+				},
+				success: jQuery.proxy(function(data, textStatus, jqXHR) {
+					donnees = JSON.parse(data);
 				
-				_this.ws.send(JSON.stringify(auth));					
-			}, this)
-		});
+					var auth = {
+						op : 'auth',
+						id : ++_this.idMessage,
+						data: donnees
+					  };		
+					
+					_this.ws.send(JSON.stringify(auth));					
+				}, this)
+			});
+		}
 	}
 	
 	this.wsOnError = function(error)
@@ -148,7 +185,7 @@ function WycaAPI(options){
 		}
 		
 		if (_this.timeoutReconnect == null)
-			_this.timeoutReconnect = setTimeout(_this.RosReconnect, 1000);
+			_this.timeoutReconnect = setTimeout(_this.Connect, 1000);
 	}
 	
 	this.wsOnClose = function(e)
@@ -161,7 +198,7 @@ function WycaAPI(options){
 		}
 		
 		if (_this.timeoutReconnect == null)
-			_this.timeoutReconnect = setTimeout(_this.RosReconnect, 1000);
+			_this.timeoutReconnect = setTimeout(_this.Connect, 1000);
 	}
 	
 	this.wsOnMessage = function(e)
@@ -175,19 +212,106 @@ function WycaAPI(options){
 				break;
 			/********** Services *********/
 			case 'LatencyStart_return':
-				if (this.callbacks[this.idMessage] !=undefined) { delete data.op; delete data.id; this.callbacks[this.idMessage](data); }
-				break;
-			/********** Topics *********/
-			case 'latency_return':
-				if (_this.options.onLatencyReturn != undefined) { _this.options.onLatencyReturn(data.params); }
+			case 'LatencyWait_return':
+			case 'MappingIsStarted_return':
+			case 'MappingStart_return':
+			case 'MappingStop_return':
+			case 'NavigationIsStarted_return':
+			case 'NavigationStart_return':
+			case 'NavigationStop_return':
+			case 'RefreshFreewheelState_return':
+			case 'RefreshSafetyStop_return':
+			case 'GetDockingState_return':
+			case 'GoToPose_return':
+			case 'Dock_return':
+			case 'Undock_return':
+			case 'ReloadMaps_return':
+			case 'GetRobotPose_return':
+				if (_this.callbacks[data.id] !=undefined) { id_mes = data.id; delete data.op; delete data.id; _this.callbacks[id_mes](data); }
 				break;
 			/********** Actions *********/
+			case 'GoToPose_feedback':
+				if (_this.options.onGoToPoseFeedback != undefined) { delete data.op; delete data.id; _this.options.onGoToPoseFeedback(data); }
+				break;
+			case 'GoToPose_result':
+				if (_this.options.onGoToPoseResult != undefined) { delete data.op; delete data.id; _this.options.onGoToPoseResult(data); }
+				break;
+			case 'Dock_feedback':
+				if (_this.options.onDockFeedback != undefined) { delete data.op; delete data.id; _this.options.onDockFeedback(data); }
+				break;
+			case 'Dock_result':
+				if (_this.options.onDockResult != undefined) {delete data.op; delete data.id;  _this.options.onDockResult(data); }
+				break;
+			case 'Undock_feedback':
+				if (_this.options.onUndockFeedback != undefined) { delete data.op; delete data.id; _this.options.onUndockFeedback(data); }
+				break;
+			case 'Undock_result':
+				if (_this.options.onUndockResult != undefined) { delete data.op; delete data.id; _this.options.onUndockResult(data); }
+				break;
+			/********** Topics *********/
+			case 'onLatencyReturn':
+				if (_this.options.onLatencyReturn != undefined) { _this.options.onLatencyReturn(data.data); }
+				break;
+			case 'onCurrentA':
+				if (_this.options.onCurrentA != undefined) { _this.options.onCurrentA(data.data); }
+				break;
+			case 'onIsPowered':
+				if (_this.options.onIsPowered != undefined) { _this.options.onIsPowered(data.data); }
+				break;
+			case 'onRelativeSOCPercentage':
+				if (_this.options.onRelativeSOCPercentage != undefined) { _this.options.onRelativeSOCPercentage(data.data); }
+				break;
+			case 'onRemainingCapacity':
+				if (_this.options.onRemainingCapacity != undefined) { _this.options.onRemainingCapacity(data.data); }
+				break;
+			case 'onTimeRemainingToEmptyMin':
+				if (_this.options.onTimeRemainingToEmptyMin != undefined) { _this.options.onTimeRemainingToEmptyMin(data.data); }
+				break;
+			case 'onTimeRemainingToFullMin':
+				if (_this.options.onTimeRemainingToFullMin != undefined) { _this.options.onTimeRemainingToFullMin(data.data); }
+				break;
+			case 'onLedCurrentAnimationMode':
+				if (_this.options.onLedCurrentAnimationMode != undefined) { _this.options.onLedCurrentAnimationMode(data.data); }
+				break;
+			case 'onLedCurrentRobotStateMode':
+				if (_this.options.onLedCurrentRobotStateMode != undefined) { _this.options.onLedCurrentRobotStateMode(data.data); }
+				break;
+			case 'onLedIsLightMode':
+				if (_this.options.onLedIsLightMode != undefined) { _this.options.onLedIsLightMode(data.data); }
+				break;
+			case 'onLedIsManualMode':
+				if (_this.options.onLedIsManualMode != undefined) { _this.options.onLedIsManualMode(data.data); }
+				break;
+			case 'onMappingIsStarted':
+				if (_this.options.onMappingIsStarted != undefined) { _this.options.onMappingIsStarted(data.data); }
+				break;
+			case 'onMappingMapInConstruction':
+				if (_this.options.onMappingMapInConstruction != undefined) { _this.options.onMappingMapInConstruction(data.data); }
+				break;
+			case 'onMappingRobotPoseInBuildingMap':
+				if (_this.options.onMappingRobotPoseInBuildingMap != undefined) { _this.options.onMappingRobotPoseInBuildingMap(data.data); }
+				break;
+			case 'onNavigationIsStarted':
+				if (_this.options.onNavigationIsStarted != undefined) { _this.options.onNavigationIsStarted(data.data); }
+				break;
+			case 'onNavigationRobotPose':
+				if (_this.options.onNavigationRobotPose != undefined) { _this.options.onNavigationRobotPose(data.data); }
+				break;
+			case 'onIsFreewheel':
+				if (_this.options.onIsFreewheel != undefined) { _this.options.onIsFreewheel(data.data); }
+				break;
+			case 'onIsSafetyStop':
+				if (_this.options.onIsSafetyStop != undefined) { _this.options.onIsSafetyStop(data.data); }
+				break;
+			case 'onDockingState':
+				if (_this.options.onDockingState != undefined) { _this.options.onDockingState(data.data); }
+				break;
 		}
 	}
 	
 	var _this = this;
 	
-	this.RosReconnect = function()
+	this.Connect = function()
 	{
 		_this.timeoutReconnect = null;
 		if (_this.options.nick == 'robot')
@@ -208,50 +332,47 @@ function WycaAPI(options){
 	
 	this.Subscribe = function()
 	{
-		if (_this.options.onLatencyReturn != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'latency_return', throttle_rate:1 }}; _this.ws.send(JSON.stringify(subscribe)); }
-		
+		if (_this.options.onLatencyReturn != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onLatencyReturn', throttle_rate:0 }}; _this.ws.send(JSON.stringify(subscribe)); }
+		if (_this.options.onCurrentA != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onCurrentA', throttle_rate:1 }}; _this.ws.send(JSON.stringify(subscribe)); }
+		if (_this.options.onIsPowered != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onIsPowered', throttle_rate:1 }}; _this.ws.send(JSON.stringify(subscribe)); }
+		if (_this.options.onRelativeSOCPercentage != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onRelativeSOCPercentage', throttle_rate:1 }}; _this.ws.send(JSON.stringify(subscribe)); }
+		if (_this.options.onRemainingCapacity != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onRemainingCapacity', throttle_rate:1 }}; _this.ws.send(JSON.stringify(subscribe)); }
+		if (_this.options.onTimeRemainingToEmptyMin != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onTimeRemainingToEmptyMin', throttle_rate:1 }}; _this.ws.send(JSON.stringify(subscribe)); }
+		if (_this.options.onTimeRemainingToFullMin != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onTimeRemainingToFullMin', throttle_rate:1 }}; _this.ws.send(JSON.stringify(subscribe)); }
+		if (_this.options.onLedCurrentAnimationMode != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onLedCurrentAnimationMode', throttle_rate:0 }}; _this.ws.send(JSON.stringify(subscribe)); }
+		if (_this.options.onLedCurrentRobotStateMode != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onLedCurrentRobotStateMode', throttle_rate:0 }}; _this.ws.send(JSON.stringify(subscribe)); }
+		if (_this.options.onLedIsLightMode != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onLedIsLightMode', throttle_rate:0 }}; _this.ws.send(JSON.stringify(subscribe)); }
+		if (_this.options.onLedIsManualMode != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onLedIsManualMode', throttle_rate:0 }}; _this.ws.send(JSON.stringify(subscribe)); }
+		if (_this.options.onMappingIsStarted != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onMappingIsStarted', throttle_rate:0 }}; _this.ws.send(JSON.stringify(subscribe)); }
+		if (_this.options.onMappingMapInConstruction != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onMappingMapInConstruction', throttle_rate:0 }}; _this.ws.send(JSON.stringify(subscribe)); }
+		if (_this.options.onMappingRobotPoseInBuildingMap != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onMappingRobotPoseInBuildingMap', throttle_rate:0 }}; _this.ws.send(JSON.stringify(subscribe)); }
+		if (_this.options.onNavigationIsStarted != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onNavigationIsStarted', throttle_rate:0 }}; _this.ws.send(JSON.stringify(subscribe)); }
+		if (_this.options.onNavigationRobotPose != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onNavigationRobotPose', throttle_rate:0 }}; _this.ws.send(JSON.stringify(subscribe)); }
+		if (_this.options.onIsFreewheel != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onIsFreewheel', throttle_rate:0 }}; _this.ws.send(JSON.stringify(subscribe)); this.RefreshFreewheelState(); }
+		if (_this.options.onIsSafetyStop != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onIsSafetyStop', throttle_rate:0 }}; _this.ws.send(JSON.stringify(subscribe)); this.RefreshSafetyStop(); }
+		if (_this.options.onDockingState != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onDockingState', throttle_rate:0 }}; _this.ws.send(JSON.stringify(subscribe)); }
 		
 		
 		if (_this.options.onInitialized != undefined) _this.options.onInitialized();
 	}
 	
-	this.TeleopRobot = function(x, t)
+	this.Teleop = function(x, z)
 	{
 		var action = {
-			op: 'TeleopRobot',
+			op: 'Teleop',
 			id : ++_this.idMessage,
-			params: {
-				angular: {
-					x:0,
-					y:0,
-					z:t
-				},
-				linear: {
-					x:x,
-					y:0,
-					z:0
-				}
-			}
+			data: { x:x, z:z }
 		};
 		_this.ws.send(JSON.stringify(action));	
 	}
-	
-	this.JoystickIsSafeOff = function(data) {
+	this.TeleopOff = function(off)
+	{
 		var action = {
-			op: 'JoystickIsSafeOff',
+			op: 'TeleopOff',
 			id : ++_this.idMessage,
-			params: data
+			data: off
 		};
-		_this.ws.send(JSON.stringify(action));
-	}
-	
-	this.DisableStaticCostmap = function(data) {
-		var action = {
-			op: 'DisableStaticCostmap',
-			id : ++_this.idMessage,
-			params: data
-		};
-		_this.ws.send(JSON.stringify(action));
+		_this.ws.send(JSON.stringify(action));	
 	}
 	
 	this.LatencyStart = function(num, callback){
@@ -261,7 +382,7 @@ function WycaAPI(options){
 		var action = {
 			op: 'LatencyStart',
 			id : _this.idMessage,
-			params: num
+			data: num
 		};
 		_this.ws.send(JSON.stringify(action));
 	}
@@ -276,5 +397,180 @@ function WycaAPI(options){
 		};
 		_this.ws.send(JSON.stringify(action));
 	}
-
+	this.MappingIsStarted = function(callback){
+		this.idMessage++;
+		if (callback != undefined)
+			this.callbacks[this.idMessage] = callback;
+		var action = {
+			op: 'MappingIsStarted',
+			id : _this.idMessage
+		};
+		_this.ws.send(JSON.stringify(action));
+	}
+	this.MappingStart = function(callback){
+		this.idMessage++;
+		if (callback != undefined)
+			this.callbacks[this.idMessage] = callback;
+		var action = {
+			op: 'MappingStart',
+			id : _this.idMessage
+		};
+		_this.ws.send(JSON.stringify(action));
+	}
+	this.MappingStop = function(callback){
+		this.idMessage++;
+		if (callback != undefined)
+			this.callbacks[this.idMessage] = callback;
+		var action = {
+			op: 'MappingStop',
+			id : _this.idMessage
+		};
+		_this.ws.send(JSON.stringify(action));
+	}
+	this.NavigationIsStarted = function(callback){
+		this.idMessage++;
+		if (callback != undefined)
+			this.callbacks[this.idMessage] = callback;
+		var action = {
+			op: 'NavigationIsStarted',
+			id : _this.idMessage
+		};
+		_this.ws.send(JSON.stringify(action));
+	}
+	this.NavigationStart = function(callback){
+		this.idMessage++;
+		if (callback != undefined)
+			this.callbacks[this.idMessage] = callback;
+		var action = {
+			op: 'NavigationStart',
+			id : _this.idMessage
+		};
+		_this.ws.send(JSON.stringify(action));
+	}
+	this.NavigationStop = function(callback){
+		this.idMessage++;
+		if (callback != undefined)
+			this.callbacks[this.idMessage] = callback;
+		var action = {
+			op: 'NavigationStop',
+			id : _this.idMessage
+		};
+		_this.ws.send(JSON.stringify(action));
+	}
+	this.RefreshFreewheelState = function(callback){
+		this.idMessage++;
+		if (callback != undefined)
+			this.callbacks[this.idMessage] = callback;
+		var action = {
+			op: 'RefreshFreewheelState',
+			id : _this.idMessage
+		};
+		_this.ws.send(JSON.stringify(action));
+	}
+	this.RefreshSafetyStop = function(callback){
+		this.idMessage++;
+		if (callback != undefined)
+			this.callbacks[this.idMessage] = callback;
+		var action = {
+			op: 'RefreshSafetyStop',
+			id : _this.idMessage
+		};
+		_this.ws.send(JSON.stringify(action));
+	}
+	this.GetDockingState = function(callback){
+		this.idMessage++;
+		if (callback != undefined)
+			this.callbacks[this.idMessage] = callback;
+		var action = {
+			op: 'GetDockingState',
+			id : _this.idMessage
+		};
+		_this.ws.send(JSON.stringify(action));
+	}
+	this.GetRobotPose = function(callback){
+		this.idMessage++;
+		if (callback != undefined)
+			this.callbacks[this.idMessage] = callback;
+		var action = {
+			op: 'GetRobotPose',
+			id : _this.idMessage
+		};
+		_this.ws.send(JSON.stringify(action));
+	}
+	this.ReloadMaps = function(callback){
+		this.idMessage++;
+		if (callback != undefined)
+			this.callbacks[this.idMessage] = callback;
+		var action = {
+			op: 'ReloadMaps',
+			id : _this.idMessage
+		};
+		_this.ws.send(JSON.stringify(action));
+	}
+	this.GoToPose = function(x, y, theta, callback){
+		this.idMessage++;
+		if (callback != undefined)
+			this.callbacks[this.idMessage] = callback;
+		var action = {
+			op: 'GoToPose',
+			id : _this.idMessage,
+			data: {
+				x:x,
+				y:y,
+				theta:theta
+			}
+		};
+		_this.ws.send(JSON.stringify(action));
+	}
+	this.GoToPoseCancel = function(callback){
+		this.idMessage++;
+		if (callback != undefined)
+			this.callbacks[this.idMessage] = callback;
+		var action = {
+			op: 'GoToPoseCancel',
+			id : _this.idMessage
+		};
+		_this.ws.send(JSON.stringify(action));
+	}
+	this.Dock = function(id_dock, callback){
+		this.idMessage++;
+		if (callback != undefined)
+			this.callbacks[this.idMessage] = callback;
+		var action = {
+			op: 'Dock',
+			id : _this.idMessage,
+			data:id_dock
+		};
+		_this.ws.send(JSON.stringify(action));
+	}
+	this.DockCancel = function(callback){
+		this.idMessage++;
+		if (callback != undefined)
+			this.callbacks[this.idMessage] = callback;
+		var action = {
+			op: 'DockCancel',
+			id : _this.idMessage
+		};
+		_this.ws.send(JSON.stringify(action));
+	}
+	this.Undock = function(callback){
+		this.idMessage++;
+		if (callback != undefined)
+			this.callbacks[this.idMessage] = callback;
+		var action = {
+			op: 'Undock',
+			id : _this.idMessage
+		};
+		_this.ws.send(JSON.stringify(action));
+	}
+	this.UndockCancel = function(callback){
+		this.idMessage++;
+		if (callback != undefined)
+			this.callbacks[this.idMessage] = callback;
+		var action = {
+			op: 'UndockCancel',
+			id : _this.idMessage
+		};
+		_this.ws.send(JSON.stringify(action));
+	}
 }

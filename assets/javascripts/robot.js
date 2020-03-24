@@ -30,44 +30,9 @@ var mappingLastOrigin = {'x':0, 'y':0 };
 $(document).ready(function(e) {
 	wycaApi = new WycaAPI({
 		host:robot_host, //192.168.1.32:9090', // host:'192.168.100.245:9090',
-		//host:'10.0.0.23:9090',
-		video_element_id:'webcam_local',
-		webcam_name: 'r200 nav',
+		api_key:user_api_key,
 		nick:'robot',
-		delay_no_reply : 30,
-		delay_lost_connexion : 30,
-		with_audio: true,
-		with_video: true,
-		onSessionClosed: function (){
-			in_visio = false;
-		},
-		onNewServerMessage: function (message){
-			if (message != '' && message.message != undefined)
-			{
-				if (message.message.substr(0,3) != 'ACK') wycaApi.SendServerMessageToServer(message.from, 'ACK_'+message.message);
-				
-				data = message.message.split('|')
-				switch(data[0])
-				{
-					case 'StartCall':
-						if (!in_visio)
-						{
-							$('#popupRemoteControl').show();
-							wycaApi.SetRoom(data[1]);
-							in_visio = true;
-							initStateRobot(robotCurrentState);
-							wycaApi.StartWebRTC(true);
-						}
-						break;
-					case 'CloseSession':
-						break;
-				}
-			}
-		},
-		onEquipmentError: function(){
-			wycaApi.StartCloseWebRTC();
-			alert('No webcam or microphone');
-		},
+		
 		onRobotConnexionError: function(data){
 			connectedToTheRobot = false;
 			$('#connexion_robot').show();
@@ -82,20 +47,20 @@ $(document).ready(function(e) {
 		},
 		onInitialized: function(){
 		},
-        onIsPoweredChange: function(data){
+        onIsPowered: function(data){
             initPoweredState(data);
         },
-        onSOCChange: function(data){
+        onRelativeSOCPercentage: function(data){
 			initBatteryState(data);
         },
-        onIsSafetyStopChange: function(data){
+        onIsSafetyStop: function(data){
             if (data)
                 $('.safety_stop').show();
             else
                 $('.safety_stop').hide();
             lastEStop = data;
         },
-		onNavigationStateChange: function(data) {
+		onNavigationIsStarted: function(data) {
 			navLaunched = data;
 			if (data)
 			{
@@ -108,25 +73,22 @@ $(document).ready(function(e) {
 				$('.only_navigation').hide();
 			}
 		},
-		onMappingStateChange: function(data) {
+		onMappingIsStarted: function(data) {
 			mappingLaunched = data;
 		},
-		onRobotPoseChange:function(pose){
+		onNavigationRobotPose:function(pose){
 			lastRobotPose = pose;
 			InitRobotPose(pose);
 		},
-        onMappingRobotPoseChange: function(data){
+        onMappingRobotPoseInBuildingMap: function(data){
             mappingLastPose = data;
             InitPosCarteMapping();
 		},
-        onMapInConstruction: function(data){
+        onMappingMapInConstruction: function(data){
             var img = document.getElementById("install_by_step_mapping_img_map_saved");
-            img.src = 'data:image/png;base64,' + data.map_trinary.data;
+            img.src = 'data:image/png;base64,' + data.map_trinary;
             mappingLastOrigin = {'x':data.x_origin, 'y':data.y_origin };
-        },
-        //onNavigationRobotStateChange: function(data){
-		//	initStateRobot(data);
-		//},
+        }
 	});
 	
 	
@@ -286,5 +248,5 @@ function EnableJoystick(enable)
 function SendJoystickOn()
 {
 	if (robotCurrentState == 'undocked' || robotCurrentState == '')
-		wycaApi.JoystickIsSafeOff(false);
+		wycaApi.TeleopOff(false);
 }

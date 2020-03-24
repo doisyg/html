@@ -71,5 +71,6 @@ $_LANG['5c23f6988f6514c3ed88e8c9bb9f82f9'] = 'Edit map';
 $_LANG['0cbc6611f5540bd0809a388dc95a615b'] = 'Test';
 $_LANG['75e8eca7439a4fbf36a7a159baf87074'] = 'Building the map';
 $_LANG['fbbf4fcb0c90883760d453c1b2835faf'] = 'Start autonomous navigation';
+$_LANG['9d60db790f5b646cc725f212720cc9f5'] = 'Invalid login or password.';
 
 ?>

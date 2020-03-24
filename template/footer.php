@@ -2,7 +2,8 @@
         
         <script>
 		var lang = '<?php echo $currentLang->iso;?>';
-		var robot_host = '<?php echo (file_exists('C:\\'))?'10.0.0.23:9090':'elodie.wyca-solutions.com:9090';?>';
+		var robot_host = '<?php echo (file_exists('C:\\'))?'192.168.0.30:9095':'elodie.wyca-solutions.com:9095';?>';
+		var user_api_key = '<?php echo $userConnected->api_key;?>';
 		var id_map_last = <?php echo $currentIdMap;?>;
 		var textSelectOnOrMoreTops = "<?php echo addslashes(stripslashes(__('You must select one or more tops')));?>";
 		var textIndicateAName = "<?php echo addslashes(stripslashes(__('You must indicate a name')));?>";
@@ -20,7 +21,7 @@
 		<!-- Specific Page Vendor -->
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js"></script>
         
-        <script src="<?php echo $_CONFIG['URL_API'];?>wyca_api.latest.min.php"></script>
+        <script src="<?php echo $_CONFIG['URL_API'];?>wyca_socket_api.js"></script>
         
         <script src="<?php echo $_CONFIG['URL'];?>assets/vendor/svg-pan-zoom/svg-pan-zoom.js"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/svg-pan-zoom/hammer.js"></script>

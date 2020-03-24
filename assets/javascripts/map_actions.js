@@ -281,6 +281,21 @@ function SetModeSelect()
 	currentStep = '';
 }
 
+function SaveElementNeeded(need)
+{
+	canChangeMenu = !need;
+	if (need)
+	{
+		$('#bSaveCurrentElem').show();
+		$('#bCancelCurrentElem').show();
+	}
+	else
+	{
+		$('#bSaveCurrentElem').hide();
+		$('#bCancelCurrentElem').hide();
+	}
+}
+
 $(document).ready(function() {
 
 	window.addEventListener('beforeunload', function(e){
@@ -302,6 +317,32 @@ $(document).ready(function() {
 	
 	svg = document.querySelector('#install_by_step_edit_map_svg');
 	InitSVG();
+	
+	$('#install_by_step_edit_map #bSaveCurrentElem').click(function(e) {
+        e.preventDefault();
+		
+		if (currentAction == 'addPoi' || currentAction == 'editPoi')
+			PoiSave();
+		else if (currentAction == 'addDock' || currentAction == 'editDock')
+			DockSave();
+		else if (currentAction == 'addArea' || currentAction == 'editArea')
+			AreaSave();
+		else if (currentAction == 'addForbiddenArea' || currentAction == 'editForbiddenArea')
+			ForbiddenSave();		
+    });
+	
+	$('#install_by_step_edit_map #bCancelCurrentElem').click(function(e) {
+        e.preventDefault();
+		
+		if (currentAction == 'addPoi' || currentAction == 'editPoi')
+			PoiCancel();
+		else if (currentAction == 'addDock' || currentAction == 'editDock')
+			DockCancel();
+		else if (currentAction == 'addArea' || currentAction == 'editArea')
+			AreaCancel();
+		else if (currentAction == 'addForbiddenArea' || currentAction == 'editForbiddenArea')
+			ForbiddenCancel();		
+    });
 	
 	$('#install_by_step_edit_map_bUndo').click(function(e) {
         e.preventDefault();
@@ -334,11 +375,12 @@ $(document).ready(function() {
 			downOnSVG_x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX);
 			downOnSVG_y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY);
 			
-			canChangeMenu = false;
+			SaveElementNeeded(true);
 			
 			blockZoom = true;
 		}
     });
+	
 	
 	$(document).on('touchstart', '#install_by_step_edit_map_svg .secable', function(e) {
 		if (currentAction = 'editForbiddenArea')
@@ -379,6 +421,21 @@ $(document).ready(function() {
 		}
     });
 	
+	$('#install_by_step_edit_map_menu_point .bDeletePoint').click(function(e) {
+        e.preventDefault();
+		HideMenus();
+		if (currentAction = 'editForbiddenArea')
+		{
+			forbiddens[currentForbiddenIndex].points.splice(currentPointLongTouch.data('index_point'), 1);
+			TraceForbidden(currentForbiddenIndex);
+		}
+		else if (currentAction = 'editArea')
+		{
+			areas[currentAreaIndex].points.splice(currentPointLongTouch.data('index_point'), 1);
+			TraceArea(currentAreaIndex);
+		}
+    });
+	
 	$('#install_by_step_edit_map_svg').on('contextmenu', function (e) {
 		
 		if (currentAction == 'gomme' && currentStep=='trace')
@@ -404,6 +461,10 @@ $(document).ready(function() {
 			return false;
 		}
     });
+	
+	/**************************/
+	/*        ZOOM            */
+	/**************************/
 	
 	$('#install_by_step_edit_map_zone_zoom_click').mousedown(function(e) {
        e.preventDefault();
@@ -515,6 +576,10 @@ $(document).ready(function() {
 			window.panZoom.pan({'x':x, 'y':y});
 	   }
     });
+	
+	/**************************/
+	/*  Click on element      */
+	/**************************/
 	
 	$(document).on('click', '#install_by_step_edit_map_svg .forbidden_elem', function(e) {
 		e.preventDefault();
@@ -639,7 +704,6 @@ $(document).ready(function() {
 			AvertCantChange();
 	});
 	
-	
 	$(document).on('click', '#install_by_step_edit_map_svg .poi_elem', function(e) {
 		e.preventDefault();
 		
@@ -682,10 +746,13 @@ $(document).ready(function() {
 			AvertCantChange();
 	});
 	
-	
+	/**************************/
+	/*  Click on element      */
+	/**************************/
+		
 	$('#install_by_step_edit_map_menu .bGomme').click(function(e) {
         e.preventDefault();
-		HideMenuPrincipal();
+		HideMenus();
 		if ($('#bGomme').hasClass('btn-primary'))
 		{
 			blockZoom = false;
@@ -701,8 +768,8 @@ $(document).ready(function() {
 			$('body').removeClass('gomme');
 			
 			//currentGommePoints = Array();
-			
-			canChangeMenu = true;
+		
+			SaveElementNeeded(true);
 		}
 		else
 		{
@@ -730,7 +797,7 @@ $(document).ready(function() {
 	
 	$('#install_by_step_edit_map_menu .bAddForbiddenArea').click(function(e) {
         e.preventDefault();
-		HideMenuPrincipal();
+		HideMenus();
 		if (canChangeMenu)
 		{
 			//blockZoom = true;
@@ -810,91 +877,11 @@ $(document).ready(function() {
 			DeleteForbidden(currentForbiddenIndex);
 		}
     });
-	$('#bForbiddenSave').click(function(e) {
-        e.preventDefault();
-		
-		$('.forbidden_elem_current').remove();
-		
-		if (currentAction == 'addForbiddenArea')
-		{
-			canChangeMenu = true;
-			
-			nextIdArea++;
-			
-			currentForbiddenPoints.pop();
-			
-			f = {'id_area':nextIdArea, 'id_map':id_map, 'nom':'', 'comment':'', 'is_forbidden':1, 'couleur_r':0, 'couleur_g':0, 'couleur_b':0, 'deleted':0, 'points':currentForbiddenPoints};
-			AddHistorique({'action':'add_forbidden', 'data':f});
-			
-			forbiddens.push(f);
-			TraceForbidden(forbiddens.length-1);
-			
-			RemoveClass('#install_by_step_edit_map_svg .active', 'active');
-			
-			currentAction = '';
-			currentStep = '';
-			
-			$('#boutonsForbidden').hide();
-			$('#boutonsStandard').show();
-			blockZoom = false;
-			
-			$('body').addClass('no_current');
-			
-			SetModeSelect();
-		}
-		else if (currentAction == 'editForbiddenArea')
-		{	
-			canChangeMenu = true;
-			
-			AddHistorique({'action':'edit_forbidden', 'data':{'index':currentForbiddenIndex, 'old':saveCurrentForbidden, 'new':JSON.stringify(forbiddens[currentForbiddenIndex])}});
-			
-			RemoveClass('#install_by_step_edit_map_svg .active', 'active');
-			
-			currentAction = '';
-			currentStep = '';
-			
-			$('#boutonsForbidden').hide();
-			$('#boutonsStandard').show();
-			blockZoom = false;
-			
-			$('body').addClass('no_current');
-			
-			SetModeSelect();
-		}
-    });
-	$('#bForbiddenCancel').click(function(e) {
-        e.preventDefault();
-		
-		canChangeMenu = true;
-		
-		$('#install_by_step_edit_map_svg .forbidden_elem_current').remove();
-		RemoveClass('#install_by_step_edit_map_svg .active', 'active');
-	
-		$('body').addClass('no_current');
-		
-		if (currentAction == 'addForbiddenArea')
-		{
-			$('#install_by_step_edit_map_svg .forbidden_elem_0').remove();
-		}
-		else if (currentAction == 'editForbiddenArea')
-		{
-			forbiddens[currentForbiddenIndex] = JSON.parse(saveCurrentForbidden);
-			TraceForbidden(currentForbiddenIndex);
-		}
-		currentAction = '';
-		currentStep = '';
-		
-		$('#boutonsForbidden').hide();
-        $('#boutonsStandard').show();
-		blockZoom = false;
-		
-		SetModeSelect();
-	});
 	
 	
 	$('#install_by_step_edit_map_menu .bAddArea').click(function(e) {
         e.preventDefault();
-		HideMenuPrincipal();
+		HideMenus();
 		if (canChangeMenu)
 		{
 			blockZoom = true;
@@ -964,86 +951,6 @@ $(document).ready(function() {
 		
 	});
 		
-	$('#bAreaSave').click(function(e) {
-        e.preventDefault();
-		
-		$('#install_by_step_edit_map_svg .area_elem_current').remove();
-		
-		if (currentAction == 'addArea')
-		{
-			canChangeMenu = true;
-			
-			nextIdArea++;
-			
-			currentAreaPoints.pop();
-			a = {'id_area':nextIdArea, 'id_map':id_map, 'nom':'', 'comment':'', 'is_forbidden':0, 'couleur_r':87, 'couleur_g':159, 'couleur_b':177, 'deleted':0, 'points':currentAreaPoints, 'configs':Array()};
-			AddHistorique({'action':'add_area', 'data':a});
-			
-			areas.push(a);
-			TraceArea(areas.length-1);
-			
-			RemoveClass('#install_by_step_edit_map_svg .active', 'active');
-			
-			currentAction = '';
-			currentStep = '';
-			
-			$('#boutonsArea').hide();
-			$('#boutonsStandard').show();
-			blockZoom = false;
-			
-			$('body').addClass('no_current');
-			
-			SetModeSelect();
-		}
-		else if (currentAction == 'editArea')
-		{
-			canChangeMenu = true;
-			
-			AddHistorique({'action':'edit_area', 'data':{'index':currentAreaIndex, 'old':saveCurrentArea, 'new':JSON.stringify(areas[currentAreaIndex])}});
-			
-			RemoveClass('#install_by_step_edit_map_svg .active', 'active');
-			
-			currentAction = '';
-			currentStep = '';
-			
-			$('#boutonsArea').hide();
-			$('#boutonsStandard').show();
-			blockZoom = false;
-			
-			$('body').addClass('no_current');
-			
-			SetModeSelect();
-		}
-    });
-	$('#bAreaCancel').click(function(e) {
-        e.preventDefault();
-		
-		canChangeMenu = true;
-		
-		$('#install_by_step_edit_map_svg .area_elem_current').remove();
-		RemoveClass('#install_by_step_edit_map_svg .active', 'active');
-	
-		$('body').addClass('no_current');
-		
-		if (currentAction == 'addArea')
-		{
-			$('#install_by_step_edit_map_svg .area_elem_0').remove();
-		}
-		else if (currentAction == 'editArea')
-		{
-			areas[currentAreaIndex] = JSON.parse(saveCurrentArea);
-			TraceArea(currentAreaIndex);
-		}
-		currentAction = '';
-		currentStep = '';
-		
-		$('#boutonsArea').hide();
-        $('#boutonsStandard').show();
-		blockZoom = false;
-		
-		SetModeSelect();
-	});
-	
 	$('#bSaveMap').click(function(e) {
         
 		jQuery.ajax({
@@ -1073,7 +980,7 @@ $(document).ready(function() {
 	
 	$('#install_by_step_edit_map_menu .bAddDock').click(function(e) {
         e.preventDefault();
-		HideMenuPrincipal();
+		HideMenus();
 		if (canChangeMenu)
 		{
 			alert('disoplay choix form pose ou click');
@@ -1116,103 +1023,6 @@ $(document).ready(function() {
 		else
 			AvertCantChange();
     });
-	$('#bDockSave').click(function(e) {
-        e.preventDefault();
-		
-		$('#install_by_step_edit_map_svg .dock_elem_current').remove();
-		
-		if (currentAction == 'addDock')
-		{
-			canChangeMenu = true;
-			
-			nextIdDock++;
-			d = {'id_station_recharge':nextIdDock, 'id_map':id_map, 'x_ros':currentDockPose.x_ros, 'y_ros':currentDockPose.y_ros, 't_ros':currentDockPose.t_ros, 'num':0};
-			AddHistorique({'action':'add_dock', 'data':d});
-			
-			docks.push(d);
-			TraceDock(docks.length-1);
-			
-			RemoveClass('#install_by_step_edit_map_svg .active', 'active');
-			
-			$('#install_by_step_edit_map_svg .dock_elem_0').remove();
-			$('#install_by_step_edit_map_svg .dock_elem_current').remove();
-			
-			currentAction = '';
-			currentStep = '';
-			
-			$('#boutonsRotate').hide();
-		
-			$('#boutonsDock').hide();
-			$('#boutonsStandard').show();
-			$('#message_aide').hide();
-			blockZoom = false;
-			
-			$('body').addClass('no_current');
-			
-			SetModeSelect();
-		}
-		else if (currentAction == 'editDock')
-		{	
-			canChangeMenu = true;
-			
-			
-			dock = docks[currentDockIndex];
-			RemoveClass('#install_by_step_edit_map_svg .dock_elem_'+dock.id_station_recharge, 'movable');
-			
-			AddHistorique({'action':'edit_dock', 'data':{'index':currentDockIndex, 'old':saveCurrentDock, 'new':JSON.stringify(docks[currentDockIndex])}});
-			
-			RemoveClass('#install_by_step_edit_map_svg .active', 'active');
-			
-			currentAction = '';
-			currentStep = '';
-			
-			$('#boutonsRotate').hide();
-			
-			$('#boutonsDock').hide();
-			$('#boutonsStandard').show();
-			$('#message_aide').hide();
-			blockZoom = false;
-			
-			$('body').addClass('no_current');
-			
-			SetModeSelect();
-		}
-    });
-	$('#bDockCancel').click(function(e) {
-        e.preventDefault();
-		
-		canChangeMenu = true;
-		
-		$('#install_by_step_edit_map_svg .dock_elem_current').remove();
-		RemoveClass('#install_by_step_edit_map_svg .active', 'active');
-	
-		$('body').addClass('no_current');
-		
-		if (currentAction == 'addDock')
-		{
-			$('#install_by_step_edit_map_svg .dock_elem_0').remove();
-			$('#install_by_step_edit_map_svg .dock_elem_current').remove();
-		}
-		else if (currentAction == 'editDock')
-		{
-			dock = docks[currentDockIndex];
-			RemoveClass('#install_by_step_edit_map_svg .dock_elem_'+dock.id_station_recharge, 'movable');
-			
-			docks[currentDockIndex] = JSON.parse(saveCurrentDock);
-			TraceDock(currentDockIndex);
-		}
-		currentAction = '';
-		currentStep = '';
-		
-		$('#boutonsRotate').hide();
-		
-		$('#boutonsDock').hide();
-        $('#boutonsStandard').show();
-		$('#message_aide').hide();
-		blockZoom = false;
-		
-		SetModeSelect();
-	});
 	$('#bDockDelete').click(function(e) {
         if (confirm('Are you sure you want to delete this docking station?'))
 		{
@@ -1251,7 +1061,7 @@ $(document).ready(function() {
 	
 	$('#install_by_step_edit_map_menu .bAddPOI').click(function(e) {
         e.preventDefault();
-		HideMenuPrincipal();
+		HideMenus();
 		if (canChangeMenu)
 		{
 			alert('disoplay choix form pose ou click');
@@ -1327,7 +1137,7 @@ $(document).ready(function() {
 	$('#bPoiEditSaveConfig').click(function(e) {
 		if (currentAction == 'addPoi')
 		{
-			canChangeMenu = true;
+			SaveElementNeeded(false);
 			
 			nextIdPoi++;
 			p = {'id_poi':nextIdPoi, 'id_map':id_map, 'x_ros':currentPoiPose.x_ros, 'y_ros':currentPoiPose.y_ros, 't_ros':currentPoiPose.t_ros, 'name':$('#poi_name').val()};
@@ -1365,74 +1175,6 @@ $(document).ready(function() {
 		
 	});
 	
-	$('#bPoiSave').click(function(e) {
-        e.preventDefault();
-		
-		if (currentAction == 'addPoi')
-		{
-			$('#poi_name').val('');
-			$('#modalPoiEditName').modal('show');
-		}
-		else if (currentAction == 'editPoi')
-		{	
-			canChangeMenu = true;
-			
-			poi = pois[currentPoiIndex];
-			RemoveClass('#install_by_step_edit_map_svg .poi_elem_'+poi.id_poi, 'movable');
-			
-			AddHistorique({'action':'edit_poi', 'data':{'index':currentPoiIndex, 'old':saveCurrentPoi, 'new':JSON.stringify(pois[currentPoiIndex])}});
-			
-			RemoveClass('#install_by_step_edit_map_svg .active', 'active');
-			
-			currentAction = '';
-			currentStep = '';
-			
-			$('#boutonsRotate').hide();
-			
-			$('#boutonsPoi').hide();
-			$('#boutonsStandard').show();
-			$('#message_aide').hide();
-			blockZoom = false;
-			
-			$('body').addClass('no_current');
-			
-			SetModeSelect();
-		}
-    });
-	$('#bPoiCancel').click(function(e) {
-        e.preventDefault();
-		
-		canChangeMenu = true;
-		
-		$('#install_by_step_edit_map_svg .poi_elem_current').remove();
-		RemoveClass('#install_by_step_edit_map_svg .active', 'active');
-	
-		$('body').addClass('no_current');
-		
-		if (currentAction == 'addPoi')
-		{
-			$('#install_by_step_edit_map_svg .poi_elem_0').remove();
-		}
-		else if (currentAction == 'editPoi')
-		{
-			poi = pois[currentPoiIndex];
-			RemoveClass('#install_by_step_edit_map_svg .poi_elem_'+poi.id_poi, 'movable');
-			
-			pois[currentPoiIndex] = JSON.parse(saveCurrentPoi);
-			TracePoi(currentPoiIndex);
-		}
-		currentAction = '';
-		currentStep = '';
-		
-		$('#boutonsRotate').hide();
-		
-		$('#boutonsPoi').hide();
-        $('#boutonsStandard').show();
-		$('#message_aide').hide();
-		blockZoom = false;
-		
-		SetModeSelect();
-	});
 	$('#bPoiDelete').click(function(e) {
         if (confirm('Are you sure you want to delete this POI?'))
 		{
@@ -1479,7 +1221,7 @@ $(document).ready(function() {
 	};
 	
 	$(document).on('touchstart', '#bRotateRight', function(e) {
-		canChangeMenu = false;
+		SaveElementNeeded(true);
 		if (timerRotate != null)
 		{
 			clearInterval(timerRotate);
@@ -1520,7 +1262,7 @@ $(document).ready(function() {
 		}
     });
 	$('#bRotateRight').click(function(e) {
-		canChangeMenu = false;
+		SaveElementNeeded(true);
 		if (currentAction == 'addPoi')
 		{
 			currentPoiPose.t_ros = parseFloat(currentPoiPose.t_ros) + Math.PI / 90;;
@@ -1547,7 +1289,7 @@ $(document).ready(function() {
 		}
     });
 	$(document).on('touchstart', '#bRotateLeft', function(e) {
-		canChangeMenu = false;
+		SaveElementNeeded(true);
 		if (timerRotate != null)
 		{
 			clearInterval(timerRotate);
@@ -1588,7 +1330,7 @@ $(document).ready(function() {
 		}
     });
 	$('#bRotateLeft').click(function(e) {
-		canChangeMenu = false;
+		SaveElementNeeded(true);
         if (currentAction == 'addPoi')
 		{
 			currentPoiPose.t_ros = parseFloat(currentPoiPose.t_ros) - Math.PI / 90;;
@@ -2314,6 +2056,322 @@ $(document).ready(function() {
 
 var touchStarted = false;
 
+function PoiSave()
+{
+	if (currentAction == 'addPoi')
+	{
+		$('#poi_name').val('');
+		$('#modalPoiEditName').modal('show');
+	}
+	else if (currentAction == 'editPoi')
+	{	
+		SaveElementNeeded(false);
+		
+		poi = pois[currentPoiIndex];
+		RemoveClass('#install_by_step_edit_map_svg .poi_elem_'+poi.id_poi, 'movable');
+		
+		AddHistorique({'action':'edit_poi', 'data':{'index':currentPoiIndex, 'old':saveCurrentPoi, 'new':JSON.stringify(pois[currentPoiIndex])}});
+		
+		RemoveClass('#install_by_step_edit_map_svg .active', 'active');
+		
+		currentAction = '';
+		currentStep = '';
+		
+		$('#boutonsRotate').hide();
+		
+		$('#boutonsPoi').hide();
+		$('#boutonsStandard').show();
+		$('#message_aide').hide();
+		blockZoom = false;
+		
+		$('body').addClass('no_current');
+		
+		SetModeSelect();
+	}
+}
+function PoiCancel()
+{
+	SaveElementNeeded(false);
+	
+	$('#install_by_step_edit_map_svg .poi_elem_current').remove();
+	RemoveClass('#install_by_step_edit_map_svg .active', 'active');
+
+	$('body').addClass('no_current');
+	
+	if (currentAction == 'addPoi')
+	{
+		$('#install_by_step_edit_map_svg .poi_elem_0').remove();
+	}
+	else if (currentAction == 'editPoi')
+	{
+		poi = pois[currentPoiIndex];
+		RemoveClass('#install_by_step_edit_map_svg .poi_elem_'+poi.id_poi, 'movable');
+		
+		pois[currentPoiIndex] = JSON.parse(saveCurrentPoi);
+		TracePoi(currentPoiIndex);
+	}
+	currentAction = '';
+	currentStep = '';
+	
+	$('#boutonsRotate').hide();
+	
+	$('#boutonsPoi').hide();
+	$('#boutonsStandard').show();
+	$('#message_aide').hide();
+	blockZoom = false;
+	
+	SetModeSelect();
+}
+function DockSave()
+{
+	$('#install_by_step_edit_map_svg .dock_elem_current').remove();
+	
+	if (currentAction == 'addDock')
+	{
+		SaveElementNeeded(false);
+		
+		nextIdDock++;
+		d = {'id_station_recharge':nextIdDock, 'id_map':id_map, 'x_ros':currentDockPose.x_ros, 'y_ros':currentDockPose.y_ros, 't_ros':currentDockPose.t_ros, 'num':0};
+		AddHistorique({'action':'add_dock', 'data':d});
+		
+		docks.push(d);
+		TraceDock(docks.length-1);
+		
+		RemoveClass('#install_by_step_edit_map_svg .active', 'active');
+		
+		$('#install_by_step_edit_map_svg .dock_elem_0').remove();
+		$('#install_by_step_edit_map_svg .dock_elem_current').remove();
+		
+		currentAction = '';
+		currentStep = '';
+		
+		$('#boutonsRotate').hide();
+	
+		$('#boutonsDock').hide();
+		$('#boutonsStandard').show();
+		$('#message_aide').hide();
+		blockZoom = false;
+		
+		$('body').addClass('no_current');
+		
+		SetModeSelect();
+	}
+	else if (currentAction == 'editDock')
+	{	
+		SaveElementNeeded(false);
+		
+		
+		dock = docks[currentDockIndex];
+		RemoveClass('#install_by_step_edit_map_svg .dock_elem_'+dock.id_station_recharge, 'movable');
+		
+		AddHistorique({'action':'edit_dock', 'data':{'index':currentDockIndex, 'old':saveCurrentDock, 'new':JSON.stringify(docks[currentDockIndex])}});
+		
+		RemoveClass('#install_by_step_edit_map_svg .active', 'active');
+		
+		currentAction = '';
+		currentStep = '';
+		
+		$('#boutonsRotate').hide();
+		
+		$('#boutonsDock').hide();
+		$('#boutonsStandard').show();
+		$('#message_aide').hide();
+		blockZoom = false;
+		
+		$('body').addClass('no_current');
+		
+		SetModeSelect();
+	}
+}
+function DockCancel()
+{
+	SaveElementNeeded(false);
+	
+	$('#install_by_step_edit_map_svg .dock_elem_current').remove();
+	RemoveClass('#install_by_step_edit_map_svg .active', 'active');
+
+	$('body').addClass('no_current');
+	
+	if (currentAction == 'addDock')
+	{
+		$('#install_by_step_edit_map_svg .dock_elem_0').remove();
+		$('#install_by_step_edit_map_svg .dock_elem_current').remove();
+	}
+	else if (currentAction == 'editDock')
+	{
+		dock = docks[currentDockIndex];
+		RemoveClass('#install_by_step_edit_map_svg .dock_elem_'+dock.id_station_recharge, 'movable');
+		
+		docks[currentDockIndex] = JSON.parse(saveCurrentDock);
+		TraceDock(currentDockIndex);
+	}
+	currentAction = '';
+	currentStep = '';
+	
+	$('#boutonsRotate').hide();
+	
+	$('#boutonsDock').hide();
+	$('#boutonsStandard').show();
+	$('#message_aide').hide();
+	blockZoom = false;
+	
+	SetModeSelect();
+}
+function AreaSave()
+{
+	$('#install_by_step_edit_map_svg .area_elem_current').remove();
+	
+	if (currentAction == 'addArea')
+	{
+		SaveElementNeeded(false);
+		
+		nextIdArea++;
+		
+		currentAreaPoints.pop();
+		a = {'id_area':nextIdArea, 'id_map':id_map, 'nom':'', 'comment':'', 'is_forbidden':0, 'couleur_r':87, 'couleur_g':159, 'couleur_b':177, 'deleted':0, 'points':currentAreaPoints, 'configs':Array()};
+		AddHistorique({'action':'add_area', 'data':a});
+		
+		areas.push(a);
+		TraceArea(areas.length-1);
+		
+		RemoveClass('#install_by_step_edit_map_svg .active', 'active');
+		
+		currentAction = '';
+		currentStep = '';
+		
+		$('#boutonsArea').hide();
+		$('#boutonsStandard').show();
+		blockZoom = false;
+		
+		$('body').addClass('no_current');
+		
+		SetModeSelect();
+	}
+	else if (currentAction == 'editArea')
+	{
+		SaveElementNeeded(false);
+		
+		AddHistorique({'action':'edit_area', 'data':{'index':currentAreaIndex, 'old':saveCurrentArea, 'new':JSON.stringify(areas[currentAreaIndex])}});
+		
+		RemoveClass('#install_by_step_edit_map_svg .active', 'active');
+		
+		currentAction = '';
+		currentStep = '';
+		
+		$('#boutonsArea').hide();
+		$('#boutonsStandard').show();
+		blockZoom = false;
+		
+		$('body').addClass('no_current');
+		
+		SetModeSelect();
+	}
+}
+function AreaCancel()
+{
+	SaveElementNeeded(false);
+	
+	$('#install_by_step_edit_map_svg .area_elem_current').remove();
+	RemoveClass('#install_by_step_edit_map_svg .active', 'active');
+
+	$('body').addClass('no_current');
+	
+	if (currentAction == 'addArea')
+	{
+		$('#install_by_step_edit_map_svg .area_elem_0').remove();
+	}
+	else if (currentAction == 'editArea')
+	{
+		areas[currentAreaIndex] = JSON.parse(saveCurrentArea);
+		TraceArea(currentAreaIndex);
+	}
+	currentAction = '';
+	currentStep = '';
+	
+	$('#boutonsArea').hide();
+	$('#boutonsStandard').show();
+	blockZoom = false;
+	
+	SetModeSelect();
+}
+function ForbiddenSave()
+{
+	$('.forbidden_elem_current').remove();
+	
+	if (currentAction == 'addForbiddenArea')
+	{
+		canChangeMenu = true;
+		
+		nextIdArea++;
+		
+		currentForbiddenPoints.pop();
+		
+		f = {'id_area':nextIdArea, 'id_map':id_map, 'nom':'', 'comment':'', 'is_forbidden':1, 'couleur_r':0, 'couleur_g':0, 'couleur_b':0, 'deleted':0, 'points':currentForbiddenPoints};
+		AddHistorique({'action':'add_forbidden', 'data':f});
+		
+		forbiddens.push(f);
+		TraceForbidden(forbiddens.length-1);
+		
+		RemoveClass('#install_by_step_edit_map_svg .active', 'active');
+		
+		currentAction = '';
+		currentStep = '';
+		
+		$('#boutonsForbidden').hide();
+		$('#boutonsStandard').show();
+		blockZoom = false;
+		
+		$('body').addClass('no_current');
+		
+		SetModeSelect();
+	}
+	else if (currentAction == 'editForbiddenArea')
+	{	
+		SaveElementNeeded(false);
+		
+		AddHistorique({'action':'edit_forbidden', 'data':{'index':currentForbiddenIndex, 'old':saveCurrentForbidden, 'new':JSON.stringify(forbiddens[currentForbiddenIndex])}});
+		
+		RemoveClass('#install_by_step_edit_map_svg .active', 'active');
+		
+		currentAction = '';
+		currentStep = '';
+		
+		$('#boutonsForbidden').hide();
+		$('#boutonsStandard').show();
+		blockZoom = false;
+		
+		$('body').addClass('no_current');
+		
+		SetModeSelect();
+	}
+}
+function ForbiddenCancel()
+{
+	SaveElementNeeded(false);
+	
+	$('#install_by_step_edit_map_svg .forbidden_elem_current').remove();
+	RemoveClass('#install_by_step_edit_map_svg .active', 'active');
+
+	$('body').addClass('no_current');
+	
+	if (currentAction == 'addForbiddenArea')
+	{
+		$('#install_by_step_edit_map_svg .forbidden_elem_0').remove();
+	}
+	else if (currentAction == 'editForbiddenArea')
+	{
+		forbiddens[currentForbiddenIndex] = JSON.parse(saveCurrentForbidden);
+		TraceForbidden(currentForbiddenIndex);
+	}
+	currentAction = '';
+	currentStep = '';
+	
+	$('#boutonsForbidden').hide();
+	$('#boutonsStandard').show();
+	blockZoom = false;
+	
+	SetModeSelect();
+}
 
 function InitTaille()
 {

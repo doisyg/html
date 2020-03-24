@@ -16,29 +16,6 @@ var nbCall = 0;
 
 var isDown = false;
 
-/*	
-function RefreshJoystickOn()
-{
-	if ($('.bToggleJosytick i').hasClass('fa-toggle-off'))
-	{
-		//wycaApi.JoystickIsSafeOff(true); Retour auto
-	}
-	else
-	{
-		wycaApi.JoystickIsSafeOff(false);
-	}
-}
-
-function StopJoystickEnable()
-{
-	if ($('.bToggleJosytick i').hasClass('fa-toggle-on'))
-	{
-		$('.bToggleJosytick i').removeClass('fa-toggle-on')
-		$('.bToggleJosytick i').addClass('fa-toggle-off')
-	}
-}
-*/
-
 $(document).ready(function(e) {
     
 	if ($('.joystickDiv:visible').length > 0)
@@ -150,7 +127,8 @@ function SetCurseurV2(x, y)
 	{
 		nbCall = 0;
 	}
-	//wycaApi.TeleopRobot(valueY * -0.5, valueX * -0.8);
+		
+	//wycaApi.Teleop(valueY * -0.5, valueX * -0.8);
 }
 
 var lastValueX = 0;
@@ -160,18 +138,21 @@ nbCall0 = 0;
 function SendCommande()
 {
 	//if (robotCurrentState != 'undocked' || (lastValueX == 0 && lastValueY == 0))
-	if ((lastValueX == 0 && lastValueY == 0))
+	if (connectedToTheRobot)
 	{
-		if (nbCall0 < 5)
+		if ((lastValueX == 0 && lastValueY == 0))
 		{
-			nbCall0++;
-			wycaApi.TeleopRobot(lastValueX * -0.5, lastValueY * -1.2);
+			if (nbCall0 < 5)
+			{
+				nbCall0++;
+				wycaApi.Teleop(lastValueX * -0.5, lastValueY * -1.2);
+			}
 		}
-	}
-	else if (isDown)
-	{
-		nbCall0 = 0;
-		wycaApi.TeleopRobot(lastValueX * -0.5, lastValueY * -1.2);
+		else if (isDown)
+		{
+			nbCall0 = 0;
+			wycaApi.Teleop(lastValueX * -0.5, lastValueY * -1.2);
+		}
 	}
 }
 

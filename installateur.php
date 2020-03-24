@@ -369,6 +369,9 @@ $INSTALL_STEP = Configuration::GetValue('INSTALL_STEP');
                         <div style="clear:both;"></div>
                     </div>
                     
+                    <a href="#" id="bSaveCurrentElem" class="btn btn-circle btn-primary btn-lg"><i class="fa fa-check"></i></a>
+                    <a href="#" id="bCancelCurrentElem" class="btn btn-circle btn-warning btn-lg"><i class="fa fa-times"></i></a>
+                    
                     <div id="install_by_step_edit_map_menu" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddForbiddenArea"><i class="fa fa-ban"></i></a></li>
@@ -376,6 +379,12 @@ $INSTALL_STEP = Configuration::GetValue('INSTALL_STEP');
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddPOI"><i class="fa fa-map-marker"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddDock"><i class="fa fa-flash"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg bGomme"><i class="fa fa-eraser"></i></a></li>
+                        </ul>
+                    </div>
+                    
+                    <div id="install_by_step_edit_map_menu_point" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
+                    	<ul>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bDeletePoint"><i class="fa fa-trash"></i></a></li>
                         </ul>
                     </div>
                     

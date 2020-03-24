@@ -169,6 +169,7 @@ function DisplayBlockZoom()
 var timerLongPress = null;
 var timerVeryLongPress = null;
 var eventTouchStart = null;
+var currentPointLongTouch = null;
 
 $(document).ready(function(e) {
 	$('.popupHelp').click(function(e) {
@@ -201,7 +202,7 @@ $(document).ready(function(e) {
 			timerVeryLongPress = null;
 		}
 		
-		if (currentAction == 'select' || currentAction == '')
+		if (canChangeMenu)
 		{
 			timerLongPress = setTimeout(LongPressSVG, 500);
 			timerVeryLongPress = setTimeout(LongVeryPressSVG, 1500);
@@ -209,11 +210,64 @@ $(document).ready(function(e) {
 		}
 		DisplayBlockZoom();
 		
-		HideMenuPrincipal();
+		HideMenus();
 		
 	});
     $('#install_by_step_edit_map_svg').on('touchmove', function(e) {
-		HideMenuPrincipal();
+		HideMenus();
+		if (timerLongPress != null)
+		{
+			clearTimeout(timerLongPress);
+			timerLongPress = null;
+		}
+		if (timerVeryLongPress != null)
+		{
+			clearTimeout(timerVeryLongPress);
+			timerVeryLongPress = null;
+		}
+		DisplayBlockZoom();
+	});
+	
+	
+	$(document).on('touchend', '#install_by_step_edit_map_svg .point_deletable', function(e) {
+		$('#zoom_popup').hide();
+		if (timerLongPress != null)
+		{
+			clearTimeout(timerLongPress);
+			timerLongPress = null;
+		}
+		if (timerVeryLongPress != null)
+		{
+			clearTimeout(timerVeryLongPress);
+			timerVeryLongPress = null;
+		}
+	});
+	$(document).on('touchstart', '#install_by_step_edit_map_svg .point_deletable', function(e) {
+		if (timerLongPress != null)
+		{
+			clearTimeout(timerLongPress);
+			timerLongPress = null;
+		}
+		if (timerVeryLongPress != null)
+		{
+			clearTimeout(timerVeryLongPress);
+			timerVeryLongPress = null;
+		}
+		
+		if (canChangeMenu || currentAction == 'editForbiddenArea' || currentAction == 'editArea')
+		{
+			timerLongPress = setTimeout(LongPressPointDeletable, 500);
+			//timerVeryLongPress = setTimeout(LongVeryPressSVG, 1500);
+			eventTouchStart = e;
+			currentPointLongTouch = $(this);
+		}
+		DisplayBlockZoom();
+		
+		HideMenus();
+		
+	});
+	$(document).on('touchmove', '#install_by_step_edit_map_svg .point_deletable', function(e) {
+    	HideMenus();
 		if (timerLongPress != null)
 		{
 			clearTimeout(timerLongPress);
@@ -228,29 +282,22 @@ $(document).ready(function(e) {
 	});
 });
 
-function HideMenuPrincipal()
+function HideMenus()
 {
 	$('#install_by_step_edit_map_menu li').hide();
+	$('#install_by_step_edit_map_menu_point li').hide();
 	$('.popupHelp').hide();
 }
 
-function LongVeryPressSVG()
+function DisplayMenu(id_menu)
 {
-	timerVeryLongPress = null;
-	
-	$('#install_by_step_edit_map_container_all .popupHelp').show(200);	
-}
-
-function LongPressSVG()
-{
-	timerLongPress = null;
-	$('#install_by_step_edit_map_menu li').hide();
-	$('#install_by_step_edit_map_menu').show();
+	$('#'+id_menu+' li').hide();
+	$('#'+id_menu).show();
 
 	topCenter = eventTouchStart.originalEvent.targetTouches[0].clientY - $('#install_by_step_edit_map_container_all').offset().top;
 	leftCenter = eventTouchStart.originalEvent.targetTouches[0].clientX - $('#install_by_step_edit_map_container_all').offset().left;
 	
-	$('#install_by_step_edit_map_menu').css({top: topCenter, left: leftCenter});
+	$('#'+id_menu).css({top: topCenter, left: leftCenter});
 	
 	rayon = 70;
 	
@@ -266,7 +313,7 @@ function LongPressSVG()
 	minTop = 10000;
 	maxTop = -100;
 	
-	$('#install_by_step_edit_map_menu li').each(function(index, element) {
+	$('#'+id_menu+' li').each(function(index, element) {
 		angle = (angleDep + 48*index) * Math.PI/180;
 		// x = rsin(θ), y = rcos(θ)
 		l = rayon * Math.sin(angle) - 25;
@@ -293,10 +340,29 @@ function LongPressSVG()
 		
 	if (decallageX != 0 || decallageY != 0)
 	{
-		$('#install_by_step_edit_map_menu li').each(function(index, element) {
+		$('#'+id_menu+' li').each(function(index, element) {
 			$(this).css({left: '+='+decallageX, top: '+='+decallageY});
-    });
+    	});
 	}
+}
+
+function LongPressPointDeletable()
+{
+	timerLongPress = null;
+	DisplayMenu('install_by_step_edit_map_menu_point');
+}
+
+function LongVeryPressSVG()
+{
+	timerVeryLongPress = null;
+	
+	$('#install_by_step_edit_map_container_all .popupHelp').show(200);	
+}
+
+function LongPressSVG()
+{
+	timerLongPress = null;
+	DisplayMenu('install_by_step_edit_map_menu');
 }
 
 function InitMap()
