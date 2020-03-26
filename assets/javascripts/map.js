@@ -170,6 +170,8 @@ var timerLongPress = null;
 var timerVeryLongPress = null;
 var eventTouchStart = null;
 var currentPointLongTouch = null;
+var currentForbiddenLongTouch = null;
+var currentAreaLongTouch = null;
 
 $(document).ready(function(e) {
 	$('.popupHelp').click(function(e) {
@@ -280,12 +282,121 @@ $(document).ready(function(e) {
 		}
 		DisplayBlockZoom();
 	});
+	
+	
+	
+	
+	$(document).on('touchend', '#install_by_step_edit_map_svg .forbidden_root', function(e) {
+		$('#zoom_popup').hide();
+		if (timerLongPress != null)
+		{
+			clearTimeout(timerLongPress);
+			timerLongPress = null;
+		}
+		if (timerVeryLongPress != null)
+		{
+			clearTimeout(timerVeryLongPress);
+			timerVeryLongPress = null;
+		}
+	});
+	$(document).on('touchstart', '#install_by_step_edit_map_svg .forbidden_root', function(e) {
+		if (timerLongPress != null)
+		{
+			clearTimeout(timerLongPress);
+			timerLongPress = null;
+		}
+		if (timerVeryLongPress != null)
+		{
+			clearTimeout(timerVeryLongPress);
+			timerVeryLongPress = null;
+		}
+		
+		if (canChangeMenu || currentAction == 'editForbiddenArea' || currentAction == 'addForbiddenArea')
+		{
+			timerLongPress = setTimeout(LongPressForbidden, 500);
+			//timerVeryLongPress = setTimeout(LongVeryPressSVG, 1500);
+			eventTouchStart = e;
+			currentForbiddenLongTouch = $(this);
+		}
+		DisplayBlockZoom();
+		
+		HideMenus();
+		
+	});
+	$(document).on('touchmove', '#install_by_step_edit_map_svg .forbidden_root', function(e) {
+    	HideMenus();
+		if (timerLongPress != null)
+		{
+			clearTimeout(timerLongPress);
+			timerLongPress = null;
+		}
+		if (timerVeryLongPress != null)
+		{
+			clearTimeout(timerVeryLongPress);
+			timerVeryLongPress = null;
+		}
+		DisplayBlockZoom();
+	});
+	
+	$(document).on('touchend', '#install_by_step_edit_map_svg .area_root', function(e) {
+		$('#zoom_popup').hide();
+		if (timerLongPress != null)
+		{
+			clearTimeout(timerLongPress);
+			timerLongPress = null;
+		}
+		if (timerVeryLongPress != null)
+		{
+			clearTimeout(timerVeryLongPress);
+			timerVeryLongPress = null;
+		}
+	});
+	$(document).on('touchstart', '#install_by_step_edit_map_svg .area_root', function(e) {
+		if (timerLongPress != null)
+		{
+			clearTimeout(timerLongPress);
+			timerLongPress = null;
+		}
+		if (timerVeryLongPress != null)
+		{
+			clearTimeout(timerVeryLongPress);
+			timerVeryLongPress = null;
+		}
+		
+		if (canChangeMenu || currentAction == 'editArea' || currentAction == 'addArea')
+		{
+			timerLongPress = setTimeout(LongPressArea, 500);
+			//timerVeryLongPress = setTimeout(LongVeryPressSVG, 1500);
+			eventTouchStart = e;
+			currentAreaLongTouch = $(this);
+		}
+		DisplayBlockZoom();
+		
+		HideMenus();
+		
+	});
+	$(document).on('touchmove', '#install_by_step_edit_map_svg .area_root', function(e) {
+    	HideMenus();
+		if (timerLongPress != null)
+		{
+			clearTimeout(timerLongPress);
+			timerLongPress = null;
+		}
+		if (timerVeryLongPress != null)
+		{
+			clearTimeout(timerVeryLongPress);
+			timerVeryLongPress = null;
+		}
+		DisplayBlockZoom();
+	});
 });
 
 function HideMenus()
 {
 	$('#install_by_step_edit_map_menu li').hide();
 	$('#install_by_step_edit_map_menu_point li').hide();
+	$('#install_by_step_edit_map_menu_forbidden li').hide();
+	$('#install_by_step_edit_map_menu_area li').hide();
 	$('.popupHelp').hide();
 }
 
@@ -344,6 +455,17 @@ function DisplayMenu(id_menu)
 			$(this).css({left: '+='+decallageX, top: '+='+decallageY});
     	});
 	}
+}
+
+function LongPressForbidden()
+{
+	timerLongPress = null;
+	DisplayMenu('install_by_step_edit_map_menu_forbidden');
+}
+function LongPressArea()
+{
+	timerLongPress = null;
+	DisplayMenu('install_by_step_edit_map_menu_area');
 }
 
 function LongPressPointDeletable()

@@ -120,6 +120,19 @@ $_CONFIG['URL'] = 'https://elodie.wyca-solutions.com/';
                         <code id="ReloadMaps_return"></code>
                     </div>
                 </section>
+                <section class="panel panel-featured panel-featured-primary">
+                    <header class="panel-heading"><h2 class="panel-title"><a href="#" id="ReflectorDetectionEnable" class="btn btn-default">ReflectorDetectionEnable</a></h2></header>
+                    <div class="panel-body">
+                        <div class="input-group">
+                            <div class="input-group-addon">Enable</div>
+                            <select id="ReflectorDetectionEnable_enable">
+                            	<option value="true">True</option>
+                            	<option value="false">False</option>
+                            </select>
+                        </div>
+                        <code id="ReflectorDetectionEnable_return"></code>
+                    </div>
+                </section>
             </div>
         </div>
     </div>
@@ -355,6 +368,12 @@ $_CONFIG['URL'] = 'https://elodie.wyca-solutions.com/';
                         <code id="onDockingState"></code>
                     </div>
                 </section>
+                <section class="panel panel-featured panel-featured-primary">
+                    <header class="panel-heading"><h2 class="panel-title">onPOIsDetect</h2></header>
+                    <div class="panel-body">
+                        <code id="onPOIsDetect"></code>
+                    </div>
+                </section>
             </div>
         </div>        
     </div>
@@ -513,6 +532,9 @@ $(document).ready(function(e) {
 		onUndockResult: function(data){
 			$('#onUndockResult').html(JSON.stringify(data));
 		},
+		onPOIsDetect: function(data){
+			$('#onPOIsDetect').html(JSON.stringify(data));
+		},
 	});
 	
 	
@@ -653,6 +675,11 @@ $(document).ready(function(e) {
 		e.preventDefault();
         wycaApi.ReloadMaps(function(e) { $('#ReloadMaps_return').html(JSON.stringify(e)); });
 	});
+	$('#ReflectorDetectionEnable').click(function(e) {
+		e.preventDefault();
+        wycaApi.ReflectorDetectionEnable($('#ReflectorDetectionEnable_enable').val() == "true" ? true:false, function(e) { $('#ReflectorDetectionEnable_return').html(JSON.stringify(e)); });
+	});
+	
 	// Actions
 	$('#GoToPose').click(function(e) {
 		e.preventDefault();

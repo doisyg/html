@@ -318,6 +318,14 @@ $(document).ready(function() {
 	svg = document.querySelector('#install_by_step_edit_map_svg');
 	InitSVG();
 	
+	$('#install_by_step_edit_map #bEndGomme').click(function(e) {
+        e.preventDefault();
+		$('#bEndGomme').hide();
+		currentAction = '';
+		currentStep = '';
+		$('body').addClass('no_current');
+    });
+	
 	$('#install_by_step_edit_map #bSaveCurrentElem').click(function(e) {
         e.preventDefault();
 		
@@ -436,6 +444,52 @@ $(document).ready(function() {
 		}
     });
 	
+	$('#install_by_step_edit_map_menu_forbidden .bDeleteForbidden').click(function(e) {
+        e.preventDefault();
+		HideMenus();
+		if (currentAction = 'editForbiddenArea')
+		{
+			i = GetForbiddenIndexFromID(currentForbiddenLongTouch.data('id_area'));
+			DeleteForbidden(i);	
+		}
+    });
+	
+	$('#install_by_step_edit_map_menu_area .bDeleteArea').click(function(e) {
+        e.preventDefault();
+		HideMenus();
+		if (currentAction = 'editArea')
+		{
+			i = GetAreaIndexFromID(currentAreaLongTouch.data('id_area'));
+			DeleteArea(i);	
+		}
+    });
+	
+	$('#install_by_step_edit_map_menu_area .bConfigArea').click(function(e) {
+        e.preventDefault();
+		HideMenus();
+		if (currentAction = 'editArea')
+		{
+			currentAreaIndex = GetAreaIndexFromID(currentAreaLongTouch.data('id_area'));
+			area = areas[currentAreaIndex];
+			$.each(area.configs, function( indexConfig, config ) {
+				switch(config.name)
+				{
+					case 'led_color_mode': $('#led_color_mode').val(config.value); break;
+					case 'led_color': $('#led_color').val(config.value); $('#led_color').keyup(); break;
+					case 'led_animation_mode': $('#led_animation_mode').val(config.value); break;
+					case 'led_animation': $('#led_animation').val(config.value); break;
+					case 'max_speed_mode': $('#max_speed_mode').val(config.value); break;
+					case 'max_speed': $('#max_speed').val(config.value); break;
+				}
+			});
+			
+			if ($('#led_color_mode').val() == 'Automatic') $('#led_color_group').hide(); else  $('#led_color_group').show();
+			if ($('#led_animation_mode').val() == 'Automatic') $('#led_animation_group').hide(); else  $('#led_animation_group').show();
+			if ($('#max_speed_mode').val() == 'Automatic') $('#max_speed_group').hide(); else  $('#max_speed_group').show();
+			$('#install_by_step_edit_map_container_all .modalAreaOptions').modal('show');
+		}
+    });
+	
 	$('#install_by_step_edit_map_svg').on('contextmenu', function (e) {
 		
 		if (currentAction == 'gomme' && currentStep=='trace')
@@ -446,6 +500,7 @@ $(document).ready(function() {
 			return false;
 			
 		}
+		/*
 		else if (currentAction == 'addForbiddenArea' && currentStep=='trace')
 		{
 			currentStep = '';
@@ -460,6 +515,7 @@ $(document).ready(function() {
 			TraceCurrentArea(currentAreaPoints);
 			return false;
 		}
+		*/
     });
 	
 	/**************************/
@@ -598,7 +654,7 @@ $(document).ready(function() {
 			
 			currentSelectedItem = Array();
 			currentSelectedItem.push({'type':'forbidden', 'id':$(this).data('id_area')});	
-			HideCurrentMenuNotSelect();			
+			HideCurrentMenuNotSelect();
 			
 			$('#boutonsForbidden').show();
             $('#boutonsStandard').hide();
@@ -842,7 +898,7 @@ $(document).ready(function() {
 			$('body').removeClass('no_current select');
 			$('.select').css("strokeWidth", minStokeWidth);
 			
-			currentAction = 'editForbiddenArea';
+			currentAction = 'addForbiddenArea';
 			currentStep = '';
 			
 			currentForbiddenIndex = GetForbiddenIndexFromID(nextIdArea);
@@ -850,6 +906,8 @@ $(document).ready(function() {
 			saveCurrentForbidden = JSON.stringify(forbidden);
 			
 			AddClass('#install_by_step_edit_map_svg .forbidden_elem_'+forbidden.id_area, 'active');
+			
+			SaveElementNeeded(true);
 			
 			/*
 			$('#boutonsForbidden').show();
@@ -884,22 +942,58 @@ $(document).ready(function() {
 		HideMenus();
 		if (canChangeMenu)
 		{
-			blockZoom = true;
+			//blockZoom = true;
+			nextIdArea++;
+			
+			p = $('#install_by_step_edit_map_svg image').position();
+			x = (eventTouchStart.originalEvent.targetTouches[0] ? eventTouchStart.originalEvent.targetTouches[0].pageX : eventTouchStart.originalEvent.changedTouches[e.changedTouches.length-1].pageX) - p.left;
+			y = (eventTouchStart.originalEvent.targetTouches[0] ? eventTouchStart.originalEvent.targetTouches[0].pageY : eventTouchStart.originalEvent.changedTouches[e.changedTouches.length-1].pageY) - p.top;
+			x = x * zoom;
+			y = ros_hauteur - (y * zoom);
+			
+			xRos = x * ros_resolution / 100;
+			yRos = y * ros_resolution / 100;
+			
+			tailleArea = 1*zoom;
+			tailleArea = 1;
+			
+			currentAreaPoints = Array();
+			currentAreaPoints.push({x:xRos - tailleArea, y:yRos - tailleArea});
+			currentAreaPoints.push({x:xRos + tailleArea, y:yRos - tailleArea});
+			currentAreaPoints.push({x:xRos + tailleArea, y:yRos + tailleArea});
+			currentAreaPoints.push({x:xRos - tailleArea, y:yRos + tailleArea});
+
+			a = {'id_area':nextIdArea, 'id_map':id_map, 'nom':'', 'comment':'', 'is_forbidden':0, 'couleur_r':87, 'couleur_g':159, 'couleur_b':177, 'deleted':0, 'points':currentAreaPoints, 'configs':Array()};
+			AddHistorique({'action':'add_area', 'data':a});
+			
+			areas.push(a);
+			TraceArea(areas.length-1);
+			
+			RemoveClass('#install_by_step_edit_map_svg .active', 'active');
+			RemoveClass('#install_by_step_edit_map_svg .activ_select', 'activ_select'); 
+			
+			currentSelectedItem = Array();
+			currentSelectedItem.push({'type':'area', 'id':nextIdArea});	
+			HideCurrentMenuNotSelect();			
 			
 			$('#boutonsArea').show();
             $('#boutonsStandard').hide();
 			
-			$('#boutonsArea #bAreaDelete').hide();
-			$('#boutonsArea #bAreaOptions').hide();
+			$('#boutonsArea #bAreaDelete').show();
 			
-			currentAction = 'addArea';	
-			currentStep = 'trace';
+			$('body').removeClass('no_current select');
+			$('.select').css("strokeWidth", minStokeWidth);
 			
-			$('body').removeClass('no_current');
-			$('body').addClass('addArea');
+			currentAction = 'addArea';
+			currentStep = '';
 			
-			currentAreaPoints = Array();
-			currentAreaPoints.push({x:0, y:0}); // Point du curseur
+			currentAreaIndex = GetAreaIndexFromID(nextIdArea);
+			area = areas[currentAreaIndex];
+			saveCurrentArea = JSON.stringify(area);
+			
+			AddClass('#install_by_step_edit_map_svg .area_elem_'+area.id_area, 'active');
+			
+			SaveElementNeeded(true);
 		}
 		else
 			AvertCantChange();
@@ -922,6 +1016,8 @@ $(document).ready(function() {
 	$('#bAreaOptions').click(function(e) {
         area = areas[currentAreaIndex];
 		
+		$('#area_color_mode').val(rgbToHex(area.couleur_r, area.couleur_g, area.couleur_b));
+		
 		$.each(area.configs, function( indexConfig, config ) {
 			switch(config.name)
 			{
@@ -941,14 +1037,27 @@ $(document).ready(function() {
 	
 	$('#bAreaSaveConfig').click(function(e) {
 		area = areas[currentAreaIndex];
+		saveCurrentArea = JSON.stringify(area);
+			
 		area.configs = Array();
 		area.configs.push({'name':'led_color_mode' , 'value':$('#led_color_mode').val()});
+		
 		area.configs.push({'name':'led_color' , 'value':$('#led_color').val()});
 		area.configs.push({'name':'led_animation_mode' , 'value':$('#led_animation_mode').val()});
 		area.configs.push({'name':'led_animation' , 'value':$('#led_animation').val()});
 		area.configs.push({'name':'max_speed_mode' , 'value':$('#max_speed_mode').val()});
 		area.configs.push({'name':'max_speed' , 'value':$('#max_speed').val()});
 		
+		var c = $('#area_color').val().split("(")[1].split(")")[0];
+		c = c.split(",");
+		area.couleur_r = parseInt(c[0]);
+		area.couleur_g = parseInt(c[1]);
+		area.couleur_b = parseInt(c[2]);
+		
+		if (currentAction == 'editArea')
+			AddHistorique({'action':'edit_area', 'data':{'index':currentAreaIndex, 'old':saveCurrentArea, 'new':JSON.stringify(areas[currentAreaIndex])}});
+		
+		TraceArea(currentAreaIndex);
 	});
 		
 	$('#bSaveMap').click(function(e) {
@@ -983,7 +1092,7 @@ $(document).ready(function() {
 		HideMenus();
 		if (canChangeMenu)
 		{
-			alert('disoplay choix form pose ou click');
+			alert('display choix form pose ou click');
 		}
 		else
 			AvertCantChange();
@@ -1391,6 +1500,7 @@ $(document).ready(function() {
 				gommes[gommes.length-1].push({x:xRos+0.01, y:yRos+0.01}); // Point du curseur
 				TraceCurrentGomme(gommes[gommes.length-1], gommes.length-1);
 				
+				$('#bEndGomme').show();
 			}
 		}
 		else if (currentAction == 'addDock' && currentStep=='setPose')
@@ -1461,6 +1571,7 @@ $(document).ready(function() {
 			TraceCurrentPoi(currentPoiPose);
 		}
 		*/
+		/*
 		else if (currentAction == 'addForbiddenArea' && currentStep=='trace')
 		{
 			e.preventDefault();
@@ -1501,6 +1612,7 @@ $(document).ready(function() {
 			//currentAreaPoints.push({x:xRos, y:yRos}); // Point du curseur
 			TraceCurrentArea(currentAreaPoints);
 		}
+		*/
 	});
 	
 	$('#install_by_step_edit_map_svg').on('touchmove', function(e) {
@@ -1825,6 +1937,7 @@ $(document).ready(function() {
 				TraceCurrentPoi(currentPoiPose);
 			}
 			*/
+			/*
 			else if (currentAction == 'addForbiddenArea' && currentStep=='trace')
 			{
 				e.preventDefault();
@@ -1839,12 +1952,6 @@ $(document).ready(function() {
 				
 				xRos = x * ros_resolution / 100;
 				yRos = y * ros_resolution / 100;
-				
-				/*
-				currentGommePoints[currentGommePoints.length-1].x = xRos;
-				currentGommePoints[currentGommePoints.length-1].y = yRos;
-				TraceCurrentGomme(currentGommePoints);
-				*/
 				
 				currentForbiddenPoints.pop(); // Point du curseur
 				currentForbiddenPoints.push({x:xRos, y:yRos});
@@ -1869,6 +1976,7 @@ $(document).ready(function() {
 				currentAreaPoints.push({x:xRos, y:yRos});
 				TraceCurrentArea(currentAreaPoints);
 			}
+			*/
 		}
 	});
 	
@@ -2006,6 +2114,7 @@ $(document).ready(function() {
 			$('#boutonsPoi #bPoiSave').show();
 		}
 		*/
+		/*
 		else if (currentAction == 'addForbiddenArea' && currentStep=='trace')
 		{
 			e.preventDefault();
@@ -2051,6 +2160,7 @@ $(document).ready(function() {
 			currentAreaPoints.push({x:xRos, y:yRos}); // Point du curseur
 			TraceCurrentArea(currentAreaPoints);
 		}
+		*/
 	});
 });
 
@@ -2225,21 +2335,16 @@ function AreaSave()
 	{
 		SaveElementNeeded(false);
 		
-		nextIdArea++;
-		
-		currentAreaPoints.pop();
-		a = {'id_area':nextIdArea, 'id_map':id_map, 'nom':'', 'comment':'', 'is_forbidden':0, 'couleur_r':87, 'couleur_g':159, 'couleur_b':177, 'deleted':0, 'points':currentAreaPoints, 'configs':Array()};
-		AddHistorique({'action':'add_area', 'data':a});
-		
-		areas.push(a);
-		TraceArea(areas.length-1);
+		AddHistorique({'action':'add_area', 'data':{'index':currentAreaIndex, 'old':saveCurrentArea, 'new':JSON.stringify(areas[currentAreaIndex])}});
 		
 		RemoveClass('#install_by_step_edit_map_svg .active', 'active');
+		RemoveClass('#install_by_step_edit_map_svg .activ_select', 'activ_select'); 
+			
 		
 		currentAction = '';
 		currentStep = '';
 		
-		$('#boutonsArea').hide();
+		$('#boutonsForbidden').hide();
 		$('#boutonsStandard').show();
 		blockZoom = false;
 		
@@ -2278,7 +2383,8 @@ function AreaCancel()
 	
 	if (currentAction == 'addArea')
 	{
-		$('#install_by_step_edit_map_svg .area_elem_0').remove();
+		DeleteArea(currentAreaIndex);
+		historiques.pop();
 	}
 	else if (currentAction == 'editArea')
 	{
@@ -2300,19 +2406,13 @@ function ForbiddenSave()
 	
 	if (currentAction == 'addForbiddenArea')
 	{
-		canChangeMenu = true;
+		SaveElementNeeded(false);
 		
-		nextIdArea++;
-		
-		currentForbiddenPoints.pop();
-		
-		f = {'id_area':nextIdArea, 'id_map':id_map, 'nom':'', 'comment':'', 'is_forbidden':1, 'couleur_r':0, 'couleur_g':0, 'couleur_b':0, 'deleted':0, 'points':currentForbiddenPoints};
-		AddHistorique({'action':'add_forbidden', 'data':f});
-		
-		forbiddens.push(f);
-		TraceForbidden(forbiddens.length-1);
+		AddHistorique({'action':'add_forbidden', 'data':{'index':currentForbiddenIndex, 'old':saveCurrentForbidden, 'new':JSON.stringify(forbiddens[currentForbiddenIndex])}});
 		
 		RemoveClass('#install_by_step_edit_map_svg .active', 'active');
+		RemoveClass('#install_by_step_edit_map_svg .activ_select', 'activ_select'); 
+			
 		
 		currentAction = '';
 		currentStep = '';
@@ -2332,6 +2432,8 @@ function ForbiddenSave()
 		AddHistorique({'action':'edit_forbidden', 'data':{'index':currentForbiddenIndex, 'old':saveCurrentForbidden, 'new':JSON.stringify(forbiddens[currentForbiddenIndex])}});
 		
 		RemoveClass('#install_by_step_edit_map_svg .active', 'active');
+		RemoveClass('#install_by_step_edit_map_svg .activ_select', 'activ_select'); 
+			
 		
 		currentAction = '';
 		currentStep = '';
@@ -2356,7 +2458,8 @@ function ForbiddenCancel()
 	
 	if (currentAction == 'addForbiddenArea')
 	{
-		$('#install_by_step_edit_map_svg .forbidden_elem_0').remove();
+		DeleteForbidden(currentForbiddenIndex);
+		historiques.pop();
 	}
 	else if (currentAction == 'editForbiddenArea')
 	{

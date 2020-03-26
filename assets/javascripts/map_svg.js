@@ -74,6 +74,7 @@ function TraceCurrentGomme(points, index)
 	}
 }
 
+/*
 function TraceCurrentForbidden(points)
 {
 	$('#install_by_step_edit_map_svg .forbidden_elem_current').remove();
@@ -114,6 +115,7 @@ function TraceCurrentForbidden(points)
 		}
 	}
 }
+*/
 
 function GetCenterForbidden(indexForbidden)
 {
@@ -176,7 +178,7 @@ function TraceForbidden(indexForbidden)
 		
 		path = makeSVGElement('polygon', { points: forbidden_point,
 							   'stroke-width': 0,
-							   'class':'poly forbidden poly_elem forbidden_elem forbidden_elem_'+forbidden.id_area,
+							   'class':'poly forbidden forbidden_root poly_elem forbidden_elem forbidden_elem_'+forbidden.id_area,
 							   'id':'forbidden_'+forbidden.id_area,
 							   'data-id_area': forbidden.id_area
 							  });
@@ -246,6 +248,7 @@ function TraceForbidden(indexForbidden)
 	}
 }
 
+/*
 function TraceCurrentArea(points)
 {
 	$('#install_by_step_edit_map_svg .area_elem_current').remove();
@@ -287,6 +290,7 @@ function TraceCurrentArea(points)
 		}
 	}
 }
+*/
 
 function GetCenterArea(indexArea)
 {
@@ -349,7 +353,7 @@ function TraceArea(indexArea)
 		
 		path = makeSVGElement('polygon', { points: area_point,
 							   'stroke-width': 0,
-							   'class':'poly area poly_elem area_elem area_elem_'+area.id_area,
+							   'class':'poly area area_root poly_elem area_elem area_elem_'+area.id_area,
 							   'id':'area_'+area.id_area,
 							   'data-id_area': area.id_area
 							  });

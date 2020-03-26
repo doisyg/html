@@ -29,6 +29,28 @@ function WycaAPI(options){
 	this.ACTION_STATUS_RECALLED     = 8;
 	this.ACTION_STATUS_LOST         = 9;
 	
+	this.throttles_rate = Array();
+	this.throttles_rate['onLatencyReturn'] = 0;
+	this.throttles_rate['onCurrentA'] = 1;
+	this.throttles_rate['onIsPowered'] = 1;
+	this.throttles_rate['onRelativeSOCPercentage'] = 1;
+	this.throttles_rate['onRemainingCapacity'] = 1;
+	this.throttles_rate['onTimeRemainingToEmptyMin'] = 1;
+	this.throttles_rate['onTimeRemainingToFullMin'] = 1;
+	this.throttles_rate['onLedCurrentAnimationMode'] = 0;
+	this.throttles_rate['onLedCurrentRobotStateMode'] = 0;
+	this.throttles_rate['onLedIsLightMode'] = 0;
+	this.throttles_rate['onLedIsManualMode'] = 0;
+	this.throttles_rate['onMappingIsStarted'] = 0;
+	this.throttles_rate['onMappingMapInConstruction'] = 0;
+	this.throttles_rate['onMappingRobotPoseInBuildingMap'] = 0;
+	this.throttles_rate['onNavigationIsStarted'] = 0;
+	this.throttles_rate['onNavigationRobotPose'] = 0;
+	this.throttles_rate['onIsFreewheel'] = 0;
+	this.throttles_rate['onIsSafetyStop'] = 0;
+	this.throttles_rate['onDockingState'] = 0;
+	this.throttles_rate['onPOIsDetect'] = 1;
+	
    	if (typeof jQuery === 'undefined') {
 	  throw new Error('WycaAPI requires jQuery')
 	}
@@ -66,72 +88,6 @@ function WycaAPI(options){
 	
 	_this = this;
 	
-	jQuery.ajax({
-		url: _this.options.serveurWyca+'API/webservices/v1.0/json/connection',
-		type: "post",
-		timeout: 15000,
-		beforeSend: function(x) {
-			x.setRequestHeader ("Authorization", "Basic " + btoa(_this.options.api_key + ':'));
-		},
-		error: function(jqXHR, textStatus, errorThrown) {
-			throw new Error('WycaAPI check API KEY error')
-			},
-		success: function(data, textStatus, jqXHR) {
-				authentificated = true;
-				if (_this.socketStarted)
-				{	
-					jQuery.ajax({
-						url: 'https://elodie.wyca-solutions.com/API/webservices/v1.0/json/robot/getHash',
-						type: "get",
-						timeout: 15000,
-						beforeSend: function(x) {
-							x.setRequestHeader ("Authorization", "Basic " + btoa(_this.options.api_key + ':'));
-						},
-						async: true,
-						data: { },
-						error: function(jqXHR, textStatus, errorThrown) {
-						},
-						success: jQuery.proxy(function(data, textStatus, jqXHR) {
-							donnees = JSON.parse(data);
-						
-							var auth = {
-								op : 'auth',
-								id : ++_this.idMessage,
-								data: donnees
-							  };		
-							
-							_this.ws.send(JSON.stringify(auth));					
-						}, this)
-					});
-				}
-				
-				jQuery.ajax({
-					url: _this.options.serveurWyca+'API/webservices/v1.0/json/pcConfig',
-					type: "get",
-					timeout: 15000,
-					beforeSend: function(x) {
-						x.setRequestHeader ("Authorization", "Basic " + btoa(_this.options.api_key + ':'));
-					},
-					error: function(jqXHR, textStatus, errorThrown) {
-						throw new Error('WycaAPI check API KEY error')
-						},
-					success: function(data, textStatus, jqXHR) {
-							if (data != '')
-							{
-								pc_config = jQuery.parseJSON(data);
-								//if (isStarted) _this.StartWebRTC();
-							}
-							else
-							{
-								throw new Error('WycaAPI API KEY not valid')
-							}
-						}
-				});
-			}
-	});
-	
-	
-	
 	this.init = function (){
 		
 		this.Connect();
@@ -141,37 +97,34 @@ function WycaAPI(options){
 	{
 		_this.socketStarted = true;
 		//_this.ROSMessageSendToPC('onRobotConnexionOpen');
-		if (this.options.onRobotConnexionOpen != undefined)
+		if (_this.options.onRobotConnexionOpen != undefined)
 		{
-			this.options.onRobotConnexionOpen();
+			_this.options.onRobotConnexionOpen();
 		}
 		
-		if (authentificated)
-		{	
-			jQuery.ajax({
-				url: 'https://elodie.wyca-solutions.com/API/webservices/v1.0/json/robot/getHash',
-				type: "get",
-				timeout: 15000,
-				beforeSend: function(x) {
-					x.setRequestHeader ("Authorization", "Basic " + btoa(_this.options.api_key + ':'));
-				},
-				async: true,
-				data: { },
-				error: function(jqXHR, textStatus, errorThrown) {
-				},
-				success: jQuery.proxy(function(data, textStatus, jqXHR) {
-					donnees = JSON.parse(data);
+		jQuery.ajax({
+			url: 'https://elodie.wyca-solutions.com/API/webservices/v1.0/json/robot/getHash',
+			type: "get",
+			timeout: 15000,
+			beforeSend: function(x) {
+				x.setRequestHeader ("Authorization", "Basic " + btoa(_this.options.api_key + ':'));
+			},
+			async: true,
+			data: { },
+			error: function(jqXHR, textStatus, errorThrown) {
+			},
+			success: jQuery.proxy(function(data, textStatus, jqXHR) {
+				donnees = JSON.parse(data);
+			
+				var auth = {
+					op : 'auth',
+					id : ++_this.idMessage,
+					data: donnees
+				  };		
 				
-					var auth = {
-						op : 'auth',
-						id : ++_this.idMessage,
-						data: donnees
-					  };		
-					
-					_this.ws.send(JSON.stringify(auth));					
-				}, this)
-			});
-		}
+				_this.ws.send(JSON.stringify(auth));					
+			}, _this)
+		});
 	}
 	
 	this.wsOnError = function(error)
@@ -192,9 +145,9 @@ function WycaAPI(options){
 	{
 		_this.socketStarted = false;
 		//_this.ROSMessageSendToPC('onRobotConnexionClose');
-		if (this.options.onRobotConnexionClose != undefined)
+		if (_this.options.onRobotConnexionClose != undefined)
 		{
-			this.options.onRobotConnexionClose();
+			_this.options.onRobotConnexionClose();
 		}
 		
 		if (_this.timeoutReconnect == null)
@@ -204,7 +157,6 @@ function WycaAPI(options){
 	this.wsOnMessage = function(e)
 	{
 		data = JSON.parse(e.data);
-		console.log(data);
 		switch(data.op)
 		{
 			case 'auth':
@@ -227,6 +179,7 @@ function WycaAPI(options){
 			case 'Undock_return':
 			case 'ReloadMaps_return':
 			case 'GetRobotPose_return':
+			case 'ReflectorDetectionEnable_return':
 				if (_this.callbacks[data.id] !=undefined) { id_mes = data.id; delete data.op; delete data.id; _this.callbacks[id_mes](data); }
 				break;
 			/********** Actions *********/
@@ -306,6 +259,9 @@ function WycaAPI(options){
 			case 'onDockingState':
 				if (_this.options.onDockingState != undefined) { _this.options.onDockingState(data.data); }
 				break;
+			case 'onPOIsDetect':
+				if (_this.options.onPOIsDetect != undefined) { _this.options.onPOIsDetect(data.data); }
+				break;
 		}
 	}
 	
@@ -332,28 +288,44 @@ function WycaAPI(options){
 	
 	this.Subscribe = function()
 	{
-		if (_this.options.onLatencyReturn != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onLatencyReturn', throttle_rate:0 }}; _this.ws.send(JSON.stringify(subscribe)); }
-		if (_this.options.onCurrentA != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onCurrentA', throttle_rate:1 }}; _this.ws.send(JSON.stringify(subscribe)); }
-		if (_this.options.onIsPowered != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onIsPowered', throttle_rate:1 }}; _this.ws.send(JSON.stringify(subscribe)); }
-		if (_this.options.onRelativeSOCPercentage != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onRelativeSOCPercentage', throttle_rate:1 }}; _this.ws.send(JSON.stringify(subscribe)); }
-		if (_this.options.onRemainingCapacity != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onRemainingCapacity', throttle_rate:1 }}; _this.ws.send(JSON.stringify(subscribe)); }
-		if (_this.options.onTimeRemainingToEmptyMin != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onTimeRemainingToEmptyMin', throttle_rate:1 }}; _this.ws.send(JSON.stringify(subscribe)); }
-		if (_this.options.onTimeRemainingToFullMin != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onTimeRemainingToFullMin', throttle_rate:1 }}; _this.ws.send(JSON.stringify(subscribe)); }
-		if (_this.options.onLedCurrentAnimationMode != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onLedCurrentAnimationMode', throttle_rate:0 }}; _this.ws.send(JSON.stringify(subscribe)); }
-		if (_this.options.onLedCurrentRobotStateMode != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onLedCurrentRobotStateMode', throttle_rate:0 }}; _this.ws.send(JSON.stringify(subscribe)); }
-		if (_this.options.onLedIsLightMode != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onLedIsLightMode', throttle_rate:0 }}; _this.ws.send(JSON.stringify(subscribe)); }
-		if (_this.options.onLedIsManualMode != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onLedIsManualMode', throttle_rate:0 }}; _this.ws.send(JSON.stringify(subscribe)); }
-		if (_this.options.onMappingIsStarted != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onMappingIsStarted', throttle_rate:0 }}; _this.ws.send(JSON.stringify(subscribe)); }
-		if (_this.options.onMappingMapInConstruction != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onMappingMapInConstruction', throttle_rate:0 }}; _this.ws.send(JSON.stringify(subscribe)); }
-		if (_this.options.onMappingRobotPoseInBuildingMap != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onMappingRobotPoseInBuildingMap', throttle_rate:0 }}; _this.ws.send(JSON.stringify(subscribe)); }
-		if (_this.options.onNavigationIsStarted != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onNavigationIsStarted', throttle_rate:0 }}; _this.ws.send(JSON.stringify(subscribe)); }
-		if (_this.options.onNavigationRobotPose != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onNavigationRobotPose', throttle_rate:0 }}; _this.ws.send(JSON.stringify(subscribe)); }
-		if (_this.options.onIsFreewheel != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onIsFreewheel', throttle_rate:0 }}; _this.ws.send(JSON.stringify(subscribe)); this.RefreshFreewheelState(); }
-		if (_this.options.onIsSafetyStop != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onIsSafetyStop', throttle_rate:0 }}; _this.ws.send(JSON.stringify(subscribe)); this.RefreshSafetyStop(); }
-		if (_this.options.onDockingState != undefined) { var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:'onDockingState', throttle_rate:0 }}; _this.ws.send(JSON.stringify(subscribe)); }
-		
+		if (_this.options.onLatencyReturn != undefined) { var n='onLatencyReturn'; var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:n, throttle_rate:_this.throttles_rate[n] }}; _this.ws.send(JSON.stringify(subscribe)); }
+		if (_this.options.onCurrentA != undefined) { var n='onCurrentA'; var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:n, throttle_rate:_this.throttles_rate[n] }}; _this.ws.send(JSON.stringify(subscribe)); }
+		if (_this.options.onIsPowered != undefined) { var n='onIsPowered'; var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:n, throttle_rate:_this.throttles_rate[n] }}; _this.ws.send(JSON.stringify(subscribe)); }
+		if (_this.options.onRelativeSOCPercentage != undefined) { var n='onRelativeSOCPercentage'; var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:n, throttle_rate:1 }}; _this.ws.send(JSON.stringify(subscribe)); }
+		if (_this.options.onRemainingCapacity != undefined) { var n='onRemainingCapacity'; var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:n, throttle_rate:_this.throttles_rate[n] }}; _this.ws.send(JSON.stringify(subscribe)); }
+		if (_this.options.onTimeRemainingToEmptyMin != undefined) { var n='onTimeRemainingToEmptyMin'; var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:n, throttle_rate:_this.throttles_rate[n] }}; _this.ws.send(JSON.stringify(subscribe)); }
+		if (_this.options.onTimeRemainingToFullMin != undefined) { var n='onTimeRemainingToFullMin'; var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:n, throttle_rate:_this.throttles_rate[n] }}; _this.ws.send(JSON.stringify(subscribe)); }
+		if (_this.options.onLedCurrentAnimationMode != undefined) { var n='onLedCurrentAnimationMode'; var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:n, throttle_rate:_this.throttles_rate[n] }}; _this.ws.send(JSON.stringify(subscribe)); }
+		if (_this.options.onLedCurrentRobotStateMode != undefined) { var n='onLedCurrentRobotStateMode'; var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:n, throttle_rate:_this.throttles_rate[n] }}; _this.ws.send(JSON.stringify(subscribe)); }
+		if (_this.options.onLedIsLightMode != undefined) { var n='onLedIsLightMode'; var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:n, throttle_rate:_this.throttles_rate[n] }}; _this.ws.send(JSON.stringify(subscribe)); }
+		if (_this.options.onLedIsManualMode != undefined) { var n='onLedIsManualMode'; var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:n, throttle_rate:_this.throttles_rate[n] }}; _this.ws.send(JSON.stringify(subscribe)); }
+		if (_this.options.onMappingIsStarted != undefined) { var n='onMappingIsStarted'; var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:n, throttle_rate:_this.throttles_rate[n] }}; _this.ws.send(JSON.stringify(subscribe)); }
+		if (_this.options.onMappingMapInConstruction != undefined) { var n='onMappingMapInConstruction'; var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:n, throttle_rate:_this.throttles_rate[n] }}; _this.ws.send(JSON.stringify(subscribe)); }
+		if (_this.options.onMappingRobotPoseInBuildingMap != undefined) { var n='onMappingRobotPoseInBuildingMap'; var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:n, throttle_rate:_this.throttles_rate[n] }}; _this.ws.send(JSON.stringify(subscribe)); }
+		if (_this.options.onNavigationIsStarted != undefined) { var n='onNavigationIsStarted'; var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:n, throttle_rate:_this.throttles_rate[n] }}; _this.ws.send(JSON.stringify(subscribe)); }
+		if (_this.options.onNavigationRobotPose != undefined) { var n='onNavigationRobotPose'; var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:n, throttle_rate:_this.throttles_rate[n] }}; _this.ws.send(JSON.stringify(subscribe)); _this.GetRobotPose(); }
+		if (_this.options.onIsFreewheel != undefined) { var n='onIsFreewheel'; var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:n, throttle_rate:_this.throttles_rate[n] }}; _this.ws.send(JSON.stringify(subscribe)); this.RefreshFreewheelState(); }
+		if (_this.options.onIsSafetyStop != undefined) { var n='onIsSafetyStop'; var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:n, throttle_rate:_this.throttles_rate[n] }}; _this.ws.send(JSON.stringify(subscribe)); this.RefreshSafetyStop(); }
+		if (_this.options.onDockingState != undefined) { var n='onDockingState'; var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:n, throttle_rate:_this.throttles_rate[n] }}; _this.ws.send(JSON.stringify(subscribe)); }
+		if (_this.options.onPOIsDetect != undefined) { var n='onPOIsDetect'; var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:n, throttle_rate:_this.throttles_rate[n] }}; _this.ws.send(JSON.stringify(subscribe)); }
 		
 		if (_this.options.onInitialized != undefined) _this.options.onInitialized();
+	}
+	
+	this.on = function (event_name, callback)
+	{
+		_this.options[event_name] = callback;
+		var subscribe = {	op : 'subscribe', id : ++_this.idMessage, params: { event:event_name, throttle_rate:_this.throttles_rate[event_name] }}; _this.ws.send(JSON.stringify(subscribe));
+		
+		if (event_name == 'onIsFreewheel') 			_this.RefreshFreewheelState();
+		if (event_name == 'onIsSafetyStop') 		_this.RefreshSafetyStop();
+		if (event_name == 'onNavigationRobotPose') 	_this.GetRobotPose();
+		
+	}
+	this.off = function (event_name)
+	{
+		var unsubscribe = {	op : 'unsubscribe', id : ++_this.idMessage, params: event_name}; _this.ws.send(JSON.stringify(unsubscribe));
+		_this.options[event_name] = null;
 	}
 	
 	this.Teleop = function(x, z)
@@ -507,6 +479,18 @@ function WycaAPI(options){
 		};
 		_this.ws.send(JSON.stringify(action));
 	}
+	this.ReflectorDetectionEnable = function(enable, callback){
+		this.idMessage++;
+		if (callback != undefined)
+			this.callbacks[this.idMessage] = callback;
+		var action = {
+			op: 'ReflectorDetectionEnable',
+			id : _this.idMessage,
+			data: enable
+		};
+		_this.ws.send(JSON.stringify(action));
+	}
+	/* Actions */
 	this.GoToPose = function(x, y, theta, callback){
 		this.idMessage++;
 		if (callback != undefined)

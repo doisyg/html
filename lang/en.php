@@ -72,5 +72,21 @@ $_LANG['0cbc6611f5540bd0809a388dc95a615b'] = 'Test';
 $_LANG['75e8eca7439a4fbf36a7a159baf87074'] = 'Building the map';
 $_LANG['fbbf4fcb0c90883760d453c1b2835faf'] = 'Start autonomous navigation';
 $_LANG['9d60db790f5b646cc725f212720cc9f5'] = 'Invalid login or password.';
+$_LANG['87ebfc25323790cee93f9912faa6511c'] = 'LED Color';
+$_LANG['086247a9b57fde6eefee2a0c4752242d'] = 'Automatic';
+$_LANG['e1ba155a9f2e8c3be94020eef32a0301'] = 'Manual';
+$_LANG['71368b23265f0b7181c8b747a0c5a9c6'] = 'LED Animation';
+$_LANG['d6b6b668dbca9d4fe774bb654226ebe3'] = 'Animation';
+$_LANG['46b5f8c58b679b4243cbdb5749642c86'] = 'Progress';
+$_LANG['074afefcc73a0e2ec68cfa34d53ac92c'] = 'Progress from center';
+$_LANG['4aca5ee9a087fb9218bfb662fe92605c'] = 'Rainbow';
+$_LANG['a8455349cbb9c12a2f2de81748509731'] = 'K2000';
+$_LANG['cfad0a7419f44ea0c64db24197abbf70'] = 'Blink';
+$_LANG['a4c58db4b4def1fea953af6a9614346a'] = 'Blink 2';
+$_LANG['5dac73aa49b9ccaca4b9b0d0ef615d10'] = 'Police';
+$_LANG['04e0385c10aefee8e4681617d2f3ef40'] = 'Fade';
+$_LANG['6bc362dbf494c61ea117fe3c71ca48a5'] = 'Move';
+$_LANG['9914a0ce04a7b7b6a8e39bec55064b82'] = 'Light';
+$_LANG['3ff6332a5c37daf23d2321949bcec7c6'] = 'Max speed';
 
 ?>

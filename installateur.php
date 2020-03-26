@@ -369,6 +369,7 @@ $INSTALL_STEP = Configuration::GetValue('INSTALL_STEP');
                         <div style="clear:both;"></div>
                     </div>
                     
+                    <a href="#" id="bEndGomme" class="btn btn-circle btn-primary btn-lg"><i class="fa fa-check"></i></a>
                     <a href="#" id="bSaveCurrentElem" class="btn btn-circle btn-primary btn-lg"><i class="fa fa-check"></i></a>
                     <a href="#" id="bCancelCurrentElem" class="btn btn-circle btn-warning btn-lg"><i class="fa fa-times"></i></a>
                     
@@ -386,6 +387,105 @@ $INSTALL_STEP = Configuration::GetValue('INSTALL_STEP');
                     	<ul>
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg bDeletePoint"><i class="fa fa-trash"></i></a></li>
                         </ul>
+                    </div>
+                    <div id="install_by_step_edit_map_menu_forbidden" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
+                    	<ul>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bDeleteForbidden"><i class="fa fa-trash"></i></a></li>
+                        </ul>
+                    </div>
+                    <div id="install_by_step_edit_map_menu_area" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
+                    	<ul>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bConfigArea"><i class="fa fa-gears"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bDeleteArea"><i class="fa fa-trash"></i></a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal fade modalAreaOptions" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+                                        <div class="h100vh_160" style="overflow:auto">
+                                            <form>
+                                                <div class="form-group">
+                                                    <label class="col-xs-4 control-label">Area color</label>
+                                                    <div class="col-xs-7">
+                                                        <div id="area_color_elem" class="input-group color" data-color="rgb(87, 159, 177)" data-color-format="rgb" data-plugin-colorpicker>
+                                                            <span class="input-group-addon"><i></i></span>
+                                                            <input id="area_color" name="area_color" type="text" class="form-control" style="width:0; padding:0;">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-xs-4 control-label" for="inputSuccess"><?php echo __('LED Color');?></label>
+                                                    <div class="col-xs-8">
+                                                        <select id="led_color_mode" name="led_color_mode" class="form-control input-sm mb-md selectChangeAffGroup">
+                                                            <option value="Automatic"><?php echo __('Automatic');?></option>
+                                                            <option value="Manual"><?php echo __('Manual');?></option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div id="led_color_group" class="form-group">
+                                                    <label class="col-xs-4 control-label">LED color</label>
+                                                    <div class="col-xs-7">
+                                                        <div id="led_color_elem" class="input-group color" data-color="rgb(255, 146, 180)" data-color-format="rgb" data-plugin-colorpicker>
+                                                            <span class="input-group-addon"><i></i></span>
+                                                            <input id="led_color" name="led_color" type="text" class="form-control" style="width:0; padding:0;">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-xs-4 control-label" for="inputSuccess"><?php echo __('LED Animation');?></label>
+                                                    <div class="col-xs-8">
+                                                        <select id="led_animation_mode" name="led_animation_mode" class="form-control input-sm mb-md selectChangeAffGroup">
+                                                            <option value="Automatic"><?php echo __('Automatic');?></option>
+                                                            <option value="Manual"><?php echo __('Manual');?></option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div id="led_animation_group" class="form-group">
+                                                    <label class="col-xs-4 control-label" for="inputSuccess"><?php echo __('Animation');?></label>
+                                                    <div class="col-xs-8">
+                                                        <select id="led_animation" name="led_animation" class="form-control input-sm mb-md">
+                                                            <option value="1"><?php echo __('Progress');?></option>
+                                                            <option value="2"><?php echo __('Progress from center');?></option>
+                                                            <option value="3"><?php echo __('Rainbow');?></option>
+                                                            <option value="4"><?php echo __('K2000');?></option>
+                                                            <option value="5"><?php echo __('Blink');?></option>
+                                                            <option value="6"><?php echo __('Blink 2');?></option>
+                                                            <option value="7"><?php echo __('Police');?></option>
+                                                            <option value="8"><?php echo __('Fade');?></option>
+                                                            <option value="9"><?php echo __('Move');?></option>
+                                                            <option value="10"><?php echo __('Light');?></option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-xs-4 control-label" for="inputSuccess"><?php echo __('Max speed');?></label>
+                                                    <div class="col-xs-8">
+                                                        <select id="max_speed_mode" name="max_speed_mode" class="form-control input-sm mb-md selectChangeAffGroup">
+                                                            <option value="Automatic"><?php echo __('Automatic');?></option>
+                                                            <option value="Manual"><?php echo __('Manual');?></option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div id="max_speed_group" class="form-group">
+                                                    <label class="col-xs-4 control-label" for="inputSuccess"><?php echo __('Max speed');?></label>
+                                                    <div class="col-xs-8">
+                                                        <input type="number" id="max_speed" name="max_speed" class="form-control input-sm mb-md" />
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        
+                                        <div style="clear:both;"></div>
+                                       
+                                        <a href="#" id="bAreaSaveConfig" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
+                                        <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="popupHelp">

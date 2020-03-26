@@ -30,6 +30,7 @@
 
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/vendor/bootstrap/css/bootstrap.css" />
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/vendor/font-awesome/css/font-awesome.css" />
+        <link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/vendor/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css"></script>
         
         
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
@@ -38,6 +39,7 @@
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/skins/extension.css" />
         
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/wyca.css" />
+		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/map.css" />
     
 
 	</head>

@@ -1,0 +1,29 @@
+/* CSS Document */
+.robot, .robot_secure, .poly { z-index:500; }
+.movable { display:none; }
+.movable.dock_elem { display:block; }
+.secable { stroke:#589FB2; display:none; }
+
+body .poly, body.addForbidden .forbidden_elem_current, body.addArea .area_elem_current, body.addPoly .poly_elem_current {  fill:rgba(204,102,0, 0.5); stroke:#00CCFF; display:block; }
+body.addForbidden rect.forbidden_elem_current, body.addArea rect.area_elem_current { fill:#000; stroke:#000; display:block; }
+
+svg .active { display:block !important; visibility:visible; }
+
+.activ_over { stroke: black !important; fill: rgba(0,0,0,0.5) !important; visibility:visible; }
+.activ_select { stroke: red !important; fill: rgba(255,0,0,0.5) !important; visibility:visible; }
+
+body .robot, .robot.active { fill:#009900; display:block; }
+
+.dock_elem_fond.active { fill:#CC0000; }
+.poi_elem_secure { fill:#AAAAAA; }
+.poi_elem_fond { fill:#589FB1; }
+.poi_elem_fond.active { fill:#CC0000; }
+
+body .robot_secure, body .robot_secure.route_elem_0, body.show_route .robot_secure, .robot_secure.active { fill:rgba(0,0,0, 0.2); display:block; }
+
+body.show_rayon .cone, body.show_rayon .cone_dir, body.show_rayon .route, body.show_rayon .robot, body.show_rayon .robot_secure, body.show_rayon .poly , body.show_rayon .text, body.show_rayon .route_rayon { display:none; }
+
+.movable { cursor:move !important; }
+label { font-weight: normal; }
+
+svg#install_by_step_edit_map_svg_clone .movable.active { display:none !important; }
