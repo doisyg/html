@@ -147,8 +147,7 @@
 		
 		<!-- Theme Initialization Files -->
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/theme.init.js"></script>
-		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/chronos.js"></script>
-		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/joystick.js?v=20200228"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/joystick.js?v=20200226_3"></script>
         
         <!--
 		<script src="<?php echo $_CONFIG['URL_API'];?>extern/roslib.js"></script>

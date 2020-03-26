@@ -16,6 +16,16 @@ var nbCall = 0;
 
 var isDown = false;
 
+window.requestAnimationFrame = window.requestAnimationFrame
+    || window.mozRequestAnimationFrame
+    || window.webkitRequestAnimationFrame
+    || window.msRequestAnimationFrame
+    || function(f){return setTimeout(f, 200)} // simulate calling code 60 
+ 
+window.cancelAnimationFrame = window.cancelAnimationFrame
+    || window.mozCancelAnimationFrame
+    || function(requestID){clearTimeout(requestID)} //fall back
+
 $(document).ready(function(e) {
     
 	SetCurseurV2(xCentre, yCentre);
@@ -50,7 +60,8 @@ $(document).ready(function(e) {
 		}
 	});
 	
-	chronos.setInterval(SendCommande, 200);
+	//setInterval(SendCommande, 200);
+	requestAnimationFrame(SendCommande);
 	//setInterval(RefreshJoystickOn, 300);
 	
 });	
@@ -126,21 +137,37 @@ var lastValueY = 0;
 
 nbCall0 = 0;
 
+var lastSendMessage = 0;
+
 function SendCommande()
 {
-	//if (robotCurrentState != 'undocked' || (lastValueX == 0 && lastValueY == 0))
-	if ((lastValueX == 0 && lastValueY == 0))
+	if ($('.joystickDiv:visible').length > 0 && nbCall0 >= 5)
 	{
-		if (nbCall0 < 5)
-		{
-			nbCall0++;
-			wycaApi.Teleop(lastValueX * -0.5, lastValueY * -1.2);
-		}
 	}
-	else if (isDown)
+	else
 	{
-		nbCall0 = 0;
-		wycaApi.Teleop(lastValueX * -0.5, lastValueY * -1.2);
+		var d = new Date();
+		ms = d.getTime();
+		if (ms - lastSendMessage > 200)
+		{
+			lastSendMessage = ms;
+			//if (robotCurrentState != 'undocked' || (lastValueX == 0 && lastValueY == 0))
+			if ((lastValueX == 0 && lastValueY == 0))
+			{
+				if (nbCall0 < 5)
+				{
+					nbCall0++;
+					wycaApi.Teleop(lastValueX * -0.5, lastValueY * -1.2);
+				}
+			}
+			else if (isDown)
+			{
+				nbCall0 = 0;
+				wycaApi.Teleop(lastValueX * -0.5, lastValueY * -1.2);
+			}
+		}
+		
+		requestAnimationFrame(SendCommande);
 	}
 }
 
