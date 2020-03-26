@@ -50,7 +50,7 @@ $(document).ready(function(e) {
 		}
 	});
 	
-	setInterval(SendCommande, 200);
+	setInterval(SendCommande, 1000);
 	//setInterval(RefreshJoystickOn, 300);
 	
 });	
@@ -125,21 +125,35 @@ var lastValueX = 0;
 var lastValueY = 0;
 
 nbCall0 = 0;
+
+var lastSendMessage = 0;
+
 function SendCommande()
 {
-	//if (robotCurrentState != 'undocked' || (lastValueX == 0 && lastValueY == 0))
-	if ((lastValueX == 0 && lastValueY == 0))
+	nbSend = 0;
+	while (nbSend < 4)
 	{
-		if (nbCall0 < 5)
+		d = new Date();
+		ms = d.getTime();
+		if (ms - lastSendMessage > 200)
 		{
-			nbCall0++;
-			wycaApi.Teleop(lastValueX * -0.5, lastValueY * -1.2);
+			lastSendMessage = ms;
+			nbSend++;
+			//if (robotCurrentState != 'undocked' || (lastValueX == 0 && lastValueY == 0))
+			if ((lastValueX == 0 && lastValueY == 0))
+			{
+				if (nbCall0 < 5)
+				{
+					nbCall0++;
+					wycaApi.Teleop(lastValueX * -0.5, lastValueY * -1.2);
+				}
+			}
+			else if (isDown)
+			{
+				nbCall0 = 0;
+				wycaApi.Teleop(lastValueX * -0.5, lastValueY * -1.2);
+			}
 		}
-	}
-	else if (isDown)
-	{
-		nbCall0 = 0;
-		wycaApi.Teleop(lastValueX * -0.5, lastValueY * -1.2);
 	}
 }
 
