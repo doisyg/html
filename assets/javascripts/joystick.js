@@ -61,8 +61,8 @@ $(document).ready(function(e) {
 	});
 	
 	//setInterval(SendCommande, 200);
-	//requestAnimationFrame(SendCommande)
-	setTimeout(SendCommande, 200);
+	requestAnimationFrame(SendCommande)
+	//setTimeout(SendCommande, 200);
 	//setInterval(RefreshJoystickOn, 300);
 	
 });	
@@ -147,13 +147,11 @@ function SendCommande()
 	}
 	else
 	{
-		/*
 		var d = new Date();
 		ms = d.getTime();
-		if (ms - lastSendMessage > 200)
+		if (ms - lastSendMessage > 100)
 		{
 			lastSendMessage = ms;
-			*/
 			//if (robotCurrentState != 'undocked' || (lastValueX == 0 && lastValueY == 0))
 			if ((lastValueX == 0 && lastValueY == 0))
 			{
@@ -168,11 +166,11 @@ function SendCommande()
 				nbCall0 = 0;
 				wycaApi.Teleop(lastValueX * -0.5, lastValueY * -1.2);
 			}
-		//}
+		}
 	}
 	
-	setTimeout(SendCommande, 200);
-		
+	//setTimeout(SendCommande, 200);
+	requestAnimationFrame(SendCommande);
 }
 
 function distanceJoystick(x1, y1, x2, y2)
