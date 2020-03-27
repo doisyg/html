@@ -61,6 +61,7 @@ function WycaAPI(options){
 	this.socketError = false;
 	this.timeoutReconnect = null;
 	this.idMessage = 0;
+	this.action = {};
 	this.callbacks = Array();
 	
 	_this = this;
@@ -289,21 +290,21 @@ function WycaAPI(options){
 	
 	this.Teleop = function(x, z)
 	{
-		var action = {
+		_this.action = {
 			op: 'Teleop',
 			id : ++_this.idMessage,
-			data: { x:x, z:z }
+			data: { x:x, z:z}
 		};
-		_this.ws.send(JSON.stringify(action));	
+		_this.ws.send(JSON.stringify(_this.action));	
 	}
 	this.TeleopOff = function(off)
 	{
-		var action = {
+		_this.action = {
 			op: 'TeleopOff',
 			id : ++_this.idMessage,
 			data: off
 		};
-		_this.ws.send(JSON.stringify(action));	
+		_this.ws.send(JSON.stringify(_this.action));	
 	}
 	
 	this.LatencyStart = function(num, callback){

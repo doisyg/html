@@ -4,26 +4,45 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Document sans nom</title>
 
+<script src="assets/vendor/jquery/jquery.js"></script>
+<script src="API/wyca_socket_api.js?v=20200327_2"></script>
+
 <script>
-function StartInterval()
-{
+
+var user_api_key = 'Jnt.kK2nXB15jhVkCEGLA3NssidZWLpsdgmt4bx8GkTZL5';
+
+$(document).ready(function() {
+	wycaApi = new WycaAPI({
+		host:"elodie.wyca-solutions.com:9095",
+		api_key:user_api_key,
+		nick:'robot',
+	});
+
+	wycaApi.init();
 	setInterval(action, 200);
-}
+});
+
 var d = new Date();
+var delta = 0;
 var lastTime = d.getTime();
 function action()
 {
+	wycaApi.Teleop(0, 1);
+
 	d = new Date();
 	ms = d.getTime();
 	delta = ms - lastTime;
 	lastTime = ms;
-	document.getElementById('log').innerHTML = delta + ' ms<br>'+ document.getElementById('log').innerHTML;
+	document.getElementById('log').innerHTML = delta + ' ms 2<br>'+ document.getElementById('log').innerHTML;
 }
+
+
+	
 </script>
 
 </head>
 
-<body onload="StartInterval()">
+<body>
 	<div id="log">
     
     </div>
