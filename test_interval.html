@@ -9,6 +9,14 @@
 
 <script>
 
+
+// PAD 20200328 CONSTANT DEFINITIONS
+const MSGINTERVAL = 200; //PAD 20200328 (origine: 200ms)
+
+// PAD 20200328 END OF CONSTANTS
+
+
+
 var user_api_key = 'Jnt.kK2nXB15jhVkCEGLA3NssidZWLpsdgmt4bx8GkTZL5';
 
 $(document).ready(function() {
@@ -19,22 +27,50 @@ $(document).ready(function() {
 	});
 
 	wycaApi.init();
-	setInterval(action, 200);
+	setInterval(action, MSGINTERVAL/4); // PAD 20200328 Double sending speed to analyze delayed ACK messages
 });
 
 var d = new Date();
 var delta = 0;
 var lastTime = d.getTime();
+var lastidx = 1; //PAD 20200328 reference message idx (last sent without ACK for future reference)
+
+/*
 function action()
 {
-	wycaApi.Teleop(0, 1);
-
 	d = new Date();
 	ms = d.getTime();
 	delta = ms - lastTime;
+	wycaApi.Teleop(0, 1); // SEND MESSAGE TO VEHICLE
 	lastTime = ms;
 	document.getElementById('log').innerHTML = delta + ' ms 2<br>'+ document.getElementById('log').innerHTML;
 }
+*/
+
+
+function action()
+{
+	d = new Date();
+	ms = d.getTime();
+
+	DBGcontrol = wycaApi.GetLastACKindice(); // PAD 20200329 for debug and trace
+
+	if( wycaApi.GetLastACKindice() >= lastidx ) { //PAD 20200328 we test if the previous message is already ACK, skip sending another if not , recover if we missed in increment
+
+		delta = ms - lastTime;
+		if ( delta >= (MSGINTERVAL-1)) {
+			wycaApi.Teleop(0, 1); // SEND MESSAGE TO VEHICLE
+			lastidx = wycaApi.GetidMessage(); //PAD 20200328 update lastidx to current sended idx
+			lastTime = ms;
+			document.getElementById('log').innerHTML = delta + ' ms 2  -> ' + DBGcontrol +' / '+lastidx+'<br>'+ document.getElementById('log').innerHTML;
+		}
+	} else { // PAD 20200329 ACK not received before interval
+
+		document.getElementById('log').innerHTML = '=== LAG WARNING ======> '+ DBGcontrol +' / '+lastidx+'<br>'+ document.getElementById('log').innerHTML;
+	}
+
+}
+
 
 
 	
