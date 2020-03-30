@@ -4,26 +4,23 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Document sans nom</title>
 
+<script src="assets/vendor/jquery/jquery.js"></script>
+<script src="assets/javascripts/socket.io.dev.js"></script>
+<!--<script src="API/wyca_socket_api.js?v=20200327_2"></script>-->
+
 <script>
-function StartInterval()
-{
-	setInterval(action, 200);
-}
-var d = new Date();
-var lastTime = d.getTime();
-function action()
-{
-	d = new Date();
-	ms = d.getTime();
-	delta = ms - lastTime;
-	lastTime = ms;
-	document.getElementById('log').innerHTML = delta + ' ms<br>'+ document.getElementById('log').innerHTML;
-}
+var socket = io('https://192.168.0.30:9095');
+socket.on('connect', function(){ console.log('connect');});
+socket.on('event', function(data){ console.log(data); });
+socket.on('disconnect', function(){ console.log('disconnect');});
+
+
+	
 </script>
 
 </head>
 
-<body onload="StartInterval()">
+<body>
 	<div id="log">
     
     </div>
