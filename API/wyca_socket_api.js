@@ -140,5 +140,6 @@ var LastIndiceACK = 0; // Memorisation du dernier ACK recu, mis à jour dans la 
 			data: { x:x, z:z}
 		};
 		_this.ws.send(JSON.stringify(_this.action));
+		setTimeout(function() { _this.ws.send("{op:'FORCE'}");}, 100);
 	}
 }
