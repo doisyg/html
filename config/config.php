@@ -19,4 +19,6 @@ $_CONFIG['KEY'] = '&xTYhx+r.C|G/cK&o,9s-JXE|:EZ)IWF6481FKMN&*E(OAYK-%LOR-eM#2=1-
 $_CONFIG['WS_KEY'] = 'Q5rd9`#4<VqP0|b4^f%jSUk(1L`DCqEE40lASD9px+r~Wqp.DZ8eiRz*UP2gXF0*';
 $_CONFIG['ROS_KEY'] = 'Q5rd9`#4<VqP0|b4^f%jSUk(1L`DCqEE40lASD9px+r~Wqp.DZ8eiRz*UP2gXF0*';
 
+$_CONFIG['API_KEY'] = 'Jnt.kK2nXB15jhVkCEGLA3NssidZWLpsdgmt4bx8GkTZL5';
+
 ?>

@@ -20,7 +20,7 @@ require_once(dirname(__FILE__)."/config.php");
 require_once(dirname(__FILE__)."/../lib/lib.php");
 require_once (dirname(__FILE__)."/../classes/includes.php");
 
-DB::Connexion($_CONFIG['BD_HOST'], $_CONFIG['BD_USER'], $_CONFIG['BD_PASSWORD'], $_CONFIG['BD_BD']);
+WycaAPI::Init($_CONFIG['API_KEY']);
 
 IpErrorTrace::AutoClear();
 IpBlocked::AutoClear();
@@ -64,7 +64,6 @@ if (IpBlocked::IsBlocked($_SERVER['REMOTE_ADDR']))
     <?php
 	die();
 }
-
 
 if (isset($_SESSION["id_user"]))
 {

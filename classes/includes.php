@@ -1,5 +1,5 @@
 <?php
-require_once(dirname(__FILE__).'/DB.php');
+require_once(dirname(__FILE__).'/WycaAPI.php');
 require_once(dirname(__FILE__).'/Email.php');
 require_once(dirname(__FILE__).'/Translate.php');
 require_once(dirname(__FILE__).'/Crypt.php');
