@@ -399,6 +399,21 @@ $INSTALL_STEP = Configuration::GetValue('INSTALL_STEP');
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg bDeleteArea"><i class="fa fa-trash"></i></a></li>
                         </ul>
                     </div>
+                    <div id="install_by_step_edit_map_menu_dock" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
+                    	<ul>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bConfigDock"><i class="fa fa-gears"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bDeleteDock"><i class="fa fa-trash"></i></a></li>
+                        </ul>
+                    </div>
+                    <div id="install_by_step_edit_map_menu_poi" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
+                    	<ul>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bConfigDock"><i class="fa fa-gears"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bDeleteDock"><i class="fa fa-trash"></i></a></li>
+                        </ul>
+                    </div>
+                    
+                    
+                    
                     
                     <div class="modal fade modalAreaOptions" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
                         <div class="modal-dialog" role="dialog">
@@ -481,6 +496,145 @@ $INSTALL_STEP = Configuration::GetValue('INSTALL_STEP');
                                         <div style="clear:both;"></div>
                                        
                                         <a href="#" id="bAreaSaveConfig" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
+                                        <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal fade modalAddDock" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+                                        <div class="h100vh_160" style="overflow:auto; text-align:center">
+                                        
+                                        	<div style="height:200px; position:relative;">
+                                            
+	                                            <img id="modalAddDock_robot" src="assets/images/robot-dessus.png" width="50" style="position:absolute; top:130px; margin-left:-25px; z-index:300;" />
+                                                
+                                                <img id="modalAddDock_dock0" class="dock" src="assets/images/reflector.png" width="25" />
+                                                <img id="modalAddDock_dock1" class="dock" src="assets/images/reflector.png" width="25" />
+                                                <img id="modalAddDock_dock2" class="dock" src="assets/images/reflector.png" width="25" />
+                                                <img id="modalAddDock_dock3" class="dock" src="assets/images/reflector.png" width="25" />
+                                                <img id="modalAddDock_dock4" class="dock" src="assets/images/reflector.png" width="25" />
+                                                <img id="modalAddDock_dock5" class="dock" src="assets/images/reflector.png" width="25" />
+                                                
+                                            </div>
+                                        
+                                            <p><?php echo stripslashes(__('Move the robot in front of the dock and click on the "Scan" button'));?></p>
+                                            <p><a href="#" class="btn btn-primary bScanAddDock">Scan</a></p>
+                                            
+                                            <div style="position:absolute; bottom:50px; left:0; width:100%; z-index:2000;">
+                                                <div class="joystickDiv" draggable="false" style="margin:auto;">
+                                                    <div class="fond"></div>
+                                                    <div class="curseur"></div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        
+                                        <div style="clear:both;"></div>
+                                       
+                                        <a href="#" id="bModalAddDockSave" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
+                                        <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal fade modalDockOptions" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+                                        <div class="h100vh_160" style="overflow:auto; text-align:center">
+                                        
+                                        	<form>
+                                                <div class="form-group">
+                                                    <label class="col-xs-4 control-label">Name</label>
+                                                    <div class="col-xs-8">
+                                                        <input type="text" id="dock_name" name="dock_name" value="" class="form-control input-sm mb-md" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-xs-4 control-label">Number</label>
+                                                    <div class="col-xs-8">
+                                                        <input type="number" id="dock_number" name="dock_number" value="1" class="form-control input-sm mb-md" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-xs-4 control-label">Comment</label>
+                                                    <div class="col-xs-8">
+                                                        <textarea id="dock_comment" name="dock_comment" class="form-control input-sm mb-md"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-xs-4 control-label">Delta X pose approch</label>
+                                                    <div class="col-xs-8">
+                                                        <input type="number" id="dock_x_pose_approch" name="dock_x_pose_approch" value="-50" class="form-control input-sm mb-md" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-xs-4 control-label">Delta Y pose approch</label>
+                                                    <div class="col-xs-8">
+                                                        <input type="number" id="dock_y_pose_approch" name="dock_y_pose_approch" value="0" class="form-control input-sm mb-md" />
+                                                    </div>
+                                                </div>
+                                                <fieldset>
+                                                	<legend>Undock procedure</legend>
+                                                </fieldset>
+                                            </form>
+                                            
+                                        </div>
+                                        
+                                        <div style="clear:both;"></div>
+                                       
+                                        <a href="#" id="bDockSaveConfig" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
+                                        <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal fade modalAddPoi" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+                                        <div class="h100vh_160" style="overflow:auto; text-align:center">
+                                        
+                                        	<div style="height:200px; position:relative;">
+                                            
+	                                            <img id="modalAddPoi_robot" src="assets/images/robot-dessus.png" width="50" style="position:absolute; top:130px; margin-left:-25px; z-index:300;" />
+                                                
+                                                <img id="modalAddPoi_poi0" class="poi" src="assets/images/reflector.png" width="25" />
+                                                <img id="modalAddPoi_poi1" class="poi" src="assets/images/reflector.png" width="25" />
+                                                <img id="modalAddPoi_poi2" class="poi" src="assets/images/reflector.png" width="25" />
+                                                <img id="modalAddPoi_poi3" class="poi" src="assets/images/reflector.png" width="25" />
+                                                <img id="modalAddPoi_poi4" class="poi" src="assets/images/reflector.png" width="25" />
+                                                <img id="modalAddPoi_poi5" class="poi" src="assets/images/reflector.png" width="25" />
+                                                
+                                            </div>
+                                        
+                                            <p><?php echo stripslashes(__('Move the robot at the final pose desired and click on the "Scan" button'));?></p>
+                                            <p><a href="#" class="btn btn-primary bScanAddPoi">Scan</a></p>
+                                            
+                                            <div style="position:absolute; bottom:50px; left:0; width:100%; z-index:2000;">
+                                                <div class="joystickDiv" draggable="false" style="margin:auto;">
+                                                    <div class="fond"></div>
+                                                    <div class="curseur"></div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        
+                                        <div style="clear:both;"></div>
+                                       
+                                        <a href="#" id="bModalAddPoiSave" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
                                         <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
                                     </div>
                                 </div>

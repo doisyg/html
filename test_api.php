@@ -493,8 +493,8 @@ $(document).ready(function(e) {
 		},
 		onMappingMapInConstruction: function(data){
 			$('#onMappingMapInConstruction').html(JSON.stringify(data));
-			$('#onMappingMapInConstruction_map').attr('src', 'data:image/png;base64,' + data.map);
-			$('#onMappingMapInConstruction_map_trinary').attr('src', 'data:image/png;base64,' + data.map_trinary);
+			$('#onMappingMapInConstruction_map').attr('src', 'data:image/png;base64,' + data.m);
+			$('#onMappingMapInConstruction_map_trinary').attr('src', 'data:image/png;base64,' + data.mt);
 		},
 		onMappingRobotPoseInBuildingMap: function(data){
 			$('#onMappingRobotPoseInBuildingMap').html(JSON.stringify(data));
@@ -640,7 +640,7 @@ $(document).ready(function(e) {
 		e.preventDefault();
         wycaApi.MappingStop(function(e) { 
 			$('#MappingStop_return').html(JSON.stringify(e)); 
-			$('#MappingStop_map').attr('src', 'data:image/png;base64,' + data.final_map);
+			$('#MappingStop_map').attr('src', 'data:image/png;base64,' + data.fm);
 		});
 	});
 	$('#NavigationIsStarted').click(function(e) {

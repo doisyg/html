@@ -88,5 +88,7 @@ $_LANG['04e0385c10aefee8e4681617d2f3ef40'] = 'Fade';
 $_LANG['6bc362dbf494c61ea117fe3c71ca48a5'] = 'Move';
 $_LANG['9914a0ce04a7b7b6a8e39bec55064b82'] = 'Light';
 $_LANG['3ff6332a5c37daf23d2321949bcec7c6'] = 'Max speed';
+$_LANG['99f5d644165114ee911155fd8d5899c5'] = 'Move the robot in front of the dock and click on the \"Scan\" button';
+$_LANG['cee69e60d1101baf958ac05170791dc2'] = 'Move the robot at the final pose desired and click on the \"Scan\" button';
 
 ?>

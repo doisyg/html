@@ -3,6 +3,7 @@ class PoiCore
 {
 	public $id_poi = -1;
 	public $id_map = -1;
+	public $id_reflector = -1;
 	public $x_ros = 0.0;
 	public $y_ros = 0.0;
 	public $t_ros = 0.0;
@@ -32,6 +33,7 @@ class PoiCore
 	{
 		$this->id_poi = $object->id_poi;
 		$this->id_map = $object->id_map;
+		$this->id_reflector = $object->id_reflector;
 		$this->x_ros = $object->x_ros;
 		$this->y_ros = $object->y_ros;
 		$this->t_ros = $object->t_ros;
@@ -64,9 +66,10 @@ class PoiCore
 	public function Insert()
 	{
 		global $_CONFIG;
-		$query = "INSERT INTO poi ( id_map, x_ros, y_ros, t_ros, name, comment, icon, advanced, active ) VALUES ( 
+		$query = "INSERT INTO poi ( id_map, id_reflector, x_ros, y_ros, t_ros, name, comment, icon, advanced, active ) VALUES ( 
 
 			'". mysqli_real_escape_string(DB::$connexion, $this->id_map) ."', 
+			'". mysqli_real_escape_string(DB::$connexion, $this->id_reflector) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->x_ros) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->y_ros) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->t_ros) ."', 
@@ -86,6 +89,7 @@ class PoiCore
 		$query = "UPDATE poi SET
 
 			id_map = '". mysqli_real_escape_string(DB::$connexion,  $this->id_map )."', 
+			id_reflector = '". mysqli_real_escape_string(DB::$connexion,  $this->id_reflector )."', 
 			x_ros = '". mysqli_real_escape_string(DB::$connexion,  $this->x_ros )."', 
 			y_ros = '". mysqli_real_escape_string(DB::$connexion,  $this->y_ros )."', 
 			t_ros = '". mysqli_real_escape_string(DB::$connexion,  $this->t_ros )."', 

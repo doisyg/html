@@ -69,6 +69,8 @@ require_once(dirname(__FILE__).'/TaskQueueCore.php');
 require_once(dirname(__FILE__).'/TaskQueue.php');
 require_once(dirname(__FILE__).'/UserCore.php');
 require_once(dirname(__FILE__).'/User.php');
+require_once(dirname(__FILE__).'/UndockProcessCore.php');
+require_once(dirname(__FILE__).'/UndockProcess.php');
 require_once(dirname(__FILE__).'/TopCore.php');
 require_once(dirname(__FILE__).'/Top.php');
 ?>

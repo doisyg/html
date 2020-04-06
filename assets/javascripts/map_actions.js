@@ -156,7 +156,7 @@ function Undo()
 			break;
 		case 'add_dock':
 			docks.pop();
-			$('#install_by_step_edit_map_svg .dock_elem_'+elem.data.id_station_recharge).remove();
+			$('#install_by_step_edit_map_svg .dock_elem_'+elem.data.id_docking_station).remove();
 			break;
 		case 'edit_dock':
 			docks[elem.data.index] = JSON.parse(elem.data.old);
@@ -391,7 +391,7 @@ $(document).ready(function() {
 	
 	
 	$(document).on('touchstart', '#install_by_step_edit_map_svg .secable', function(e) {
-		if (currentAction = 'editForbiddenArea')
+		if (currentAction == 'editForbiddenArea')
 		{
 			p = $('#install_by_step_edit_map_svg image').position();
 			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[e.changedTouches.length-1].pageX) - p.left;
@@ -409,7 +409,7 @@ $(document).ready(function() {
 			forbiddens[currentForbiddenIndex].points.splice($(this).data('index_point'), 0, {x:xRos, y:yRos});
 			TraceForbidden(currentForbiddenIndex);
 		}
-		else if (currentAction = 'editArea')
+		else if (currentAction == 'editArea')
 		{
 			p = $('#install_by_step_edit_map_svg image').position();
 			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[e.changedTouches.length-1].pageX) - p.left;
@@ -432,12 +432,12 @@ $(document).ready(function() {
 	$('#install_by_step_edit_map_menu_point .bDeletePoint').click(function(e) {
         e.preventDefault();
 		HideMenus();
-		if (currentAction = 'editForbiddenArea')
+		if (currentAction == 'editForbiddenArea')
 		{
 			forbiddens[currentForbiddenIndex].points.splice(currentPointLongTouch.data('index_point'), 1);
 			TraceForbidden(currentForbiddenIndex);
 		}
-		else if (currentAction = 'editArea')
+		else if (currentAction == 'editArea')
 		{
 			areas[currentAreaIndex].points.splice(currentPointLongTouch.data('index_point'), 1);
 			TraceArea(currentAreaIndex);
@@ -467,7 +467,7 @@ $(document).ready(function() {
 	$('#install_by_step_edit_map_menu_area .bConfigArea').click(function(e) {
         e.preventDefault();
 		HideMenus();
-		if (currentAction = 'editArea')
+		if (currentAction == 'editArea')
 		{
 			currentAreaIndex = GetAreaIndexFromID(currentAreaLongTouch.data('id_area'));
 			area = areas[currentAreaIndex];
@@ -488,6 +488,76 @@ $(document).ready(function() {
 			if ($('#max_speed_mode').val() == 'Automatic') $('#max_speed_group').hide(); else  $('#max_speed_group').show();
 			$('#install_by_step_edit_map_container_all .modalAreaOptions').modal('show');
 		}
+    });
+	
+	$('#install_by_step_edit_map_menu_dock .bDeleteDock').click(function(e) {
+        e.preventDefault();
+		HideMenus();
+		i = GetDockIndexFromID(currentDockLongTouch.data('id_docking_station'));
+		DeleteDock(i);
+    });
+	
+	$('#install_by_step_edit_map_menu_dock .bConfigDock').click(function(e) {
+        e.preventDefault();
+		HideMenus();
+		currentAction = 'editDock';
+	
+		currentDockIndex = GetDockIndexFromID(currentDockLongTouch.data('id_docking_station'));
+		dock = docks[currentDockIndex];
+		/*
+		$.each(area.configs, function( indexConfig, config ) {
+			switch(config.name)
+			{
+				case 'led_color_mode': $('#led_color_mode').val(config.value); break;
+				case 'led_color': $('#led_color').val(config.value); $('#led_color').keyup(); break;
+				case 'led_animation_mode': $('#led_animation_mode').val(config.value); break;
+				case 'led_animation': $('#led_animation').val(config.value); break;
+				case 'max_speed_mode': $('#max_speed_mode').val(config.value); break;
+				case 'max_speed': $('#max_speed').val(config.value); break;
+			}
+		});
+		
+		if ($('#led_color_mode').val() == 'Automatic') $('#led_color_group').hide(); else  $('#led_color_group').show();
+		if ($('#led_animation_mode').val() == 'Automatic') $('#led_animation_group').hide(); else  $('#led_animation_group').show();
+		if ($('#max_speed_mode').val() == 'Automatic') $('#max_speed_group').hide(); else  $('#max_speed_group').show();
+		*/
+		$('#install_by_step_edit_map_container_all .modalDockOptions').modal('show');
+		
+    });
+	
+	$('#install_by_step_edit_map_menu_poi .bDeletePoi').click(function(e) {
+        e.preventDefault();
+		HideMenus();
+		i = GetPoiIndexFromID(currentPoiLongTouch.data('id_poi'));
+		DeletePoi(i);
+    });
+	
+	$('#install_by_step_edit_map_menu_dock .bConfigDock').click(function(e) {
+        e.preventDefault();
+		HideMenus();
+		currentAction = 'editPoi';
+	
+		currentPoiIndex = GetPoiIndexFromID(currentPoiLongTouch.data('id_poi'));
+		poi = pois[currentPoiIndex];
+		/*
+		$.each(area.configs, function( indexConfig, config ) {
+			switch(config.name)
+			{
+				case 'led_color_mode': $('#led_color_mode').val(config.value); break;
+				case 'led_color': $('#led_color').val(config.value); $('#led_color').keyup(); break;
+				case 'led_animation_mode': $('#led_animation_mode').val(config.value); break;
+				case 'led_animation': $('#led_animation').val(config.value); break;
+				case 'max_speed_mode': $('#max_speed_mode').val(config.value); break;
+				case 'max_speed': $('#max_speed').val(config.value); break;
+			}
+		});
+		
+		if ($('#led_color_mode').val() == 'Automatic') $('#led_color_group').hide(); else  $('#led_color_group').show();
+		if ($('#led_animation_mode').val() == 'Automatic') $('#led_animation_group').hide(); else  $('#led_animation_group').show();
+		if ($('#max_speed_mode').val() == 'Automatic') $('#max_speed_group').hide(); else  $('#max_speed_group').show();
+		*/
+		$('#install_by_step_edit_map_container_all .modalPoiOptions').modal('show');
+		
     });
 	
 	$('#install_by_step_edit_map_svg').on('contextmenu', function (e) {
@@ -734,7 +804,7 @@ $(document).ready(function() {
 			
 			
 			currentSelectedItem = Array();
-			currentSelectedItem.push({'type':'dock', 'id':$(this).data('id_station_recharge')});	
+			currentSelectedItem.push({'type':'dock', 'id':$(this).data('id_docking_station')});	
 			HideCurrentMenuNotSelect();
 			
 			$('#boutonsDock').show();
@@ -748,12 +818,12 @@ $(document).ready(function() {
 			currentAction = 'editDock';	
 			currentStep = '';
 			
-			currentDockIndex = GetDockIndexFromID($(this).data('id_station_recharge'));
+			currentDockIndex = GetDockIndexFromID($(this).data('id_docking_station'));
 			dock = docks[currentDockIndex];
 			saveCurrentDock = JSON.stringify(dock);
 			
-			AddClass('#install_by_step_edit_map_svg .dock_elem_'+dock.id_station_recharge, 'active');
-			AddClass('#install_by_step_edit_map_svg .dock_elem_'+dock.id_station_recharge, 'movable');
+			AddClass('#install_by_step_edit_map_svg .dock_elem_'+dock.id_docking_station, 'active');
+			//AddClass('#install_by_step_edit_map_svg .dock_elem_'+dock.id_docking_station, 'movable');	// Dock non movable
 			
 		}
 		else
@@ -796,7 +866,8 @@ $(document).ready(function() {
 			saveCurrentPoi = JSON.stringify(poi);
 			
 			AddClass('#install_by_step_edit_map_svg .poi_elem_'+poi.id_poi, 'active');
-			AddClass('#install_by_step_edit_map_svg .poi_elem_'+poi.id_poi, 'movable');
+			if (poi.id_reflector < 1) // Movable que si il n'est pas lié à un reflecteur
+				AddClass('#install_by_step_edit_map_svg .poi_elem_'+poi.id_poi, 'movable');
 		}
 		else
 			AvertCantChange();
@@ -1092,18 +1163,182 @@ $(document).ready(function() {
 		HideMenus();
 		if (canChangeMenu)
 		{
-			alert('display choix form pose ou click');
+			$('#install_by_step_edit_map_container_all .modalAddDock').modal('show');
 		}
 		else
 			AvertCantChange();
 	});
+	$('.modalAddDock .bScanAddDock').click(function(e) {
+		$('.modalAddDock .bScanAddDock').addClass('disabled');
+		
+        wycaApi.on('onPOIsDetect', function(data) {
+			
+			$('.modalAddDock .bScanAddDock').removeClass('disabled');
+			
+			// On a recu, on se désabonne
+			wycaApi.ReflectorDetectionEnable(false);	
+			wycaApi.off('onPOIsDetect');
+			
+			console.log('onPOIsDetect');
+			console.log(data);
+			
+			
+			$('.modalAddDock .dock').hide();
+			
+			posRobot = $('.modalAddDock #modalAddDock_robot').offset();
+			
+			for (i=0; i< data.length; i++)
+			{
+				if (data[i].type == 'Dock')
+				{
+					$('.modalAddDock #modalAddDock_dock'+i).show();
+					$('.modalAddDock #modalAddDock_dock'+i).css('left', posRobot.left + data[i].pose.y * 100); // lidar : y * -1
+					$('.modalAddDock #modalAddDock_dock'+i).css('top', posRobot.top - data[i].pose.x * 100 - 12.5 - 20); // +20 position lidar, - 12.5 pour le centre
+					angle = data[i].pose.theta * 180 / Math.PI;
+					$('.modalAddDock #modalAddDock_dock'+i).css({'-webkit-transform' : 'rotate('+ angle +'deg)',
+																 '-moz-transform' : 'rotate('+ angle +'deg)',
+																 '-ms-transform' : 'rotate('+ angle +'deg)',
+																 'transform' : 'rotate('+ angle +'deg)'});
+					
+					
+					$('.modalAddDock #modalAddDock_dock'+i).data('id_reflector', data[i].Id);
+					$('.modalAddDock #modalAddDock_dock'+i).data('x', data[i].pose.x);
+					$('.modalAddDock #modalAddDock_dock'+i).data('y', data[i].pose.y);
+					$('.modalAddDock #modalAddDock_dock'+i).data('theta', data[i].pose.theta);
+				}
+			}
+		});
+		
+		wycaApi.ReflectorDetectionEnable(true);
+    });
+	
+	$('.modalAddDock .dock').click(function(e) {
+        e.preventDefault();
+		
+		nextIdDock++;
+		
+		num = GetMaxNumDock()+1;
+		d = {'id_docking_station':nextIdDock, 'id_map':id_map, 'id_reflector':$(this).data('id_reflector'), 'x_ros':$(this).data('x'), 'y_ros':$(this).data('y'), 't_ros':$(this).data('theta'), 'num':num, 'name':'Dock '+num, 'comment':''};
+		AddHistorique({'action':'add_dock', 'data':d});
+        docks.push(d);
+		TraceDock(docks.length-1);
+		
+		$('#install_by_step_edit_map_container_all .modalAddDock').modal('hide');
+		
+		currentDockIndex = docks.length-1;
+		dock = docks[currentDockIndex];
+		/*
+		$.each(area.configs, function( indexConfig, config ) {
+			switch(config.name)
+			{
+				case 'led_color_mode': $('#led_color_mode').val(config.value); break;
+				case 'led_color': $('#led_color').val(config.value); $('#led_color').keyup(); break;
+				case 'led_animation_mode': $('#led_animation_mode').val(config.value); break;
+				case 'led_animation': $('#led_animation').val(config.value); break;
+				case 'max_speed_mode': $('#max_speed_mode').val(config.value); break;
+				case 'max_speed': $('#max_speed').val(config.value); break;
+			}
+		});
+		
+		if ($('#led_color_mode').val() == 'Automatic') $('#led_color_group').hide(); else  $('#led_color_group').show();
+		if ($('#led_animation_mode').val() == 'Automatic') $('#led_animation_group').hide(); else  $('#led_animation_group').show();
+		if ($('#max_speed_mode').val() == 'Automatic') $('#max_speed_group').hide(); else  $('#max_speed_group').show();
+		*/
+		$('#install_by_step_edit_map_container_all .modalDockOptions').modal('show');
+    });
+	
+	$('#install_by_step_edit_map_menu .bAddPOI').click(function(e) {
+        e.preventDefault();
+		HideMenus();
+		if (canChangeMenu)
+		{
+			$('#install_by_step_edit_map_container_all .modalAddPoi').modal('show');
+		}
+		else
+			AvertCantChange();
+	});
+	$('.modalAddPoi .bScanAddPoi').click(function(e) {
+		$('.modalAddPoi .bScanAddPoi').addClass('disabled');
+		
+        wycaApi.on('onPOIsDetect', function(data) {
+			
+			$('.modalAddPoi .bScanAddPoi').removeClass('disabled');
+			
+			// On a recu, on se désabonne
+			wycaApi.ReflectorDetectionEnable(false);	
+			wycaApi.off('onPOIsDetect');
+			
+			$('.modalAddPoi .poi').hide();
+			
+			posRobot = $('.modalAddPoi #modalAddPoi_robot').offset();
+			
+			for (i=0; i< data.length; i++)
+			{
+				if (data[i].type != 'Dock')
+				{
+					$('.modalAddPoi #modalAddPoi_poi'+i).show();
+					$('.modalAddPoi #modalAddPoi_poi'+i).css('left', posRobot.left + data[i].pose.y * 100); // lidar : y * -1
+					$('.modalAddPoi #modalAddPoi_poi'+i).css('top', posRobot.top - data[i].pose.x * 100 - 12.5 - 20); // +20 position lidar, - 12.5 pour le centre
+					angle = data[i].pose.theta * 180 / Math.PI;
+					$('.modalAddPoi #modalAddPoi_poi'+i).css({'-webkit-transform' : 'rotate('+ angle +'deg)',
+																 '-moz-transform' : 'rotate('+ angle +'deg)',
+																 '-ms-transform' : 'rotate('+ angle +'deg)',
+																 'transform' : 'rotate('+ angle +'deg)'});
+					
+					
+					$('.modalAddPoi #modalAddPoi_poi'+i).data('id_reflector', data[i].Id);
+					$('.modalAddPoi #modalAddPoi_poi'+i).data('x', data[i].pose.x);
+					$('.modalAddPoi #modalAddPoi_poi'+i).data('y', data[i].pose.y);
+					$('.modalAddPoi #modalAddPoi_poi'+i).data('theta', data[i].pose.theta);
+				}
+			}
+		});
+		
+		wycaApi.ReflectorDetectionEnable(true);
+    });
+	
+	$('.modalAddPoi .poi').click(function(e) {
+        e.preventDefault();
+		
+		nextIdPoi++;
+		
+		p = {'id_poi':nextIdPoi, 'id_map':id_map, 'id_reflector':$(this).data('id_reflector'), 'x_ros':$(this).data('x'), 'y_ros':$(this).data('y'), 't_ros':$(this).data('theta'), 'name':'POI', 'comment':'', 'icon':'', 'active':true};
+		AddHistorique({'action':'add_poi', 'data':p});
+        pois.push(p);
+		TracePoi(pois.length-1);
+				
+		$('#install_by_step_edit_map_container_all .modalAddPoi').modal('hide');
+		
+		currentPoiIndex = pois.length-1;
+		poi = pois[currentPoiIndex];
+		/*
+		$.each(area.configs, function( indexConfig, config ) {
+			switch(config.name)
+			{
+				case 'led_color_mode': $('#led_color_mode').val(config.value); break;
+				case 'led_color': $('#led_color').val(config.value); $('#led_color').keyup(); break;
+				case 'led_animation_mode': $('#led_animation_mode').val(config.value); break;
+				case 'led_animation': $('#led_animation').val(config.value); break;
+				case 'max_speed_mode': $('#max_speed_mode').val(config.value); break;
+				case 'max_speed': $('#max_speed').val(config.value); break;
+			}
+		});
+		
+		if ($('#led_color_mode').val() == 'Automatic') $('#led_color_group').hide(); else  $('#led_color_group').show();
+		if ($('#led_animation_mode').val() == 'Automatic') $('#led_animation_group').hide(); else  $('#led_animation_group').show();
+		if ($('#max_speed_mode').val() == 'Automatic') $('#max_speed_group').hide(); else  $('#max_speed_group').show();
+		*/
+		$('#install_by_step_edit_map_container_all .modalPoiOptions').modal('show');
+    });
 	
 	$('#bDockCreateFromPose').click(function(e) {
 		nextIdDock++;
 		
 		dockPosition = GetDockPosition(lastRobotPose);
 		
-		d = {'id_station_recharge':nextIdDock, 'id_map':id_map, 'x_ros':dockPosition.x, 'y_ros':dockPosition.y, 't_ros':dockPosition.theta, 'num':0};
+		num = GetMaxNumDock()+1;
+		d = {'id_docking_station':nextIdDock, 'id_map':id_map, 'id_reflector':$(this).data('id_reflector'), 'x_ros':dockPosition.x, 'y_ros':dockPosition.y, 't_ros':dockPosition.theta, 'num':num, 'name':'Dock '+num, 'comment':''};
+		
 		AddHistorique({'action':'add_dock', 'data':d});
         docks.push(d);
 		TraceDock(docks.length-1);
@@ -1168,20 +1403,9 @@ $(document).ready(function() {
 		}
 	});
 	
-	$('#install_by_step_edit_map_menu .bAddPOI').click(function(e) {
-        e.preventDefault();
-		HideMenus();
-		if (canChangeMenu)
-		{
-			alert('disoplay choix form pose ou click');
-		}
-		else
-			AvertCantChange();
-	});
-	
 	$('#bPoiCreateFromPose').click(function(e) {
 		nextIdPoi++;
-		p = {'id_poi':nextIdPoi, 'id_map':id_map, 'x_ros':lastRobotPose.x, 'y_ros':lastRobotPose.y, 't_ros':lastRobotPose.theta, 'name':'POI'};
+		p = {'id_poi':nextIdPoi, 'id_map':id_map, 'id_reflector':-1, 'x_ros':lastRobotPose.x, 'y_ros':lastRobotPose.y, 't_ros':lastRobotPose.theta, 'name':'POI', 'comment':'', 'icon':'', 'active':true};
 		AddHistorique({'action':'add_poi', 'data':p});
         pois.push(p);
 		TracePoi(pois.length-1);
@@ -1249,7 +1473,7 @@ $(document).ready(function() {
 			SaveElementNeeded(false);
 			
 			nextIdPoi++;
-			p = {'id_poi':nextIdPoi, 'id_map':id_map, 'x_ros':currentPoiPose.x_ros, 'y_ros':currentPoiPose.y_ros, 't_ros':currentPoiPose.t_ros, 'name':$('#poi_name').val()};
+			p = {'id_poi':nextIdPoi, 'id_map':id_map, 'id_reflector':-1, 'x_ros':currentPoiPose.x_ros, 'y_ros':currentPoiPose.y_ros, 't_ros':currentPoiPose.t_ros, 'name':$('#poi_name').val(), 'comment':'', 'icon':'', 'active':true};
 			AddHistorique({'action':'add_poi', 'data':p});
 			
 			pois.push(p);
@@ -1711,7 +1935,7 @@ $(document).ready(function() {
 			   {
 				   e.preventDefault();
 				    
-				   dock = GetDockFromID(movableDown.data('id_station_recharge'));
+				   dock = GetDockFromID(movableDown.data('id_docking_station'));
 				   
 				   pageX = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX);
 				   pageY = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY);
@@ -1719,8 +1943,8 @@ $(document).ready(function() {
 				  	x = dock.x_ros * 100 / ros_resolution;
 					y = ros_hauteur - (dock.y_ros * 100 / ros_resolution);
 				  
-					$('#dock_'+movableDown.data('id_station_recharge')).attr('transform', 'rotate('+0+', '+x+', '+y+')');
-					$('#dock_connect_'+movableDown.data('id_station_recharge')).attr('transform', 'rotate('+0+', '+x+', '+y+')');
+					$('#dock_'+movableDown.data('id_docking_station')).attr('transform', 'rotate('+0+', '+x+', '+y+')');
+					$('#dock_connect_'+movableDown.data('id_docking_station')).attr('transform', 'rotate('+0+', '+x+', '+y+')');
 				  
 					delta = (downOnSVG_x - pageX) * zoom * ros_resolution / 100;
 					dock.x_ros = parseFloat(dock.x_ros) - delta;
@@ -1731,22 +1955,22 @@ $(document).ready(function() {
 					//movableDown.attr('y', ros_hauteur - (dock.y_ros * 100 / ros_resolution) - 5); 
 					
 					
-					$('#dock_'+movableDown.data('id_station_recharge')).attr('x', dock.x_ros * 100 / ros_resolution - 5);
-					$('#dock_'+movableDown.data('id_station_recharge')).attr('y', ros_hauteur - (dock.y_ros * 100 / ros_resolution) - 1); 
+					$('#dock_'+movableDown.data('id_docking_station')).attr('x', dock.x_ros * 100 / ros_resolution - 5);
+					$('#dock_'+movableDown.data('id_docking_station')).attr('y', ros_hauteur - (dock.y_ros * 100 / ros_resolution) - 1); 
 					
-					$('#dock_connect_'+movableDown.data('id_station_recharge')).attr('x1', dock.x_ros * 100 / ros_resolution - 1);
-					$('#dock_connect_'+movableDown.data('id_station_recharge')).attr('y1', ros_hauteur - (dock.y_ros * 100 / ros_resolution) - 1); 
-					$('#dock_connect_'+movableDown.data('id_station_recharge')).attr('x2', dock.x_ros * 100 / ros_resolution + 1);
-					$('#dock_connect_'+movableDown.data('id_station_recharge')).attr('y2', ros_hauteur - (dock.y_ros * 100 / ros_resolution) - 1); 
+					$('#dock_connect_'+movableDown.data('id_docking_station')).attr('x1', dock.x_ros * 100 / ros_resolution - 1);
+					$('#dock_connect_'+movableDown.data('id_docking_station')).attr('y1', ros_hauteur - (dock.y_ros * 100 / ros_resolution) - 1); 
+					$('#dock_connect_'+movableDown.data('id_docking_station')).attr('x2', dock.x_ros * 100 / ros_resolution + 1);
+					$('#dock_connect_'+movableDown.data('id_docking_station')).attr('y2', ros_hauteur - (dock.y_ros * 100 / ros_resolution) - 1); 
 					
 					x = dock.x_ros * 100 / ros_resolution;
 					y = ros_hauteur - (dock.y_ros * 100 / ros_resolution);	
 					angle = 0 - dock.t_ros * 180 / Math.PI - 90;
 					
-					$('#dock_'+movableDown.data('id_station_recharge')).attr('transform', 'rotate('+angle+', '+x+', '+y+')');
-					$('#dock_connect_'+movableDown.data('id_station_recharge')).attr('transform', 'rotate('+angle+', '+x+', '+y+')');
+					$('#dock_'+movableDown.data('id_docking_station')).attr('transform', 'rotate('+angle+', '+x+', '+y+')');
+					$('#dock_connect_'+movableDown.data('id_docking_station')).attr('transform', 'rotate('+angle+', '+x+', '+y+')');
 					
-					//TraceDock(GetDockIndexFromID(movableDown.data('id_station_recharge')));
+					//TraceDock(GetDockIndexFromID(movableDown.data('id_docking_station')));
 				    
 					downOnSVG_x = pageX;
 					downOnSVG_y = pageY;
@@ -1786,7 +2010,7 @@ $(document).ready(function() {
 					$('#poi_sens_'+movableDown.data('id_poi')).attr('points', (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2));
 					$('#poi_sens_'+movableDown.data('id_poi')).attr('transform', 'rotate('+angle+', '+x+', '+y+')');
 					
-					//TraceDock(GetDockIndexFromID(movableDown.data('id_station_recharge')));
+					//TraceDock(GetDockIndexFromID(movableDown.data('id_docking_station')));
 				    
 					downOnSVG_x = pageX;
 					downOnSVG_y = pageY;
@@ -2241,7 +2465,8 @@ function DockSave()
 		SaveElementNeeded(false);
 		
 		nextIdDock++;
-		d = {'id_station_recharge':nextIdDock, 'id_map':id_map, 'x_ros':currentDockPose.x_ros, 'y_ros':currentDockPose.y_ros, 't_ros':currentDockPose.t_ros, 'num':0};
+		num = GetMaxNumDock()+1;
+		d = {'id_docking_station':nextIdDock, 'id_map':id_map, 'id_reflector':$(this).data('id_reflector'), 'x_ros':currentDockPose.x_ros, 'y_ros':currentDockPose.y_ros, 't_ros':currentDockPose.t_ros, 'num':num, 'name':'Dock '+num, 'comment':''};
 		AddHistorique({'action':'add_dock', 'data':d});
 		
 		docks.push(d);
@@ -2272,7 +2497,7 @@ function DockSave()
 		
 		
 		dock = docks[currentDockIndex];
-		RemoveClass('#install_by_step_edit_map_svg .dock_elem_'+dock.id_station_recharge, 'movable');
+		RemoveClass('#install_by_step_edit_map_svg .dock_elem_'+dock.id_docking_station, 'movable');
 		
 		AddHistorique({'action':'edit_dock', 'data':{'index':currentDockIndex, 'old':saveCurrentDock, 'new':JSON.stringify(docks[currentDockIndex])}});
 		
@@ -2310,7 +2535,7 @@ function DockCancel()
 	else if (currentAction == 'editDock')
 	{
 		dock = docks[currentDockIndex];
-		RemoveClass('#install_by_step_edit_map_svg .dock_elem_'+dock.id_station_recharge, 'movable');
+		RemoveClass('#install_by_step_edit_map_svg .dock_elem_'+dock.id_docking_station, 'movable');
 		
 		docks[currentDockIndex] = JSON.parse(saveCurrentDock);
 		TraceDock(currentDockIndex);
@@ -2669,7 +2894,7 @@ function DeleteDock(indexInArray)
 	AddHistorique({'action':'delete_dock', 'data':indexInArray});
 	
 	data = docks[indexInArray];
-	$('#install_by_step_edit_map_svg .dock_elem_'+data.id_station_recharge).remove();
+	$('#install_by_step_edit_map_svg .dock_elem_'+data.id_docking_station).remove();
 	
 	RemoveClass('#install_by_step_edit_map_svg .active', 'active');
 	
@@ -2689,7 +2914,7 @@ function GetDockFromID(id)
 {
 	ret = null;
 	$.each(docks, function(indexInArray, dock){
-		if (dock.id_station_recharge == id)
+		if (dock.id_docking_station == id)
 		{
 			ret = dock;
 			return ret;
@@ -2701,11 +2926,20 @@ function GetDockIndexFromID(id)
 {
 	ret = null;
 	$.each(docks, function(indexInArray, dock){
-		if (dock.id_station_recharge == id)
+		if (dock.id_docking_station == id)
 		{
 			ret = indexInArray;
 			return ret;
 		}
+	});
+	return ret;
+}
+function GetMaxNumDock()
+{
+	ret = 0;
+	$.each(docks, function(indexInArray, dock){
+		if (dock.num > ret)
+			ret = dock.num;
 	});
 	return ret;
 }

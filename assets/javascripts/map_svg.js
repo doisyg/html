@@ -447,12 +447,12 @@ function TraceCurrentDock(pose)
 function TraceDock(indexDock)
 {
 	dock = docks[indexDock];
-	if (dock.deleted != undefined && dock.deleted == 1) { $('#install_by_step_edit_map_svg .dock_elem_'+dock.id_station_recharge).remove(); return; }
+	if (dock.deleted != undefined && dock.deleted == 1) { $('#install_by_step_edit_map_svg .dock_elem_'+dock.id_docking_station).remove(); return; }
 	
 	is_active = false;
-	if ($('#install_by_step_edit_map_svg .dock_elem_'+dock.id_station_recharge).length > 0)
+	if ($('#install_by_step_edit_map_svg .dock_elem_'+dock.id_docking_station).length > 0)
 	{
-		t = $('#install_by_step_edit_map_svg .dock_elem_'+dock.id_station_recharge);
+		t = $('#install_by_step_edit_map_svg .dock_elem_'+dock.id_docking_station);
 		if (t.attr('class') != t.attr('class').replace('active', ''))
 		{
 			is_active = true;
@@ -464,7 +464,7 @@ function TraceDock(indexDock)
 		index_point_movable = movableDown.data('index_point');
 	}
 	else
-		$('#install_by_step_edit_map_svg .dock_elem_'+dock.id_station_recharge).remove();
+		$('#install_by_step_edit_map_svg .dock_elem_'+dock.id_docking_station).remove();
 	
 	x = dock.x_ros * 100 / ros_resolution;
 	y = ros_hauteur - (dock.y_ros * 100 / ros_resolution);
@@ -475,9 +475,9 @@ function TraceDock(indexDock)
 				   'stroke-width': minStokeWidth,
 				   'fill':'yellow',
 				   'transform':'rotate('+angle+', '+x+', '+y+')',
-				   'class':'dock_elem dock_elem_fond dock_elem_'+dock.id_station_recharge,
-				   'id': 'dock_'+dock.id_station_recharge,
-				   'data-id_station_recharge': dock.id_station_recharge,
+				   'class':'dock_elem dock_elem_fond dock_elem_'+dock.id_docking_station,
+				   'id': 'dock_'+dock.id_docking_station,
+				   'data-id_docking_station': dock.id_docking_station,
 				   'data-element_type': 'dock',
 				   'data-element': 'dock'
 				  });
@@ -488,16 +488,16 @@ function TraceDock(indexDock)
 				   'stroke-linecap':'square',
 				   'stroke':'orange',
 				   'transform':'rotate('+angle+', '+x+', '+y+')',
-				   'class':'dock_elem dock_elem_'+dock.id_station_recharge,
-				   'id': 'dock_connect_'+dock.id_station_recharge,
-				   'data-id_station_recharge': dock.id_station_recharge,
+				   'class':'dock_elem dock_elem_'+dock.id_docking_station,
+				   'id': 'dock_connect_'+dock.id_docking_station,
+				   'data-id_docking_station': dock.id_docking_station,
 				   'data-element_type': 'dock',
 				   'data-element': 'dock'
 				  });
 	svg.appendChild(path);
 	
 	if (is_active)
-		AddClass('#install_by_step_edit_map_svg .dock_elem_'+dock.id_station_recharge, 'active');
+		AddClass('#install_by_step_edit_map_svg .dock_elem_'+dock.id_docking_station, 'active');
 }
 
 function TraceCurrentPoi(pose)

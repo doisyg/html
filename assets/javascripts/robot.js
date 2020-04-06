@@ -224,6 +224,7 @@ function InitPosCarteMapping()
 	}
 }
 
+/*
 var intervalJoystickEnable = null;
 function EnableJoystick(enable)
 {
@@ -250,3 +251,4 @@ function SendJoystickOn()
 	if (robotCurrentState == 'undocked' || robotCurrentState == '')
 		wycaApi.TeleopOff(false);
 }
+*/

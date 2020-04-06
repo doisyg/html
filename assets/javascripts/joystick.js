@@ -16,6 +16,8 @@ var nbCall = 0;
 
 var isDown = false;
 
+var intervalSendCommande = null;
+
 $(document).ready(function(e) {
     
 	if ($('.joystickDiv:visible').length > 0)
@@ -46,6 +48,10 @@ $(document).ready(function(e) {
 	$('.joystickDiv .curseur').on('touchmove', function(e){
 		isDown = true;
 		SetCurseurV2((event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX), (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY));
+		
+		if (intervalSendCommande == null)
+			intervalSendCommande = setInterval(SendCommande, 200);
+		
 	});
 	$(document).on('touchend', function(e) {
 		isDown = false;
@@ -59,7 +65,7 @@ $(document).ready(function(e) {
 		}
 	});
 	
-	setInterval(SendCommande, 200);
+	
 	//setInterval(RefreshJoystickOn, 300);
 	
 });	
@@ -140,12 +146,18 @@ function SendCommande()
 	//if (robotCurrentState != 'undocked' || (lastValueX == 0 && lastValueY == 0))
 	if (connectedToTheRobot)
 	{
+		wycaApi.TeleopOff(false);
 		if ((lastValueX == 0 && lastValueY == 0))
 		{
 			if (nbCall0 < 5)
 			{
 				nbCall0++;
 				wycaApi.Teleop(lastValueX * -0.5, lastValueY * -1.2);
+			}
+			else
+			{
+				clearInterval(intervalSendCommande);
+				intervalSendCommande = null;
 			}
 		}
 		else if (isDown)

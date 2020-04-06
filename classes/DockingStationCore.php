@@ -3,6 +3,7 @@ class DockingStationCore
 {
 	public $id_docking_station = -1;
 	public $id_map = -1;
+	public $id_reflector = -1;
 	public $x_ros = 0.0;
 	public $y_ros = 0.0;
 	public $t_ros = 0.0;
@@ -31,6 +32,7 @@ class DockingStationCore
 	{
 		$this->id_docking_station = $object->id_docking_station;
 		$this->id_map = $object->id_map;
+		$this->id_reflector = $object->id_reflector;
 		$this->x_ros = $object->x_ros;
 		$this->y_ros = $object->y_ros;
 		$this->t_ros = $object->t_ros;
@@ -62,9 +64,10 @@ class DockingStationCore
 	public function Insert()
 	{
 		global $_CONFIG;
-		$query = "INSERT INTO docking_station ( id_map, x_ros, y_ros, t_ros, num, name, comment, active ) VALUES ( 
+		$query = "INSERT INTO docking_station ( id_map, id_reflector, x_ros, y_ros, t_ros, num, name, comment, active ) VALUES ( 
 
 			'". mysqli_real_escape_string(DB::$connexion, $this->id_map) ."', 
+			'". mysqli_real_escape_string(DB::$connexion, $this->id_reflector) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->x_ros) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->y_ros) ."', 
 			'". mysqli_real_escape_string(DB::$connexion, $this->t_ros) ."', 
@@ -83,6 +86,7 @@ class DockingStationCore
 		$query = "UPDATE docking_station SET
 
 			id_map = '". mysqli_real_escape_string(DB::$connexion,  $this->id_map )."', 
+			id_reflector = '". mysqli_real_escape_string(DB::$connexion,  $this->id_reflector )."', 
 			x_ros = '". mysqli_real_escape_string(DB::$connexion,  $this->x_ros )."', 
 			y_ros = '". mysqli_real_escape_string(DB::$connexion,  $this->y_ros )."', 
 			t_ros = '". mysqli_real_escape_string(DB::$connexion,  $this->t_ros )."', 
