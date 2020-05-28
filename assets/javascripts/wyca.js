@@ -41,6 +41,11 @@ $(document).ready(function(e) {
 	
 	history.pushState({ current_groupe:$('.menu_groupe .active').attr('id'), current_page:'' }, $('.menu_groupe .active').html(), "/#"+$('.menu_groupe .active').html());
 	
+	$('.popup_error .panel-heading .fa-times').click(function(e) {
+        e.preventDefault();
+		$(this).closest('.popup_error').hide();
+    });
+	
 	if ($('#install_by_step_check').is(':visible')) setTimeout(StartAnimCheckComposantInstall, 2000);
 	
 	var elementCss = {
@@ -51,7 +56,7 @@ $(document).ready(function(e) {
 	
 	$('section:not(".active") .anim_tuiles').css({ transform: 'rotatey(90deg)', "z-index": "0" });
 	
-	$('.is_checkbox').click(function(e) {
+	$('body').on('click', '.is_checkbox', function(e) {
         e.preventDefault();
         $(this).toggleClass('checked');
     });
@@ -60,6 +65,11 @@ $(document).ready(function(e) {
         e.preventDefault();
 		$('#alert_wyca p').html('');
 		$('#alert_wyca').hide();
+    });
+	
+	$('.bUndock').click(function(e) {
+        e.preventDefault();
+		wycaApi.Undock();
     });
 	
 	$('.btn_change_group').click(function(e) {
@@ -81,7 +91,7 @@ $(document).ready(function(e) {
 		});
     });
 	
-	$('.button_goto').click(function(e) {
+	$( 'body' ).on( 'click', '.button_goto', function(e) {
         e.preventDefault();
 		
 		history.pushState({ current_groupe:$('.menu_groupe .active').attr('id'), current_page:$(this).data('goto')}, $(this).data('goto'), "/#"+$(this).data('goto'));
@@ -130,7 +140,10 @@ $(document).ready(function(e) {
 		}
 		
 		if (next == 'install_by_step_wifi') InitInstallWifiPage();
+		if (next == 'install_by_step_tops') InitTops();
+		if (next == 'install_by_step_top') InitTopsActive();
 		
+		InitJoystick();
     });
 	
 	$('#pages_install_by_step a.select_langue').click(function(e) {
@@ -183,7 +196,45 @@ $(document).ready(function(e) {
 		});
     });
 	
+	$('#pages_install_by_step a#bImportTopDo').click(function(e) {
+        e.preventDefault();
+		
+		$('.modalImportTop_loading').hide();
+		$('.modalImportTop_content').show();
+		
+		file = $('#pages_install_by_step #file_import_top')[0].files[0];
+		var reader = new FileReader();
+		reader.onload = function(event) { 
+			wycaApi.InstallNewTopWithoutKey(btoa(reader.result), function(data) { 
+				if (data.A == wycaApi.AnswerCode.NO_ERROR)
+				{
+					
+					$('.modalImportTop_loading').hide();
+					$('.modalImportTop_content').show();
+					
+					$('#pages_install_by_step .modalImportTop').modal('hide');
+					InitTops();
+				}
+				else
+				{
+					console.log(JSON.stringify(data)); 
+					alert(wycaApi.AnswerCodeToString(data.A));
+				}
+				
+				
+			});
+		};
+		reader.readAsText(file);
+    });
 	
+	$('#pages_install_by_step a.import_top').click(function(e) {
+        e.preventDefault();
+		
+		$('.modalImportTop_loading').hide();
+		$('.modalImportTop_content').show();
+		
+		$('#pages_install_by_step .modalImportTop').modal('show');
+	});
 	$('#pages_install_by_step a.save_tops').click(function(e) {
         e.preventDefault();
 		
@@ -200,39 +251,43 @@ $(document).ready(function(e) {
 		}
 		else
 		{
-			$.ajax({
-				type: "POST",
-				url: 'ajax/install_by_step_save_tops.php',
-				data: { 
-					id_tops: listAvailableTops
-				},
-				dataType: 'json',
-				success: function(data) {
-					if (data.error != '')
-						alert_wyca(textSelectOnOrMoreTops);
-					else if (data.next_step == 'select')
-						$('#pages_install_by_step a.save_tops_next_select').click();
-					else
-					{
+			wycaApi.SetAvailableTops(listAvailableTops, function(data){
+				
+				$.ajax({
+					type: "POST",
+					url: 'ajax/install_by_step_save_tops.php',
+					data: { 
+						nb_tops: listAvailableTops.length
+					},
+					dataType: 'json',
+					success: function(data) {
+					},
+					error: function(e) {
+						alert(e.responseText);
+					}
+				});
+				
+				if (listAvailableTops.length == 1)
+				{
+					wycaApi.SetActiveTop(listAvailableTops[0], function(data){
 						$('#pages_install_by_step a.save_tops_next_check').click();
 						setTimeout(StartAnimCheckComposantInstall, 2000);
-					}
-				},
-				error: function(e) {
-					alert(e.responseText);
+					});
 				}
+				else
+					$('#pages_install_by_step a.save_tops_next_select').click();
 			});
 		}
     });
 	
-	
-	$('#pages_install_by_step a.set_top').click(function(e) {
-        e.preventDefault();
+	$( '#pages_install_by_step' ).on( 'click', 'a.set_top', function(e) {
+        e.preventDefault();		
+		wycaApi.SetActiveTop($(this).data('id_top'), function(data){});		
+		
 		$.ajax({
 			type: "POST",
 			url: 'ajax/install_by_step_set_top.php',
 			data: { 
-				id_top: $(this).data('id_top')
 			},
 			dataType: 'json',
 			success: function(data) {
@@ -241,6 +296,7 @@ $(document).ready(function(e) {
 				alert(e.responseText);
 			}
 		});
+		
 		setTimeout(StartAnimCheckComposantInstall, 2000);
     });
 	
@@ -268,22 +324,23 @@ $(document).ready(function(e) {
 		}
 		else
 		{
-			$.ajax({
-				type: "POST",
-				url: 'ajax/install_by_step_site.php',
-				data: { 
-					name : $('#pages_install_by_step .i_site_name').val()
-				},
-				dataType: 'json',
-				success: function(data) {
-					if (data.error != '')
-						alert_wyca(textIndicateAName);
-					else
-						$('#pages_install_by_step a.install_by_step_site_next').click();
-				},
-				error: function(e) {
-					alert(e.responseText);
-				}
+			wycaApi.GetCurrentSite(function(data) {
+				data.D.name = $('#pages_install_by_step .i_site_name').val();
+				wycaApi.SetSite(data.D, function(data){
+					$.ajax({
+						type: "POST",
+						url: 'ajax/install_by_step_site.php',
+						data: {
+						},
+						dataType: 'json',
+						success: function(data) {
+						},
+						error: function(e) {
+							alert(e.responseText);
+						}
+					});
+					$('#pages_install_by_step a.install_by_step_site_next').click();
+				});
 			});
 		}
 	});
@@ -348,9 +405,9 @@ $(document).ready(function(e) {
 		wycaApi.MappingStop(function(data) {
 			$('#install_by_step_mapping_fin .loading_fin_create_map').hide();
 			var img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
-            img.src = 'data:image/png;base64,' + data.final_map.data;
+            img.src = 'data:image/png;base64,' + data.D;
 			
-			finalMapData = 'data:image/png;base64,' + data.final_map.data;
+			finalMapData = 'data:image/png;base64,' + data.D;
 			
 			setTimeout(function() {
 				canvas = document.createElement('canvas');
@@ -405,49 +462,100 @@ $(document).ready(function(e) {
 			
 			$.ajax({
 				type: "POST",
-				url: 'ajax/install_by_step_save_mapping.php',
-				data: $('#install_by_step_mapping_form').serialize(),
+				url: 'ajax/get_map_tri.php',
+				data: {
+					'image_tri':canvasDessin.toDataURL()
+				},
 				dataType: 'json',
 				success: function(data) {
-					id_map_last = data.id_map;
-					id_map = data.id_map;
+					if (!data.error)
+					{
+						map = {
+							'id_map': -1,
+							'id_site': -1,
+							'name': $('#install_by_step_mapping_from_name').val(),
+							'comment': '',
+							'image': finalMapData,
+							'image_tri': data.image,
+							'ros_resolution': 5,
+							'ros_width': $('#install_by_step_mapping_img_map_saved_fin').prop('naturalWidth'),
+							'ros_height': $('#install_by_step_mapping_img_map_saved_fin').prop('naturalHeight'),
+							'threshold_free': parseInt($('#threshold_free_slider').val()),
+							'threshold_occupied': parseInt($('#threshold_occupied_slider').val())
+						};
+						
+						wycaApi.SetMap(map, function(data){
+							if (data.A == wycaApi.AnswerCode.NO_ERROR)
+							{
+								id_map_last = data.D;
+								id_map = data.D;
+								wycaApi.GetMapComplete(id_map, function(data){
+									if (data.A == wycaApi.AnswerCode.NO_ERROR)
+									{
+										forbiddens = data.D.forbiddens;
+										areas = data.D.areas;
+										gommes = Array();
+										docks = data.D.docks;
+										pois = data.D.pois;
+										
+										$('#install_by_step_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
+										
+										largeurSlam = data.D.ros_width;
+										hauteurSlam = data.D.ros_height;
+										largeurRos = data.D.ros_width;
+										hauteurRos = data.D.ros_height;
+										
+										ros_largeur = data.D.ros_width;
+										ros_hauteur = data.D.ros_height;
+										ros_resolution = data.D.ros_resolution;
+										
+										$('#install_by_step_edit_map_svg').attr('width', data.D.ros_width);
+										$('#install_by_step_edit_map_svg').attr('height', data.D.ros_height);
+										
+										$('#install_by_step_edit_map_image').attr('width', data.D.ros_width);
+										$('#install_by_step_edit_map_image').attr('height', data.D.ros_height);
+										$('#install_by_step_edit_map_image').attr('xlink:href', 'data:image/png;base64,'+data.D.image_tri);
+									  
+										$('#install_by_step_mapping_use .bUseThisMapNowYes').show();
+										$('#install_by_step_mapping_use .bUseThisMapNowNo').show();
+										$('#install_by_step_mapping_use .modalUseThisMapNowTitle1').show();
+										$('#install_by_step_mapping_use .modalUseThisMapNowTitle2').hide();
+										$('#install_by_step_mapping_use .modalUseThisMapNowContent').hide();
+										
+										$('#install_by_step_mapping_fin .install_by_step_mapping_fin_next').click();
+										
+										InitMap();
+									  
+										var img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
+										img.src = "assets/images/vide.png";
+										
+										
+										$.ajax({
+											type: "POST",
+											url: 'ajax/install_by_step_save_mapping.php',
+											data: {},
+											dataType: 'json',
+											success: function(data) {
+											},
+											error: function(e) {
+											}
+										});
+									}
+									else
+									{
+										alert('Get map error : ' + wycaApi.AnswerCodeToString(data.A));
+									}		
 									
-					forbiddens = data.forbiddens;
-					areas = data.areas;
-					gommes = Array();
-					docks = data.docks;
-					pois = data.pois;
+								});
+							}
+							else
+							{
+								alert('Save map error : ' + wycaApi.AnswerCodeToString(data.A));
+							}							
+						});
+					}
+									
 					
-					$('#install_by_step_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.plan.image_tri);
-					
-					largeurSlam = data.plan.ros_width;
-					hauteurSlam = data.plan.ros_height;
-					largeurRos = data.plan.ros_width;
-					hauteurRos = data.plan.ros_height;
-					
-					ros_largeur = data.plan.ros_width;
-					ros_hauteur = data.plan.ros_height;
-					ros_resolution = data.plan.ros_resolution;
-					
-					$('#install_by_step_edit_map_svg').attr('width', data.plan.ros_width);
-					$('#install_by_step_edit_map_svg').attr('height', data.plan.ros_height);
-					
-					$('#install_by_step_edit_map_image').attr('width', data.plan.ros_width);
-					$('#install_by_step_edit_map_image').attr('height', data.plan.ros_height);
-					$('#install_by_step_edit_map_image').attr('xlink:href', 'data:image/png;base64,'+data.plan.image_tri);
-				  
-				  	$('#install_by_step_mapping_use .bUseThisMapNowYes').show();
-					$('#install_by_step_mapping_use .bUseThisMapNowNo').show();
-					$('#install_by_step_mapping_use .modalUseThisMapNowTitle1').show();
-					$('#install_by_step_mapping_use .modalUseThisMapNowTitle2').hide();
-					$('#install_by_step_mapping_use .modalUseThisMapNowContent').hide();
-					
-					$('#install_by_step_mapping_fin .install_by_step_mapping_fin_next').click();
-					
-					InitMap();
-				  
-				  	var img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
-        			img.src = "assets/images/vide.png";
 				},
 				error: function(e) {
 					
@@ -457,8 +565,6 @@ $(document).ready(function(e) {
 					alert(e.responseText);
 				}
 			});
-			
-			
 		}
 	});
 	
@@ -473,27 +579,23 @@ $(document).ready(function(e) {
 		
 		$('#install_by_step_mapping_use .modalUseThisMapNowContentDetails').html(textBuildingMap);
 		
-		$.ajax({
-			type: "POST",
-			url: 'ajax/install_by_step_export_map_to_robot.php',
-			data: {
-				'id_map': id_map_last
-			},
-			dataType: 'json',
-			success: function(data) {
-				id_map_last = data.id_map;
-				id_map = data.id_map;
-			  
+		wycaApi.SetMapAsCurrent(id_map, function(data){
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
 				$('#install_by_step_mapping_use .modalUseThisMapNowContentDetails').html(textStartAutonomous);
-			  	wycaApi.NavigationStart(true, function(r) {
+				wycaApi.NavigationStartFromMapping(function(r) {
 					if (!r.success) alert_wyca(r.message);
 					$('#install_by_step_mapping_use .install_by_step_mapping_use_next').click();
 					
 					console.log('TODO : Mettre à jour liste des maps !');
 				});
-			},
-			error: function(e) {
-				alert_wyca(e.responseText);
+			}
+			else
+			{
+				if (data.M != '')
+					alert_wyca(data.M);
+				else
+					alert_wyca(wycaApi.AnswerCodeToString(data.A));
 				
 				$('#install_by_step_mapping_use .bUseThisMapNowYes').show();
 				$('#install_by_step_mapping_use .bUseThisMapNowNo').show();
@@ -502,6 +604,8 @@ $(document).ready(function(e) {
 				$('#install_by_step_mapping_use .modalUseThisMapNowContent').hide();
 			}
 		});
+		
+		
     });
 	
 	$('#install_by_step_mapping_fin .bResetValueThreshold').click(function(e) {
@@ -555,31 +659,18 @@ $(document).ready(function(e) {
 		$('#install_by_step_wifi_password .wifi_connexion_progress').show();
 		$('#install_by_step_wifi_password .wifi_connexion_error').html('');
 		
-		$.ajax({
-			type: "POST",
-			url: 'ajax/install_by_step_wifi_connect.php',
-			data: {
-				'ssid': selectedWifi,
-				'passwd': $('#install_by_step_wifi_password .i_wifi_passwd_name').val()
-			},
-			dataType: 'json',
-			success: function(data) {
-				if (data.error)
-				{
-					$('#install_by_step_wifi_password .wifi_connexion_error').html(data.message);
-				}
-				else
-				{
-					$('#install_by_step_wifi_password .skip_wifi').click();
-					$('#install_by_step_wifi_password .wifi_connexion_error').html('');
-				}
-				
-				$('#install_by_step_wifi_password .install_by_step_wifi_password_save').show();
-				$('#install_by_step_wifi_password .wifi_connexion_progress').hide();
-			},
-			error: function(e) {
-				alert(e.responseText);
+		wycaApi.WifiConnection(selectedWifi, $('#install_by_step_wifi_password .i_wifi_passwd_name').val(), function(data){
+			if (data.A != wycaApi.AnswerCode.NO_ERROR)
+			{
+				$('#install_by_step_wifi_password .wifi_connexion_error').html(data.M);
 			}
+			else
+			{
+				$('#install_by_step_wifi_password .skip_wifi').click();
+				$('#install_by_step_wifi_password .wifi_connexion_error').html('');
+			}
+			$('#install_by_step_wifi_password .install_by_step_wifi_password_save').show();
+			$('#install_by_step_wifi_password .wifi_connexion_progress').hide();
 		});
     });
 	
@@ -588,21 +679,125 @@ $(document).ready(function(e) {
 	$("#threshold_free_slider_elem").slider({ "value": 25, "range": "min", "max": 100 });
 	$("#threshold_free_slider_elem").on("slide", function(slideEvt) { $("#threshold_free_output b").text(slideEvt.value); $("#threshold_free_slider").val(slideEvt.value); });
 	
+	$('#install_by_step_edit_map .bSaveEditMap').click(function(e) {
+		e.preventDefault();
+        
+		data = {};
+		
+		data.forbiddens = forbiddens;
+		$.each(data.forbiddens, function(indexInArray, forbidden){
+			if (forbidden.id_area >= 300000)
+			{
+				data.forbiddens[indexInArray].id_area = -1;
+			}
+		});
+		data.areas = areas;
+		$.each(data.areas, function(indexInArray, area){
+			if (area.id_area >= 300000)
+			{
+				data.areas[indexInArray].id_area = -1;
+			}
+		});
+		data.gommes = gommes;
+		data.docks = docks;
+		$.each(data.docks, function(indexInArray, dock){
+			if (dock.id_docking_station >= 300000)
+			{
+				data.docks[indexInArray].id_docking_station = -1;
+			}
+		});
+		data.pois = pois;
+		$.each(data.pois, function(indexInArray, poi){
+			if (poi.id_poi >= 300000)
+			{
+				data.pois[indexInArray].id_poi = -1;
+			}
+		});
+		
+		console.log(JSON.stringify(data));
+		
+		wycaApi.SetCurrentMapData(data, function(data){
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				/*
+				if (navLaunched && id_map == current_id_map)
+				{
+					wycaApi.NavigationReloadMaps(function(e) { if (e.A != wycaApi.AnswerCode.NO_ERROR) console.error(wycaApi.AnswerCodeToString(data.A)+ " " + data.M); });	
+				}
+				*/
+				alert_wyca("Save ok");
+			}
+			else
+			{
+				alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' + data.M);
+			}
+		});
+    });
+	
 });
+
+function InitTops()
+{
+	$('.install_by_step_tops_loading').show();
+	$('#install_by_step_tops .tuiles').html('');
+	if (wycaApi.socketAuthed)
+	{
+		wycaApi.GetTopsList(function(data) {
+			console.log(data);
+			$.each(data.D,function(index, value){
+				$('#install_by_step_tops .tuiles').append('<li class="col-xs-4">'+
+				'	<a class="is_checkbox '+(value.available?'checked':'')+' anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'" href="#">'+
+				'		<i class="fa fa-check"></i>'+
+				'		<img src="data:image/png;base64, '+value.image_b64+'" />'+value.name+''+
+				'	</a>'+
+				'</li>');
+			});
+			$('.install_by_step_tops_loading').hide();
+		});
+	}
+	else
+	{
+		setTimeout(InitTops, 500);
+	}
+}
+
+
+function InitTopsActive()
+{
+	$('.install_by_step_top_loading').show();
+	$('#install_by_step_top .tuiles').html('');
+	if (wycaApi.socketAuthed)
+	{
+		wycaApi.GetTopsList(function(data) {
+			$.each(data.D,function(index, value){
+				if (value.available)
+				{
+					$('#install_by_step_top .tuiles').append('<li class="col-xs-4 bTop' + value.id_top + '">'+
+					'	<a href="#" class="set_top button_goto anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'" data-goto="install_by_step_check">'+
+					'		<img src="data:image/png;base64, '+value.image_b64+'" />'+value.name+''+
+					'	</a>'+
+					'</li>');
+				}
+			});
+			$('.install_by_step_top_loading').hide();
+		});
+	}
+	else
+	{
+		setTimeout(InitTopsActive, 500);
+	}
+}
 
 
 function InitInstallWifiPage()
 {
-	$.ajax({
-		type: "POST",
-		url: 'ajax/install_by_step_get_wifi.php',
-		data: { },
-		dataType: 'json',
-		success: function(data) {
-			if (data.list.length > 0)
+	if (wycaApi.socketAuthed)
+	{
+		wycaApi.GetWifiList(function(data) {
+			$('#install_by_step_wifi tr').hide();
+			if (data.D.length > 0)
 			{
-				$('#install_by_step_wifi tr').hide();
-				$.each(data.list,function(index, value){
+				$.each(data.D,function(index, value){
 					signal = parseInt(value.signal/20);
 					if ($('#install_by_step_wifi .wifi'+value.bssid).length > 0)
 					{
@@ -620,14 +815,15 @@ function InitInstallWifiPage()
 					}
 				});
 			}
-		},
-		error: function(e) {
-			alert(e.responseText);
-		}
-	});
-	
-	if ($('#install_by_step_wifi').is(':visible'))
-		setTimeout(InitInstallWifiPage, 3000);
+		});
+		
+		if ($('#install_by_step_wifi').is(':visible'))
+			setTimeout(InitInstallWifiPage, 3000);
+	}
+	else
+	{
+		setTimeout(InitInstallWifiPage, 500);
+	}
 }
 
 function StartAnimCheckComposantInstall()
@@ -769,4 +965,11 @@ function CalculateMapTrinaryDo()
 	var idata = ctx.createImageData(width, height);
 	idata.data.set(buffer);
 	ctx.putImageData(idata, 0, 0);
+}
+
+
+function DisplayError(text)
+{
+	 $('.popup_error .panel-body').html(text);
+	 $('.popup_error').show();
 }

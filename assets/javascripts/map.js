@@ -56,40 +56,48 @@ var blockZoom = false;
 
 function GetInfosCurrentMap()
 {
-	$.ajax({
-		type: "POST",
-		url: 'ajax/install_by_step_get_infos_map.php',
-		data: {
-			id_map: id_map_last
-		},
-		dataType: 'json',
-		success: function(data) {
-			id_map_last = data.id_map;
-			id_map = data.id_map;
-							
-			forbiddens = data.forbiddens;
-			areas = data.areas;
+	if (wycaApi.socketAuthed)
+	{
+		GetInfosCurrentMapDo();
+	}
+	else
+	{
+		setTimeout(GetInfosCurrentMap, 500);
+	}
+}
+
+function GetInfosCurrentMapDo()
+{
+	wycaApi.GetCurrentMapComplete(function(data) {
+		if (data.A == wycaApi.AnswerCode.NO_ERROR)
+		{
+			console.log(data.D);
+			id_map = data.D.id_map;
+			id_map_last = data.D.id_map;
+			
+			forbiddens = data.D.forbiddens;
+			areas = data.D.areas;
 			gommes = Array();
-			docks = data.docks;
-			pois = data.pois;
+			docks = data.D.docks;
+			pois = data.D.pois;
 			
-			$('#install_by_step_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.plan.image_tri);
+			$('#install_by_step_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
 			
-			largeurSlam = data.plan.ros_width;
-			hauteurSlam = data.plan.ros_height;
-			largeurRos = data.plan.ros_width;
-			hauteurRos = data.plan.ros_height;
+			largeurSlam = data.D.ros_width;
+			hauteurSlam = data.D.ros_height;
+			largeurRos = data.D.ros_width;
+			hauteurRos = data.D.ros_height;
 			
-			ros_largeur = data.plan.ros_width;
-			ros_hauteur = data.plan.ros_height;
-			ros_resolution = data.plan.ros_resolution;
+			ros_largeur = data.D.ros_width;
+			ros_hauteur = data.D.ros_height;
+			ros_resolution = data.D.ros_resolution;
 			
-			$('#install_by_step_edit_map_svg').attr('width', data.plan.ros_width);
-			$('#install_by_step_edit_map_svg').attr('height', data.plan.ros_height);
+			$('#install_by_step_edit_map_svg').attr('width', data.D.ros_width);
+			$('#install_by_step_edit_map_svg').attr('height', data.D.ros_height);
 			
-			$('#install_by_step_edit_map_image').attr('width', data.plan.ros_width);
-			$('#install_by_step_edit_map_image').attr('height', data.plan.ros_height);
-			$('#install_by_step_edit_map_image').attr('xlink:href', 'data:image/png;base64,'+data.plan.image_tri);
+			$('#install_by_step_edit_map_image').attr('width', data.D.ros_width);
+			$('#install_by_step_edit_map_image').attr('height', data.D.ros_height);
+			$('#install_by_step_edit_map_image').attr('xlink:href', 'data:image/png;base64,'+data.D.image_tri);
 		  
 			$('#install_by_step_mapping_use .bUseThisMapNowYes').show();
 			$('#install_by_step_mapping_use .bUseThisMapNowNo').show();
@@ -98,9 +106,11 @@ function GetInfosCurrentMap()
 			$('#install_by_step_mapping_use .modalUseThisMapNowContent').hide();
 			
 			InitMap();
-		},
-		error: function(e) {
-			alert(e.responseText);
+			ResizeSVG();
+		}
+		else
+		{
+			alert('Init map error : ' + wycaApi.AnswerCodeToString(data.A));
 		}
 	});
 }

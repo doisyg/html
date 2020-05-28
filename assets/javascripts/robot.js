@@ -7,6 +7,8 @@ var mappingLastPose = null;
 var mappingStarted = false;
 var intervalMap = null;
 
+var dockingStateLast = "not_init";
+
 var viewer;
 var gridClient;
 
@@ -24,6 +26,8 @@ var canvas;
 
 var width = 0;
 var height = 0;
+
+var teleopEnable = false;
 
 var mappingLastOrigin = {'x':0, 'y':0 };
 
@@ -47,12 +51,10 @@ $(document).ready(function(e) {
 		},
 		onInitialized: function(){
 		},
-        onIsPowered: function(data){
-            initPoweredState(data);
-        },
-        onRelativeSOCPercentage: function(data){
-			initBatteryState(data);
-        },
+		onBatteryState: function(data){
+			initBatteryState(data.SOC);
+			initPoweredState(data.IS_POWERED);
+		},
         onIsSafetyStop: function(data){
             if (data)
                 $('.safety_stop').show();
@@ -81,33 +83,75 @@ $(document).ready(function(e) {
 			InitRobotPose(pose);
 		},
         onMappingRobotPoseInBuildingMap: function(data){
-            mappingLastPose = data;
+            mappingLastPose = {'x':parseFloat(data.X), 'y':parseFloat(data.Y), 'theta':parseFloat(data.T) };
             InitPosCarteMapping();
 		},
         onMappingMapInConstruction: function(data){
             var img = document.getElementById("install_by_step_mapping_img_map_saved");
-            img.src = 'data:image/png;base64,' + data.map_trinary;
-            mappingLastOrigin = {'x':data.x_origin, 'y':data.y_origin };
-        }
+            img.src = 'data:image/png;base64,' + data.M;
+            mappingLastOrigin = {'x':parseFloat(data.X), 'y':parseFloat(data.Y) };
+        },
+		onDockingState: function(data){
+            if (dockingStateLast != data)
+			{
+				dockingStateLast = data;
+            	InitDockingState();
+			}
+		},
 	});
 	
 	
 	wycaApi.init();	
 });
 
+function InitDockingState()
+{
+	if (dockingStateLast == "docked")
+	{
+		$('.ifDocked').show();
+		$('.ifUndocked').hide();
+	}
+	else
+	{
+		$('.ifDocked').hide();
+		$('.ifUndocked').show();
+	}
+	
+	// Le jpystick s'affiche quand le robot passe de docker à dédocker, donc on recheck l'initialisation du joystick
+	InitJoystick();
+}
+
+function InitJoystick()
+{
+	// Si un joystick est visible, on enable le telop
+	if ($('.joystickDiv:visible').length > 0)
+	{
+		if (!teleopEnable)
+		{
+			teleopEnable = true;
+			wycaApi.TeleopStart();
+		}
+	}
+	else
+	{
+		// Sinon, on le disabled
+		if (teleopEnable)
+		{
+			teleopEnable = false;
+			wycaApi.TeleopStop();
+		}
+	}
+}
+
 function initPoweredState(data)
 {
 	$('#icoBattery').removeClass('battery-ok battery-mid');
     if (data)
 	{
-		$('.ifDocked').show();
-		$('.ifUndocked').hide();
         $('#icoBattery').addClass('battery-ok');
 	}
     else
 	{
-		$('.ifDocked').hide();
-		$('.ifUndocked').show();
         $('#icoBattery').addClass('battery-mid');
 	}
 }
@@ -246,9 +290,5 @@ function EnableJoystick(enable)
 	
 }
 
-function SendJoystickOn()
-{
-	if (robotCurrentState == 'undocked' || robotCurrentState == '')
-		wycaApi.TeleopOff(false);
-}
+
 */

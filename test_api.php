@@ -29,32 +29,18 @@ $_CONFIG['URL'] = 'https://elodie.wyca-solutions.com/';
         <h2>Service</h2>
         <div class="fixheight">
             <div class="col-md-6">
+                
+                <section class="panel panel-featured panel-featured-primary">
+                    <header class="panel-heading"><h2 class="panel-title"><a href="#" id="InstallNewTop" class="btn btn-default">Install new top</a></h2></header>
+                    <div class="panel-body">
+                        <code id="InstallNewTop_return"></code>
+                    </div>
+                </section>
                     
-                <section class="panel panel-featured panel-featured-primary">
-                    <header class="panel-heading"><h2 class="panel-title"><a href="#" id="LatencyStart" class="btn btn-default">LatencyStart</a></h2></header>
-                    <div class="panel-body">
-                        <code id="LatencyStart_return"></code>
-                    </div>
-                </section>
-                
-                <section class="panel panel-featured panel-featured-primary">
-                    <header class="panel-heading"><h2 class="panel-title"><a href="#" id="LatencyWait" class="btn btn-default">LatencyWait</a></h2></header>
-                    <div class="panel-body">
-                        <code id="LatencyWait_return"></code>
-                    </div>
-                </section>
-                
                 <section class="panel panel-featured panel-featured-primary">
                     <header class="panel-heading"><h2 class="panel-title"><a href="#" id="MappingIsStarted" class="btn btn-default">MappingIsStarted</a></h2></header>
                     <div class="panel-body">
                         <code id="MappingIsStarted_return"></code>
-                    </div>
-                </section>
-                
-                <section class="panel panel-featured panel-featured-primary">
-                    <header class="panel-heading"><h2 class="panel-title"><a href="#" id="MappingStart" class="btn btn-default">MappingStart</a></h2></header>
-                    <div class="panel-body">
-                        <code id="MappingStart_return"></code>
                     </div>
                 </section>
                 
@@ -77,15 +63,125 @@ $_CONFIG['URL'] = 'https://elodie.wyca-solutions.com/';
                         <code id="GetRobotPose_return"></code>
                     </div>
                 </section>
-            </div>
-            <div class="col-md-6">
-                
                 <section class="panel panel-featured panel-featured-primary">
-                    <header class="panel-heading"><h2 class="panel-title"><a href="#" id="NavigationStart" class="btn btn-default">NavigationStart</a></h2></header>
+                    <header class="panel-heading"><h2 class="panel-title"><a href="#" id="GetLedIsLightMode" class="btn btn-default">GetLedIsLightMode</a></h2></header>
                     <div class="panel-body">
-                        <code id="NavigationStart_return"></code>
+                        <code id="GetLedIsLightMode_return"></code>
                     </div>
                 </section>
+                <section class="panel panel-featured panel-featured-primary">
+                    <header class="panel-heading"><h2 class="panel-title"><a href="#" id="GetLedIsManualMode" class="btn btn-default">GetLedIsManualMode</a></h2></header>
+                    <div class="panel-body">
+                        <code id="GetLedIsManualMode_return"></code>
+                    </div>
+                </section>
+                <section class="panel panel-featured panel-featured-primary">
+                    <header class="panel-heading"><h2 class="panel-title"><a href="#" id="GetLedAnimationMode" class="btn btn-default">GetLedAnimationMode</a></h2></header>
+                    <div class="panel-body">
+                        <code id="GetLedAnimationMode_return"></code>
+                    </div>
+                </section>
+                <section class="panel panel-featured panel-featured-primary">
+                    <header class="panel-heading"><h2 class="panel-title"><a href="#" id="GetLedRobotState" class="btn btn-default">GetLedRobotState</a></h2></header>
+                    <div class="panel-body">
+                        <code id="GetLedRobotState_return"></code>
+                    </div>
+                </section>
+                <section class="panel panel-featured panel-featured-primary">
+                    <header class="panel-heading"><h2 class="panel-title"><a href="#" id="GetWifiList" class="btn btn-default">GetWifiList</a></h2></header>
+                    <div class="panel-body">
+                        <code id="GetWifiList_return"></code>
+                    </div>
+                </section>
+                <section class="panel panel-featured panel-featured-primary">
+                    <header class="panel-heading"><h2 class="panel-title"><a href="#" id="WifiConnection" class="btn btn-default">WifiConnection</a></h2></header>
+                    <div class="panel-body">
+                    	<div class="input-group">
+                            <div class="input-group-addon">ssid</div>
+                            <input type="text" class="form-control" id="WifiConnection_ssid" value="" placeholder="ssid">
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-addon">password</div>
+                            <input type="password" class="form-control" id="WifiConnection_password" value="" placeholder="password">
+                        </div>
+                        <code id="WifiConnection_return"></code>
+                    </div>
+                </section>
+                <section class="panel panel-featured panel-featured-primary">
+                    <header class="panel-heading"><h2 class="panel-title"><a href="#" id="ConfLedAnim" class="btn btn-default">ConfLedAnim</a></h2></header>
+                    <div class="panel-body">
+                    	<div class="input-group">
+                            <div class="input-group-addon">Robot state</div>
+                            <select class="form-control" id="ConfLedAnim_state">
+                            	<option value="1">Safety</option>
+                            	<option value="2">MOVE</option>
+                            	<option value="3">CHARGING</option>
+                            	<option value="4">STOPPED</option>
+                            	<option value="5">MANUAL</option>
+                            	<option value="6">LIGHT</option>
+                            </select>
+                        </div>
+                    	<div class="input-group">
+                            <div class="input-group-addon">Led animation</div>
+                            <select class="form-control" id="ConfLedAnim_anim">
+                            	<option value="1">PROGRESS</option>
+                            	<option value="2">PROGRESS_CENTER</option>
+                            	<option value="3">RAINBOW</option>
+                            	<option value="4">K2000</option>
+                            	<option value="5">CLIGNOTE</option>
+                            	<option value="6">CLIGNOTE_2</option>
+                            	<option value="7">POLICE</option>
+                            	<option value="8">FONDU</option>
+                            	<option value="9">MOVE</option>
+                            	<option value="10">LIGHT</option>
+                            	<option value="11">PROGRESS_CENTER_CHARGE</option>
+                            	<option value="12">PROGRESS_CENTER_CHARGE_BLINK</option>
+                            	<option value="13">FADE_FR_FLAG</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-addon">Color Red</div>
+                            <input type="text" class="form-control" id="ConfLedAnim_color_r" value="0" placeholder="Color R">
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-addon">Color Green</div>
+                            <input type="text" class="form-control" id="ConfLedAnim_color_g" value="0" placeholder="Color G">
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-addon">Color Blue</div>
+                            <input type="text" class="form-control" id="ConfLedAnim_color_b" value="0" placeholder="Color B">
+                        </div>
+                        <code id="ConfLedAnim_return"></code>
+                    </div>
+                </section>
+                <section class="panel panel-featured panel-featured-primary">
+                    <header class="panel-heading"><h2 class="panel-title"><a href="#" id="SetLedIsLightMode" class="btn btn-default">SetLedIsLightMode</a></h2></header>
+                    <div class="panel-body">
+                    	<div class="input-group">
+                            <div class="input-group-addon">Is light mode</div>
+                            <select class="form-control" id="SetLedIsLightMode_enable">
+                            	<option value="false">False</option>
+                            	<option value="true">True</option>
+                            </select>
+                        </div>
+                        <code id="SetLedIsLightMode_return"></code>
+                    </div>
+                </section>
+                <section class="panel panel-featured panel-featured-primary">
+                    <header class="panel-heading"><h2 class="panel-title"><a href="#" id="SetLedIsManualMode" class="btn btn-default">SetLedIsManualMode</a></h2></header>
+                    <div class="panel-body">
+                    	<div class="input-group">
+                            <div class="input-group-addon">Is manual mode</div>
+                            <select class="form-control" id="SetLedIsManualMode_enable">
+                            	<option value="false">False</option>
+                            	<option value="true">True</option>
+                            </select>
+                        </div>
+                        <code id="SetLedIsManualMode_return"></code>
+                    </div>
+                </section>
+            </div>
+            <div class="col-md-6">
                 
                 <section class="panel panel-featured panel-featured-primary">
                     <header class="panel-heading"><h2 class="panel-title"><a href="#" id="NavigationStop" class="btn btn-default">NavigationStop</a></h2></header>
@@ -133,6 +229,31 @@ $_CONFIG['URL'] = 'https://elodie.wyca-solutions.com/';
                         <code id="ReflectorDetectionEnable_return"></code>
                     </div>
                 </section>
+                <section class="panel panel-featured panel-featured-primary">
+                    <header class="panel-heading"><h2 class="panel-title"><a href="#" id="GetFiducialsVisible" class="btn btn-default">GetFiducialsVisible</a></h2></header>
+                    <div class="panel-body">
+                        <code id="GetFiducialsVisible_return"></code>
+                    </div>
+                </section>
+                <section class="panel panel-featured panel-featured-primary">
+                    <header class="panel-heading"><h2 class="panel-title"><a href="#" id="SetFiducialsRecorded" class="btn btn-default">SetFiducialsRecorded</a></h2></header>
+                    <div class="panel-body">
+                        <div class="input-group">
+                            <div class="input-group-addon">Enable</div>
+                            <select id="SetFiducialsRecorded_enable">
+                            	<option value="true">True</option>
+                            	<option value="false">False</option>
+                            </select>
+                        </div>
+                        <code id="SetFiducialsRecorded_return"></code>
+                    </div>
+                </section>
+                <section class="panel panel-featured panel-featured-primary">
+                    <header class="panel-heading"><h2 class="panel-title"><a href="#" id="GetFiducialsRecorded" class="btn btn-default">GetFiducialsRecorded</a></h2></header>
+                    <div class="panel-body">
+                        <code id="GetFiducialsRecorded_return"></code>
+                    </div>
+                </section>
             </div>
         </div>
     </div>
@@ -140,6 +261,35 @@ $_CONFIG['URL'] = 'https://elodie.wyca-solutions.com/';
 	    <div class="col-md-6">
             <h2>Actions</h2>
             <div class="fixheight">
+                <section class="panel panel-featured panel-featured-primary">
+                    <header class="panel-heading"><h2 class="panel-title"><a href="#" id="MappingStart" class="btn btn-default">MappingStart</a></h2></header>
+                    <div class="panel-body">
+                        <h4>Feedback</h4>
+                        <code id="onMappingStartFeedback"></code>
+                        <h4>Result</h4>
+                        <code id="onMappingStartResult"></code>
+                        <h4>Return</h4>
+                        <code id="MappingStartReturn"></code>
+                    </div>
+                </section>
+                <section class="panel panel-featured panel-featured-primary">
+                    <header class="panel-heading"><h2 class="panel-title"><a href="#" id="NavigationStart" class="btn btn-default">NavigationStart</a></h2></header>
+                    <div class="panel-body">
+                        <div class="input-group">
+                            <div class="input-group-addon">Init from mapping</div>
+                            <select class="form-control" id="NavigationStart_init_from_mapping">
+                            	<option value="true">True</option>
+                            	<option value="false">False</option>
+                            </select>
+                        </div>
+                        <h4>Feedback</h4>
+                        <code id="onNavigationStartFeedback"></code>
+                        <h4>Result</h4>
+                        <code id="onNavigationStartResult"></code>
+                        <h4>Return</h4>
+                        <code id="NavigationStartReturn"></code>
+                    </div>
+                </section>
                 <section class="panel panel-featured panel-featured-primary">
                     <header class="panel-heading"><h2 class="panel-title"><a href="#" id="GoToPose" class="btn btn-default">GoToPose</a></h2></header>
                     <div class="panel-body">
@@ -189,6 +339,7 @@ $_CONFIG['URL'] = 'https://elodie.wyca-solutions.com/';
                         <code id="UndockReturn"></code>
                     </div>
                 </section>
+                
             </div>
         </div>
         <div class="col-md-6">        
@@ -213,24 +364,6 @@ $_CONFIG['URL'] = 'https://elodie.wyca-solutions.com/';
                         <code id="Teleop_return"></code>
                     </div>
                 </section>
-                <section class="panel panel-featured panel-featured-primary">
-                    <header class="panel-heading"><h2 class="panel-title"><a href="#" id="TeleopOff" class="btn btn-default">TeleopOff Start</a></h2></header>
-                    <div class="panel-body">
-                        <div class="input-group">
-                            <div class="input-group-addon">Interval</div>
-                            <input type="text" class="form-control" id="TeleopOff_rate" value="200" placeholder="Rate">
-                            <div class="input-group-addon">ms</div>
-                        </div>
-                        <div class="input-group">
-                            <div class="input-group-addon">X</div>
-                            <select class="form-control" id="TeleopOff_isoff">
-                                <option value="false">False</option>
-                                <option value="true">True</option>
-                            </select>
-                        </div>
-                        <code id="Teleop_return"></code>
-                    </div>
-                </section>
             </div>
         </div>
     </div>
@@ -245,39 +378,9 @@ $_CONFIG['URL'] = 'https://elodie.wyca-solutions.com/';
                     </div>
                 </section>
                 <section class="panel panel-featured panel-featured-primary">
-                    <header class="panel-heading"><h2 class="panel-title">onLatencyReturn</h2></header>
+                    <header class="panel-heading"><h2 class="panel-title">onBatteryState</h2></header>
                     <div class="panel-body">
-                        <code id="onLatencyReturn"></code>
-                    </div>
-                </section>
-                <section class="panel panel-featured panel-featured-primary">
-                    <header class="panel-heading"><h2 class="panel-title">onLatencyReturn</h2></header>
-                    <div class="panel-body">
-                        <code id="onLatencyReturn"></code>
-                    </div>
-                </section>
-                <section class="panel panel-featured panel-featured-primary">
-                    <header class="panel-heading"><h2 class="panel-title">onCurrentA</h2></header>
-                    <div class="panel-body">
-                        <code id="onCurrentA"></code>
-                    </div>
-                </section>
-                <section class="panel panel-featured panel-featured-primary">
-                    <header class="panel-heading"><h2 class="panel-title">onIsPowered</h2></header>
-                    <div class="panel-body">
-                        <code id="onIsPowered"></code>
-                    </div>
-                </section>
-                <section class="panel panel-featured panel-featured-primary">
-                    <header class="panel-heading"><h2 class="panel-title">onRelativeSOCPercentage</h2></header>
-                    <div class="panel-body">
-                        <code id="onRelativeSOCPercentage"></code>
-                    </div>
-                </section>
-                <section class="panel panel-featured panel-featured-primary">
-                    <header class="panel-heading"><h2 class="panel-title">onRemainingCapacity</h2></header>
-                    <div class="panel-body">
-                        <code id="onRemainingCapacity"></code>
+                        <code id="onBatteryState"></code>
                     </div>
                 </section>
                 <section class="panel panel-featured panel-featured-primary">
@@ -397,7 +500,7 @@ function StartLantency()
 	index++;
 	$('#log').html($('#log').html() + 'Start latency test ' + index + '<br />');
 	timeStart[index] = new Date().getTime();
-	wycaApi.LatencyStart(index, function(e) { $('#LatencyStart_return').html(JSON.stringify(e)); console.log('retour_service', e);});
+	wycaApi.LatencyStart(index, function(data) { $('#LatencyStart_return').html(JSON.stringify(data)); console.log('retour_service', e);});
 }
 
 var nbTest = 0;
@@ -414,18 +517,12 @@ function Teleop_call()
 {
 	wycaApi.Teleop(Teleop_x, Teleop_z);
 }
-var TeleopOff_started = false;
-var TeleopOff_interval = null;
-var TeleopOff_isoff = 0;
-function TeleopOff_call()
-{
-	wycaApi.TeleopOff(TeleopOff_isoff);
-}
 
 $(document).ready(function(e) {
 	wycaApi = new WycaAPI({
 		//host:'elodie.wyca-solutions.com:9095',
-		host:'192.168.0.30:9095',
+		//host:'192.168.0.30:9095',
+		host:'10.0.0.44:9095',
 		api_key:'Jnt.kK2nXB15jhVkCEGLA3NssidZWLpsdgmt4bx8GkTZL5',
 		nick:'robot',
 		onRobotConnexionError: function(data){
@@ -443,32 +540,10 @@ $(document).ready(function(e) {
 			$('#connexion_robot').show();
 			$('#RobotConnexion').html('close');
 		},
-		onLatencyReturn: function(data){
-			$('#onLatencyReturn').html(JSON.stringify(data));
-			var timeReturn = new Date().getTime();
-			data = parseInt(data/1000000);
-			elapse = timeReturn - data;
-			nbTest++;
-			totalTest += elapse;
-			if (elapse < minTest) minTest = elapse;
-			if (elapse > maxTest) maxTest = elapse;
-			
-			$('#log').html($('#log').html() + ' ' + 'Result ' + data);
-			$('#log').html($('#log').html() + ' ' + 'Latency : ' + elapse + ' ms<br/>');
-		},
 		onInitialized: function(){
 		},
-		onCurrentA: function(data){
-			$('#onCurrentA').html(JSON.stringify(data));
-		},
-		onIsPowered: function(data){
-			$('#onIsPowered').html(JSON.stringify(data));
-		},
-		onRelativeSOCPercentage: function(data){
-			$('#onRelativeSOCPercentage').html(JSON.stringify(data));
-		},
-		onRemainingCapacity: function(data){
-			$('#onRemainingCapacity').html(JSON.stringify(data));
+		onBatteryState: function(data){
+			$('#onBatteryState').html(JSON.stringify(data));
 		},
 		onTimeRemainingToEmptyMin: function(data){
 			$('#onTimeRemainingToEmptyMin').html(JSON.stringify(data));
@@ -493,8 +568,8 @@ $(document).ready(function(e) {
 		},
 		onMappingMapInConstruction: function(data){
 			$('#onMappingMapInConstruction').html(JSON.stringify(data));
-			$('#onMappingMapInConstruction_map').attr('src', 'data:image/png;base64,' + data.m);
-			$('#onMappingMapInConstruction_map_trinary').attr('src', 'data:image/png;base64,' + data.mt);
+			$('#onMappingMapInConstruction_map').attr('src', 'data:image/png;base64,' + data.M);
+			$('#onMappingMapInConstruction_map_trinary').attr('src', 'data:image/png;base64,' + data.MT);
 		},
 		onMappingRobotPoseInBuildingMap: function(data){
 			$('#onMappingRobotPoseInBuildingMap').html(JSON.stringify(data));
@@ -531,6 +606,18 @@ $(document).ready(function(e) {
 		},
 		onUndockResult: function(data){
 			$('#onUndockResult').html(JSON.stringify(data));
+		},
+		onMappingStartFeedback: function(data){
+			$('#onMappingStartFeedback').html(JSON.stringify(data));
+		},
+		onMappingStartResult: function(data){
+			$('#onMappingStartResult').html(JSON.stringify(data));
+		},
+		onNavigationStartFeedback: function(data){
+			$('#onNavigationStartFeedback').html(JSON.stringify(data));
+		},
+		onNavigationStartResult: function(data){
+			$('#onNavigationStartResult').html(JSON.stringify(data));
 		},
 		onPOIsDetect: function(data){
 			$('#onPOIsDetect').html(JSON.stringify(data));
@@ -571,127 +658,170 @@ $(document).ready(function(e) {
 			Teleop_interval = setInterval(Teleop_call, time);
 		}
     });
-	$('#TeleopOff').click(function(e) {
-        if (TeleopOff_started)
-		{
-			TeleopOff_isoff = true;
-			if (TeleopOff_interval != null)
-			{
-				clearInterval(TeleopOff_interval);
-				TeleopOff_interval = null;
-			}
-			TeleopOff_started = false;
-			$('#TeleopOff').html('TeleopOff Start');
-		}
-		else
-		{
-			TeleopOff_started = true;
-			$('#TeleopOff').html('TeleopOff Stop');
-			
-			time = parseInt($('#TeleopOff_rate').val());
-			TeleopOff_isoff = $('#TeleopOff_isoff').val() == 'true'?true:false;
-			
-			if (TeleopOff_interval != null)
-			{
-				clearInterval(TeleopOff_interval);
-				TeleopOff_interval = null;
-			}
-			TeleopOff_interval = setInterval(TeleopOff_call, time);
-		}
-    });
 	
 	// Service
-	$('#LatencyStart').click(function(e) {
-        e.preventDefault();
-		StartLantency();
-
-		if (!started)
-		{
-			started = true;
-			nbTest = 0;
-			totalTest = 0;
-			minTest = 100000;
-			maxTest = 0;
-		}
-		else
-		{
-			setTimeout(function() {
-				$('#log').html($('#log').html() + 'Min : ' + minTest + ' ms<br />');
-				$('#log').html($('#log').html() + 'Max : ' + maxTest + ' ms<br />');
-				moy = (totalTest / nbTest);
-				$('#log').html($('#log').html() + 'Moyenne : ' + moy  + ' ms<br />');
-			}, 1000);
-		}
+	$('#InstallNewTop').click(function(e) {
+		e.preventDefault();
+		$('#InstallNewTop_return').html('');
+        wycaApi.InstallNewTop('A GENRER', '<?php echo base64_encode(file_get_contents('./test/export Top steph.wyca'));?>', function(data) { $('#InstallNewTop_return').html(JSON.stringify(data)); });
 	});
 	
-	$('#LatencyWait').click(function(e) {
-		e.preventDefault();
-        wycaApi.LatencyWait(function(e) { $('#LatencyWait_return').html(JSON.stringify(e)); });
-	});
 	$('#MappingIsStarted').click(function(e) {
 		e.preventDefault();
-        wycaApi.MappingIsStarted(function(e) { $('#MappingIsStarted_return').html(JSON.stringify(e)); });
-	});
-	$('#MappingStart').click(function(e) {
-		e.preventDefault();
-        wycaApi.MappingStart(function(e) { $('#MappingStartt_return').html(JSON.stringify(e)); });
+		$('#MappingIsStarted_return').html('');
+        wycaApi.MappingIsStarted(function(data) { $('#MappingIsStarted_return').html(JSON.stringify(data)); });
 	});
 	$('#MappingStop').click(function(e) {
 		e.preventDefault();
-        wycaApi.MappingStop(function(e) { 
-			$('#MappingStop_return').html(JSON.stringify(e)); 
-			$('#MappingStop_map').attr('src', 'data:image/png;base64,' + data.fm);
+		$('#MappingStop_return').html('');
+        wycaApi.MappingStop(function(data) { 
+			$('#MappingStop_return').html(JSON.stringify(data)); 
+			$('#MappingStop_map').attr('src', 'data:image/png;base64,' + data.D);
 		});
 	});
 	$('#NavigationIsStarted').click(function(e) {
 		e.preventDefault();
-        wycaApi.NavigationIsStarted(function(e) { $('#NavigationIsStarted_return').html(JSON.stringify(e)); });
-	});
-	$('#NavigationStart').click(function(e) {
-		e.preventDefault();
-        wycaApi.NavigationStart(function(e) { $('#NavigationStart_return').html(JSON.stringify(e)); });
+		$('#NavigationIsStarted_return').html('');
+        wycaApi.NavigationIsStarted(function(data) { $('#NavigationIsStarted_return').html(JSON.stringify(data)); });
 	});
 	$('#NavigationStop').click(function(e) {
 		e.preventDefault();
-        wycaApi.NavigationStop(function(e) { $('#NavigationStop_return').html(JSON.stringify(e)); });
+		$('#NavigationStop_return').html('');
+        wycaApi.NavigationStop(function(data) { $('#NavigationStop_return').html(JSON.stringify(data)); });
 	});
 	$('#RefreshFreewheelState').click(function(e) {
 		e.preventDefault();
-        wycaApi.RefreshFreewheelState(function(e) { $('#RefreshFreewheelState_return').html(JSON.stringify(e)); });
+		$('#RefreshFreewheelState_return').html('');
+        wycaApi.RefreshFreewheelState(function(data) { $('#RefreshFreewheelState_return').html(JSON.stringify(data)); });
 	});
 	$('#RefreshSafetyStop').click(function(e) {
 		e.preventDefault();
-        wycaApi.RefreshSafetyStop(function(e) { $('#RefreshSafetyStop_return').html(JSON.stringify(e)); });
+		$('#RefreshSafetyStop_return').html('');
+        wycaApi.RefreshSafetyStop(function(data) { $('#RefreshSafetyStop_return').html(JSON.stringify(data)); });
 	});
 	$('#GetDockingState').click(function(e) {
 		e.preventDefault();
-        wycaApi.GetDockingState(function(e) { $('#GetDockingState_return').html(JSON.stringify(e)); });
+		$('#GetDockingState_return').html('');
+        wycaApi.GetDockingState(function(data) { $('#GetDockingState_return').html(JSON.stringify(data)); });
 	});
 	$('#GetRobotPose').click(function(e) {
 		e.preventDefault();
-        wycaApi.GetRobotPose(function(e) { $('#GetRobotPose_return').html(JSON.stringify(e)); });
+		$('#GetRobotPose_return').html('');
+        wycaApi.GetRobotPose(function(data) { $('#GetRobotPose_return').html(JSON.stringify(data)); });
 	});
 	$('#ReloadMaps').click(function(e) {
 		e.preventDefault();
-        wycaApi.ReloadMaps(function(e) { $('#ReloadMaps_return').html(JSON.stringify(e)); });
+		$('#ReloadMaps_return').html('');
+        wycaApi.ReloadMaps(function(data) { $('#ReloadMaps_return').html(JSON.stringify(data)); });
 	});
 	$('#ReflectorDetectionEnable').click(function(e) {
 		e.preventDefault();
-        wycaApi.ReflectorDetectionEnable($('#ReflectorDetectionEnable_enable').val() == "true" ? true:false, function(e) { $('#ReflectorDetectionEnable_return').html(JSON.stringify(e)); });
+		$('#ReflectorDetectionEnable_return').html('');
+        wycaApi.ReflectorDetectionEnable($('#ReflectorDetectionEnable_enable').val() == "true" ? true:false, function(data) { $('#ReflectorDetectionEnable_return').html(JSON.stringify(data)); });
+	});
+	$('#GetLedIsLightMode').click(function(e) {
+		e.preventDefault();
+		$('#GetLedIsLightMode_return').html('');
+        wycaApi.GetLedIsLightMode(function(data) { $('#GetLedIsLightMode_return').html(JSON.stringify(data)); });
+	});
+	$('#GetLedIsManualMode').click(function(e) {
+		e.preventDefault();
+		$('#GetLedIsManualMode_return').html('');
+        wycaApi.GetLedIsManualMode(function(data) { $('#GetLedIsManualMode_return').html(JSON.stringify(data)); });
+	});
+	$('#SetLedIsLightMode').click(function(e) {
+		e.preventDefault();
+		$('#SetLedIsLightMode_return').html('');
+        wycaApi.SetLedIsLightMode($('#SetLedIsLightMode_enable').val() == "true" ? true:false, function(data) { $('#SetLedIsLightMode_return').html(JSON.stringify(data)); });
+	});
+	$('#SetLedIsManualMode').click(function(e) {
+		e.preventDefault();
+		$('#SetLedIsManualMode_return').html('');
+        wycaApi.SetLedIsManualMode($('#SetLedIsManualMode_enable').val() == "true" ? true:false, function(data) { $('#SetLedIsManualMode_return').html(JSON.stringify(data)); });
+	});
+	$('#GetLedAnimationMode').click(function(e) {
+		e.preventDefault();
+		$('#GetLedAnimationMode_return').html('');
+        wycaApi.GetLedAnimationMode(function(data) { $('#GetLedAnimationMode_return').html(JSON.stringify(data)); });
+	});
+	$('#GetLedRobotState').click(function(e) {
+		e.preventDefault();
+		$('#GetLedRobotState_return').html('');
+        wycaApi.GetLedRobotState(function(data) { $('#GetLedRobotState_return').html(JSON.stringify(data)); });
+	});
+	
+	$('#ConfLedAnim').click(function(e) {
+		e.preventDefault();
+		$('#ConfLedAnim_return').html('');
+        wycaApi.ConfLedAnim($('#ConfLedAnim_state').val(), $('#ConfLedAnim_anim').val(), $('#ConfLedAnim_color_r').val(), $('#ConfLedAnim_color_g').val(), $('#ConfLedAnim_color_b').val(), function(data) { $('#ConfLedAnim_return').html(JSON.stringify(data)); });
+	});
+	
+	$('#GetWifiList').click(function(e) {
+		e.preventDefault();
+		$('#GetWifiList_return').html('');
+        wycaApi.GetWifiList(function(data) { $('#GetWifiList_return').html(JSON.stringify(data)); });
+	});
+	$('#WifiConnection').click(function(e) {
+		e.preventDefault();
+		$('#WifiConnection_return').html('');
+        wycaApi.WifiConnection($('#WifiConnection_ssid').val(), $('#WifiConnection_password').val(), function(data) { $('#WifiConnection_return').html(JSON.stringify(data)); });
+	});
+	
+	$('#GetFiducialsVisible').click(function(e) {
+		e.preventDefault();
+		$('#GetFiducialsVisible_return').html('');
+        wycaApi.GetFiducialsVisible(function(data) { $('#GetFiducialsVisible_return').html(JSON.stringify(data)); });
+	});
+	$('#SetFiducialsRecorded').click(function(e) {
+		e.preventDefault();
+		$('#SetFiducialsRecorded_return').html('');
+        wycaApi.SetFiducialsRecorded($('#SetFiducialsRecorded_enable').val() == "true" ? true:false, function(data) { $('#SetFiducialsRecorded_return').html(JSON.stringify(data)); });
+	});
+	$('#GetFiducialsRecorded').click(function(e) {
+		e.preventDefault();
+		$('#GetFiducialsRecorded_return').html('');
+        wycaApi.GetFiducialsRecorded(function(data) { $('#GetFiducialsRecorded_return').html(JSON.stringify(data)); });
 	});
 	
 	// Actions
 	$('#GoToPose').click(function(e) {
 		e.preventDefault();
-    	wycaApi.GoToPose(parseFloat($('#GoToPose_x').val()), parseFloat($('#GoToPose_y').val()), parseFloat($('#GoToPose_theta').val()), function(e) { $('#GoToPoseReturn').html(JSON.stringify(e)); });
+		$('#GoToPoseReturn').html('');
+		$('#onGoToPoseFeedback').html('');
+		$('#onGoToPoseResult').html('');
+    	wycaApi.GoToPose(parseFloat($('#GoToPose_x').val()), parseFloat($('#GoToPose_y').val()), parseFloat($('#GoToPose_theta').val()), function(data) { $('#GoToPoseReturn').html(JSON.stringify(data)); });
     });
 	$('#Dock').click(function(e) {
 		e.preventDefault();
-		wycaApi.Dock(parseInt($('#Dock_id').val()), function(e) { $('#DockReturn').html(JSON.stringify(e)); });
+		$('#DockReturn').html('');
+		$('#onDockFeedback').html('');
+		$('#onDockResult').html('');
+		wycaApi.Dock(parseInt($('#Dock_id').val()), function(data) { $('#DockReturn').html(JSON.stringify(data)); });
     });
 	$('#Undock').click(function(e) {
 		e.preventDefault();
-		wycaApi.Undock(function(e) { $('#UndockReturn').html(JSON.stringify(e)); });
+		$('#UndockReturn').html('');
+		$('#onUndockFeedback').html('');
+		$('#onUndockResult').html('');
+		wycaApi.Undock(function(data) { $('#UndockReturn').html(JSON.stringify(data)); });
     });
+	$('#MappingStart').click(function(e) {
+		e.preventDefault();
+		$('#MappingStartReturn').html('');
+		$('#onMappingStartFeedback').html('');
+		$('#onMappingStartResult').html('');
+		wycaApi.MappingStart(function(data) { $('#MappingStartReturn').html(JSON.stringify(data)); });
+    });
+	$('#NavigationStart').click(function(e) {
+		e.preventDefault();
+		init_from_mapping = false;
+		$('#NavigationStartReturn').html('');
+		$('#onNavigationStartFeedback').html('');
+		$('#onNavigationStartResult').html('');
+		if ($('#NavigationStart_init_from_mapping').val() == 'true')
+			init_from_mapping = true;
+			
+        wycaApi.NavigationStart(init_from_mapping, function(data) { $('#NavigationStartReturn').html(JSON.stringify(data)); });
+	});
 });
 </script>

@@ -146,7 +146,6 @@ function SendCommande()
 	//if (robotCurrentState != 'undocked' || (lastValueX == 0 && lastValueY == 0))
 	if (connectedToTheRobot)
 	{
-		wycaApi.TeleopOff(false);
 		if ((lastValueX == 0 && lastValueY == 0))
 		{
 			if (nbCall0 < 5)

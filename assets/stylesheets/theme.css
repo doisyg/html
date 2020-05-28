@@ -19,6 +19,8 @@ body {
 	overflow-y: scroll;
 }
 
+.popup_error { position:fixed; top:0; left:0; bottom:0; right:0; background-color:rgba(0,0,0,0.4); z-index:50000; padding:20px; display:none; }
+
 a {
 	color: #cccccc;
 }
@@ -6159,6 +6161,7 @@ html .panel .panel-heading-transparent + .panel-body {
 	margin-top: 0;
 }
 
+/*
 @media only screen and (max-width: 767px) {
 	.panel-actions {
 		float: none;
@@ -6171,6 +6174,7 @@ html .panel .panel-heading-transparent + .panel-body {
 		vertical-align: top;
 	}
 }
+*/
 /* tabs */
 .tabs {
 	-moz-border-radius: 4px;

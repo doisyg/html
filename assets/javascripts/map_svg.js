@@ -142,7 +142,7 @@ function GetCenterForbidden(indexForbidden)
 function TraceForbidden(indexForbidden)
 {
 	forbidden = forbiddens[indexForbidden];
-	if (forbidden.deleted == 1) { $('#install_by_step_edit_map_svg .forbidden_elem_'+forbidden.id_area).remove(); return; }
+	if (forbidden.deleted) { $('#install_by_step_edit_map_svg .forbidden_elem_'+forbidden.id_area).remove(); return; }
 	
 	is_active = false;
 	if ($('#install_by_step_edit_map_svg .forbidden_elem_'+forbidden.id_area).length > 0)
@@ -317,7 +317,7 @@ function GetCenterArea(indexArea)
 function TraceArea(indexArea)
 {
 	area = areas[indexArea];
-	if (area.deleted == 1) { $('#install_by_step_edit_map_svg .area_elem_'+area.id_area).remove(); return; }
+	if (area.deleted) { $('#install_by_step_edit_map_svg .area_elem_'+area.id_area).remove(); return; }
 	
 	is_active = false;
 	if ($('#install_by_step_edit_map_svg .area_elem_'+area.id_area).length > 0)
@@ -357,7 +357,7 @@ function TraceArea(indexArea)
 							   'id':'area_'+area.id_area,
 							   'data-id_area': area.id_area
 							  });
-		path.style.fill = 'rgba('+area.couleur_r+','+area.couleur_g+','+area.couleur_b+',0.5)'
+		path.style.fill = 'rgba('+area.color_r+','+area.color_g+','+area.color_b+',0.5)'
 		svg.appendChild(path);
 		
 		lastPointIndex = points.length-1;
@@ -447,7 +447,7 @@ function TraceCurrentDock(pose)
 function TraceDock(indexDock)
 {
 	dock = docks[indexDock];
-	if (dock.deleted != undefined && dock.deleted == 1) { $('#install_by_step_edit_map_svg .dock_elem_'+dock.id_docking_station).remove(); return; }
+	if (dock.deleted != undefined && dock.deleted) { $('#install_by_step_edit_map_svg .dock_elem_'+dock.id_docking_station).remove(); return; }
 	
 	is_active = false;
 	if ($('#install_by_step_edit_map_svg .dock_elem_'+dock.id_docking_station).length > 0)
@@ -466,10 +466,10 @@ function TraceDock(indexDock)
 	else
 		$('#install_by_step_edit_map_svg .dock_elem_'+dock.id_docking_station).remove();
 	
-	x = dock.x_ros * 100 / ros_resolution;
-	y = ros_hauteur - (dock.y_ros * 100 / ros_resolution);
+	x = dock.fiducial_pose_x * 100 / ros_resolution;
+	y = ros_hauteur - (dock.fiducial_pose_y * 100 / ros_resolution);
 	
-	angle = 0 - dock.t_ros * 180 / Math.PI - 90;
+	angle = 0 - dock.fiducial_pose_t * 180 / Math.PI - 90;
 	
 	path = makeSVGElement('rect', { x: x-5, y:y-1, height:2, width:10,
 				   'stroke-width': minStokeWidth,
@@ -504,9 +504,9 @@ function TraceCurrentPoi(pose)
 {
 	$('#install_by_step_edit_map_svg .poi_elem_current').remove();
 	
-	x = pose.x_ros * 100 / ros_resolution;
-	y = ros_hauteur - (pose.y_ros * 100 / ros_resolution);
-	angle = 0 - pose.t_ros * 180 / Math.PI;
+	x = pose.final_pose_x * 100 / ros_resolution;
+	y = ros_hauteur - (pose.final_pose_y * 100 / ros_resolution);
+	angle = 0 - pose.final_pose_t * 180 / Math.PI;
 	
 	rayonRobot = (26 / ros_resolution);
 	rayonRobotSecure = ((26+15) / ros_resolution);
@@ -541,7 +541,7 @@ function TraceCurrentPoi(pose)
 function TracePoi(indexPoi)
 {
 	poi = pois[indexPoi];
-	if (poi.deleted != undefined && poi.deleted == 1) { $('#install_by_step_edit_map_svg .poi_elem_'+poi.id_poi).remove(); return; }
+	if (poi.deleted != undefined && poi.deleted) { $('#install_by_step_edit_map_svg .poi_elem_'+poi.id_poi).remove(); return; }
 	
 	is_active = false;
 	if ($('#install_by_step_edit_map_svg .poi_elem_'+poi.id_poi).length > 0)

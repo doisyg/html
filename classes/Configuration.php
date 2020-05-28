@@ -1,51 +1,42 @@
 <?php
-class Configuration extends ConfigurationCore
+class Configuration
 {
-	public static function GetConfigurations($order = "", $order_sens = "")
+	private static $data = array();
+	
+	public static function Init()
 	{
-		$query = "SELECT * FROM configuration";
-		if ($order!="")
-			$query .= " ORDER BY ".mysqli_real_escape_string(DB::$connexion,$order)." ".mysqli_real_escape_string(DB::$connexion,$order_sens);
-		else 
-			$query .= " ORDER BY id_configuration ASC";
-		$result = mysqli_query(DB::$connexion, $query);
-		$array = array();
-		while ($row = @mysqli_fetch_object( $result ) )
+		$file_path = dirname(__FILE__).'/../lang/c.conf';
+		if (file_exists($file_path))
 		{
-			$array[] = new Configuration($row, true);
+			self::$data = json_decode(file_get_contents ( $file_path ), true);
+			if (json_last_error() != JSON_ERROR_NONE)
+				self::$data = array();
 		}
-		@mysqli_free_result( $result );
-		return $array;
+		else
+			self::$data = array();
 	}
 	
-	public static function GetValue($variable)
+	public static function Save()
 	{
-		$query = "SELECT * FROM configuration WHERE nom = '".$variable."'";
-		$resultat=mysqli_query(DB::$connexion, $query);
-		
-		if ($r = mysqli_fetch_object($resultat))
-			return $r->valeur;
-		else
-		{
-			return -1;
+		$file_path = dirname(__FILE__).'/../lang/c.conf';
+		if ($fd = fopen($file_path, 'w'))
+		{	
+			fwrite($fd, json_encode(self::$data));
+			fclose($fd);
 		}
 	}
-		
-	public static function GetFromVariable($variable)
+	
+	public function GetValue($name)
 	{
-		$query = "SELECT * FROM configuration WHERE nom = '".$variable."'";
-		$resultat=mysqli_query(DB::$connexion, $query);
-		
-		if ($r = mysqli_fetch_object($resultat))
-			return new Configuration($r, true);
-		else
-		{
-			$c = new Configuration();
-			$c->nom = $variable;
-			return $c;			
-			//debug_print_backtrace();
-			//die ($variable." non définie en base");
-		}
+		return isset(self::$data[$name])?self::$data[$name]:'';		
+	}
+	
+	public function SetValue($name, $value)
+	{
+		self::$data[$name] = $value;
+		self::Save();	
 	}
 }
+
+Configuration::Init();
 ?>

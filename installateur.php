@@ -1,8 +1,9 @@
-<?php if (!isset($userConnected) || $userConnected->id_groupe_user > 2) die('ERROR');
+<?php if (!isset($_SESSION['id_groupe_user']) || $_SESSION['id_groupe_user'] > 2) die('ERROR');
 
 $INSTALL_STEP = Configuration::GetValue('INSTALL_STEP');
+if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
 ?>
-<div id="pages_install" class="global_page <?php echo $userConnected->id_groupe_user == 2?'active':'';?>">
+<div id="pages_install" class="global_page <?php echo $_SESSION['id_groupe_user'] == 2?'active':'';?>">
 
 	<div id="pages_install_by_step" class="global_sub_page <?php echo $INSTALL_STEP < 100?'active':'';?>">
     	<section id="install_by_step_lang" class="page hmi_tuile <?php echo $INSTALL_STEP == 0?'active':'';?>">
@@ -96,8 +97,11 @@ $INSTALL_STEP = Configuration::GetValue('INSTALL_STEP');
                 <h2><?php echo __('Select available Tops');?></h2>
             </header>
             <div class="content">
+            	<div class="install_by_step_tops_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
                 <ul class="tuiles row">
                 	<?php 
+					// TODO
+					/*
 					$tops = Top::GetTops();
 					$i = 0;
 					foreach($tops as $top)
@@ -110,13 +114,45 @@ $INSTALL_STEP = Configuration::GetValue('INSTALL_STEP');
                             </a>
                         </li><?php
                     }
+					*/
 					?>
                 </ul>
+                
+                <div style="clear:both; height:20px;"></div>
+                <a href="#" class="import_top btn btn-default pull-left">Import new top</a>   
                 
                 <a href="#" class="save_tops btn btn-default pull-right">Next <i class="fa fa-chevron-right"></i></a>   
                 <a href="#" class="save_tops_next_select button_goto" data-goto="install_by_step_top" style="display:none;" data-goto="install_by_step_top"></a>   
                 <a href="#" class="save_tops_next_check button_goto" data-goto="install_by_step_check" style="display:none;" data-goto="install_by_step_top"></a>   
+                
+            
+                <div class="modal fade modalImportTop" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                    <div class="modal-dialog" role="dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="actions mh100vh_55">
+                                    <div class="h100vh_160" style="overflow:auto; text-align:center">
+                                    
+                                        <div class="modalImportTop_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
+                                        <div class="modalImportTop_content">
+	                                        <input id="file_import_top" type="file" class="form-control" />
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                    <div style="clear:both;"></div>
+                                   
+                                    <a href="#" id="bImportTopDo" class="btn btn-primary" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Import');?></a>
+                                    <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
             </div>
+            
         </section>
         
         <section id="install_by_step_top" class="page hmi_tuile <?php echo $INSTALL_STEP == 4?'active':'';?>">
@@ -126,8 +162,11 @@ $INSTALL_STEP = Configuration::GetValue('INSTALL_STEP');
                 <h2><?php echo __('Select active Top');?></h2>
             </header>
             <div class="content">
+            	<div class="install_by_step_top_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
                 <ul class="tuiles row">
                 	<?php 
+					// TODO
+					/*
 					$tops = Top::GetTops();
 					$i = 0;
 					foreach($tops as $top)
@@ -139,8 +178,11 @@ $INSTALL_STEP = Configuration::GetValue('INSTALL_STEP');
                             </a>
                         </li><?php
                     }
+					*/
 					?>
-                </ul>           
+                </ul>
+                
+                <div style="clear:both; height:20px;"></div>
             </div>
         </section>
         
@@ -233,7 +275,9 @@ $INSTALL_STEP = Configuration::GetValue('INSTALL_STEP');
                 
                 <div style="text-align:center; font-size:26px;">
                 
-                    <a href="#" class="bMappingStart btn btn-primary btn_big_popup"><i class="fa fa-play"></i> <?php echo __('Start mapping');?></a>
+                	
+                    <a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
+                    <a href="#" class="bMappingStart btn btn-primary btn_big_popup ifUndocked"><i class="fa fa-play"></i> <?php echo __('Start mapping');?></a>
                     
                     <div class="progressStartMapping" style="display:none;">
                         <h3><?php echo __('Start mapping');?></h3>
@@ -248,7 +292,7 @@ $INSTALL_STEP = Configuration::GetValue('INSTALL_STEP');
                         <img class="map_dyn" id="install_by_step_mapping_img_map_saved" src="" style="position:absolute; z-index:200" />
                     </div>
                     
-                    <div style="position:absolute; bottom:50px; left:0; width:100%; z-index:2000;">
+                    <div class="ifUndocked" style="position:absolute; bottom:50px; left:0; width:100%; z-index:2000;">
                         <div class="joystickDiv" draggable="false" style="margin:auto;">
                             <div class="fond"></div>
                             <div class="curseur"></div>
@@ -510,33 +554,37 @@ $INSTALL_STEP = Configuration::GetValue('INSTALL_STEP');
                                     <div class="actions mh100vh_55">
                                         <div class="h100vh_160" style="overflow:auto; text-align:center">
                                         
-                                        	<div style="height:200px; position:relative;">
-                                            
-	                                            <img id="modalAddDock_robot" src="assets/images/robot-dessus.png" width="50" style="position:absolute; top:130px; margin-left:-25px; z-index:300;" />
-                                                
-                                                <img id="modalAddDock_dock0" class="dock" src="assets/images/reflector.png" width="25" />
-                                                <img id="modalAddDock_dock1" class="dock" src="assets/images/reflector.png" width="25" />
-                                                <img id="modalAddDock_dock2" class="dock" src="assets/images/reflector.png" width="25" />
-                                                <img id="modalAddDock_dock3" class="dock" src="assets/images/reflector.png" width="25" />
-                                                <img id="modalAddDock_dock4" class="dock" src="assets/images/reflector.png" width="25" />
-                                                <img id="modalAddDock_dock5" class="dock" src="assets/images/reflector.png" width="25" />
-                                                
-                                            </div>
+                                        	<a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
                                         
-                                            <p><?php echo stripslashes(__('Move the robot in front of the dock and click on the "Scan" button'));?></p>
-                                            <p><a href="#" class="btn btn-primary bScanAddDock">Scan</a></p>
+                                        	<div class="ifUndocked">
+                                                <div style="height:200px; position:relative;">
+                                                
+                                                    <img id="modalAddDock_robot" src="assets/images/robot-dessus.png" width="50" style="position:absolute; top:130px; margin-left:-25px; z-index:300;" />
+                                                    
+                                                    <img id="modalAddDock_dock0" class="dock" src="assets/images/reflector.png" width="25" />
+                                                    <img id="modalAddDock_dock1" class="dock" src="assets/images/reflector.png" width="25" />
+                                                    <img id="modalAddDock_dock2" class="dock" src="assets/images/reflector.png" width="25" />
+                                                    <img id="modalAddDock_dock3" class="dock" src="assets/images/reflector.png" width="25" />
+                                                    <img id="modalAddDock_dock4" class="dock" src="assets/images/reflector.png" width="25" />
+                                                    <img id="modalAddDock_dock5" class="dock" src="assets/images/reflector.png" width="25" />
+                                                    
+                                                </div>
                                             
-                                            <div style="position:absolute; bottom:50px; left:0; width:100%; z-index:2000;">
-                                                <div class="joystickDiv" draggable="false" style="margin:auto;">
-                                                    <div class="fond"></div>
-                                                    <div class="curseur"></div>
+                                                <p><?php echo stripslashes(__('Move the robot in front of the dock and click on the "Scan" button'));?></p>
+                                                <p><a href="#" class="btn btn-primary bScanAddDock">Scan</a></p>
+                                                
+                                                <div style="position:absolute; bottom:50px; left:0; width:100%; z-index:2000;">
+                                                    <div class="joystickDiv" draggable="false" style="margin:auto;">
+                                                        <div class="fond"></div>
+                                                        <div class="curseur"></div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             
                                         </div>
                                         
                                         <div style="clear:both;"></div>
-                                       
+                                                                                
                                         <a href="#" id="bModalAddDockSave" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
                                         <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
                                     </div>
@@ -571,20 +619,28 @@ $INSTALL_STEP = Configuration::GetValue('INSTALL_STEP');
                                                         <textarea id="dock_comment" name="dock_comment" class="form-control input-sm mb-md"></textarea>
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label class="col-xs-4 control-label">Delta X pose approch</label>
-                                                    <div class="col-xs-8">
-                                                        <input type="number" id="dock_x_pose_approch" name="dock_x_pose_approch" value="-50" class="form-control input-sm mb-md" />
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-xs-4 control-label">Delta Y pose approch</label>
-                                                    <div class="col-xs-8">
-                                                        <input type="number" id="dock_y_pose_approch" name="dock_y_pose_approch" value="0" class="form-control input-sm mb-md" />
-                                                    </div>
-                                                </div>
                                                 <fieldset>
                                                 	<legend>Undock procedure</legend>
+                                                    <div style="text-align:left;">
+                                                        <a href="#" class="bUndockProcedureAddElem btn btn-circle btn-default"><i class="fa fa-plus"></i></a>
+                                                        <ul class="list_undock_procedure list_elem">
+                                                            <li id="list_undock_procedure_elem_1" data-index_dock="1" data-action="move" data-distance="-0.3">
+                                                            	Move back 0.3m
+                                                                <a href="#" class="bUndockProcedureDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>
+                                                                <a href="#" class="bUndockProcedureEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>
+                                                            </li>
+                                                            <li id="list_undock_procedure_elem_2" data-index_dock="2" data-action="rotate" data-angle="45">
+                                                            	Rotate 45°
+                                                                <a href="#" class="bUndockProcedureDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>
+                                                                <a href="#" class="bUndockProcedureEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>
+                                                            </li>
+                                                            <li id="list_undock_procedure_elem_3" data-index_dock="3" data-action="move" data-distance="0.1">
+                                                            	Move front 0.1m
+                                                                <a href="#" class="bUndockProcedureDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>
+                                                                <a href="#" class="bUndockProcedureEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>
+                                                            </li>
+                                                        </ul>
+                                                     </div>
                                                 </fieldset>
                                             </form>
                                             
@@ -600,6 +656,73 @@ $INSTALL_STEP = Configuration::GetValue('INSTALL_STEP');
                         </div>
                     </div>
                     
+                    <div class="modal fade modalDockElemOptions" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+                                        <div class="h100vh_160" style="overflow:auto; text-align:center">
+                                        
+                                        	<form>
+                                                <div class="form-group">
+                                                    <label class="col-xs-12 control-label">Action</label>
+                                                    <div class="col-xs-6">
+                                                        <input type="radio" id="up_elem_action_move" name="up_elem_action" value="move" class="form-control" />
+                                                    	<label for="up_elem_action_move" class="control-label">Move</label>    
+                                                    </div>
+                                                    <div class="col-xs-6">
+                                                        <input type="radio" id="up_elem_action_rotate" name="up_elem_action" value="rotate" class="form-control" />
+                                                    	<label for="up_elem_action_rotate" class="control-label">Rotate</label>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="up_elem_action_move">
+                                                    <div class="form-group">
+                                                        <label class="col-xs-12 control-label">Direction</label>
+                                                        <div class="col-xs-6">
+                                                            <input type="radio" id="up_elem_direction_front" name="up_elem_direction" value="front" class="form-control" />
+                                                            <label for="up_elem_direction_front" class="control-label">Front</label>    
+                                                        </div>
+                                                        <div class="col-xs-6">
+                                                            <input type="radio" id="up_elem_direction_back" name="up_elem_direction" value="back" class="form-control" />
+                                                            <label for="up_elem_direction_back" class="control-label">Back</label>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="form-group">
+                                                        <label class="col-xs-12 control-label">Distance</label>
+                                                        <div class="col-md-6 input-group mb-md">
+                                                            <input type="text" value="0" class="form-control" name="up_elem_move_distance" id="up_elem_move_distance" />
+                                                            <span class="input-group-addon">m</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                
+                                                <div class="up_elem_action_rotate">
+                                                    <div class="form-group">
+                                                        <label class="col-xs-12 control-label">Angle</label>
+                                                        <div class="col-md-6 input-group mb-md">
+                                                            <input type="text" value="0" class="form-control" name="up_elem_rotate_angle" id="up_elem_rotate_angle" />
+                                                            <span class="input-group-addon ">°</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                            </form>
+                                            
+                                        </div>
+                                        
+                                        <div style="clear:both;"></div>
+                                       
+                                        <a href="#" class="btn btn-primary bDockElemSave" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
+                                        <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div class="modal fade modalAddPoi" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
                         <div class="modal-dialog" role="dialog">
                             <div class="modal-content">
@@ -607,29 +730,33 @@ $INSTALL_STEP = Configuration::GetValue('INSTALL_STEP');
                                     <div class="actions mh100vh_55">
                                         <div class="h100vh_160" style="overflow:auto; text-align:center">
                                         
-                                        	<div style="height:200px; position:relative;">
-                                            
-	                                            <img id="modalAddPoi_robot" src="assets/images/robot-dessus.png" width="50" style="position:absolute; top:130px; margin-left:-25px; z-index:300;" />
-                                                
-                                                <img id="modalAddPoi_poi0" class="poi" src="assets/images/reflector.png" width="25" />
-                                                <img id="modalAddPoi_poi1" class="poi" src="assets/images/reflector.png" width="25" />
-                                                <img id="modalAddPoi_poi2" class="poi" src="assets/images/reflector.png" width="25" />
-                                                <img id="modalAddPoi_poi3" class="poi" src="assets/images/reflector.png" width="25" />
-                                                <img id="modalAddPoi_poi4" class="poi" src="assets/images/reflector.png" width="25" />
-                                                <img id="modalAddPoi_poi5" class="poi" src="assets/images/reflector.png" width="25" />
-                                                
-                                            </div>
+                                        	<a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
                                         
-                                            <p><?php echo stripslashes(__('Move the robot at the final pose desired and click on the "Scan" button'));?></p>
-                                            <p><a href="#" class="btn btn-primary bScanAddPoi">Scan</a></p>
+                                        	<div class="ifUndocked">
+                                                
+                                                <div style="height:200px; position:relative;">
+                                                
+                                                    <img id="modalAddPoi_robot" src="assets/images/robot-dessus.png" width="50" style="position:absolute; top:130px; margin-left:-25px; z-index:300;" />
+                                                    
+                                                    <img id="modalAddPoi_poi0" class="poi" src="assets/images/reflector.png" width="25" />
+                                                    <img id="modalAddPoi_poi1" class="poi" src="assets/images/reflector.png" width="25" />
+                                                    <img id="modalAddPoi_poi2" class="poi" src="assets/images/reflector.png" width="25" />
+                                                    <img id="modalAddPoi_poi3" class="poi" src="assets/images/reflector.png" width="25" />
+                                                    <img id="modalAddPoi_poi4" class="poi" src="assets/images/reflector.png" width="25" />
+                                                    <img id="modalAddPoi_poi5" class="poi" src="assets/images/reflector.png" width="25" />
+                                                    
+                                                </div>
                                             
-                                            <div style="position:absolute; bottom:50px; left:0; width:100%; z-index:2000;">
-                                                <div class="joystickDiv" draggable="false" style="margin:auto;">
-                                                    <div class="fond"></div>
-                                                    <div class="curseur"></div>
+                                                <p><?php echo stripslashes(__('Move the robot at the final pose desired and click on the "Scan" button'));?></p>
+                                                <p><a href="#" class="btn btn-primary bScanAddPoi">Scan</a></p>
+                                                
+                                                <div style="position:absolute; bottom:50px; left:0; width:100%; z-index:2000;">
+                                                    <div class="joystickDiv" draggable="false" style="margin:auto;">
+                                                        <div class="fond"></div>
+                                                        <div class="curseur"></div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            
                                         </div>
                                         
                                         <div style="clear:both;"></div>
@@ -664,7 +791,11 @@ $INSTALL_STEP = Configuration::GetValue('INSTALL_STEP');
                 </div>
             </div>
             <footer>
-            	<a href="#" class="btn btn-warning button_goto bSaveEditMap" data-goto="install_by_step_test_map" style="position:absolute; width:100%; left:0; bottom:0px; font-size:30px;"><?php echo __('Test');?></a>
+            
+            	
+                <a href="#" class="btn btn-primary bSaveEditMap" style="position:absolute; width:50%; left:0; bottom:0px; font-size:30px;"><?php echo __('Save map');?></a>
+            
+            	<a href="#" class="btn btn-warning button_goto bSaveEditMap" data-goto="install_by_step_test_map" style="position:absolute; width:50%; right:0; left:auto; bottom:0px; font-size:30px;"><?php echo __('Test');?></a>
             </footer>
         </section>
     </div>

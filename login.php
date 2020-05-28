@@ -1,57 +1,5 @@
-<?php $notCloseSession = true; include_once('./config/initSite.php');
-
-Update::CheckUpdate();
-
-if (isset($_POST['email']))
-{
-	if (User::CheckConnexion($_POST['email'], $_POST['password']))
-	{
-		$_SESSION["id_user"] = User::GetIdConnexion($_POST['email'], $_POST['password']);
-		$_SESSION["IP"] = $_SERVER['REMOTE_ADDR'];
-		
-		session_write_close();
-
-		header('location:index.php');
-	}
-	else
-	{
-		$ip_trace = new IpErrorTrace();
-		$ip_trace->IP = $_SERVER['REMOTE_ADDR'];
-		$ip_trace->type = 'Connect';
-		$ip_trace->date = date('Y-m-d H:i:s');
-		$ip_trace->Save();
-	
-		$log = new LogSystem();
-		$log->date = date('Y-m-d H:i:s');
-		$log->level = 'MEDIUM';
-		$log->type = 'Connection';
-		$log->detail = 'IP '.$_SERVER['REMOTE_ADDR'].' connection error with '.$_POST['email'].' login';
-		$log->Save();
-		
-		if (IpErrorTrace::CheckIP($_SERVER['REMOTE_ADDR'])>=10)
-		{
-			// On block l'IP
-			$ipb = new IpBlocked();
-			$ipb->IP = $_SERVER['REMOTE_ADDR'];
-			$ipb->date = date('Y-m-d H:i:s');
-			$ipb->Insert();
-			
-			$log = new LogSystem();
-			$log->date = date('Y-m-d H:i:s');
-			$log->level = 'HIGH';
-			$log->type = 'Connection';
-			$log->detail = 'IP '.$_SERVER['REMOTE_ADDR'].' blocked after 10 connection attempts.';
-			$log->Save();			
-			
-			header('location:login.php');
-		}		
-		
-		session_write_close();
-		$message = __('Invalid login or password.');
-		$erreur = true;
-	}
-}
-
+<?php 
+include_once('./config/initSite.php');
 ?>
 <!doctype html>
 <html class="fixed">
@@ -84,11 +32,13 @@ if (isset($_POST['email']))
 
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/vendor/bootstrap/css/bootstrap.css" />
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/vendor/font-awesome/css/font-awesome.css" />
+        
+		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/theme.css" />
 
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/login.css" />
 
 	</head>
-	<body style="background-image:url(../assets/images/tops/<?php echo $activeTop->image_name;?>);">
+	<body>
 		<section class="body-sign">
 			<div class="center-sign">
 				<a href="/" class="logo pull-left">
@@ -108,11 +58,11 @@ if (isset($_POST['email']))
                             </div>
                             <?php
                         }?>
-						<form method="post">
+						<form method="post" id="formLogin">
 							<div class="form-group mb-lg">
 								<label><?php echo __('Login');?></label>
 								<div class="input-group input-group-icon">
-									<input name="email" type="text" class="form-control input-lg" />
+									<input id="login_email" name="email" type="text" class="form-control input-lg" />
 									<span class="input-group-addon">
 										<span class="icon icon-lg">
 											<i class="fa fa-user"></i>
@@ -127,7 +77,7 @@ if (isset($_POST['email']))
 									<!--<a href="#" id="bLostPassword" class="pull-right"><?php echo __('Lost Password?');?></a>-->
 								</div>
 								<div class="input-group input-group-icon">
-									<input name="password" type="password" class="form-control input-lg" />
+									<input id="login_password" name="password" type="password" class="form-control input-lg" />
 									<span class="input-group-addon">
 										<span class="icon icon-lg">
 											<i class="fa fa-lock"></i>
@@ -148,8 +98,102 @@ if (isset($_POST['email']))
 				</div>
 			</div>
 		</section>
+        
+        <div class="popup_error">
+        	<section class="panel panel-secondary" data-portlet-item="">
+                <header class="panel-heading">
+                    <div class="panel-actions">
+                        <a href="#" class="fa fa-times"></a>
+                    </div>
+                    <h2 class="panel-title">Error</h2>
+                </header>
+                <div class="panel-body"></div>
+            </section>
+        </div>
 		
         <script src="<?php echo $_CONFIG['URL'];?>assets/vendor/jquery/jquery.js"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/bootstrap/js/bootstrap.js"></script>
 	</body>
 </html>
+
+<script>
+function DisplayError(text)
+{
+	 $('.popup_error .panel-body').html(text);
+	 $('.popup_error').show();
+}
+
+var ws;
+
+$(document).ready(function(e) {
+	
+	$('.popup_error .panel-heading .fa-times').click(function(e) {
+        e.preventDefault();
+		$(this).closest('.popup_error').hide();
+    });
+	
+    $('#formLogin').submit(function(e) {
+        e.preventDefault();
+	
+		if ($('#login_email').val() == '' || $('#login_password').val() == '')
+		{
+			DisplayError('Login and password required.');
+		}
+		else
+		{
+			var robot_host = '<?php echo (file_exists('C:\\'))?'192.168.0.30:9095':'elodie.wyca-solutions.com:9095';?>';
+			//var robot_host = '<?php echo (file_exists('C:\\'))?'10.0.0.44:9095':'elodie.wyca-solutions.com:9095';?>';
+			
+			if ("WebSocket" in window) {
+				ws = new WebSocket('wss://'+ robot_host);
+			} else if ("MozWebSocket" in window) {
+				ws = new MozWebSocket('wss://'+ robot_host);
+			} else {
+				throw new Error('This Browser does not support WebSockets')
+			}
+			ws.onopen = function(e) {
+				var auth = {
+				"O": 1010,
+				"P": {
+					"L":$('#login_email').val(),
+					"P":$('#login_password').val()
+				}
+			  };		
+			
+			  ws.send(JSON.stringify(auth));
+			};
+			ws.onerror = function(e) { DisplayError('Communication with the robot impossible'); };
+			ws.onclose = function(e) { };
+			ws.onmessage = function(e) { 
+			
+				if (e.data == 'ack') return;
+				msg = JSON.parse(e.data);
+				if (msg.A > 0)
+				{
+					DisplayError(msg.M);
+				}
+				else
+				{
+					// Connexion OK, on save l'api_key
+					$.ajax({
+						type: "POST",
+						url: 'ajax/connection.php',
+						data: {
+							id: msg.D.ID,
+							k: msg.D.KEY,
+							g: msg.D.GROUP
+						},
+						success: function(data) {
+							location.href = 'index.php';
+						},
+						error: function(e) {
+							alert(e.responseText);
+						}
+					});
+				}
+			};
+		}
+			
+    });
+});
+</script>

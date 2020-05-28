@@ -72,7 +72,7 @@ var intervalRefreshConn = null;
 
 var savedCanClose = true;
 
-
+var indexDockElem = 0;
 
 var timerCantChange = null;
 function AvertCantChange()
@@ -139,7 +139,7 @@ function Undo()
 			TraceForbidden(elem.data.index);
 			break;
 		case 'delete_forbidden':
-			forbiddens[elem.data].deleted = 0;
+			forbiddens[elem.data].deleted = false;
 			TraceForbidden(elem.data);
 			break;
 		case 'add_area':
@@ -151,7 +151,7 @@ function Undo()
 			TraceArea(elem.data.index);
 			break;
 		case 'delete_area':
-			areas[elem.data].deleted = 0;
+			areas[elem.data].deleted = false;
 			TraceArea(elem.data);
 			break;
 		case 'add_dock':
@@ -163,7 +163,7 @@ function Undo()
 			TraceDock(elem.data.index);
 			break;
 		case 'delete_dock':
-			docks[elem.data].deleted = 0;
+			docks[elem.data].deleted = false;
 			TraceDock(elem.data);
 			break;
 		case 'add_poi':
@@ -175,7 +175,7 @@ function Undo()
 			TracePoi(elem.data.index);
 			break;
 		case 'delete_poi':
-			pois[elem.data].deleted = 0;
+			pois[elem.data].deleted = false;
 			TracePoi(elem.data);
 			break;
 	}
@@ -206,7 +206,7 @@ function Redo()
 			TraceForbidden(elem.data.index);
 			break;
 		case 'delete_forbidden':
-			forbiddens[elem.data].deleted = 1;
+			forbiddens[elem.data].deleted = true;
 			TraceForbidden(elem.data);
 			break;
 		case 'add_area':
@@ -218,7 +218,7 @@ function Redo()
 			TraceArea(elem.data.index);
 			break;
 		case 'delete_area':
-			areas[elem.data].deleted = 1;
+			areas[elem.data].deleted = true;
 			TraceArea(elem.data);
 			break;
 		case 'add_dock':
@@ -230,7 +230,7 @@ function Redo()
 			TraceDock(elem.data.index);
 			break;
 		case 'delete_dock':
-			docks[elem.data].deleted = 1;
+			docks[elem.data].deleted = true;
 			TraceDock(elem.data);
 			break;
 		case 'add_poi':
@@ -242,7 +242,7 @@ function Redo()
 			TracePoi(elem.data.index);
 			break;
 		case 'delete_poi':
-			pois[elem.data].deleted = 1;
+			pois[elem.data].deleted = true;
 			TracePoi(elem.data);
 			break;
 	}
@@ -447,7 +447,7 @@ $(document).ready(function() {
 	$('#install_by_step_edit_map_menu_forbidden .bDeleteForbidden').click(function(e) {
         e.preventDefault();
 		HideMenus();
-		if (currentAction = 'editForbiddenArea')
+		if (currentAction == "select" || currentAction == 'editForbiddenArea')
 		{
 			i = GetForbiddenIndexFromID(currentForbiddenLongTouch.data('id_area'));
 			DeleteForbidden(i);	
@@ -457,7 +457,7 @@ $(document).ready(function() {
 	$('#install_by_step_edit_map_menu_area .bDeleteArea').click(function(e) {
         e.preventDefault();
 		HideMenus();
-		if (currentAction = 'editArea')
+		if (currentAction == "select" || currentAction == 'editArea')
 		{
 			i = GetAreaIndexFromID(currentAreaLongTouch.data('id_area'));
 			DeleteArea(i);	
@@ -467,21 +467,32 @@ $(document).ready(function() {
 	$('#install_by_step_edit_map_menu_area .bConfigArea').click(function(e) {
         e.preventDefault();
 		HideMenus();
-		if (currentAction == 'editArea')
+		if (currentAction == "select" || currentAction == 'editArea')
 		{
 			currentAreaIndex = GetAreaIndexFromID(currentAreaLongTouch.data('id_area'));
 			area = areas[currentAreaIndex];
-			$.each(area.configs, function( indexConfig, config ) {
-				switch(config.name)
-				{
-					case 'led_color_mode': $('#led_color_mode').val(config.value); break;
-					case 'led_color': $('#led_color').val(config.value); $('#led_color').keyup(); break;
-					case 'led_animation_mode': $('#led_animation_mode').val(config.value); break;
-					case 'led_animation': $('#led_animation').val(config.value); break;
-					case 'max_speed_mode': $('#max_speed_mode').val(config.value); break;
-					case 'max_speed': $('#max_speed').val(config.value); break;
-				}
-			});
+			if (area.configs != undefined)
+			{
+				$.each(area.configs, function( indexConfig, config ) {
+					switch(config.name)
+					{
+						case 'led_color_mode': $('#led_color_mode').val(config.value); break;
+						case 'led_color': $('#led_color').val(config.value); $('#led_color').keyup(); break;
+						case 'led_animation_mode': $('#led_animation_mode').val(config.value); break;
+						case 'led_animation': $('#led_animation').val(config.value); break;
+						case 'max_speed_mode': $('#max_speed_mode').val(config.value); break;
+						case 'max_speed': $('#max_speed').val(config.value); break;
+					}
+				});
+			}
+			else
+			{
+				$('#led_color_mode').val('Automatic');
+				$('#led_animation_mode').val('Automatic');
+				$('#max_speed_mode').val('Automatic');
+			}
+			
+			$('#area_color').val('rgb('+area.color_r+','+area.color_g+','+area.color_b+')'); $('#area_color').keyup();
 			
 			if ($('#led_color_mode').val() == 'Automatic') $('#led_color_group').hide(); else  $('#led_color_group').show();
 			if ($('#led_animation_mode').val() == 'Automatic') $('#led_animation_group').hide(); else  $('#led_animation_group').show();
@@ -504,23 +515,51 @@ $(document).ready(function() {
 	
 		currentDockIndex = GetDockIndexFromID(currentDockLongTouch.data('id_docking_station'));
 		dock = docks[currentDockIndex];
-		/*
-		$.each(area.configs, function( indexConfig, config ) {
-			switch(config.name)
-			{
-				case 'led_color_mode': $('#led_color_mode').val(config.value); break;
-				case 'led_color': $('#led_color').val(config.value); $('#led_color').keyup(); break;
-				case 'led_animation_mode': $('#led_animation_mode').val(config.value); break;
-				case 'led_animation': $('#led_animation').val(config.value); break;
-				case 'max_speed_mode': $('#max_speed_mode').val(config.value); break;
-				case 'max_speed': $('#max_speed').val(config.value); break;
-			}
-		});
 		
-		if ($('#led_color_mode').val() == 'Automatic') $('#led_color_group').hide(); else  $('#led_color_group').show();
-		if ($('#led_animation_mode').val() == 'Automatic') $('#led_animation_group').hide(); else  $('#led_animation_group').show();
-		if ($('#max_speed_mode').val() == 'Automatic') $('#max_speed_group').hide(); else  $('#max_speed_group').show();
-		*/
+		$('#dock_number').val(dock.num);
+		$('#dock_name').val(dock.name);
+		$('#dock_comment').val(dock.comment);
+		
+		$('.modalDockOptions .list_undock_procedure li').remove();
+		
+		$.each(dock.undock_path, function( indexConfig, undock_step ) {
+
+			console.log(undock_step);
+			indexDockElem++;
+			
+			if (undock_step.linear_distance != 0)
+			{				
+				distance = undock_step.linear_distance;
+				direction = undock_step.linear_distance > 0 ? 'front':'back';
+				
+				$('.modalDockOptions .list_undock_procedure').append('' +
+					'<li id="list_undock_procedure_elem_'+indexDockElem+'" data-index_dock_procedure="'+indexDockElem+'" data-action="move" data-distance="' + distance + '">'+
+					'	<span>Move ' + ((direction == 'back')?'back':'front') + ' ' + ((direction == 'back')?distance*-1:distance) + 'm</span>'+
+					'	<a href="#" class="bUndockProcedureDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+					'	<a href="#" class="bUndockProcedureEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
+					'</li>'
+					);
+			}
+			else
+			{	
+				angle = undock_step.angular_distance * 180 / Math.PI;
+				angle = Math.round(angle*100)/100;
+				
+				$('.modalDockOptions .list_undock_procedure').append('' +
+					'<li id="list_undock_procedure_elem_'+indexDockElem+'" data-index_dock_procedure="'+indexDockElem+'" data-action="rotate" data-angle="'+angle+'">'+
+					'	<span>Rotate '+angle+'°</span>'+
+					'	<a href="#" class="bUndockProcedureDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+					'	<a href="#" class="bUndockProcedureEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
+					'</li>'
+					);
+			}
+			
+		});		
+		
+		
+		$('#install_by_step_edit_map_container_all .modalDockOptions').modal('show');
+		
+		
 		$('#install_by_step_edit_map_container_all .modalDockOptions').modal('show');
 		
     });
@@ -532,7 +571,7 @@ $(document).ready(function() {
 		DeletePoi(i);
     });
 	
-	$('#install_by_step_edit_map_menu_dock .bConfigDock').click(function(e) {
+	$('#install_by_step_edit_map_menu_dock .bConfigPoi').click(function(e) {
         e.preventDefault();
 		HideMenus();
 		currentAction = 'editPoi';
@@ -866,7 +905,7 @@ $(document).ready(function() {
 			saveCurrentPoi = JSON.stringify(poi);
 			
 			AddClass('#install_by_step_edit_map_svg .poi_elem_'+poi.id_poi, 'active');
-			if (poi.id_reflector < 1) // Movable que si il n'est pas lié à un reflecteur
+			if (poi.id_fiducial < 1) // Movable que si il n'est pas lié à un reflecteur
 				AddClass('#install_by_step_edit_map_svg .poi_elem_'+poi.id_poi, 'movable');
 		}
 		else
@@ -948,7 +987,7 @@ $(document).ready(function() {
 			currentForbiddenPoints.push({x:xRos + tailleArea, y:yRos + tailleArea});
 			currentForbiddenPoints.push({x:xRos - tailleArea, y:yRos + tailleArea});
 			
-			f = {'id_area':nextIdArea, 'id_map':id_map, 'nom':'', 'comment':'', 'is_forbidden':1, 'couleur_r':0, 'couleur_g':0, 'couleur_b':0, 'deleted':0, 'points':currentForbiddenPoints};
+			f = {'id_area':nextIdArea, 'id_map':id_map, 'nom':'', 'comment':'', 'is_forbidden':true, 'color_r':0, 'color_g':0, 'color_b':0, 'deleted':false, 'points':currentForbiddenPoints};
 			AddHistorique({'action':'add_forbidden', 'data':f});
 			
 			forbiddens.push(f);
@@ -1034,7 +1073,7 @@ $(document).ready(function() {
 			currentAreaPoints.push({x:xRos + tailleArea, y:yRos + tailleArea});
 			currentAreaPoints.push({x:xRos - tailleArea, y:yRos + tailleArea});
 
-			a = {'id_area':nextIdArea, 'id_map':id_map, 'nom':'', 'comment':'', 'is_forbidden':0, 'couleur_r':87, 'couleur_g':159, 'couleur_b':177, 'deleted':0, 'points':currentAreaPoints, 'configs':Array()};
+			a = {'id_area':nextIdArea, 'id_map':id_map, 'nom':'', 'comment':'', 'is_forbidden':false, 'color_r':87, 'color_g':159, 'color_b':177, 'deleted':false, 'points':currentAreaPoints, 'configs':Array()};
 			AddHistorique({'action':'add_area', 'data':a});
 			
 			areas.push(a);
@@ -1087,7 +1126,7 @@ $(document).ready(function() {
 	$('#bAreaOptions').click(function(e) {
         area = areas[currentAreaIndex];
 		
-		$('#area_color_mode').val(rgbToHex(area.couleur_r, area.couleur_g, area.couleur_b));
+		$('#area_color_mode').val(rgbToHex(area.color_r, area.color_g, area.color_b));
 		
 		$.each(area.configs, function( indexConfig, config ) {
 			switch(config.name)
@@ -1121,9 +1160,11 @@ $(document).ready(function() {
 		
 		var c = $('#area_color').val().split("(")[1].split(")")[0];
 		c = c.split(",");
-		area.couleur_r = parseInt(c[0]);
-		area.couleur_g = parseInt(c[1]);
-		area.couleur_b = parseInt(c[2]);
+		area.color_r = parseInt(c[0]);
+		area.color_g = parseInt(c[1]);
+		area.color_b = parseInt(c[2]);
+		
+		areas[currentAreaIndex] = area;
 		
 		if (currentAction == 'editArea')
 			AddHistorique({'action':'edit_area', 'data':{'index':currentAreaIndex, 'old':saveCurrentArea, 'new':JSON.stringify(areas[currentAreaIndex])}});
@@ -1131,33 +1172,6 @@ $(document).ready(function() {
 		TraceArea(currentAreaIndex);
 	});
 		
-	$('#bSaveMap').click(function(e) {
-        
-		jQuery.ajax({
-				url: 'ajax/saveMap.php',
-				type: "post",
-				dataType: "json",
-				data: { 
-						'id_map':id_map,
-						'gommes':JSON.stringify(gommes),
-						'forbiddens':JSON.stringify(forbiddens),
-						'areas':JSON.stringify(areas),
-						'docks':JSON.stringify(docks),
-						'pois':JSON.stringify(pois)
-					},
-				error: function(jqXHR, textStatus, errorThrown) {
-					},
-				success: function(data, textStatus, jqXHR) {
-						savedCanClose = true;
-						if (navLaunched && id_map == current_id_map)
-						{
-							wycaApi.NavigationReloadMaps(function(e) { if (!e.success) console.error(e.error); });	
-						}
-					}
-			});
-		
-    });
-	
 	$('#install_by_step_edit_map_menu .bAddDock').click(function(e) {
         e.preventDefault();
 		HideMenus();
@@ -1171,45 +1185,59 @@ $(document).ready(function() {
 	$('.modalAddDock .bScanAddDock').click(function(e) {
 		$('.modalAddDock .bScanAddDock').addClass('disabled');
 		
-        wycaApi.on('onPOIsDetect', function(data) {
+		wycaApi.GetFiducialsVisible(function(data) {
 			
-			$('.modalAddDock .bScanAddDock').removeClass('disabled');
+			$('.modalAddDock .bScanAddDock').removeClass('disabled');	
 			
-			// On a recu, on se désabonne
-			wycaApi.ReflectorDetectionEnable(false);	
-			wycaApi.off('onPOIsDetect');
-			
-			console.log('onPOIsDetect');
-			console.log(data);
-			
-			
-			$('.modalAddDock .dock').hide();
-			
-			posRobot = $('.modalAddDock #modalAddDock_robot').offset();
-			
-			for (i=0; i< data.length; i++)
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
-				if (data[i].type == 'Dock')
+				console.log(data);
+				
+				$('.modalAddDock .dock').hide();
+				
+				posRobot = $('.modalAddDock #modalAddDock_robot').offset();
+				
+				for (i=0; i< data.D.length; i++)
 				{
-					$('.modalAddDock #modalAddDock_dock'+i).show();
-					$('.modalAddDock #modalAddDock_dock'+i).css('left', posRobot.left + data[i].pose.y * 100); // lidar : y * -1
-					$('.modalAddDock #modalAddDock_dock'+i).css('top', posRobot.top - data[i].pose.x * 100 - 12.5 - 20); // +20 position lidar, - 12.5 pour le centre
-					angle = data[i].pose.theta * 180 / Math.PI;
-					$('.modalAddDock #modalAddDock_dock'+i).css({'-webkit-transform' : 'rotate('+ angle +'deg)',
-																 '-moz-transform' : 'rotate('+ angle +'deg)',
-																 '-ms-transform' : 'rotate('+ angle +'deg)',
-																 'transform' : 'rotate('+ angle +'deg)'});
-					
-					
-					$('.modalAddDock #modalAddDock_dock'+i).data('id_reflector', data[i].Id);
-					$('.modalAddDock #modalAddDock_dock'+i).data('x', data[i].pose.x);
-					$('.modalAddDock #modalAddDock_dock'+i).data('y', data[i].pose.y);
-					$('.modalAddDock #modalAddDock_dock'+i).data('theta', data[i].pose.theta);
+					if (data.D[i].TY == 'Dock')
+					{
+						/*
+						distance = Math.sqrt((data.D[i].P.X - lastRobotPose.X)*(data.D[i].P.X - lastRobotPose.X) + (data.D[i].P.Y - lastRobotPose.Y)*(data.D[i].P.Y - lastRobotPose.Y));
+						x_from_robot = Math.cos(lastRobotPose.T) * distance;
+						y_from_robot = Math.sin(lastRobotPose.T) * distance;
+						*/
+						
+						new_point = RotatePoint (data.D[i].P, lastRobotPose, lastRobotPose.T - Math.PI/2);
+						x_from_robot = new_point.X - lastRobotPose.X;
+						y_from_robot = new_point.Y - lastRobotPose.Y;
+						
+						// 1px / cm
+						
+						$('.modalAddDock #modalAddDock_dock'+i).show();
+						$('.modalAddDock #modalAddDock_dock'+i).css('left', posRobot.left + x_from_robot * 100); // lidar : y * -1
+						$('.modalAddDock #modalAddDock_dock'+i).css('top', posRobot.top - y_from_robot * 100); // +20 position lidar, - 12.5 pour le centre
+						//angle = (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
+						
+						angle = 0 - (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
+						
+						$('.modalAddDock #modalAddDock_dock'+i).css({'-webkit-transform' : 'rotate('+ angle +'deg)',
+																	 '-moz-transform' : 'rotate('+ angle +'deg)',
+																	 '-ms-transform' : 'rotate('+ angle +'deg)',
+																	 'transform' : 'rotate('+ angle +'deg)'});
+						
+						
+						$('.modalAddDock #modalAddDock_dock'+i).data('id_fiducial', data.D[i].ID);
+						$('.modalAddDock #modalAddDock_dock'+i).data('x', data.D[i].P.X);
+						$('.modalAddDock #modalAddDock_dock'+i).data('y', data.D[i].P.Y);
+						$('.modalAddDock #modalAddDock_dock'+i).data('theta', data.D[i].P.T);
+					}
 				}
 			}
+			else
+			{
+				DisplayError(wycaApi.AnswerCodeToString(data.A) + "<br/>" + data.M);
+			}
 		});
-		
-		wycaApi.ReflectorDetectionEnable(true);
     });
 	
 	$('.modalAddDock .dock').click(function(e) {
@@ -1217,8 +1245,21 @@ $(document).ready(function() {
 		
 		nextIdDock++;
 		
+		distance_centre_robot_fiducial = 0.26;
+		distance_approche_robot_fiducial = 0.76;
+		
+		final_pose_x = $(this).data('x') + Math.cos($(this).data('theta')) * distance_centre_robot_fiducial;
+		final_pose_y = $(this).data('y') + Math.sin($(this).data('theta')) * distance_centre_robot_fiducial;
+		final_pose_t = $(this).data('theta') + Math.PI;
+		
+		$(this).data('x'), $(this).data('y'), $(this).data('theta')
+		
+		approch_pose_x = $(this).data('x') + Math.cos($(this).data('theta')) * distance_approche_robot_fiducial;
+		approch_pose_y = $(this).data('y') + Math.sin($(this).data('theta')) * distance_approche_robot_fiducial;
+		approch_pose_t = $(this).data('theta') + Math.PI;
+		
 		num = GetMaxNumDock()+1;
-		d = {'id_docking_station':nextIdDock, 'id_map':id_map, 'id_reflector':$(this).data('id_reflector'), 'x_ros':$(this).data('x'), 'y_ros':$(this).data('y'), 't_ros':$(this).data('theta'), 'num':num, 'name':'Dock '+num, 'comment':''};
+		d = {'id_docking_station':nextIdDock, 'id_map':id_map, 'id_fiducial':$(this).data('id_fiducial'), 'final_pose_x':final_pose_x, 'final_pose_y':final_pose_y, 'final_pose_t':final_pose_t, 'approch_pose_x':approch_pose_x, 'approch_pose_y':approch_pose_y, 'approch_pose_t':approch_pose_t, 'num':parseInt(num), 'fiducial_pose_x':$(this).data('x'), 'fiducial_pose_y':$(this).data('y'), 'fiducial_pose_t':$(this).data('theta'), 'name':'Dock '+num, 'comment':'', 'undock_path':[{'linear_distance':-0.3, 'angular_distance':0}]};
 		AddHistorique({'action':'add_dock', 'data':d});
         docks.push(d);
 		TraceDock(docks.length-1);
@@ -1227,25 +1268,185 @@ $(document).ready(function() {
 		
 		currentDockIndex = docks.length-1;
 		dock = docks[currentDockIndex];
-		/*
-		$.each(area.configs, function( indexConfig, config ) {
-			switch(config.name)
-			{
-				case 'led_color_mode': $('#led_color_mode').val(config.value); break;
-				case 'led_color': $('#led_color').val(config.value); $('#led_color').keyup(); break;
-				case 'led_animation_mode': $('#led_animation_mode').val(config.value); break;
-				case 'led_animation': $('#led_animation').val(config.value); break;
-				case 'max_speed_mode': $('#max_speed_mode').val(config.value); break;
-				case 'max_speed': $('#max_speed').val(config.value); break;
-			}
-		});
 		
-		if ($('#led_color_mode').val() == 'Automatic') $('#led_color_group').hide(); else  $('#led_color_group').show();
-		if ($('#led_animation_mode').val() == 'Automatic') $('#led_animation_group').hide(); else  $('#led_animation_group').show();
-		if ($('#max_speed_mode').val() == 'Automatic') $('#max_speed_group').hide(); else  $('#max_speed_group').show();
-		*/
+		$('#dock_number').val(dock.num);
+		
+		$('.modalDockOptions .list_undock_procedure li').remove();
+		
+		indexDockElem++;
+		
+		$('.modalDockOptions .list_undock_procedure').append('' +
+			'<li id="list_undock_procedure_elem_'+indexDockElem+'" data-index_dock="'+indexDockElem+'" data-action="move" data-distance="-0.3">'+
+			'	<span>Move back 0.3m</span>'+
+			'	<a href="#" class="bUndockProcedureDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+			'	<a href="#" class="bUndockProcedureEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
+			'</li>'
+			);
+		
 		$('#install_by_step_edit_map_container_all .modalDockOptions').modal('show');
     });
+	
+	$('#bDockSaveConfig').click(function(e) {
+		dock = docks[currentDockIndex];
+		saveCurrentDock = JSON.stringify(dock);
+				
+		dock.name = $('#dock_name').val();
+		dock.num = parseInt($('#dock_number').val());
+		dock.comment = $('#dock_comment').val();
+			
+		dock.undock_path = Array();
+		
+		$('.modalDockOptions .list_undock_procedure li').each(function(index, element) {
+			if ($(this).data('action') == 'rotate')
+			{
+				angle_rad = parseFloat($(this).data('angle')) * Math.PI/180;
+				dock.undock_path.push({'linear_distance':0, 'angular_distance':angle_rad});
+			}
+			else
+				dock.undock_path.push({'linear_distance':$(this).data('distance'), 'angular_distance':0});
+        });
+		
+		docks[currentDockIndex] = dock;
+				
+		if (currentAction == 'editDock')
+			AddHistorique({'action':'edit_dock', 'data':{'index':currentDockIndex, 'old':saveCurrentDock, 'new':JSON.stringify(docks[currentDockIndex])}});
+		
+		TraceDock(currentDockIndex);
+	});
+	
+	$('.modalDockOptions .bUndockProcedureAddElem').click(function(e) {
+        e.preventDefault();
+		
+		$('#up_elem_action_move').prop('checked', false);
+		$('#up_elem_action_rotate').prop('checked', false);
+		
+		$('#up_elem_direction_back').prop('checked', true);
+		$('.up_elem_action_move').hide();
+		$('.up_elem_action_rotate').hide();
+		
+		$('#install_by_step_edit_map_container_all .modalDockElemOptions').data('index_dock_procedure', -1);
+		
+		$('#install_by_step_edit_map_container_all .modalDockElemOptions').modal('show');
+    });
+	
+	$('.modalDockElemOptions input:radio[name="up_elem_action"]').change(function () {
+		action = $("input[name='up_elem_action']:checked").val()
+		$('.up_elem_action_move').hide();
+		$('.up_elem_action_rotate').hide();
+		if (action == 'move') {
+			
+			$('.up_elem_action_move').show();
+		}
+		else if (action == 'rotate') {
+			$('.up_elem_action_rotate').show();
+		}
+	});
+		
+	$('.modalDockElemOptions .bDockElemSave').click(function(e) {
+		
+		index_dock_procedure = $('#install_by_step_edit_map_container_all .modalDockElemOptions').data('index_dock_procedure');
+		if (index_dock_procedure == -1)
+		{
+			indexDockElem++;
+			
+			action = $("input[name='up_elem_action']:checked").val();
+			
+			if (action == 'move') {
+				
+				distance = parseFloat($("#up_elem_move_distance").val());
+				direction = $("input[name='up_elem_direction']:checked").val();
+							
+				$('.modalDockOptions .list_undock_procedure').append('' +
+					'<li id="list_undock_procedure_elem_'+indexDockElem+'" data-index_dock_procedure="'+indexDockElem+'" data-action="move" data-distance="' + ((direction == 'back')?distance*-1:distance) + '">'+
+					'	<span>Move ' + ((direction == 'back')?'back':'front') + ' ' + distance + 'm</span>'+
+					'	<a href="#" class="bUndockProcedureDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+					'	<a href="#" class="bUndockProcedureEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
+					'</li>'
+					);
+			}
+			else if (action == 'rotate') {
+				
+				angle = $("#up_elem_rotate_angle").val();
+				
+				$('.modalDockOptions .list_undock_procedure').append('' +
+					'<li id="list_undock_procedure_elem_'+indexDockElem+'" data-index_dock_procedure="'+indexDockElem+'" data-action="rotate" data-angle="'+angle+'">'+
+					'	<span>Rotate '+angle+'°</span>'+
+					'	<a href="#" class="bUndockProcedureDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+					'	<a href="#" class="bUndockProcedureEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
+					'</li>'
+					);
+			}
+		}
+		else
+		{
+			action = $("input[name='up_elem_action']:checked").val();
+			if (action == 'move') {
+				
+				distance = parseFloat($("#up_elem_move_distance").val());
+				direction = $("input[name='up_elem_direction']:checked").val();
+				
+				li = $('#list_undock_procedure_elem_'+ index_dock_procedure);
+				span = $('#list_undock_procedure_elem_'+ index_dock_procedure + ' span');
+				
+				li.data('action', 'move');
+				li.data('distance', ((direction == 'back')?distance*-1:distance));
+				span.html('Move ' + ((direction == 'back')?'back':'front') + ' ' + distance + 'm');
+			}
+			else if (action == 'rotate') {
+				
+				angle = $("#up_elem_rotate_angle").val();
+				
+				li = $('#list_undock_procedure_elem_'+ index_dock_procedure);
+				span = $('#list_undock_procedure_elem_'+ index_dock_procedure + ' span');
+				
+				li.data('action', 'rotate');
+				li.data('angle', angle);
+				span.html('Rotate '+angle+'°');
+			}
+		}
+    });
+	
+	$(document).on('click', '.modalDockOptions .bUndockProcedureDeleteElem', function(e) {
+		e.preventDefault();
+		
+		$(this).closest('li').remove();
+	});
+	
+	$(document).on('click', '.modalDockOptions .bUndockProcedureEditElem', function(e) {
+		e.preventDefault();
+		
+		$('#up_elem_action_move').prop('checked', false);
+		$('#up_elem_action_rotate').prop('checked', false);
+		
+		$('.up_elem_action_move').hide();
+		$('.up_elem_action_rotate').hide();
+		
+		li = $(this).closest('li');
+		if (li.data('action') == 'rotate')
+		{
+			$('.up_elem_action_rotate').show();
+			$('#up_elem_action_rotate').prop('checked', true);
+			$("#up_elem_rotate_angle").val(li.data('angle'));
+		}
+		else
+		{
+			$('.up_elem_action_move').show();
+			$('#up_elem_action_move').prop('checked', true);
+			distance = li.data('distance');
+			if (distance < 0)
+				$('#up_elem_direction_back').prop('checked', true);
+			else
+				$('#up_elem_direction_front').prop('checked', true);
+			
+			$("#up_elem_move_distance").val(Math.abs(distance));
+		}
+		
+		
+		$('#install_by_step_edit_map_container_all .modalDockElemOptions').data('index_dock_procedure', li.data('index_dock_procedure'));
+		
+		$('#install_by_step_edit_map_container_all .modalDockElemOptions').modal('show');
+		
+	});
 	
 	$('#install_by_step_edit_map_menu .bAddPOI').click(function(e) {
         e.preventDefault();
@@ -1286,10 +1487,10 @@ $(document).ready(function() {
 																 'transform' : 'rotate('+ angle +'deg)'});
 					
 					
-					$('.modalAddPoi #modalAddPoi_poi'+i).data('id_reflector', data[i].Id);
-					$('.modalAddPoi #modalAddPoi_poi'+i).data('x', data[i].pose.x);
-					$('.modalAddPoi #modalAddPoi_poi'+i).data('y', data[i].pose.y);
-					$('.modalAddPoi #modalAddPoi_poi'+i).data('theta', data[i].pose.theta);
+					$('.modalAddPoi #modalAddPoi_poi'+i).data('id_fiducial', data[i].Id);
+					$('.modalAddPoi #modalAddPoi_poi'+i).data('fiducial_pose_x', data[i].pose.x);
+					$('.modalAddPoi #modalAddPoi_poi'+i).data('fiducial_pose_y', data[i].pose.y);
+					$('.modalAddPoi #modalAddPoi_poi'+i).data('fiducial_pose_t', data[i].pose.theta);
 				}
 			}
 		});
@@ -1302,7 +1503,7 @@ $(document).ready(function() {
 		
 		nextIdPoi++;
 		
-		p = {'id_poi':nextIdPoi, 'id_map':id_map, 'id_reflector':$(this).data('id_reflector'), 'x_ros':$(this).data('x'), 'y_ros':$(this).data('y'), 't_ros':$(this).data('theta'), 'name':'POI', 'comment':'', 'icon':'', 'active':true};
+		p = {'id_poi':nextIdPoi, 'id_map':id_map, 'id_fiducial':$(this).data('id_fiducial'), 'fiducial_pose_x':$(this).data('fiducial_pose_x'), 'fiducial_pose_y':$(this).data('fiducial_pose_y'), 'fiducial_pose_t':$(this).data('fiducial_pose_t'), 'name':'POI', 'comment':'', 'icon':'', 'active':true};
 		AddHistorique({'action':'add_poi', 'data':p});
         pois.push(p);
 		TracePoi(pois.length-1);
@@ -1331,18 +1532,6 @@ $(document).ready(function() {
 		$('#install_by_step_edit_map_container_all .modalPoiOptions').modal('show');
     });
 	
-	$('#bDockCreateFromPose').click(function(e) {
-		nextIdDock++;
-		
-		dockPosition = GetDockPosition(lastRobotPose);
-		
-		num = GetMaxNumDock()+1;
-		d = {'id_docking_station':nextIdDock, 'id_map':id_map, 'id_reflector':$(this).data('id_reflector'), 'x_ros':dockPosition.x, 'y_ros':dockPosition.y, 't_ros':dockPosition.theta, 'num':num, 'name':'Dock '+num, 'comment':''};
-		
-		AddHistorique({'action':'add_dock', 'data':d});
-        docks.push(d);
-		TraceDock(docks.length-1);
-    });
 	$('#bDockCreateFromMap').click(function(e) {
         if (canChangeMenu)
 		{
@@ -1405,7 +1594,7 @@ $(document).ready(function() {
 	
 	$('#bPoiCreateFromPose').click(function(e) {
 		nextIdPoi++;
-		p = {'id_poi':nextIdPoi, 'id_map':id_map, 'id_reflector':-1, 'x_ros':lastRobotPose.x, 'y_ros':lastRobotPose.y, 't_ros':lastRobotPose.theta, 'name':'POI', 'comment':'', 'icon':'', 'active':true};
+		p = {'id_poi':nextIdPoi, 'id_map':id_map, 'id_fiducial':-1, 'final_pose_x':lastRobotPose.x, 'final_pose_y':lastRobotPose.y, 'final_pose_t':lastRobotPose.theta, 'approch_pose_x':lastRobotPose.x, 'approch_pose_y':lastRobotPose.y, 'approch_pose_t':lastRobotPose.theta, 'fiducial_pose_x':0, 'fiducial_pose_y':0, 'fiducial_pose_t':0, 'name':'POI', 'comment':'', 'icon':'', 'active':true};
 		AddHistorique({'action':'add_poi', 'data':p});
         pois.push(p);
 		TracePoi(pois.length-1);
@@ -1473,7 +1662,7 @@ $(document).ready(function() {
 			SaveElementNeeded(false);
 			
 			nextIdPoi++;
-			p = {'id_poi':nextIdPoi, 'id_map':id_map, 'id_reflector':-1, 'x_ros':currentPoiPose.x_ros, 'y_ros':currentPoiPose.y_ros, 't_ros':currentPoiPose.t_ros, 'name':$('#poi_name').val(), 'comment':'', 'icon':'', 'active':true};
+			p = {'id_poi':nextIdPoi, 'id_map':id_map, 'id_fiducial':-1, 'final_pose_x':currentPoiPose.x_ros, 'final_pose_y':currentPoiPose.y_ros, 'final_pose_t':currentPoiPose.t_ros, 'approch_pose_x':currentPoiPose.x_ros, 'approch_pose_y':currentPoiPose.y_ros, 'approch_pose_t':currentPoiPose.t_ros, 'fiducial_pose_x':0, 'fiducial_pose_y':0, 'fiducial_pose_t':0, 'name':$('#poi_name').val(), 'comment':'', 'icon':'', 'active':true};
 			AddHistorique({'action':'add_poi', 'data':p});
 			
 			pois.push(p);
@@ -1563,13 +1752,13 @@ $(document).ready(function() {
 		timerRotate = setInterval(function() { 
 			if (currentAction == 'addPoi')
 			{
-				currentPoiPose.t_ros = parseFloat(currentPoiPose.t_ros) + Math.PI / 90;;
+				currentPoiPose.t_ros = parseFloat(currentPoiPose.t_ros) + Math.PI / 90;
 				
 				TraceCurrentPoi(currentPoiPose);
 			}
 			else if (currentAction == 'addDock')
 			{
-				currentDockPose.t_ros = parseFloat(currentDockPose.t_ros) + Math.PI / 90;;
+				currentDockPose.t_ros = parseFloat(currentDockPose.t_ros) + Math.PI / 90;
 				
 				TraceCurrentDock(currentDockPose);
 			}
@@ -1598,13 +1787,13 @@ $(document).ready(function() {
 		SaveElementNeeded(true);
 		if (currentAction == 'addPoi')
 		{
-			currentPoiPose.t_ros = parseFloat(currentPoiPose.t_ros) + Math.PI / 90;;
+			currentPoiPose.t_ros = parseFloat(currentPoiPose.t_ros) + Math.PI / 90;
 			
 			TraceCurrentPoi(currentPoiPose);
 		}
 		else if (currentAction == 'addDock')
 		{
-			currentDockPose.t_ros = parseFloat(currentDockPose.t_ros) + Math.PI / 90;;
+			currentDockPose.t_ros = parseFloat(currentDockPose.t_ros) + Math.PI / 90;
 			
 			TraceCurrentDock(currentDockPose);
 		}
@@ -1631,13 +1820,13 @@ $(document).ready(function() {
 		timerRotate = setInterval(function() { 
 			if (currentAction == 'addPoi')
 			{
-				currentPoiPose.t_ros = parseFloat(currentPoiPose.t_ros) - Math.PI / 90;;
+				currentPoiPose.t_ros = parseFloat(currentPoiPose.t_ros) - Math.PI / 90;
 				
 				TraceCurrentPoi(currentPoiPose);
 			}
 			else if (currentAction == 'addDock')
 			{
-				currentDockPose.t_ros = parseFloat(currentDockPose.t_ros) - Math.PI / 90;;
+				currentDockPose.t_ros = parseFloat(currentDockPose.t_ros) - Math.PI / 90;
 				
 				TraceCurrentDock(currentDockPose);
 			}
@@ -1666,13 +1855,13 @@ $(document).ready(function() {
 		SaveElementNeeded(true);
         if (currentAction == 'addPoi')
 		{
-			currentPoiPose.t_ros = parseFloat(currentPoiPose.t_ros) - Math.PI / 90;;
+			currentPoiPose.t_ros = parseFloat(currentPoiPose.t_ros) - Math.PI / 90;
 			
 			TraceCurrentPoi(currentPoiPose);
 		}
 		else if (currentAction == 'addDock')
 		{
-			currentDockPose.t_ros = parseFloat(currentDockPose.t_ros) - Math.PI / 90;;
+			currentDockPose.t_ros = parseFloat(currentDockPose.t_ros) - Math.PI / 90;
 			
 			TraceCurrentDock(currentDockPose);
 		}
@@ -2466,7 +2655,7 @@ function DockSave()
 		
 		nextIdDock++;
 		num = GetMaxNumDock()+1;
-		d = {'id_docking_station':nextIdDock, 'id_map':id_map, 'id_reflector':$(this).data('id_reflector'), 'x_ros':currentDockPose.x_ros, 'y_ros':currentDockPose.y_ros, 't_ros':currentDockPose.t_ros, 'num':num, 'name':'Dock '+num, 'comment':''};
+		d = {'id_docking_station':nextIdDock, 'id_map':id_map, 'id_fiducial':$(this).data('id_fiducial'), 'final_pose_x':currentDockPose.x_ros, 'final_pose_y':currentDockPose.y_ros, 'final_pose_t':currentDockPose.t_ros, 'approch_pose_x':currentDockPose.x_ros, 'approch_pose_y':currentDockPose.y_ros, 'approch_pose_t':currentDockPose.t_ros, 'fiducial_pose_x':currentDockPose.x_ros, 'fiducial_pose_y':currentDockPose.y_ros, 'fiducial_pose_t':currentDockPose.t_ros, 'num':parseInt(num), 'name':'Dock '+num, 'comment':''};
 		AddHistorique({'action':'add_dock', 'data':d});
 		
 		docks.push(d);
@@ -2788,7 +2977,7 @@ function DeleteForbidden(indexInArray)
 {
 	if ($('.cancel:visible').length > 0) $('.cancel:visible').click();
 	
-	forbiddens[indexInArray].deleted = 1;
+	forbiddens[indexInArray].deleted = true;
 	
 	AddHistorique({'action':'delete_forbidden', 'data':indexInArray});
 	
@@ -2839,7 +3028,7 @@ function DeleteArea(indexInArray)
 {
 	if ($('.cancel:visible').length > 0) $('.cancel:visible').click();
 	
-	areas[indexInArray].deleted = 1;
+	areas[indexInArray].deleted = true;
 	
 	AddHistorique({'action':'delete_area', 'data':indexInArray});
 	
@@ -2889,7 +3078,7 @@ function DeleteDock(indexInArray)
 {
 	if ($('.cancel:visible').length > 0) $('.cancel:visible').click();
 	
-	docks[indexInArray].deleted = 1;
+	docks[indexInArray].deleted = true;
 	
 	AddHistorique({'action':'delete_dock', 'data':indexInArray});
 	
@@ -2948,7 +3137,7 @@ function DeletePoi(indexInArray)
 {
 	if ($('.cancel:visible').length > 0) $('.cancel:visible').click();
 	
-	pois[indexInArray].deleted = 1;
+	pois[indexInArray].deleted = true;
 	
 	AddHistorique({'action':'delete_poi', 'data':indexInArray});
 	
@@ -3008,4 +3197,14 @@ function GetDockPosition(pose)
 	dockPose = {'x': pose.x + Math.cos(pose.theta) * 0.26 , 'y': pose.y + Math.sin(pose.theta) * 0.26, 'theta':pose.theta};
 	
 	return dockPose;
+}
+
+function RotatePoint (M, O, angle) {
+    var xM, yM, x, y;
+    //angle *= Math.PI / 180;
+    xM = M.X - O.X;
+    yM = M.Y - O.Y;
+    x = xM * Math.cos (angle) + yM * Math.sin (angle) + O.X;
+    y = - xM * Math.sin (angle) + yM * Math.cos (angle) + O.Y;
+    return ({X:Math.round (x*100)/100, Y:Math.round (y*100)/100});
 }

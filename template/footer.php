@@ -1,10 +1,23 @@
 		</div>
         
+        <div class="popup_error">
+        	<section class="panel panel-secondary" data-portlet-item="">
+                <header class="panel-heading">
+                    <div class="panel-actions">
+                        <a href="#" class="fa fa-times"></a>
+                    </div>
+                    <h2 class="panel-title">Error</h2>
+                </header>
+                <div class="panel-body"></div>
+            </section>
+        </div>
+        
         <script>
 		var lang = '<?php echo $currentLang->iso;?>';
 		var robot_host = '<?php echo (file_exists('C:\\'))?'192.168.0.30:9095':'elodie.wyca-solutions.com:9095';?>';
-		var user_api_key = '<?php echo $userConnected->api_key;?>';
-		var id_map_last = <?php echo $currentIdMap;?>;
+		//var robot_host = '<?php echo (file_exists('C:\\'))?'10.0.0.44:9095':'elodie.wyca-solutions.com:9095';?>';
+		var user_api_key = '<?php echo $_SESSION["api_key"];?>';
+		// TODO var id_map_last = <?php // echo $currentIdMap;?>;
 		var textSelectOnOrMoreTops = "<?php echo addslashes(stripslashes(__('You must select one or more tops')));?>";
 		var textIndicateAName = "<?php echo addslashes(stripslashes(__('You must indicate a name')));?>";
 		var textStartMapping = "<?php echo addslashes(stripslashes(__('Start mapping')));?>";
@@ -39,10 +52,17 @@
         
         <script>
 		$(document).ready(function(e) {
-            <?php if ($INSTALL_STEP == 1) {?>
+			
+            <?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 1) {?>
 			InitInstallWifiPage();
 			<?php }?>
-			<?php if ($INSTALL_STEP == 8) {?>
+            <?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 3) {?>
+			InitTops();
+			<?php }?>
+            <?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 4) {?>
+			InitTopsActive();
+			<?php }?>
+			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 8) {?>
 			GetInfosCurrentMap();
 			<?php }?>
         });

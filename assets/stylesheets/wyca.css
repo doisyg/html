@@ -11,6 +11,7 @@ body > header { background-color:#589FB2; padding:5px; color:#FFFFFF; }
 .global_sub_page { position:absolute; top:0; left:0; display:none; min-height:calc(100vh - 45px); width:100%; }
 .global_sub_page.active { display:block; }
 
+.popup_error { position:fixed; top:0; left:0; bottom:0; right:0; background-color:rgba(0,0,0,0.4); z-index:50000; padding:20px; display:none; }
 
 section.page { min-height:calc(100vh - 45px); display:none; position:absolute; top:0; left:0; width:100%; }
 section.page.active { display:block; }
@@ -102,6 +103,8 @@ ul.tuiles li .tuile_img.is_checkbox.checked i.fa-spinner.fa-pulse { display:none
 
 .wifi_connexion_progress { text-align:center; font-size:40px; display:none; }
 
+.loading_big { text-align:center; font-size:40px; display:none; }
+
 #install_by_step_edit_map_container_all { position:relative; margin:-20px; height:calc(100vh - 152px); }
 #install_by_step_edit_map_all { height:100%; }
 #install_by_step_edit_map_map_navigation { height:100%; }
@@ -118,6 +121,7 @@ ul.tuiles li .tuile_img.is_checkbox.checked i.fa-spinner.fa-pulse { display:none
 .btn-circle.btn-lg { width: 50px; height: 50px; padding: 10px 16px; font-size: 18px; line-height: 1.33; border-radius: 25px; }
 .btn-circle.btn-xl { width: 70px; height: 70px; padding: 10px 16px; font-size: 24px; line-height: 1.33; border-radius: 35px; }
 .btn-circle.btn-lg i { font-size:30px; line-height:50px; }
+.btn-circle.btn-xs { width: 20px; height: 20px; text-align: center; padding:0; font-size: 9px; line-height: 17px; border-radius: 20px; }
 
 .menu_icon_touch .btn-circle.btn-lg { padding:0; }
 .menu_icon_touch .description { position: absolute; left: 60px; font-size: 14px; top: 10px; display: none; padding: 5px; background-color: rgba(255,255,255,0.5); border-radius:2px; }
@@ -147,3 +151,217 @@ ul.tuiles li .tuile_img.is_checkbox.checked i.fa-spinner.fa-pulse { display:none
 
 .modalAddDock .dock { position:absolute; top:130px; margin-left:-12.5px; z-index:300; display:none; }
 .modalAddPoi .poi { position:absolute; top:130px; margin-left:-12.5px; z-index:300; display:none; }
+
+
+
+html .panel-primary .panel-heading {
+	background: #cccccc;
+}
+
+html .panel-primary .panel-subtitle {
+	opacity: 0.8;
+	color: white;
+}
+
+html .panel-primary .panel-title {
+	color: white;
+}
+
+html .panel-primary .panel-actions a {
+	background-color: transparent !important;
+	color: white;
+}
+
+html .panel-secondary .panel-heading {
+	background: #e36159;
+}
+
+html .panel-secondary .panel-subtitle {
+	opacity: 0.8;
+	color: white;
+}
+
+html .panel-secondary .panel-title {
+	color: white;
+}
+
+html .panel-secondary .panel-actions a {
+	background-color: transparent !important;
+	color: white;
+}
+
+html .panel-tertiary .panel-heading {
+	background: #2baab1;
+}
+
+html .panel-tertiary .panel-subtitle {
+	opacity: 0.8;
+	color: white;
+}
+
+html .panel-tertiary .panel-title {
+	color: white;
+}
+
+html .panel-tertiary .panel-actions a {
+	background-color: transparent !important;
+	color: white;
+}
+
+html .panel-quartenary .panel-heading {
+	background: #734ba9;
+}
+
+html .panel-quartenary .panel-subtitle {
+	opacity: 0.8;
+	color: white;
+}
+
+html .panel-quartenary .panel-title {
+	color: white;
+}
+
+html .panel-quartenary .panel-actions a {
+	background-color: transparent !important;
+	color: white;
+}
+
+html .panel-success .panel-heading {
+	background: #47a447;
+}
+
+html .panel-success .panel-subtitle {
+	opacity: 0.8;
+	color: white;
+}
+
+html .panel-success .panel-title {
+	color: white;
+}
+
+html .panel-success .panel-actions a {
+	background-color: transparent !important;
+	color: white;
+}
+
+html .panel-warning .panel-heading {
+	background: #ed9c28;
+}
+
+html .panel-warning .panel-subtitle {
+	opacity: 0.8;
+	color: white;
+}
+
+html .panel-warning .panel-title {
+	color: white;
+}
+
+html .panel-warning .panel-actions a {
+	background-color: transparent !important;
+	color: white;
+}
+
+html .panel-danger .panel-heading {
+	background: #d2322d;
+}
+
+html .panel-danger .panel-subtitle {
+	opacity: 0.8;
+	color: white;
+}
+
+html .panel-danger .panel-title {
+	color: white;
+}
+
+html .panel-danger .panel-actions a {
+	background-color: transparent !important;
+	color: white;
+}
+
+html .panel-info .panel-heading {
+	background: #5bc0de;
+}
+
+html .panel-info .panel-subtitle {
+	opacity: 0.8;
+	color: white;
+}
+
+html .panel-info .panel-title {
+	color: white;
+}
+
+html .panel-info .panel-actions a {
+	background-color: transparent !important;
+	color: white;
+}
+
+html .panel-dark .panel-heading {
+	background: #171717;
+}
+
+html .panel-dark .panel-subtitle {
+	opacity: 0.8;
+	color: white;
+}
+
+html .panel-dark .panel-title {
+	color: white;
+}
+
+html .panel-dark .panel-actions a {
+	background-color: transparent !important;
+	color: white;
+}
+
+html .panel-transparent > .panel-heading {
+	background: none;
+	border: 0;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+html .panel-transparent > .panel-heading .panel-actions {
+	right: 0;
+}
+
+html .panel-transparent > .panel-heading + .panel-body {
+	border-radius: 5px;
+}
+
+html .panel-transparent > .panel-body {
+	padding: 0;
+	border-radius: 0;
+	background: transparent;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+
+html .panel .panel-heading-transparent {
+	background: none;
+	border: 0;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+html .panel .panel-heading-transparent .panel-actions {
+	right: 0;
+}
+
+html .panel .panel-heading-transparent + .panel-body {
+	border-radius: 5px;
+}
+
+html .panel-heading { position:relative; }
+
+.panel-actions {
+	right: 15px;
+	position: absolute;
+	top: 7px;
+}
+
+
+ul.list_elem { margin:0; padding:0; margin-top:10px; }
+ul.list_elem li { padding:5px 10px; border:1px solid #CCC; border-radius:3px; margin-bottom:10px; }
