@@ -218,7 +218,7 @@ function WycaAPI(options){
 		webcam_name: "",
 		serveurWyca : 'https://elodie.wyca-solutions.com/',
 		on_error_webcam_try_without : true,
-		host : 'elodie.wyca-solutions.com:9090',
+		host : 'elodie.wyca-solutions.com:9095',
 		api_key:''
     };
     this.options = $.extend({}, defaults, options || {});
@@ -232,9 +232,9 @@ function WycaAPI(options){
 		throw new Error('This Browser does not support WebSockets')
 	}
 	
-	this.socketStarted = false;
-	this.socketAuthed = false;
-	this.socketError = false;
+	this.websocketStarted = false;
+	this.websocketAuthed = false;
+	this.websocketError = false;
 	this.timeoutReconnect = null;
 	this.callbacks = Array();
 	this.authentificated = false;
@@ -244,12 +244,16 @@ function WycaAPI(options){
 	
 	this.init = function (){
 		
-		this.Connect();
+		this.WsConnect();
 	};
+	
+	/****************/
+	/** Websockets **/
+	/****************/
 	
 	this.wsOnOpen = function(e)
 	{
-		_this.socketStarted = true;
+		_this.websocketStarted = true;
 		//_this.ROSMessageSendToPC('onRobotConnexionOpen');
 		if (_this.options.onRobotConnexionOpen != undefined)
 		{
@@ -269,9 +273,9 @@ function WycaAPI(options){
 	
 	this.wsOnError = function(error)
 	{
-		//_this.socketStarted = false;
-		//_this.socketAuthed = false;
-		_this.socketError = true;
+		//_this.websocketStarted = false;
+		//_this.websocketAuthed = false;
+		_this.websocketError = true;
 		//_this.ROSMessageSendToPC('onRobotConnexionError');
 		if (_this.options.onRobotConnexionError != undefined)
 		{
@@ -279,13 +283,13 @@ function WycaAPI(options){
 		}
 		
 		if (_this.timeoutReconnect == null)
-			_this.timeoutReconnect = setTimeout(_this.Connect, 1000);
+			_this.timeoutReconnect = setTimeout(_this.WsConnect, 1000);
 	}
 	
 	this.wsOnClose = function(e)
 	{
-		_this.socketStarted = false;
-		_this.socketAuthed = false;
+		_this.websocketStarted = false;
+		_this.websocketAuthed = false;
 		//_this.ROSMessageSendToPC('onRobotConnexionClose');
 		if (_this.options.onRobotConnexionClose != undefined)
 		{
@@ -293,7 +297,7 @@ function WycaAPI(options){
 		}
 		
 		if (_this.timeoutReconnect == null)
-			_this.timeoutReconnect = setTimeout(_this.Connect, 1000);
+			_this.timeoutReconnect = setTimeout(_this.WsConnect, 1000);
 	}
 	
 	this.wsOnMessage = function(e)
@@ -318,7 +322,7 @@ function WycaAPI(options){
 				case this.CommandCode.AUTH_USER:
 					if (msg.A == _this.AnswerCode.NO_ERROR)
 					{
-						_this.socketAuthed = true;
+						_this.websocketAuthed = true;
 						_this.Subscribe();
 					}
 					else
@@ -506,14 +510,31 @@ function WycaAPI(options){
 		}
 	}
 	
-	var _this = this;
+	this.WsConnect = function()
+	{
+		_this.timeoutReconnect = null;
+		if (_this.options.nick == 'robot')
+		{
+			if ("WebSocket" in window) {
+				_this.ws = new WebSocket('wss://'+_this.options.host);
+			} else if ("MozWebSocket" in window) {
+				_this.ws = new MozWebSocket('wss://'+_this.options.host);
+			} else {
+				throw new Error('This Browser does not support WebSockets')
+			}
+			_this.ws.onopen = jQuery.proxy(_this.wsOnOpen, _this);
+			_this.ws.onerror = jQuery.proxy(_this.wsOnError, _this);
+			_this.ws.onclose = jQuery.proxy(_this.wsOnClose , _this);
+			_this.ws.onmessage = jQuery.proxy(_this.wsOnMessage , _this);
+		}
+	}
 	
 	this.wycaSend = function (msg) {
-		if (!_this.socketStarted)
-			_this.socketAuthed = false;
+		if (!_this.websocketStarted)
+			_this.websocketAuthed = false;
 		else
 		{
-			if (_this.socketAuthed)
+			if (_this.websocketAuthed)
 			{
 				_this.ws.send(msg);
 				
@@ -529,6 +550,12 @@ function WycaAPI(options){
 				console.error('No auth');
 		}
 	}
+	
+	var _this = this;
+	
+	/****************/
+	/** 	API	   **/
+	/****************/
 	
 	this.AnswerCodeToString = function(ac)
 	{
@@ -557,26 +584,7 @@ function WycaAPI(options){
 			default: return 'Unknow error code';
 		}
 	}
-	
-	this.Connect = function()
-	{
-		_this.timeoutReconnect = null;
-		if (_this.options.nick == 'robot')
-		{
-			if ("WebSocket" in window) {
-				_this.ws = new WebSocket('wss://'+_this.options.host);
-			} else if ("MozWebSocket" in window) {
-				_this.ws = new MozWebSocket('wss://'+_this.options.host);
-			} else {
-				throw new Error('This Browser does not support WebSockets')
-			}
-			_this.ws.onopen = jQuery.proxy(_this.wsOnOpen, _this);
-			_this.ws.onerror = jQuery.proxy(_this.wsOnError, _this);
-			_this.ws.onclose = jQuery.proxy(_this.wsOnClose , _this);
-			_this.ws.onmessage = jQuery.proxy(_this.wsOnMessage , _this);
-		}
-	}
-	
+		
 	this.Subscribe = function()
 	{
 		if (_this.options.onBatteryState != undefined) { var n=_this.EventCode.BATTERY_STATE; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_EVENT, "P": { "E":n, "F":1000}}; _this.wycaSend(JSON.stringify(subscribe)); }
@@ -597,6 +605,12 @@ function WycaAPI(options){
 		if (_this.options.onPOIsDetect != undefined) { var n=_this.EventCode.POI_POSES; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		
 		if (_this.options.onInitialized != undefined) _this.options.onInitialized();
+	}
+	
+	this.UnsubscribeAll = function()
+	{
+		var unsubscribe = { "O": _this.CommandCode.UNSUBSCRIBE_ALL};
+		_this.wycaSend(JSON.stringify(unsubscribe));
 	}
 	
 	this.on = function (event_name, callback)
