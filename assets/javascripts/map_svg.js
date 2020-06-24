@@ -422,10 +422,10 @@ function TraceCurrentDock(pose)
 {
 	$('#install_by_step_edit_map_svg .dock_elem_current').remove();
 	
-	x = pose.x_ros * 100 / ros_resolution;
-	y = ros_hauteur - (pose.y_ros * 100 / ros_resolution);
+	x = pose.fiducial_pose_x * 100 / ros_resolution;
+	y = ros_hauteur - (pose.fiducial_pose_y * 100 / ros_resolution);
 	
-	angle = 0 - pose.t_ros * 180 / Math.PI - 90;
+	angle = 0 - pose.fiducial_pose_t * 180 / Math.PI - 90;
 	
 	path = makeSVGElement('rect', { x: x-5, y:y-1, height:2, width:10,
 				   'stroke-width': minStokeWidth,
@@ -560,9 +560,9 @@ function TracePoi(indexPoi)
 	else
 		$('#install_by_step_edit_map_svg .poi_elem_'+poi.id_poi).remove();
 	
-	x = poi.x_ros * 100 / ros_resolution;
-	y = ros_hauteur - (poi.y_ros * 100 / ros_resolution);	
-	angle = 0 - poi.t_ros * 180 / Math.PI;
+	x = poi.final_pose_x * 100 / ros_resolution;
+	y = ros_hauteur - (poi.final_pose_y * 100 / ros_resolution);	
+	angle = 0 - poi.final_pose_t * 180 / Math.PI;
 	
 	rayonRobot = (26 / ros_resolution);
 	rayonRobotSecure = ((26+15) / ros_resolution);

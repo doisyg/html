@@ -16,6 +16,8 @@ var dessin;
 var currentAction = '';
 var currentStep = '';
 
+var currentStepAddPoi = '';
+
 var svg;
 
 var timerRotate = null;
@@ -73,6 +75,9 @@ var intervalRefreshConn = null;
 var savedCanClose = true;
 
 var indexDockElem = 0;
+var indexPoiElem = 0;
+
+var poi_temp_add = {};
 
 var timerCantChange = null;
 function AvertCantChange()
@@ -558,10 +563,6 @@ $(document).ready(function() {
 		
 		
 		$('#install_by_step_edit_map_container_all .modalDockOptions').modal('show');
-		
-		
-		$('#install_by_step_edit_map_container_all .modalDockOptions').modal('show');
-		
     });
 	
 	$('#install_by_step_edit_map_menu_poi .bDeletePoi').click(function(e) {
@@ -571,30 +572,53 @@ $(document).ready(function() {
 		DeletePoi(i);
     });
 	
-	$('#install_by_step_edit_map_menu_dock .bConfigPoi').click(function(e) {
+	$('#install_by_step_edit_map_menu_poi .bConfigPoi').click(function(e) {
         e.preventDefault();
 		HideMenus();
 		currentAction = 'editPoi';
 	
 		currentPoiIndex = GetPoiIndexFromID(currentPoiLongTouch.data('id_poi'));
 		poi = pois[currentPoiIndex];
-		/*
-		$.each(area.configs, function( indexConfig, config ) {
-			switch(config.name)
-			{
-				case 'led_color_mode': $('#led_color_mode').val(config.value); break;
-				case 'led_color': $('#led_color').val(config.value); $('#led_color').keyup(); break;
-				case 'led_animation_mode': $('#led_animation_mode').val(config.value); break;
-				case 'led_animation': $('#led_animation').val(config.value); break;
-				case 'max_speed_mode': $('#max_speed_mode').val(config.value); break;
-				case 'max_speed': $('#max_speed').val(config.value); break;
-			}
-		});
 		
-		if ($('#led_color_mode').val() == 'Automatic') $('#led_color_group').hide(); else  $('#led_color_group').show();
-		if ($('#led_animation_mode').val() == 'Automatic') $('#led_animation_group').hide(); else  $('#led_animation_group').show();
-		if ($('#max_speed_mode').val() == 'Automatic') $('#max_speed_group').hide(); else  $('#max_speed_group').show();
-		*/
+		$('#poi_name').val(poi.name);
+		$('#poi_comment').val(poi.comment);
+		
+		$('.modalPoiOptions .list_undock_procedure_poi li').remove();
+		
+		$.each(poi.undock_path, function( indexConfig, undock_step ) {
+
+			console.log(undock_step);
+			indexPoiElem++;
+			
+			if (undock_step.linear_distance != 0)
+			{				
+				distance = undock_step.linear_distance;
+				direction = undock_step.linear_distance > 0 ? 'front':'back';
+				
+				$('.modalPoiOptions .list_undock_procedure_poi').append('' +
+					'<li id="list_undock_procedure_poi_elem_'+indexPoiElem+'" data-index_poi_procedure="'+indexPoiElem+'" data-action="move" data-distance="' + distance + '">'+
+					'	<span>Move ' + ((direction == 'back')?'back':'front') + ' ' + ((direction == 'back')?distance*-1:distance) + 'm</span>'+
+					'	<a href="#" class="bUndockProcedurePoiDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+					'	<a href="#" class="bUndockProcedurePoiEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
+					'</li>'
+					);
+			}
+			else
+			{	
+				angle = undock_step.angular_distance * 180 / Math.PI;
+				angle = Math.round(angle*100)/100;
+				
+				$('.modalPoiOptions .list_undock_procedure_poi').append('' +
+					'<li id="list_undock_procedure_poi_elem_'+indexPoiElem+'" data-index_poi_procedure="'+indexPoiElem+'" data-action="rotate" data-angle="'+angle+'">'+
+					'	<span>Rotate '+angle+'°</span>'+
+					'	<a href="#" class="bUndockProcedurePoiDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+					'	<a href="#" class="bUndockProcedurePoiEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
+					'</li>'
+					);
+			}
+			
+		});		
+		
 		$('#install_by_step_edit_map_container_all .modalPoiOptions').modal('show');
 		
     });
@@ -987,7 +1011,7 @@ $(document).ready(function() {
 			currentForbiddenPoints.push({x:xRos + tailleArea, y:yRos + tailleArea});
 			currentForbiddenPoints.push({x:xRos - tailleArea, y:yRos + tailleArea});
 			
-			f = {'id_area':nextIdArea, 'id_map':id_map, 'nom':'', 'comment':'', 'is_forbidden':true, 'color_r':0, 'color_g':0, 'color_b':0, 'deleted':false, 'points':currentForbiddenPoints};
+			f = {'id_area':nextIdArea, 'id_map':id_map, 'name':'', 'comment':'', 'is_forbidden':true, 'color_r':0, 'color_g':0, 'color_b':0, 'deleted':false, 'points':currentForbiddenPoints};
 			AddHistorique({'action':'add_forbidden', 'data':f});
 			
 			forbiddens.push(f);
@@ -1073,7 +1097,7 @@ $(document).ready(function() {
 			currentAreaPoints.push({x:xRos + tailleArea, y:yRos + tailleArea});
 			currentAreaPoints.push({x:xRos - tailleArea, y:yRos + tailleArea});
 
-			a = {'id_area':nextIdArea, 'id_map':id_map, 'nom':'', 'comment':'', 'is_forbidden':false, 'color_r':87, 'color_g':159, 'color_b':177, 'deleted':false, 'points':currentAreaPoints, 'configs':Array()};
+			a = {'id_area':nextIdArea, 'id_map':id_map, 'name':'', 'comment':'', 'is_forbidden':false, 'color_r':87, 'color_g':159, 'color_b':177, 'deleted':false, 'points':currentAreaPoints, 'configs':Array()};
 			AddHistorique({'action':'add_area', 'data':a});
 			
 			areas.push(a);
@@ -1185,7 +1209,7 @@ $(document).ready(function() {
 	$('.modalAddDock .bScanAddDock').click(function(e) {
 		$('.modalAddDock .bScanAddDock').addClass('disabled');
 		
-		wycaApi.GetFiducialsVisible(function(data) {
+		wycaApi.GetMapFiducialsVisible(function(data) {
 			
 			$('.modalAddDock .bScanAddDock').removeClass('disabled');	
 			
@@ -1251,15 +1275,13 @@ $(document).ready(function() {
 		final_pose_x = $(this).data('x') + Math.cos($(this).data('theta')) * distance_centre_robot_fiducial;
 		final_pose_y = $(this).data('y') + Math.sin($(this).data('theta')) * distance_centre_robot_fiducial;
 		final_pose_t = $(this).data('theta') + Math.PI;
-		
-		$(this).data('x'), $(this).data('y'), $(this).data('theta')
-		
+				
 		approch_pose_x = $(this).data('x') + Math.cos($(this).data('theta')) * distance_approche_robot_fiducial;
 		approch_pose_y = $(this).data('y') + Math.sin($(this).data('theta')) * distance_approche_robot_fiducial;
 		approch_pose_t = $(this).data('theta') + Math.PI;
 		
 		num = GetMaxNumDock()+1;
-		d = {'id_docking_station':nextIdDock, 'id_map':id_map, 'id_fiducial':$(this).data('id_fiducial'), 'final_pose_x':final_pose_x, 'final_pose_y':final_pose_y, 'final_pose_t':final_pose_t, 'approch_pose_x':approch_pose_x, 'approch_pose_y':approch_pose_y, 'approch_pose_t':approch_pose_t, 'num':parseInt(num), 'fiducial_pose_x':$(this).data('x'), 'fiducial_pose_y':$(this).data('y'), 'fiducial_pose_t':$(this).data('theta'), 'name':'Dock '+num, 'comment':'', 'undock_path':[{'linear_distance':-0.3, 'angular_distance':0}]};
+		d = {'id_docking_station':nextIdDock, 'id_map':id_map, 'id_fiducial':$(this).data('id_fiducial'), 'final_pose_x':final_pose_x, 'final_pose_y':final_pose_y, 'final_pose_t':final_pose_t, 'approch_pose_x':approch_pose_x, 'approch_pose_y':approch_pose_y, 'approch_pose_t':approch_pose_t, 'num':parseInt(num), 'fiducial_pose_x':$(this).data('x'), 'fiducial_pose_y':$(this).data('y'), 'fiducial_pose_t':$(this).data('theta'), 'name':'Dock '+num, 'comment':'', 'advanced':true, 'undock_path':[{'linear_distance':-0.3, 'angular_distance':0}]};
 		AddHistorique({'action':'add_dock', 'data':d});
         docks.push(d);
 		TraceDock(docks.length-1);
@@ -1453,6 +1475,10 @@ $(document).ready(function() {
 		HideMenus();
 		if (canChangeMenu)
 		{
+			$('.texts_add_poi').hide();
+			$('.text_prepare_approch').show();
+			currentStepAddPoi = 'set_approch';
+			
 			$('#install_by_step_edit_map_container_all .modalAddPoi').modal('show');
 		}
 		else
@@ -1461,76 +1487,270 @@ $(document).ready(function() {
 	$('.modalAddPoi .bScanAddPoi').click(function(e) {
 		$('.modalAddPoi .bScanAddPoi').addClass('disabled');
 		
-        wycaApi.on('onPOIsDetect', function(data) {
+		wycaApi.GetMapFiducialsVisible(function(data) {
 			
-			$('.modalAddPoi .bScanAddPoi').removeClass('disabled');
+			$('.modalAddPoi .bScanAddPoi').removeClass('disabled');	
 			
-			// On a recu, on se désabonne
-			wycaApi.ReflectorDetectionEnable(false);	
-			wycaApi.off('onPOIsDetect');
-			
-			$('.modalAddPoi .poi').hide();
-			
-			posRobot = $('.modalAddPoi #modalAddPoi_robot').offset();
-			
-			for (i=0; i< data.length; i++)
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
-				if (data[i].type != 'Dock')
+				console.log(data);
+				
+				$('.modalAddPoi .poi').hide();
+				
+				posRobot = $('.modalAddPoi #modalAddPoi_robot').offset();
+				
+				if (data.D.length > 0)
 				{
-					$('.modalAddPoi #modalAddPoi_poi'+i).show();
-					$('.modalAddPoi #modalAddPoi_poi'+i).css('left', posRobot.left + data[i].pose.y * 100); // lidar : y * -1
-					$('.modalAddPoi #modalAddPoi_poi'+i).css('top', posRobot.top - data[i].pose.x * 100 - 12.5 - 20); // +20 position lidar, - 12.5 pour le centre
-					angle = data[i].pose.theta * 180 / Math.PI;
-					$('.modalAddPoi #modalAddPoi_poi'+i).css({'-webkit-transform' : 'rotate('+ angle +'deg)',
+					$('.texts_add_poi').hide();
+					if (currentStepAddPoi != 'set_final')
+						$('.text_set_approch').show();
+					else
+						$('.text_set_final').show();
+				}
+				
+				for (i=0; i< data.D.length; i++)
+				{
+					if (data.D[i].TY != 'Dock')
+					{
+						new_point = RotatePoint (data.D[i].P, lastRobotPose, lastRobotPose.T - Math.PI/2);
+						x_from_robot = new_point.X - lastRobotPose.X;
+						y_from_robot = new_point.Y - lastRobotPose.Y;
+						
+						// 1px / cm
+						
+						$('.modalAddPoi #modalAddPoi_poi'+i).show();
+						$('.modalAddPoi #modalAddPoi_poi'+i).css('left', posRobot.left + x_from_robot * 100); // lidar : y * -1
+						$('.modalAddPoi #modalAddPoi_poi'+i).css('top', posRobot.top - y_from_robot * 100); // +20 position lidar, - 12.5 pour le centre
+						//angle = (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
+						
+						angle = 0 - (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
+						
+						$('.modalAddPoi #modalAddPoi_poi'+i).css({'-webkit-transform' : 'rotate('+ angle +'deg)',
 																 '-moz-transform' : 'rotate('+ angle +'deg)',
 																 '-ms-transform' : 'rotate('+ angle +'deg)',
 																 'transform' : 'rotate('+ angle +'deg)'});
-					
-					
-					$('.modalAddPoi #modalAddPoi_poi'+i).data('id_fiducial', data[i].Id);
-					$('.modalAddPoi #modalAddPoi_poi'+i).data('fiducial_pose_x', data[i].pose.x);
-					$('.modalAddPoi #modalAddPoi_poi'+i).data('fiducial_pose_y', data[i].pose.y);
-					$('.modalAddPoi #modalAddPoi_poi'+i).data('fiducial_pose_t', data[i].pose.theta);
+						
+						
+						$('.modalAddPoi #modalAddPoi_poi'+i).data('id_fiducial', data.D[i].ID);
+						$('.modalAddPoi #modalAddPoi_poi'+i).data('x', data.D[i].P.X);
+						$('.modalAddPoi #modalAddPoi_poi'+i).data('y', data.D[i].P.Y);
+						$('.modalAddPoi #modalAddPoi_poi'+i).data('theta', data.D[i].P.T);
+					}
 				}
 			}
+			else
+			{
+				DisplayError(wycaApi.AnswerCodeToString(data.A) + "<br/>" + data.M);
+			}
 		});
-		
-		wycaApi.ReflectorDetectionEnable(true);
     });
 	
 	$('.modalAddPoi .poi').click(function(e) {
         e.preventDefault();
 		
-		nextIdPoi++;
-		
-		p = {'id_poi':nextIdPoi, 'id_map':id_map, 'id_fiducial':$(this).data('id_fiducial'), 'fiducial_pose_x':$(this).data('fiducial_pose_x'), 'fiducial_pose_y':$(this).data('fiducial_pose_y'), 'fiducial_pose_t':$(this).data('fiducial_pose_t'), 'name':'POI', 'comment':'', 'icon':'', 'active':true};
-		AddHistorique({'action':'add_poi', 'data':p});
-        pois.push(p);
-		TracePoi(pois.length-1);
-				
-		$('#install_by_step_edit_map_container_all .modalAddPoi').modal('hide');
-		
-		currentPoiIndex = pois.length-1;
-		poi = pois[currentPoiIndex];
-		/*
-		$.each(area.configs, function( indexConfig, config ) {
-			switch(config.name)
-			{
-				case 'led_color_mode': $('#led_color_mode').val(config.value); break;
-				case 'led_color': $('#led_color').val(config.value); $('#led_color').keyup(); break;
-				case 'led_animation_mode': $('#led_animation_mode').val(config.value); break;
-				case 'led_animation': $('#led_animation').val(config.value); break;
-				case 'max_speed_mode': $('#max_speed_mode').val(config.value); break;
-				case 'max_speed': $('#max_speed').val(config.value); break;
-			}
-		});
-		
-		if ($('#led_color_mode').val() == 'Automatic') $('#led_color_group').hide(); else  $('#led_color_group').show();
-		if ($('#led_animation_mode').val() == 'Automatic') $('#led_animation_group').hide(); else  $('#led_animation_group').show();
-		if ($('#max_speed_mode').val() == 'Automatic') $('#max_speed_group').hide(); else  $('#max_speed_group').show();
-		*/
-		$('#install_by_step_edit_map_container_all .modalPoiOptions').modal('show');
+		if (currentStepAddPoi == 'set_approch')
+		{
+			nextIdPoi++;
+			
+			poi_temp_add = {'id_poi':nextIdPoi, 'id_map':id_map, 'id_fiducial':$(this).data('id_fiducial'), 'fiducial_pose_x':$(this).data('x'), 'fiducial_pose_y':$(this).data('y'), 'fiducial_pose_t':$(this).data('theta'), 'final_pose_x':lastRobotPose.X, 'final_pose_y':lastRobotPose.Y, 'final_pose_t':lastRobotPose.T, 'approch_pose_x':lastRobotPose.X, 'approch_pose_y':lastRobotPose.Y, 'approch_pose_t':lastRobotPose.T, 'name':'POI', 'comment':'', 'icon':'', 'active':true};
+			
+			$('.modalAddPoi .poi').hide();
+			
+ 			currentStepAddPoi = 'set_final';
+			$('.texts_add_poi').hide();
+			$('.text_prepare_final').show();
+		}
+		else
+		{
+			poi_temp_add.final_pose_x = lastRobotPose.X;
+			poi_temp_add.final_pose_y = lastRobotPose.Y;
+			poi_temp_add.final_pose_t = lastRobotPose.T;
+			
+			AddHistorique({'action':'add_poi', 'data':poi_temp_add});
+			pois.push(poi_temp_add);
+			TracePoi(pois.length-1);
+					
+			$('#install_by_step_edit_map_container_all .modalAddPoi').modal('hide');
+			
+			currentPoiIndex = pois.length-1;
+			poi = pois[currentPoiIndex];
+			
+			$('.modalPoiOptions .list_undock_procedure_poi li').remove();
+			
+			indexPoiElem++;
+			
+			$('.modalPoiOptions .list_undock_procedure_poi').append('' +
+				'<li id="list_undock_procedure_poi_elem_'+indexPoiElem+'" data-index_poi="'+indexPoiElem+'" data-action="move" data-distance="-0.3">'+
+				'	<span>Move back 0.3m</span>'+
+				'	<a href="#" class="bUndockProcedurePoiDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+				'	<a href="#" class="bUndockProcedurePoiEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
+				'</li>'
+				);
+			
+			$('#install_by_step_edit_map_container_all .modalPoiOptions').modal('show');
+		}
     });
+	
+	$('#bPoiSaveConfig').click(function(e) {
+		poi = pois[currentPoiIndex];
+		saveCurrentPoi = JSON.stringify(poi);
+				
+		poi.name = $('#poi_name').val();
+		poi.comment = $('#poi_comment').val();
+			
+		poi.undock_path = Array();
+		
+		$('.modalPoiOptions .list_undock_procedure_poi li').each(function(index, element) {
+			if ($(this).data('action') == 'rotate')
+			{
+				angle_rad = parseFloat($(this).data('angle')) * Math.PI/180;
+				poi.undock_path.push({'linear_distance':0, 'angular_distance':angle_rad});
+			}
+			else
+				poi.undock_path.push({'linear_distance':$(this).data('distance'), 'angular_distance':0});
+        });
+		
+		pois[currentPoiIndex] = poi;
+				
+		if (currentAction == 'editPoi')
+			AddHistorique({'action':'edit_poi', 'data':{'index':currentPoiIndex, 'old':saveCurrentPoi, 'new':JSON.stringify(pois[currentPoiIndex])}});
+		
+		TracePoi(currentPoiIndex);
+	});
+	
+	$('.modalPoiOptions .bUndockProcedurePoiAddElem').click(function(e) {
+        e.preventDefault();
+		
+		$('#up_poi_elem_action_move').prop('checked', false);
+		$('#up_poi_elem_action_rotate').prop('checked', false);
+		
+		$('#up_poi_elem_direction_back').prop('checked', true);
+		$('.up_poi_elem_action_move').hide();
+		$('.up_poi_elem_action_rotate').hide();
+		
+		$('#install_by_step_edit_map_container_all .modalPoiElemOptions').data('index_poi_procedure', -1);
+		
+		$('#install_by_step_edit_map_container_all .modalPoiElemOptions').modal('show');
+    });
+	
+	$('.modalPoiElemOptions input:radio[name="up_poi_elem_action"]').change(function () {
+		action = $("input[name='up_poi_elem_action']:checked").val()
+		$('.up_poi_elem_action_move').hide();
+		$('.up_poi_elem_action_rotate').hide();
+		if (action == 'move') {
+			$('.up_poi_elem_action_move').show();
+		}
+		else if (action == 'rotate') {
+			$('.up_poi_elem_action_rotate').show();
+		}
+	});
+		
+	$('.modalPoiElemOptions .bPoiElemSave').click(function(e) {
+		
+		index_poi_procedure = $('#install_by_step_edit_map_container_all .modalPoiElemOptions').data('index_poi_procedure');
+		if (index_poi_procedure == -1)
+		{
+			indexPoiElem++;
+			
+			action = $("input[name='up_poi_elem_action']:checked").val();
+			
+			if (action == 'move') {
+				
+				distance = parseFloat($("#up_poi_elem_move_distance").val());
+				direction = $("input[name='up_poi_elem_direction']:checked").val();
+							
+				$('.modalPoiOptions .list_undock_procedure_poi').append('' +
+					'<li id="list_undock_procedure_poi_elem_'+indexPoiElem+'" data-index_poi_procedure="'+indexPoiElem+'" data-action="move" data-distance="' + ((direction == 'back')?distance*-1:distance) + '">'+
+					'	<span>Move ' + ((direction == 'back')?'back':'front') + ' ' + distance + 'm</span>'+
+					'	<a href="#" class="bUndockProcedurePoiDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+					'	<a href="#" class="bUndockProcedurePoiEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
+					'</li>'
+					);
+			}
+			else if (action == 'rotate') {
+				
+				angle = $("#up_poi_elem_rotate_angle").val();
+				
+				$('.modalPoiOptions .list_undock_procedure_poi').append('' +
+					'<li id="list_undock_procedure_poi_elem_'+indexPoiElem+'" data-index_poi_procedure="'+indexPoiElem+'" data-action="rotate" data-angle="'+angle+'">'+
+					'	<span>Rotate '+angle+'°</span>'+
+					'	<a href="#" class="bUndockProcedurePoiDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+					'	<a href="#" class="bUndockProcedurePoiEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
+					'</li>'
+					);
+			}
+		}
+		else
+		{
+			action = $("input[name='up_poi_elem_action']:checked").val();
+			if (action == 'move') {
+				
+				distance = parseFloat($("#up_poi_elem_move_distance").val());
+				direction = $("input[name='up_poi_elem_direction']:checked").val();
+				
+				li = $('#list_undock_procedure_poi_elem_'+ index_poi_procedure);
+				span = $('#list_undock_procedure_poi_elem_'+ index_poi_procedure + ' span');
+				
+				li.data('action', 'move');
+				li.data('distance', ((direction == 'back')?distance*-1:distance));
+				span.html('Move ' + ((direction == 'back')?'back':'front') + ' ' + distance + 'm');
+			}
+			else if (action == 'rotate') {
+				
+				angle = $("#up_poi_elem_rotate_angle").val();
+				
+				li = $('#list_undock_procedure_poi_elem_'+ index_poi_procedure);
+				span = $('#list_undock_procedure_poi_elem_'+ index_poi_procedure + ' span');
+				
+				li.data('action', 'rotate');
+				li.data('angle', angle);
+				span.html('Rotate '+angle+'°');
+			}
+		}
+    });
+	
+	$(document).on('click', '.modalPoiOptions .bUndockProcedurePoiDeleteElem', function(e) {
+		e.preventDefault();
+		
+		$(this).closest('li').remove();
+	});
+	
+	$(document).on('click', '.modalPoiOptions .bUndockProcedurePoiEditElem', function(e) {
+		e.preventDefault();
+		
+		$('#up_poi_elem_action_move').prop('checked', false);
+		$('#up_poi_elem_action_rotate').prop('checked', false);
+		
+		$('.up_poi_elem_action_move').hide();
+		$('.up_poi_elem_action_rotate').hide();
+		
+		li = $(this).closest('li');
+		if (li.data('action') == 'rotate')
+		{
+			$('.up_poi_elem_action_rotate').show();
+			$('#up_poi_elem_action_rotate').prop('checked', true);
+			$("#up_poi_elem_rotate_angle").val(li.data('angle'));
+		}
+		else
+		{
+			$('.up_poi_elem_action_move').show();
+			$('#up_poi_elem_action_move').prop('checked', true);
+			distance = li.data('distance');
+			if (distance < 0)
+				$('#up_poi_elem_direction_back').prop('checked', true);
+			else
+				$('#up_poi_elem_direction_front').prop('checked', true);
+			
+			$("#up_poi_elem_move_distance").val(Math.abs(distance));
+		}
+		
+		
+		$('#install_by_step_edit_map_container_all .modalPoiElemOptions').data('index_poi_procedure', li.data('index_poi_procedure'));
+		
+		$('#install_by_step_edit_map_container_all .modalPoiElemOptions').modal('show');
+		
+	});
+	
 	
 	$('#bDockCreateFromMap').click(function(e) {
         if (canChangeMenu)
@@ -1577,8 +1797,8 @@ $(document).ready(function() {
 			p = $('#install_by_step_edit_map_svg image').position();
 			
 			
-			x = dock.x_ros * 100 / 5;
-			y = dock.y_ros * 100 / 5;
+			x = dock.approch_pose_x * 100 / 5;
+			y = dock.approch_pose_y * 100 / 5;
 			
 			x = x / zoom;
 			y = (ros_hauteur - y) / zoom;
@@ -1662,7 +1882,7 @@ $(document).ready(function() {
 			SaveElementNeeded(false);
 			
 			nextIdPoi++;
-			p = {'id_poi':nextIdPoi, 'id_map':id_map, 'id_fiducial':-1, 'final_pose_x':currentPoiPose.x_ros, 'final_pose_y':currentPoiPose.y_ros, 'final_pose_t':currentPoiPose.t_ros, 'approch_pose_x':currentPoiPose.x_ros, 'approch_pose_y':currentPoiPose.y_ros, 'approch_pose_t':currentPoiPose.t_ros, 'fiducial_pose_x':0, 'fiducial_pose_y':0, 'fiducial_pose_t':0, 'name':$('#poi_name').val(), 'comment':'', 'icon':'', 'active':true};
+			p = {'id_poi':nextIdPoi, 'id_map':id_map, 'id_fiducial':-1, 'final_pose_x':currentPoiPose.final_pose_x, 'final_pose_y':currentPoiPose.final_pose_y, 'final_pose_t':currentPoiPose.final_pose_t, 'approch_pose_x':currentPoiPose.approch_pose_x, 'approch_pose_y':currentPoiPose.approch_pose_y, 'approch_pose_t':currentPoiPose.approch_pose_t, 'fiducial_pose_x':currentPoiPose.fiducial_pose_x, 'fiducial_pose_y':currentPoiPose.fiducial_pose_y, 'fiducial_pose_t':currentPoiPose.fiducial_pose_t, 'name':$('#poi_name').val(), 'comment':'', 'icon':'', 'active':true};
 			AddHistorique({'action':'add_poi', 'data':p});
 			
 			pois.push(p);
@@ -1721,8 +1941,8 @@ $(document).ready(function() {
 			zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();		
 			p = $('#install_by_step_edit_map_svg image').position();
 			
-			x = poi.x_ros * 100 / 5;
-			y = poi.y_ros * 100 / 5;
+			x = poi.approch_pose_x * 100 / 5;
+			y = poi.approch_pose_y * 100 / 5;
 			
 			x = x / zoom;
 			y = (ros_hauteur - y) / zoom;
@@ -1752,26 +1972,26 @@ $(document).ready(function() {
 		timerRotate = setInterval(function() { 
 			if (currentAction == 'addPoi')
 			{
-				currentPoiPose.t_ros = parseFloat(currentPoiPose.t_ros) + Math.PI / 90;
+				currentPoiPose.approch_pose_t = parseFloat(currentPoiPose.approch_pose_t) + Math.PI / 90;
 				
 				TraceCurrentPoi(currentPoiPose);
 			}
 			else if (currentAction == 'addDock')
 			{
-				currentDockPose.t_ros = parseFloat(currentDockPose.t_ros) + Math.PI / 90;
+				currentDockPose.approch_pose_t = parseFloat(currentDockPose.approch_pose_t) + Math.PI / 90;
 				
 				TraceCurrentDock(currentDockPose);
 			}
 			else if (currentAction == 'editPoi')
 			{
 				poi = pois[currentPoiIndex];
-				poi.t_ros = parseFloat(poi.t_ros) + Math.PI / 90;
+				poi.approch_pose_t = parseFloat(poi.approch_pose_t) + Math.PI / 90;
 				TracePoi(currentPoiIndex);			
 			}
 			else if (currentAction == 'editDock')
 			{
 				dock = docks[currentDockIndex];
-				dock.t_ros = parseFloat(dock.t_ros) + Math.PI / 90;
+				dock.approch_pose_t = parseFloat(dock.approch_pose_t) + Math.PI / 90;
 				TraceDock(currentDockIndex);		
 			}
 		}, 100);
@@ -1787,26 +2007,26 @@ $(document).ready(function() {
 		SaveElementNeeded(true);
 		if (currentAction == 'addPoi')
 		{
-			currentPoiPose.t_ros = parseFloat(currentPoiPose.t_ros) + Math.PI / 90;
+			currentPoiPose.approch_pose_t = parseFloat(currentPoiPose.approch_pose_t) + Math.PI / 90;
 			
 			TraceCurrentPoi(currentPoiPose);
 		}
 		else if (currentAction == 'addDock')
 		{
-			currentDockPose.t_ros = parseFloat(currentDockPose.t_ros) + Math.PI / 90;
+			currentDockPose.approch_pose_t = parseFloat(currentDockPose.approch_pose_t) + Math.PI / 90;
 			
 			TraceCurrentDock(currentDockPose);
 		}
 		else if (currentAction == 'editPoi')
 		{
 			poi = pois[currentPoiIndex];
-			poi.t_ros = parseFloat(poi.t_ros) + Math.PI / 90;
+			poi.approch_pose_t = parseFloat(poi.approch_pose_t) + Math.PI / 90;
 			TracePoi(currentPoiIndex);			
 		}
 		else if (currentAction == 'editDock')
 		{
 			dock = docks[currentDockIndex];
-			dock.t_ros = parseFloat(dock.t_ros) + Math.PI / 90;
+			dock.approch_pose_t = parseFloat(dock.approch_pose_t) + Math.PI / 90;
 			TraceDock(currentDockIndex);
 		}
     });
@@ -1820,26 +2040,26 @@ $(document).ready(function() {
 		timerRotate = setInterval(function() { 
 			if (currentAction == 'addPoi')
 			{
-				currentPoiPose.t_ros = parseFloat(currentPoiPose.t_ros) - Math.PI / 90;
+				currentPoiPose.approch_pose_t = parseFloat(currentPoiPose.approch_pose_t) - Math.PI / 90;
 				
 				TraceCurrentPoi(currentPoiPose);
 			}
 			else if (currentAction == 'addDock')
 			{
-				currentDockPose.t_ros = parseFloat(currentDockPose.t_ros) - Math.PI / 90;
+				currentDockPose.approch_pose_t = parseFloat(currentDockPose.approch_pose_t) - Math.PI / 90;
 				
 				TraceCurrentDock(currentDockPose);
 			}
 			else if (currentAction == 'editPoi')
 			{
 				poi = pois[currentPoiIndex];
-				poi.t_ros = parseFloat(poi.t_ros) - Math.PI / 90;
+				poi.approch_pose_t = parseFloat(poi.approch_pose_t) - Math.PI / 90;
 				TracePoi(currentPoiIndex);			
 			}
 			else if (currentAction == 'editDock')
 			{
 				dock = docks[currentDockIndex];
-				dock.t_ros = parseFloat(dock.t_ros) - Math.PI / 90;
+				dock.approch_pose_t = parseFloat(dock.approch_pose_t) - Math.PI / 90;
 				TraceDock(currentDockIndex);
 			}
 		}, 100);
@@ -1855,26 +2075,26 @@ $(document).ready(function() {
 		SaveElementNeeded(true);
         if (currentAction == 'addPoi')
 		{
-			currentPoiPose.t_ros = parseFloat(currentPoiPose.t_ros) - Math.PI / 90;
+			currentPoiPose.approch_pose_t = parseFloat(currentPoiPose.approch_pose_t) - Math.PI / 90;
 			
 			TraceCurrentPoi(currentPoiPose);
 		}
 		else if (currentAction == 'addDock')
 		{
-			currentDockPose.t_ros = parseFloat(currentDockPose.t_ros) - Math.PI / 90;
+			currentDockPose.approch_pose_t = parseFloat(currentDockPose.approch_pose_t) - Math.PI / 90;
 			
 			TraceCurrentDock(currentDockPose);
 		}
 		else if (currentAction == 'editPoi')
 		{
 			poi = pois[currentPoiIndex];
-			poi.t_ros = parseFloat(poi.t_ros) - Math.PI / 90;
+			poi.approch_pose_t = parseFloat(poi.approch_pose_t) - Math.PI / 90;
 			TracePoi(currentPoiIndex);			
 		}
 		else if (currentAction == 'editDock')
 		{
 			dock = docks[currentDockIndex];
-			dock.t_ros = parseFloat(dock.t_ros) - Math.PI / 90;
+			dock.approch_pose_t = parseFloat(dock.approch_pose_t) - Math.PI / 90;
 			TraceDock(currentDockIndex);
 		}        
     });
@@ -1927,9 +2147,9 @@ $(document).ready(function() {
 			xRos = x * ros_resolution / 100;
 			yRos = y * ros_resolution / 100;
 			
-			currentDockPose.x_ros = xRos;
-			currentDockPose.y_ros = yRos;
-			currentDockPose.t_ros = 0;
+			currentDockPose.approach_pose_x = xRos;
+			currentDockPose.approach_pose_y = yRos;
+			currentDockPose.approach_pose_t = 0;
 			
 			TraceCurrentDock(currentDockPose);
 		}
@@ -1945,7 +2165,7 @@ $(document).ready(function() {
 			xRos = x * ros_resolution / 100;
 			yRos = y * ros_resolution / 100;
 			
-			currentDockPose.t_ros = GetAngleRadian(currentDockPose.x_ros, currentDockPose.y_ros, xRos, yRos) + Math.PI;
+			currentDockPose.approch_pose_t = GetAngleRadian(currentDockPose.approch_pose_x, currentDockPose.approch_pose_y, xRos, yRos) + Math.PI;
 							
 			TraceCurrentDock(currentDockPose);
 		}
@@ -1961,9 +2181,9 @@ $(document).ready(function() {
 			xRos = x * ros_resolution / 100;
 			yRos = y * ros_resolution / 100;
 			
-			currentPoiPose.x_ros = xRos;
-			currentPoiPose.y_ros = yRos;
-			currentPoiPose.t_ros = 0;
+			currentPoiPose.approch_pose_x = xRos;
+			currentPoiPose.approch_pose_y = yRos;
+			currentPoiPose.approch_pose_t = 0;
 			
 			TraceCurrentPoi(currentPoiPose);
 		}
@@ -1979,7 +2199,7 @@ $(document).ready(function() {
 			xRos = x * ros_resolution / 100;
 			yRos = y * ros_resolution / 100;
 			
-			currentPoiPose.t_ros = GetAngleRadian(currentPoiPose.x_ros, currentPoiPose.y_ros, xRos, yRos) + Math.PI;
+			currentPoiPose.approch_pose_t = GetAngleRadian(currentPoiPose.approch_pose_x, currentPoiPose.approch_pose_y, xRos, yRos) + Math.PI;
 							
 			TraceCurrentPoi(currentPoiPose);
 		}
@@ -2038,8 +2258,8 @@ $(document).ready(function() {
 				p = $('#install_by_step_edit_map_svg image').position();
 				
 				
-				x = currentDockPose.x_ros * 100 / 5;
-				y = currentDockPose.y_ros * 100 / 5;
+				x = currentDockPose.approach_pose_x * 100 / 5;
+				y = currentDockPose.approach_pose_y * 100 / 5;
 				
 				x = x / zoom;
 				y = (ros_hauteur - y) / zoom;
@@ -2057,8 +2277,8 @@ $(document).ready(function() {
 				p = $('#install_by_step_edit_map_svg image').position();
 				
 				
-				x = currentPoiPose.x_ros * 100 / 5;
-				y = currentPoiPose.y_ros * 100 / 5;
+				x = currentPoiPose.approach_pose_x * 100 / 5;
+				y = currentPoiPose.approach_pose_y * 100 / 5;
 				
 				x = x / zoom;
 				y = (ros_hauteur - y) / zoom;
@@ -2078,8 +2298,8 @@ $(document).ready(function() {
 				p = $('#install_by_step_edit_map_svg image').position();
 				
 				
-				x = dock.x_ros * 100 / 5;
-				y = dock.y_ros * 100 / 5;
+				x = dock.approch_pose_x * 100 / 5;
+				y = dock.approch_pose_y * 100 / 5;
 				
 				x = x / zoom;
 				y = (ros_hauteur - y) / zoom;
@@ -2099,8 +2319,8 @@ $(document).ready(function() {
 				p = $('#install_by_step_edit_map_svg image').position();
 				
 				
-				x = poi.x_ros * 100 / 5;
-				y = poi.y_ros * 100 / 5;
+				x = poi.approch_pose_x * 100 / 5;
+				y = poi.approch_pose_y * 100 / 5;
 				
 				x = x / zoom;
 				y = (ros_hauteur - y) / zoom;
@@ -2129,32 +2349,32 @@ $(document).ready(function() {
 				   pageX = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX);
 				   pageY = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY);
 				  
-				  	x = dock.x_ros * 100 / ros_resolution;
-					y = ros_hauteur - (dock.y_ros * 100 / ros_resolution);
+				  	x = dock.approch_pose_x * 100 / ros_resolution;
+					y = ros_hauteur - (dock.approch_pose_y * 100 / ros_resolution);
 				  
 					$('#dock_'+movableDown.data('id_docking_station')).attr('transform', 'rotate('+0+', '+x+', '+y+')');
 					$('#dock_connect_'+movableDown.data('id_docking_station')).attr('transform', 'rotate('+0+', '+x+', '+y+')');
 				  
 					delta = (downOnSVG_x - pageX) * zoom * ros_resolution / 100;
-					dock.x_ros = parseFloat(dock.x_ros) - delta;
+					dock.approch_pose_x = parseFloat(dock.approch_pose_x) - delta;
 					delta = (downOnSVG_y - pageY) * zoom * ros_resolution / 100;
-					dock.y_ros = parseFloat(dock.y_ros) + delta;
+					dock.approch_pose_y = parseFloat(dock.approch_pose_y) + delta;
 					
-					//movableDown.attr('x', dock.x_ros * 100 / ros_resolution - 5);
-					//movableDown.attr('y', ros_hauteur - (dock.y_ros * 100 / ros_resolution) - 5); 
+					//movableDown.attr('x', dock.approch_pose_x * 100 / ros_resolution - 5);
+					//movableDown.attr('y', ros_hauteur - (dock.approch_pose_y * 100 / ros_resolution) - 5); 
 					
 					
-					$('#dock_'+movableDown.data('id_docking_station')).attr('x', dock.x_ros * 100 / ros_resolution - 5);
-					$('#dock_'+movableDown.data('id_docking_station')).attr('y', ros_hauteur - (dock.y_ros * 100 / ros_resolution) - 1); 
+					$('#dock_'+movableDown.data('id_docking_station')).attr('x', dock.approch_pose_x * 100 / ros_resolution - 5);
+					$('#dock_'+movableDown.data('id_docking_station')).attr('y', ros_hauteur - (dock.approch_pose_y * 100 / ros_resolution) - 1); 
 					
-					$('#dock_connect_'+movableDown.data('id_docking_station')).attr('x1', dock.x_ros * 100 / ros_resolution - 1);
-					$('#dock_connect_'+movableDown.data('id_docking_station')).attr('y1', ros_hauteur - (dock.y_ros * 100 / ros_resolution) - 1); 
-					$('#dock_connect_'+movableDown.data('id_docking_station')).attr('x2', dock.x_ros * 100 / ros_resolution + 1);
-					$('#dock_connect_'+movableDown.data('id_docking_station')).attr('y2', ros_hauteur - (dock.y_ros * 100 / ros_resolution) - 1); 
+					$('#dock_connect_'+movableDown.data('id_docking_station')).attr('x1', dock.approch_pose_x * 100 / ros_resolution - 1);
+					$('#dock_connect_'+movableDown.data('id_docking_station')).attr('y1', ros_hauteur - (dock.approch_pose_y * 100 / ros_resolution) - 1); 
+					$('#dock_connect_'+movableDown.data('id_docking_station')).attr('x2', dock.approch_pose_x * 100 / ros_resolution + 1);
+					$('#dock_connect_'+movableDown.data('id_docking_station')).attr('y2', ros_hauteur - (dock.approch_pose_y * 100 / ros_resolution) - 1); 
 					
-					x = dock.x_ros * 100 / ros_resolution;
-					y = ros_hauteur - (dock.y_ros * 100 / ros_resolution);	
-					angle = 0 - dock.t_ros * 180 / Math.PI - 90;
+					x = dock.approch_pose_x * 100 / ros_resolution;
+					y = ros_hauteur - (dock.approch_pose_y * 100 / ros_resolution);	
+					angle = 0 - dock.approch_pose_t * 180 / Math.PI - 90;
 					
 					$('#dock_'+movableDown.data('id_docking_station')).attr('transform', 'rotate('+angle+', '+x+', '+y+')');
 					$('#dock_connect_'+movableDown.data('id_docking_station')).attr('transform', 'rotate('+angle+', '+x+', '+y+')');
@@ -2173,22 +2393,22 @@ $(document).ready(function() {
 				   pageX = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX);
 				   pageY = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY);
 				  
-				  	x = poi.x_ros * 100 / ros_resolution;
-					y = ros_hauteur - (poi.y_ros * 100 / ros_resolution);
+				  	x = poi.approch_pose_x * 100 / ros_resolution;
+					y = ros_hauteur - (poi.approch_pose_y * 100 / ros_resolution);
 				  
 					$('#poi_sens_'+movableDown.data('id_poi')).attr('transform', 'rotate('+0+', '+x+', '+y+')');
 				  
 					delta = (downOnSVG_x - pageX) * zoom * ros_resolution / 100;
-					poi.x_ros = parseFloat(poi.x_ros) - delta;
+					poi.approch_pose_x = parseFloat(poi.approch_pose_x) - delta;
 					delta = (downOnSVG_y - pageY) * zoom * ros_resolution / 100;
-					poi.y_ros = parseFloat(poi.y_ros) + delta;
+					poi.approch_pose_y = parseFloat(poi.approch_pose_y) + delta;
 					
-					//movableDown.attr('x', dock.x_ros * 100 / ros_resolution - 5);
-					//movableDown.attr('y', ros_hauteur - (dock.y_ros * 100 / ros_resolution) - 5); 
+					//movableDown.attr('x', dock.approch_pose_x * 100 / ros_resolution - 5);
+					//movableDown.attr('y', ros_hauteur - (dock.approch_pose_y * 100 / ros_resolution) - 5); 
 					
-					x = poi.x_ros * 100 / ros_resolution;
-					y = ros_hauteur - (poi.y_ros * 100 / ros_resolution);	
-					angle = 0 - poi.t_ros * 180 / Math.PI;
+					x = poi.approch_pose_x * 100 / ros_resolution;
+					y = ros_hauteur - (poi.approch_pose_y * 100 / ros_resolution);	
+					angle = 0 - poi.approch_pose_t * 180 / Math.PI;
 					
 					$('#poi_secure_'+movableDown.data('id_poi')).attr('cx', x);
 					$('#poi_secure_'+movableDown.data('id_poi')).attr('cy', y); 
@@ -2293,9 +2513,9 @@ $(document).ready(function() {
 				xRos = x * ros_resolution / 100;
 				yRos = y * ros_resolution / 100;
 				
-				currentDockPose.x_ros = xRos;
-				currentDockPose.y_ros = yRos;
-				currentDockPose.t_ros = 0;
+				currentDockPose.approach_pose_x = xRos;
+				currentDockPose.approach_pose_y = yRos;
+				currentDockPose.approach_pose_t = 0;
 				
 				TraceCurrentDock(currentDockPose);
 			}
@@ -2311,7 +2531,7 @@ $(document).ready(function() {
 				xRos = x * ros_resolution / 100;
 				yRos = y * ros_resolution / 100;
 				
-				currentDockPose.t_ros = GetAngleRadian(currentDockPose.x_ros, currentDockPose.y_ros, xRos, yRos) + Math.PI;
+				currentDockPose.approch_pose_t = GetAngleRadian(currentDockPose.approch_pose_x, currentDockPose.approch_pose_y, xRos, yRos) + Math.PI;
 								
 				TraceCurrentDock(currentDockPose);
 			}
@@ -2327,9 +2547,9 @@ $(document).ready(function() {
 				xRos = x * ros_resolution / 100;
 				yRos = y * ros_resolution / 100;
 				
-				currentPoiPose.x_ros = xRos;
-				currentPoiPose.y_ros = yRos;
-				currentPoiPose.t_ros = 0;
+				currentPoiPose.approch_pose_x = xRos;
+				currentPoiPose.approch_pose_y = yRos;
+				currentPoiPose.approch_pose_t = 0;
 				
 				TraceCurrentPoi(currentPoiPose);
 			}
@@ -2345,7 +2565,7 @@ $(document).ready(function() {
 				xRos = x * ros_resolution / 100;
 				yRos = y * ros_resolution / 100;
 				
-				currentPoiPose.t_ros = GetAngleRadian(currentPoiPose.x_ros, currentPoiPose.y_ros, xRos, yRos) + Math.PI;
+				currentPoiPose.approch_pose_t = GetAngleRadian(currentPoiPose.approch_pose_x, currentPoiPose.approch_pose_y, xRos, yRos) + Math.PI;
 								
 				TraceCurrentPoi(currentPoiPose);
 			}
@@ -2426,15 +2646,15 @@ $(document).ready(function() {
 			xRos = x * ros_resolution / 100;
 			yRos = y * ros_resolution / 100;
 			
-			currentDockPose.x_ros = xRos;
-			currentDockPose.y_ros = yRos;
-			currentDockPose.t_ros = 0;
+			currentDockPose.approach_pose_x = xRos;
+			currentDockPose.approach_pose_y = yRos;
+			currentDockPose.approach_pose_t = 0;
 			
 			TraceCurrentDock(currentDockPose);
 			
 			
-			x = currentDockPose.x_ros * 100 / 5;
-			y = currentDockPose.y_ros * 100 / 5;
+			x = currentDockPose.approach_pose_x * 100 / 5;
+			y = currentDockPose.approach_pose_y * 100 / 5;
 			
 			x = x / zoom;
 			y = (ros_hauteur - y) / zoom;
@@ -2463,7 +2683,7 @@ $(document).ready(function() {
 			xRos = x * ros_resolution / 100;
 			yRos = y * ros_resolution / 100;
 			
-			currentDockPose.t_ros = GetAngleRadian(currentDockPose.x_ros, currentDockPose.y_ros, xRos, yRos) + Math.PI;
+			currentDockPose.approch_pose_t = GetAngleRadian(currentDockPose.approch_pose_x, currentDockPose.approch_pose_y, xRos, yRos) + Math.PI;
 							
 			TraceCurrentDock(currentDockPose);
 			
@@ -2481,9 +2701,9 @@ $(document).ready(function() {
 			xRos = x * ros_resolution / 100;
 			yRos = y * ros_resolution / 100;
 			
-			currentPoiPose.x_ros = xRos;
-			currentPoiPose.y_ros = yRos;
-			currentPoiPose.t_ros = 0;
+			currentPoiPose.approach_pose_x = xRos;
+			currentPoiPose.approach_pose_y = yRos;
+			currentPoiPose.approach_pose_t = 0;
 			
 			TraceCurrentPoi(currentPoiPose);
 			
@@ -2491,8 +2711,8 @@ $(document).ready(function() {
 			p = $('#install_by_step_edit_map_svg image').position();
 			
 			
-			x = currentPoiPose.x_ros * 100 / 5;
-			y = currentPoiPose.y_ros * 100 / 5;
+			x = currentPoiPose.approach_pose_x * 100 / 5;
+			y = currentPoiPose.approach_pose_y * 100 / 5;
 			
 			x = x / zoom;
 			y = (ros_hauteur - y) / zoom;
@@ -2520,7 +2740,7 @@ $(document).ready(function() {
 			xRos = x * ros_resolution / 100;
 			yRos = y * ros_resolution / 100;
 			
-			currentPoiPose.t_ros = GetAngleRadian(currentPoiPose.x_ros, currentPoiPose.y_ros, xRos, yRos) + Math.PI;
+			currentPoiPose.approch_pose_t = GetAngleRadian(currentPoiPose.approch_pose_x, currentPoiPose.approch_pose_y, xRos, yRos) + Math.PI;
 							
 			TraceCurrentPoi(currentPoiPose);
 			
@@ -2655,7 +2875,7 @@ function DockSave()
 		
 		nextIdDock++;
 		num = GetMaxNumDock()+1;
-		d = {'id_docking_station':nextIdDock, 'id_map':id_map, 'id_fiducial':$(this).data('id_fiducial'), 'final_pose_x':currentDockPose.x_ros, 'final_pose_y':currentDockPose.y_ros, 'final_pose_t':currentDockPose.t_ros, 'approch_pose_x':currentDockPose.x_ros, 'approch_pose_y':currentDockPose.y_ros, 'approch_pose_t':currentDockPose.t_ros, 'fiducial_pose_x':currentDockPose.x_ros, 'fiducial_pose_y':currentDockPose.y_ros, 'fiducial_pose_t':currentDockPose.t_ros, 'num':parseInt(num), 'name':'Dock '+num, 'comment':''};
+		d = {'id_docking_station':nextIdDock, 'id_map':id_map, 'id_fiducial':$(this).data('id_fiducial'), 'final_pose_x':currentDockPose.final_pose_x, 'final_pose_y':currentDockPose.final_pose_y, 'final_pose_t':currentDockPose.final_pose_t, 'approch_pose_x':currentDockPose.approch_pose_x, 'approch_pose_y':currentDockPose.approch_pose_y, 'approch_pose_t':currentDockPose.approch_pose_t, 'fiducial_pose_x':currentDockPose.fiducial_pose_x, 'fiducial_pose_y':currentDockPose.fiducial_pose_y, 'fiducial_pose_t':currentDockPose.fiducial_pose_t, 'num':parseInt(num), 'name':'Dock '+num, 'comment':''};
 		AddHistorique({'action':'add_dock', 'data':d});
 		
 		docks.push(d);

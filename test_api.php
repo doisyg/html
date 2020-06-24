@@ -339,6 +339,17 @@ $_CONFIG['URL'] = 'https://elodie.wyca-solutions.com/';
                         <code id="UndockReturn"></code>
                     </div>
                 </section>
+                <section class="panel panel-featured panel-featured-primary">
+                    <header class="panel-heading"><h2 class="panel-title"><a href="#" id="RecoveryFromFiducial" class="btn btn-default">RecoveryFromFiducial</a></h2></header>
+                    <div class="panel-body">
+                        <h4>Feedback</h4>
+                        <code id="onRecoveryFromFiducialFeedback"></code>
+                        <h4>Result</h4>
+                        <code id="onRecoveryFromFiducialResult"></code>
+                        <h4>Return</h4>
+                        <code id="RecoveryFromFiducialReturn"></code>
+                    </div>
+                </section>
                 
             </div>
         </div>
@@ -521,8 +532,8 @@ function Teleop_call()
 $(document).ready(function(e) {
 	wycaApi = new WycaAPI({
 		//host:'elodie.wyca-solutions.com:9095',
-		//host:'192.168.0.30:9095',
-		host:'10.0.0.44:9095',
+		host:'192.168.0.30:9095',
+		//host:'10.0.0.44:9095',
 		api_key:'Jnt.kK2nXB15jhVkCEGLA3NssidZWLpsdgmt4bx8GkTZL5',
 		nick:'robot',
 		onRobotConnexionError: function(data){
@@ -621,6 +632,12 @@ $(document).ready(function(e) {
 		},
 		onPOIsDetect: function(data){
 			$('#onPOIsDetect').html(JSON.stringify(data));
+		},
+		onRecoveryFromFiducialFeedback: function(data){
+			$('#onRecoveryFromFiducialFeedback').html(JSON.stringify(data));
+		},
+		onRecoveryFromFiducialResult: function(data){
+			$('#onRecoveryFromFiducialResult').html(JSON.stringify(data));
 		},
 	});
 	
@@ -753,7 +770,7 @@ $(document).ready(function(e) {
 	$('#ConfLedAnim').click(function(e) {
 		e.preventDefault();
 		$('#ConfLedAnim_return').html('');
-        wycaApi.ConfLedAnim($('#ConfLedAnim_state').val(), $('#ConfLedAnim_anim').val(), $('#ConfLedAnim_color_r').val(), $('#ConfLedAnim_color_g').val(), $('#ConfLedAnim_color_b').val(), function(data) { $('#ConfLedAnim_return').html(JSON.stringify(data)); });
+        wycaApi.ConfLedAnim(parseInt($('#ConfLedAnim_state').val()), parseInt($('#ConfLedAnim_anim').val()), parseInt($('#ConfLedAnim_color_r').val()), parseInt($('#ConfLedAnim_color_g').val()), parseInt($('#ConfLedAnim_color_b').val()), function(data) { $('#ConfLedAnim_return').html(JSON.stringify(data)); });
 	});
 	
 	$('#GetWifiList').click(function(e) {
@@ -804,6 +821,13 @@ $(document).ready(function(e) {
 		$('#onUndockFeedback').html('');
 		$('#onUndockResult').html('');
 		wycaApi.Undock(function(data) { $('#UndockReturn').html(JSON.stringify(data)); });
+    });
+	$('#RecoveryFromFiducial').click(function(e) {
+		e.preventDefault();
+		$('#RecoveryFromFiducialReturn').html('');
+		$('#onRecoveryFromFiducialFeedback').html('');
+		$('#onRecoveryFromFiducialResult').html('');
+		wycaApi.RecoveryFromFiducial(function(data) { $('#RecoveryFromFiducialReturn').html(JSON.stringify(data)); });
     });
 	$('#MappingStart').click(function(e) {
 		e.preventDefault();

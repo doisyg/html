@@ -133,15 +133,15 @@ function WycaAPI(options){
 		SET_DOCKING_STATION			: 0x6110,
 		DELETE_DOCKING_STATION			: 0x6111,
 		SET_DOCKING_STATION_MASTER			: 0x6113,
-		GET_DOCKING_STATIONS_LIST			: 0x6112,
+		GET_DOCKING_STATION_LIST			: 0x6112,
 		GET_LOG_ROS			: 0x6116,
 		SET_LOG_ROS			: 0x6117,
 		DELETE_LOG_ROS			: 0x6118,
-		GET_LOGS_ROS_LIST			: 0x6119,
+		GET_LOG_ROS_LIST			: 0x6119,
 		GET_LOG_SYSTEM			: 0x611A,
 		SET_LOG_SYSTEM			: 0x611B,
 		DELETE_LOG_SYSTEM			: 0x611C,
-		GET_LOGS_SYSTEM_LIST			: 0x611D,
+		GET_LOG_SYSTEM_LIST			: 0x611D,
 		GET_POI			: 0x6125,
 		SET_POI			: 0x6126,
 		DELETE_POI			: 0x6127,
@@ -157,12 +157,9 @@ function WycaAPI(options){
 		GET_ROBOT_CONFIG			: 0x6129,
 		SET_ROBOT_CONFIG			: 0x612A,
 		DELETE_ROBOT_CONFIG			: 0x612B,
-		GET_ROBOT_CONFIGS_LIST			: 0x612D,
+		GET_ROBOT_CONFIG_LIST			: 0x612D,
 		GET_CURRENT_ROBOT_CONFIG			: 0x610C,
 		SET_ROBOT_CONFIG_AS_CURRENT			: 0x612C,
-		GET_SERVICE_BOOK			: 0x6140,
-		SET_SERVICE_BOOK			: 0x6141,
-		GET_SERVICE_BOOKS_LIST			: 0x6142,
 		GET_GLOBAL_VEHICULE_PERSISTANTE_DATA_STORAGE			: 0x6114,
 		SET_GLOBAL_VEHICULE_PERSISTANTE_DATA_STORAGE			: 0x6115,
 		SIZE_GLOBAL_VEHICULE_PERSISTANTE_DATA_STORAGE			: 0x6133,
@@ -2082,9 +2079,9 @@ function WycaAPI(options){
 	}
 	this.GetDockingStationsList = function(id_map, callback){
 		if (callback != undefined)
-			this.callbacks[_this.CommandCode.GET_DOCKING_STATIONS_LIST] = callback;
+			this.callbacks[_this.CommandCode.GET_DOCKING_STATION_LIST] = callback;
 		var action = {
-			"O": _this.CommandCode.GET_DOCKING_STATIONS_LIST,
+			"O": _this.CommandCode.GET_DOCKING_STATION_LIST,
 			"P": id_map
 		};
 		_this.wycaSend(JSON.stringify(action));
@@ -2156,9 +2153,9 @@ function WycaAPI(options){
 	}
 	this.GetLogRossList = function(callback){
 		if (callback != undefined)
-			this.callbacks[_this.CommandCode.GET_LOGS_ROS_LIST] = callback;
+			this.callbacks[_this.CommandCode.GET_LOG_ROS_LIST] = callback;
 		var action = {
-			"O": _this.CommandCode.GET_LOGS_ROS_LIST,
+			"O": _this.CommandCode.GET_LOG_ROS_LIST,
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
@@ -2192,9 +2189,9 @@ function WycaAPI(options){
 	}
 	this.GetLogSystemsList = function(callback){
 		if (callback != undefined)
-			this.callbacks[_this.CommandCode.GET_LOGS_SYSTEM_LIST] = callback;
+			this.callbacks[_this.CommandCode.GET_LOG_SYSTEM_LIST] = callback;
 		var action = {
-			"O": _this.CommandCode.GET_LOGS_SYSTEM_LIST,
+			"O": _this.CommandCode.GET_LOG_SYSTEM_LIST,
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
@@ -2300,9 +2297,9 @@ function WycaAPI(options){
 	}
 	this.GetRobotConfigsList = function(id_site, callback){
 		if (callback != undefined)
-			this.callbacks[_this.CommandCode.GET_ROBOT_CONFIGS_LIST] = callback;
+			this.callbacks[_this.CommandCode.GET_ROBOT_CONFIG_LIST] = callback;
 		var action = {
-			"O": _this.CommandCode.GET_ROBOT_CONFIGS_LIST,
+			"O": _this.CommandCode.GET_ROBOT_CONFIG_LIST,
 			"P": id_site
 		};
 		_this.wycaSend(JSON.stringify(action));
@@ -2325,32 +2322,6 @@ function WycaAPI(options){
 		_this.wycaSend(JSON.stringify(action));
 	}	
 	
-	this.GetServiceBook = function(id_service_book, callback){
-		if (callback != undefined)
-			this.callbacks[_this.CommandCode.GET_SERVICE_BOOK] = callback;
-		var action = {
-			"O": _this.CommandCode.GET_SERVICE_BOOK,
-			"P": id_service_book
-		};
-		_this.wycaSend(JSON.stringify(action));
-	}	
-	this.SetServiceBook = function(json_service_book, callback){
-		if (callback != undefined)
-			this.callbacks[_this.CommandCode.SET_SERVICE_BOOK] = callback;
-		var action = {
-			"O": _this.CommandCode.SET_SERVICE_BOOK,
-			"P": json_service_book
-		};
-		_this.wycaSend(JSON.stringify(action));
-	}	
-	this.GetServiceBooksList = function(callback){
-		if (callback != undefined)
-			this.callbacks[_this.CommandCode.GET_SERVICE_BOOKS_LIST] = callback;
-		var action = {
-			"O": _this.CommandCode.GET_SERVICE_BOOKS_LIST
-		};
-		_this.wycaSend(JSON.stringify(action));
-	}
 		
 	this.GetWifiList = function(callback){
 		if (callback != undefined)

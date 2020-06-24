@@ -153,7 +153,7 @@ $(document).ready(function(e) {
 			}
 			ws.onopen = function(e) {
 				var auth = {
-				"O": 1010,
+				"O": 0x6108, // CHECK_USER_CONNEXION
 				"P": {
 					"L":$('#login_email').val(),
 					"P":$('#login_password').val()

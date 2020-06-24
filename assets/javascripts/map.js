@@ -53,16 +53,30 @@ var docks = Array();
 var pois = Array();
 
 var blockZoom = false;
+var gotoTest = false;
 
 function GetInfosCurrentMap()
 {
-	if (wycaApi.socketAuthed)
+	if (wycaApi.websocketAuthed)
 	{
 		GetInfosCurrentMapDo();
 	}
 	else
 	{
 		setTimeout(GetInfosCurrentMap, 500);
+	}
+}
+
+
+function GetInfosCurrentMapForTest()
+{
+	if (wycaApi.websocketAuthed)
+	{
+		GetInfosCurrentMapDoForTest();
+	}
+	else
+	{
+		setTimeout(GetInfosCurrentMapForTest, 500);
 	}
 }
 
@@ -107,6 +121,9 @@ function GetInfosCurrentMapDo()
 			
 			InitMap();
 			ResizeSVG();
+			
+			if (gotoTest) InitTest();
+			gotoTest = false;
 		}
 		else
 		{
@@ -115,6 +132,33 @@ function GetInfosCurrentMapDo()
 	});
 }
 
+function InitTest()
+{
+	$('#install_by_step_test_map .list_test li').remove();
+	$('#install_by_step_test_map .install_by_step_test_map_loading').hide();
+	
+	var indexLi = 0;
+	
+	$.each(pois, function(indexInArray, poi){
+		indexLi++;
+		$('#install_by_step_test_map .list_test').append('' +
+			'<li id="list_test_'+indexLi+'" data-index_li="'+indexLi+'" data-type="Poi" data-id="' + poi.id_poi + '">'+
+			'	<span>' + poi.name + '</span>'+
+			'	<a href="#" class="bExecuteTest btn btn-xs btn-circle btn-warning pull-right"><i class="fa fa-play"></i></a>'+
+			'</li>'
+			);
+	});
+	
+	$.each(docks, function(indexInArray, dock){
+		indexLi++;
+		$('#install_by_step_test_map .list_test').append('' +
+			'<li id="list_test_'+indexLi+'" data-index_li="'+indexLi+'" data-type="Dock" data-id="' + dock.id_docking_station + '">'+
+			'	<span>' + dock.name + '</span>'+
+			'	<a href="#" class="bExecuteTest btn btn-xs btn-circle btn-warning pull-right"><i class="fa fa-play"></i></a>'+
+			'</li>'
+			);
+	});
+}
 
 function DisplayBlockZoom()
 {
@@ -152,6 +196,7 @@ function DisplayBlockZoom()
 		$('#zoom_popup').css('left', l);
 		$('#zoom_popup').css('top', t);
 		$('#zoom_popup').show();
+		
 		/*
 		
 		$('#svg_copy').html($('#svg .svg-pan-zoom_viewport').html());

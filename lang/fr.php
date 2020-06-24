@@ -90,5 +90,24 @@ $_LANG['fbbf4fcb0c90883760d453c1b2835faf'] = 'Start autonomous navigation';
 $_LANG['72d6d7a1885885bb55a565fd1070581a'] = 'Import';
 $_LANG['247c4d4167d1bd89ca58b130f9775e62'] = 'Undock robot';
 $_LANG['7a7ad1c5615171b6af66b87b2fe0deaa'] = 'Save map';
+$_LANG['38192e4a5fd57454c4f118f2272fe1ce'] = 'Move the robot at the approach position desired and click on the \"Scan\" button';
+$_LANG['354e942fcc16d5421833be4821613f69'] = 'Click on the fiducial to set the approch position';
+$_LANG['2b3a1d48e7b13bad458369317f1c0f10'] = 'Move the robot at the final position desired and click on the \"Scan\" button';
+$_LANG['74d48468a9018f0daab47b3a9d3ddd46'] = 'Click on the fiducial to set the final position';
+$_LANG['4a8b45c6fef195a18a894697f059ef36'] = 'Test map';
+$_LANG['70d9be9b139893aa6c69b5e77e614311'] = 'Confirm';
+$_LANG['254f642527b45bc260048e30704edb39'] = 'Configuration';
+$_LANG['c17275ee07d8dd49fd857c18851713fb'] = 'Minimum battery level before move:';
+$_LANG['10ac3d04253ef7e1ddc73e6091c0cd55'] = 'Next';
+$_LANG['edaf402ef54754a9ec2c5f474fad9fd8'] = 'Finish installation';
+$_LANG['609a6c2b0a0f96c672ca036fb3431d37'] = 'Emergency battery level (execute a go to charge if the battery drops below this level)';
+$_LANG['4c231e0da3eaaa6a9752174f7f9cfb31'] = 'Confirm password';
+$_LANG['1c76cbfe21c6f44c1d1e59d54f3e4420'] = 'Company';
+$_LANG['04176f095283bc729f1e3926967e7034'] = 'Firstname';
+$_LANG['dff4bf10409100d989495c6d5486035e'] = 'Lastname';
+$_LANG['b78a3223503896721cca1303f776159b'] = 'Title';
+$_LANG['0be8406951cdfda82f00f79328cf4efc'] = 'Comment';
+$_LANG['707912d1ef743f320e98807cddbefc20'] = 'Close installation';
+$_LANG['0eb820cbe0beb3ac65058d3aee5a1662'] = 'Congratulations !';
 
 ?>

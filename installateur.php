@@ -68,11 +68,12 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                 
                 <div class="wifi_connexion_progress"><i class="fa fa fa-spinner fa-pulse"></i></div>
                 
-                <a href="#" class="skip_wifi button_goto btn btn-default pull-right" data-goto="install_by_step_date">Skip <i class="fa fa-chevron-right"></i></a>
+                <a href="#" class="skip_wifi button_goto btn btn-default pull-right" data-goto="install_by_step_tops">Skip <i class="fa fa-chevron-right"></i></a>
             </div>
         </section>
         
     
+    	<!--
     	<section id="install_by_step_date" class="page <?php echo $INSTALL_STEP == 2?'active':'';?>">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_wifi"></a>
             <header>
@@ -88,10 +89,10 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                 <a href="#" class="save_date button_goto btn btn-default pull-right" data-goto="install_by_step_tops">OK <i class="fa fa-chevron-right"></i></a>
                 
             </div>
-        </section>
+        </section>-->
         
         <section id="install_by_step_tops" class="page hmi_tuile <?php echo $INSTALL_STEP == 3?'active':'';?>">
-        	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_date"></a>
+        	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_wifi"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
                 <h2><?php echo __('Select available Tops');?></h2>
@@ -451,8 +452,8 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                     </div>
                     <div id="install_by_step_edit_map_menu_poi" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bConfigDock"><i class="fa fa-gears"></i></a></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bDeleteDock"><i class="fa fa-trash"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bConfigPoi"><i class="fa fa-gears"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bDeletePoi"><i class="fa fa-trash"></i></a></li>
                         </ul>
                     </div>
                     
@@ -747,7 +748,12 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                                                     
                                                 </div>
                                             
-                                                <p><?php echo stripslashes(__('Move the robot at the final pose desired and click on the "Scan" button'));?></p>
+                                            	<div style="color:#CC0000;">
+                                                    <p class="texts_add_poi text_prepare_approch"><?php echo stripslashes(__('Move the robot at the approach position desired and click on the "Scan" button'));?></p>
+                                                    <p class="texts_add_poi text_set_approch"><?php echo stripslashes(__('Click on the fiducial to set the approch position'));?></p>
+                                                    <p class="texts_add_poi text_prepare_final"><?php echo stripslashes(__('Move the robot at the final position desired and click on the "Scan" button'));?></p>
+                                                    <p class="texts_add_poi text_set_final"><?php echo stripslashes(__('Click on the fiducial to set the final position'));?></p>
+                                                </div>                                                
                                                 <p><a href="#" class="btn btn-primary bScanAddPoi">Scan</a></p>
                                                 
                                                 <div style="position:absolute; bottom:50px; left:0; width:100%; z-index:2000;">
@@ -762,6 +768,120 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                                         <div style="clear:both;"></div>
                                        
                                         <a href="#" id="bModalAddPoiSave" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
+                                        <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal fade modalPoiOptions" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+                                        <div class="h100vh_160" style="overflow:auto; text-align:center">
+                                        
+                                        	<form>
+                                                <div class="form-group">
+                                                    <label class="col-xs-4 control-label">Name</label>
+                                                    <div class="col-xs-8">
+                                                        <input type="text" id="poi_name" name="poi_name" value="" class="form-control input-sm mb-md" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-xs-4 control-label">Comment</label>
+                                                    <div class="col-xs-8">
+                                                        <textarea id="poi_comment" name="poi_comment" class="form-control input-sm mb-md"></textarea>
+                                                    </div>
+                                                </div>
+                                                <fieldset>
+                                                	<legend>Undock procedure</legend>
+                                                    <div style="text-align:left;">
+                                                        <a href="#" class="bUndockProcedurePoiAddElem btn btn-circle btn-default"><i class="fa fa-plus"></i></a>
+                                                        <ul class="list_undock_procedure_poi list_elem">
+                                                            <li id="list_undock_procedure_poi_elem_1" data-index_poi="1" data-action="move" data-distance="-0.3">
+                                                            	Move back 0.3m
+                                                                <a href="#" class="bUndockProcedurePoiDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>
+                                                                <a href="#" class="bUndockProcedurePoiEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>
+                                                            </li>
+                                                        </ul>
+                                                     </div>
+                                                </fieldset>
+                                            </form>
+                                            
+                                        </div>
+                                        
+                                        <div style="clear:both;"></div>
+                                       
+                                        <a href="#" id="bPoiSaveConfig" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
+                                        <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal fade modalPoiElemOptions" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+                                        <div class="h100vh_160" style="overflow:auto; text-align:center">
+                                        
+                                        	<form>
+                                                <div class="form-group">
+                                                    <label class="col-xs-12 control-label">Action</label>
+                                                    <div class="col-xs-6">
+                                                        <input type="radio" id="up_poi_elem_action_move" name="up_poi_elem_action" value="move" class="form-control" />
+                                                    	<label for="up_poi_elem_action_move" class="control-label">Move</label>    
+                                                    </div>
+                                                    <div class="col-xs-6">
+                                                        <input type="radio" id="up_poi_elem_action_rotate" name="up_poi_elem_action" value="rotate" class="form-control" />
+                                                    	<label for="up_poi_elem_action_rotate" class="control-label">Rotate</label>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="up_poi_elem_action_move">
+                                                    <div class="form-group">
+                                                        <label class="col-xs-12 control-label">Direction</label>
+                                                        <div class="col-xs-6">
+                                                            <input type="radio" id="up_poi_elem_direction_front" name="up_poi_elem_direction" value="front" class="form-control" />
+                                                            <label for="up_poi_elem_direction_front" class="control-label">Front</label>    
+                                                        </div>
+                                                        <div class="col-xs-6">
+                                                            <input type="radio" id="up_poi_elem_direction_back" name="up_poi_elem_direction" value="back" class="form-control" />
+                                                            <label for="up_poi_elem_direction_back" class="control-label">Back</label>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="form-group">
+                                                        <label class="col-xs-12 control-label">Distance</label>
+                                                        <div class="col-md-6 input-group mb-md">
+                                                            <input type="text" value="0" class="form-control" name="up_poi_elem_move_distance" id="up_poi_elem_move_distance" />
+                                                            <span class="input-group-addon">m</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                
+                                                <div class="up_poi_elem_action_rotate">
+                                                    <div class="form-group">
+                                                        <label class="col-xs-12 control-label">Angle</label>
+                                                        <div class="col-md-6 input-group mb-md">
+                                                            <input type="text" value="0" class="form-control" name="up_poi_elem_rotate_angle" id="up_poi_elem_rotate_angle" />
+                                                            <span class="input-group-addon ">°</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                            </form>
+                                            
+                                        </div>
+                                        
+                                        <div style="clear:both;"></div>
+                                       
+                                        <a href="#" class="btn btn-primary bPoiElemSave" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
                                         <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
                                     </div>
                                 </div>
@@ -796,6 +916,230 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                 <a href="#" class="btn btn-primary bSaveEditMap" style="position:absolute; width:50%; left:0; bottom:0px; font-size:30px;"><?php echo __('Save map');?></a>
             
             	<a href="#" class="btn btn-warning button_goto bSaveEditMap" data-goto="install_by_step_test_map" style="position:absolute; width:50%; right:0; left:auto; bottom:0px; font-size:30px;"><?php echo __('Test');?></a>
+            </footer>
+        </section>
+        
+        <section id="install_by_step_test_map" class="page with_footer">
+        	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_edit_map"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Test map');?></h2>
+            </header>
+            <div class="content">
+                
+                <div class="install_by_step_test_map_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
+                
+                <ul class="list_test list_elem">
+                </ul>
+                
+            </div>
+            <footer>
+            
+            	
+                <a href="#" class="btn btn-primary button_goto" data-goto="install_by_step_edit_map" style="position:absolute; width:50%; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+            
+            	<a href="#" class="btn btn-warning button_goto bTestFinish" data-goto="install_by_step_config" style="position:absolute; width:50%; right:0; left:auto; bottom:0px; font-size:30px;"><?php echo __('Confirm');?></a>
+            </footer>
+        </section>
+        
+        
+        <section id="install_by_step_config" class="page <?php echo $INSTALL_STEP == 9?'active':'';?> with_footer">
+        	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_test_map"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Configuration');?></h2>
+            </header>
+            <form class="form_site" action="" method="post" style="margin-bottom:20px;">
+            <div class="content">
+                
+                <div class="install_by_step_test_map_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
+                
+                <div class="loaded col-md-12" style="padding-top:50px;">
+                    
+                    
+                    
+                    <div class="form-group">
+                        <label for="i_level_min_gotocharge" class="col-xs-12 col-md-6 control-label"><?php echo __('Emergency battery level (execute a go to charge if the battery drops below this level)');?></label>
+                        <div class="col-md-6 input-group mb-md">
+                            <input type="text" value="0" class="form-control" name="i_level_min_gotocharge" id="i_level_min_gotocharge" />
+                            <span class="input-group-addon">%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="i_level_min_dotask" class="col-xs-12 col-md-6 control-label"><?php echo __('Minimum battery level before move:');?></label>
+                        <div class="col-md-6 input-group mb-md">
+                            <input type="text" value="0" class="form-control" name="i_level_min_dotask" id="i_level_min_dotask" />
+                            <span class="input-group-addon">%</span>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="install_by_step_config_next button_goto" data-goto="install_by_step_manager" style="display:none;"></a>   
+                </div>
+                
+            </div>
+            <footer>
+            	<a href="#" class="bConfigurationSave btn btn-primary" data-goto="install_by_step_manager" style="position:absolute; right:0; bottom:0px; width:100%; z-index:2001; font-size:30px;"><?php echo __('Save');?></a>
+            </footer>
+            </form>
+        
+        </section>
+        
+        <section id="install_by_step_manager" class="page <?php echo $INSTALL_STEP == 10?'active':'';?> with_footer">
+        	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_config"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Managers');?></h2>
+            </header>
+            <div class="content">
+                
+                <div class="install_by_step_manager_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
+                
+                <div class="loaded col-md-12" style="padding-top:30px;">
+                	<a href="#" class="bAddManager btn btn-primary">Add an account</a>
+                
+                    <ul class="list_managers list_elem">
+                    </ul>
+                    
+                    <div class="modal fade modalManager" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+                                        <div class="h100vh_160" style="overflow:auto">
+                                            <form>
+                                            	<input type="hidden" name="i_id_manager" id="i_id_manager" value="-1" />
+                                                <div class="form-group">
+                                                    <label class="col-xs-12 col-md-3 control-label" for="societe"><?php echo __('Company');?></label>
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <input id="i_manager_societe" name="societe" type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-xs-12 col-md-3 control-label" for="prenom"><?php echo __('Firstname');?></label>
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <input id="i_manager_prenom" name="prenom" type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-xs-12 col-md-3 control-label" for="nom"><?php echo __('Lastname');?></label>
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <input id="i_manager_nom" name="nom" type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-xs-12 col-md-3 control-label" for="email"><?php echo __('Email');?></label>
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <input id="i_manager_email" name="email" type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-xs-12 col-md-3 control-label" for="password"><?php echo __('Password');?></label>
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <input id="i_manager_password" name="password" type="password" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-xs-12 col-md-3 control-label" for="cpassword"><?php echo __('Confirm password');?></label>
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <input id="i_manager_cpassword" name="cpassword" type="password" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        
+                                        <div style="clear:both;"></div>
+                                       
+                                        <a href="#" id="bManagerSave" class="btn btn-primary" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
+                                        <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <footer>
+            	<a href="#" class="btn btn-primary button_goto bValidManager" data-goto="install_by_step_service_book" style="position:absolute; right:0; bottom:0px; width:100%; z-index:2001; font-size:30px;"><?php echo __('Next');?></a>
+            </footer>
+        </section>
+                
+        
+        <section id="install_by_step_service_book" class="page <?php echo $INSTALL_STEP == 11?'active':'';?> with_footer">
+        	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_manager"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Service book');?></h2>
+            </header>
+            <div class="content">
+                
+                <div class="install_by_step_service_book_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
+                
+                <div class="loaded col-md-12" style="padding-top:30px;">
+                    <a href="#" class="bAddServiceBook btn btn-primary">Add a service book</a>
+                    <ul class="list_service_books list_elem">
+                    </ul>
+                    
+                    <div class="modal fade modalServiceBook" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+                                        <div class="h100vh_160" style="overflow:auto">
+                                            <form>
+                                            	<div class="form-group">
+                                                    <label class="col-xs-12 col-md-3 control-label" for="title"><?php echo __('Title');?></label>
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <input id="i_service_book_title" name="title" type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-xs-12 col-md-3 control-label" for="comment"><?php echo __('Comment');?></label>
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <textarea id="i_service_book_comment" name="comment" style="height:50vh;" class="form-control"></textarea>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        
+                                        <div style="clear:both;"></div>
+                                       
+                                        <a href="#" id="bServiceBookSave" class="btn btn-primary" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
+                                        <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+				</div>                
+            </div>
+            <footer>
+            	<a href="#" class="btn btn-primary button_goto bFinishInstallation" data-goto="install_by_step_end" style="position:absolute; right:0; bottom:0px; width:100%; z-index:2001; font-size:30px;"><?php echo __('Finish installation');?></a>
+            </footer>
+        </section>
+        
+        <section id="install_by_step_end" class="page with_footer">
+        	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_service_book"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Congratulations !');?></h2>
+            </header>
+            <div class="content">
+                
+                <section class="panel panel-success">
+                    <header class="panel-heading">
+                        <h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fa fa-thumbs-up"></i></h2>
+                    </header>
+                    <div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
+                        <strong>Congratulations !</strong><br />
+						The installation process is now complete.
+                    </div>
+                </section>
+                
+            </div>
+            <footer>
+            	<a href="#" class="btn btn-primary bCloseInstallation" style="position:absolute; right:0; bottom:0px; width:100%; z-index:2001; font-size:30px;"><?php echo __('Close installation');?></a>
             </footer>
         </section>
     </div>

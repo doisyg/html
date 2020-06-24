@@ -65,6 +65,15 @@
 			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 8) {?>
 			GetInfosCurrentMap();
 			<?php }?>
+			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 9) {?>
+			GetConfigurations();
+			<?php }?>
+			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 10) {?>
+			GetManagers();
+			<?php }?>
+			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 11) {?>
+			GetServiceBooks();
+			<?php }?>
         });
 		</script>
 	</body>

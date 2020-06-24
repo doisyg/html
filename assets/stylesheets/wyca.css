@@ -16,10 +16,11 @@ body > header { background-color:#589FB2; padding:5px; color:#FFFFFF; }
 section.page { min-height:calc(100vh - 45px); display:none; position:absolute; top:0; left:0; width:100%; }
 section.page.active { display:block; }
 section.page header { text-align:right; border-bottom:2px solid #589FB2; }
-#pages_wyca section.page header { border-color:#d9534f; }
-#pages_install section.page header { border-color:#f0ad4e; }
-#pages_manager section.page header { border-color:#589FB2; }
-#pages_user section.page header { border-color:#5cb85c; }
+#pages_wyca section.page > header { border-color:#d9534f; }
+#pages_install section.page > header { border-color:#f0ad4e; }
+#pages_manager section.page > header { border-color:#589FB2; }
+#pages_user section.page > header { border-color:#5cb85c; }
+
 
 section.page header h2 { margin:0; padding:10px; font-size:24px }
 section.page header img { height:50px; padding:10px; }
@@ -363,5 +364,14 @@ html .panel-heading { position:relative; }
 }
 
 
-ul.list_elem { margin:0; padding:0; margin-top:10px; }
+ul.list_elem { margin:0; padding:0; margin-top:10px; list-style:none; }
 ul.list_elem li { padding:5px 10px; border:1px solid #CCC; border-radius:3px; margin-bottom:10px; }
+
+ul.list_test li.ko { color:#CC0000; border-color:#CC0000; }
+ul.list_test li.done { color:#006600; border-color:#006600; }
+
+.modal { z-index:10000; }
+
+.list_service_books li { background-color:#EFEFEF; }
+.list_service_books li .title { font-weight:bold; }
+.list_service_books li .comment { white-space: pre; }

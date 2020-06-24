@@ -36,6 +36,7 @@ $(window).on("popstate", function(e) {
 })(history.pushState);
 
 var selectedWifi = '';
+var json_user = {};
 
 $(document).ready(function(e) {
 	
@@ -142,6 +143,9 @@ $(document).ready(function(e) {
 		if (next == 'install_by_step_wifi') InitInstallWifiPage();
 		if (next == 'install_by_step_tops') InitTops();
 		if (next == 'install_by_step_top') InitTopsActive();
+		if (next == 'install_by_step_config') GetConfigurations();
+		if (next == 'install_by_step_manager') GetManagers();
+		if (next == 'install_by_step_service_book') GetServiceBooks();
 		
 		InitJoystick();
     });
@@ -218,7 +222,7 @@ $(document).ready(function(e) {
 				else
 				{
 					console.log(JSON.stringify(data)); 
-					alert(wycaApi.AnswerCodeToString(data.A));
+					alert_wyca(wycaApi.AnswerCodeToString(data.A));
 				}
 				
 				
@@ -714,18 +718,28 @@ $(document).ready(function(e) {
 			}
 		});
 		
-		console.log(JSON.stringify(data));
+		if ($(this).hasClass('button_goto'))
+		{
+			$('#install_by_step_test_map .list_test li').remove();
+			$('#install_by_step_test_map .install_by_step_test_map_loading').show();
+			
+			gotoTest = true;
+		}
+		else
+			gotoTest = false;
 		
 		wycaApi.SetCurrentMapData(data, function(data){
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
+				
+				// On reload la carte pour mettre à jours les ids
+				GetInfosCurrentMap();
 				/*
 				if (navLaunched && id_map == current_id_map)
 				{
 					wycaApi.NavigationReloadMaps(function(e) { if (e.A != wycaApi.AnswerCode.NO_ERROR) console.error(wycaApi.AnswerCodeToString(data.A)+ " " + data.M); });	
 				}
 				*/
-				alert_wyca("Save ok");
 			}
 			else
 			{
@@ -734,13 +748,395 @@ $(document).ready(function(e) {
 		});
     });
 	
+	$('#install_by_step_test_map').on( 'click', '.bExecuteTest', function(e) {
+        e.preventDefault();
+		
+		$('#install_by_step_test_map .bExecuteTest').addClass('disabled');
+		
+		currentTestIndex = $(this).parent().data('index_li');
+		
+		id = $(this).parent().data('id');
+		if ($(this).parent().data('type') == 'Poi')
+		{
+			wycaApi.on('onGoToPoiResult', function (data){
+				
+				$('#install_by_step_test_map .bExecuteTest').removeClass('disabled');
+				if (data.A == wycaApi.AnswerCode.NO_ERROR)
+				{
+					$('#install_by_step_test_map #list_test_'+currentTestIndex).addClass('done');
+					$('#install_by_step_test_map #list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-danger');
+					$('#install_by_step_test_map #list_test_'+currentTestIndex+' a').addClass('btn-success');
+				}
+				else
+				{
+					$('#install_by_step_test_map #list_test_'+currentTestIndex).addClass('ko');
+					$('#install_by_step_test_map #list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-success');
+					$('#install_by_step_test_map #list_test_'+currentTestIndex+' a').addClass('btn-danger');
+					if (data.M != '')
+						alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+					else
+						alert_wyca(wycaApi.AnswerCodeToString(data.A));
+				}
+				
+				// On rebranche l'ancienne fonction
+				wycaApi.on('onGoToPoiResult', onGoToPoiResult);
+			});
+			wycaApi.GoToPoi(id);
+		}
+		else
+		{
+			// Dock
+			wycaApi.GoToCharge(id);
+			wycaApi.on('onGoToChargeResult', function (data){
+				
+				$('#install_by_step_test_map .bExecuteTest').removeClass('disabled');
+				if (data.A == wycaApi.AnswerCode.NO_ERROR)
+				{
+					$('#install_by_step_test_map #list_test_'+currentTestIndex).addClass('done');
+					$('#install_by_step_test_map #list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-danger');
+					$('#install_by_step_test_map #list_test_'+currentTestIndex+' a').addClass('btn-success');
+				}
+				else
+				{
+					$('#install_by_step_test_map #list_test_'+currentTestIndex).addClass('ko');
+					$('#install_by_step_test_map #list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-success');
+					$('#install_by_step_test_map #list_test_'+currentTestIndex+' a').addClass('btn-danger');
+					if (data.M != '')
+						alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+					else
+						alert_wyca(wycaApi.AnswerCodeToString(data.A));
+				}
+				
+				// On rebranche l'ancienne fonction
+				wycaApi.on('onGoToChargeResult', onGoToChargeResult);
+			});
+			
+		}
+    });
+	
+	$('#install_by_step_test_map .bTestFinish').click(function(e) {
+		$.ajax({
+			type: "POST",
+			url: 'ajax/install_by_step_test_finish.php',
+			data: {
+			},
+			dataType: 'json',
+			success: function(data) {
+			},
+			error: function(e) {
+				alert(e.responseText);
+			}
+		});
+    });
+	
+	$('#install_by_step_config .bConfigurationSave').click(function(e) {
+		wycaApi.SetEnergyConfiguration(parseInt($('#install_by_step_config #i_level_min_gotocharge').val()), parseInt($('#install_by_step_config #i_level_min_dotask').val()), function(data) {
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$.ajax({
+					type: "POST",
+					url: 'ajax/install_by_step_config.php',
+					data: {
+					},
+					dataType: 'json',
+					success: function(data) {
+					},
+					error: function(e) {
+						alert(e.responseText);
+					}
+				});
+				$('#install_by_step_config .install_by_step_config_next').click();
+				
+			}
+			else
+			{
+				console.log(JSON.stringify(data)); 
+				alert_wyca(wycaApi.AnswerCodeToString(data.A));
+			}
+		});
+    });
+	
+	$('#install_by_step_manager .bAddManager').click(function(e) {
+	
+		$('#install_by_step_manager .modalManager #i_id_manager').val(-1);
+		$('#install_by_step_manager .modalManager #i_manager_email').val('');
+		$('#install_by_step_manager .modalManager #i_manager_societe').val('');
+		$('#install_by_step_manager .modalManager #i_manager_prenom').val('');
+		$('#install_by_step_manager .modalManager #i_manager_nom').val('');
+		$('#install_by_step_manager .modalManager #i_manager_password').val('');
+		$('#install_by_step_manager .modalManager #i_manager_cpassword').val('');
+		
+		$('#install_by_step_manager .modalManager').modal('show');
+	});
+	
+	$('#install_by_step_manager .modalManager #bManagerSave').click(function(e) {
+        e.preventDefault();
+		
+		if ($('#install_by_step_manager .modalManager #i_manager_password').val() != $('#install_by_step_manager .modalManager #i_manager_cpassword').val())
+		{
+			alert_wyca('Invalid password or confirm');
+		}
+		else if ($('#install_by_step_manager .modalManager #i_manager_societe').val() == "" )
+		{
+			alert_wyca('Company is required');
+		}
+		else if ($('#install_by_step_manager .modalManager #i_manager_prenom').val() == "" )
+		{
+			alert_wyca('Firstname is required');
+		}
+		else if ($('#install_by_step_manager .modalManager #i_manager_nom').val() == "" )
+		{
+			alert_wyca('Lastname is required');
+		}
+		else
+		{
+			json_user = {
+				"id_user": parseInt($('#install_by_step_manager .modalManager #i_id_manager').val()),
+				"company": $('#install_by_step_manager .modalManager #i_manager_societe').val(),
+				"lastname": $('#install_by_step_manager .modalManager #i_manager_nom').val(),
+				"firstname": $('#install_by_step_manager .modalManager #i_manager_prenom').val(),
+				"email": $('#install_by_step_manager .modalManager #i_manager_email').val(),
+				"pass": $('#install_by_step_manager .modalManager #i_manager_password').val(),
+				"id_group_user": 3,
+			};
+			
+			wycaApi.SetUser(json_user, function(data) {
+				if (data.A == wycaApi.AnswerCode.NO_ERROR)
+				{
+					// On ajoute le li
+					id_user = data.D;
+					if ($('#list_manager_elem_'+id_user).length > 0)
+					{
+						$('#list_manager_elem_'+id_user+' span.email').html(json_user.email);
+						$('#list_manager_elem_'+id_user+' span.societe').html(json_user.company);
+						$('#list_manager_elem_'+id_user+' span.prenom').html(json_user.firstname);
+						$('#list_manager_elem_'+id_user+' span.nom').html(json_user.lastname);
+					}
+					else
+					{
+						$('#install_by_step_manager .list_managers').append('' +
+							'<li id="list_manager_elem_'+id_user+'" data-id_user="'+id_user+'">'+
+							'	<span class="societe">'+json_user.company+'</span><br /><span class="prenom">'+json_user.firstname+'</span> <span class="nom">'+json_user.lastname+'</span><br /><span class="email">'+data.D.email+'</span>'+
+							'	<a href="#" class="bManagerDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+							'	<a href="#" class="bManagerEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
+							'</li>'
+							);
+					}
+					
+					$('#install_by_step_manager .modalManager').modal('hide');
+				}
+				else
+				{
+					console.log(JSON.stringify(data)); 
+					alert_wyca(wycaApi.AnswerCodeToString(data.A));
+				}
+			});
+		}
+    });
+	
+	$(document).on('click', '#install_by_step_manager .bManagerDeleteElem', function(e) {
+		e.preventDefault();
+		
+		id_user_to_delete = parseInt($(this).closest('li').data('id_user'));
+		
+		wycaApi.DeleteUser(id_user_to_delete, function(data) {
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$('#list_manager_elem_'+id_user_to_delete).remove();
+			}
+			else
+			{
+				console.log(JSON.stringify(data)); 
+				alert_wyca(wycaApi.AnswerCodeToString(data.A));
+			}
+		});
+	});
+	
+	$(document).on('click', '#install_by_step_manager .bManagerEditElem', function(e) {
+		e.preventDefault();
+		
+		id_user = $(this).closest('li').data('id_user');
+		$('#install_by_step_manager .modalManager #i_id_manager').val(id_user);
+		$('#install_by_step_manager .modalManager #i_manager_email').val($('#list_manager_elem_'+id_user+' span.email').html());
+		$('#install_by_step_manager .modalManager #i_manager_societe').val($('#list_manager_elem_'+id_user+' span.societe').html());
+		$('#install_by_step_manager .modalManager #i_manager_prenom').val($('#list_manager_elem_'+id_user+' span.prenom').html());
+		$('#install_by_step_manager .modalManager #i_manager_nom').val($('#list_manager_elem_'+id_user+' span.nom').html());
+		$('#install_by_step_manager .modalManager #i_manager_password').val('');
+		$('#install_by_step_manager .modalManager #i_manager_cpassword').val('');
+		
+		$('#install_by_step_manager .modalManager').modal('show');
+	});
+	
+	$('#install_by_step_manager .bValidManager').click(function(e) {
+        $.ajax({
+			type: "POST",
+			url: 'ajax/install_by_step_managers.php',
+			data: {
+			},
+			dataType: 'json',
+			success: function(data) {
+			},
+			error: function(e) {
+				alert(e.responseText);
+			}
+		});
+    });
+	
+	$('#install_by_step_service_book .bAddServiceBook').click(function(e) {
+	
+		$('#install_by_step_service_book .modalServiceBook #i_service_book_title').val('');
+		$('#install_by_step_service_book .modalServiceBook #i_service_book_comment').val('');
+		
+		$('#install_by_step_service_book .modalServiceBook').modal('show');
+	});
+	
+	$('#install_by_step_service_book .modalServiceBook #bServiceBookSave').click(function(e) {
+        e.preventDefault();
+		
+		if ($('#install_by_step_service_book .modalServiceBook #i_service_book_title').val() == "" )
+		{
+			alert_wyca('Title is required');
+		}
+		else if ($('#install_by_step_service_book .modalServiceBook #i_service_book_comment').val() == "" )
+		{
+			alert_wyca('Comment is required');
+		}
+		else
+		{
+			json_service_book = {
+				"id_service_book": -1,
+				"title": $('#install_by_step_service_book .modalServiceBook #i_service_book_title').val(),
+				"comment": $('#install_by_step_service_book .modalServiceBook #i_service_book_comment').val()
+			};
+			
+			wycaApi.SetServiceBook(json_service_book, function(data) {
+				if (data.A == wycaApi.AnswerCode.NO_ERROR)
+				{
+					// On ajoute le li
+					$('#install_by_step_service_book .list_service_books').append('' +
+						'<li>'+
+						'	<div class="title">'+json_service_book.title+'</div>'+
+						'	<div class="comment">'+json_service_book.comment+'</div>'+
+						'</li>'
+						);
+
+					$('#install_by_step_service_book .modalServiceBook').modal('hide');
+				}
+				else
+				{
+					console.log(JSON.stringify(data)); 
+					alert_wyca(wycaApi.AnswerCodeToString(data.A));
+				}
+			});
+		}
+    });
+	
+	$('#install_by_step_service_book .bFinishInstallation').click(function(e) {
+        $.ajax({
+			type: "POST",
+			url: 'ajax/install_by_step_finish.php',
+			data: {
+			},
+			dataType: 'json',
+			success: function(data) {
+			},
+			error: function(e) {
+				alert(e.responseText);
+			}
+		});
+    });
 });
+
+var currentTestIndex = -1;
+
+function GetServiceBooks()
+{
+	$('.install_by_step_service_book_loading').show();
+	$('#install_by_step_service_book .loaded').hide();
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetServiceBooksList(function(data) {
+			
+			$('#install_by_step_service_book .list_service_books').html('');
+			
+			if (data.D != undefined)
+			$.each(data.D,function(index, value){
+				$('#install_by_step_service_book .list_service_books').append('' +
+						'<li>'+
+						'	<div class="title">'+value.title+'</div>'+
+						'	<div class="comment">'+value.comment+'</div>'+
+						'</li>'
+						);
+			});
+			
+			$('.install_by_step_service_book_loading').hide();
+			$('#install_by_step_service_book .loaded').show();
+		});
+	}
+	else
+	{
+		setTimeout(GetServiceBooks, 500);
+	}
+}
+
+function GetManagers()
+{
+	$('.install_by_step_manager_loading').show();
+	$('#install_by_step_manager .loaded').hide();
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetUsersList(function(data) {
+			
+			$('#install_by_step_manager .list_managers').html('');
+			
+			if (data.D != undefined)
+			$.each(data.D,function(index, value){
+				if (value.id_group_user  == 3)
+				{
+					$('#install_by_step_manager .list_managers').append('' +
+						'<li id="list_manager_elem_'+value.id_user+'" data-id_user="'+value.id_user+'">'+
+						'	<span class="societe">'+value.company+'</span><br /><span class="prenom">'+value.firstname+'</span> <span class="nom">'+value.lastname+'</span><br /><span class="email">'+value.email+'</span>'+
+						'	<a href="#" class="bManagerDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="bManagerEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
+						'</li>'
+						);
+				}
+			});
+			
+			$('.install_by_step_manager_loading').hide();
+			$('#install_by_step_manager .loaded').show();
+		});
+	}
+	else
+	{
+		setTimeout(GetManagers, 500);
+	}
+}
+
+function GetConfigurations()
+{
+	$('.install_by_step_test_map_loading').show();
+	$('#install_by_step_config .loaded').hide();
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetEnergyConfiguration(function(data) {
+			$('#install_by_step_config #i_level_min_gotocharge').val(data.D.EBL);
+			$('#install_by_step_config #i_level_min_dotask').val(data.D.MBL);
+			$('.install_by_step_test_map_loading').hide();
+			$('#install_by_step_config .loaded').show();
+		});
+	}
+	else
+	{
+		setTimeout(GetConfigurations, 500);
+	}
+}
 
 function InitTops()
 {
 	$('.install_by_step_tops_loading').show();
 	$('#install_by_step_tops .tuiles').html('');
-	if (wycaApi.socketAuthed)
+	if (wycaApi.websocketAuthed)
 	{
 		wycaApi.GetTopsList(function(data) {
 			console.log(data);
@@ -766,7 +1162,7 @@ function InitTopsActive()
 {
 	$('.install_by_step_top_loading').show();
 	$('#install_by_step_top .tuiles').html('');
-	if (wycaApi.socketAuthed)
+	if (wycaApi.websocketAuthed)
 	{
 		wycaApi.GetTopsList(function(data) {
 			$.each(data.D,function(index, value){
@@ -791,7 +1187,7 @@ function InitTopsActive()
 
 function InitInstallWifiPage()
 {
-	if (wycaApi.socketAuthed)
+	if (wycaApi.websocketAuthed)
 	{
 		wycaApi.GetWifiList(function(data) {
 			$('#install_by_step_wifi tr').hide();

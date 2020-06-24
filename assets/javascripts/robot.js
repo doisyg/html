@@ -98,11 +98,20 @@ $(document).ready(function(e) {
             	InitDockingState();
 			}
 		},
+		onGoToPoiResult: onGoToPoiResult,
+		onGoToChargeResult: onGoToChargeResult
 	});
 	
 	
 	wycaApi.init();	
 });
+
+function onGoToPoiResult(data)
+{
+}
+function onGoToChargeResult(data)
+{
+}
 
 function InitDockingState()
 {
