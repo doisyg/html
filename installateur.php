@@ -705,6 +705,13 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                                                         <input type="number" id="dock_number" name="dock_number" value="1" class="form-control input-sm mb-md" />
                                                     </div>
                                                 </div>
+                                                
+                                                <div class="form-group">
+                                                    <label for="dock_is_master" class="col-xs-10 control-label">Is default docking station for this robot</label>
+                                                    <div class="col-xs-2">
+                                                        <input type="checkbox" id="dock_is_master" name="dock_is_master" class="input-sm mb-md" style="height:auto;" />
+                                                    </div>
+                                                </div>
                                                 <div class="form-group">
                                                     <label class="col-xs-4 control-label">Comment</label>
                                                     <div class="col-xs-8">

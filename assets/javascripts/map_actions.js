@@ -520,7 +520,7 @@ $(document).ready(function() {
 	
 		currentDockIndex = GetDockIndexFromID(currentDockLongTouch.data('id_docking_station'));
 		dock = docks[currentDockIndex];
-		
+		$('#dock_is_master').prop('checked', dock.is_master);
 		$('#dock_number').val(dock.num);
 		$('#dock_name').val(dock.name);
 		$('#dock_comment').val(dock.comment);
@@ -1382,7 +1382,7 @@ $(document).ready(function() {
 		approch_pose_t = $(this).data('theta') + Math.PI;
 		
 		num = GetMaxNumDock()+1;
-		d = {'id_docking_station':nextIdDock, 'id_map':id_map, 'id_fiducial':$(this).data('id_fiducial'), 'final_pose_x':final_pose_x, 'final_pose_y':final_pose_y, 'final_pose_t':final_pose_t, 'approch_pose_x':approch_pose_x, 'approch_pose_y':approch_pose_y, 'approch_pose_t':approch_pose_t, 'num':parseInt(num), 'fiducial_pose_x':$(this).data('x'), 'fiducial_pose_y':$(this).data('y'), 'fiducial_pose_t':$(this).data('theta'), 'name':'Dock '+num, 'comment':'', 'advanced':true, 'undock_path':[{'linear_distance':-0.3, 'angular_distance':0}]};
+		d = {'id_docking_station':nextIdDock, 'id_map':id_map, 'id_fiducial':$(this).data('id_fiducial'), 'final_pose_x':final_pose_x, 'final_pose_y':final_pose_y, 'final_pose_t':final_pose_t, 'approch_pose_x':approch_pose_x, 'approch_pose_y':approch_pose_y, 'approch_pose_t':approch_pose_t, 'num':parseInt(num), 'fiducial_pose_x':$(this).data('x'), 'fiducial_pose_y':$(this).data('y'), 'fiducial_pose_t':$(this).data('theta'), 'name':'Dock '+num, 'comment':'', 'advanced':true, 'undock_path':[{'linear_distance':-0.3, 'angular_distance':0}], 'is_master':false};
 		AddHistorique({'action':'add_dock', 'data':d});
         docks.push(d);
 		TraceDock(docks.length-1);
@@ -1416,6 +1416,14 @@ $(document).ready(function() {
 		dock.name = $('#dock_name').val();
 		dock.num = parseInt($('#dock_number').val());
 		dock.comment = $('#dock_comment').val();
+		if ($('#dock_is_master').prop('checked'))
+		{
+			// Désactive les autres
+			$.each(docks, function( index, dock ) {
+				dock.is_master = false;
+			});
+		}
+		dock.is_master = $('#dock_is_master').prop('checked');
 			
 		dock.undock_path = Array();
 		
