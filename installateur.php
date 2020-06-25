@@ -526,6 +526,18 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                                             
                                             <h2>Remember to save the map before launching a test</h2>
                                             
+                                            <a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
+                                        
+                                        	<div class="ifUndocked">
+                                                
+                                                <div style="text-align:center; width:100%; z-index:2000; margin-top:50px;">
+                                                    <div class="joystickDiv" draggable="false" style="margin:auto;">
+                                                        <div class="fond"></div>
+                                                        <div class="curseur"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
                                         </div>
                                         
                                         <div style="clear:both;"></div>
@@ -976,6 +988,8 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                         	<li><i class="fa fa-map-marker"></i><span class="description">Add POI</span></li>
                         	<li><i class="fa fa-flash"></i><span class="description">Add docking station</span></li>
                         	<li><i class="fa fa-eraser"></i><span class="description">Erase pixel</span></li>
+                        	<li><i class="fa fa-check"></i><span class="description">Test go to POI or dock</span></li>
+                        	<li><span style="display:inline-block; margin-right:25px; width:15px; height:15px; border-radius:100%; background-color:#009900;"></span><span class="description">Robot position</span></li>
                         </ul>
                         
                         <p>Click to hide</p>

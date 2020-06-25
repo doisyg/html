@@ -608,6 +608,51 @@ function TracePoi(indexPoi)
 		AddClass('#install_by_step_edit_map_svg .poi_elem_'+poi.id_poi, 'active');
 }
 
+var robot_traced = false;
+function TraceRobot(robot_x, robot_y, robot_theta)
+{
+	x = robot_x * 100 / ros_resolution;
+	y = ros_hauteur - (robot_y * 100 / ros_resolution);	
+	angle = 0 - robot_theta * 180 / Math.PI;
+	
+	rayonRobot = (26 / ros_resolution);
+	
+	if (!robot_traced)
+	{
+		robot_traced = true;
+		
+		path = makeSVGElement('circle', { cx: x,
+										cy: y,
+									   r: rayonRobot,
+									   'class': 'robot_elem robot_elem_fond',
+									   'id': 'robot_circle',
+									   'data-element_type': 'robot',
+									   'data-element': 'robot'
+									   });
+		svg.appendChild(path);
+	}
+	else
+	{
+		$('#robot_circle').attr("cx", x);
+		$('#robot_circle').attr("cy", y);
+	}
+	
+	$('#robot_sens').remove();
+	path = makeSVGElement('polyline', { 'points': (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2),
+									'stroke':'#FFFFFF',
+									'stroke-width':1,
+									'fill':'none',
+									'stroke-linejoin':'round',
+									'stroke-linecap':'round',
+								   'class': 'robot_elem',
+								   'transform':'rotate('+angle+', '+x+', '+y+')',
+								   'id': 'robot_sens',
+								   'data-element_type': 'robot',
+								   'data-element': 'robot'
+								   });
+	svg.appendChild(path);
+}
+
 function ResizeSVG()
 {
 	$.each(forbiddens, function( index, forbidden ) {
@@ -622,6 +667,8 @@ function ResizeSVG()
 	$.each(pois, function( index, poi ) {
 		TracePoi(index);
 	});
+	
+	TraceRobot(lastRobotPose.X, lastRobotPose.Y, lastRobotPose.T);
 }
 
 function makeSVGElement(tag, attrs, texte='')

@@ -29,6 +29,7 @@ var height = 0;
 
 var teleopEnable = false;
 
+var lastRobotPose = {'X':0, 'Y':0, 'T':0 };
 var mappingLastOrigin = {'x':0, 'y':0 };
 
 $(document).ready(function(e) {
@@ -212,6 +213,8 @@ function initStateRobot(etat)
 
 function InitRobotPose(pose)
 {
+	console.log(pose);
+	TraceRobot(pose.X, pose.Y, pose.T);
 	/*
 	x =  (pose.x - 0.25) * 100 / 5;
 	y = an_ros_hauteur - (pose.y + 0.25) * 100 / 5;
