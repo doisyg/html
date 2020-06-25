@@ -109,5 +109,6 @@ $_LANG['b78a3223503896721cca1303f776159b'] = 'Title';
 $_LANG['0be8406951cdfda82f00f79328cf4efc'] = 'Comment';
 $_LANG['707912d1ef743f320e98807cddbefc20'] = 'Close installation';
 $_LANG['0eb820cbe0beb3ac65058d3aee5a1662'] = 'Congratulations !';
+$_LANG['a0bfb8e59e6c13fc8d990781f77694fe'] = 'Continue';
 
 ?>

@@ -448,16 +448,95 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                     	<ul>
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg bConfigDock"><i class="fa fa-gears"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg bDeleteDock"><i class="fa fa-trash"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg" data-toggle="modal" data-target="#modalDoSaveBeforeTestDock"><i class="fa fa-check"></i></a></li>
                         </ul>
                     </div>
                     <div id="install_by_step_edit_map_menu_poi" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg bConfigPoi"><i class="fa fa-gears"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg bDeletePoi"><i class="fa fa-trash"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg" data-toggle="modal" data-target="#modalDoSaveBeforeTestPoi"><i class="fa fa-check"></i></a></li>
                         </ul>
                     </div>
                     
+                    <div class="modal fade modalFinTest" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+                                        <div class="h100vh_160" style="overflow:auto">
+                                            
+                                            <section class="panel panel-success">
+                                                <header class="panel-heading">
+                                                    <h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fa fa-thumbs-up"></i></h2>
+                                                </header>
+                                                <div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
+                                                    <strong>Congratulations !</strong><br />
+                                                    No error during action.
+                                                </div>
+                                            </section>
+                                            <section class="panel panel-danger">
+                                                <header class="panel-heading">
+                                                    <h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fa fa-remove"></i></h2>
+                                                </header>
+                                                <div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
+                                                    <strong>Error !</strong><br />
+                                                    <span class="error_details"></span>
+                                                </div>
+                                            </section>
+                                            
+                                        </div>
+                                        
+                                        <div style="clear:both;"></div>
+                                       
+                                        <a href="#" class="btn btn-primary" data-dismiss="modal" style="width:100%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Close');?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     
+                    <div id="modalDoSaveBeforeTestDock" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+                                        <div class="h100vh_160" style="overflow:auto">
+                                            
+                                            <h2>Remember to save the map before launching a test</h2>
+                                            
+                                        </div>
+                                        
+                                        <div style="clear:both;"></div>
+                                       
+                                        <a href="#" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+                                        <a href="#" class="btn btn-warning bTestDock" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Continue');?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="modalDoSaveBeforeTestPoi" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+                                        <div class="h100vh_160" style="overflow:auto">
+                                            
+                                            <h2>Remember to save the map before launching a test</h2>
+                                            
+                                        </div>
+                                        
+                                        <div style="clear:both;"></div>
+                                       
+                                        <a href="#" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+                                        <a href="#" class="btn btn-warning bTestPoi" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Continue');?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     
                     
                     <div class="modal fade modalAreaOptions" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">

@@ -23,7 +23,7 @@ function WycaAPI(options){
 		NAVIGTION_IS_ACTIVE		    : 0x12D,
 		MAPPING_IS_NOT_STARTED  	: 0x12E,
 		MAPPING_IS_ACTIVE		    : 0x12F,
-		MAP_NOT_IN_SITE			    : 0x130, // Robot trying to undock
+		MAP_NOT_IN_SITE			    : 0x130,
 		UNDOCKING                   : 0x131, // Robot trying to undock
 		DOCKED                      : 0x132, // Robot is docked
 		NO_DOCK                     : 0x133, // No dock detected
@@ -1750,9 +1750,9 @@ function WycaAPI(options){
 		var action = {
 			"O": _this.CommandCode.GO_TO_POSE,
 			"P": {
-				X:x,
-				Y:y,
-				T:theta
+				"X":x,
+				"Y":y,
+				"T":theta
 			}
 		};
 		_this.wycaSend(JSON.stringify(action));

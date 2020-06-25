@@ -67,19 +67,6 @@ function GetInfosCurrentMap()
 	}
 }
 
-
-function GetInfosCurrentMapForTest()
-{
-	if (wycaApi.websocketAuthed)
-	{
-		GetInfosCurrentMapDoForTest();
-	}
-	else
-	{
-		setTimeout(GetInfosCurrentMapForTest, 500);
-	}
-}
-
 function GetInfosCurrentMapDo()
 {
 	wycaApi.GetCurrentMapComplete(function(data) {
@@ -123,6 +110,7 @@ function GetInfosCurrentMapDo()
 			ResizeSVG();
 			
 			if (gotoTest) InitTest();
+			
 			gotoTest = false;
 		}
 		else
@@ -130,6 +118,43 @@ function GetInfosCurrentMapDo()
 			alert('Init map error : ' + wycaApi.AnswerCodeToString(data.A));
 		}
 	});
+}
+
+function GetDataMapToSave()
+{
+	data = {};
+	
+	data.forbiddens = forbiddens;
+	$.each(data.forbiddens, function(indexInArray, forbidden){
+		if (forbidden.id_area >= 300000)
+		{
+			data.forbiddens[indexInArray].id_area = -1;
+		}
+	});
+	data.areas = areas;
+	$.each(data.areas, function(indexInArray, area){
+		if (area.id_area >= 300000)
+		{
+			data.areas[indexInArray].id_area = -1;
+		}
+	});
+	data.gommes = gommes;
+	data.docks = docks;
+	$.each(data.docks, function(indexInArray, dock){
+		if (dock.id_docking_station >= 300000)
+		{
+			data.docks[indexInArray].id_docking_station = -1;
+		}
+	});
+	data.pois = pois;
+	$.each(data.pois, function(indexInArray, poi){
+		if (poi.id_poi >= 300000)
+		{
+			data.pois[indexInArray].id_poi = -1;
+		}
+	});
+	
+	return data;
 }
 
 function InitTest()

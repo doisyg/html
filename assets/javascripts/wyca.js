@@ -686,37 +686,7 @@ $(document).ready(function(e) {
 	$('#install_by_step_edit_map .bSaveEditMap').click(function(e) {
 		e.preventDefault();
         
-		data = {};
-		
-		data.forbiddens = forbiddens;
-		$.each(data.forbiddens, function(indexInArray, forbidden){
-			if (forbidden.id_area >= 300000)
-			{
-				data.forbiddens[indexInArray].id_area = -1;
-			}
-		});
-		data.areas = areas;
-		$.each(data.areas, function(indexInArray, area){
-			if (area.id_area >= 300000)
-			{
-				data.areas[indexInArray].id_area = -1;
-			}
-		});
-		data.gommes = gommes;
-		data.docks = docks;
-		$.each(data.docks, function(indexInArray, dock){
-			if (dock.id_docking_station >= 300000)
-			{
-				data.docks[indexInArray].id_docking_station = -1;
-			}
-		});
-		data.pois = pois;
-		$.each(data.pois, function(indexInArray, poi){
-			if (poi.id_poi >= 300000)
-			{
-				data.pois[indexInArray].id_poi = -1;
-			}
-		});
+		data = GetDataMapToSave();
 		
 		if ($(this).hasClass('button_goto'))
 		{
@@ -781,12 +751,31 @@ $(document).ready(function(e) {
 				// On rebranche l'ancienne fonction
 				wycaApi.on('onGoToPoiResult', onGoToPoiResult);
 			});
-			wycaApi.GoToPoi(id);
+			wycaApi.GoToPoi(id, function (data){
+				
+				if (data.A == wycaApi.AnswerCode.NO_ERROR)
+				{
+				}
+				else
+				{
+					$('#install_by_step_test_map .bExecuteTest').removeClass('disabled');
+				
+					$('#install_by_step_test_map #list_test_'+currentTestIndex).addClass('ko');
+					$('#install_by_step_test_map #list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-success');
+					$('#install_by_step_test_map #list_test_'+currentTestIndex+' a').addClass('btn-danger');
+					if (data.M != '')
+						alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+					else
+						alert_wyca(wycaApi.AnswerCodeToString(data.A));
+					
+					// On rebranche l'ancienne fonction
+					wycaApi.on('onGoToPoiResult', onGoToPoiResult);
+				}
+			});
 		}
 		else
 		{
 			// Dock
-			wycaApi.GoToCharge(id);
 			wycaApi.on('onGoToChargeResult', function (data){
 				
 				$('#install_by_step_test_map .bExecuteTest').removeClass('disabled');
@@ -809,6 +798,27 @@ $(document).ready(function(e) {
 				
 				// On rebranche l'ancienne fonction
 				wycaApi.on('onGoToChargeResult', onGoToChargeResult);
+			});
+			wycaApi.GoToCharge(id, function (data){
+				
+				if (data.A == wycaApi.AnswerCode.NO_ERROR)
+				{
+				}
+				else
+				{
+					$('#install_by_step_test_map .bExecuteTest').removeClass('disabled');
+					
+					$('#install_by_step_test_map #list_test_'+currentTestIndex).addClass('ko');
+					$('#install_by_step_test_map #list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-success');
+					$('#install_by_step_test_map #list_test_'+currentTestIndex+' a').addClass('btn-danger');
+					if (data.M != '')
+						alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+					else
+						alert_wyca(wycaApi.AnswerCodeToString(data.A));
+					
+					// On rebranche l'ancienne fonction
+					wycaApi.on('onGoToChargeResult', onGoToChargeResult);
+				}
 			});
 			
 		}

@@ -314,6 +314,23 @@ $_CONFIG['URL'] = 'https://elodie.wyca-solutions.com/';
                     </div>
                 </section>
                 <section class="panel panel-featured panel-featured-primary">
+                    <header class="panel-heading"><h2 class="panel-title"><a href="#" id="GoToPoi" class="btn btn-default">GoToPoi</a> <a href="#" id="GoToPoiCancel" class="btn btn-default">Cancel</a></h2></header>
+                    <div class="panel-body">
+                        <div class="input-group">
+                            <div class="input-group-addon">ID</div>
+                            <input type="text" class="form-control" id="GoToPoi_id" value="1" placeholder="ID">
+                        </div>
+                        <h4>Feedback</h4>
+                        <code id="onGoToPoiFeedback"></code>
+                        <h4>Result</h4>
+                        <code id="onGoToPoiResult"></code>
+                        <h4>Return</h4>
+                        <code id="GoToPoiReturn"></code>
+                        <h4>Cancel Return</h4>
+                        <code id="GoToPoiCancelReturn"></code>
+                    </div>
+                </section>
+                <section class="panel panel-featured panel-featured-primary">
                     <header class="panel-heading"><h2 class="panel-title"><a href="#" id="Dock" class="btn btn-default">Dock</a></h2></header>
                     <div class="panel-body">
                         <div class="input-group">
@@ -606,6 +623,12 @@ $(document).ready(function(e) {
 		onGoToPoseResult: function(data){
 			$('#onGoToPoseResult').html(JSON.stringify(data));
 		},
+		onGoToPoiFeedback: function(data){
+			$('#onGoToPoiFeedback').html(JSON.stringify(data));
+		},
+		onGoToPoiResult: function(data){
+			$('#onGoToPoiResult').html(JSON.stringify(data));
+		},
 		onDockFeedback: function(data){
 			$('#onDockFeedback').html(JSON.stringify(data));
 		},
@@ -807,6 +830,16 @@ $(document).ready(function(e) {
 		$('#onGoToPoseFeedback').html('');
 		$('#onGoToPoseResult').html('');
     	wycaApi.GoToPose(parseFloat($('#GoToPose_x').val()), parseFloat($('#GoToPose_y').val()), parseFloat($('#GoToPose_theta').val()), function(data) { $('#GoToPoseReturn').html(JSON.stringify(data)); });
+    });
+	$('#GoToPoi').click(function(e) {
+		e.preventDefault();
+		$('#GoToPoiReturn').html('');
+		$('#onGoToPoiFeedback').html('');
+		$('#onGoToPoiResult').html('');
+    	wycaApi.GoToPoi(parseFloat($('#GoToPoi_id').val()), function(data) { $('#GoToPoiReturn').html(JSON.stringify(data)); });
+    });
+	$('#GoToPoiCancel').click(function(e) {
+		wycaApi.GoToPoiCancel(function(data) { $('#GoToPoiCancelReturn').html(JSON.stringify(data)); });
     });
 	$('#Dock').click(function(e) {
 		e.preventDefault();

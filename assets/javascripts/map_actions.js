@@ -565,6 +565,56 @@ $(document).ready(function() {
 		$('#install_by_step_edit_map_container_all .modalDockOptions').modal('show');
     });
 	
+	$('#install_by_step_edit_map .bTestDock').click(function(e) {
+        e.preventDefault();
+		HideMenus();
+		
+		wycaApi.on('onGoToChargeResult', function (data){
+			
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$('#install_by_step_edit_map .modalFinTest section.panel-success').show();
+				$('#install_by_step_edit_map .modalFinTest section.panel-danger').hide();
+			}
+			else
+			{
+				$('#install_by_step_edit_map .modalFinTest section.panel-success').hide();
+				$('#install_by_step_edit_map .modalFinTest section.panel-danger').show();
+				
+				if (data.M != '')
+					$('#install_by_step_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+				else
+					$('#install_by_step_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
+			}
+			
+			// On rebranche l'ancienne fonction
+			wycaApi.on('onGoToChargeResult', onGoToChargeResult);
+			
+			$('#install_by_step_edit_map .modalFinTest').modal('show');
+		});
+		wycaApi.GoToCharge(currentDockLongTouch.data('id_docking_station'), function (data){
+			
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+			}
+			else
+			{
+				$('#install_by_step_edit_map .modalFinTest section.panel-success').hide();
+				$('#install_by_step_edit_map .modalFinTest section.panel-danger').show();
+				
+				if (data.M != '')
+					$('#install_by_step_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+				else
+					$('#install_by_step_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
+				
+				// On rebranche l'ancienne fonction
+				wycaApi.on('onGoToChargeResult', onGoToChargeResult);
+				
+				$('#install_by_step_edit_map .modalFinTest').modal('show');
+			}
+		});
+    });
+	
 	$('#install_by_step_edit_map_menu_poi .bDeletePoi').click(function(e) {
         e.preventDefault();
 		HideMenus();
@@ -621,6 +671,57 @@ $(document).ready(function() {
 		
 		$('#install_by_step_edit_map_container_all .modalPoiOptions').modal('show');
 		
+    });
+	
+	$('#install_by_step_edit_map .bTestPoi').click(function(e) {
+        e.preventDefault();
+		HideMenus();
+		
+		wycaApi.on('onGoToPoiResult', function (data){
+			
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$('#install_by_step_edit_map .modalFinTest section.panel-success').show();
+				$('#install_by_step_edit_map .modalFinTest section.panel-danger').hide();
+			}
+			else
+			{
+				$('#install_by_step_edit_map .modalFinTest section.panel-success').hide();
+				$('#install_by_step_edit_map .modalFinTest section.panel-danger').show();
+				
+				if (data.M != '')
+					$('#install_by_step_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+				else
+					$('#install_by_step_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
+			}
+			
+			// On rebranche l'ancienne fonction
+			wycaApi.on('onGoToPoiResult', onGoToPoiResult);
+		
+			$('#install_by_step_edit_map .modalFinTest').modal('show');
+		});
+		
+		wycaApi.GoToPoi(currentPoiLongTouch.data('id_poi'), function (data){
+			
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+			}
+			else
+			{
+				$('#install_by_step_edit_map .modalFinTest section.panel-success').hide();
+				$('#install_by_step_edit_map .modalFinTest section.panel-danger').show();
+				
+				if (data.M != '')
+					$('#install_by_step_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+				else
+					$('#install_by_step_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
+			
+				// On rebranche l'ancienne fonction
+				wycaApi.on('onGoToPoiResult', onGoToPoiResult);
+				
+				$('#install_by_step_edit_map .modalFinTest').modal('show');
+			}
+		});
     });
 	
 	$('#install_by_step_edit_map_svg').on('contextmenu', function (e) {
