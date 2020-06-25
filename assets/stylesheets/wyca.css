@@ -93,10 +93,10 @@ ul.tuiles li .tuile_img.is_checkbox.checked i.fa-spinner.fa-pulse { display:none
 
 @media only screen and (max-width: 767px)
 {
-	#divResultTrinary { z-index:200; }
-	#divOptionTrinary { position:absolute; bottom:30px; left:5%; width:90%; z-index:300; color:#0088cc; text-align:left; }
-	#divOptionTrinary .panel-body { background-color:rgba(255,255,255,0.5); }
-	#divOptionTrinary h3 { display:none; }
+	#install_by_step_mapping_divResultTrinary { z-index:200; }
+	#install_by_step_mapping_divOptionTrinary { position:absolute; bottom:30px; left:5%; width:90%; z-index:300; color:#0088cc; text-align:left; }
+	#install_by_step_mapping_divOptionTrinary .panel-body { background-color:rgba(255,255,255,0.5); }
+	#install_by_step_mapping_divOptionTrinary h3 { display:none; }
 }
 
 .table_wifi img { width:25px; }
@@ -135,8 +135,8 @@ ul.tuiles li .tuile_img.is_checkbox.checked i.fa-spinner.fa-pulse { display:none
 .popupHelp ul li;first-child { border-top:1px solid #EEEEEE; }
 .popupHelp ul li i { font-size:24px; min-width:40px; }
 
-#bEndGomme, #bSaveCurrentElem { position:absolute; top:10px; left:10px; padding:0; display:none; }
-#bCancelCurrentElem { position:absolute; top:10px; left:80px; padding:0; display:none; }
+#install_by_step_edit_map_bEndGomme, #install_by_step_edit_map_bSaveCurrentElem { position:absolute; top:10px; left:10px; padding:0; display:none; }
+#install_by_step_edit_map_bCancelCurrentElem { position:absolute; top:10px; left:80px; padding:0; display:none; }
 
 .h100vh_160 { height:calc(100vh - 60px); }
 

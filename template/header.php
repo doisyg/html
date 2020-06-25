@@ -50,8 +50,12 @@
             	<div class="btn-group pull-left" role="group" aria-label="Change group">
 	            	<?php if ($_SESSION['id_groupe_user'] <= 1) { ?><button id="bPagesWyca" type="button" data-groupe="pages_wyca" data-btn_class="btn-danger" class="btn_change_group btn btn-sm btn-<?php echo $_SESSION['id_groupe_user'] == 1?'danger active':'default';?>">Wyca</button><?php }?>
 	            	<?php if ($_SESSION['id_groupe_user'] <= 2) { ?><button id="bPagesInstall" type="button" data-groupe="pages_install" data-btn_class="btn-warning" class="btn_change_group btn btn-sm btn-<?php echo $_SESSION['id_groupe_user'] == 2?'warning active':'default';?>">Install</button><?php }?>
-	            	<?php if ($_SESSION['id_groupe_user'] <= 3) { ?><button id="bPagesManger" type="button" data-groupe="pages_manager" data-btn_class="btn-primary" class="btn_change_group btn btn-sm btn-<?php echo $_SESSION['id_groupe_user'] == 3?'primary active':'default';?>">Manager</button><?php }?>
-	            	<?php if ($_SESSION['id_groupe_user'] <= 4) { ?><button id="bPagesUser" type="button" data-groupe="pages_user" data-btn_class="btn-success" class="btn_change_group btn btn-sm btn-<?php echo $_SESSION['id_groupe_user'] == 4?'success active':'default';?>">User</button><?php }?>
+                    <?php
+					$INSTALL_STEP = Configuration::GetValue('INSTALL_STEP');
+					if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
+					?>
+	            	<?php if ($_SESSION['id_groupe_user'] <= 3) { ?><button id="bPagesManger" type="button" data-groupe="pages_manager" data-btn_class="btn-primary" class="btn_change_group btn btn-sm btn-<?php echo $_SESSION['id_groupe_user'] == 3?'primary active':'default';?>" <?php echo ($INSTALL_STEP < 100)?'style="display:none;"':'';?>>Manager</button><?php }?>
+	            	<?php if ($_SESSION['id_groupe_user'] <= 4) { ?><button id="bPagesUser" type="button" data-groupe="pages_user" data-btn_class="btn-success" class="btn_change_group btn btn-sm btn-<?php echo $_SESSION['id_groupe_user'] == 4?'success active':'default';?>" <?php echo ($INSTALL_STEP < 100)?'style="display:none;"':'';?>>User</button><?php }?>
                 </ul>
             </div>
             <div class="pull-right">

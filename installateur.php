@@ -136,14 +136,14 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                                     
                                         <div class="modalImportTop_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
                                         <div class="modalImportTop_content">
-	                                        <input id="file_import_top" type="file" class="form-control" />
+	                                        <input class="file_import_top" type="file" class="form-control" />
                                         </div>
                                         
                                     </div>
                                     
                                     <div style="clear:both;"></div>
                                    
-                                    <a href="#" id="bImportTopDo" class="btn btn-primary" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Import');?></a>
+                                    <a href="#" class="btn btn-primary bImportTopDo" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Import');?></a>
                                     <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
                                 </div>
                             </div>
@@ -329,24 +329,24 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                 
                     <div class="fin_mapping_view" style="height:65vh; width:100%; margin:10px 0; border:1px solid #EFEFEF; position:relative; background-color:#F0F0F0;">
                         <img id="install_by_step_mapping_img_map_saved_fin" src="" style="z-index:200; display:none; max-width:100%;" />
-                        <div id="divOptionTrinary">
-                            <div id="threshold_free_slider_elem" class="mt-lg mb-lg slider-primary" data-plugin-slider data-plugin-options='{ "value": 25, "range": "min", "max": 100 }' data-plugin-slider-output="#threshold_free_slider">
-                                <input id="threshold_free_slider" type="hidden" value="25" />
+                        <div id="install_by_step_mapping_divOptionTrinary">
+                            <div id="install_by_step_mapping_threshold_free_slider_elem" class="mt-lg mb-lg slider-primary" data-plugin-slider data-plugin-options='{ "value": 25, "range": "min", "max": 100 }' data-plugin-slider-output="#install_by_step_mapping_threshold_free_slider">
+                                <input id="install_by_step_mapping_threshold_free_slider" type="hidden" value="25" />
                             </div>
-                            <p id="threshold_free_output">Threshold free: <b>25</b></p>
+                            <p id="install_by_step_mapping_threshold_free_output">Threshold free: <b>25</b></p>
                                                 
-                            <div id="threshold_occupied_slider_elem" class="mt-lg mb-lg slider-primary" data-plugin-slider data-plugin-options='{ "value": 65, "range": "min", "max": 100 }' data-plugin-slider-output="#threshold_occupied_slider">
-                                <input id="threshold_occupied_slider" type="hidden" value="65" />
+                            <div id="install_by_step_mapping_threshold_occupied_slider_elem" class="mt-lg mb-lg slider-primary" data-plugin-slider data-plugin-options='{ "value": 65, "range": "min", "max": 100 }' data-plugin-slider-output="#install_by_step_mapping_threshold_occupied_slider">
+                                <input id="install_by_step_mapping_threshold_occupied_slider" type="hidden" value="65" />
                             </div>
-                            <p id="threshold_occupied_output">Threshold occupied: <b>65</b></p>
+                            <p id="install_by_step_mapping_threshold_occupied_output">Threshold occupied: <b>65</b></p>
                             
                             <a href="#" class="btn btn-xs btn-primary bResetValueThreshold"><?php echo __('Reset values');?></a>
                             
                         </div>
-                        <div id="divResultTrinary">
+                        <div id="install_by_step_mapping_divResultTrinary">
                             <div style="height:80vh; overflow:auto;">
                                 <i style="font-size:60px;" class="fa fa-spinner fa-pulse loading_fin_create_map"></i>
-                                <canvas id="canvas_result_trinary" width="" height="" style="max-width:100%; max-height:65vh;"></canvas>
+                                <canvas id="install_by_step_mapping_canvas_result_trinary" width="" height="" style="max-width:100%; max-height:65vh;"></canvas>
                             </div>
                         </div>
                     </div>
@@ -414,9 +414,9 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                         <div style="clear:both;"></div>
                     </div>
                     
-                    <a href="#" id="bEndGomme" class="btn btn-circle btn-primary btn-lg"><i class="fa fa-check"></i></a>
-                    <a href="#" id="bSaveCurrentElem" class="btn btn-circle btn-primary btn-lg"><i class="fa fa-check"></i></a>
-                    <a href="#" id="bCancelCurrentElem" class="btn btn-circle btn-warning btn-lg"><i class="fa fa-times"></i></a>
+                    <a href="#" id="install_by_step_edit_map_bEndGomme" class="btn btn-circle btn-primary btn-lg"><i class="fa fa-check"></i></a>
+                    <a href="#" id="install_by_step_edit_map_bSaveCurrentElem" class="btn btn-circle btn-primary btn-lg"><i class="fa fa-check"></i></a>
+                    <a href="#" id="install_by_step_edit_map_bCancelCurrentElem" class="btn btn-circle btn-warning btn-lg"><i class="fa fa-times"></i></a>
                     
                     <div id="install_by_step_edit_map_menu" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
@@ -448,14 +448,14 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                     	<ul>
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg bConfigDock"><i class="fa fa-gears"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg bDeleteDock"><i class="fa fa-trash"></i></a></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg" data-toggle="modal" data-target="#modalDoSaveBeforeTestDock"><i class="fa fa-check"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg" data-toggle="modal" data-target="#install_by_step_edit_map_modalDoSaveBeforeTestDock"><i class="fa fa-check"></i></a></li>
                         </ul>
                     </div>
                     <div id="install_by_step_edit_map_menu_poi" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg bConfigPoi"><i class="fa fa-gears"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg bDeletePoi"><i class="fa fa-trash"></i></a></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg" data-toggle="modal" data-target="#modalDoSaveBeforeTestPoi"><i class="fa fa-check"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg" data-toggle="modal" data-target="#install_by_step_edit_map_modalDoSaveBeforeTestPoi"><i class="fa fa-check"></i></a></li>
                         </ul>
                     </div>
                     
@@ -496,7 +496,7 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                         </div>
                     </div>
                     
-                    <div id="modalDoSaveBeforeTestDock" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                    <div id="install_by_step_edit_map_modalDoSaveBeforeTestDock" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
                         <div class="modal-dialog" role="dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -504,6 +504,18 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                                         <div class="h100vh_160" style="overflow:auto">
                                             
                                             <h2>Remember to save the map before launching a test</h2>
+                                            
+                                            <a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
+                                        
+                                        	<div class="ifUndocked">
+                                                
+                                                <div style="text-align:center; width:100%; z-index:2000; margin-top:50px;">
+                                                    <div class="joystickDiv" draggable="false" style="margin:auto;">
+                                                        <div class="fond"></div>
+                                                        <div class="curseur"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             
                                         </div>
                                         
@@ -517,7 +529,7 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                         </div>
                     </div>
                     
-                    <div id="modalDoSaveBeforeTestPoi" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                    <div id="install_by_step_edit_map_modalDoSaveBeforeTestPoi" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
                         <div class="modal-dialog" role="dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -561,43 +573,43 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                                                 <div class="form-group">
                                                     <label class="col-xs-4 control-label">Area color</label>
                                                     <div class="col-xs-7">
-                                                        <div id="area_color_elem" class="input-group color" data-color="rgb(87, 159, 177)" data-color-format="rgb" data-plugin-colorpicker>
+                                                        <div id="install_by_step_edit_map_area_color_elem" class="input-group color" data-color="rgb(87, 159, 177)" data-color-format="rgb" data-plugin-colorpicker>
                                                             <span class="input-group-addon"><i></i></span>
-                                                            <input id="area_color" name="area_color" type="text" class="form-control" style="width:0; padding:0;">
+                                                            <input id="install_by_step_edit_map_area_color" name="area_color" type="text" class="form-control" style="width:0; padding:0;">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-xs-4 control-label" for="inputSuccess"><?php echo __('LED Color');?></label>
                                                     <div class="col-xs-8">
-                                                        <select id="led_color_mode" name="led_color_mode" class="form-control input-sm mb-md selectChangeAffGroup">
+                                                        <select id="install_by_step_edit_map_led_color_mode" name="led_color_mode" class="form-control input-sm mb-md selectChangeAffGroup">
                                                             <option value="Automatic"><?php echo __('Automatic');?></option>
                                                             <option value="Manual"><?php echo __('Manual');?></option>
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div id="led_color_group" class="form-group">
+                                                <div id="install_by_step_edit_map_led_color_group" class="form-group">
                                                     <label class="col-xs-4 control-label">LED color</label>
                                                     <div class="col-xs-7">
-                                                        <div id="led_color_elem" class="input-group color" data-color="rgb(255, 146, 180)" data-color-format="rgb" data-plugin-colorpicker>
+                                                        <div id="install_by_step_edit_map_led_color_elem" class="input-group color" data-color="rgb(255, 146, 180)" data-color-format="rgb" data-plugin-colorpicker>
                                                             <span class="input-group-addon"><i></i></span>
-                                                            <input id="led_color" name="led_color" type="text" class="form-control" style="width:0; padding:0;">
+                                                            <input id="install_by_step_edit_map_led_color" name="led_color" type="text" class="form-control" style="width:0; padding:0;">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-xs-4 control-label" for="inputSuccess"><?php echo __('LED Animation');?></label>
                                                     <div class="col-xs-8">
-                                                        <select id="led_animation_mode" name="led_animation_mode" class="form-control input-sm mb-md selectChangeAffGroup">
+                                                        <select id="install_by_step_edit_map_led_animation_mode" name="led_animation_mode" class="form-control input-sm mb-md selectChangeAffGroup">
                                                             <option value="Automatic"><?php echo __('Automatic');?></option>
                                                             <option value="Manual"><?php echo __('Manual');?></option>
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div id="led_animation_group" class="form-group">
+                                                <div id="install_by_step_edit_map_led_animation_group" class="form-group">
                                                     <label class="col-xs-4 control-label" for="inputSuccess"><?php echo __('Animation');?></label>
                                                     <div class="col-xs-8">
-                                                        <select id="led_animation" name="led_animation" class="form-control input-sm mb-md">
+                                                        <select id="install_by_step_edit_map_led_animation" name="led_animation" class="form-control input-sm mb-md">
                                                             <option value="1"><?php echo __('Progress');?></option>
                                                             <option value="2"><?php echo __('Progress from center');?></option>
                                                             <option value="3"><?php echo __('Rainbow');?></option>
@@ -614,16 +626,16 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                                                 <div class="form-group">
                                                     <label class="col-xs-4 control-label" for="inputSuccess"><?php echo __('Max speed');?></label>
                                                     <div class="col-xs-8">
-                                                        <select id="max_speed_mode" name="max_speed_mode" class="form-control input-sm mb-md selectChangeAffGroup">
+                                                        <select id="install_by_step_edit_map_max_speed_mode" name="max_speed_mode" class="form-control input-sm mb-md selectChangeAffGroup">
                                                             <option value="Automatic"><?php echo __('Automatic');?></option>
                                                             <option value="Manual"><?php echo __('Manual');?></option>
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div id="max_speed_group" class="form-group">
+                                                <div id="install_by_step_edit_map_max_speed_group" class="form-group">
                                                     <label class="col-xs-4 control-label" for="inputSuccess"><?php echo __('Max speed');?></label>
                                                     <div class="col-xs-8">
-                                                        <input type="number" id="max_speed" name="max_speed" class="form-control input-sm mb-md" />
+                                                        <input type="number" id="install_by_step_edit_map_max_speed" name="max_speed" class="form-control input-sm mb-md" />
                                                     </div>
                                                 </div>
                                             </form>
@@ -631,7 +643,7 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" id="bAreaSaveConfig" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
+                                        <a href="#" id="install_by_step_edit_map_bAreaSaveConfig" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
                                         <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
                                     </div>
                                 </div>
@@ -651,14 +663,14 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                                         	<div class="ifUndocked">
                                                 <div style="height:200px; position:relative;">
                                                 
-                                                    <img id="modalAddDock_robot" src="assets/images/robot-dessus.png" width="50" style="position:absolute; top:130px; margin-left:-25px; z-index:300;" />
+                                                    <img id="install_by_step_edit_map_modalAddDock_robot" src="assets/images/robot-dessus.png" width="50" style="position:absolute; top:130px; margin-left:-25px; z-index:300;" />
                                                     
-                                                    <img id="modalAddDock_dock0" class="dock" src="assets/images/reflector.png" width="25" />
-                                                    <img id="modalAddDock_dock1" class="dock" src="assets/images/reflector.png" width="25" />
-                                                    <img id="modalAddDock_dock2" class="dock" src="assets/images/reflector.png" width="25" />
-                                                    <img id="modalAddDock_dock3" class="dock" src="assets/images/reflector.png" width="25" />
-                                                    <img id="modalAddDock_dock4" class="dock" src="assets/images/reflector.png" width="25" />
-                                                    <img id="modalAddDock_dock5" class="dock" src="assets/images/reflector.png" width="25" />
+                                                    <img id="install_by_step_edit_map_modalAddDock_dock0" class="dock" src="assets/images/reflector.png" width="25" />
+                                                    <img id="install_by_step_edit_map_modalAddDock_dock1" class="dock" src="assets/images/reflector.png" width="25" />
+                                                    <img id="install_by_step_edit_map_modalAddDock_dock2" class="dock" src="assets/images/reflector.png" width="25" />
+                                                    <img id="install_by_step_edit_map_modalAddDock_dock3" class="dock" src="assets/images/reflector.png" width="25" />
+                                                    <img id="install_by_step_edit_map_modalAddDock_dock4" class="dock" src="assets/images/reflector.png" width="25" />
+                                                    <img id="install_by_step_edit_map_modalAddDock_dock5" class="dock" src="assets/images/reflector.png" width="25" />
                                                     
                                                 </div>
                                             
@@ -677,7 +689,7 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                                         
                                         <div style="clear:both;"></div>
                                                                                 
-                                        <a href="#" id="bModalAddDockSave" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
+                                        <a href="#" id="install_by_step_edit_map_bModalAddDockSave" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
                                         <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
                                     </div>
                                 </div>
@@ -696,26 +708,26 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                                                 <div class="form-group">
                                                     <label class="col-xs-4 control-label">Name</label>
                                                     <div class="col-xs-8">
-                                                        <input type="text" id="dock_name" name="dock_name" value="" class="form-control input-sm mb-md" />
+                                                        <input type="text" id="install_by_step_edit_map_dock_name" name="dock_name" value="" class="form-control input-sm mb-md" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-xs-4 control-label">Number</label>
                                                     <div class="col-xs-8">
-                                                        <input type="number" id="dock_number" name="dock_number" value="1" class="form-control input-sm mb-md" />
+                                                        <input type="number" id="install_by_step_edit_map_dock_number" name="dock_number" value="1" class="form-control input-sm mb-md" />
                                                     </div>
                                                 </div>
                                                 
                                                 <div class="form-group">
                                                     <label for="dock_is_master" class="col-xs-10 control-label">Is default docking station for this robot</label>
                                                     <div class="col-xs-2">
-                                                        <input type="checkbox" id="dock_is_master" name="dock_is_master" class="input-sm mb-md" style="height:auto;" />
+                                                        <input type="checkbox" id="install_by_step_edit_map_dock_is_master" name="dock_is_master" class="input-sm mb-md" style="height:auto;" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-xs-4 control-label">Comment</label>
                                                     <div class="col-xs-8">
-                                                        <textarea id="dock_comment" name="dock_comment" class="form-control input-sm mb-md"></textarea>
+                                                        <textarea id="install_by_step_edit_map_dock_comment" name="dock_comment" class="form-control input-sm mb-md"></textarea>
                                                     </div>
                                                 </div>
                                                 <fieldset>
@@ -723,17 +735,17 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                                                     <div style="text-align:left;">
                                                         <a href="#" class="bUndockProcedureAddElem btn btn-circle btn-default"><i class="fa fa-plus"></i></a>
                                                         <ul class="list_undock_procedure list_elem">
-                                                            <li id="list_undock_procedure_elem_1" data-index_dock="1" data-action="move" data-distance="-0.3">
+                                                            <li id="install_by_step_edit_map_list_undock_procedure_elem_1" data-index_dock="1" data-action="move" data-distance="-0.3">
                                                             	Move back 0.3m
                                                                 <a href="#" class="bUndockProcedureDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>
                                                                 <a href="#" class="bUndockProcedureEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>
                                                             </li>
-                                                            <li id="list_undock_procedure_elem_2" data-index_dock="2" data-action="rotate" data-angle="45">
+                                                            <li id="install_by_step_edit_map_list_undock_procedure_elem_2" data-index_dock="2" data-action="rotate" data-angle="45">
                                                             	Rotate 45°
                                                                 <a href="#" class="bUndockProcedureDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>
                                                                 <a href="#" class="bUndockProcedureEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>
                                                             </li>
-                                                            <li id="list_undock_procedure_elem_3" data-index_dock="3" data-action="move" data-distance="0.1">
+                                                            <li id="install_by_step_edit_map_list_undock_procedure_elem_3" data-index_dock="3" data-action="move" data-distance="0.1">
                                                             	Move front 0.1m
                                                                 <a href="#" class="bUndockProcedureDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>
                                                                 <a href="#" class="bUndockProcedureEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>
@@ -747,7 +759,7 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" id="bDockSaveConfig" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
+                                        <a href="#" id="install_by_step_edit_map_bDockSaveConfig" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
                                         <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
                                     </div>
                                 </div>
@@ -766,11 +778,11 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                                                 <div class="form-group">
                                                     <label class="col-xs-12 control-label">Action</label>
                                                     <div class="col-xs-6">
-                                                        <input type="radio" id="up_elem_action_move" name="up_elem_action" value="move" class="form-control" />
+                                                        <input type="radio" id="install_by_step_edit_map_up_elem_action_move" name="up_elem_action" value="move" class="form-control" />
                                                     	<label for="up_elem_action_move" class="control-label">Move</label>    
                                                     </div>
                                                     <div class="col-xs-6">
-                                                        <input type="radio" id="up_elem_action_rotate" name="up_elem_action" value="rotate" class="form-control" />
+                                                        <input type="radio" id="install_by_step_edit_map_up_elem_action_rotate" name="up_elem_action" value="rotate" class="form-control" />
                                                     	<label for="up_elem_action_rotate" class="control-label">Rotate</label>
                                                     </div>
                                                 </div>
@@ -779,11 +791,11 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                                                     <div class="form-group">
                                                         <label class="col-xs-12 control-label">Direction</label>
                                                         <div class="col-xs-6">
-                                                            <input type="radio" id="up_elem_direction_front" name="up_elem_direction" value="front" class="form-control" />
+                                                            <input type="radio" id="install_by_step_edit_map_up_elem_direction_front" name="up_elem_direction" value="front" class="form-control" />
                                                             <label for="up_elem_direction_front" class="control-label">Front</label>    
                                                         </div>
                                                         <div class="col-xs-6">
-                                                            <input type="radio" id="up_elem_direction_back" name="up_elem_direction" value="back" class="form-control" />
+                                                            <input type="radio" id="install_by_step_edit_map_up_elem_direction_back" name="up_elem_direction" value="back" class="form-control" />
                                                             <label for="up_elem_direction_back" class="control-label">Back</label>
                                                         </div>
                                                     </div>
@@ -791,7 +803,7 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                                                     <div class="form-group">
                                                         <label class="col-xs-12 control-label">Distance</label>
                                                         <div class="col-md-6 input-group mb-md">
-                                                            <input type="text" value="0" class="form-control" name="up_elem_move_distance" id="up_elem_move_distance" />
+                                                            <input type="text" value="0" class="form-control" name="up_elem_move_distance" id="install_by_step_edit_map_up_elem_move_distance" />
                                                             <span class="input-group-addon">m</span>
                                                         </div>
                                                     </div>
@@ -802,7 +814,7 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                                                     <div class="form-group">
                                                         <label class="col-xs-12 control-label">Angle</label>
                                                         <div class="col-md-6 input-group mb-md">
-                                                            <input type="text" value="0" class="form-control" name="up_elem_rotate_angle" id="up_elem_rotate_angle" />
+                                                            <input type="text" value="0" class="form-control" name="up_elem_rotate_angle" id="install_by_step_edit_map_up_elem_rotate_angle" />
                                                             <span class="input-group-addon ">°</span>
                                                         </div>
                                                     </div>
@@ -835,14 +847,14 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                                                 
                                                 <div style="height:200px; position:relative;">
                                                 
-                                                    <img id="modalAddPoi_robot" src="assets/images/robot-dessus.png" width="50" style="position:absolute; top:130px; margin-left:-25px; z-index:300;" />
+                                                    <img id="install_by_step_edit_map_modalAddPoi_robot" src="assets/images/robot-dessus.png" width="50" style="position:absolute; top:130px; margin-left:-25px; z-index:300;" />
                                                     
-                                                    <img id="modalAddPoi_poi0" class="poi" src="assets/images/reflector.png" width="25" />
-                                                    <img id="modalAddPoi_poi1" class="poi" src="assets/images/reflector.png" width="25" />
-                                                    <img id="modalAddPoi_poi2" class="poi" src="assets/images/reflector.png" width="25" />
-                                                    <img id="modalAddPoi_poi3" class="poi" src="assets/images/reflector.png" width="25" />
-                                                    <img id="modalAddPoi_poi4" class="poi" src="assets/images/reflector.png" width="25" />
-                                                    <img id="modalAddPoi_poi5" class="poi" src="assets/images/reflector.png" width="25" />
+                                                    <img id="install_by_step_edit_map_modalAddPoi_poi0" class="poi" src="assets/images/reflector.png" width="25" />
+                                                    <img id="install_by_step_edit_map_modalAddPoi_poi1" class="poi" src="assets/images/reflector.png" width="25" />
+                                                    <img id="install_by_step_edit_map_modalAddPoi_poi2" class="poi" src="assets/images/reflector.png" width="25" />
+                                                    <img id="install_by_step_edit_map_modalAddPoi_poi3" class="poi" src="assets/images/reflector.png" width="25" />
+                                                    <img id="install_by_step_edit_map_modalAddPoi_poi4" class="poi" src="assets/images/reflector.png" width="25" />
+                                                    <img id="install_by_step_edit_map_modalAddPoi_poi5" class="poi" src="assets/images/reflector.png" width="25" />
                                                     
                                                 </div>
                                             
@@ -865,7 +877,7 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" id="bModalAddPoiSave" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
+                                        <a href="#" id="install_by_step_edit_map_bModalAddPoiSave" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
                                         <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
                                     </div>
                                 </div>
@@ -884,13 +896,13 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                                                 <div class="form-group">
                                                     <label class="col-xs-4 control-label">Name</label>
                                                     <div class="col-xs-8">
-                                                        <input type="text" id="poi_name" name="poi_name" value="" class="form-control input-sm mb-md" />
+                                                        <input type="text" id="install_by_step_edit_map_poi_name" name="poi_name" value="" class="form-control input-sm mb-md" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-xs-4 control-label">Comment</label>
                                                     <div class="col-xs-8">
-                                                        <textarea id="poi_comment" name="poi_comment" class="form-control input-sm mb-md"></textarea>
+                                                        <textarea id="install_by_step_edit_map_poi_comment" name="poi_comment" class="form-control input-sm mb-md"></textarea>
                                                     </div>
                                                 </div>
                                                 <fieldset>
@@ -898,7 +910,7 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                                                     <div style="text-align:left;">
                                                         <a href="#" class="bUndockProcedurePoiAddElem btn btn-circle btn-default"><i class="fa fa-plus"></i></a>
                                                         <ul class="list_undock_procedure_poi list_elem">
-                                                            <li id="list_undock_procedure_poi_elem_1" data-index_poi="1" data-action="move" data-distance="-0.3">
+                                                            <li id="install_by_step_edit_map_list_undock_procedure_poi_elem_1" data-index_poi="1" data-action="move" data-distance="-0.3">
                                                             	Move back 0.3m
                                                                 <a href="#" class="bUndockProcedurePoiDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>
                                                                 <a href="#" class="bUndockProcedurePoiEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>
@@ -912,7 +924,7 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" id="bPoiSaveConfig" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
+                                        <a href="#" id="install_by_step_edit_map_bPoiSaveConfig" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
                                         <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
                                     </div>
                                 </div>
@@ -931,11 +943,11 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                                                 <div class="form-group">
                                                     <label class="col-xs-12 control-label">Action</label>
                                                     <div class="col-xs-6">
-                                                        <input type="radio" id="up_poi_elem_action_move" name="up_poi_elem_action" value="move" class="form-control" />
+                                                        <input type="radio" id="install_by_step_edit_map_up_poi_elem_action_move" name="up_poi_elem_action" value="move" class="form-control" />
                                                     	<label for="up_poi_elem_action_move" class="control-label">Move</label>    
                                                     </div>
                                                     <div class="col-xs-6">
-                                                        <input type="radio" id="up_poi_elem_action_rotate" name="up_poi_elem_action" value="rotate" class="form-control" />
+                                                        <input type="radio" id="install_by_step_edit_map_up_poi_elem_action_rotate" name="up_poi_elem_action" value="rotate" class="form-control" />
                                                     	<label for="up_poi_elem_action_rotate" class="control-label">Rotate</label>
                                                     </div>
                                                 </div>
@@ -944,11 +956,11 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                                                     <div class="form-group">
                                                         <label class="col-xs-12 control-label">Direction</label>
                                                         <div class="col-xs-6">
-                                                            <input type="radio" id="up_poi_elem_direction_front" name="up_poi_elem_direction" value="front" class="form-control" />
+                                                            <input type="radio" id="install_by_step_edit_map_up_poi_elem_direction_front" name="up_poi_elem_direction" value="front" class="form-control" />
                                                             <label for="up_poi_elem_direction_front" class="control-label">Front</label>    
                                                         </div>
                                                         <div class="col-xs-6">
-                                                            <input type="radio" id="up_poi_elem_direction_back" name="up_poi_elem_direction" value="back" class="form-control" />
+                                                            <input type="radio" id="install_by_step_edit_map_up_poi_elem_direction_back" name="up_poi_elem_direction" value="back" class="form-control" />
                                                             <label for="up_poi_elem_direction_back" class="control-label">Back</label>
                                                         </div>
                                                     </div>
@@ -956,7 +968,7 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                                                     <div class="form-group">
                                                         <label class="col-xs-12 control-label">Distance</label>
                                                         <div class="col-md-6 input-group mb-md">
-                                                            <input type="text" value="0" class="form-control" name="up_poi_elem_move_distance" id="up_poi_elem_move_distance" />
+                                                            <input type="text" value="0" class="form-control" name="up_poi_elem_move_distance" id="install_by_step_edit_map_up_poi_elem_move_distance" />
                                                             <span class="input-group-addon">m</span>
                                                         </div>
                                                     </div>
@@ -967,7 +979,7 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                                                     <div class="form-group">
                                                         <label class="col-xs-12 control-label">Angle</label>
                                                         <div class="col-md-6 input-group mb-md">
-                                                            <input type="text" value="0" class="form-control" name="up_poi_elem_rotate_angle" id="up_poi_elem_rotate_angle" />
+                                                            <input type="text" value="0" class="form-control" name="up_poi_elem_rotate_angle" id="install_by_step_edit_map_up_poi_elem_rotate_angle" />
                                                             <span class="input-group-addon ">°</span>
                                                         </div>
                                                     </div>
@@ -1005,9 +1017,9 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                     
                 </div>
                 
-                <div id="zoom_popup" style="position:absolute; top:20px; left:20px; width:101px; height:101px; border:1px solid #000; overflow:hidden; display:none; z-index:8000;">
-                    <div id="zoom_popup_content" style="position:absolute; top:0; height:0;"></div>
-                    <div id="zoom_popup_mire" style="position:absolute; width:101px; height:101px; top:0; left:0; background-image:url(assets/images/mire.png);"></div>
+                <div id="install_by_step_edit_map_zoom_popup" style="position:absolute; top:20px; left:20px; width:101px; height:101px; border:1px solid #000; overflow:hidden; display:none; z-index:8000;">
+                    <div id="install_by_step_edit_map_zoom_popup_content" style="position:absolute; top:0; height:0;"></div>
+                    <div id="install_by_step_edit_map_zoom_popup_mire" style="position:absolute; width:101px; height:101px; top:0; left:0; background-image:url(assets/images/mire.png);"></div>
                 </div>
             </div>
             <footer>
@@ -1061,7 +1073,7 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                     <div class="form-group">
                         <label for="i_level_min_gotocharge" class="col-xs-12 col-md-6 control-label"><?php echo __('Emergency battery level (execute a go to charge if the battery drops below this level)');?></label>
                         <div class="col-md-6 input-group mb-md">
-                            <input type="text" value="0" class="form-control" name="i_level_min_gotocharge" id="i_level_min_gotocharge" />
+                            <input type="text" value="0" class="form-control" name="i_level_min_gotocharge" id="install_by_step_config_i_level_min_gotocharge" />
                             <span class="input-group-addon">%</span>
                         </div>
                     </div>
@@ -1069,7 +1081,7 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                     <div class="form-group">
                         <label for="i_level_min_dotask" class="col-xs-12 col-md-6 control-label"><?php echo __('Minimum battery level before move:');?></label>
                         <div class="col-md-6 input-group mb-md">
-                            <input type="text" value="0" class="form-control" name="i_level_min_dotask" id="i_level_min_dotask" />
+                            <input type="text" value="0" class="form-control" name="i_level_min_dotask" id="install_by_step_config_i_level_min_dotask" />
                             <span class="input-group-addon">%</span>
                         </div>
                     </div>
@@ -1108,41 +1120,41 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                                     <div class="actions mh100vh_55">
                                         <div class="h100vh_160" style="overflow:auto">
                                             <form>
-                                            	<input type="hidden" name="i_id_manager" id="i_id_manager" value="-1" />
+                                            	<input type="hidden" name="i_id_manager" id="install_by_step_manager_i_id_manager" value="-1" />
                                                 <div class="form-group">
                                                     <label class="col-xs-12 col-md-3 control-label" for="societe"><?php echo __('Company');?></label>
                                                     <div class="col-xs-12 col-md-6">
-                                                        <input id="i_manager_societe" name="societe" type="text" class="form-control">
+                                                        <input id="install_by_step_manager_i_manager_societe" name="societe" type="text" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-xs-12 col-md-3 control-label" for="prenom"><?php echo __('Firstname');?></label>
                                                     <div class="col-xs-12 col-md-6">
-                                                        <input id="i_manager_prenom" name="prenom" type="text" class="form-control">
+                                                        <input id="install_by_step_manager_i_manager_prenom" name="prenom" type="text" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-xs-12 col-md-3 control-label" for="nom"><?php echo __('Lastname');?></label>
                                                     <div class="col-xs-12 col-md-6">
-                                                        <input id="i_manager_nom" name="nom" type="text" class="form-control">
+                                                        <input id="install_by_step_manager_i_manager_nom" name="nom" type="text" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-xs-12 col-md-3 control-label" for="email"><?php echo __('Email');?></label>
                                                     <div class="col-xs-12 col-md-6">
-                                                        <input id="i_manager_email" name="email" type="text" class="form-control">
+                                                        <input id="install_by_step_manager_i_manager_email" name="email" type="text" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-xs-12 col-md-3 control-label" for="password"><?php echo __('Password');?></label>
                                                     <div class="col-xs-12 col-md-6">
-                                                        <input id="i_manager_password" name="password" type="password" class="form-control">
+                                                        <input id="install_by_step_manager_i_manager_password" name="password" type="password" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-xs-12 col-md-3 control-label" for="cpassword"><?php echo __('Confirm password');?></label>
                                                     <div class="col-xs-12 col-md-6">
-                                                        <input id="i_manager_cpassword" name="cpassword" type="password" class="form-control">
+                                                        <input id="install_by_step_manager_i_manager_cpassword" name="cpassword" type="password" class="form-control">
                                                     </div>
                                                 </div>
                                             </form>
@@ -1150,7 +1162,7 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" id="bManagerSave" class="btn btn-primary" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
+                                        <a href="#" id="install_by_step_manager_bManagerSave" class="btn btn-primary" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
                                         <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
                                     </div>
                                 </div>
@@ -1191,13 +1203,13 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                                             	<div class="form-group">
                                                     <label class="col-xs-12 col-md-3 control-label" for="title"><?php echo __('Title');?></label>
                                                     <div class="col-xs-12 col-md-6">
-                                                        <input id="i_service_book_title" name="title" type="text" class="form-control">
+                                                        <input id="install_by_step_service_book_i_service_book_title" name="title" type="text" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-xs-12 col-md-3 control-label" for="comment"><?php echo __('Comment');?></label>
                                                     <div class="col-xs-12 col-md-6">
-                                                        <textarea id="i_service_book_comment" name="comment" style="height:50vh;" class="form-control"></textarea>
+                                                        <textarea id="install_by_step_service_book_i_service_book_comment" name="comment" style="height:50vh;" class="form-control"></textarea>
                                                     </div>
                                                 </div>
                                             </form>
@@ -1205,7 +1217,7 @@ if ($INSTALL_STEP == '') $INSTALL_STEP = 0;
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" id="bServiceBookSave" class="btn btn-primary" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
+                                        <a href="#" id="install_by_step_service_book_bServiceBookSave" class="btn btn-primary" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
                                         <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
                                     </div>
                                 </div>

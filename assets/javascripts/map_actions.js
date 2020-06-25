@@ -141,11 +141,11 @@ function Undo()
 			break;
 		case 'edit_forbidden':
 			forbiddens[elem.data.index] = JSON.parse(elem.data.old);
-			TraceForbidden(elem.data.index);
+			ByStepTraceForbidden(elem.data.index);
 			break;
 		case 'delete_forbidden':
 			forbiddens[elem.data].deleted = false;
-			TraceForbidden(elem.data);
+			ByStepTraceForbidden(elem.data);
 			break;
 		case 'add_area':
 			areas.pop();
@@ -153,11 +153,11 @@ function Undo()
 			break;
 		case 'edit_area':
 			areas[elem.data.index] = JSON.parse(elem.data.old);
-			TraceArea(elem.data.index);
+			ByStepTraceArea(elem.data.index);
 			break;
 		case 'delete_area':
 			areas[elem.data].deleted = false;
-			TraceArea(elem.data);
+			ByStepTraceArea(elem.data);
 			break;
 		case 'add_dock':
 			docks.pop();
@@ -165,11 +165,11 @@ function Undo()
 			break;
 		case 'edit_dock':
 			docks[elem.data.index] = JSON.parse(elem.data.old);
-			TraceDock(elem.data.index);
+			ByStepTraceDock(elem.data.index);
 			break;
 		case 'delete_dock':
 			docks[elem.data].deleted = false;
-			TraceDock(elem.data);
+			ByStepTraceDock(elem.data);
 			break;
 		case 'add_poi':
 			pois.pop();
@@ -177,11 +177,11 @@ function Undo()
 			break;
 		case 'edit_poi':
 			pois[elem.data.index] = JSON.parse(elem.data.old);
-			TracePoi(elem.data.index);
+			ByStepTracePoi(elem.data.index);
 			break;
 		case 'delete_poi':
 			pois[elem.data].deleted = false;
-			TracePoi(elem.data);
+			ByStepTracePoi(elem.data);
 			break;
 	}
 	historiqueIndex--;
@@ -200,55 +200,55 @@ function Redo()
 	{
 		case 'gomme':
 			gommes.push(elem.data);
-			TraceCurrentGomme(gommes[gommes.length-1], gommes.length-1)
+			ByStepTraceCurrentGomme(gommes[gommes.length-1], gommes.length-1)
 			break;
 		case 'add_forbidden':
 			forbiddens.push(elem.data);
-			TraceForbidden(forbiddens.length-1);
+			ByStepTraceForbidden(forbiddens.length-1);
 			break;
 		case 'edit_forbidden':
 			forbiddens[elem.data.index] = JSON.parse(elem.data.new);
-			TraceForbidden(elem.data.index);
+			ByStepTraceForbidden(elem.data.index);
 			break;
 		case 'delete_forbidden':
 			forbiddens[elem.data].deleted = true;
-			TraceForbidden(elem.data);
+			ByStepTraceForbidden(elem.data);
 			break;
 		case 'add_area':
 			areas.push(elem.data);
-			TraceArea(areas.length-1);
+			ByStepTraceArea(areas.length-1);
 			break;
 		case 'edit_area':
 			areas[elem.data.index] = JSON.parse(elem.data.new);
-			TraceArea(elem.data.index);
+			ByStepTraceArea(elem.data.index);
 			break;
 		case 'delete_area':
 			areas[elem.data].deleted = true;
-			TraceArea(elem.data);
+			ByStepTraceArea(elem.data);
 			break;
 		case 'add_dock':
 			docks.push(elem.data);
-			TraceDock(docks.length-1);
+			ByStepTraceDock(docks.length-1);
 			break;
 		case 'edit_dock':
 			docks[elem.data.index] = JSON.parse(elem.data.new);
-			TraceDock(elem.data.index);
+			ByStepTraceDock(elem.data.index);
 			break;
 		case 'delete_dock':
 			docks[elem.data].deleted = true;
-			TraceDock(elem.data);
+			ByStepTraceDock(elem.data);
 			break;
 		case 'add_poi':
 			pois.push(elem.data);
-			TracePoi(pois.length-1);
+			ByStepTracePoi(pois.length-1);
 			break;
 		case 'edit_poi':
 			pois[elem.data.index] = JSON.parse(elem.data.new);
-			TracePoi(elem.data.index);
+			ByStepTracePoi(elem.data.index);
 			break;
 		case 'delete_poi':
 			pois[elem.data].deleted = true;
-			TracePoi(elem.data);
+			ByStepTracePoi(elem.data);
 			break;
 	}
 	
@@ -291,13 +291,13 @@ function SaveElementNeeded(need)
 	canChangeMenu = !need;
 	if (need)
 	{
-		$('#bSaveCurrentElem').show();
-		$('#bCancelCurrentElem').show();
+		$('#install_by_step_edit_map_bSaveCurrentElem').show();
+		$('#install_by_step_edit_map_bCancelCurrentElem').show();
 	}
 	else
 	{
-		$('#bSaveCurrentElem').hide();
-		$('#bCancelCurrentElem').hide();
+		$('#install_by_step_edit_map_bSaveCurrentElem').hide();
+		$('#install_by_step_edit_map_bCancelCurrentElem').hide();
 	}
 }
 
@@ -323,15 +323,15 @@ $(document).ready(function() {
 	svg = document.querySelector('#install_by_step_edit_map_svg');
 	InitSVG();
 	
-	$('#install_by_step_edit_map #bEndGomme').click(function(e) {
+	$('#install_by_step_edit_map #install_by_step_edit_map_bEndGomme').click(function(e) {
         e.preventDefault();
-		$('#bEndGomme').hide();
+		$('#install_by_step_edit_map_bEndGomme').hide();
 		currentAction = '';
 		currentStep = '';
 		$('body').addClass('no_current');
     });
 	
-	$('#install_by_step_edit_map #bSaveCurrentElem').click(function(e) {
+	$('#install_by_step_edit_map #install_by_step_edit_map_bSaveCurrentElem').click(function(e) {
         e.preventDefault();
 		
 		if (currentAction == 'addPoi' || currentAction == 'editPoi')
@@ -344,7 +344,7 @@ $(document).ready(function() {
 			ForbiddenSave();		
     });
 	
-	$('#install_by_step_edit_map #bCancelCurrentElem').click(function(e) {
+	$('#install_by_step_edit_map #install_by_step_edit_map_bCancelCurrentElem').click(function(e) {
         e.preventDefault();
 		
 		if (currentAction == 'addPoi' || currentAction == 'editPoi')
@@ -359,23 +359,23 @@ $(document).ready(function() {
 	
 	$('#install_by_step_edit_map_bUndo').click(function(e) {
         e.preventDefault();
-		if (!$('#bUndo').hasClass('disabled'))
+		if (!$('#install_by_step_edit_map_bUndo').hasClass('disabled'))
 			Undo();
 	});
 	$('#install_by_step_edit_map_bUndo').on('touchstart', function(e) { 
 		e.preventDefault();
-		if (!$('#bUndo').hasClass('disabled'))
+		if (!$('#install_by_step_edit_map_bUndo').hasClass('disabled'))
 			Undo();
 	});
 	
 	$('#install_by_step_edit_map_bRedo').click(function(e) {
         e.preventDefault();
-		if (!$('#bRedo').hasClass('disabled'))
+		if (!$('#install_by_step_edit_map_bRedo').hasClass('disabled'))
 			Redo();
     });
 	$('#install_by_step_edit_map_bRedo').on('touchstart', function(e) { 
 		e.preventDefault();
-		if (!$('#bRedo').hasClass('disabled'))
+		if (!$('#install_by_step_edit_map_bRedo').hasClass('disabled'))
 			Redo();
 	});
 	
@@ -412,7 +412,7 @@ $(document).ready(function() {
 			
 			
 			forbiddens[currentForbiddenIndex].points.splice($(this).data('index_point'), 0, {x:xRos, y:yRos});
-			TraceForbidden(currentForbiddenIndex);
+			ByStepTraceForbidden(currentForbiddenIndex);
 		}
 		else if (currentAction == 'editArea')
 		{
@@ -430,100 +430,100 @@ $(document).ready(function() {
 			
 			
 			areas[currentAreaIndex].points.splice($(this).data('index_point'), 0, {x:xRos, y:yRos});
-			TraceArea(currentAreaIndex);
+			ByStepTraceArea(currentAreaIndex);
 		}
     });
 	
 	$('#install_by_step_edit_map_menu_point .bDeletePoint').click(function(e) {
         e.preventDefault();
-		HideMenus();
+		ByStepHideMenus();
 		if (currentAction == 'editForbiddenArea')
 		{
-			forbiddens[currentForbiddenIndex].points.splice(currentPointLongTouch.data('index_point'), 1);
-			TraceForbidden(currentForbiddenIndex);
+			forbiddens[currentForbiddenIndex].points.splice(currentPointByStepLongTouch.data('index_point'), 1);
+			ByStepTraceForbidden(currentForbiddenIndex);
 		}
 		else if (currentAction == 'editArea')
 		{
-			areas[currentAreaIndex].points.splice(currentPointLongTouch.data('index_point'), 1);
-			TraceArea(currentAreaIndex);
+			areas[currentAreaIndex].points.splice(currentPointByStepLongTouch.data('index_point'), 1);
+			ByStepTraceArea(currentAreaIndex);
 		}
     });
 	
 	$('#install_by_step_edit_map_menu_forbidden .bDeleteForbidden').click(function(e) {
         e.preventDefault();
-		HideMenus();
+		ByStepHideMenus();
 		if (currentAction == "select" || currentAction == 'editForbiddenArea')
 		{
-			i = GetForbiddenIndexFromID(currentForbiddenLongTouch.data('id_area'));
+			i = GetForbiddenIndexFromID(currentForbiddenByStepLongTouch.data('id_area'));
 			DeleteForbidden(i);	
 		}
     });
 	
 	$('#install_by_step_edit_map_menu_area .bDeleteArea').click(function(e) {
         e.preventDefault();
-		HideMenus();
+		ByStepHideMenus();
 		if (currentAction == "select" || currentAction == 'editArea')
 		{
-			i = GetAreaIndexFromID(currentAreaLongTouch.data('id_area'));
+			i = GetAreaIndexFromID(currentAreaByStepLongTouch.data('id_area'));
 			DeleteArea(i);	
 		}
     });
 	
 	$('#install_by_step_edit_map_menu_area .bConfigArea').click(function(e) {
         e.preventDefault();
-		HideMenus();
+		ByStepHideMenus();
 		if (currentAction == "select" || currentAction == 'editArea')
 		{
-			currentAreaIndex = GetAreaIndexFromID(currentAreaLongTouch.data('id_area'));
+			currentAreaIndex = GetAreaIndexFromID(currentAreaByStepLongTouch.data('id_area'));
 			area = areas[currentAreaIndex];
 			if (area.configs != undefined)
 			{
 				$.each(area.configs, function( indexConfig, config ) {
 					switch(config.name)
 					{
-						case 'led_color_mode': $('#led_color_mode').val(config.value); break;
-						case 'led_color': $('#led_color').val(config.value); $('#led_color').keyup(); break;
-						case 'led_animation_mode': $('#led_animation_mode').val(config.value); break;
-						case 'led_animation': $('#led_animation').val(config.value); break;
-						case 'max_speed_mode': $('#max_speed_mode').val(config.value); break;
-						case 'max_speed': $('#max_speed').val(config.value); break;
+						case 'led_color_mode': $('#install_by_step_edit_map_led_color_mode').val(config.value); break;
+						case 'led_color': $('#install_by_step_edit_map_led_color').val(config.value); $('#install_by_step_edit_map_led_color').keyup(); break;
+						case 'led_animation_mode': $('#install_by_step_edit_map_led_animation_mode').val(config.value); break;
+						case 'led_animation': $('#install_by_step_edit_map_led_animation').val(config.value); break;
+						case 'max_speed_mode': $('#install_by_step_edit_map_max_speed_mode').val(config.value); break;
+						case 'max_speed': $('#install_by_step_edit_map_max_speed').val(config.value); break;
 					}
 				});
 			}
 			else
 			{
-				$('#led_color_mode').val('Automatic');
-				$('#led_animation_mode').val('Automatic');
-				$('#max_speed_mode').val('Automatic');
+				$('#install_by_step_edit_map_led_color_mode').val('Automatic');
+				$('#install_by_step_edit_map_led_animation_mode').val('Automatic');
+				$('#install_by_step_edit_map_max_speed_mode').val('Automatic');
 			}
 			
-			$('#area_color').val('rgb('+area.color_r+','+area.color_g+','+area.color_b+')'); $('#area_color').keyup();
+			$('#install_by_step_edit_map_area_color').val('rgb('+area.color_r+','+area.color_g+','+area.color_b+')'); $('#install_by_step_edit_map_area_color').keyup();
 			
-			if ($('#led_color_mode').val() == 'Automatic') $('#led_color_group').hide(); else  $('#led_color_group').show();
-			if ($('#led_animation_mode').val() == 'Automatic') $('#led_animation_group').hide(); else  $('#led_animation_group').show();
-			if ($('#max_speed_mode').val() == 'Automatic') $('#max_speed_group').hide(); else  $('#max_speed_group').show();
+			if ($('#install_by_step_edit_map_led_color_mode').val() == 'Automatic') $('#install_by_step_edit_map_led_color_group').hide(); else  $('#install_by_step_edit_map_led_color_group').show();
+			if ($('#install_by_step_edit_map_led_animation_mode').val() == 'Automatic') $('#install_by_step_edit_map_led_animation_group').hide(); else  $('#install_by_step_edit_map_led_animation_group').show();
+			if ($('#install_by_step_edit_map_max_speed_mode').val() == 'Automatic') $('#install_by_step_edit_map_max_speed_group').hide(); else  $('#install_by_step_edit_map_max_speed_group').show();
 			$('#install_by_step_edit_map_container_all .modalAreaOptions').modal('show');
 		}
     });
 	
 	$('#install_by_step_edit_map_menu_dock .bDeleteDock').click(function(e) {
         e.preventDefault();
-		HideMenus();
-		i = GetDockIndexFromID(currentDockLongTouch.data('id_docking_station'));
+		ByStepHideMenus();
+		i = GetDockIndexFromID(currentDockByStepLongTouch.data('id_docking_station'));
 		DeleteDock(i);
     });
 	
 	$('#install_by_step_edit_map_menu_dock .bConfigDock').click(function(e) {
         e.preventDefault();
-		HideMenus();
+		ByStepHideMenus();
 		currentAction = 'editDock';
 	
-		currentDockIndex = GetDockIndexFromID(currentDockLongTouch.data('id_docking_station'));
+		currentDockIndex = GetDockIndexFromID(currentDockByStepLongTouch.data('id_docking_station'));
 		dock = docks[currentDockIndex];
-		$('#dock_is_master').prop('checked', dock.is_master);
-		$('#dock_number').val(dock.num);
-		$('#dock_name').val(dock.name);
-		$('#dock_comment').val(dock.comment);
+		$('#install_by_step_edit_map_dock_is_master').prop('checked', dock.is_master);
+		$('#install_by_step_edit_map_dock_number').val(dock.num);
+		$('#install_by_step_edit_map_dock_name').val(dock.name);
+		$('#install_by_step_edit_map_dock_comment').val(dock.comment);
 		
 		$('.modalDockOptions .list_undock_procedure li').remove();
 		
@@ -538,7 +538,7 @@ $(document).ready(function() {
 				direction = undock_step.linear_distance > 0 ? 'front':'back';
 				
 				$('.modalDockOptions .list_undock_procedure').append('' +
-					'<li id="list_undock_procedure_elem_'+indexDockElem+'" data-index_dock_procedure="'+indexDockElem+'" data-action="move" data-distance="' + distance + '">'+
+					'<li id="install_by_step_edit_map_vlist_undock_procedure_elem_'+indexDockElem+'" data-index_dock_procedure="'+indexDockElem+'" data-action="move" data-distance="' + distance + '">'+
 					'	<span>Move ' + ((direction == 'back')?'back':'front') + ' ' + ((direction == 'back')?distance*-1:distance) + 'm</span>'+
 					'	<a href="#" class="bUndockProcedureDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
 					'	<a href="#" class="bUndockProcedureEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
@@ -551,7 +551,7 @@ $(document).ready(function() {
 				angle = Math.round(angle*100)/100;
 				
 				$('.modalDockOptions .list_undock_procedure').append('' +
-					'<li id="list_undock_procedure_elem_'+indexDockElem+'" data-index_dock_procedure="'+indexDockElem+'" data-action="rotate" data-angle="'+angle+'">'+
+					'<li id="install_by_step_edit_map_list_undock_procedure_elem_'+indexDockElem+'" data-index_dock_procedure="'+indexDockElem+'" data-action="rotate" data-angle="'+angle+'">'+
 					'	<span>Rotate '+angle+'°</span>'+
 					'	<a href="#" class="bUndockProcedureDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
 					'	<a href="#" class="bUndockProcedureEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
@@ -567,7 +567,7 @@ $(document).ready(function() {
 	
 	$('#install_by_step_edit_map .bTestDock').click(function(e) {
         e.preventDefault();
-		HideMenus();
+		ByStepHideMenus();
 		
 		wycaApi.on('onGoToChargeResult', function (data){
 			
@@ -592,7 +592,7 @@ $(document).ready(function() {
 			
 			$('#install_by_step_edit_map .modalFinTest').modal('show');
 		});
-		wycaApi.GoToCharge(currentDockLongTouch.data('id_docking_station'), function (data){
+		wycaApi.GoToCharge(currentDockByStepLongTouch.data('id_docking_station'), function (data){
 			
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
@@ -617,21 +617,21 @@ $(document).ready(function() {
 	
 	$('#install_by_step_edit_map_menu_poi .bDeletePoi').click(function(e) {
         e.preventDefault();
-		HideMenus();
-		i = GetPoiIndexFromID(currentPoiLongTouch.data('id_poi'));
+		ByStepHideMenus();
+		i = GetPoiIndexFromID(currentPoiByStepLongTouch.data('id_poi'));
 		DeletePoi(i);
     });
 	
 	$('#install_by_step_edit_map_menu_poi .bConfigPoi').click(function(e) {
         e.preventDefault();
-		HideMenus();
+		ByStepHideMenus();
 		currentAction = 'editPoi';
 	
-		currentPoiIndex = GetPoiIndexFromID(currentPoiLongTouch.data('id_poi'));
+		currentPoiIndex = GetPoiIndexFromID(currentPoiByStepLongTouch.data('id_poi'));
 		poi = pois[currentPoiIndex];
 		
-		$('#poi_name').val(poi.name);
-		$('#poi_comment').val(poi.comment);
+		$('#install_by_step_edit_map_poi_name').val(poi.name);
+		$('#install_by_step_edit_map_poi_comment').val(poi.comment);
 		
 		$('.modalPoiOptions .list_undock_procedure_poi li').remove();
 		
@@ -646,7 +646,7 @@ $(document).ready(function() {
 				direction = undock_step.linear_distance > 0 ? 'front':'back';
 				
 				$('.modalPoiOptions .list_undock_procedure_poi').append('' +
-					'<li id="list_undock_procedure_poi_elem_'+indexPoiElem+'" data-index_poi_procedure="'+indexPoiElem+'" data-action="move" data-distance="' + distance + '">'+
+					'<li id="install_by_step_edit_map_list_undock_procedure_poi_elem_'+indexPoiElem+'" data-index_poi_procedure="'+indexPoiElem+'" data-action="move" data-distance="' + distance + '">'+
 					'	<span>Move ' + ((direction == 'back')?'back':'front') + ' ' + ((direction == 'back')?distance*-1:distance) + 'm</span>'+
 					'	<a href="#" class="bUndockProcedurePoiDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
 					'	<a href="#" class="bUndockProcedurePoiEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
@@ -659,7 +659,7 @@ $(document).ready(function() {
 				angle = Math.round(angle*100)/100;
 				
 				$('.modalPoiOptions .list_undock_procedure_poi').append('' +
-					'<li id="list_undock_procedure_poi_elem_'+indexPoiElem+'" data-index_poi_procedure="'+indexPoiElem+'" data-action="rotate" data-angle="'+angle+'">'+
+					'<li id="install_by_step_edit_map_list_undock_procedure_poi_elem_'+indexPoiElem+'" data-index_poi_procedure="'+indexPoiElem+'" data-action="rotate" data-angle="'+angle+'">'+
 					'	<span>Rotate '+angle+'°</span>'+
 					'	<a href="#" class="bUndockProcedurePoiDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
 					'	<a href="#" class="bUndockProcedurePoiEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
@@ -675,7 +675,7 @@ $(document).ready(function() {
 	
 	$('#install_by_step_edit_map .bTestPoi').click(function(e) {
         e.preventDefault();
-		HideMenus();
+		ByStepHideMenus();
 		
 		wycaApi.on('onGoToPoiResult', function (data){
 			
@@ -701,7 +701,7 @@ $(document).ready(function() {
 			$('#install_by_step_edit_map .modalFinTest').modal('show');
 		});
 		
-		wycaApi.GoToPoi(currentPoiLongTouch.data('id_poi'), function (data){
+		wycaApi.GoToPoi(currentPoiByStepLongTouch.data('id_poi'), function (data){
 			
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
@@ -730,7 +730,7 @@ $(document).ready(function() {
 		{
 			currentStep = '';
 			currentGommePoints.pop(); // Point du curseur
-			TraceCurrentGomme(currentGommePoints);
+			ByStepTraceCurrentGomme(currentGommePoints);
 			return false;
 			
 		}
@@ -739,14 +739,14 @@ $(document).ready(function() {
 		{
 			currentStep = '';
 			currentForbiddenPoints.pop(); // Point du curseur
-			TraceCurrentForbidden(currentForbiddenPoints);
+			ByStepTraceCurrentForbidden(currentForbiddenPoints);
 			return false;
 		}
 		else if (currentAction == 'addArea' && currentStep=='trace')
 		{
 			currentStep = '';
 			currentAreaPoints.pop(); // Point du curseur
-			TraceCurrentArea(currentAreaPoints);
+			ByStepTraceCurrentArea(currentAreaPoints);
 			return false;
 		}
 		*/
@@ -890,10 +890,10 @@ $(document).ready(function() {
 			currentSelectedItem.push({'type':'forbidden', 'id':$(this).data('id_area')});	
 			HideCurrentMenuNotSelect();
 			
-			$('#boutonsForbidden').show();
-            $('#boutonsStandard').hide();
+			$('#install_by_step_edit_map_boutonsForbidden').show();
+            $('#install_by_step_edit_map_boutonsStandard').hide();
 			
-			$('#boutonsForbidden #bForbiddenDelete').show();
+			$('#install_by_step_edit_map_boutonsForbidden #install_by_step_edit_map_bForbiddenDelete').show();
 			
 			$('body').removeClass('no_current select');
 			$('.select').css("strokeWidth", minStokeWidth);
@@ -930,11 +930,11 @@ $(document).ready(function() {
 			currentSelectedItem.push({'type':'area', 'id':$(this).data('id_area')});	
 			HideCurrentMenuNotSelect();
 			
-			$('#boutonsArea').show();
-            $('#boutonsStandard').hide();
+			$('#install_by_step_edit_map_boutonsArea').show();
+            $('#install_by_step_edit_map_boutonsStandard').hide();
 			
-			$('#boutonsArea #bAreaDelete').show();
-			$('#boutonsArea #bAreaOptions').show();
+			$('#install_by_step_edit_map_boutonsArea #install_by_step_edit_map_bAreaDelete').show();
+			$('#install_by_step_edit_map_boutonsArea #install_by_step_edit_map_bAreaOptions').show();
 			
 			$('body').removeClass('no_current select');
 			$('.select').css("strokeWidth", minStokeWidth);
@@ -971,10 +971,10 @@ $(document).ready(function() {
 			currentSelectedItem.push({'type':'dock', 'id':$(this).data('id_docking_station')});	
 			HideCurrentMenuNotSelect();
 			
-			$('#boutonsDock').show();
-            $('#boutonsStandard').hide();
+			$('#install_by_step_edit_map_boutonsDock').show();
+            $('#install_by_step_edit_map_boutonsStandard').hide();
 			
-			$('#boutonsDock a').show();
+			$('#install_by_step_edit_map_boutonsDock a').show();
 			
 			$('body').removeClass('no_current select');
 			$('.select').css("strokeWidth", minStokeWidth);
@@ -1013,11 +1013,11 @@ $(document).ready(function() {
 			currentSelectedItem.push({'type':'poi', 'id':$(this).data('id_poi')});	
 			HideCurrentMenuNotSelect();
 			
-			$('#boutonsPoi').show();
+			$('#install_by_step_edit_map_boutonsPoi').show();
 			
-            $('#boutonsStandard').hide();
+            $('#install_by_step_edit_map_boutonsStandard').hide();
 			
-			$('#boutonsPoi a').show();
+			$('#install_by_step_edit_map_boutonsPoi a').show();
 			
 			$('body').removeClass('no_current select');
 			$('.select').css("strokeWidth", minStokeWidth);
@@ -1043,14 +1043,14 @@ $(document).ready(function() {
 		
 	$('#install_by_step_edit_map_menu .bGomme').click(function(e) {
         e.preventDefault();
-		HideMenus();
-		if ($('#bGomme').hasClass('btn-primary'))
+		ByStepHideMenus();
+		if ($('#install_by_step_edit_map_bGomme').hasClass('btn-primary'))
 		{
 			blockZoom = false;
 			
 			HideCurrentMenu();
 			
-			$('#bGomme').removeClass('btn-primary');
+			$('#install_by_step_edit_map_bGomme').removeClass('btn-primary');
 		
 			currentAction = '';	
 			currentStep = '';
@@ -1070,7 +1070,7 @@ $(document).ready(function() {
 			{
 				HideCurrentMenu();
 				
-				$('#bGomme').addClass('btn-primary');
+				$('#install_by_step_edit_map_bGomme').addClass('btn-primary');
 			
 				currentAction = 'gomme';	
 				currentStep = '';
@@ -1088,7 +1088,7 @@ $(document).ready(function() {
 	
 	$('#install_by_step_edit_map_menu .bAddForbiddenArea').click(function(e) {
         e.preventDefault();
-		HideMenus();
+		ByStepHideMenus();
 		if (canChangeMenu)
 		{
 			//blockZoom = true;
@@ -1116,7 +1116,7 @@ $(document).ready(function() {
 			AddHistorique({'action':'add_forbidden', 'data':f});
 			
 			forbiddens.push(f);
-			TraceForbidden(forbiddens.length-1);
+			ByStepTraceForbidden(forbiddens.length-1);
 			
 			RemoveClass('#install_by_step_edit_map_svg .active', 'active');
 			RemoveClass('#install_by_step_edit_map_svg .activ_select', 'activ_select'); 
@@ -1125,10 +1125,10 @@ $(document).ready(function() {
 			currentSelectedItem.push({'type':'forbidden', 'id':nextIdArea});	
 			HideCurrentMenuNotSelect();			
 			
-			$('#boutonsForbidden').show();
-            $('#boutonsStandard').hide();
+			$('#install_by_step_edit_map_boutonsForbidden').show();
+            $('#install_by_step_edit_map_boutonsStandard').hide();
 			
-			$('#boutonsForbidden #bForbiddenDelete').show();
+			$('#install_by_step_edit_map_boutonsForbidden #install_by_step_edit_map_bForbiddenDelete').show();
 			
 			$('body').removeClass('no_current select');
 			$('.select').css("strokeWidth", minStokeWidth);
@@ -1145,10 +1145,10 @@ $(document).ready(function() {
 			SaveElementNeeded(true);
 			
 			/*
-			$('#boutonsForbidden').show();
-            $('#boutonsStandard').hide();
+			$('#install_by_step_edit_map_boutonsForbidden').show();
+            $('#install_by_step_edit_map_boutonsStandard').hide();
 			
-			$('#boutonsForbidden #bForbiddenDelete').hide();
+			$('#install_by_step_edit_map_boutonsForbidden #install_by_step_edit_map_bForbiddenDelete').hide();
 			
 			currentAction = 'addForbiddenArea';	
 			currentStep = 'trace';
@@ -1164,7 +1164,7 @@ $(document).ready(function() {
 			AvertCantChange();
 	});
 	
-	$('#bForbiddenDelete').click(function(e) {
+	$('#install_by_step_edit_map_bForbiddenDelete').click(function(e) {
         if (confirm('Are you sure you want to delete this area?'))
 		{
 			DeleteForbidden(currentForbiddenIndex);
@@ -1174,7 +1174,7 @@ $(document).ready(function() {
 	
 	$('#install_by_step_edit_map_menu .bAddArea').click(function(e) {
         e.preventDefault();
-		HideMenus();
+		ByStepHideMenus();
 		if (canChangeMenu)
 		{
 			//blockZoom = true;
@@ -1202,7 +1202,7 @@ $(document).ready(function() {
 			AddHistorique({'action':'add_area', 'data':a});
 			
 			areas.push(a);
-			TraceArea(areas.length-1);
+			ByStepTraceArea(areas.length-1);
 			
 			RemoveClass('#install_by_step_edit_map_svg .active', 'active');
 			RemoveClass('#install_by_step_edit_map_svg .activ_select', 'activ_select'); 
@@ -1211,10 +1211,10 @@ $(document).ready(function() {
 			currentSelectedItem.push({'type':'area', 'id':nextIdArea});	
 			HideCurrentMenuNotSelect();			
 			
-			$('#boutonsArea').show();
-            $('#boutonsStandard').hide();
+			$('#install_by_step_edit_map_boutonsArea').show();
+            $('#install_by_step_edit_map_boutonsStandard').hide();
 			
-			$('#boutonsArea #bAreaDelete').show();
+			$('#install_by_step_edit_map_boutonsArea #install_by_step_edit_map_bAreaDelete').show();
 			
 			$('body').removeClass('no_current select');
 			$('.select').css("strokeWidth", minStokeWidth);
@@ -1234,7 +1234,7 @@ $(document).ready(function() {
 			AvertCantChange();
 	});
 	
-	$('#bAreaDelete').click(function(e) {
+	$('#install_by_step_edit_map_bAreaDelete').click(function(e) {
         if (confirm('Are you sure you want to delete this area?'))
 		{
 			DeleteArea(currentAreaIndex);
@@ -1248,42 +1248,42 @@ $(document).ready(function() {
 			$('#' + $(this).attr('id').replace('mode', 'group')).show();
     });
 	
-	$('#bAreaOptions').click(function(e) {
+	$('#install_by_step_edit_map_bAreaOptions').click(function(e) {
         area = areas[currentAreaIndex];
 		
-		$('#area_color_mode').val(rgbToHex(area.color_r, area.color_g, area.color_b));
+		$('#install_by_step_edit_map_area_color_mode').val(rgbToHex(area.color_r, area.color_g, area.color_b));
 		
 		$.each(area.configs, function( indexConfig, config ) {
 			switch(config.name)
 			{
-				case 'led_color_mode': $('#led_color_mode').val(config.value); break;
-				case 'led_color': $('#led_color').val(config.value); $('#led_color').keyup(); break;
-				case 'led_animation_mode': $('#led_animation_mode').val(config.value); break;
-				case 'led_animation': $('#led_animation').val(config.value); break;
-				case 'max_speed_mode': $('#max_speed_mode').val(config.value); break;
-				case 'max_speed': $('#max_speed').val(config.value); break;
+				case 'led_color_mode': $('#install_by_step_edit_map_led_color_mode').val(config.value); break;
+				case 'led_color': $('#install_by_step_edit_map_led_color').val(config.value); $('#install_by_step_edit_map_led_color').keyup(); break;
+				case 'led_animation_mode': $('#install_by_step_edit_map_led_animation_mode').val(config.value); break;
+				case 'led_animation': $('#install_by_step_edit_map_led_animation').val(config.value); break;
+				case 'max_speed_mode': $('#install_by_step_edit_map_max_speed_mode').val(config.value); break;
+				case 'max_speed': $('#install_by_step_edit_map_max_speed').val(config.value); break;
 			}
 		});
 		
-		if ($('#led_color_mode').val() == 'Automatic') $('#led_color_group').hide(); else  $('#led_color_group').show();
-		if ($('#led_animation_mode').val() == 'Automatic') $('#led_animation_group').hide(); else  $('#led_animation_group').show();
-		if ($('#max_speed_mode').val() == 'Automatic') $('#max_speed_group').hide(); else  $('#max_speed_group').show();
+		if ($('#install_by_step_edit_map_led_color_mode').val() == 'Automatic') $('#install_by_step_edit_map_led_color_group').hide(); else  $('#install_by_step_edit_map_led_color_group').show();
+		if ($('#install_by_step_edit_map_led_animation_mode').val() == 'Automatic') $('#install_by_step_edit_map_led_animation_group').hide(); else  $('#install_by_step_edit_map_led_animation_group').show();
+		if ($('#install_by_step_edit_map_max_speed_mode').val() == 'Automatic') $('#install_by_step_edit_map_max_speed_group').hide(); else  $('#install_by_step_edit_map_max_speed_group').show();
     });
 	
-	$('#bAreaSaveConfig').click(function(e) {
+	$('#install_by_step_edit_map_bAreaSaveConfig').click(function(e) {
 		area = areas[currentAreaIndex];
 		saveCurrentArea = JSON.stringify(area);
 			
 		area.configs = Array();
-		area.configs.push({'name':'led_color_mode' , 'value':$('#led_color_mode').val()});
+		area.configs.push({'name':'led_color_mode' , 'value':$('#install_by_step_edit_map_led_color_mode').val()});
 		
-		area.configs.push({'name':'led_color' , 'value':$('#led_color').val()});
-		area.configs.push({'name':'led_animation_mode' , 'value':$('#led_animation_mode').val()});
-		area.configs.push({'name':'led_animation' , 'value':$('#led_animation').val()});
-		area.configs.push({'name':'max_speed_mode' , 'value':$('#max_speed_mode').val()});
-		area.configs.push({'name':'max_speed' , 'value':$('#max_speed').val()});
+		area.configs.push({'name':'led_color' , 'value':$('#install_by_step_edit_map_led_color').val()});
+		area.configs.push({'name':'led_animation_mode' , 'value':$('#install_by_step_edit_map_led_animation_mode').val()});
+		area.configs.push({'name':'led_animation' , 'value':$('#install_by_step_edit_map_led_animation').val()});
+		area.configs.push({'name':'max_speed_mode' , 'value':$('#install_by_step_edit_map_max_speed_mode').val()});
+		area.configs.push({'name':'max_speed' , 'value':$('#install_by_step_edit_map_max_speed').val()});
 		
-		var c = $('#area_color').val().split("(")[1].split(")")[0];
+		var c = $('#install_by_step_edit_map_area_color').val().split("(")[1].split(")")[0];
 		c = c.split(",");
 		area.color_r = parseInt(c[0]);
 		area.color_g = parseInt(c[1]);
@@ -1294,12 +1294,12 @@ $(document).ready(function() {
 		if (currentAction == 'editArea')
 			AddHistorique({'action':'edit_area', 'data':{'index':currentAreaIndex, 'old':saveCurrentArea, 'new':JSON.stringify(areas[currentAreaIndex])}});
 		
-		TraceArea(currentAreaIndex);
+		ByStepTraceArea(currentAreaIndex);
 	});
 		
 	$('#install_by_step_edit_map_menu .bAddDock').click(function(e) {
         e.preventDefault();
-		HideMenus();
+		ByStepHideMenus();
 		if (canChangeMenu)
 		{
 			$('#install_by_step_edit_map_container_all .modalAddDock').modal('show');
@@ -1320,7 +1320,7 @@ $(document).ready(function() {
 				
 				$('.modalAddDock .dock').hide();
 				
-				posRobot = $('.modalAddDock #modalAddDock_robot').offset();
+				posRobot = $('.modalAddDock #install_by_step_edit_map_modalAddDock_robot').offset();
 				
 				for (i=0; i< data.D.length; i++)
 				{
@@ -1338,23 +1338,23 @@ $(document).ready(function() {
 						
 						// 1px / cm
 						
-						$('.modalAddDock #modalAddDock_dock'+i).show();
-						$('.modalAddDock #modalAddDock_dock'+i).css('left', posRobot.left + x_from_robot * 100); // lidar : y * -1
-						$('.modalAddDock #modalAddDock_dock'+i).css('top', posRobot.top - y_from_robot * 100); // +20 position lidar, - 12.5 pour le centre
+						$('.modalAddDock #install_by_step_edit_map_modalAddDock_dock'+i).show();
+						$('.modalAddDock #install_by_step_edit_map_modalAddDock_dock'+i).css('left', posRobot.left + x_from_robot * 100); // lidar : y * -1
+						$('.modalAddDock #install_by_step_edit_map_modalAddDock_dock'+i).css('top', posRobot.top - y_from_robot * 100); // +20 position lidar, - 12.5 pour le centre
 						//angle = (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
 						
 						angle = 0 - (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
 						
-						$('.modalAddDock #modalAddDock_dock'+i).css({'-webkit-transform' : 'rotate('+ angle +'deg)',
+						$('.modalAddDock #install_by_step_edit_map_modalAddDock_dock'+i).css({'-webkit-transform' : 'rotate('+ angle +'deg)',
 																	 '-moz-transform' : 'rotate('+ angle +'deg)',
 																	 '-ms-transform' : 'rotate('+ angle +'deg)',
 																	 'transform' : 'rotate('+ angle +'deg)'});
 						
 						
-						$('.modalAddDock #modalAddDock_dock'+i).data('id_fiducial', data.D[i].ID);
-						$('.modalAddDock #modalAddDock_dock'+i).data('x', data.D[i].P.X);
-						$('.modalAddDock #modalAddDock_dock'+i).data('y', data.D[i].P.Y);
-						$('.modalAddDock #modalAddDock_dock'+i).data('theta', data.D[i].P.T);
+						$('.modalAddDock #install_by_step_edit_map_modalAddDock_dock'+i).data('id_fiducial', data.D[i].ID);
+						$('.modalAddDock #install_by_step_edit_map_modalAddDock_dock'+i).data('x', data.D[i].P.X);
+						$('.modalAddDock #install_by_step_edit_map_modalAddDock_dock'+i).data('y', data.D[i].P.Y);
+						$('.modalAddDock #install_by_step_edit_map_modalAddDock_dock'+i).data('theta', data.D[i].P.T);
 					}
 				}
 			}
@@ -1385,21 +1385,21 @@ $(document).ready(function() {
 		d = {'id_docking_station':nextIdDock, 'id_map':id_map, 'id_fiducial':$(this).data('id_fiducial'), 'final_pose_x':final_pose_x, 'final_pose_y':final_pose_y, 'final_pose_t':final_pose_t, 'approch_pose_x':approch_pose_x, 'approch_pose_y':approch_pose_y, 'approch_pose_t':approch_pose_t, 'num':parseInt(num), 'fiducial_pose_x':$(this).data('x'), 'fiducial_pose_y':$(this).data('y'), 'fiducial_pose_t':$(this).data('theta'), 'name':'Dock '+num, 'comment':'', 'advanced':true, 'undock_path':[{'linear_distance':-0.3, 'angular_distance':0}], 'is_master':false};
 		AddHistorique({'action':'add_dock', 'data':d});
         docks.push(d);
-		TraceDock(docks.length-1);
+		ByStepTraceDock(docks.length-1);
 		
 		$('#install_by_step_edit_map_container_all .modalAddDock').modal('hide');
 		
 		currentDockIndex = docks.length-1;
 		dock = docks[currentDockIndex];
 		
-		$('#dock_number').val(dock.num);
+		$('#install_by_step_edit_map_dock_number').val(dock.num);
 		
 		$('.modalDockOptions .list_undock_procedure li').remove();
 		
 		indexDockElem++;
 		
 		$('.modalDockOptions .list_undock_procedure').append('' +
-			'<li id="list_undock_procedure_elem_'+indexDockElem+'" data-index_dock="'+indexDockElem+'" data-action="move" data-distance="-0.3">'+
+			'<li id="install_by_step_edit_map_list_undock_procedure_elem_'+indexDockElem+'" data-index_dock="'+indexDockElem+'" data-action="move" data-distance="-0.3">'+
 			'	<span>Move back 0.3m</span>'+
 			'	<a href="#" class="bUndockProcedureDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
 			'	<a href="#" class="bUndockProcedureEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
@@ -1409,21 +1409,21 @@ $(document).ready(function() {
 		$('#install_by_step_edit_map_container_all .modalDockOptions').modal('show');
     });
 	
-	$('#bDockSaveConfig').click(function(e) {
+	$('#install_by_step_edit_map_bDockSaveConfig').click(function(e) {
 		dock = docks[currentDockIndex];
 		saveCurrentDock = JSON.stringify(dock);
 				
-		dock.name = $('#dock_name').val();
-		dock.num = parseInt($('#dock_number').val());
-		dock.comment = $('#dock_comment').val();
-		if ($('#dock_is_master').prop('checked'))
+		dock.name = $('#install_by_step_edit_map_dock_name').val();
+		dock.num = parseInt($('#install_by_step_edit_map_dock_number').val());
+		dock.comment = $('#install_by_step_edit_map_dock_comment').val();
+		if ($('#install_by_step_edit_map_dock_is_master').prop('checked'))
 		{
 			// Désactive les autres
 			$.each(docks, function( index, dock ) {
 				dock.is_master = false;
 			});
 		}
-		dock.is_master = $('#dock_is_master').prop('checked');
+		dock.is_master = $('#install_by_step_edit_map_dock_is_master').prop('checked');
 			
 		dock.undock_path = Array();
 		
@@ -1442,16 +1442,16 @@ $(document).ready(function() {
 		if (currentAction == 'editDock')
 			AddHistorique({'action':'edit_dock', 'data':{'index':currentDockIndex, 'old':saveCurrentDock, 'new':JSON.stringify(docks[currentDockIndex])}});
 		
-		TraceDock(currentDockIndex);
+		ByStepTraceDock(currentDockIndex);
 	});
 	
 	$('.modalDockOptions .bUndockProcedureAddElem').click(function(e) {
         e.preventDefault();
 		
-		$('#up_elem_action_move').prop('checked', false);
-		$('#up_elem_action_rotate').prop('checked', false);
+		$('#install_by_step_edit_map_up_elem_action_move').prop('checked', false);
+		$('#install_by_step_edit_map_up_elem_action_rotate').prop('checked', false);
 		
-		$('#up_elem_direction_back').prop('checked', true);
+		$('#install_by_step_edit_map_up_elem_direction_back').prop('checked', true);
 		$('.up_elem_action_move').hide();
 		$('.up_elem_action_rotate').hide();
 		
@@ -1484,11 +1484,11 @@ $(document).ready(function() {
 			
 			if (action == 'move') {
 				
-				distance = parseFloat($("#up_elem_move_distance").val());
+				distance = parseFloat($("#install_by_step_edit_map_up_elem_move_distance").val());
 				direction = $("input[name='up_elem_direction']:checked").val();
 							
 				$('.modalDockOptions .list_undock_procedure').append('' +
-					'<li id="list_undock_procedure_elem_'+indexDockElem+'" data-index_dock_procedure="'+indexDockElem+'" data-action="move" data-distance="' + ((direction == 'back')?distance*-1:distance) + '">'+
+					'<li id="install_by_step_edit_map_list_undock_procedure_elem_'+indexDockElem+'" data-index_dock_procedure="'+indexDockElem+'" data-action="move" data-distance="' + ((direction == 'back')?distance*-1:distance) + '">'+
 					'	<span>Move ' + ((direction == 'back')?'back':'front') + ' ' + distance + 'm</span>'+
 					'	<a href="#" class="bUndockProcedureDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
 					'	<a href="#" class="bUndockProcedureEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
@@ -1497,10 +1497,10 @@ $(document).ready(function() {
 			}
 			else if (action == 'rotate') {
 				
-				angle = $("#up_elem_rotate_angle").val();
+				angle = $("#install_by_step_edit_map_up_elem_rotate_angle").val();
 				
 				$('.modalDockOptions .list_undock_procedure').append('' +
-					'<li id="list_undock_procedure_elem_'+indexDockElem+'" data-index_dock_procedure="'+indexDockElem+'" data-action="rotate" data-angle="'+angle+'">'+
+					'<li id="install_by_step_edit_map_list_undock_procedure_elem_'+indexDockElem+'" data-index_dock_procedure="'+indexDockElem+'" data-action="rotate" data-angle="'+angle+'">'+
 					'	<span>Rotate '+angle+'°</span>'+
 					'	<a href="#" class="bUndockProcedureDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
 					'	<a href="#" class="bUndockProcedureEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
@@ -1513,11 +1513,11 @@ $(document).ready(function() {
 			action = $("input[name='up_elem_action']:checked").val();
 			if (action == 'move') {
 				
-				distance = parseFloat($("#up_elem_move_distance").val());
+				distance = parseFloat($("#install_by_step_edit_map_up_elem_move_distance").val());
 				direction = $("input[name='up_elem_direction']:checked").val();
 				
-				li = $('#list_undock_procedure_elem_'+ index_dock_procedure);
-				span = $('#list_undock_procedure_elem_'+ index_dock_procedure + ' span');
+				li = $('#install_by_step_edit_map_list_undock_procedure_elem_'+ index_dock_procedure);
+				span = $('#install_by_step_edit_map_list_undock_procedure_elem_'+ index_dock_procedure + ' span');
 				
 				li.data('action', 'move');
 				li.data('distance', ((direction == 'back')?distance*-1:distance));
@@ -1525,10 +1525,10 @@ $(document).ready(function() {
 			}
 			else if (action == 'rotate') {
 				
-				angle = $("#up_elem_rotate_angle").val();
+				angle = $("#install_by_step_edit_map_up_elem_rotate_angle").val();
 				
-				li = $('#list_undock_procedure_elem_'+ index_dock_procedure);
-				span = $('#list_undock_procedure_elem_'+ index_dock_procedure + ' span');
+				li = $('#install_by_step_edit_map_list_undock_procedure_elem_'+ index_dock_procedure);
+				span = $('#install_by_step_edit_map_list_undock_procedure_elem_'+ index_dock_procedure + ' span');
 				
 				li.data('action', 'rotate');
 				li.data('angle', angle);
@@ -1546,8 +1546,8 @@ $(document).ready(function() {
 	$(document).on('click', '.modalDockOptions .bUndockProcedureEditElem', function(e) {
 		e.preventDefault();
 		
-		$('#up_elem_action_move').prop('checked', false);
-		$('#up_elem_action_rotate').prop('checked', false);
+		$('#install_by_step_edit_map_up_elem_action_move').prop('checked', false);
+		$('#install_by_step_edit_map_up_elem_action_rotate').prop('checked', false);
 		
 		$('.up_elem_action_move').hide();
 		$('.up_elem_action_rotate').hide();
@@ -1556,20 +1556,20 @@ $(document).ready(function() {
 		if (li.data('action') == 'rotate')
 		{
 			$('.up_elem_action_rotate').show();
-			$('#up_elem_action_rotate').prop('checked', true);
-			$("#up_elem_rotate_angle").val(li.data('angle'));
+			$('#install_by_step_edit_map_up_elem_action_rotate').prop('checked', true);
+			$("#install_by_step_edit_map_up_elem_rotate_angle").val(li.data('angle'));
 		}
 		else
 		{
 			$('.up_elem_action_move').show();
-			$('#up_elem_action_move').prop('checked', true);
+			$('#install_by_step_edit_map_up_elem_action_move').prop('checked', true);
 			distance = li.data('distance');
 			if (distance < 0)
-				$('#up_elem_direction_back').prop('checked', true);
+				$('#install_by_step_edit_map_up_elem_direction_back').prop('checked', true);
 			else
-				$('#up_elem_direction_front').prop('checked', true);
+				$('#install_by_step_edit_map_up_elem_direction_front').prop('checked', true);
 			
-			$("#up_elem_move_distance").val(Math.abs(distance));
+			$("#install_by_step_edit_map_up_elem_move_distance").val(Math.abs(distance));
 		}
 		
 		
@@ -1581,7 +1581,7 @@ $(document).ready(function() {
 	
 	$('#install_by_step_edit_map_menu .bAddPOI').click(function(e) {
         e.preventDefault();
-		HideMenus();
+		ByStepHideMenus();
 		if (canChangeMenu)
 		{
 			$('.texts_add_poi').hide();
@@ -1606,7 +1606,7 @@ $(document).ready(function() {
 				
 				$('.modalAddPoi .poi').hide();
 				
-				posRobot = $('.modalAddPoi #modalAddPoi_robot').offset();
+				posRobot = $('.modalAddPoi #install_by_step_edit_map_modalAddPoi_robot').offset();
 				
 				if (data.D.length > 0)
 				{
@@ -1627,23 +1627,23 @@ $(document).ready(function() {
 						
 						// 1px / cm
 						
-						$('.modalAddPoi #modalAddPoi_poi'+i).show();
-						$('.modalAddPoi #modalAddPoi_poi'+i).css('left', posRobot.left + x_from_robot * 100); // lidar : y * -1
-						$('.modalAddPoi #modalAddPoi_poi'+i).css('top', posRobot.top - y_from_robot * 100); // +20 position lidar, - 12.5 pour le centre
+						$('.modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).show();
+						$('.modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).css('left', posRobot.left + x_from_robot * 100); // lidar : y * -1
+						$('.modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).css('top', posRobot.top - y_from_robot * 100); // +20 position lidar, - 12.5 pour le centre
 						//angle = (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
 						
 						angle = 0 - (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
 						
-						$('.modalAddPoi #modalAddPoi_poi'+i).css({'-webkit-transform' : 'rotate('+ angle +'deg)',
+						$('.modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).css({'-webkit-transform' : 'rotate('+ angle +'deg)',
 																 '-moz-transform' : 'rotate('+ angle +'deg)',
 																 '-ms-transform' : 'rotate('+ angle +'deg)',
 																 'transform' : 'rotate('+ angle +'deg)'});
 						
 						
-						$('.modalAddPoi #modalAddPoi_poi'+i).data('id_fiducial', data.D[i].ID);
-						$('.modalAddPoi #modalAddPoi_poi'+i).data('x', data.D[i].P.X);
-						$('.modalAddPoi #modalAddPoi_poi'+i).data('y', data.D[i].P.Y);
-						$('.modalAddPoi #modalAddPoi_poi'+i).data('theta', data.D[i].P.T);
+						$('.modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).data('id_fiducial', data.D[i].ID);
+						$('.modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).data('x', data.D[i].P.X);
+						$('.modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).data('y', data.D[i].P.Y);
+						$('.modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).data('theta', data.D[i].P.T);
 					}
 				}
 			}
@@ -1677,7 +1677,7 @@ $(document).ready(function() {
 			
 			AddHistorique({'action':'add_poi', 'data':poi_temp_add});
 			pois.push(poi_temp_add);
-			TracePoi(pois.length-1);
+			ByStepTracePoi(pois.length-1);
 					
 			$('#install_by_step_edit_map_container_all .modalAddPoi').modal('hide');
 			
@@ -1689,7 +1689,7 @@ $(document).ready(function() {
 			indexPoiElem++;
 			
 			$('.modalPoiOptions .list_undock_procedure_poi').append('' +
-				'<li id="list_undock_procedure_poi_elem_'+indexPoiElem+'" data-index_poi="'+indexPoiElem+'" data-action="move" data-distance="-0.3">'+
+				'<li id="install_by_step_edit_map_list_undock_procedure_poi_elem_'+indexPoiElem+'" data-index_poi="'+indexPoiElem+'" data-action="move" data-distance="-0.3">'+
 				'	<span>Move back 0.3m</span>'+
 				'	<a href="#" class="bUndockProcedurePoiDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
 				'	<a href="#" class="bUndockProcedurePoiEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
@@ -1700,12 +1700,12 @@ $(document).ready(function() {
 		}
     });
 	
-	$('#bPoiSaveConfig').click(function(e) {
+	$('#install_by_step_edit_map_bPoiSaveConfig').click(function(e) {
 		poi = pois[currentPoiIndex];
 		saveCurrentPoi = JSON.stringify(poi);
 				
-		poi.name = $('#poi_name').val();
-		poi.comment = $('#poi_comment').val();
+		poi.name = $('#install_by_step_edit_map_poi_name').val();
+		poi.comment = $('#install_by_step_edit_map_poi_comment').val();
 			
 		poi.undock_path = Array();
 		
@@ -1724,16 +1724,16 @@ $(document).ready(function() {
 		if (currentAction == 'editPoi')
 			AddHistorique({'action':'edit_poi', 'data':{'index':currentPoiIndex, 'old':saveCurrentPoi, 'new':JSON.stringify(pois[currentPoiIndex])}});
 		
-		TracePoi(currentPoiIndex);
+		ByStepTracePoi(currentPoiIndex);
 	});
 	
 	$('.modalPoiOptions .bUndockProcedurePoiAddElem').click(function(e) {
         e.preventDefault();
 		
-		$('#up_poi_elem_action_move').prop('checked', false);
-		$('#up_poi_elem_action_rotate').prop('checked', false);
+		$('#install_by_step_edit_map_up_poi_elem_action_move').prop('checked', false);
+		$('#install_by_step_edit_map_up_poi_elem_action_rotate').prop('checked', false);
 		
-		$('#up_poi_elem_direction_back').prop('checked', true);
+		$('#install_by_step_edit_map_up_poi_elem_direction_back').prop('checked', true);
 		$('.up_poi_elem_action_move').hide();
 		$('.up_poi_elem_action_rotate').hide();
 		
@@ -1765,11 +1765,11 @@ $(document).ready(function() {
 			
 			if (action == 'move') {
 				
-				distance = parseFloat($("#up_poi_elem_move_distance").val());
+				distance = parseFloat($("#install_by_step_edit_map_up_poi_elem_move_distance").val());
 				direction = $("input[name='up_poi_elem_direction']:checked").val();
 							
 				$('.modalPoiOptions .list_undock_procedure_poi').append('' +
-					'<li id="list_undock_procedure_poi_elem_'+indexPoiElem+'" data-index_poi_procedure="'+indexPoiElem+'" data-action="move" data-distance="' + ((direction == 'back')?distance*-1:distance) + '">'+
+					'<li id="install_by_step_edit_map_list_undock_procedure_poi_elem_'+indexPoiElem+'" data-index_poi_procedure="'+indexPoiElem+'" data-action="move" data-distance="' + ((direction == 'back')?distance*-1:distance) + '">'+
 					'	<span>Move ' + ((direction == 'back')?'back':'front') + ' ' + distance + 'm</span>'+
 					'	<a href="#" class="bUndockProcedurePoiDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
 					'	<a href="#" class="bUndockProcedurePoiEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
@@ -1778,10 +1778,10 @@ $(document).ready(function() {
 			}
 			else if (action == 'rotate') {
 				
-				angle = $("#up_poi_elem_rotate_angle").val();
+				angle = $("#install_by_step_edit_map_up_poi_elem_rotate_angle").val();
 				
 				$('.modalPoiOptions .list_undock_procedure_poi').append('' +
-					'<li id="list_undock_procedure_poi_elem_'+indexPoiElem+'" data-index_poi_procedure="'+indexPoiElem+'" data-action="rotate" data-angle="'+angle+'">'+
+					'<li id="install_by_step_edit_map_list_undock_procedure_poi_elem_'+indexPoiElem+'" data-index_poi_procedure="'+indexPoiElem+'" data-action="rotate" data-angle="'+angle+'">'+
 					'	<span>Rotate '+angle+'°</span>'+
 					'	<a href="#" class="bUndockProcedurePoiDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
 					'	<a href="#" class="bUndockProcedurePoiEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
@@ -1794,11 +1794,11 @@ $(document).ready(function() {
 			action = $("input[name='up_poi_elem_action']:checked").val();
 			if (action == 'move') {
 				
-				distance = parseFloat($("#up_poi_elem_move_distance").val());
+				distance = parseFloat($("#install_by_step_edit_map_up_poi_elem_move_distance").val());
 				direction = $("input[name='up_poi_elem_direction']:checked").val();
 				
-				li = $('#list_undock_procedure_poi_elem_'+ index_poi_procedure);
-				span = $('#list_undock_procedure_poi_elem_'+ index_poi_procedure + ' span');
+				li = $('#install_by_step_edit_map_list_undock_procedure_poi_elem_'+ index_poi_procedure);
+				span = $('#install_by_step_edit_map_list_undock_procedure_poi_elem_'+ index_poi_procedure + ' span');
 				
 				li.data('action', 'move');
 				li.data('distance', ((direction == 'back')?distance*-1:distance));
@@ -1806,10 +1806,10 @@ $(document).ready(function() {
 			}
 			else if (action == 'rotate') {
 				
-				angle = $("#up_poi_elem_rotate_angle").val();
+				angle = $("#install_by_step_edit_map_up_poi_elem_rotate_angle").val();
 				
-				li = $('#list_undock_procedure_poi_elem_'+ index_poi_procedure);
-				span = $('#list_undock_procedure_poi_elem_'+ index_poi_procedure + ' span');
+				li = $('#install_by_step_edit_map_list_undock_procedure_poi_elem_'+ index_poi_procedure);
+				span = $('#install_by_step_edit_map_list_undock_procedure_poi_elem_'+ index_poi_procedure + ' span');
 				
 				li.data('action', 'rotate');
 				li.data('angle', angle);
@@ -1827,8 +1827,8 @@ $(document).ready(function() {
 	$(document).on('click', '.modalPoiOptions .bUndockProcedurePoiEditElem', function(e) {
 		e.preventDefault();
 		
-		$('#up_poi_elem_action_move').prop('checked', false);
-		$('#up_poi_elem_action_rotate').prop('checked', false);
+		$('#install_by_step_edit_map_up_poi_elem_action_move').prop('checked', false);
+		$('#install_by_step_edit_map_up_poi_elem_action_rotate').prop('checked', false);
 		
 		$('.up_poi_elem_action_move').hide();
 		$('.up_poi_elem_action_rotate').hide();
@@ -1837,20 +1837,20 @@ $(document).ready(function() {
 		if (li.data('action') == 'rotate')
 		{
 			$('.up_poi_elem_action_rotate').show();
-			$('#up_poi_elem_action_rotate').prop('checked', true);
-			$("#up_poi_elem_rotate_angle").val(li.data('angle'));
+			$('#install_by_step_edit_map_up_poi_elem_action_rotate').prop('checked', true);
+			$("#install_by_step_edit_map_up_poi_elem_rotate_angle").val(li.data('angle'));
 		}
 		else
 		{
 			$('.up_poi_elem_action_move').show();
-			$('#up_poi_elem_action_move').prop('checked', true);
+			$('#install_by_step_edit_map_up_poi_elem_action_move').prop('checked', true);
 			distance = li.data('distance');
 			if (distance < 0)
-				$('#up_poi_elem_direction_back').prop('checked', true);
+				$('#install_by_step_edit_map_up_poi_elem_direction_back').prop('checked', true);
 			else
-				$('#up_poi_elem_direction_front').prop('checked', true);
+				$('#install_by_step_edit_map_up_poi_elem_direction_front').prop('checked', true);
 			
-			$("#up_poi_elem_move_distance").val(Math.abs(distance));
+			$("#install_by_step_edit_map_up_poi_elem_move_distance").val(Math.abs(distance));
 		}
 		
 		
@@ -1861,17 +1861,17 @@ $(document).ready(function() {
 	});
 	
 	
-	$('#bDockCreateFromMap').click(function(e) {
+	$('#install_by_step_edit_map_bDockCreateFromMap').click(function(e) {
         if (canChangeMenu)
 		{
 			blockZoom = true;
 			
-			$('#boutonsDock').show();
-            $('#boutonsStandard').hide();
+			$('#install_by_step_edit_map_boutonsDock').show();
+            $('#install_by_step_edit_map_boutonsStandard').hide();
 			
-			$('#boutonsDock #bDockSave').hide();
-			$('#boutonsDock #bDockDelete').hide();
-			$('#boutonsDock #bDockDirection').hide();
+			$('#install_by_step_edit_map_boutonsDock #install_by_step_edit_map_bDockSave').hide();
+			$('#install_by_step_edit_map_boutonsDock #install_by_step_edit_map_bDockDelete').hide();
+			$('#install_by_step_edit_map_boutonsDock #install_by_step_edit_map_bDockDirection').hide();
 			
 			currentAction = 'addDock';	
 			currentStep = 'setPose';
@@ -1879,24 +1879,24 @@ $(document).ready(function() {
 			$('body').removeClass('no_current');
 			$('body').addClass('addDock');
 			
-			$('#message_aide').html(textClickOnMapPose);
-			$('#message_aide').show();
+			$('#install_by_step_edit_map_message_aide').html(textClickOnMapPose);
+			$('#install_by_step_edit_map_message_aide').show();
 		}
 		else
 			AvertCantChange();
     });
-	$('#bDockDelete').click(function(e) {
+	$('#install_by_step_edit_map_bDockDelete').click(function(e) {
         if (confirm('Are you sure you want to delete this docking station?'))
 		{
 			DeleteDock(currentDockIndex);
 		}
     });
-	$('#bDockDirection').click(function(e) {
+	$('#install_by_step_edit_map_bDockDirection').click(function(e) {
         e.preventDefault();
 		
-		if ($('#boutonsRotate').is(':visible'))
+		if ($('#install_by_step_edit_map_boutonsRotate').is(':visible'))
 		{
-			$('#boutonsRotate').hide();
+			$('#install_by_step_edit_map_boutonsRotate').hide();
 		}
 		else
 		{
@@ -1915,18 +1915,18 @@ $(document).ready(function() {
 			x = x + p.left;
 			y = y + p.top;
 			
-			$('#boutonsRotate').css('left', x - $('#boutonsRotate').width()/2);
-			$('#boutonsRotate').css('top', y - 60);
-			$('#boutonsRotate').show();
+			$('#install_by_step_edit_map_boutonsRotate').css('left', x - $('#install_by_step_edit_map_boutonsRotate').width()/2);
+			$('#install_by_step_edit_map_boutonsRotate').css('top', y - 60);
+			$('#install_by_step_edit_map_boutonsRotate').show();
 		}
 	});
 	
-	$('#bPoiCreateFromPose').click(function(e) {
+	$('#install_by_step_edit_map_bPoiCreateFromPose').click(function(e) {
 		nextIdPoi++;
 		p = {'id_poi':nextIdPoi, 'id_map':id_map, 'id_fiducial':-1, 'final_pose_x':lastRobotPose.x, 'final_pose_y':lastRobotPose.y, 'final_pose_t':lastRobotPose.theta, 'approch_pose_x':lastRobotPose.x, 'approch_pose_y':lastRobotPose.y, 'approch_pose_t':lastRobotPose.theta, 'fiducial_pose_x':0, 'fiducial_pose_y':0, 'fiducial_pose_t':0, 'name':'POI', 'comment':'', 'icon':'', 'active':true};
 		AddHistorique({'action':'add_poi', 'data':p});
         pois.push(p);
-		TracePoi(pois.length-1);
+		ByStepTracePoi(pois.length-1);
 		
 		RemoveClass('#install_by_step_edit_map_svg .active', 'active');
 		RemoveClass('#install_by_step_edit_map_svg .activ_select', 'activ_select'); 
@@ -1936,11 +1936,11 @@ $(document).ready(function() {
 		currentSelectedItem.push({'type':'poi', 'id':$(this).data('id_poi')});	
 		HideCurrentMenuNotSelect();
 		
-		$('#boutonsPoi').show();
+		$('#install_by_step_edit_map_boutonsPoi').show();
 		
-		$('#boutonsStandard').hide();
+		$('#install_by_step_edit_map_boutonsStandard').hide();
 		
-		$('#boutonsPoi a').show();
+		$('#install_by_step_edit_map_boutonsPoi a').show();
 		
 		$('body').removeClass('no_current select');
 		$('.select').css("strokeWidth", minStokeWidth);
@@ -1955,21 +1955,21 @@ $(document).ready(function() {
 		AddClass('#install_by_step_edit_map_svg .poi_elem_'+nextIdPoi, 'active');
 		AddClass('#install_by_step_edit_map_svg .poi_elem_'+nextIdPoi, 'movable');
 		
-		$('#bPoiEditName').click();
+		$('#install_by_step_edit_map_bPoiEditName').click();
         
     });
-	$('#bPoiCreateFromMap').click(function(e) {
+	$('#install_by_step_edit_map_bPoiCreateFromMap').click(function(e) {
         if (canChangeMenu)
 		{
 			blockZoom = true;
 			
-			$('#boutonsPoi').show();
-            $('#boutonsStandard').hide();
+			$('#install_by_step_edit_map_boutonsPoi').show();
+            $('#install_by_step_edit_map_boutonsStandard').hide();
 			
-			$('#boutonsPoi #bPoiSave').hide();
-			$('#boutonsPoi #bPoiDelete').hide();
-			$('#boutonsPoi #bPoiDirection').hide();
-			$('#boutonsPoi #bPoiEditName').hide();
+			$('#install_by_step_edit_map_boutonsPoi #install_by_step_edit_map_bPoiSave').hide();
+			$('#install_by_step_edit_map_boutonsPoi #install_by_step_edit_map_bPoiDelete').hide();
+			$('#install_by_step_edit_map_boutonsPoi #install_by_step_edit_map_bPoiDirection').hide();
+			$('#install_by_step_edit_map_boutonsPoi #install_by_step_edit_map_bPoiEditName').hide();
 			
 			currentAction = 'addPoi';	
 			currentStep = 'setPose';
@@ -1977,25 +1977,25 @@ $(document).ready(function() {
 			$('body').removeClass('no_current');
 			$('body').addClass('addPoi');
 			
-			$('#message_aide').html(textClickOnMapPose);
-			$('#message_aide').show();
+			$('#install_by_step_edit_map_message_aide').html(textClickOnMapPose);
+			$('#install_by_step_edit_map_message_aide').show();
 		}
 		else
 			AvertCantChange();
     });
 	
 	
-	$('#bPoiEditSaveConfig').click(function(e) {
+	$('#install_by_step_edit_map_bPoiEditSaveConfig').click(function(e) {
 		if (currentAction == 'addPoi')
 		{
 			SaveElementNeeded(false);
 			
 			nextIdPoi++;
-			p = {'id_poi':nextIdPoi, 'id_map':id_map, 'id_fiducial':-1, 'final_pose_x':currentPoiPose.final_pose_x, 'final_pose_y':currentPoiPose.final_pose_y, 'final_pose_t':currentPoiPose.final_pose_t, 'approch_pose_x':currentPoiPose.approch_pose_x, 'approch_pose_y':currentPoiPose.approch_pose_y, 'approch_pose_t':currentPoiPose.approch_pose_t, 'fiducial_pose_x':currentPoiPose.fiducial_pose_x, 'fiducial_pose_y':currentPoiPose.fiducial_pose_y, 'fiducial_pose_t':currentPoiPose.fiducial_pose_t, 'name':$('#poi_name').val(), 'comment':'', 'icon':'', 'active':true};
+			p = {'id_poi':nextIdPoi, 'id_map':id_map, 'id_fiducial':-1, 'final_pose_x':currentPoiPose.final_pose_x, 'final_pose_y':currentPoiPose.final_pose_y, 'final_pose_t':currentPoiPose.final_pose_t, 'approch_pose_x':currentPoiPose.approch_pose_x, 'approch_pose_y':currentPoiPose.approch_pose_y, 'approch_pose_t':currentPoiPose.approch_pose_t, 'fiducial_pose_x':currentPoiPose.fiducial_pose_x, 'fiducial_pose_y':currentPoiPose.fiducial_pose_y, 'fiducial_pose_t':currentPoiPose.fiducial_pose_t, 'name':$('#install_by_step_edit_map_poi_name').val(), 'comment':'', 'icon':'', 'active':true};
 			AddHistorique({'action':'add_poi', 'data':p});
 			
 			pois.push(p);
-			TracePoi(pois.length-1);
+			ByStepTracePoi(pois.length-1);
 			
 			$('#install_by_step_edit_map_svg .poi_elem_current').remove();
 			
@@ -2004,11 +2004,11 @@ $(document).ready(function() {
 			currentAction = '';
 			currentStep = '';
 			
-			$('#boutonsRotate').hide();
+			$('#install_by_step_edit_map_boutonsRotate').hide();
 			
-			$('#boutonsPoi').hide();
-			$('#boutonsStandard').show();
-			$('#message_aide').hide();
+			$('#install_by_step_edit_map_boutonsPoi').hide();
+			$('#install_by_step_edit_map_boutonsStandard').show();
+			$('#install_by_step_edit_map_message_aide').hide();
 			blockZoom = false;
 			
 			$('body').addClass('no_current');
@@ -2020,28 +2020,28 @@ $(document).ready(function() {
 		else
 		{
 			poi = pois[currentPoiIndex];
-			poi.name = $('#poi_name').val();
+			poi.name = $('#install_by_step_edit_map_poi_name').val();
 			if (poi.name == '') poi.name = 'POI';
 		}
 		
 	});
 	
-	$('#bPoiDelete').click(function(e) {
+	$('#install_by_step_edit_map_bPoiDelete').click(function(e) {
         if (confirm('Are you sure you want to delete this POI?'))
 		{
 			DeletePoi(currentPoiIndex);
 		}
     });
-	$('#bPoiEditName').click(function(e) {
+	$('#install_by_step_edit_map_bPoiEditName').click(function(e) {
    		poi = pois[currentPoiIndex];
-		$('#poi_name').val(poi.name);
+		$('#install_by_step_edit_map_poi_name').val(poi.name);
 	});
-	$('#bPoiDirection').click(function(e) {
+	$('#install_by_step_edit_map_bPoiDirection').click(function(e) {
         e.preventDefault();
 		
-		if ($('#boutonsRotate').is(':visible'))
+		if ($('#install_by_step_edit_map_boutonsRotate').is(':visible'))
 		{
-			$('#boutonsRotate').hide();
+			$('#install_by_step_edit_map_boutonsRotate').hide();
 		}
 		else
 		{
@@ -2059,9 +2059,9 @@ $(document).ready(function() {
 			x = x + p.left;
 			y = y + p.top;
 			
-			$('#boutonsRotate').css('left', x - $('#boutonsRotate').width()/2);
-			$('#boutonsRotate').css('top', y - 60);
-			$('#boutonsRotate').show();
+			$('#install_by_step_edit_map_boutonsRotate').css('left', x - $('#install_by_step_edit_map_boutonsRotate').width()/2);
+			$('#install_by_step_edit_map_boutonsRotate').css('top', y - 60);
+			$('#install_by_step_edit_map_boutonsRotate').show();
 		}
 	});
 	
@@ -2071,7 +2071,7 @@ $(document).ready(function() {
 		 return false;
 	};
 	
-	$(document).on('touchstart', '#bRotateRight', function(e) {
+	$(document).on('touchstart', '#install_by_step_edit_map_bRotateRight', function(e) {
 		SaveElementNeeded(true);
 		if (timerRotate != null)
 		{
@@ -2083,63 +2083,63 @@ $(document).ready(function() {
 			{
 				currentPoiPose.approch_pose_t = parseFloat(currentPoiPose.approch_pose_t) + Math.PI / 90;
 				
-				TraceCurrentPoi(currentPoiPose);
+				ByStepTraceCurrentPoi(currentPoiPose);
 			}
 			else if (currentAction == 'addDock')
 			{
 				currentDockPose.approch_pose_t = parseFloat(currentDockPose.approch_pose_t) + Math.PI / 90;
 				
-				TraceCurrentDock(currentDockPose);
+				ByStepTraceCurrentDock(currentDockPose);
 			}
 			else if (currentAction == 'editPoi')
 			{
 				poi = pois[currentPoiIndex];
 				poi.approch_pose_t = parseFloat(poi.approch_pose_t) + Math.PI / 90;
-				TracePoi(currentPoiIndex);			
+				ByStepTracePoi(currentPoiIndex);			
 			}
 			else if (currentAction == 'editDock')
 			{
 				dock = docks[currentDockIndex];
 				dock.approch_pose_t = parseFloat(dock.approch_pose_t) + Math.PI / 90;
-				TraceDock(currentDockIndex);		
+				ByStepTraceDock(currentDockIndex);		
 			}
 		}, 100);
     });
-	$(document).on('touchend', '#bRotateRight', function(e) {
+	$(document).on('touchend', '#install_by_step_edit_map_bRotateRight', function(e) {
 		if (timerRotate != null)
 		{
 			clearInterval(timerRotate);
 			timerRotate = null;
 		}
     });
-	$('#bRotateRight').click(function(e) {
+	$('#install_by_step_edit_map_bRotateRight').click(function(e) {
 		SaveElementNeeded(true);
 		if (currentAction == 'addPoi')
 		{
 			currentPoiPose.approch_pose_t = parseFloat(currentPoiPose.approch_pose_t) + Math.PI / 90;
 			
-			TraceCurrentPoi(currentPoiPose);
+			ByStepTraceCurrentPoi(currentPoiPose);
 		}
 		else if (currentAction == 'addDock')
 		{
 			currentDockPose.approch_pose_t = parseFloat(currentDockPose.approch_pose_t) + Math.PI / 90;
 			
-			TraceCurrentDock(currentDockPose);
+			ByStepTraceCurrentDock(currentDockPose);
 		}
 		else if (currentAction == 'editPoi')
 		{
 			poi = pois[currentPoiIndex];
 			poi.approch_pose_t = parseFloat(poi.approch_pose_t) + Math.PI / 90;
-			TracePoi(currentPoiIndex);			
+			ByStepTracePoi(currentPoiIndex);			
 		}
 		else if (currentAction == 'editDock')
 		{
 			dock = docks[currentDockIndex];
 			dock.approch_pose_t = parseFloat(dock.approch_pose_t) + Math.PI / 90;
-			TraceDock(currentDockIndex);
+			ByStepTraceDock(currentDockIndex);
 		}
     });
-	$(document).on('touchstart', '#bRotateLeft', function(e) {
+	$(document).on('touchstart', '#install_by_step_edit_map_bRotateLeft', function(e) {
 		SaveElementNeeded(true);
 		if (timerRotate != null)
 		{
@@ -2151,60 +2151,60 @@ $(document).ready(function() {
 			{
 				currentPoiPose.approch_pose_t = parseFloat(currentPoiPose.approch_pose_t) - Math.PI / 90;
 				
-				TraceCurrentPoi(currentPoiPose);
+				ByStepTraceCurrentPoi(currentPoiPose);
 			}
 			else if (currentAction == 'addDock')
 			{
 				currentDockPose.approch_pose_t = parseFloat(currentDockPose.approch_pose_t) - Math.PI / 90;
 				
-				TraceCurrentDock(currentDockPose);
+				ByStepTraceCurrentDock(currentDockPose);
 			}
 			else if (currentAction == 'editPoi')
 			{
 				poi = pois[currentPoiIndex];
 				poi.approch_pose_t = parseFloat(poi.approch_pose_t) - Math.PI / 90;
-				TracePoi(currentPoiIndex);			
+				ByStepTracePoi(currentPoiIndex);			
 			}
 			else if (currentAction == 'editDock')
 			{
 				dock = docks[currentDockIndex];
 				dock.approch_pose_t = parseFloat(dock.approch_pose_t) - Math.PI / 90;
-				TraceDock(currentDockIndex);
+				ByStepTraceDock(currentDockIndex);
 			}
 		}, 100);
     });
-	$(document).on('touchend', '#bRotateLeft', function(e) {
+	$(document).on('touchend', '#install_by_step_edit_map_bRotateLeft', function(e) {
 		if (timerRotate != null)
 		{
 			clearInterval(timerRotate);
 			timerRotate = null;
 		}
     });
-	$('#bRotateLeft').click(function(e) {
+	$('#install_by_step_edit_map_bRotateLeft').click(function(e) {
 		SaveElementNeeded(true);
         if (currentAction == 'addPoi')
 		{
 			currentPoiPose.approch_pose_t = parseFloat(currentPoiPose.approch_pose_t) - Math.PI / 90;
 			
-			TraceCurrentPoi(currentPoiPose);
+			ByStepTraceCurrentPoi(currentPoiPose);
 		}
 		else if (currentAction == 'addDock')
 		{
 			currentDockPose.approch_pose_t = parseFloat(currentDockPose.approch_pose_t) - Math.PI / 90;
 			
-			TraceCurrentDock(currentDockPose);
+			ByStepTraceCurrentDock(currentDockPose);
 		}
 		else if (currentAction == 'editPoi')
 		{
 			poi = pois[currentPoiIndex];
 			poi.approch_pose_t = parseFloat(poi.approch_pose_t) - Math.PI / 90;
-			TracePoi(currentPoiIndex);			
+			ByStepTracePoi(currentPoiIndex);			
 		}
 		else if (currentAction == 'editDock')
 		{
 			dock = docks[currentDockIndex];
 			dock.approch_pose_t = parseFloat(dock.approch_pose_t) - Math.PI / 90;
-			TraceDock(currentDockIndex);
+			ByStepTraceDock(currentDockIndex);
 		}        
     });
 		
@@ -2240,9 +2240,9 @@ $(document).ready(function() {
 								
 				gommes[gommes.length-1].push({x:xRos, y:yRos});
 				gommes[gommes.length-1].push({x:xRos+0.01, y:yRos+0.01}); // Point du curseur
-				TraceCurrentGomme(gommes[gommes.length-1], gommes.length-1);
+				ByStepTraceCurrentGomme(gommes[gommes.length-1], gommes.length-1);
 				
-				$('#bEndGomme').show();
+				$('#install_by_step_edit_map_bEndGomme').show();
 			}
 		}
 		else if (currentAction == 'addDock' && currentStep=='setPose')
@@ -2260,7 +2260,7 @@ $(document).ready(function() {
 			currentDockPose.approach_pose_y = yRos;
 			currentDockPose.approach_pose_t = 0;
 			
-			TraceCurrentDock(currentDockPose);
+			ByStepTraceCurrentDock(currentDockPose);
 		}
 		/*
 		else if (currentAction == 'addDock' && currentStep=='setDir')
@@ -2276,7 +2276,7 @@ $(document).ready(function() {
 			
 			currentDockPose.approch_pose_t = GetAngleRadian(currentDockPose.approch_pose_x, currentDockPose.approch_pose_y, xRos, yRos) + Math.PI;
 							
-			TraceCurrentDock(currentDockPose);
+			ByStepTraceCurrentDock(currentDockPose);
 		}
 		*/
 		else if (currentAction == 'addPoi' && currentStep=='setPose')
@@ -2294,7 +2294,7 @@ $(document).ready(function() {
 			currentPoiPose.approch_pose_y = yRos;
 			currentPoiPose.approch_pose_t = 0;
 			
-			TraceCurrentPoi(currentPoiPose);
+			ByStepTraceCurrentPoi(currentPoiPose);
 		}
 		/*
 		else if (currentAction == 'addDock' && currentStep=='setDir')
@@ -2310,7 +2310,7 @@ $(document).ready(function() {
 			
 			currentPoiPose.approch_pose_t = GetAngleRadian(currentPoiPose.approch_pose_x, currentPoiPose.approch_pose_y, xRos, yRos) + Math.PI;
 							
-			TraceCurrentPoi(currentPoiPose);
+			ByStepTraceCurrentPoi(currentPoiPose);
 		}
 		*/
 		/*
@@ -2319,7 +2319,7 @@ $(document).ready(function() {
 			e.preventDefault();
 			
 			//x = e.offsetX;
-			//y = $('#mapBox').height() - e.offsetY;
+			//y = $('#install_by_step_edit_map_mapBox').height() - e.offsetY;
 			p = $('#install_by_step_edit_map_svg image').position();
 			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
 			y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
@@ -2332,14 +2332,14 @@ $(document).ready(function() {
 			currentForbiddenPoints.pop(); // Point du curseur
 			currentForbiddenPoints.push({x:xRos, y:yRos});
 			//currentForbiddenPoints.push({x:xRos, y:yRos}); // Point du curseur
-			TraceCurrentForbidden(currentForbiddenPoints);
+			ByStepTraceCurrentForbidden(currentForbiddenPoints);
 		}
 		else if (currentAction == 'addArea' && currentStep=='trace')
 		{
 			e.preventDefault();
 			
 			//x = e.offsetX;
-			//y = $('#mapBox').height() - e.offsetY;
+			//y = $('#install_by_step_edit_map_mapBox').height() - e.offsetY;
 			p = $('#install_by_step_edit_map_svg image').position();
 			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
 			y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
@@ -2352,14 +2352,14 @@ $(document).ready(function() {
 			currentAreaPoints.pop(); // Point du curseur
 			currentAreaPoints.push({x:xRos, y:yRos});
 			//currentAreaPoints.push({x:xRos, y:yRos}); // Point du curseur
-			TraceCurrentArea(currentAreaPoints);
+			ByStepTraceCurrentArea(currentAreaPoints);
 		}
 		*/
 	});
 	
 	$('#install_by_step_edit_map_svg').on('touchmove', function(e) {
 		
-		if ($('#boutonsRotate').is(':visible'))
+		if ($('#install_by_step_edit_map_boutonsRotate').is(':visible'))
 		{
 			 if (currentAction == 'addDock')
 			 {
@@ -2376,9 +2376,9 @@ $(document).ready(function() {
 				x = x + p.left;
 				y = y + p.top;
 				
-				$('#boutonsRotate').css('left', x - $('#boutonsRotate').width()/2);
-				$('#boutonsRotate').css('top', y - 60);
-				$('#boutonsRotate').show();
+				$('#install_by_step_edit_map_boutonsRotate').css('left', x - $('#install_by_step_edit_map_boutonsRotate').width()/2);
+				$('#install_by_step_edit_map_boutonsRotate').css('top', y - 60);
+				$('#install_by_step_edit_map_boutonsRotate').show();
 			 }
 			 else if (currentAction == 'addPoi')
 			 {
@@ -2395,9 +2395,9 @@ $(document).ready(function() {
 				x = x + p.left;
 				y = y + p.top;
 				
-				$('#boutonsRotate').css('left', x - $('#boutonsRotate').width()/2);
-				$('#boutonsRotate').css('top', y - 60);
-				$('#boutonsRotate').show();
+				$('#install_by_step_edit_map_boutonsRotate').css('left', x - $('#install_by_step_edit_map_boutonsRotate').width()/2);
+				$('#install_by_step_edit_map_boutonsRotate').css('top', y - 60);
+				$('#install_by_step_edit_map_boutonsRotate').show();
 			 }
 			 else if (currentAction == 'editDock')
 			 {
@@ -2416,9 +2416,9 @@ $(document).ready(function() {
 				x = x + p.left;
 				y = y + p.top;
 				
-				$('#boutonsRotate').css('left', x - $('#boutonsRotate').width()/2);
-				$('#boutonsRotate').css('top', y - 60);
-				$('#boutonsRotate').show();
+				$('#install_by_step_edit_map_boutonsRotate').css('left', x - $('#install_by_step_edit_map_boutonsRotate').width()/2);
+				$('#install_by_step_edit_map_boutonsRotate').css('top', y - 60);
+				$('#install_by_step_edit_map_boutonsRotate').show();
 			 }
 			 else if (currentAction == 'editPoi')
 			 {
@@ -2437,9 +2437,9 @@ $(document).ready(function() {
 				x = x + p.left;
 				y = y + p.top;
 				
-				$('#boutonsRotate').css('left', x - $('#boutonsRotate').width()/2);
-				$('#boutonsRotate').css('top', y - 60);
-				$('#boutonsRotate').show();
+				$('#install_by_step_edit_map_boutonsRotate').css('left', x - $('#install_by_step_edit_map_boutonsRotate').width()/2);
+				$('#install_by_step_edit_map_boutonsRotate').css('top', y - 60);
+				$('#install_by_step_edit_map_boutonsRotate').show();
 			 }
 		}
 		
@@ -2461,8 +2461,8 @@ $(document).ready(function() {
 				  	x = dock.approch_pose_x * 100 / ros_resolution;
 					y = ros_hauteur - (dock.approch_pose_y * 100 / ros_resolution);
 				  
-					$('#dock_'+movableDown.data('id_docking_station')).attr('transform', 'rotate('+0+', '+x+', '+y+')');
-					$('#dock_connect_'+movableDown.data('id_docking_station')).attr('transform', 'rotate('+0+', '+x+', '+y+')');
+					$('#install_by_step_edit_map_dock_'+movableDown.data('id_docking_station')).attr('transform', 'rotate('+0+', '+x+', '+y+')');
+					$('#install_by_step_edit_map_dock_connect_'+movableDown.data('id_docking_station')).attr('transform', 'rotate('+0+', '+x+', '+y+')');
 				  
 					delta = (downOnSVG_x - pageX) * zoom * ros_resolution / 100;
 					dock.approch_pose_x = parseFloat(dock.approch_pose_x) - delta;
@@ -2473,22 +2473,22 @@ $(document).ready(function() {
 					//movableDown.attr('y', ros_hauteur - (dock.approch_pose_y * 100 / ros_resolution) - 5); 
 					
 					
-					$('#dock_'+movableDown.data('id_docking_station')).attr('x', dock.approch_pose_x * 100 / ros_resolution - 5);
-					$('#dock_'+movableDown.data('id_docking_station')).attr('y', ros_hauteur - (dock.approch_pose_y * 100 / ros_resolution) - 1); 
+					$('#install_by_step_edit_map_dock_'+movableDown.data('id_docking_station')).attr('x', dock.approch_pose_x * 100 / ros_resolution - 5);
+					$('#install_by_step_edit_map_dock_'+movableDown.data('id_docking_station')).attr('y', ros_hauteur - (dock.approch_pose_y * 100 / ros_resolution) - 1); 
 					
-					$('#dock_connect_'+movableDown.data('id_docking_station')).attr('x1', dock.approch_pose_x * 100 / ros_resolution - 1);
-					$('#dock_connect_'+movableDown.data('id_docking_station')).attr('y1', ros_hauteur - (dock.approch_pose_y * 100 / ros_resolution) - 1); 
-					$('#dock_connect_'+movableDown.data('id_docking_station')).attr('x2', dock.approch_pose_x * 100 / ros_resolution + 1);
-					$('#dock_connect_'+movableDown.data('id_docking_station')).attr('y2', ros_hauteur - (dock.approch_pose_y * 100 / ros_resolution) - 1); 
+					$('#install_by_step_edit_map_dock_connect_'+movableDown.data('id_docking_station')).attr('x1', dock.approch_pose_x * 100 / ros_resolution - 1);
+					$('#install_by_step_edit_map_dock_connect_'+movableDown.data('id_docking_station')).attr('y1', ros_hauteur - (dock.approch_pose_y * 100 / ros_resolution) - 1); 
+					$('#install_by_step_edit_map_dock_connect_'+movableDown.data('id_docking_station')).attr('x2', dock.approch_pose_x * 100 / ros_resolution + 1);
+					$('#install_by_step_edit_map_dock_connect_'+movableDown.data('id_docking_station')).attr('y2', ros_hauteur - (dock.approch_pose_y * 100 / ros_resolution) - 1); 
 					
 					x = dock.approch_pose_x * 100 / ros_resolution;
 					y = ros_hauteur - (dock.approch_pose_y * 100 / ros_resolution);	
 					angle = 0 - dock.approch_pose_t * 180 / Math.PI - 90;
 					
-					$('#dock_'+movableDown.data('id_docking_station')).attr('transform', 'rotate('+angle+', '+x+', '+y+')');
-					$('#dock_connect_'+movableDown.data('id_docking_station')).attr('transform', 'rotate('+angle+', '+x+', '+y+')');
+					$('#install_by_step_edit_map_dock_'+movableDown.data('id_docking_station')).attr('transform', 'rotate('+angle+', '+x+', '+y+')');
+					$('#install_by_step_edit_map_dock_connect_'+movableDown.data('id_docking_station')).attr('transform', 'rotate('+angle+', '+x+', '+y+')');
 					
-					//TraceDock(GetDockIndexFromID(movableDown.data('id_docking_station')));
+					//ByStepTraceDock(GetDockIndexFromID(movableDown.data('id_docking_station')));
 				    
 					downOnSVG_x = pageX;
 					downOnSVG_y = pageY;
@@ -2505,7 +2505,7 @@ $(document).ready(function() {
 				  	x = poi.approch_pose_x * 100 / ros_resolution;
 					y = ros_hauteur - (poi.approch_pose_y * 100 / ros_resolution);
 				  
-					$('#poi_sens_'+movableDown.data('id_poi')).attr('transform', 'rotate('+0+', '+x+', '+y+')');
+					$('#install_by_step_edit_map_poi_sens_'+movableDown.data('id_poi')).attr('transform', 'rotate('+0+', '+x+', '+y+')');
 				  
 					delta = (downOnSVG_x - pageX) * zoom * ros_resolution / 100;
 					poi.approch_pose_x = parseFloat(poi.approch_pose_x) - delta;
@@ -2519,16 +2519,16 @@ $(document).ready(function() {
 					y = ros_hauteur - (poi.approch_pose_y * 100 / ros_resolution);	
 					angle = 0 - poi.approch_pose_t * 180 / Math.PI;
 					
-					$('#poi_secure_'+movableDown.data('id_poi')).attr('cx', x);
-					$('#poi_secure_'+movableDown.data('id_poi')).attr('cy', y); 
+					$('#install_by_step_edit_map_poi_secure_'+movableDown.data('id_poi')).attr('cx', x);
+					$('#install_by_step_edit_map_poi_secure_'+movableDown.data('id_poi')).attr('cy', y); 
 					
-					$('#poi_robot_'+movableDown.data('id_poi')).attr('cx', x);
-					$('#poi_robot_'+movableDown.data('id_poi')).attr('cy', y);
+					$('#install_by_step_edit_map_poi_robot_'+movableDown.data('id_poi')).attr('cx', x);
+					$('#install_by_step_edit_map_poi_robot_'+movableDown.data('id_poi')).attr('cy', y);
 										
-					$('#poi_sens_'+movableDown.data('id_poi')).attr('points', (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2));
-					$('#poi_sens_'+movableDown.data('id_poi')).attr('transform', 'rotate('+angle+', '+x+', '+y+')');
+					$('#install_by_step_edit_map_poi_sens_'+movableDown.data('id_poi')).attr('points', (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2));
+					$('#install_by_step_edit_map_poi_sens_'+movableDown.data('id_poi')).attr('transform', 'rotate('+angle+', '+x+', '+y+')');
 					
-					//TraceDock(GetDockIndexFromID(movableDown.data('id_docking_station')));
+					//ByStepTraceDock(GetDockIndexFromID(movableDown.data('id_docking_station')));
 				    
 					downOnSVG_x = pageX;
 					downOnSVG_y = pageY;
@@ -2550,7 +2550,7 @@ $(document).ready(function() {
 					movableDown.attr('x', forbidden.points[movableDown.data('index_point')].x * 100 / ros_resolution - 5);
 					movableDown.attr('y', ros_hauteur - (forbidden.points[movableDown.data('index_point')].y * 100 / ros_resolution) - 5); 
 				
-					TraceForbidden(GetForbiddenIndexFromID(movableDown.data('id_area')));
+					ByStepTraceForbidden(GetForbiddenIndexFromID(movableDown.data('id_area')));
 				    
 					downOnSVG_x = pageX;
 					downOnSVG_y = pageY;
@@ -2572,7 +2572,7 @@ $(document).ready(function() {
 					movableDown.attr('x', area.points[movableDown.data('index_point')].x * 100 / ros_resolution - 5);
 					movableDown.attr('y', ros_hauteur - (area.points[movableDown.data('index_point')].y * 100 / ros_resolution) - 5); 
 				
-					TraceArea(GetAreaIndexFromID(movableDown.data('id_area')));
+					ByStepTraceArea(GetAreaIndexFromID(movableDown.data('id_area')));
 				    
 					downOnSVG_x = pageX;
 					downOnSVG_y = pageY;
@@ -2588,7 +2588,7 @@ $(document).ready(function() {
 				clickSelectSVG_x_last = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
 				clickSelectSVG_y_last = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
 				
-				TraceSection(clickSelectSVG_x, clickSelectSVG_y, clickSelectSVG_x_last, clickSelectSVG_y_last);
+				ByStepTraceSection(clickSelectSVG_x, clickSelectSVG_y, clickSelectSVG_x_last, clickSelectSVG_y_last);
 			}
 			else if (currentAction == 'gomme' && (currentStep=='trace' || currentStep=='traced'))
 			{
@@ -2596,7 +2596,7 @@ $(document).ready(function() {
 				currentStep ='traced';
 				
 				//x = e.offsetX;
-				//y = $('#mapBox').height() - e.offsetY;
+				//y = $('#install_by_step_edit_map_mapBox').height() - e.offsetY;
 				p = $('#install_by_step_edit_map_svg image').position();
 				x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
 				y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
@@ -2609,7 +2609,7 @@ $(document).ready(function() {
 				gommes[gommes.length-1].pop(); // Point du curseur
 				gommes[gommes.length-1].push({x:xRos, y:yRos});
 				gommes[gommes.length-1].push({x:xRos, y:yRos}); // Point du curseur
-				TraceCurrentGomme(gommes[gommes.length-1], gommes.length-1);
+				ByStepTraceCurrentGomme(gommes[gommes.length-1], gommes.length-1);
 			}
 			else if (currentAction == 'addDock' && currentStep=='setPose')
 			{
@@ -2626,7 +2626,7 @@ $(document).ready(function() {
 				currentDockPose.approach_pose_y = yRos;
 				currentDockPose.approach_pose_t = 0;
 				
-				TraceCurrentDock(currentDockPose);
+				ByStepTraceCurrentDock(currentDockPose);
 			}
 			/*
 			else if (currentAction == 'addDock' && currentStep=='setDir')
@@ -2642,7 +2642,7 @@ $(document).ready(function() {
 				
 				currentDockPose.approch_pose_t = GetAngleRadian(currentDockPose.approch_pose_x, currentDockPose.approch_pose_y, xRos, yRos) + Math.PI;
 								
-				TraceCurrentDock(currentDockPose);
+				ByStepTraceCurrentDock(currentDockPose);
 			}
 			*/
 			else if (currentAction == 'addPoi' && currentStep=='setPose')
@@ -2660,7 +2660,7 @@ $(document).ready(function() {
 				currentPoiPose.approch_pose_y = yRos;
 				currentPoiPose.approch_pose_t = 0;
 				
-				TraceCurrentPoi(currentPoiPose);
+				ByStepTraceCurrentPoi(currentPoiPose);
 			}
 			/*
 			else if (currentAction == 'addPoi' && currentStep=='setDir')
@@ -2676,7 +2676,7 @@ $(document).ready(function() {
 				
 				currentPoiPose.approch_pose_t = GetAngleRadian(currentPoiPose.approch_pose_x, currentPoiPose.approch_pose_y, xRos, yRos) + Math.PI;
 								
-				TraceCurrentPoi(currentPoiPose);
+				ByStepTraceCurrentPoi(currentPoiPose);
 			}
 			*/
 			/*
@@ -2685,7 +2685,7 @@ $(document).ready(function() {
 				e.preventDefault();
 				
 				//x = e.offsetX;
-				//y = $('#mapBox').height() - e.offsetY;
+				//y = $('#install_by_step_edit_map_mapBox').height() - e.offsetY;
 				p = $('#install_by_step_edit_map_svg image').position();
 				x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
 				y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
@@ -2697,14 +2697,14 @@ $(document).ready(function() {
 				
 				currentForbiddenPoints.pop(); // Point du curseur
 				currentForbiddenPoints.push({x:xRos, y:yRos});
-				TraceCurrentForbidden(currentForbiddenPoints);
+				ByStepTraceCurrentForbidden(currentForbiddenPoints);
 			}
 			else if (currentAction == 'addArea' && currentStep=='trace')
 			{
 				e.preventDefault();
 				
 				//x = e.offsetX;
-				//y = $('#mapBox').height() - e.offsetY;
+				//y = $('#install_by_step_edit_map_mapBox').height() - e.offsetY;
 				p = $('#install_by_step_edit_map_svg image').position();
 				x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
 				y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
@@ -2716,7 +2716,7 @@ $(document).ready(function() {
 				
 				currentAreaPoints.pop(); // Point du curseur
 				currentAreaPoints.push({x:xRos, y:yRos});
-				TraceCurrentArea(currentAreaPoints);
+				ByStepTraceCurrentArea(currentAreaPoints);
 			}
 			*/
 		}
@@ -2732,11 +2732,11 @@ $(document).ready(function() {
 			
 			if (movableDown.data('element_type') == 'forbidden')
 			{
-				TraceForbidden(GetForbiddenIndexFromID(movableDown.data('id_area')));
+				ByStepTraceForbidden(GetForbiddenIndexFromID(movableDown.data('id_area')));
 			}
 			else if (movableDown.data('element_type') == 'area')
 			{
-				TraceArea(GetAreaIndexFromID(movableDown.data('id_area')));
+				ByStepTraceArea(GetAreaIndexFromID(movableDown.data('id_area')));
 			}
 		}
 		if (currentAction == 'gomme' && currentStep=='traced')
@@ -2759,7 +2759,7 @@ $(document).ready(function() {
 			currentDockPose.approach_pose_y = yRos;
 			currentDockPose.approach_pose_t = 0;
 			
-			TraceCurrentDock(currentDockPose);
+			ByStepTraceCurrentDock(currentDockPose);
 			
 			
 			x = currentDockPose.approach_pose_x * 100 / 5;
@@ -2771,13 +2771,13 @@ $(document).ready(function() {
 			x = x + p.left;
 			y = y + p.top;
 			
-			$('#boutonsRotate').css('left', x - $('#boutonsRotate').width()/2);
-			$('#boutonsRotate').css('top', y - 60);
-			$('#boutonsRotate').show();
-			$('#bDockSave').show();
+			$('#install_by_step_edit_map_boutonsRotate').css('left', x - $('#install_by_step_edit_map_boutonsRotate').width()/2);
+			$('#install_by_step_edit_map_boutonsRotate').css('top', y - 60);
+			$('#install_by_step_edit_map_boutonsRotate').show();
+			$('#install_by_step_edit_map_bDockSave').show();
 			
 			//currentStep='setDir';
-			//$('#message_aide').html(textClickOnMapDir);
+			//$('#install_by_step_edit_map_message_aide').html(textClickOnMapDir);
 			
 		}
 		/*
@@ -2794,9 +2794,9 @@ $(document).ready(function() {
 			
 			currentDockPose.approch_pose_t = GetAngleRadian(currentDockPose.approch_pose_x, currentDockPose.approch_pose_y, xRos, yRos) + Math.PI;
 							
-			TraceCurrentDock(currentDockPose);
+			ByStepTraceCurrentDock(currentDockPose);
 			
-			$('#boutonsDock #bDockSave').show();
+			$('#install_by_step_edit_map_boutonsDock #install_by_step_edit_map_bDockSave').show();
 		}
 		*/
 		else if (currentAction == 'addPoi' && currentStep=='setPose')
@@ -2814,7 +2814,7 @@ $(document).ready(function() {
 			currentPoiPose.approach_pose_y = yRos;
 			currentPoiPose.approach_pose_t = 0;
 			
-			TraceCurrentPoi(currentPoiPose);
+			ByStepTraceCurrentPoi(currentPoiPose);
 			
 			zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();		
 			p = $('#install_by_step_edit_map_svg image').position();
@@ -2829,13 +2829,13 @@ $(document).ready(function() {
 			x = x + p.left;
 			y = y + p.top;
 			
-			$('#boutonsRotate').css('left', x - $('#boutonsRotate').width()/2);
-			$('#boutonsRotate').css('top', y - 60);
-			$('#boutonsRotate').show();
-			$('#bPoiSave').show();
+			$('#install_by_step_edit_map_boutonsRotate').css('left', x - $('#install_by_step_edit_map_boutonsRotate').width()/2);
+			$('#install_by_step_edit_map_boutonsRotate').css('top', y - 60);
+			$('#install_by_step_edit_map_boutonsRotate').show();
+			$('#install_by_step_edit_map_bPoiSave').show();
 			
 			//currentStep='setDir';
-			//$('#message_aide').html(textClickOnMapDir);
+			//$('#install_by_step_edit_map_message_aide').html(textClickOnMapDir);
 		}
 		/*
 		else if (currentAction == 'addPoi' && currentStep=='setDir')
@@ -2851,9 +2851,9 @@ $(document).ready(function() {
 			
 			currentPoiPose.approch_pose_t = GetAngleRadian(currentPoiPose.approch_pose_x, currentPoiPose.approch_pose_y, xRos, yRos) + Math.PI;
 							
-			TraceCurrentPoi(currentPoiPose);
+			ByStepTraceCurrentPoi(currentPoiPose);
 			
-			$('#boutonsPoi #bPoiSave').show();
+			$('#install_by_step_edit_map_boutonsPoi #install_by_step_edit_map_bPoiSave').show();
 		}
 		*/
 		/*
@@ -2862,7 +2862,7 @@ $(document).ready(function() {
 			e.preventDefault();
 			
 			//x = e.offsetX;
-			//y = $('#mapBox').height() - e.offsetY;
+			//y = $('#install_by_step_edit_map_mapBox').height() - e.offsetY;
 			p = $('#install_by_step_edit_map_svg image').position();
 			
 			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
@@ -2877,14 +2877,14 @@ $(document).ready(function() {
 			currentForbiddenPoints.pop(); // Point du curseur
 			currentForbiddenPoints.push({x:xRos, y:yRos});
 			currentForbiddenPoints.push({x:xRos, y:yRos}); // Point du curseur
-			TraceCurrentForbidden(currentForbiddenPoints);
+			ByStepTraceCurrentForbidden(currentForbiddenPoints);
 		}
 		else if (currentAction == 'addArea' && currentStep=='trace')
 		{
 			e.preventDefault();
 			
 			//x = e.offsetX;
-			//y = $('#mapBox').height() - e.offsetY;
+			//y = $('#install_by_step_edit_map_mapBox').height() - e.offsetY;
 			p = $('#install_by_step_edit_map_svg image').position();
 			
 			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
@@ -2900,7 +2900,7 @@ $(document).ready(function() {
 			currentAreaPoints.pop(); // Point du curseur
 			currentAreaPoints.push({x:xRos, y:yRos});
 			currentAreaPoints.push({x:xRos, y:yRos}); // Point du curseur
-			TraceCurrentArea(currentAreaPoints);
+			ByStepTraceCurrentArea(currentAreaPoints);
 		}
 		*/
 	});
@@ -2912,8 +2912,8 @@ function PoiSave()
 {
 	if (currentAction == 'addPoi')
 	{
-		$('#poi_name').val('');
-		$('#modalPoiEditName').modal('show');
+		$('#install_by_step_edit_map_poi_name').val('');
+		$('#install_by_step_edit_map_modalPoiEditName').modal('show');
 	}
 	else if (currentAction == 'editPoi')
 	{	
@@ -2929,11 +2929,11 @@ function PoiSave()
 		currentAction = '';
 		currentStep = '';
 		
-		$('#boutonsRotate').hide();
+		$('#install_by_step_edit_map_boutonsRotate').hide();
 		
-		$('#boutonsPoi').hide();
-		$('#boutonsStandard').show();
-		$('#message_aide').hide();
+		$('#install_by_step_edit_map_boutonsPoi').hide();
+		$('#install_by_step_edit_map_boutonsStandard').show();
+		$('#install_by_step_edit_map_message_aide').hide();
 		blockZoom = false;
 		
 		$('body').addClass('no_current');
@@ -2960,16 +2960,16 @@ function PoiCancel()
 		RemoveClass('#install_by_step_edit_map_svg .poi_elem_'+poi.id_poi, 'movable');
 		
 		pois[currentPoiIndex] = JSON.parse(saveCurrentPoi);
-		TracePoi(currentPoiIndex);
+		ByStepTracePoi(currentPoiIndex);
 	}
 	currentAction = '';
 	currentStep = '';
 	
-	$('#boutonsRotate').hide();
+	$('#install_by_step_edit_map_boutonsRotate').hide();
 	
-	$('#boutonsPoi').hide();
-	$('#boutonsStandard').show();
-	$('#message_aide').hide();
+	$('#install_by_step_edit_map_boutonsPoi').hide();
+	$('#install_by_step_edit_map_boutonsStandard').show();
+	$('#install_by_step_edit_map_message_aide').hide();
 	blockZoom = false;
 	
 	SetModeSelect();
@@ -2988,7 +2988,7 @@ function DockSave()
 		AddHistorique({'action':'add_dock', 'data':d});
 		
 		docks.push(d);
-		TraceDock(docks.length-1);
+		ByStepTraceDock(docks.length-1);
 		
 		RemoveClass('#install_by_step_edit_map_svg .active', 'active');
 		
@@ -2998,11 +2998,11 @@ function DockSave()
 		currentAction = '';
 		currentStep = '';
 		
-		$('#boutonsRotate').hide();
+		$('#install_by_step_edit_map_boutonsRotate').hide();
 	
-		$('#boutonsDock').hide();
-		$('#boutonsStandard').show();
-		$('#message_aide').hide();
+		$('#install_by_step_edit_map_boutonsDock').hide();
+		$('#install_by_step_edit_map_boutonsStandard').show();
+		$('#install_by_step_edit_map_message_aide').hide();
 		blockZoom = false;
 		
 		$('body').addClass('no_current');
@@ -3024,11 +3024,11 @@ function DockSave()
 		currentAction = '';
 		currentStep = '';
 		
-		$('#boutonsRotate').hide();
+		$('#install_by_step_edit_map_boutonsRotate').hide();
 		
-		$('#boutonsDock').hide();
-		$('#boutonsStandard').show();
-		$('#message_aide').hide();
+		$('#install_by_step_edit_map_boutonsDock').hide();
+		$('#install_by_step_edit_map_boutonsStandard').show();
+		$('#install_by_step_edit_map_message_aide').hide();
 		blockZoom = false;
 		
 		$('body').addClass('no_current');
@@ -3056,16 +3056,16 @@ function DockCancel()
 		RemoveClass('#install_by_step_edit_map_svg .dock_elem_'+dock.id_docking_station, 'movable');
 		
 		docks[currentDockIndex] = JSON.parse(saveCurrentDock);
-		TraceDock(currentDockIndex);
+		ByStepTraceDock(currentDockIndex);
 	}
 	currentAction = '';
 	currentStep = '';
 	
-	$('#boutonsRotate').hide();
+	$('#install_by_step_edit_map_boutonsRotate').hide();
 	
-	$('#boutonsDock').hide();
-	$('#boutonsStandard').show();
-	$('#message_aide').hide();
+	$('#install_by_step_edit_map_boutonsDock').hide();
+	$('#install_by_step_edit_map_boutonsStandard').show();
+	$('#install_by_step_edit_map_message_aide').hide();
 	blockZoom = false;
 	
 	SetModeSelect();
@@ -3087,8 +3087,8 @@ function AreaSave()
 		currentAction = '';
 		currentStep = '';
 		
-		$('#boutonsForbidden').hide();
-		$('#boutonsStandard').show();
+		$('#install_by_step_edit_map_boutonsForbidden').hide();
+		$('#install_by_step_edit_map_boutonsStandard').show();
 		blockZoom = false;
 		
 		$('body').addClass('no_current');
@@ -3106,8 +3106,8 @@ function AreaSave()
 		currentAction = '';
 		currentStep = '';
 		
-		$('#boutonsArea').hide();
-		$('#boutonsStandard').show();
+		$('#install_by_step_edit_map_boutonsArea').hide();
+		$('#install_by_step_edit_map_boutonsStandard').show();
 		blockZoom = false;
 		
 		$('body').addClass('no_current');
@@ -3132,13 +3132,13 @@ function AreaCancel()
 	else if (currentAction == 'editArea')
 	{
 		areas[currentAreaIndex] = JSON.parse(saveCurrentArea);
-		TraceArea(currentAreaIndex);
+		ByStepTraceArea(currentAreaIndex);
 	}
 	currentAction = '';
 	currentStep = '';
 	
-	$('#boutonsArea').hide();
-	$('#boutonsStandard').show();
+	$('#install_by_step_edit_map_boutonsArea').hide();
+	$('#install_by_step_edit_map_boutonsStandard').show();
 	blockZoom = false;
 	
 	SetModeSelect();
@@ -3160,8 +3160,8 @@ function ForbiddenSave()
 		currentAction = '';
 		currentStep = '';
 		
-		$('#boutonsForbidden').hide();
-		$('#boutonsStandard').show();
+		$('#install_by_step_edit_map_boutonsForbidden').hide();
+		$('#install_by_step_edit_map_boutonsStandard').show();
 		blockZoom = false;
 		
 		$('body').addClass('no_current');
@@ -3181,8 +3181,8 @@ function ForbiddenSave()
 		currentAction = '';
 		currentStep = '';
 		
-		$('#boutonsForbidden').hide();
-		$('#boutonsStandard').show();
+		$('#install_by_step_edit_map_boutonsForbidden').hide();
+		$('#install_by_step_edit_map_boutonsStandard').show();
 		blockZoom = false;
 		
 		$('body').addClass('no_current');
@@ -3207,13 +3207,13 @@ function ForbiddenCancel()
 	else if (currentAction == 'editForbiddenArea')
 	{
 		forbiddens[currentForbiddenIndex] = JSON.parse(saveCurrentForbidden);
-		TraceForbidden(currentForbiddenIndex);
+		ByStepTraceForbidden(currentForbiddenIndex);
 	}
 	currentAction = '';
 	currentStep = '';
 	
-	$('#boutonsForbidden').hide();
-	$('#boutonsStandard').show();
+	$('#install_by_step_edit_map_boutonsForbidden').hide();
+	$('#install_by_step_edit_map_boutonsStandard').show();
 	blockZoom = false;
 	
 	SetModeSelect();
@@ -3322,8 +3322,8 @@ function DeleteForbidden(indexInArray)
 	$('.btn-mode-gene').addClass('btn-default');
 	
 	
-	$('#boutonsForbidden').hide();
-    $('#boutonsStandard').show();
+	$('#install_by_step_edit_map_boutonsForbidden').hide();
+    $('#install_by_step_edit_map_boutonsStandard').show();
 	blockZoom = false;
 	
 	SetModeSelect();
@@ -3372,8 +3372,8 @@ function DeleteArea(indexInArray)
 	$('.btn-mode-gene').removeClass('btn-primary');
 	$('.btn-mode-gene').addClass('btn-default');
 	
-	$('#boutonsArea').hide();
-    $('#boutonsStandard').show();
+	$('#install_by_step_edit_map_boutonsArea').hide();
+    $('#install_by_step_edit_map_boutonsStandard').show();
 	blockZoom = false;
 	
 	SetModeSelect();
@@ -3422,8 +3422,8 @@ function DeleteDock(indexInArray)
 	$('.btn-mode-gene').removeClass('btn-primary');
 	$('.btn-mode-gene').addClass('btn-default');
 	
-	$('#boutonsDock').hide();
-    $('#boutonsStandard').show();
+	$('#install_by_step_edit_map_boutonsDock').hide();
+    $('#install_by_step_edit_map_boutonsStandard').show();
 	blockZoom = false;
 	
 	SetModeSelect();
@@ -3481,8 +3481,8 @@ function DeletePoi(indexInArray)
 	$('.btn-mode-gene').removeClass('btn-primary');
 	$('.btn-mode-gene').addClass('btn-default');
 	
-	$('#boutonsPoi').hide();
-    $('#boutonsStandard').show();
+	$('#install_by_step_edit_map_boutonsPoi').hide();
+    $('#install_by_step_edit_map_boutonsStandard').show();
 	blockZoom = false;
 	
 	SetModeSelect();

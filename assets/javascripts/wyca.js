@@ -200,13 +200,13 @@ $(document).ready(function(e) {
 		});
     });
 	
-	$('#pages_install_by_step a#bImportTopDo').click(function(e) {
+	$('#pages_install_by_step a.bImportTopDo').click(function(e) {
         e.preventDefault();
 		
 		$('.modalImportTop_loading').hide();
 		$('.modalImportTop_content').show();
 		
-		file = $('#pages_install_by_step #file_import_top')[0].files[0];
+		file = $('#pages_install_by_step .file_import_top')[0].files[0];
 		var reader = new FileReader();
 		reader.onload = function(event) { 
 			wycaApi.InstallNewTopWithoutKey(btoa(reader.result), function(data) { 
@@ -419,8 +419,8 @@ $(document).ready(function(e) {
 				width = img.naturalWidth;
 				height = img.naturalHeight;
 				
-				$('#canvas_result_trinary').attr('width', img.naturalWidth);
-				$('#canvas_result_trinary').attr('height', img.naturalHeight);
+				$('#install_by_step_mapping_canvas_result_trinary').attr('width', img.naturalWidth);
+				$('#install_by_step_mapping_canvas_result_trinary').attr('height', img.naturalHeight);
 				
 				canvas.width = img.naturalWidth;
 				canvas.height = img.naturalHeight;
@@ -460,8 +460,8 @@ $(document).ready(function(e) {
 			$('#install_by_step_mapping_from_image_tri').val(canvasDessin.toDataURL());
 			$('#install_by_step_mapping_from_ros_largeur').val($('#install_by_step_mapping_img_map_saved_fin').prop('naturalWidth'));
 			$('#install_by_step_mapping_from_ros_hauteur').val($('#install_by_step_mapping_img_map_saved_fin').prop('naturalHeight'));
-			$('#install_by_step_mapping_from_threshold_free').val($('#threshold_free_slider').val());
-			$('#install_by_step_mapping_from_threshold_occupied').val($('#threshold_occupied_slider').val());
+			$('#install_by_step_mapping_from_threshold_free').val($('#install_by_step_mapping_threshold_free_slider').val());
+			$('#install_by_step_mapping_from_threshold_occupied').val($('#install_by_step_mapping_threshold_occupied_slider').val());
 			//$('#form_mapping').submit();
 			
 			$.ajax({
@@ -484,8 +484,8 @@ $(document).ready(function(e) {
 							'ros_resolution': 5,
 							'ros_width': $('#install_by_step_mapping_img_map_saved_fin').prop('naturalWidth'),
 							'ros_height': $('#install_by_step_mapping_img_map_saved_fin').prop('naturalHeight'),
-							'threshold_free': parseInt($('#threshold_free_slider').val()),
-							'threshold_occupied': parseInt($('#threshold_occupied_slider').val())
+							'threshold_free': parseInt($('#install_by_step_mapping_threshold_free_slider').val()),
+							'threshold_occupied': parseInt($('#install_by_step_mapping_threshold_occupied_slider').val())
 						};
 						
 						wycaApi.SetMap(map, function(data){
@@ -615,27 +615,27 @@ $(document).ready(function(e) {
 	$('#install_by_step_mapping_fin .bResetValueThreshold').click(function(e) {
         e.preventDefault();
 		
-		$("#threshold_free_slider").val(25);
-		$("#threshold_free_slider_elem").slider('value',25);
-		$('#threshold_free_output b').text( 25 );
+		$("#install_by_step_mapping_threshold_free_slider").val(25);
+		$("#install_by_step_mapping_threshold_free_slider_elem").slider('value',25);
+		$('#install_by_step_mapping_threshold_free_output b').text( 25 );
 		threshold_free = 25;
 		
-		$("#threshold_occupied_slider").val(65);
-		$("#threshold_occupied_slider_elem").slider('value',65);
-		$('#threshold_occupied_output b').text( 65 );
+		$("#install_by_step_mapping_threshold_occupied_slider").val(65);
+		$("#install_by_step_mapping_threshold_occupied_slider_elem").slider('value',65);
+		$('#install_by_step_mapping_threshold_occupied_output b').text( 65 );
 		threshold_occupied = 65;
 		
 		CalculateMapTrinary();
     });
 	
-	$('#threshold_free_slider').change(function() {
-		$('#threshold_free_output b').text( this.value );
+	$('#install_by_step_mapping_threshold_free_slider').change(function() {
+		$('#install_by_step_mapping_threshold_free_output b').text( this.value );
 		threshold_free = this.value;
 		
 		CalculateMapTrinary();
 	});
-	$('#threshold_occupied_slider').change(function() {
-		$('#threshold_occupied_output b').text( this.value );
+	$('#install_by_step_mapping_threshold_occupied_slider').change(function() {
+		$('#install_by_step_mapping_threshold_occupied_output b').text( this.value );
 		threshold_occupied = this.value;
 		
 		CalculateMapTrinary();
@@ -678,10 +678,10 @@ $(document).ready(function(e) {
 		});
     });
 	
-	$("#threshold_occupied_slider_elem").slider({ "value": 65, "range": "min", "max": 100 });
-	$("#threshold_occupied_slider_elem").on("slide", function(slideEvt) { $("#threshold_occupied_output b").text(slideEvt.value); $("#threshold_occupied_slider").val(slideEvt.value); });
-	$("#threshold_free_slider_elem").slider({ "value": 25, "range": "min", "max": 100 });
-	$("#threshold_free_slider_elem").on("slide", function(slideEvt) { $("#threshold_free_output b").text(slideEvt.value); $("#threshold_free_slider").val(slideEvt.value); });
+	$("#install_by_step_mapping_threshold_occupied_slider_elem").slider({ "value": 65, "range": "min", "max": 100 });
+	$("#install_by_step_mapping_threshold_occupied_slider_elem").on("slide", function(slideEvt) { $("#install_by_step_mapping_threshold_occupied_output b").text(slideEvt.value); $("#install_by_step_mapping_threshold_occupied_slider").val(slideEvt.value); });
+	$("#install_by_step_mapping_threshold_free_slider_elem").slider({ "value": 25, "range": "min", "max": 100 });
+	$("#install_by_step_mapping_threshold_free_slider_elem").on("slide", function(slideEvt) { $("#install_by_step_mapping_threshold_free_output b").text(slideEvt.value); $("#install_by_step_mapping_threshold_free_slider").val(slideEvt.value); });
 	
 	$('#install_by_step_edit_map .bSaveEditMap').click(function(e) {
 		e.preventDefault();
@@ -733,15 +733,15 @@ $(document).ready(function(e) {
 				$('#install_by_step_test_map .bExecuteTest').removeClass('disabled');
 				if (data.A == wycaApi.AnswerCode.NO_ERROR)
 				{
-					$('#install_by_step_test_map #list_test_'+currentTestIndex).addClass('done');
-					$('#install_by_step_test_map #list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-danger');
-					$('#install_by_step_test_map #list_test_'+currentTestIndex+' a').addClass('btn-success');
+					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex).addClass('done');
+					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-danger');
+					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex+' a').addClass('btn-success');
 				}
 				else
 				{
-					$('#install_by_step_test_map #list_test_'+currentTestIndex).addClass('ko');
-					$('#install_by_step_test_map #list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-success');
-					$('#install_by_step_test_map #list_test_'+currentTestIndex+' a').addClass('btn-danger');
+					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex).addClass('ko');
+					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-success');
+					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex+' a').addClass('btn-danger');
 					if (data.M != '')
 						alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
 					else
@@ -760,9 +760,9 @@ $(document).ready(function(e) {
 				{
 					$('#install_by_step_test_map .bExecuteTest').removeClass('disabled');
 				
-					$('#install_by_step_test_map #list_test_'+currentTestIndex).addClass('ko');
-					$('#install_by_step_test_map #list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-success');
-					$('#install_by_step_test_map #list_test_'+currentTestIndex+' a').addClass('btn-danger');
+					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex).addClass('ko');
+					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-success');
+					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex+' a').addClass('btn-danger');
 					if (data.M != '')
 						alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
 					else
@@ -781,15 +781,15 @@ $(document).ready(function(e) {
 				$('#install_by_step_test_map .bExecuteTest').removeClass('disabled');
 				if (data.A == wycaApi.AnswerCode.NO_ERROR)
 				{
-					$('#install_by_step_test_map #list_test_'+currentTestIndex).addClass('done');
-					$('#install_by_step_test_map #list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-danger');
-					$('#install_by_step_test_map #list_test_'+currentTestIndex+' a').addClass('btn-success');
+					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex).addClass('done');
+					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-danger');
+					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex+' a').addClass('btn-success');
 				}
 				else
 				{
-					$('#install_by_step_test_map #list_test_'+currentTestIndex).addClass('ko');
-					$('#install_by_step_test_map #list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-success');
-					$('#install_by_step_test_map #list_test_'+currentTestIndex+' a').addClass('btn-danger');
+					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex).addClass('ko');
+					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-success');
+					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex+' a').addClass('btn-danger');
 					if (data.M != '')
 						alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
 					else
@@ -808,9 +808,9 @@ $(document).ready(function(e) {
 				{
 					$('#install_by_step_test_map .bExecuteTest').removeClass('disabled');
 					
-					$('#install_by_step_test_map #list_test_'+currentTestIndex).addClass('ko');
-					$('#install_by_step_test_map #list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-success');
-					$('#install_by_step_test_map #list_test_'+currentTestIndex+' a').addClass('btn-danger');
+					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex).addClass('ko');
+					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-success');
+					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex+' a').addClass('btn-danger');
 					if (data.M != '')
 						alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
 					else
@@ -840,7 +840,7 @@ $(document).ready(function(e) {
     });
 	
 	$('#install_by_step_config .bConfigurationSave').click(function(e) {
-		wycaApi.SetEnergyConfiguration(parseInt($('#install_by_step_config #i_level_min_gotocharge').val()), parseInt($('#install_by_step_config #i_level_min_dotask').val()), function(data) {
+		wycaApi.SetEnergyConfiguration(parseInt($('#install_by_step_config #install_by_step_config_i_level_min_gotocharge').val()), parseInt($('#install_by_step_config #install_by_step_config_i_level_min_dotask').val()), function(data) {
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
 				$.ajax({
@@ -868,45 +868,45 @@ $(document).ready(function(e) {
 	
 	$('#install_by_step_manager .bAddManager').click(function(e) {
 	
-		$('#install_by_step_manager .modalManager #i_id_manager').val(-1);
-		$('#install_by_step_manager .modalManager #i_manager_email').val('');
-		$('#install_by_step_manager .modalManager #i_manager_societe').val('');
-		$('#install_by_step_manager .modalManager #i_manager_prenom').val('');
-		$('#install_by_step_manager .modalManager #i_manager_nom').val('');
-		$('#install_by_step_manager .modalManager #i_manager_password').val('');
-		$('#install_by_step_manager .modalManager #i_manager_cpassword').val('');
+		$('#install_by_step_manager .modalManager #install_by_step_manager_i_id_manager').val(-1);
+		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_email').val('');
+		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_societe').val('');
+		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_prenom').val('');
+		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_nom').val('');
+		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_password').val('');
+		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_cpassword').val('');
 		
 		$('#install_by_step_manager .modalManager').modal('show');
 	});
 	
-	$('#install_by_step_manager .modalManager #bManagerSave').click(function(e) {
+	$('#install_by_step_manager .modalManager #install_by_step_manager_bManagerSave').click(function(e) {
         e.preventDefault();
 		
-		if ($('#install_by_step_manager .modalManager #i_manager_password').val() != $('#install_by_step_manager .modalManager #i_manager_cpassword').val())
+		if ($('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_password').val() != $('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_cpassword').val())
 		{
 			alert_wyca('Invalid password or confirm');
 		}
-		else if ($('#install_by_step_manager .modalManager #i_manager_societe').val() == "" )
+		else if ($('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_societe').val() == "" )
 		{
 			alert_wyca('Company is required');
 		}
-		else if ($('#install_by_step_manager .modalManager #i_manager_prenom').val() == "" )
+		else if ($('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_prenom').val() == "" )
 		{
 			alert_wyca('Firstname is required');
 		}
-		else if ($('#install_by_step_manager .modalManager #i_manager_nom').val() == "" )
+		else if ($('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_nom').val() == "" )
 		{
 			alert_wyca('Lastname is required');
 		}
 		else
 		{
 			json_user = {
-				"id_user": parseInt($('#install_by_step_manager .modalManager #i_id_manager').val()),
-				"company": $('#install_by_step_manager .modalManager #i_manager_societe').val(),
-				"lastname": $('#install_by_step_manager .modalManager #i_manager_nom').val(),
-				"firstname": $('#install_by_step_manager .modalManager #i_manager_prenom').val(),
-				"email": $('#install_by_step_manager .modalManager #i_manager_email').val(),
-				"pass": $('#install_by_step_manager .modalManager #i_manager_password').val(),
+				"id_user": parseInt($('#install_by_step_manager .modalManager #install_by_step_manager_i_id_manager').val()),
+				"company": $('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_societe').val(),
+				"lastname": $('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_nom').val(),
+				"firstname": $('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_prenom').val(),
+				"email": $('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_email').val(),
+				"pass": $('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_password').val(),
 				"id_group_user": 3,
 			};
 			
@@ -915,17 +915,17 @@ $(document).ready(function(e) {
 				{
 					// On ajoute le li
 					id_user = data.D;
-					if ($('#list_manager_elem_'+id_user).length > 0)
+					if ($('#install_by_step_manager_list_manager_elem_'+id_user).length > 0)
 					{
-						$('#list_manager_elem_'+id_user+' span.email').html(json_user.email);
-						$('#list_manager_elem_'+id_user+' span.societe').html(json_user.company);
-						$('#list_manager_elem_'+id_user+' span.prenom').html(json_user.firstname);
-						$('#list_manager_elem_'+id_user+' span.nom').html(json_user.lastname);
+						$('#install_by_step_manager_list_manager_elem_'+id_user+' span.email').html(json_user.email);
+						$('#install_by_step_manager_list_manager_elem_'+id_user+' span.societe').html(json_user.company);
+						$('#install_by_step_manager_list_manager_elem_'+id_user+' span.prenom').html(json_user.firstname);
+						$('#install_by_step_manager_list_manager_elem_'+id_user+' span.nom').html(json_user.lastname);
 					}
 					else
 					{
 						$('#install_by_step_manager .list_managers').append('' +
-							'<li id="list_manager_elem_'+id_user+'" data-id_user="'+id_user+'">'+
+							'<li id="install_by_step_manager_list_manager_elem_'+id_user+'" data-id_user="'+id_user+'">'+
 							'	<span class="societe">'+json_user.company+'</span><br /><span class="prenom">'+json_user.firstname+'</span> <span class="nom">'+json_user.lastname+'</span><br /><span class="email">'+data.D.email+'</span>'+
 							'	<a href="#" class="bManagerDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
 							'	<a href="#" class="bManagerEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
@@ -952,7 +952,7 @@ $(document).ready(function(e) {
 		wycaApi.DeleteUser(id_user_to_delete, function(data) {
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
-				$('#list_manager_elem_'+id_user_to_delete).remove();
+				$('#install_by_step_manager_list_manager_elem_'+id_user_to_delete).remove();
 			}
 			else
 			{
@@ -966,13 +966,13 @@ $(document).ready(function(e) {
 		e.preventDefault();
 		
 		id_user = $(this).closest('li').data('id_user');
-		$('#install_by_step_manager .modalManager #i_id_manager').val(id_user);
-		$('#install_by_step_manager .modalManager #i_manager_email').val($('#list_manager_elem_'+id_user+' span.email').html());
-		$('#install_by_step_manager .modalManager #i_manager_societe').val($('#list_manager_elem_'+id_user+' span.societe').html());
-		$('#install_by_step_manager .modalManager #i_manager_prenom').val($('#list_manager_elem_'+id_user+' span.prenom').html());
-		$('#install_by_step_manager .modalManager #i_manager_nom').val($('#list_manager_elem_'+id_user+' span.nom').html());
-		$('#install_by_step_manager .modalManager #i_manager_password').val('');
-		$('#install_by_step_manager .modalManager #i_manager_cpassword').val('');
+		$('#install_by_step_manager .modalManager #install_by_step_manager_i_id_manager').val(id_user);
+		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_email').val($('#install_by_step_manager_list_manager_elem_'+id_user+' span.email').html());
+		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_societe').val($('#install_by_step_manager_list_manager_elem_'+id_user+' span.societe').html());
+		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_prenom').val($('#install_by_step_manager_list_manager_elem_'+id_user+' span.prenom').html());
+		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_nom').val($('#install_by_step_manager_list_manager_elem_'+id_user+' span.nom').html());
+		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_password').val('');
+		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_cpassword').val('');
 		
 		$('#install_by_step_manager .modalManager').modal('show');
 	});
@@ -994,20 +994,20 @@ $(document).ready(function(e) {
 	
 	$('#install_by_step_service_book .bAddServiceBook').click(function(e) {
 	
-		$('#install_by_step_service_book .modalServiceBook #i_service_book_title').val('');
-		$('#install_by_step_service_book .modalServiceBook #i_service_book_comment').val('');
+		$('#install_by_step_service_book .modalServiceBook #install_by_step_service_book_i_service_book_title').val('');
+		$('#install_by_step_service_book .modalServiceBook #install_by_step_service_book_i_service_book_comment').val('');
 		
 		$('#install_by_step_service_book .modalServiceBook').modal('show');
 	});
 	
-	$('#install_by_step_service_book .modalServiceBook #bServiceBookSave').click(function(e) {
+	$('#install_by_step_service_book .modalServiceBook #install_by_step_service_book_bServiceBookSave').click(function(e) {
         e.preventDefault();
 		
-		if ($('#install_by_step_service_book .modalServiceBook #i_service_book_title').val() == "" )
+		if ($('#install_by_step_service_book .modalServiceBook #install_by_step_service_book_i_service_book_title').val() == "" )
 		{
 			alert_wyca('Title is required');
 		}
-		else if ($('#install_by_step_service_book .modalServiceBook #i_service_book_comment').val() == "" )
+		else if ($('#install_by_step_service_book .modalServiceBook #install_by_step_service_book_i_service_book_comment').val() == "" )
 		{
 			alert_wyca('Comment is required');
 		}
@@ -1015,8 +1015,8 @@ $(document).ready(function(e) {
 		{
 			json_service_book = {
 				"id_service_book": -1,
-				"title": $('#install_by_step_service_book .modalServiceBook #i_service_book_title').val(),
-				"comment": $('#install_by_step_service_book .modalServiceBook #i_service_book_comment').val()
+				"title": $('#install_by_step_service_book .modalServiceBook #install_by_step_service_book_i_service_book_title').val(),
+				"comment": $('#install_by_step_service_book .modalServiceBook #install_by_step_service_book_i_service_book_comment').val()
 			};
 			
 			wycaApi.SetServiceBook(json_service_book, function(data) {
@@ -1054,6 +1054,13 @@ $(document).ready(function(e) {
 				alert(e.responseText);
 			}
 		});
+		
+		$('#pages_install_by_step').removeClass('active');
+		$('#pages_install_normal').addClass('active');
+		
+		
+		$('.menu_groupe button').show();
+		
     });
 });
 
@@ -1104,7 +1111,7 @@ function GetManagers()
 				if (value.id_group_user  == 3)
 				{
 					$('#install_by_step_manager .list_managers').append('' +
-						'<li id="list_manager_elem_'+value.id_user+'" data-id_user="'+value.id_user+'">'+
+						'<li id="install_by_step_manager_list_manager_elem_'+value.id_user+'" data-id_user="'+value.id_user+'">'+
 						'	<span class="societe">'+value.company+'</span><br /><span class="prenom">'+value.firstname+'</span> <span class="nom">'+value.lastname+'</span><br /><span class="email">'+value.email+'</span>'+
 						'	<a href="#" class="bManagerDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
 						'	<a href="#" class="bManagerEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
@@ -1130,8 +1137,8 @@ function GetConfigurations()
 	if (wycaApi.websocketAuthed)
 	{
 		wycaApi.GetEnergyConfiguration(function(data) {
-			$('#install_by_step_config #i_level_min_gotocharge').val(data.D.EBL);
-			$('#install_by_step_config #i_level_min_dotask').val(data.D.MBL);
+			$('#install_by_step_config #install_by_step_config_i_level_min_gotocharge').val(data.D.EBL);
+			$('#install_by_step_config #install_by_step_config_i_level_min_dotask').val(data.D.MBL);
 			$('.install_by_step_test_map_loading').hide();
 			$('#install_by_step_config .loaded').show();
 		});

@@ -106,8 +106,8 @@ function GetInfosCurrentMapDo()
 			$('#install_by_step_mapping_use .modalUseThisMapNowTitle2').hide();
 			$('#install_by_step_mapping_use .modalUseThisMapNowContent').hide();
 			
-			InitMap();
-			ResizeSVG();
+			ByStepInitMap();
+			ByStepResizeSVG();
 			
 			if (gotoTest) InitTest();
 			
@@ -185,7 +185,7 @@ function InitTest()
 	});
 }
 
-function DisplayBlockZoom()
+function ByStepDisplayBlockZoom()
 {
 	if (blockZoom)
 	{
@@ -246,14 +246,14 @@ function DisplayBlockZoom()
 	}
 }
 
-var timerLongPress = null;
-var timerVeryLongPress = null;
+var timerByStepLongPress = null;
+var timerByStepVeryLongPress = null;
 var eventTouchStart = null;
-var currentPointLongTouch = null;
-var currentForbiddenLongTouch = null;
-var currentAreaLongTouch = null;
-var currentDockLongTouch = null;
-var currentPoiLongTouch = null;
+var currentPointByStepLongTouch = null;
+var currentForbiddenByStepLongTouch = null;
+var currentAreaByStepLongTouch = null;
+var currentDockByStepLongTouch = null;
+var currentPoiByStepLongTouch = null;
 
 $(document).ready(function(e) {
 	$('.popupHelp').click(function(e) {
@@ -262,107 +262,107 @@ $(document).ready(function(e) {
     });
 	$('#install_by_step_edit_map_svg').on('touchend', function(e) { 
 		$('#zoom_popup').hide();
-		if (timerLongPress != null)
+		if (timerByStepLongPress != null)
 		{
-			clearTimeout(timerLongPress);
-			timerLongPress = null;
+			clearTimeout(timerByStepLongPress);
+			timerByStepLongPress = null;
 		}
-		if (timerVeryLongPress != null)
+		if (timerByStepVeryLongPress != null)
 		{
-			clearTimeout(timerVeryLongPress);
-			timerVeryLongPress = null;
+			clearTimeout(timerByStepVeryLongPress);
+			timerByStepVeryLongPress = null;
 		}
 	});
 	$('#install_by_step_edit_map_svg').on('touchstart', function(e) {
 		
-		if (timerLongPress != null)
+		if (timerByStepLongPress != null)
 		{
-			clearTimeout(timerLongPress);
-			timerLongPress = null;
+			clearTimeout(timerByStepLongPress);
+			timerByStepLongPress = null;
 		}
-		if (timerVeryLongPress != null)
+		if (timerByStepVeryLongPress != null)
 		{
-			clearTimeout(timerVeryLongPress);
-			timerVeryLongPress = null;
+			clearTimeout(timerByStepVeryLongPress);
+			timerByStepVeryLongPress = null;
 		}
 		
 		if (canChangeMenu)
 		{
-			timerLongPress = setTimeout(LongPressSVG, 500);
-			timerVeryLongPress = setTimeout(LongVeryPressSVG, 1500);
+			timerByStepLongPress = setTimeout(ByStepLongPressSVG, 500);
+			timerByStepVeryLongPress = setTimeout(ByStepLongVeryPressSVG, 1500);
 			eventTouchStart = e;
 		}
-		DisplayBlockZoom();
+		ByStepDisplayBlockZoom();
 		
-		HideMenus();
+		ByStepHideMenus();
 		
 	});
     $('#install_by_step_edit_map_svg').on('touchmove', function(e) {
-		HideMenus();
-		if (timerLongPress != null)
+		ByStepHideMenus();
+		if (timerByStepLongPress != null)
 		{
-			clearTimeout(timerLongPress);
-			timerLongPress = null;
+			clearTimeout(timerByStepLongPress);
+			timerByStepLongPress = null;
 		}
-		if (timerVeryLongPress != null)
+		if (timerByStepVeryLongPress != null)
 		{
-			clearTimeout(timerVeryLongPress);
-			timerVeryLongPress = null;
+			clearTimeout(timerByStepVeryLongPress);
+			timerByStepVeryLongPress = null;
 		}
-		DisplayBlockZoom();
+		ByStepDisplayBlockZoom();
 	});
 	
 	
 	$(document).on('touchend', '#install_by_step_edit_map_svg .point_deletable', function(e) {
 		$('#zoom_popup').hide();
-		if (timerLongPress != null)
+		if (timerByStepLongPress != null)
 		{
-			clearTimeout(timerLongPress);
-			timerLongPress = null;
+			clearTimeout(timerByStepLongPress);
+			timerByStepLongPress = null;
 		}
-		if (timerVeryLongPress != null)
+		if (timerByStepVeryLongPress != null)
 		{
-			clearTimeout(timerVeryLongPress);
-			timerVeryLongPress = null;
+			clearTimeout(timerByStepVeryLongPress);
+			timerByStepVeryLongPress = null;
 		}
 	});
 	$(document).on('touchstart', '#install_by_step_edit_map_svg .point_deletable', function(e) {
-		if (timerLongPress != null)
+		if (timerByStepLongPress != null)
 		{
-			clearTimeout(timerLongPress);
-			timerLongPress = null;
+			clearTimeout(timerByStepLongPress);
+			timerByStepLongPress = null;
 		}
-		if (timerVeryLongPress != null)
+		if (timerByStepVeryLongPress != null)
 		{
-			clearTimeout(timerVeryLongPress);
-			timerVeryLongPress = null;
+			clearTimeout(timerByStepVeryLongPress);
+			timerByStepVeryLongPress = null;
 		}
 		
 		if (canChangeMenu || currentAction == 'editForbiddenArea' || currentAction == 'editArea')
 		{
-			timerLongPress = setTimeout(LongPressPointDeletable, 500);
-			//timerVeryLongPress = setTimeout(LongVeryPressSVG, 1500);
+			timerByStepLongPress = setTimeout(ByStepLongPressPointDeletable, 500);
+			//timerByStepVeryLongPress = setTimeout(ByStepLongVeryPressSVG, 1500);
 			eventTouchStart = e;
-			currentPointLongTouch = $(this);
+			currentPointByStepLongTouch = $(this);
 		}
-		DisplayBlockZoom();
+		ByStepDisplayBlockZoom();
 		
-		HideMenus();
+		ByStepHideMenus();
 		
 	});
 	$(document).on('touchmove', '#install_by_step_edit_map_svg .point_deletable', function(e) {
-    	HideMenus();
-		if (timerLongPress != null)
+    	ByStepHideMenus();
+		if (timerByStepLongPress != null)
 		{
-			clearTimeout(timerLongPress);
-			timerLongPress = null;
+			clearTimeout(timerByStepLongPress);
+			timerByStepLongPress = null;
 		}
-		if (timerVeryLongPress != null)
+		if (timerByStepVeryLongPress != null)
 		{
-			clearTimeout(timerVeryLongPress);
-			timerVeryLongPress = null;
+			clearTimeout(timerByStepVeryLongPress);
+			timerByStepVeryLongPress = null;
 		}
-		DisplayBlockZoom();
+		ByStepDisplayBlockZoom();
 	});
 	
 	
@@ -370,215 +370,215 @@ $(document).ready(function(e) {
 	
 	$(document).on('touchend', '#install_by_step_edit_map_svg .forbidden_root', function(e) {
 		$('#zoom_popup').hide();
-		if (timerLongPress != null)
+		if (timerByStepLongPress != null)
 		{
-			clearTimeout(timerLongPress);
-			timerLongPress = null;
+			clearTimeout(timerByStepLongPress);
+			timerByStepLongPress = null;
 		}
-		if (timerVeryLongPress != null)
+		if (timerByStepVeryLongPress != null)
 		{
-			clearTimeout(timerVeryLongPress);
-			timerVeryLongPress = null;
+			clearTimeout(timerByStepVeryLongPress);
+			timerByStepVeryLongPress = null;
 		}
 	});
 	$(document).on('touchstart', '#install_by_step_edit_map_svg .forbidden_root', function(e) {
-		if (timerLongPress != null)
+		if (timerByStepLongPress != null)
 		{
-			clearTimeout(timerLongPress);
-			timerLongPress = null;
+			clearTimeout(timerByStepLongPress);
+			timerByStepLongPress = null;
 		}
-		if (timerVeryLongPress != null)
+		if (timerByStepVeryLongPress != null)
 		{
-			clearTimeout(timerVeryLongPress);
-			timerVeryLongPress = null;
+			clearTimeout(timerByStepVeryLongPress);
+			timerByStepVeryLongPress = null;
 		}
 		
 		if (canChangeMenu || currentAction == 'editForbiddenArea' || currentAction == 'addForbiddenArea')
 		{
-			timerLongPress = setTimeout(LongPressForbidden, 500);
-			//timerVeryLongPress = setTimeout(LongVeryPressSVG, 1500);
+			timerByStepLongPress = setTimeout(ByStepLongPressForbidden, 500);
+			//timerByStepVeryLongPress = setTimeout(ByStepLongVeryPressSVG, 1500);
 			eventTouchStart = e;
-			currentForbiddenLongTouch = $(this);
+			currentForbiddenByStepLongTouch = $(this);
 		}
-		DisplayBlockZoom();
+		ByStepDisplayBlockZoom();
 		
-		HideMenus();
+		ByStepHideMenus();
 		
 	});
 	$(document).on('touchmove', '#install_by_step_edit_map_svg .forbidden_root', function(e) {
-    	HideMenus();
-		if (timerLongPress != null)
+    	ByStepHideMenus();
+		if (timerByStepLongPress != null)
 		{
-			clearTimeout(timerLongPress);
-			timerLongPress = null;
+			clearTimeout(timerByStepLongPress);
+			timerByStepLongPress = null;
 		}
-		if (timerVeryLongPress != null)
+		if (timerByStepVeryLongPress != null)
 		{
-			clearTimeout(timerVeryLongPress);
-			timerVeryLongPress = null;
+			clearTimeout(timerByStepVeryLongPress);
+			timerByStepVeryLongPress = null;
 		}
-		DisplayBlockZoom();
+		ByStepDisplayBlockZoom();
 	});
 	
 	$(document).on('touchend', '#install_by_step_edit_map_svg .area_root', function(e) {
 		$('#zoom_popup').hide();
-		if (timerLongPress != null)
+		if (timerByStepLongPress != null)
 		{
-			clearTimeout(timerLongPress);
-			timerLongPress = null;
+			clearTimeout(timerByStepLongPress);
+			timerByStepLongPress = null;
 		}
-		if (timerVeryLongPress != null)
+		if (timerByStepVeryLongPress != null)
 		{
-			clearTimeout(timerVeryLongPress);
-			timerVeryLongPress = null;
+			clearTimeout(timerByStepVeryLongPress);
+			timerByStepVeryLongPress = null;
 		}
 	});
 	$(document).on('touchstart', '#install_by_step_edit_map_svg .area_root', function(e) {
-		if (timerLongPress != null)
+		if (timerByStepLongPress != null)
 		{
-			clearTimeout(timerLongPress);
-			timerLongPress = null;
+			clearTimeout(timerByStepLongPress);
+			timerByStepLongPress = null;
 		}
-		if (timerVeryLongPress != null)
+		if (timerByStepVeryLongPress != null)
 		{
-			clearTimeout(timerVeryLongPress);
-			timerVeryLongPress = null;
+			clearTimeout(timerByStepVeryLongPress);
+			timerByStepVeryLongPress = null;
 		}
 		
 		if (canChangeMenu || currentAction == 'editArea' || currentAction == 'addArea')
 		{
-			timerLongPress = setTimeout(LongPressArea, 500);
-			//timerVeryLongPress = setTimeout(LongVeryPressSVG, 1500);
+			timerByStepLongPress = setTimeout(ByStepLongPressArea, 500);
+			//timerByStepVeryLongPress = setTimeout(ByStepLongVeryPressSVG, 1500);
 			eventTouchStart = e;
-			currentAreaLongTouch = $(this);
+			currentAreaByStepLongTouch = $(this);
 		}
-		DisplayBlockZoom();
+		ByStepDisplayBlockZoom();
 		
-		HideMenus();
+		ByStepHideMenus();
 		
 	});
 	$(document).on('touchmove', '#install_by_step_edit_map_svg .area_root', function(e) {
-    	HideMenus();
-		if (timerLongPress != null)
+    	ByStepHideMenus();
+		if (timerByStepLongPress != null)
 		{
-			clearTimeout(timerLongPress);
-			timerLongPress = null;
+			clearTimeout(timerByStepLongPress);
+			timerByStepLongPress = null;
 		}
-		if (timerVeryLongPress != null)
+		if (timerByStepVeryLongPress != null)
 		{
-			clearTimeout(timerVeryLongPress);
-			timerVeryLongPress = null;
+			clearTimeout(timerByStepVeryLongPress);
+			timerByStepVeryLongPress = null;
 		}
-		DisplayBlockZoom();
+		ByStepDisplayBlockZoom();
 	});
 	
 	
 	$(document).on('touchend', '#install_by_step_edit_map_svg .dock_elem', function(e) {
 		$('#zoom_popup').hide();
-		if (timerLongPress != null)
+		if (timerByStepLongPress != null)
 		{
-			clearTimeout(timerLongPress);
-			timerLongPress = null;
+			clearTimeout(timerByStepLongPress);
+			timerByStepLongPress = null;
 		}
-		if (timerVeryLongPress != null)
+		if (timerByStepVeryLongPress != null)
 		{
-			clearTimeout(timerVeryLongPress);
-			timerVeryLongPress = null;
+			clearTimeout(timerByStepVeryLongPress);
+			timerByStepVeryLongPress = null;
 		}
 	});
 	$(document).on('touchstart', '#install_by_step_edit_map_svg .dock_elem', function(e) {
-		if (timerLongPress != null)
+		if (timerByStepLongPress != null)
 		{
-			clearTimeout(timerLongPress);
-			timerLongPress = null;
+			clearTimeout(timerByStepLongPress);
+			timerByStepLongPress = null;
 		}
-		if (timerVeryLongPress != null)
+		if (timerByStepVeryLongPress != null)
 		{
-			clearTimeout(timerVeryLongPress);
-			timerVeryLongPress = null;
+			clearTimeout(timerByStepVeryLongPress);
+			timerByStepVeryLongPress = null;
 		}
 		
 		if (canChangeMenu)
 		{
-			timerLongPress = setTimeout(LongPressDock, 500);
-			//timerVeryLongPress = setTimeout(LongVeryPressSVG, 1500);
+			timerByStepLongPress = setTimeout(ByStepLongPressDock, 500);
+			//timerByStepVeryLongPress = setTimeout(ByStepLongVeryPressSVG, 1500);
 			eventTouchStart = e;
-			currentDockLongTouch = $(this);
+			currentDockByStepLongTouch = $(this);
 		}
-		DisplayBlockZoom();
+		ByStepDisplayBlockZoom();
 		
-		HideMenus();
+		ByStepHideMenus();
 		
 	});
 	$(document).on('touchmove', '#install_by_step_edit_map_svg .dock_elem', function(e) {
-    	HideMenus();
-		if (timerLongPress != null)
+    	ByStepHideMenus();
+		if (timerByStepLongPress != null)
 		{
-			clearTimeout(timerLongPress);
-			timerLongPress = null;
+			clearTimeout(timerByStepLongPress);
+			timerByStepLongPress = null;
 		}
-		if (timerVeryLongPress != null)
+		if (timerByStepVeryLongPress != null)
 		{
-			clearTimeout(timerVeryLongPress);
-			timerVeryLongPress = null;
+			clearTimeout(timerByStepVeryLongPress);
+			timerByStepVeryLongPress = null;
 		}
-		DisplayBlockZoom();
+		ByStepDisplayBlockZoom();
 	});
 	
 	$(document).on('touchend', '#install_by_step_edit_map_svg .poi_elem', function(e) {
 		$('#zoom_popup').hide();
-		if (timerLongPress != null)
+		if (timerByStepLongPress != null)
 		{
-			clearTimeout(timerLongPress);
-			timerLongPress = null;
+			clearTimeout(timerByStepLongPress);
+			timerByStepLongPress = null;
 		}
-		if (timerVeryLongPress != null)
+		if (timerByStepVeryLongPress != null)
 		{
-			clearTimeout(timerVeryLongPress);
-			timerVeryLongPress = null;
+			clearTimeout(timerByStepVeryLongPress);
+			timerByStepVeryLongPress = null;
 		}
 	});
 	$(document).on('touchstart', '#install_by_step_edit_map_svg .poi_elem', function(e) {
-		if (timerLongPress != null)
+		if (timerByStepLongPress != null)
 		{
-			clearTimeout(timerLongPress);
-			timerLongPress = null;
+			clearTimeout(timerByStepLongPress);
+			timerByStepLongPress = null;
 		}
-		if (timerVeryLongPress != null)
+		if (timerByStepVeryLongPress != null)
 		{
-			clearTimeout(timerVeryLongPress);
-			timerVeryLongPress = null;
+			clearTimeout(timerByStepVeryLongPress);
+			timerByStepVeryLongPress = null;
 		}
 		
 		if (canChangeMenu)
 		{
-			timerLongPress = setTimeout(LongPressPoi, 500);
-			//timerVeryLongPress = setTimeout(LongVeryPressSVG, 1500);
+			timerByStepLongPress = setTimeout(ByStepLongPressPoi, 500);
+			//timerByStepVeryLongPress = setTimeout(ByStepLongVeryPressSVG, 1500);
 			eventTouchStart = e;
-			currentPoiLongTouch = $(this);
+			currentPoiByStepLongTouch = $(this);
 		}
-		DisplayBlockZoom();
+		ByStepDisplayBlockZoom();
 		
-		HideMenus();
+		ByStepHideMenus();
 		
 	});
 	$(document).on('touchmove', '#install_by_step_edit_map_svg .poi_elem', function(e) {
-    	HideMenus();
-		if (timerLongPress != null)
+    	ByStepHideMenus();
+		if (timerByStepLongPress != null)
 		{
-			clearTimeout(timerLongPress);
-			timerLongPress = null;
+			clearTimeout(timerByStepLongPress);
+			timerByStepLongPress = null;
 		}
-		if (timerVeryLongPress != null)
+		if (timerByStepVeryLongPress != null)
 		{
-			clearTimeout(timerVeryLongPress);
-			timerVeryLongPress = null;
+			clearTimeout(timerByStepVeryLongPress);
+			timerByStepVeryLongPress = null;
 		}
-		DisplayBlockZoom();
+		ByStepDisplayBlockZoom();
 	});
 });
 
-function HideMenus()
+function ByStepHideMenus()
 {
 	$('#install_by_step_edit_map_menu li').hide();
 	$('#install_by_step_edit_map_menu_point li').hide();
@@ -589,7 +589,7 @@ function HideMenus()
 	$('.popupHelp').hide();
 }
 
-function DisplayMenu(id_menu)
+function ByStepDisplayMenu(id_menu)
 {
 	$('#'+id_menu+' li').hide();
 	$('#'+id_menu).show();
@@ -646,47 +646,47 @@ function DisplayMenu(id_menu)
 	}
 }
 
-function LongPressForbidden()
+function ByStepLongPressForbidden()
 {
-	timerLongPress = null;
-	DisplayMenu('install_by_step_edit_map_menu_forbidden');
+	timerByStepLongPress = null;
+	ByStepDisplayMenu('install_by_step_edit_map_menu_forbidden');
 }
-function LongPressArea()
+function ByStepLongPressArea()
 {
-	timerLongPress = null;
-	DisplayMenu('install_by_step_edit_map_menu_area');
+	timerByStepLongPress = null;
+	ByStepDisplayMenu('install_by_step_edit_map_menu_area');
 }
-function LongPressDock()
+function ByStepLongPressDock()
 {
-	timerLongPress = null;
-	DisplayMenu('install_by_step_edit_map_menu_dock');
+	timerByStepLongPress = null;
+	ByStepDisplayMenu('install_by_step_edit_map_menu_dock');
 }
-function LongPressPoi()
+function ByStepLongPressPoi()
 {
-	timerLongPress = null;
-	DisplayMenu('install_by_step_edit_map_menu_poi');
-}
-
-function LongPressPointDeletable()
-{
-	timerLongPress = null;
-	DisplayMenu('install_by_step_edit_map_menu_point');
+	timerByStepLongPress = null;
+	ByStepDisplayMenu('install_by_step_edit_map_menu_poi');
 }
 
-function LongVeryPressSVG()
+function ByStepLongPressPointDeletable()
 {
-	timerVeryLongPress = null;
+	timerByStepLongPress = null;
+	ByStepDisplayMenu('install_by_step_edit_map_menu_point');
+}
+
+function ByStepLongVeryPressSVG()
+{
+	timerByStepVeryLongPress = null;
 	
 	$('#install_by_step_edit_map_container_all .popupHelp').show(200);	
 }
 
-function LongPressSVG()
+function ByStepLongPressSVG()
 {
-	timerLongPress = null;
-	DisplayMenu('install_by_step_edit_map_menu');
+	timerByStepLongPress = null;
+	ByStepDisplayMenu('install_by_step_edit_map_menu');
 }
 
-function InitMap()
+function ByStepInitMap()
 {
 	var eventsHandler;
 

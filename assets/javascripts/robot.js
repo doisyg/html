@@ -214,7 +214,7 @@ function initStateRobot(etat)
 function InitRobotPose(pose)
 {
 	console.log(pose);
-	TraceRobot(pose.X, pose.Y, pose.T);
+	ByStepTraceRobot(pose.X, pose.Y, pose.T);
 	/*
 	x =  (pose.x - 0.25) * 100 / 5;
 	y = an_ros_hauteur - (pose.y + 0.25) * 100 / 5;
