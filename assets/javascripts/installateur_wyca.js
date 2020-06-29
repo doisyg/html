@@ -271,7 +271,7 @@ $(document).ready(function(e) {
 					window.location.href = window.location.href;
 			},
 			error: function(e) {
-				alert(e.responseText);
+				alert_wyca('Error set lang ; ' + e.responseText);
 			}
 		});
     });

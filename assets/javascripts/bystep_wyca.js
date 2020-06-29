@@ -21,7 +21,7 @@ $(document).ready(function(e) {
 					window.location.href = window.location.href;
 			},
 			error: function(e) {
-				alert(e.responseText);
+				alert_wyca('Error set lang ; ' + e.responseText);
 			}
 		});
     });
@@ -37,7 +37,7 @@ $(document).ready(function(e) {
 			success: function(data) {
 			},
 			error: function(e) {
-				alert(e.responseText);
+				alert_wyca('Error skip wifi ; ' + e.responseText);
 			}
 		});
     });
@@ -52,7 +52,7 @@ $(document).ready(function(e) {
 			success: function(data) {
 			},
 			error: function(e) {
-				alert(e.responseText);
+				alert_wyca('Error save date ; ' + e.responseText);
 			}
 		});
     });
@@ -124,7 +124,7 @@ $(document).ready(function(e) {
 					success: function(data) {
 					},
 					error: function(e) {
-						alert(e.responseText);
+						alert_wyca('Error save tops ; ' + e.responseText);
 					}
 				});
 				
@@ -154,7 +154,7 @@ $(document).ready(function(e) {
 			success: function(data) {
 			},
 			error: function(e) {
-				alert(e.responseText);
+				alert_wyca('Error set top ; ' + e.responseText);
 			}
 		});
 		
@@ -172,7 +172,7 @@ $(document).ready(function(e) {
 			success: function(data) {
 			},
 			error: function(e) {
-				alert(e.responseText);
+				alert_wyca('Error step check ; ' + e.responseText);
 			}
 		});
     });
@@ -197,7 +197,7 @@ $(document).ready(function(e) {
 						success: function(data) {
 						},
 						error: function(e) {
-							alert(e.responseText);
+							alert_wyca('Error step site ; ' + e.responseText);
 						}
 					});
 					$('#pages_install_by_step a.install_by_step_site_next').click();
@@ -216,7 +216,7 @@ $(document).ready(function(e) {
 		
 		if (navLaunched)
 		{
-			wycaApi.NavigationStop(function(r) { if (!r.success) alert(r.message);});
+			wycaApi.NavigationStop(function(data) { if (data.A != wycaApi.AnswerCode.NO_ERROR) alert_wyca('Error navigation stop ; ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M);});
 			
 			$('#install_by_step_mapping .progressStartMapping h3').html(textStopNavigation);
 			timerCreateMap = 10;
@@ -228,7 +228,8 @@ $(document).ready(function(e) {
 		{
 			if (!mappingLaunched)
 			{
-				wycaApi.MappingStart(function(r) { 
+				wycaApi.MappingStart(function(data) {
+					if (data.A != wycaApi.AnswerCode.NO_ERROR) { alert_wyca('Error mapping start ; ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M);} 
 					mappingStarted = true;
 				});
 				
@@ -308,7 +309,7 @@ $(document).ready(function(e) {
 		}
 		else
 		{
-			var canvasDessin = document.getElementById('canvas_result_trinary');
+			var canvasDessin = document.getElementById('install_by_step_mapping_canvas_result_trinary');
 		
 			$('#install_by_step_mapping_fin .bMappingCancelMap2').hide();
 			$('#install_by_step_mapping_fin .bMappingSaveMap').hide();
@@ -385,7 +386,7 @@ $(document).ready(function(e) {
 										
 										$('#install_by_step_mapping_fin .install_by_step_mapping_fin_next').click();
 										
-										InitMap();
+										ByStepInitMap();
 									  
 										var img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
 										img.src = "assets/images/vide.png";
@@ -404,14 +405,14 @@ $(document).ready(function(e) {
 									}
 									else
 									{
-										alert('Get map error : ' + wycaApi.AnswerCodeToString(data.A));
+										alert_wyca('Get map error : ' + wycaApi.AnswerCodeToString(data.A));
 									}		
 									
 								});
 							}
 							else
 							{
-								alert('Save map error : ' + wycaApi.AnswerCodeToString(data.A));
+								alert_wyca('Save map error : ' + wycaApi.AnswerCodeToString(data.A));
 							}							
 						});
 					}
@@ -423,7 +424,7 @@ $(document).ready(function(e) {
 					var img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
         			img.src = "assets/images/vide.png";
 					
-					alert(e.responseText);
+					alert_wyca('Error get map trinary ; ' + e.responseText);
 				}
 			});
 		}
@@ -444,19 +445,18 @@ $(document).ready(function(e) {
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
 				$('#install_by_step_mapping_use .modalUseThisMapNowContentDetails').html(textStartAutonomous);
-				wycaApi.NavigationStartFromMapping(function(r) {
-					if (!r.success) alert_wyca(r.message);
-					$('#install_by_step_mapping_use .install_by_step_mapping_use_next').click();
+				wycaApi.NavigationStartFromMapping(function(data) {
 					
-					console.log('TODO : Mettre à jour liste des maps !');
+					if (data.A != wycaApi.AnswerCode.NO_ERROR) { alert_wyca('Error navigation start ; ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M);} 
+					$('#install_by_step_mapping_use .install_by_step_mapping_use_next').click();
 				});
 			}
 			else
 			{
+				text = wycaApi.AnswerCodeToString(data.A);
 				if (data.M != '')
-					alert_wyca(data.M);
-				else
-					alert_wyca(wycaApi.AnswerCodeToString(data.A));
+					text += ' : ' + data.M;
+				alert_wyca(text);
 				
 				$('#install_by_step_mapping_use .bUseThisMapNowYes').show();
 				$('#install_by_step_mapping_use .bUseThisMapNowNo').show();
@@ -691,7 +691,7 @@ $(document).ready(function(e) {
 			success: function(data) {
 			},
 			error: function(e) {
-				alert(e.responseText);
+				alert_wyca('Error step finish ; ' + e.responseText);
 			}
 		});
     });
@@ -709,7 +709,7 @@ $(document).ready(function(e) {
 					success: function(data) {
 					},
 					error: function(e) {
-						alert(e.responseText);
+						alert_wyca('Error step finish ; ' + e.responseText);
 					}
 				});
 				$('#install_by_step_config .install_by_step_config_next').click();
@@ -844,7 +844,7 @@ $(document).ready(function(e) {
 			success: function(data) {
 			},
 			error: function(e) {
-				alert(e.responseText);
+				alert_wyca('Error step managers ; ' + e.responseText);
 			}
 		});
     });
@@ -908,7 +908,7 @@ $(document).ready(function(e) {
 			success: function(data) {
 			},
 			error: function(e) {
-				alert(e.responseText);
+				alert_wyca('Error step finish ; ' + e.responseText);
 			}
 		});
 		
@@ -1050,7 +1050,7 @@ function CalculateMapTrinaryDo()
 		}
 	}
 	
-	var canvasDessin = document.getElementById('canvas_result_trinary'),
+	var canvasDessin = document.getElementById('install_by_step_mapping_canvas_result_trinary'),
 	ctx = canvasDessin.getContext('2d');
 	
 	var idata = ctx.createImageData(width, height);

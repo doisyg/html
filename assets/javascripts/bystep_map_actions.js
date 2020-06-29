@@ -1399,7 +1399,7 @@ $(document).ready(function() {
 		indexDockElem++;
 		
 		$('.modalDockOptions .list_undock_procedure').append('' +
-			'<li id="install_by_step_edit_map_list_undock_procedure_elem_'+indexDockElem+'" data-index_dock="'+indexDockElem+'" data-action="move" data-distance="-0.3">'+
+			'<li id="install_by_step_edit_map_list_undock_procedure_elem_'+indexDockElem+'" data-index_dock_procedure="'+indexDockElem+'" data-action="move" data-distance="-0.3">'+
 			'	<span>Move back 0.3m</span>'+
 			'	<a href="#" class="bUndockProcedureDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
 			'	<a href="#" class="bUndockProcedureEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+

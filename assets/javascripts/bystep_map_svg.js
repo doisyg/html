@@ -691,7 +691,7 @@ function ExportSVG() {
 
 	var rawSVG = $("#install_by_step_edit_map_svg").outerHTML;;
 	
-	var myCanvas = document.getElementById("canvas_export_svg");
+	var myCanvas = document.getElementById("install_by_step_edit_map_canvas_export_svg");
     var ctxt = myCanvas.getContext("2d");
 
     var svgTemp = new Blob([rawSVG], {type:"image/svg+xml;charset=utf-8"}),
@@ -710,7 +710,7 @@ function ExportSVG() {
 
 function SaveImg()
 {
-	var myCanvas = document.getElementById("canvas_export_svg");
+	var myCanvas = document.getElementById("install_by_step_edit_map_canvas_export_svg");
 }
 
 function svg_to_png_data(target) {

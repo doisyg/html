@@ -115,7 +115,7 @@ function GetInfosCurrentMapDoByStep()
 		}
 		else
 		{
-			alert('Init map error : ' + wycaApi.AnswerCodeToString(data.A));
+			alert_wyca('Init map error : ' + wycaApi.AnswerCodeToString(data.A));
 		}
 	});
 }
@@ -195,7 +195,7 @@ function ByStepDisplayBlockZoom()
 		p_prime = p.cloneNode(true);
 		p_prime.id = "install_by_step_edit_map_svg_clone";
 		$('#zoom_popup_content').html('');
-		document.getElementById('zoom_popup_content').appendChild(p_prime);
+		document.getElementById('install_by_step_edit_map_zoom_popup_content').appendChild(p_prime);
 		
 		$('#install_by_step_edit_map_svg_clone').width(ros_largeur);
 		$('#install_by_step_edit_map_svg_clone').height(ros_hauteur);
