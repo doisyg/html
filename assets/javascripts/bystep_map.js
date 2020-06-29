@@ -14,7 +14,7 @@ function distance(x1, y1, x2, y2)
 }
 
 function diff(x, y) {
-	var centerItem = $('#robotDestination'),Fin
+	var centerItem = $('#install_by_step_edit_map_robotDestination'),Fin
 		centerLoc = centerItem.offset();
 	var dx = x - (centerLoc.left + (centerItem.width() / 2));
 		dy = y - (centerLoc.top + (centerItem.height() / 2));
@@ -194,7 +194,7 @@ function ByStepDisplayBlockZoom()
 		p = document.getElementById("install_by_step_edit_map_svg"); 
 		p_prime = p.cloneNode(true);
 		p_prime.id = "install_by_step_edit_map_svg_clone";
-		$('#zoom_popup_content').html('');
+		$('#install_by_step_edit_map_zoom_popup_content').html('');
 		document.getElementById('install_by_step_edit_map_zoom_popup_content').appendChild(p_prime);
 		
 		$('#install_by_step_edit_map_svg_clone').width(ros_largeur);
@@ -204,10 +204,10 @@ function ByStepDisplayBlockZoom()
 		x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
 		y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
 
-		zoom = ros_largeur / $('#svg').width() / window.panZoom.getZoom();
+		zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();
 		/*
-		$('#img_svg').css('left',(-x*zoom) * 10 + 50);
-		$('#img_svg').css('top', (-y*zoom) * 10 + 50);
+		$('#install_by_step_edit_map_img_svg').css('left',(-x*zoom) * 10 + 50);
+		$('#install_by_step_edit_map_img_svg').css('top', (-y*zoom) * 10 + 50);
 		*/
 		
 		$('#install_by_step_edit_map_svg_clone').css('left', -event.targetTouches[0].pageX + 50 + 2);
@@ -218,31 +218,31 @@ function ByStepDisplayBlockZoom()
 		t = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - 150;
 		if (t + 101 > $('body').height() - 20) t -= 100;
 		if (t < 20) t = 20;
-		$('#zoom_popup').css('left', l);
-		$('#zoom_popup').css('top', t);
-		$('#zoom_popup').show();
+		$('#install_by_step_edit_map_zoom_popup').css('left', l);
+		$('#install_by_step_edit_map_zoom_popup').css('top', t);
+		$('#install_by_step_edit_map_zoom_popup').show();
 		
 		/*
 		
-		$('#svg_copy').html($('#svg .svg-pan-zoom_viewport').html());
+		$('#install_by_step_edit_map_svg_copy').html($('#install_by_step_edit_map_svg .svg-pan-zoom_viewport').html());
 		
-		p = $('#svg image').position();
+		p = $('#install_by_step_edit_map_svg image').position();
 		x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
 		y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
 		
-		zoom = ros_largeur / $('#svg').width() / window.panZoom.getZoom();
+		zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();
 				
-		$('#svg_copy').css('left', -x*zoom + 50);
-		$('#svg_copy').css('top', -y*zoom + 50);
+		$('#install_by_step_edit_map_svg_copy').css('left', -x*zoom + 50);
+		$('#install_by_step_edit_map_svg_copy').css('top', -y*zoom + 50);
 		
-		$('#zoom_popup').css('left', (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) + 50);
-		$('#zoom_popup').css('top', (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - 150);
-		$('#zoom_popup').show();
+		$('#install_by_step_edit_map_zoom_popup').css('left', (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) + 50);
+		$('#install_by_step_edit_map_zoom_popup').css('top', (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - 150);
+		$('#install_by_step_edit_map_zoom_popup').show();
 		*/
 	}
 	else
 	{
-		$('#zoom_popup').hide();
+		$('#install_by_step_edit_map_zoom_popup').hide();
 	}
 }
 
@@ -261,7 +261,7 @@ $(document).ready(function(e) {
 		$(this).hide(200);
     });
 	$('#install_by_step_edit_map_svg').on('touchend', function(e) { 
-		$('#zoom_popup').hide();
+		$('#install_by_step_edit_map_zoom_popup').hide();
 		if (timerByStepLongPress != null)
 		{
 			clearTimeout(timerByStepLongPress);
@@ -314,7 +314,7 @@ $(document).ready(function(e) {
 	
 	
 	$(document).on('touchend', '#install_by_step_edit_map_svg .point_deletable', function(e) {
-		$('#zoom_popup').hide();
+		$('#install_by_step_edit_map_zoom_popup').hide();
 		if (timerByStepLongPress != null)
 		{
 			clearTimeout(timerByStepLongPress);
@@ -369,7 +369,7 @@ $(document).ready(function(e) {
 	
 	
 	$(document).on('touchend', '#install_by_step_edit_map_svg .forbidden_root', function(e) {
-		$('#zoom_popup').hide();
+		$('#install_by_step_edit_map_zoom_popup').hide();
 		if (timerByStepLongPress != null)
 		{
 			clearTimeout(timerByStepLongPress);
@@ -421,7 +421,7 @@ $(document).ready(function(e) {
 	});
 	
 	$(document).on('touchend', '#install_by_step_edit_map_svg .area_root', function(e) {
-		$('#zoom_popup').hide();
+		$('#install_by_step_edit_map_zoom_popup').hide();
 		if (timerByStepLongPress != null)
 		{
 			clearTimeout(timerByStepLongPress);
@@ -474,7 +474,7 @@ $(document).ready(function(e) {
 	
 	
 	$(document).on('touchend', '#install_by_step_edit_map_svg .dock_elem', function(e) {
-		$('#zoom_popup').hide();
+		$('#install_by_step_edit_map_zoom_popup').hide();
 		if (timerByStepLongPress != null)
 		{
 			clearTimeout(timerByStepLongPress);
@@ -526,7 +526,7 @@ $(document).ready(function(e) {
 	});
 	
 	$(document).on('touchend', '#install_by_step_edit_map_svg .poi_elem', function(e) {
-		$('#zoom_popup').hide();
+		$('#install_by_step_edit_map_zoom_popup').hide();
 		if (timerByStepLongPress != null)
 		{
 			clearTimeout(timerByStepLongPress);
