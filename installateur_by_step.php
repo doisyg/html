@@ -38,7 +38,7 @@
                 
                 <a href="#" class="refresh_wifi btn btn-default pull-left"><i class="fa fa-refresh"></i></a>
                 
-                <a href="#" class="skip_wifi button_goto btn btn-default pull-right" data-goto="install_by_step_date">Skip <i class="fa fa-chevron-right"></i></a>
+                <a href="#" class="skip_wifi button_goto btn btn-default pull-right" data-goto="install_by_step_tops">Skip <i class="fa fa-chevron-right"></i></a>
                 <a href="#" class="set_passwd_wifi button_goto" data-goto="install_by_step_wifi_password" style="display:none;"></a>
                 
             </div>

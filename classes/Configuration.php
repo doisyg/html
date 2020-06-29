@@ -26,12 +26,12 @@ class Configuration
 		}
 	}
 	
-	public function GetValue($name)
+	public static function GetValue($name)
 	{
 		return isset(self::$data[$name])?self::$data[$name]:'';		
 	}
 	
-	public function SetValue($name, $value)
+	public static function SetValue($name, $value)
 	{
 		self::$data[$name] = $value;
 		self::Save();	
