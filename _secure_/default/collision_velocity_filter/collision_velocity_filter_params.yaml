@@ -1,0 +1,12 @@
+footprint_update_frequency: 0.1
+pot_ctrl_vmax: 0.4
+pot_ctrl_vtheta_max: 0.4
+pot_ctrl_kv: 1.0
+pot_ctrl_kp: 2.0
+pot_ctrl_virt_mass: 0.8
+influence_radius: 2.0
+obstacle_damping_dist: 1.5
+stop_threshold: 0.0
+use_circumscribed_threshold: 0.2
+costmap_obstacle_treshold: 100
+is_robot_circular: true
