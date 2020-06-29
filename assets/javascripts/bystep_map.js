@@ -210,8 +210,49 @@ function ByStepDisplayBlockZoom()
 		$('#install_by_step_edit_map_img_svg').css('top', (-y*zoom) * 10 + 50);
 		*/
 		
-		$('#install_by_step_edit_map_svg_clone').css('left', -event.targetTouches[0].pageX + 50 + 2);
-		$('#install_by_step_edit_map_svg_clone').css('top', -event.targetTouches[0].pageY + 50 + $('#install_by_step_edit_map_container_all').position().top + 23);
+		//$('#install_by_step_edit_map_svg_clone').css('left', -event.targetTouches[0].pageX + 50 + 2);
+		//$('#install_by_step_edit_map_svg_clone').css('top', -event.targetTouches[0].pageY + 50 + $('#install_by_step_edit_map_container_all').position().top + 23);
+		
+		//x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX);
+		//y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY);
+		
+		z = window.panZoom.getZoom();
+		x = -x + 50 + 2; // * z;
+		y = -y + 50 + 2; // * z;
+		
+		var obj = $('#install_by_step_edit_map_svg_clone g');
+		obj.attr('id', 'install_by_step_edit_map_svg_clone_g');
+		 var transformMatrix = obj.css("-webkit-transform") ||
+		   obj.css("-moz-transform")    ||
+		   obj.css("-ms-transform")     ||
+		   obj.css("-o-transform")      ||
+		   obj.css("transform");
+		 var matrix = transformMatrix.replace(/[^0-9\-.,]/g, '').split(',');
+		
+		s =
+			"matrix(" +
+			matrix[0] +
+			"," +
+			matrix[1] +
+			"," +
+			matrix[2] +
+			"," +
+			matrix[3] +
+			"," +
+			x +
+			"," +
+			y +
+			")";
+	
+		element = document.getElementById('install_by_step_edit_map_svg_clone_g');
+		element.setAttributeNS(null, "transform", s);
+		if ("transform" in element.style) {
+		  element.style.transform = s;
+		} else if ("-ms-transform" in element.style) {
+		  element.style["-ms-transform"] = s;
+		} else if ("-webkit-transform" in element.style) {
+		  element.style["-webkit-transform"] = s;
+		}
 		
 		l = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) + 50;
 		if (l + 101 > $('#install_by_step_edit_map_container_all').width() - 20) l -= 200;
