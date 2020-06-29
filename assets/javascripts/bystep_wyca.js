@@ -560,7 +560,7 @@ $(document).ready(function(e) {
 			{
 				
 				// On reload la carte pour mettre à jours les ids
-				GetInfosCurrentMap();
+				GetInfosCurrentMapByStep();
 				/*
 				if (navLaunched && id_map == current_id_map)
 				{

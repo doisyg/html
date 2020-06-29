@@ -696,21 +696,6 @@
                                                     <div style="text-align:left;">
                                                         <a href="#" class="bUndockProcedureAddElem btn btn-circle btn-default"><i class="fa fa-plus"></i></a>
                                                         <ul class="list_undock_procedure list_elem">
-                                                            <li id="install_by_step_edit_map_list_undock_procedure_elem_1" data-index_dock="1" data-action="move" data-distance="-0.3">
-                                                            	Move back 0.3m
-                                                                <a href="#" class="bUndockProcedureDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>
-                                                                <a href="#" class="bUndockProcedureEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>
-                                                            </li>
-                                                            <li id="install_by_step_edit_map_list_undock_procedure_elem_2" data-index_dock="2" data-action="rotate" data-angle="45">
-                                                            	Rotate 45°
-                                                                <a href="#" class="bUndockProcedureDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>
-                                                                <a href="#" class="bUndockProcedureEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>
-                                                            </li>
-                                                            <li id="install_by_step_edit_map_list_undock_procedure_elem_3" data-index_dock="3" data-action="move" data-distance="0.1">
-                                                            	Move front 0.1m
-                                                                <a href="#" class="bUndockProcedureDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>
-                                                                <a href="#" class="bUndockProcedureEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>
-                                                            </li>
                                                         </ul>
                                                      </div>
                                                 </fieldset>
@@ -871,11 +856,6 @@
                                                     <div style="text-align:left;">
                                                         <a href="#" class="bUndockProcedurePoiAddElem btn btn-circle btn-default"><i class="fa fa-plus"></i></a>
                                                         <ul class="list_undock_procedure_poi list_elem">
-                                                            <li id="install_by_step_edit_map_list_undock_procedure_poi_elem_1" data-index_poi="1" data-action="move" data-distance="-0.3">
-                                                            	Move back 0.3m
-                                                                <a href="#" class="bUndockProcedurePoiDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>
-                                                                <a href="#" class="bUndockProcedurePoiEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>
-                                                            </li>
                                                         </ul>
                                                      </div>
                                                 </fieldset>
