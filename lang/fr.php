@@ -110,5 +110,13 @@ $_LANG['0be8406951cdfda82f00f79328cf4efc'] = 'Comment';
 $_LANG['707912d1ef743f320e98807cddbefc20'] = 'Close installation';
 $_LANG['0eb820cbe0beb3ac65058d3aee5a1662'] = 'Congratulations !';
 $_LANG['a0bfb8e59e6c13fc8d990781f77694fe'] = 'Continue';
+$_LANG['f9aae5fda8d810a29f12d1e61b4ab25f'] = 'Users';
+$_LANG['d8afbc541b39d23648c823057cffe3a5'] = 'Recovery';
+$_LANG['5f41670a7460d03dca5911ff21c912de'] = 'Comming soon';
+$_LANG['46f3ea056caa3126b91f3f70beea068c'] = 'Map';
+$_LANG['0f96070b3a86cb9028f6f8d278dadb25'] = 'Change top';
+$_LANG['11087d84f70335d1fec3aa9e72c8b1d5'] = 'Tops';
+$_LANG['6bdade84aea01b81c7a914e866e4603a'] = 'Seclect active top';
+$_LANG['271535966b6ca5b894deb92d2a14b581'] = 'Set active top';
 
 ?>

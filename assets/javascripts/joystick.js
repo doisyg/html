@@ -20,16 +20,27 @@ var intervalSendCommande = null;
 
 $(document).ready(function(e) {
     
+	haveJoystick = false;
 	if ($('.joystickDiv:visible').length > 0)
+	{
 		offset = $('.joystickDiv:visible').offset()
-	else
+		haveJoystick = true;
+	}
+	else if ($('.joystickDiv').length > 0)
+	{
 		offset = $('.joystickDiv').offset()
-	marginLeft = offset.left;
-	marginTop = offset.top;
-	xCentre = 112 + marginLeft;
-	yCentre = 112 + marginTop; 
+		haveJoystick = true;
+	}
 	
-	SetCurseurV2(xCentre, yCentre);
+	if (haveJoystick)
+	{
+		marginLeft = offset.left;
+		marginTop = offset.top;
+		xCentre = 112 + marginLeft;
+		yCentre = 112 + marginTop; 
+		
+		SetCurseurV2(xCentre, yCentre);
+	}
 		
 	$('.joystickDiv .curseur').mousedown(function(e){
 		e.preventDefault();

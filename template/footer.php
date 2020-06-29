@@ -14,8 +14,8 @@
         
         <script>
 		var lang = '<?php echo $currentLang->iso;?>';
-		//var robot_host = '<?php echo (file_exists('C:\\'))?'192.168.0.30:9095':'elodie.wyca-solutions.com:9095';?>';
-		var robot_host = '<?php echo (file_exists('C:\\'))?'10.0.0.44:9095':'elodie.wyca-solutions.com:9095';?>';
+		var robot_host = '<?php echo (file_exists('C:\\'))?'192.168.0.30:9095':'elodie.wyca-solutions.com:9095';?>';
+		//var robot_host = '<?php echo (file_exists('C:\\'))?'10.0.0.44:9095':'elodie.wyca-solutions.com:9095';?>';
 		var user_api_key = '<?php echo $_SESSION["api_key"];?>';
 		// TODO var id_map_last = <?php // echo $currentIdMap;?>;
 		var textSelectOnOrMoreTops = "<?php echo addslashes(stripslashes(__('You must select one or more tops')));?>";
@@ -40,39 +40,41 @@
         <script src="<?php echo $_CONFIG['URL'];?>assets/vendor/svg-pan-zoom/svg-pan-zoom.js"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/svg-pan-zoom/hammer.js"></script>
 
-		<?php $lastUpdate = '20200312';?>
+		<?php $lastUpdate = '20200625';?>
 
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/plugins.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/joystick.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/robot.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/wyca.js?v=<?php echo $lastUpdate;?>"></script>
-		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/map.js?v=<?php echo $lastUpdate;?>"></script>
-		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/map_actions.js?v=<?php echo $lastUpdate;?>"></script>
-		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/map_svg.js?v=<?php echo $lastUpdate;?>"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/bystep_wyca.js?v=<?php echo $lastUpdate;?>"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/bystep_map.js?v=<?php echo $lastUpdate;?>"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/bystep_map_actions.js?v=<?php echo $lastUpdate;?>"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/bystep_map_svg.js?v=<?php echo $lastUpdate;?>"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/installateur_wyca.js?v=<?php echo $lastUpdate;?>"></script>
         
         <script>
 		$(document).ready(function(e) {
 			
             <?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 1) {?>
-			InitInstallWifiPage();
+			InitInstallWifiPageByStep();
 			<?php }?>
             <?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 3) {?>
-			InitTops();
+			InitTopsByStep();
 			<?php }?>
             <?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 4) {?>
-			InitTopsActive();
+			InitTopsActiveByStep();
 			<?php }?>
 			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 8) {?>
-			GetInfosCurrentMap();
+			GetInfosCurrentMapByStep();
 			<?php }?>
 			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 9) {?>
-			GetConfigurations();
+			GetConfigurationsByStep();
 			<?php }?>
 			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 10) {?>
-			GetManagers();
+			GetManagersByStep();
 			<?php }?>
 			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 11) {?>
-			GetServiceBooks();
+			GetServiceBooksByStep();
 			<?php }?>
         });
 		</script>

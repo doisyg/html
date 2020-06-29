@@ -235,6 +235,10 @@ function WycaAPI(options){
 		DOCK_RESULT			: 0x0004,
 		UNDOCK_FEEDBACK			: 0x0013,
 		UNDOCK_RESULT			: 0x0014,
+		SET_ACTIVE_TOP_FEEDBACK			: 0x6001,
+		SET_ACTIVE_TOP_RESULT			: 0x6002,
+		INSTALL_NEW_TOP_FEEDBACK		: 0x1001,
+		INSTALL_NEW_TOP_RESULT			: 0x1002,
 	 
 	};
 
@@ -697,6 +701,10 @@ function WycaAPI(options){
 								case _this.EventCode.DOCK_RECOVERY_RESULT:
 								case _this.EventCode.RECOVERY_FROM_FIDUCIAL_FEEDBACK:
 								case _this.EventCode.RECOVERY_FROM_FIDUCIAL_RESULT:
+								case _this.EventCode.SET_ACTIVE_TOP_FEEDBACK:
+								case _this.EventCode.SET_ACTIVE_TOP_RESULT:
+								case _this.EventCode.INSTALL_NEW_TOP_FEEDBACK:
+								case _this.EventCode.INSTALL_NEW_TOP_RESULT:
 									doTransfert = false;
 									break;
 							}
@@ -743,6 +751,16 @@ function WycaAPI(options){
 						{
 							_this.subscribeOnWebrtc[_this.EventCode.RECOVERY_FROM_FIDUCIAL_FEEDBACK] = 'subscribed';
 							_this.subscribeOnWebrtc[_this.EventCode.RECOVERY_FROM_FIDUCIAL_RESULT] = 'subscribed';
+						}
+						if (json.O == _this.CommandCode.SET_ACTIVE_TOP)
+						{
+							_this.subscribeOnWebrtc[_this.EventCode.SET_ACTIVE_TOP_FEEDBACK] = 'subscribed';
+							_this.subscribeOnWebrtc[_this.EventCode.SET_ACTIVE_TOP_RESULT] = 'subscribed';
+						}
+						if (json.O == _this.CommandCode.INSTALL_NEW_TOP)
+						{
+							_this.subscribeOnWebrtc[_this.EventCode.INSTALL_NEW_TOP_FEEDBACK] = 'subscribed';
+							_this.subscribeOnWebrtc[_this.EventCode.INSTALL_NEW_TOP_RESULT] = 'subscribed';
 						}
 												
 						// On transfère au robot
@@ -1108,6 +1126,18 @@ function WycaAPI(options){
 				case this.EventCode.UNDOCK_RESULT:
 					if (_this.options.onUndockResult != undefined) { delete msg.E; _this.options.onUndockResult(msg); }
 					break;
+				case _this.EventCode.SET_ACTIVE_TOP_FEEDBACK:
+					if (_this.options.onSetActiveTopFeedback != undefined) { delete msg.E; _this.options.onSetActiveTopFeedback(msg); }
+					break;
+				case _this.EventCode.SET_ACTIVE_TOP_RESULT:
+					if (_this.options.onSetActiveTopResult != undefined) { delete msg.E; _this.options.onSetActiveTopResult(msg); }
+					break;
+				case _this.EventCode.INSTALL_NEW_TOP_FEEDBACK:
+					if (_this.options.onInstallNewTopFeedback != undefined) { delete msg.E; _this.options.onInstallNewTopFeedback(msg); }
+					break;
+				case _this.EventCode.INSTALL_NEW_TOP_RESULT:
+					if (_this.options.onInstallNewTopResult != undefined) { delete msg.E; _this.options.onInstallNewTopResult(msg); }
+					break;
 				case this.EventCode.MAPPING_START_FEEDBACK:
 					if (_this.options.onMappingStartFeedback != undefined) { delete msg.E; _this.options.onMappingStartFeedback(msg); }
 					break;
@@ -1358,6 +1388,10 @@ function WycaAPI(options){
 				case 'onDockRecoveryResult': ev_code = _this.EventCode.DOCK_RECOVERY_RESULT; break;
 				case 'onRecoveryFromFiducialFeedback': ev_code = _this.EventCode.RECOVERY_FROM_FIDUCIAL_FEEDBACK; break;
 				case 'onRecoveryFromFiducialResult': ev_code = _this.EventCode.RECOVERY_FROM_FIDUCIAL_RESULT; break;
+				case 'onSetActiveTopFeedback': ev_code = _this.EventCode.SET_ACTIVE_TOP_FEEDBACK; break;
+				case 'onSetActiveTopResult': ev_code = _this.EventCode.SET_ACTIVE_TOP_RESULT; break;
+				case 'onInstallNewTopFeedback': ev_code = _this.EventCode.INSTALL_NEW_TOP_FEEDBACK; break;
+				case 'onInstallNewTopResult': ev_code = _this.EventCode.INSTALL_NEW_TOP_RESULT; break;
 			}
 		}
 		
@@ -1419,6 +1453,10 @@ function WycaAPI(options){
 				case 'onDockRecoveryResult': ev_code = _this.EventCode.DOCK_RECOVERY_RESULT; break;
 				case 'onRecoveryFromFiducialFeedback': ev_code = _this.EventCode.RECOVERY_FROM_FIDUCIAL_FEEDBACK; break;
 				case 'onRecoveryFromFiducialResult': ev_code = _this.EventCode.RECOVERY_FROM_FIDUCIAL_RESULT; break;
+				case 'onSetActiveTopFeedback': ev_code = _this.EventCode.SET_ACTIVE_TOP_FEEDBACK; break;
+				case 'onSetActiveTopResult': ev_code = _this.EventCode.SET_ACTIVE_TOP_RESULT; break;
+				case 'onInstallNewTopFeedback': ev_code = _this.EventCode.INSTALL_NEW_TOP_FEEDBACK; break;
+				case 'onInstallNewTopResult': ev_code = _this.EventCode.INSTALL_NEW_TOP_RESULT; break;
 			}
 		}
 		

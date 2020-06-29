@@ -55,19 +55,19 @@ var pois = Array();
 var blockZoom = false;
 var gotoTest = false;
 
-function GetInfosCurrentMap()
+function GetInfosCurrentMapByStep()
 {
 	if (wycaApi.websocketAuthed)
 	{
-		GetInfosCurrentMapDo();
+		GetInfosCurrentMapDoByStep();
 	}
 	else
 	{
-		setTimeout(GetInfosCurrentMap, 500);
+		setTimeout(GetInfosCurrentMapByStep, 500);
 	}
 }
 
-function GetInfosCurrentMapDo()
+function GetInfosCurrentMapDoByStep()
 {
 	wycaApi.GetCurrentMapComplete(function(data) {
 		if (data.A == wycaApi.AnswerCode.NO_ERROR)
