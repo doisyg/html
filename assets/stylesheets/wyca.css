@@ -382,3 +382,62 @@ ul.list_test li.done { color:#006600; border-color:#006600; }
 .list_service_books li .comment { white-space: pre; }
 
 .list_service_books .date { float:right; }
+
+
+.mh100vh {
+	min-height: 100vh;
+  	min-height: calc(var(--vh, 1vh) * 100);
+	padding:1px;
+}
+
+.mh100vh_55 {
+	min-height: calc(100vh - 55px);
+  	min-height: calc(var(--vh, 1vh) * 100 - 55px);
+	padding:1px;
+}
+
+.mh100vh_100 {
+	min-height: calc(100vh - 100px);
+  	min-height: calc(var(--vh, 1vh) * 100 - 100px);
+	padding:1px;
+}
+
+.mh100vh_110 {
+	min-height: calc(100vh - 110px);
+  	min-height: calc(var(--vh, 1vh) * 100 - 110px);
+	padding:1px;
+}
+.mh100vh_160 {
+	min-height: calc(100vh - 160px);
+  	min-height: calc(var(--vh, 1vh) * 100 - 160px);
+	padding:1px;
+}
+
+.h100vh {
+	height: 100vh;
+  	height: calc(var(--vh, 1vh) * 100);
+	padding:1px;
+}
+
+.h100vh_55 {
+	height: calc(100vh - 55px);
+  	height: calc(var(--vh, 1vh) * 100 - 55px);
+	padding:1px;
+}
+
+.h100vh_100 {
+	height: calc(100vh - 100px);
+  	height: calc(var(--vh, 1vh) * 100 - 100px);
+	padding:1px;
+}
+
+.h100vh_110 {
+	height: calc(100vh - 110px);
+  	height: calc(var(--vh, 1vh) * 100 - 110px);
+	padding:1px;
+}
+.h100vh_160 {
+	height: calc(100vh - 160px);
+  	height: calc(var(--vh, 1vh) * 100 - 160px);
+	padding:1px;
+}
