@@ -558,6 +558,7 @@ $(document).ready(function(e) {
 		wycaApi.SetCurrentMapData(data, function(data){
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
+				success_wyca("Map saved !");
 				
 				// On reload la carte pour mettre à jours les ids
 				GetInfosCurrentMapByStep();

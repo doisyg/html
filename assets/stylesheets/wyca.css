@@ -441,3 +441,6 @@ ul.list_test li.done { color:#006600; border-color:#006600; }
   	height: calc(var(--vh, 1vh) * 100 - 160px);
 	padding:1px;
 }
+
+
+.colorpicker.colorpicker-visible { z-index:10000; }

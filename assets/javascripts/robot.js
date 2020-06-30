@@ -88,9 +88,12 @@ $(document).ready(function(e) {
             InitPosCarteMapping();
 		},
         onMappingMapInConstruction: function(data){
-            var img = document.getElementById("install_by_step_mapping_img_map_saved");
-            img.src = 'data:image/png;base64,' + data.M;
-            mappingLastOrigin = {'x':parseFloat(data.X), 'y':parseFloat(data.Y) };
+			if (data.M != undefined)
+			{
+				var img = document.getElementById("install_by_step_mapping_img_map_saved");
+				img.src = 'data:image/png;base64,' + data.M;
+				mappingLastOrigin = {'x':parseFloat(data.X), 'y':parseFloat(data.Y) };
+			}
         },
 		onDockingState: function(data){
             if (dockingStateLast != data)
@@ -213,21 +216,7 @@ function initStateRobot(etat)
 
 function InitRobotPose(pose)
 {
-	console.log(pose);
 	ByStepTraceRobot(pose.X, pose.Y, pose.T);
-	/*
-	x =  (pose.x - 0.25) * 100 / 5;
-	y = an_ros_hauteur - (pose.y + 0.25) * 100 / 5;
-	
-	x2 =  (pose.x) * 100 / 5;
-	y2 = an_ros_hauteur - (pose.y) * 100 / 5;
-	
-	
-	$('#an_robot').attr('x', x);
-	$('#an_robot').attr('y', y);
-	$('#an_robot').attr('transform', 'rotate('+(180 - pose.theta *  180 / Math.PI - 90) +', '+x2+', '+y2+')');
-	*/
-	
 }
 
 function InitPosCarteMapping()
