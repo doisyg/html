@@ -204,7 +204,8 @@ function ByStepDisplayBlockZoom()
 		x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
 		y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
 
-		zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();
+		//zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();
+		zoom = ByStepGetZoom();	
 		/*
 		$('#install_by_step_edit_map_img_svg').css('left',(-x*zoom) * 10 + 50);
 		$('#install_by_step_edit_map_img_svg').css('top', (-y*zoom) * 10 + 50);
@@ -271,7 +272,8 @@ function ByStepDisplayBlockZoom()
 		x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
 		y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
 		
-		zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();
+		//zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();
+		zoom = ByStepGetZoom();
 				
 		$('#install_by_step_edit_map_svg_copy').css('left', -x*zoom + 50);
 		$('#install_by_step_edit_map_svg_copy').css('top', -y*zoom + 50);

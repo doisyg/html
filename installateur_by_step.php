@@ -375,9 +375,13 @@
                         <div style="clear:both;"></div>
                     </div>
                     
+                    <a href="#" id="install_by_step_edit_map_bStop" class="btn btn-circle btn-danger btn-lg"><i class="fa fa-stop"></i></a>
                     <a href="#" id="install_by_step_edit_map_bEndGomme" class="btn btn-circle btn-primary btn-lg"><i class="fa fa-check"></i></a>
                     <a href="#" id="install_by_step_edit_map_bSaveCurrentElem" class="btn btn-circle btn-primary btn-lg"><i class="fa fa-check"></i></a>
                     <a href="#" id="install_by_step_edit_map_bCancelCurrentElem" class="btn btn-circle btn-warning btn-lg"><i class="fa fa-times"></i></a>
+                    
+                    <a href="#" id="install_by_step_edit_map_bUndo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:40px; left:10px;"><i class="fa fa-mail-reply"></i></a>
+                    <a href="#" id="install_by_step_edit_map_bRedo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:40px; left:45px;"><i class="fa fa-mail-forward"></i></a>
                     
                     <div id="install_by_step_edit_map_menu" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
@@ -427,7 +431,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <div class="actions mh100vh_55">
-                                        <div class="h100vh_160" style="overflow:auto">
+                                        <div class="h100vh_160" style="overflow:auto; text-align:center;">
                                             
                                             <div style="height:60px;"></div>
                                             
@@ -496,9 +500,9 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <div class="actions mh100vh_55">
-                                        <div class="h100vh_160" style="overflow:auto">
+                                        <div class="h100vh_160" style="overflow:auto; text-align:center">
                                             
-                                            <h2>Remember to save the map before launching a test</h2>
+                                            <h3 style="color:#F90; padding-bottom:20px;">Remember to save the map before launching a test</h3>
                                             
                                             <a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
                                         
@@ -529,9 +533,9 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <div class="actions mh100vh_55">
-                                        <div class="h100vh_160" style="overflow:auto">
+                                        <div class="h100vh_160" style="overflow:auto; text-align:center">
                                             
-                                            <h2>Remember to save the map before launching a test</h2>
+                                            <h3 style="color:#F90; padding-bottom:20px;">Remember to save the map before launching a test</h3>
                                             
                                             <a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
                                         

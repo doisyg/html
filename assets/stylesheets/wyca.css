@@ -140,7 +140,7 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 .popupHelp ul li;first-child { border-top:1px solid #EEEEEE; }
 .popupHelp ul li i { font-size:24px; min-width:40px; }
 
-#install_by_step_edit_map_bEndGomme, #install_by_step_edit_map_bSaveCurrentElem { position:absolute; top:10px; left:10px; padding:0; display:none; }
+#install_by_step_edit_map_bEndGomme, #install_by_step_edit_map_bSaveCurrentElem, #install_by_step_edit_map_bStop { position:absolute; top:10px; left:10px; padding:0; display:none; }
 #install_by_step_edit_map_bCancelCurrentElem { position:absolute; top:10px; left:80px; padding:0; display:none; }
 
 .h100vh_160 { height:calc(100vh - 60px); height: calc(var(--vh, 1vh) * 100 - 60px); }

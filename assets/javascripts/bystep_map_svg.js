@@ -15,6 +15,25 @@ function InitSVG()
 {
 }
 
+function ByStepGetZoom()
+{
+	var obj = $('#install_by_step_edit_map_svg g');
+	obj.attr('id', 'install_by_step_edit_map_svg_g');
+	 var transformMatrix = obj.css("-webkit-transform") ||
+	   obj.css("-moz-transform")    ||
+	   obj.css("-ms-transform")     ||
+	   obj.css("-o-transform")      ||
+	   obj.css("transform");
+	   
+	 if (transformMatrix == undefined)
+	 	return  ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom()
+	 
+	 var matrix = transformMatrix.replace(/[^0-9\-.,]/g, '').split(',');
+	 
+	 
+	 return 1 / parseFloat(matrix[0]);
+}
+
 function ByStepTraceSection(x1, y1, x2, y2)
 {
 	$('#install_by_step_edit_map_svg .selection').remove();
@@ -46,7 +65,6 @@ function ByStepTraceCurrentGomme(points, index)
 			
 			x = (point.x * 100 / ros_resolution);
 			y = ros_hauteur - ((point.y * 100 / ros_resolution));
-			
 			gomme_point += x+','+y;
 		});
 		

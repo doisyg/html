@@ -103,13 +103,17 @@ $(document).ready(function(e) {
 			}
 		},
 		onGoToPoiResult: onGoToPoiResult,
-		onGoToChargeResult: onGoToChargeResult
+		onGoToChargeResult: onGoToChargeResult,
+		onGoToPoseResult: onGoToPoseResult,
 	});
 	
 	
 	wycaApi.init();	
 });
 
+function onGoToPoseResult(data)
+{
+}
 function onGoToPoiResult(data)
 {
 }

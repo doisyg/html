@@ -334,6 +334,12 @@ $(document).ready(function() {
 		
     });
 	
+	$('#install_by_step_edit_map #install_by_step_edit_map_bStop').click(function(e) {
+        e.preventDefault();
+		
+		wycaApi.StopMove();	
+    });
+	
 	$('#install_by_step_edit_map #install_by_step_edit_map_bSaveCurrentElem').click(function(e) {
         e.preventDefault();
 		
@@ -388,8 +394,16 @@ $(document).ready(function() {
 			touchStarted = true;
 			downOnMovable = true;
 			movableDown = $(this);
-			downOnSVG_x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX);
-			downOnSVG_y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY);
+			//downOnSVG_x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX);
+			//downOnSVG_y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY);
+			downOnSVG_x = parseFloat($(this).attr('x')) + parseFloat($(this).attr('width'))/2;
+			downOnSVG_y = parseFloat($(this).attr('y')) + parseFloat($(this).attr('height'))/2;
+			
+			p = $('#install_by_step_edit_map_svg image').position();
+			zoom = ByStepGetZoom();
+			
+			downOnSVG_x = downOnSVG_x / zoom + p.left;
+			downOnSVG_y = downOnSVG_y / zoom + p.top;
 			
 			SaveElementNeeded(true);
 			
@@ -399,7 +413,8 @@ $(document).ready(function() {
 	
 	
 	$(document).on('touchstart', '#install_by_step_edit_map_svg .secable', function(e) {
-		if (currentAction == 'editForbiddenArea')
+		zoom = ByStepGetZoom();
+		if (currentAction == 'editForbiddenArea' || currentAction == 'addForbiddenArea')
 		{
 			p = $('#install_by_step_edit_map_svg image').position();
 			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[e.changedTouches.length-1].pageX) - p.left;
@@ -417,7 +432,7 @@ $(document).ready(function() {
 			forbiddens[currentForbiddenIndex].points.splice($(this).data('index_point'), 0, {x:xRos, y:yRos});
 			ByStepTraceForbidden(currentForbiddenIndex);
 		}
-		else if (currentAction == 'editArea')
+		else if (currentAction == 'editArea' || currentAction == 'addArea')
 		{
 			p = $('#install_by_step_edit_map_svg image').position();
 			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[e.changedTouches.length-1].pageX) - p.left;
@@ -573,7 +588,7 @@ $(document).ready(function() {
 		ByStepHideMenus();
 		
 		wycaApi.on('onGoToChargeResult', function (data){
-			
+			$('#install_by_step_edit_map_bStop').hide();
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
 				$('#install_by_step_edit_map .modalFinTest section.panel-success').show();
@@ -599,6 +614,7 @@ $(document).ready(function() {
 			
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
+				$('#install_by_step_edit_map_bStop').show();
 			}
 			else
 			{
@@ -681,7 +697,7 @@ $(document).ready(function() {
 		ByStepHideMenus();
 		
 		wycaApi.on('onGoToPoiResult', function (data){
-			
+			$('#install_by_step_edit_map_bStop').hide();
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
 				$('#install_by_step_edit_map .modalFinTest section.panel-success').show();
@@ -708,6 +724,7 @@ $(document).ready(function() {
 			
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
+				$('#install_by_step_edit_map_bStop').show();
 			}
 			else
 			{
@@ -776,7 +793,8 @@ $(document).ready(function() {
 			x = e.offsetX - wZoom / 2;
 			y = e.offsetY - hZoom / 2;
 					
-			zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();
+			//zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();
+			zoom = ByStepGetZoom();
 			
 			largeur_img = ros_largeur / zoom
 			
@@ -799,7 +817,8 @@ $(document).ready(function() {
 		x = e.offsetX - wZoom / 2;
 		y = e.offsetY - hZoom / 2;
 				
-		zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();
+		//zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();
+		zoom = ByStepGetZoom();
 		
 		largeur_img = ros_largeur / zoom
 		
@@ -827,7 +846,8 @@ $(document).ready(function() {
 		x = x - wZoom / 2;
 		y = y - hZoom / 2;
 				
-		zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();
+		//zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();
+		zoom = ByStepGetZoom();
 		
 		largeur_img = ros_largeur / zoom
 		
@@ -859,7 +879,8 @@ $(document).ready(function() {
 			x = x - wZoom / 2;
 			y = y - hZoom / 2;
 					
-			zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();
+			//zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();
+			zoom = ByStepGetZoom();
 			
 			largeur_img = ros_largeur / zoom
 			
@@ -1043,10 +1064,70 @@ $(document).ready(function() {
 	/**************************/
 	/*  Click on element      */
 	/**************************/
-	bMoveTo
 	$('#install_by_step_edit_map_menu .bMoveTo').click(function(e) {
         e.preventDefault();
-		alert('A faire');
+		
+		ByStepHideMenus();
+		
+		zoom = ByStepGetZoom();
+		p = $('#install_by_step_edit_map_svg image').position();
+		x = (eventTouchStart.originalEvent.targetTouches[0] ? eventTouchStart.originalEvent.targetTouches[0].pageX : eventTouchStart.originalEvent.changedTouches[e.changedTouches.length-1].pageX) - p.left;
+		y = (eventTouchStart.originalEvent.targetTouches[0] ? eventTouchStart.originalEvent.targetTouches[0].pageY : eventTouchStart.originalEvent.changedTouches[e.changedTouches.length-1].pageY) - p.top;
+		x = x * zoom;
+		y = ros_hauteur - (y * zoom);
+		
+		xRos = x * ros_resolution / 100;
+		yRos = y * ros_resolution / 100;
+		
+		wycaApi.on('onGoToPoseResult', function (data){
+			$('#install_by_step_edit_map_bStop').hide();
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$('#install_by_step_edit_map .modalFinTest section.panel-success').show();
+				$('#install_by_step_edit_map .modalFinTest section.panel-danger').hide();
+			}
+			else
+			{
+				$('#install_by_step_edit_map .modalFinTest section.panel-success').hide();
+				$('#install_by_step_edit_map .modalFinTest section.panel-danger').show();
+				
+				if (data.M != '')
+					$('#install_by_step_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+				else
+					$('#install_by_step_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
+			}
+			
+			// On rebranche l'ancienne fonction
+			wycaApi.on('onGoToPoiResult', onGoToPoseResult);
+		
+			$('#install_by_step_edit_map .modalFinTest').modal('show');
+		});
+		
+		console.log('GoToPose', xRos, yRos);
+		
+		wycaApi.GoToPose(xRos, yRos, 0, function (data){
+			
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$('#install_by_step_edit_map_bStop').show();
+			}
+			else
+			{
+				$('#install_by_step_edit_map .modalFinTest section.panel-success').hide();
+				$('#install_by_step_edit_map .modalFinTest section.panel-danger').show();
+				
+				if (data.M != '')
+					$('#install_by_step_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+				else
+					$('#install_by_step_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
+			
+				// On rebranche l'ancienne fonction
+				wycaApi.on('onGoToPoseResult', onGoToPoseResult);
+				
+				$('#install_by_step_edit_map .modalFinTest').modal('show');
+			}
+		});
+		
     });
 	
 	$('#install_by_step_edit_map_menu .bGomme').click(function(e) {
@@ -1101,6 +1182,8 @@ $(document).ready(function() {
 		{
 			//blockZoom = true;
 			nextIdArea++;
+			
+			zoom = ByStepGetZoom();
 			
 			p = $('#install_by_step_edit_map_svg image').position();
 			x = (eventTouchStart.originalEvent.targetTouches[0] ? eventTouchStart.originalEvent.targetTouches[0].pageX : eventTouchStart.originalEvent.changedTouches[e.changedTouches.length-1].pageX) - p.left;
@@ -1187,7 +1270,7 @@ $(document).ready(function() {
 		{
 			//blockZoom = true;
 			nextIdArea++;
-			
+			zoom = ByStepGetZoom();
 			p = $('#install_by_step_edit_map_svg image').position();
 			x = (eventTouchStart.originalEvent.targetTouches[0] ? eventTouchStart.originalEvent.targetTouches[0].pageX : eventTouchStart.originalEvent.changedTouches[e.changedTouches.length-1].pageX) - p.left;
 			y = (eventTouchStart.originalEvent.targetTouches[0] ? eventTouchStart.originalEvent.targetTouches[0].pageY : eventTouchStart.originalEvent.changedTouches[e.changedTouches.length-1].pageY) - p.top;
@@ -1910,7 +1993,8 @@ $(document).ready(function() {
 		{
 			dock = docks[currentDockIndex];
 			
-			zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();		
+			//zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();
+			zoom = ByStepGetZoom();		
 			p = $('#install_by_step_edit_map_svg image').position();
 			
 			
@@ -2055,7 +2139,8 @@ $(document).ready(function() {
 		{
 			poi = pois[currentPoiIndex];
 			
-			zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();		
+			//zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();
+			zoom = ByStepGetZoom();		
 			p = $('#install_by_step_edit_map_svg image').position();
 			
 			x = poi.approch_pose_x * 100 / 5;
@@ -2227,7 +2312,8 @@ $(document).ready(function() {
 	$('#install_by_step_edit_map_svg').on('touchstart', function(e) {
 		touchStarted = true;
 		
-		zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();
+		//zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();
+		zoom = ByStepGetZoom();
 		
 		if (currentAction == 'gomme' && currentStep=='')
 		{
@@ -2369,11 +2455,11 @@ $(document).ready(function() {
 		
 		if ($('#install_by_step_edit_map_boutonsRotate').is(':visible'))
 		{
+			//zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();
+			zoom = ByStepGetZoom();
 			 if (currentAction == 'addDock')
 			 {
-				zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();		
 				p = $('#install_by_step_edit_map_svg image').position();
-				
 				
 				x = currentDockPose.approach_pose_x * 100 / 5;
 				y = currentDockPose.approach_pose_y * 100 / 5;
@@ -2390,10 +2476,8 @@ $(document).ready(function() {
 			 }
 			 else if (currentAction == 'addPoi')
 			 {
-				zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();		
 				p = $('#install_by_step_edit_map_svg image').position();
-				
-				
+			
 				x = currentPoiPose.approach_pose_x * 100 / 5;
 				y = currentPoiPose.approach_pose_y * 100 / 5;
 				
@@ -2411,7 +2495,6 @@ $(document).ready(function() {
 			 {
 				dock = docks[currentDockIndex];
 				
-				zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();		
 				p = $('#install_by_step_edit_map_svg image').position();
 				
 				
@@ -2432,7 +2515,6 @@ $(document).ready(function() {
 			 {
 				poi = pois[currentPoiIndex];
 				
-				zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();		
 				p = $('#install_by_step_edit_map_svg image').position();
 				
 				
@@ -2454,7 +2536,7 @@ $(document).ready(function() {
 		if (touchStarted)
 		{
 			//zoom = 1;
-			zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();
+			zoom = ByStepGetZoom();
 			if (downOnMovable)
 			{
 			   if (movableDown.data('element_type') == 'dock')
@@ -2732,6 +2814,7 @@ $(document).ready(function() {
 	
 	$('#install_by_step_edit_map_svg').on('touchend', function(e) {
 		touchStarted = false;
+		zoom = ByStepGetZoom();
 		if (downOnMovable)
 		{
 			downOnMovable = false;
@@ -3242,7 +3325,8 @@ function RefreshZoomView()
 	pImg.left -= pSVG.left;
 	pImg.top -= pSVG.top;
 	
-	zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();
+	//zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();
+	zoom = ByStepGetZoom();
 	
 	wZoom = $('#install_by_step_edit_map_zoom_carte').width();
 	hZoom = $('#install_by_step_edit_map_zoom_carte').height();
