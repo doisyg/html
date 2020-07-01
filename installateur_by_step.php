@@ -386,6 +386,8 @@
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddPOI"><i class="fa fa-map-marker"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddDock"><i class="fa fa-flash"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg bGomme"><i class="fa fa-eraser"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bMoveTo"><i class="fa fa-crosshairs"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bMove" data-toggle="modal" data-target="#install_by_step_edit_map_modalTeleop"><i class="fa fa-gamepad"></i></a></li>
                         </ul>
                     </div>
                     
@@ -418,6 +420,38 @@
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg bDeletePoi"><i class="fa fa-trash"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg" data-toggle="modal" data-target="#install_by_step_edit_map_modalDoSaveBeforeTestPoi"><i class="fa fa-check"></i></a></li>
                         </ul>
+                    </div>
+                    
+                    <div id="install_by_step_edit_map_modalTeleop" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+                                        <div class="h100vh_160" style="overflow:auto">
+                                            
+                                            <div style="height:60px;"></div>
+                                            
+                                            <a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
+                                        
+                                        	<div class="ifUndocked">
+                                                
+                                                <div style="text-align:center; width:100%; z-index:2000; margin-top:50px;">
+                                                    <div class="joystickDiv" draggable="false" style="margin:auto;">
+                                                        <div class="fond"></div>
+                                                        <div class="curseur"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        
+                                        <div style="clear:both;"></div>
+                                       
+                                        <a href="#" class="btn btn-primary bTestDock" data-dismiss="modal" style="width:100%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Close');?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="modal fade modalFinTest" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
@@ -948,6 +982,8 @@
                         	<li><i class="fa fa-map-marker"></i><span class="description">Add POI</span></li>
                         	<li><i class="fa fa-flash"></i><span class="description">Add docking station</span></li>
                         	<li><i class="fa fa-eraser"></i><span class="description">Erase pixel</span></li>
+                        	<li><i class="fa fa-crosshairs"></i><span class="description">Move the root to this point</span></li>
+                        	<li><i class="fa fa-gamepad"></i><span class="description">Teleop the root</span></li>
                         	<li><i class="fa fa-check"></i><span class="description">Test go to POI or dock</span></li>
                         	<li><span style="display:inline-block; margin-right:25px; width:15px; height:15px; border-radius:100%; background-color:#009900;"></span><span class="description">Robot position</span></li>
                         </ul>

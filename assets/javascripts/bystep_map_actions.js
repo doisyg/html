@@ -329,6 +329,9 @@ $(document).ready(function() {
 		currentAction = '';
 		currentStep = '';
 		$('body').addClass('no_current');
+		blockZoom = false;
+		SetModeSelect();
+		
     });
 	
 	$('#install_by_step_edit_map #install_by_step_edit_map_bSaveCurrentElem').click(function(e) {
@@ -1040,7 +1043,12 @@ $(document).ready(function() {
 	/**************************/
 	/*  Click on element      */
 	/**************************/
-		
+	bMoveTo
+	$('#install_by_step_edit_map_menu .bMoveTo').click(function(e) {
+        e.preventDefault();
+		alert('A faire');
+    });
+	
 	$('#install_by_step_edit_map_menu .bGomme').click(function(e) {
         e.preventDefault();
 		ByStepHideMenus();
