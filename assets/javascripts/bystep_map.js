@@ -106,6 +106,10 @@ function GetInfosCurrentMapDoByStep()
 			$('#install_by_step_mapping_use .modalUseThisMapNowTitle2').hide();
 			$('#install_by_step_mapping_use .modalUseThisMapNowContent').hide();
 			
+			historiques = Array();
+			historiqueIndex = -1;
+			RefreshHistorique();
+			
 			ByStepInitMap();
 			ByStepResizeSVG();
 			
@@ -221,13 +225,16 @@ function ByStepDisplayBlockZoom()
 		x = -x + 50 + 2; // * z;
 		y = -y + 50 + 2; // * z;
 		
-		var obj = $('#install_by_step_edit_map_svg_clone g');
-		obj.attr('id', 'install_by_step_edit_map_svg_clone_g');
-		 var transformMatrix = obj.css("-webkit-transform") ||
+		var obj = $('#install_by_step_edit_map_svg g');
+		var transformMatrix = obj.css("-webkit-transform") ||
 		   obj.css("-moz-transform")    ||
 		   obj.css("-ms-transform")     ||
 		   obj.css("-o-transform")      ||
 		   obj.css("transform");
+		   
+		obj = $('#install_by_step_edit_map_svg_clone g');
+		obj.attr('id', 'install_by_step_edit_map_svg_clone_g');
+		 
 		 var matrix = transformMatrix.replace(/[^0-9\-.,]/g, '').split(',');
 		
 		s =

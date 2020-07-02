@@ -325,6 +325,8 @@ $(document).ready(function() {
 	
 	$('#install_by_step_edit_map #install_by_step_edit_map_bEndGomme').click(function(e) {
         e.preventDefault();
+		
+		canChangeMenu = true;
 		$('#install_by_step_edit_map_bEndGomme').hide();
 		currentAction = '';
 		currentStep = '';
@@ -2336,6 +2338,7 @@ $(document).ready(function() {
 				gommes[gommes.length-1].push({x:xRos+0.01, y:yRos+0.01}); // Point du curseur
 				ByStepTraceCurrentGomme(gommes[gommes.length-1], gommes.length-1);
 				
+				canChangeMenu = false;
 				$('#install_by_step_edit_map_bEndGomme').show();
 			}
 		}
