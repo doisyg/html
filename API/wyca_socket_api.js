@@ -18,6 +18,7 @@ function WycaAPI(options){
 		ACTION_ALREADY_STARTED      : 0x0C9,
 		CANCELED		            : 0x0CA,
 	    SERVICE_UNAVAILABLE         : 0x0CB,
+	    BATTERY_TOO_LOW		        : 0x0CC,
 		
 		NAVIGTION_IS_NOT_STARTED    : 0x12C,
 		NAVIGTION_IS_ACTIVE		    : 0x12D,
@@ -1286,7 +1287,8 @@ function WycaAPI(options){
 			case _this.AnswerCode.NO_ACTION_IN_PROGRESS : return 'No action in progress'; break;
 			case _this.AnswerCode.ACTION_ALREADY_STARTED : return 'Action already started'; break;
 			case _this.AnswerCode.CANCELED : return 'Action canceled'; break;
-			case _this.AnswerCode.SERVICE_UNVAILABLE : return 'Service unvailable'; break;
+			case _this.AnswerCode.SERVICE_UNAVAILABLE : return 'Service unvailable'; break;
+			case _this.AnswerCode.BATTERY_TOO_LOW : return 'Battery too low'; break;
 			case _this.AnswerCode.NAVIGTION_IS_NOT_STARTED : return 'Navigation is not started'; break;
 			case _this.AnswerCode.NAVIGTION_IS_ACTIVE : return 'Navigation is active and block current operation'; break;
 			case _this.AnswerCode.MAPPING_IS_NOT_STARTED : return 'Mapping is not started'; break;
