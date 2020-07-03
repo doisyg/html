@@ -375,10 +375,10 @@ function UserTraceRobot(robot_x, robot_y, robot_theta)
 	
 	rayonRobot = (26 / ros_resolution);
 	
-	if (!robot_traced_user)
+	if (true || !robot_traced_user) // true pour le mettre au premier plan
 	{
 		robot_traced_user = true;
-		
+		$('#user_edit_map_robot_circle').remove();
 		path = makeSVGElement('circle', { cx: x,
 										cy: y,
 									   r: rayonRobot,
@@ -413,8 +413,6 @@ function UserTraceRobot(robot_x, robot_y, robot_theta)
 
 function UserResizeSVG()
 {	
-	UserTraceRobot(lastRobotPose.X, lastRobotPose.Y, lastRobotPose.T);
-	
 	$('#user_edit_map_svg .forbidden_elem').remove();
 	$.each(forbiddens, function( index, forbidden ) {
 		UserTraceForbidden(index);
@@ -431,4 +429,6 @@ function UserResizeSVG()
 	$.each(pois, function( index, poi ) {
 		UserTracePoi(index);
 	});
+	
+	UserTraceRobot(lastRobotPose.X, lastRobotPose.Y, lastRobotPose.T);
 }
