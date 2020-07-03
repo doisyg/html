@@ -46,11 +46,28 @@
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/joystick.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/robot.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/wyca.js?v=<?php echo $lastUpdate;?>"></script>
+		
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/bystep_wyca.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/bystep_map.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/bystep_map_actions.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/bystep_map_svg.js?v=<?php echo $lastUpdate;?>"></script>
+        <?php if ($_SESSION['id_groupe_user'] <= 2) {?>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/normal_wyca.js?v=<?php echo $lastUpdate;?>"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/normal_map.js?v=<?php echo $lastUpdate;?>"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/normal_map_actions.js?v=<?php echo $lastUpdate;?>"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/normal_map_svg.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/installateur_wyca.js?v=<?php echo $lastUpdate;?>"></script>
+		<?php } if ($_SESSION['id_groupe_user'] <= 3) {?>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/manager_wyca.js?v=<?php echo $lastUpdate;?>"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/manager_map.js?v=<?php echo $lastUpdate;?>"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/manager_map_actions.js?v=<?php echo $lastUpdate;?>"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/manager_map_svg.js?v=<?php echo $lastUpdate;?>"></script>
+        <?php } if ($_SESSION['id_groupe_user'] <= 4) {?>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/user_wyca.js?v=<?php echo $lastUpdate;?>"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/user_map.js?v=<?php echo $lastUpdate;?>"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/user_map_actions.js?v=<?php echo $lastUpdate;?>"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/user_map_svg.js?v=<?php echo $lastUpdate;?>"></script>
+        <?php }?>
         
         <script>
 		$(document).ready(function(e) {

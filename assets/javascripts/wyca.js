@@ -84,7 +84,15 @@ $(document).ready(function(e) {
 	
 	$('.bUndock').click(function(e) {
         e.preventDefault();
-		wycaApi.Undock();
+		wycaApi.Undock(function(data){
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+			}
+			else
+			{
+				alert_wyca(wycaApi.AnswerCodeToString(data.A));
+			}
+		});
     });
 	
 	
@@ -126,6 +134,10 @@ $(document).ready(function(e) {
 		if (next == 'install_normal_setup_wifi') InitInstallWifiPageNormal();
 		if (next == 'install_normal_manager') GetManagersNormal();
 		if (next == 'install_normal_service_book') GetServiceBooksNormal();
+		if (next == 'install_normal_edit_map') GetInfosCurrentMapNormal();
+		
+		if (next == 'manager_edit_map') GetInfosCurrentMapManager();
+		if (next == 'user_edit_map') GetInfosCurrentMapUser();
 		
 		
 		

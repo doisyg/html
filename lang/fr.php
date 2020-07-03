@@ -118,5 +118,6 @@ $_LANG['0f96070b3a86cb9028f6f8d278dadb25'] = 'Change top';
 $_LANG['11087d84f70335d1fec3aa9e72c8b1d5'] = 'Tops';
 $_LANG['6bdade84aea01b81c7a914e866e4603a'] = 'Seclect active top';
 $_LANG['271535966b6ca5b894deb92d2a14b581'] = 'Set active top';
+$_LANG['bfca0b2f3b4ba454bdcf4db3e3f6fc16'] = 'Move the robot at the final position desired and click on the \"Add POI\" button';
 
 ?>
