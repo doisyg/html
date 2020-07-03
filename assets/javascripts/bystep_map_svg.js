@@ -5,7 +5,8 @@ function AppliquerZoom()
 	//Resize();
 	//$('#boxsmap').resize();
 	
-	ByStepResizeSVG();
+	if ($('#install_by_step_edit_map').is(':visible')) ByStepResizeSVG();
+	if ($('#install_normal_edit_map').is(':visible')) NormalResizeSVG();
 	
 	//RefreshZoomView();
 	//setTimeout(RefreshZoomView, 100);
@@ -50,7 +51,7 @@ function ByStepTraceSection(x1, y1, x2, y2)
 				   'class':'selection',
 				   'id': 'selection',
 				  });
-	svg.appendChild(path);
+	svgByStep.appendChild(path);
 }
 
 function ByStepTraceCurrentGomme(points, index)
@@ -76,7 +77,7 @@ function ByStepTraceCurrentGomme(points, index)
 								   'data-index': 'current'
 								  });
 								  
-		svg.appendChild(path);
+		svgByStep.appendChild(path);
 		$('#install_by_step_edit_map_svg .gomme_elem_current_'+index).insertAfter($('#install_by_step_edit_map_svg image'));
 		
 		path = makeSVGElement('polyline', { points: gomme_point,
@@ -87,7 +88,7 @@ function ByStepTraceCurrentGomme(points, index)
 								   'data-index': 'current'
 								  });
 								  
-		svg.appendChild(path);
+		svgByStep.appendChild(path);
 		$('#install_by_step_edit_map_svg .gomme_elem_current_'+index).insertAfter($('#install_by_step_edit_map_svg image'));
 	}
 }
@@ -110,7 +111,7 @@ function ByStepTraceCurrentForbidden(points)
 							   'class':'poly forbidden_elem_current',
 							   'data-index': 'current'
 							  });
-			svg.appendChild(path);
+			svgByStep.appendChild(path);
 		}
 		else
 		{
@@ -129,7 +130,7 @@ function ByStepTraceCurrentForbidden(points)
 									   'class':'poly forbidden_elem_current',
 									   'data-index': 'current'
 									  });
-			svg.appendChild(path);
+			svgByStep.appendChild(path);
 		}
 	}
 }
@@ -201,7 +202,7 @@ function ByStepTraceForbidden(indexForbidden)
 							   'data-id_area': forbidden.id_area
 							  });
 		path.style.fill = 'rgba(0,0,0,0.5)'
-		svg.appendChild(path);
+		svgByStep.appendChild(path);
 		
 		lastPointIndex = points.length-1;
 		lastPoint = points[lastPointIndex];
@@ -226,7 +227,7 @@ function ByStepTraceForbidden(indexForbidden)
 							   'data-element_type': 'forbidden',
 							   'data-element': 'forbidden'
 							  });
-				svg.appendChild(path);
+				svgByStep.appendChild(path);
 			}
 			
 			lastPointIndex = indexPoint;
@@ -255,7 +256,7 @@ function ByStepTraceForbidden(indexForbidden)
 							   'data-element_type': 'forbidden',
 							   'data-element': 'forbidden'
 							  });
-				svg.appendChild(path);
+				svgByStep.appendChild(path);
 			}
 			
 			lastPoint = point;
@@ -285,7 +286,7 @@ function ByStepTraceCurrentArea(points)
 							   'class':'poly forbidden_elem_current',
 							   'data-index': 'current'
 							  });
-			svg.appendChild(path);
+			svgByStep.appendChild(path);
 		}
 		else
 		{
@@ -304,7 +305,7 @@ function ByStepTraceCurrentArea(points)
 									   'class':'poly area_elem_current',
 									   'data-index': 'current'
 									  });
-			svg.appendChild(path);
+			svgByStep.appendChild(path);
 		}
 	}
 }
@@ -376,7 +377,7 @@ function ByStepTraceArea(indexArea)
 							   'data-id_area': area.id_area
 							  });
 		path.style.fill = 'rgba('+area.color_r+','+area.color_g+','+area.color_b+',0.5)'
-		svg.appendChild(path);
+		svgByStep.appendChild(path);
 		
 		lastPointIndex = points.length-1;
 		lastPoint = points[lastPointIndex];
@@ -401,7 +402,7 @@ function ByStepTraceArea(indexArea)
 							   'data-element_type': 'area',
 							   'data-element': 'area'
 							  });
-				svg.appendChild(path);
+				svgByStep.appendChild(path);
 			}
 			
 			lastPointIndex = indexPoint;
@@ -427,7 +428,7 @@ function ByStepTraceArea(indexArea)
 							   'data-element_type': 'area',
 							   'data-element': 'area'
 							  });
-				svg.appendChild(path);
+				svgByStep.appendChild(path);
 			}
 		});
 		
@@ -451,16 +452,16 @@ function ByStepTraceCurrentDock(pose)
 				   'transform':'rotate('+angle+', '+x+', '+y+')',
 				   'class':'movable dock_elem dock_elem_current'
 				  });
-	svg.appendChild(path);
+	svgByStep.appendChild(path);
 	
-	path = makeSVGElement('line', { 'x1': x-1, 'y1':y-1, 'x2': x+1, 'y2':y-1,
+	path = makeSVGElement('line', { 'x1': x-1, 'y1':y+1, 'x2': x+1, 'y2':y+1,
 				   'stroke-width': 1,
 				   'stroke-linecap':'square',
 				   'stroke':'orange',
 				   'transform':'rotate('+angle+', '+x+', '+y+')',
 				   'class':'dock_elem dock_elem_current'
 				  });
-	svg.appendChild(path);
+	svgByStep.appendChild(path);
 }
 function ByStepTraceDock(indexDock)
 {
@@ -491,7 +492,7 @@ function ByStepTraceDock(indexDock)
 	
 	path = makeSVGElement('rect', { x: x-5, y:y-1, height:2, width:10,
 				   'stroke-width': minStokeWidth,
-				   'fill':'yellow',
+				   'fill':'red',
 				   'transform':'rotate('+angle+', '+x+', '+y+')',
 				   'class':'dock_elem dock_elem_fond dock_elem_'+dock.id_docking_station,
 				   'id': 'install_by_step_edit_map_dock_'+dock.id_docking_station,
@@ -499,12 +500,12 @@ function ByStepTraceDock(indexDock)
 				   'data-element_type': 'dock',
 				   'data-element': 'dock'
 				  });
-	svg.appendChild(path);
+	svgByStep.appendChild(path);
 	
-	path = makeSVGElement('line', { 'x1': x-1, 'y1':y-1, 'x2': x+1, 'y2':y-1,
+	path = makeSVGElement('line', { 'x1': x-1, 'y1':y+1, 'x2': x+1, 'y2':y+1,
 				   'stroke-width': 1,
 				   'stroke-linecap':'square',
-				   'stroke':'orange',
+				   'stroke':'red',
 				   'transform':'rotate('+angle+', '+x+', '+y+')',
 				   'class':'dock_elem dock_elem_'+dock.id_docking_station,
 				   'id': 'install_by_step_edit_map_dock_connect_'+dock.id_docking_station,
@@ -512,7 +513,40 @@ function ByStepTraceDock(indexDock)
 				   'data-element_type': 'dock',
 				   'data-element': 'dock'
 				  });
-	svg.appendChild(path);
+	svgByStep.appendChild(path);
+	
+	x = dock.final_pose_x * 100 / ros_resolution;
+	y = ros_hauteur - (dock.final_pose_y * 100 / ros_resolution);
+	angle = 0 - dock.final_pose_t * 180 / Math.PI;
+	
+	rayonRobot = (26 / ros_resolution);
+	rayonRobotSecure = ((26+15) / ros_resolution);
+	
+	path = makeSVGElement('circle', { cx: x,
+									cy: y,
+								   r: rayonRobot,
+								   'class': 'dock_elem dock_elem_robot dock_elem_fond dock_elem_'+dock.id_docking_station,
+								   'id': 'install_by_step_edit_map_dock_robot_'+dock.id_docking_station,
+								   'data-id_docking_station': dock.id_docking_station,
+								   'data-element_type': 'dock',
+								   'data-element': 'dock'
+								   });
+	svgByStep.appendChild(path);
+	
+	path = makeSVGElement('polyline', { 'points': (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2),
+									'stroke':'#FFFFFF',
+									'stroke-width':1,
+									'fill':'none',
+									'stroke-linejoin':'round',
+									'stroke-linecap':'round',
+								   'class': 'dock_elem dock_elem_'+dock.id_docking_station,
+								   'transform':'rotate('+angle+', '+x+', '+y+')',
+								   'id': 'install_by_step_edit_map_dock_sens_'+dock.id_docking_station,
+								   'data-id_docking_station': dock.id_docking_station,
+								   'data-element_type': 'dock',
+								   'data-element': 'dock'
+								   });
+	svgByStep.appendChild(path);
 	
 	if (is_active)
 		AddClass('#install_by_step_edit_map_svg .dock_elem_'+dock.id_docking_station, 'active');
@@ -535,7 +569,7 @@ function ByStepTraceCurrentPoi(pose)
 								   'class': 'poi_elem poi_elem_current',
 								   });
 	path.style.fill = '#AAAAAA';
-	svg.appendChild(path);
+	svgByStep.appendChild(path);
 	
 	path = makeSVGElement('circle', { cx: x,
 									cy: y,
@@ -543,7 +577,7 @@ function ByStepTraceCurrentPoi(pose)
 								   'class': 'poi_elem poi_elem_current',
 								   });
 	path.style.fill = '#589FB1';
-	svg.appendChild(path);
+	svgByStep.appendChild(path);
 	
 	path = makeSVGElement('polyline', { 'points': (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2),
 									'stroke':'#FFFFFF',
@@ -554,7 +588,7 @@ function ByStepTraceCurrentPoi(pose)
 								   'class': 'poi_elem poi_elem_current',
 								   'transform':'rotate('+angle+', '+x+', '+y+')',
 								   });
-	svg.appendChild(path);
+	svgByStep.appendChild(path);
 }
 function ByStepTracePoi(indexPoi)
 {
@@ -594,7 +628,7 @@ function ByStepTracePoi(indexPoi)
 								   'data-element_type': 'poi',
 								   'data-element': 'poi'
 								   });
-	svg.appendChild(path);
+	svgByStep.appendChild(path);
 	
 	path = makeSVGElement('circle', { cx: x,
 									cy: y,
@@ -605,7 +639,7 @@ function ByStepTracePoi(indexPoi)
 								   'data-element_type': 'poi',
 								   'data-element': 'poi'
 								   });
-	svg.appendChild(path);
+	svgByStep.appendChild(path);
 	
 	path = makeSVGElement('polyline', { 'points': (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2),
 									'stroke':'#FFFFFF',
@@ -620,7 +654,7 @@ function ByStepTracePoi(indexPoi)
 								   'data-element_type': 'poi',
 								   'data-element': 'poi'
 								   });
-	svg.appendChild(path);
+	svgByStep.appendChild(path);
 	
 	if (is_active)
 		AddClass('#install_by_step_edit_map_svg .poi_elem_'+poi.id_poi, 'active');
@@ -647,7 +681,7 @@ function ByStepTraceRobot(robot_x, robot_y, robot_theta)
 									   'data-element_type': 'robot',
 									   'data-element': 'robot'
 									   });
-		svg.appendChild(path);
+		svgByStep.appendChild(path);
 	}
 	else
 	{
@@ -675,15 +709,19 @@ function ByStepResizeSVG()
 {	
 	ByStepTraceRobot(lastRobotPose.X, lastRobotPose.Y, lastRobotPose.T);
 	
+	$('#install_by_step_edit_map_svg .forbidden_elem').remove();
 	$.each(forbiddens, function( index, forbidden ) {
 		ByStepTraceForbidden(index);
 	});
+	$('#install_by_step_edit_map_svg .area_elem').remove();
 	$.each(areas, function( index, area ) {
 		ByStepTraceArea(index);
 	});
+	$('#install_by_step_edit_map_svg .dock_elem').remove();
 	$.each(docks, function( index, dock ) {
 		ByStepTraceDock(index);
 	});
+	$('#install_by_step_edit_map_svg .poi_elem').remove();
 	$.each(pois, function( index, poi ) {
 		ByStepTracePoi(index);
 	});

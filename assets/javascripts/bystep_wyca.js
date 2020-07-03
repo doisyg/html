@@ -543,37 +543,44 @@ $(document).ready(function(e) {
 	$('#install_by_step_edit_map .bSaveEditMap').click(function(e) {
 		e.preventDefault();
         
-		data = GetDataMapToSave();
-		
-		if ($(this).hasClass('button_goto'))
+		if (!bystepCanChangeMenu)
 		{
-			$('#install_by_step_test_map .list_test li').remove();
-			$('#install_by_step_test_map .install_by_step_test_map_loading').show();
-			
-			gotoTest = true;
+			alert_wyca('You must confirm the active element');
 		}
 		else
-			gotoTest = false;
-		
-		wycaApi.SetCurrentMapData(data, function(data){
-			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+		{
+			data = GetDataMapToSave();
+			
+			if ($(this).hasClass('button_goto'))
 			{
-				success_wyca("Map saved !");
+				$('#install_by_step_test_map .list_test li').remove();
+				$('#install_by_step_test_map .install_by_step_test_map_loading').show();
 				
-				// On reload la carte pour mettre à jours les ids
-				GetInfosCurrentMapByStep();
-				/*
-				if (navLaunched && id_map == current_id_map)
-				{
-					wycaApi.NavigationReloadMaps(function(e) { if (e.A != wycaApi.AnswerCode.NO_ERROR) console.error(wycaApi.AnswerCodeToString(data.A)+ " " + data.M); });	
-				}
-				*/
+				gotoTest = true;
 			}
 			else
-			{
-				alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' + data.M);
-			}
-		});
+				gotoTest = false;
+			
+			wycaApi.SetCurrentMapData(data, function(data){
+				if (data.A == wycaApi.AnswerCode.NO_ERROR)
+				{
+					success_wyca("Map saved !");
+					
+					// On reload la carte pour mettre à jours les ids
+					GetInfosCurrentMapByStep();
+					/*
+					if (navLaunched && id_map == current_id_map)
+					{
+						wycaApi.NavigationReloadMaps(function(e) { if (e.A != wycaApi.AnswerCode.NO_ERROR) console.error(wycaApi.AnswerCodeToString(data.A)+ " " + data.M); });	
+					}
+					*/
+				}
+				else
+				{
+					alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' + data.M);
+				}
+			});
+		}
     });
 	
 	$('#install_by_step_test_map').on( 'click', '.bExecuteTest', function(e) {

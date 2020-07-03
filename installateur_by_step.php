@@ -980,14 +980,14 @@
                     
                     <div class="popupHelp">
                     	<h2>Help</h2>
-                    	<ul>
+                    	<ul style="color:#000;">
                         	<li><i class="fa fa-ban"></i><span class="description">Add forbidden area</span></li>
                         	<li><i class="fa fa-square"></i><span class="description">Add custom area</span></li>
                         	<li><i class="fa fa-map-marker"></i><span class="description">Add POI</span></li>
                         	<li><i class="fa fa-flash"></i><span class="description">Add docking station</span></li>
                         	<li><i class="fa fa-eraser"></i><span class="description">Erase pixel</span></li>
-                        	<li><i class="fa fa-crosshairs"></i><span class="description">Move the root to this point</span></li>
-                        	<li><i class="fa fa-gamepad"></i><span class="description">Teleop the root</span></li>
+                        	<li><i class="fa fa-crosshairs"></i><span class="description">Move the robot to this point</span></li>
+                        	<li><i class="fa fa-gamepad"></i><span class="description">Teleop the robot</span></li>
                         	<li><i class="fa fa-check"></i><span class="description">Test go to POI or dock</span></li>
                         	<li><span style="display:inline-block; margin-right:25px; width:15px; height:15px; border-radius:100%; background-color:#009900;"></span><span class="description">Robot position</span></li>
                         </ul>

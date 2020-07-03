@@ -106,12 +106,14 @@ function GetInfosCurrentMapDoByStep()
 			$('#install_by_step_mapping_use .modalUseThisMapNowTitle2').hide();
 			$('#install_by_step_mapping_use .modalUseThisMapNowContent').hide();
 			
-			historiques = Array();
-			historiqueIndex = -1;
-			RefreshHistorique();
+			bysteplHistoriques = Array();
+			bysteplHistoriqueIndex = -1;
+			ByStepRefreshHistorique();
 			
-			ByStepInitMap();
-			ByStepResizeSVG();
+			setTimeout(function(){
+				ByStepInitMap();
+				ByStepResizeSVG();
+			},500); 
 			
 			if (gotoTest) InitTest();
 			
@@ -336,7 +338,7 @@ $(document).ready(function(e) {
 			timerByStepVeryLongPress = null;
 		}
 		
-		if (canChangeMenu)
+		if (bystepCanChangeMenu)
 		{
 			timerByStepLongPress = setTimeout(ByStepLongPressSVG, 500);
 			timerByStepVeryLongPress = setTimeout(ByStepLongVeryPressSVG, 1500);
@@ -388,7 +390,7 @@ $(document).ready(function(e) {
 			timerByStepVeryLongPress = null;
 		}
 		
-		if (canChangeMenu || currentAction == 'editForbiddenArea' || currentAction == 'editArea')
+		if (bystepCanChangeMenu || bystepCurrentAction == 'addForbiddenArea' || bystepCurrentAction == 'addArea' || bystepCurrentAction == 'editForbiddenArea' || bystepCurrentAction == 'editArea')
 		{
 			timerByStepLongPress = setTimeout(ByStepLongPressPointDeletable, 500);
 			//timerByStepVeryLongPress = setTimeout(ByStepLongVeryPressSVG, 1500);
@@ -443,7 +445,7 @@ $(document).ready(function(e) {
 			timerByStepVeryLongPress = null;
 		}
 		
-		if (canChangeMenu || currentAction == 'editForbiddenArea' || currentAction == 'addForbiddenArea')
+		if (bystepCanChangeMenu || bystepCurrentAction == 'editForbiddenArea' || bystepCurrentAction == 'addForbiddenArea')
 		{
 			timerByStepLongPress = setTimeout(ByStepLongPressForbidden, 500);
 			//timerByStepVeryLongPress = setTimeout(ByStepLongVeryPressSVG, 1500);
@@ -495,7 +497,7 @@ $(document).ready(function(e) {
 			timerByStepVeryLongPress = null;
 		}
 		
-		if (canChangeMenu || currentAction == 'editArea' || currentAction == 'addArea')
+		if (bystepCanChangeMenu || bystepCurrentAction == 'editArea' || bystepCurrentAction == 'addArea')
 		{
 			timerByStepLongPress = setTimeout(ByStepLongPressArea, 500);
 			//timerByStepVeryLongPress = setTimeout(ByStepLongVeryPressSVG, 1500);
@@ -548,7 +550,7 @@ $(document).ready(function(e) {
 			timerByStepVeryLongPress = null;
 		}
 		
-		if (canChangeMenu)
+		if (bystepCanChangeMenu)
 		{
 			timerByStepLongPress = setTimeout(ByStepLongPressDock, 500);
 			//timerByStepVeryLongPress = setTimeout(ByStepLongVeryPressSVG, 1500);
@@ -600,7 +602,7 @@ $(document).ready(function(e) {
 			timerByStepVeryLongPress = null;
 		}
 		
-		if (canChangeMenu)
+		if (bystepCanChangeMenu)
 		{
 			timerByStepLongPress = setTimeout(ByStepLongPressPoi, 500);
 			//timerByStepVeryLongPress = setTimeout(ByStepLongVeryPressSVG, 1500);
@@ -807,7 +809,7 @@ function ByStepInitMap()
 	, RefreshMap: function() { setTimeout(RefreshZoomView, 10); }
 	});
 	
-	svg = document.querySelector('.svg-pan-zoom_viewport');
+	svgByStep = document.querySelector('#install_by_step_edit_map_svg .svg-pan-zoom_viewport');
 	
 	//window.panZoom = {};
 	//window.panZoom.getZoom = function () { return 1; }
