@@ -220,10 +220,10 @@ function initStateRobot(etat)
 firstInitRobotPose = true;
 function InitRobotPose(pose)
 {
-	if ($('#install_by_step_edit_map').is(':visible') || firstInitRobotPose) ByStepTraceRobot(pose.X, pose.Y, pose.T);
-	if ($('#install_normal_edit_map').is(':visible') || firstInitRobotPose) NormalTraceRobot(pose.X, pose.Y, pose.T);
-	if ($('#manager_edit_map').is(':visible') || firstInitRobotPose) ManagerTraceRobot(pose.X, pose.Y, pose.T);
-	if ($('#user_edit_map').is(':visible') || firstInitRobotPose) UserTraceRobot(pose.X, pose.Y, pose.T);
+	if ($('#install_by_step_edit_map').length > 0 && ($('#install_by_step_edit_map').is(':visible') || firstInitRobotPose)) ByStepTraceRobot(pose.X, pose.Y, pose.T);
+	if ($('#install_normal_edit_map').length > 0 && ($('#install_normal_edit_map').is(':visible') || firstInitRobotPose)) NormalTraceRobot(pose.X, pose.Y, pose.T);
+	if ($('#manager_edit_map').length > 0 && ($('#manager_edit_map').is(':visible') || firstInitRobotPose)) ManagerTraceRobot(pose.X, pose.Y, pose.T);
+	if ($('#user_edit_map').length > 0 && ($('#user_edit_map').is(':visible') || firstInitRobotPose)) UserTraceRobot(pose.X, pose.Y, pose.T);
 	
 	firstInitRobotPose = false
 }

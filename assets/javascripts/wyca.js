@@ -137,6 +137,8 @@ $(document).ready(function(e) {
 		if (next == 'install_normal_edit_map') GetInfosCurrentMapNormal();
 		
 		if (next == 'manager_edit_map') GetInfosCurrentMapManager();
+		if (next == 'manager_top') InitTopsActiveManager();
+		if (next == 'manager_users') GetUsers();
 		if (next == 'user_edit_map') GetInfosCurrentMapUser();
 		
 		
@@ -254,6 +256,41 @@ function GetServiceBooksByStep()
 	{
 		setTimeout(GetServiceBooksByStep, 500);
 	}
+}
+
+function GetUsers()
+{
+	$('.manager_users_loading').show();
+	$('#manager_users .loaded').hide();
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetUsersList(function(data) {
+			
+			$('#manager_users .list_users').html('');
+			
+			if (data.D != undefined)
+			$.each(data.D,function(index, value){
+				if (value.id_group_user  == 4)
+				{
+					$('#manager_users .list_users').append('' +
+						'<li id="manager_users_list_user_elem_'+value.id_user+'" data-id_user="'+value.id_user+'">'+
+						'	<span class="societe">'+value.company+'</span><br /><span class="prenom">'+value.firstname+'</span> <span class="nom">'+value.lastname+'</span><br /><span class="email">'+value.email+'</span>'+
+						'	<a href="#" class="bUserDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="bUserEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
+						'</li>'
+						);
+				}
+			});
+			
+			$('.manager_users_loading').hide();
+			$('#manager_users .loaded').show();
+		});
+	}
+	else
+	{
+		setTimeout(GetUsers, 500);
+	}
+
 }
 
 function GetManagersNormal()
@@ -387,6 +424,35 @@ function InitTopsNormal()
 	}
 }
 
+
+function InitTopsActiveManager()
+{
+	$('.manager_top_loading').show();
+	$('#manager_top .tuiles').html('');
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetTopsList(function(data) {
+			console.log(data);
+			$.each(data.D,function(index, value){
+				if (value.available)
+				{
+					$('#manager_top .tuiles').append('<li class="col-xs-4 bTop' + value.id_top + '">'+
+					'	<a href="#" class="is_checkbox set_top '+(value.active?'checked':'')+' anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'">'+
+					'		<i class="fa fa-check"></i>'+
+					'		<img src="data:image/png;base64, '+value.image_b64+'" />'+value.name+''+
+					'	</a>'+
+					'</li>');
+				}
+			});
+			$('.manager_top_loading').hide();
+		});
+	}
+	else
+	{
+		setTimeout(InitTopsActiveManager, 500);
+
+	}
+}
 
 function InitTopsActiveNormal()
 {
