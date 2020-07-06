@@ -699,7 +699,7 @@ $(document).ready(function() {
 			ManagerAvertCantChange();
 	});
 	
-	$('.modalAddPoi .bAddPoiAtCurrentPose').click(function(e) {
+	$('#manager_edit_map_container_all .modalAddPoi .bAddPoiAtCurrentPose').click(function(e) {
 		
 		nextIdPoi++;
 			

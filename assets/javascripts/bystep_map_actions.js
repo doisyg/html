@@ -1680,20 +1680,20 @@ $(document).ready(function() {
 		else
 			ByStepAvertCantChange();
 	});
-	$('.modalAddPoi .bScanAddPoi').click(function(e) {
-		$('.modalAddPoi .bScanAddPoi').addClass('disabled');
+	$('#install_by_step_edit_map_container_all .modalAddPoi .bScanAddPoi').click(function(e) {
+		$('#install_by_step_edit_map_container_all .modalAddPoi .bScanAddPoi').addClass('disabled');
 		
 		wycaApi.GetMapFiducialsVisible(function(data) {
 			
-			$('.modalAddPoi .bScanAddPoi').removeClass('disabled');	
+			$('#install_by_step_edit_map_container_all .modalAddPoi .bScanAddPoi').removeClass('disabled');	
 			
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
 				console.log(data);
 				
-				$('.modalAddPoi .poi').hide();
+				$('#install_by_step_edit_map_container_all .modalAddPoi .poi').hide();
 				
-				posRobot = $('.modalAddPoi #install_by_step_edit_map_modalAddPoi_robot').offset();
+				posRobot = $('#install_by_step_edit_map_container_all .modalAddPoi #install_by_step_edit_map_modalAddPoi_robot').offset();
 				
 				if (data.D.length > 0)
 				{
@@ -1714,23 +1714,23 @@ $(document).ready(function() {
 						
 						// 1px / cm
 						
-						$('.modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).show();
-						$('.modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).css('left', posRobot.left + x_from_robot * 100); // lidar : y * -1
-						$('.modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).css('top', posRobot.top - y_from_robot * 100); // +20 position lidar, - 12.5 pour le centre
+						$('#install_by_step_edit_map_container_all .modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).show();
+						$('#install_by_step_edit_map_container_all .modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).css('left', posRobot.left + x_from_robot * 100); // lidar : y * -1
+						$('#install_by_step_edit_map_container_all .modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).css('top', posRobot.top - y_from_robot * 100); // +20 position lidar, - 12.5 pour le centre
 						//angle = (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
 						
 						angle = 0 - (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
 						
-						$('.modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).css({'-webkit-transform' : 'rotate('+ angle +'deg)',
+						$('#install_by_step_edit_map_container_all .modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).css({'-webkit-transform' : 'rotate('+ angle +'deg)',
 																 '-moz-transform' : 'rotate('+ angle +'deg)',
 																 '-ms-transform' : 'rotate('+ angle +'deg)',
 																 'transform' : 'rotate('+ angle +'deg)'});
 						
 						
-						$('.modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).data('id_fiducial', data.D[i].ID);
-						$('.modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).data('x', data.D[i].P.X);
-						$('.modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).data('y', data.D[i].P.Y);
-						$('.modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).data('theta', data.D[i].P.T);
+						$('#install_by_step_edit_map_container_all .modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).data('id_fiducial', data.D[i].ID);
+						$('#install_by_step_edit_map_container_all .modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).data('x', data.D[i].P.X);
+						$('#install_by_step_edit_map_container_all .modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).data('y', data.D[i].P.Y);
+						$('#install_by_step_edit_map_container_all .modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).data('theta', data.D[i].P.T);
 					}
 				}
 			}
@@ -1741,7 +1741,7 @@ $(document).ready(function() {
 		});
     });
 	
-	$('.modalAddPoi .poi').click(function(e) {
+	$('#install_by_step_edit_map_container_all .modalAddPoi .poi').click(function(e) {
         e.preventDefault();
 		
 		if (currentStepAddPoi == 'set_approch')
@@ -1750,7 +1750,7 @@ $(document).ready(function() {
 			
 			poi_temp_add = {'id_poi':nextIdPoi, 'id_map':id_map, 'id_fiducial':$(this).data('id_fiducial'), 'fiducial_pose_x':$(this).data('x'), 'fiducial_pose_y':$(this).data('y'), 'fiducial_pose_t':$(this).data('theta'), 'final_pose_x':lastRobotPose.X, 'final_pose_y':lastRobotPose.Y, 'final_pose_t':lastRobotPose.T, 'approch_pose_x':lastRobotPose.X, 'approch_pose_y':lastRobotPose.Y, 'approch_pose_t':lastRobotPose.T, 'name':'POI', 'comment':'', 'color':'', 'advanced':true, 'icon':'', 'active':true};
 			
-			$('.modalAddPoi .poi').hide();
+			$('#install_by_step_edit_map_container_all .modalAddPoi .poi').hide();
 			
  			currentStepAddPoi = 'set_final';
 			$('.texts_add_poi').hide();
