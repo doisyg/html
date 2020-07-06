@@ -686,7 +686,7 @@
             </header>
             <div class="content">
                 <ul class="tuiles row">
-                    <li class="col-xs-4"><a class="button_goto anim_tuiles tuile1 todo" data-goto="install_normal_setup_sites" href="#"><i class="fa fa-building"></i><?php echo __('Sites');?></a></li>
+                    <li class="col-xs-4"><a class="button_goto anim_tuiles tuile1" data-goto="install_normal_setup_sites" href="#"><i class="fa fa-building"></i><?php echo __('Sites');?></a></li>
                     <li class="col-xs-4"><a class="button_goto anim_tuiles tuile2" data-goto="install_normal_setup_language" href="#"><i class="fa fa-language"></i><?php echo __('Language');?></a></li>
                     <li class="col-xs-4"><a class="button_goto anim_tuiles tuile3" data-goto="install_normal_setup_wifi" href="#"><i class="fa fa-gear"></i><?php echo __('Wifi');?></a></li>
                     <li class="col-xs-4"><a class="button_goto anim_tuiles tuile4" data-goto="install_normal_setup_vehicule" href="#"><i class="fa fa-android"></i><?php echo __('Vehicule');?></a></li>
@@ -700,6 +700,27 @@
             </footer>
         </section>
         
+        <section id="install_normal_setup_sites" class="page with_footer">
+	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Sites');?></h2>
+            </header>
+            <div class="content">
+                
+                <div class="install_normal_setup_sites_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
+                
+                <div class="loaded col-md-12" style="padding-top:30px;">
+                	<a href="#" class="bAddSite btn btn-primary">Add new site</a>
+                
+                    <ul class="list_sites list_elem">
+                    </ul>
+                </div>
+            </div>
+            <footer>
+                <a href="#" class="btn btn-wyca button_goto" data-goto="install_normal_setup"><i class="fa fa-chevron-left"></i> <?php echo __('Back');?></a>
+            </footer>
+        </section>
         <section id="install_normal_setup_language" class="page hmi_tuile with_footer">
 	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
             <header>

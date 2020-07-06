@@ -100,12 +100,7 @@ function GetInfosCurrentMapDoManager()
 			setTimeout(function(){
 				ManagerInitMap();
 				ManagerResizeSVG();			
-			},500); 
-			
-			
-			if (gotoTest) InitTest();
-			
-			gotoTest = false;
+			},500);
 		}
 		else
 		{

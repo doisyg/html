@@ -1966,7 +1966,7 @@ function WycaAPI(options){
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
-	this.GetSiteAsCurrent = function(id_site, callback){
+	this.SetSiteAsCurrent = function(id_site, callback){
 		if (callback != undefined)
 			this.callbacks[_this.CommandCode.SET_SITE_AS_CURRENT] = callback;
 		var action = {

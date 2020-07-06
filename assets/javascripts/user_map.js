@@ -101,11 +101,6 @@ function GetInfosCurrentMapDoUser()
 				UserInitMap();
 				UserResizeSVG();			
 			},500); 
-			
-			
-			if (gotoTest) InitTest();
-			
-			gotoTest = false;
 		}
 		else
 		{

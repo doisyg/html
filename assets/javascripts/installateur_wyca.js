@@ -1,5 +1,55 @@
+var create_new_site = false;
+var id_site_to_delete = -1;
 
 $(document).ready(function(e) {
+	
+	$('#install_normal_setup_sites .bAddSite').click(function(e) {
+		e.preventDefault();
+		
+		create_new_site = true;
+		
+		$('#pages_install_normal').hide();
+		$('#pages_install_by_step section.page').hide();
+		$('#pages_install_by_step').show();
+		$('#install_by_step_site').show();
+	});
+	
+	$(document).on('click', '#install_normal_setup_sites .bSiteSetCurrentElem', function(e) {
+		e.preventDefault();
+		
+		id_site = parseInt($(this).closest('li').data('id_site'));
+		
+		
+		wycaApi.SetSiteAsCurrent(id_site, function(data) {
+			if (data.A != wycaApi.AnswerCode.NO_ERROR) 
+				alert_wyca('Error navigation stop ; ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M);
+			else
+			{
+				GetSitesNormal();
+			}
+		});
+	});
+	
+	$(document).on('click', '#install_normal_setup_sites .bSiteDeleteElem', function(e) {
+		e.preventDefault();
+		
+		id_site_to_delete = parseInt($(this).closest('li').data('id_site'));
+		
+		wycaApi.DeleteSite(id_site, function(data) {
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$('#install_normal_setup_sites_list_site_elem_'+id_site_to_delete).remove();
+			}
+			else
+			{
+				console.log(JSON.stringify(data)); 
+				text = wycaApi.AnswerCodeToString(data.A);
+				if (data.M != '') text += '<br />'+data.M;
+				alert_wyca(text);
+			}
+		});
+	});
+	
 	
 	$('#install_normal_service_book .bAddServiceBook').click(function(e) {
 	

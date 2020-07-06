@@ -1394,20 +1394,20 @@ $(document).ready(function() {
 		else
 			ByStepAvertCantChange();
 	});
-	$('.modalAddDock .bScanAddDock').click(function(e) {
-		$('.modalAddDock .bScanAddDock').addClass('disabled');
+	$('#install_by_step_edit_map_container_all .modalAddDock .bScanAddDock').click(function(e) {
+		$('#install_by_step_edit_map_container_all .modalAddDock .bScanAddDock').addClass('disabled');
 		
 		wycaApi.GetMapFiducialsVisible(function(data) {
 			
-			$('.modalAddDock .bScanAddDock').removeClass('disabled');	
+			$('#install_by_step_edit_map_container_all .modalAddDock .bScanAddDock').removeClass('disabled');	
 			
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
 				console.log(data);
 				
-				$('.modalAddDock .dock').hide();
+				$('#install_by_step_edit_map_container_all .modalAddDock .dock').hide();
 				
-				posRobot = $('.modalAddDock #install_by_step_edit_map_modalAddDock_robot').offset();
+				posRobot = $('#install_by_step_edit_map_container_all .modalAddDock #install_by_step_edit_map_modalAddDock_robot').offset();
 				
 				for (i=0; i< data.D.length; i++)
 				{
@@ -1425,23 +1425,23 @@ $(document).ready(function() {
 						
 						// 1px / cm
 						
-						$('.modalAddDock #install_by_step_edit_map_modalAddDock_dock'+i).show();
-						$('.modalAddDock #install_by_step_edit_map_modalAddDock_dock'+i).css('left', posRobot.left + x_from_robot * 100); // lidar : y * -1
-						$('.modalAddDock #install_by_step_edit_map_modalAddDock_dock'+i).css('top', posRobot.top - y_from_robot * 100); // +20 position lidar, - 12.5 pour le centre
+						$('#install_by_step_edit_map_container_all .modalAddDock #install_by_step_edit_map_modalAddDock_dock'+i).show();
+						$('#install_by_step_edit_map_container_all .modalAddDock #install_by_step_edit_map_modalAddDock_dock'+i).css('left', posRobot.left + x_from_robot * 100); // lidar : y * -1
+						$('#install_by_step_edit_map_container_all .modalAddDock #install_by_step_edit_map_modalAddDock_dock'+i).css('top', posRobot.top - y_from_robot * 100); // +20 position lidar, - 12.5 pour le centre
 						//angle = (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
 						
 						angle = 0 - (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
 						
-						$('.modalAddDock #install_by_step_edit_map_modalAddDock_dock'+i).css({'-webkit-transform' : 'rotate('+ angle +'deg)',
+						$('#install_by_step_edit_map_container_all .modalAddDock #install_by_step_edit_map_modalAddDock_dock'+i).css({'-webkit-transform' : 'rotate('+ angle +'deg)',
 																	 '-moz-transform' : 'rotate('+ angle +'deg)',
 																	 '-ms-transform' : 'rotate('+ angle +'deg)',
 																	 'transform' : 'rotate('+ angle +'deg)'});
 						
 						
-						$('.modalAddDock #install_by_step_edit_map_modalAddDock_dock'+i).data('id_fiducial', data.D[i].ID);
-						$('.modalAddDock #install_by_step_edit_map_modalAddDock_dock'+i).data('x', data.D[i].P.X);
-						$('.modalAddDock #install_by_step_edit_map_modalAddDock_dock'+i).data('y', data.D[i].P.Y);
-						$('.modalAddDock #install_by_step_edit_map_modalAddDock_dock'+i).data('theta', data.D[i].P.T);
+						$('#install_by_step_edit_map_container_all .modalAddDock #install_by_step_edit_map_modalAddDock_dock'+i).data('id_fiducial', data.D[i].ID);
+						$('#install_by_step_edit_map_container_all .modalAddDock #install_by_step_edit_map_modalAddDock_dock'+i).data('x', data.D[i].P.X);
+						$('#install_by_step_edit_map_container_all .modalAddDock #install_by_step_edit_map_modalAddDock_dock'+i).data('y', data.D[i].P.Y);
+						$('#install_by_step_edit_map_container_all .modalAddDock #install_by_step_edit_map_modalAddDock_dock'+i).data('theta', data.D[i].P.T);
 					}
 				}
 			}
@@ -1452,7 +1452,7 @@ $(document).ready(function() {
 		});
     });
 	
-	$('.modalAddDock .dock').click(function(e) {
+	$('#install_by_step_edit_map_container_all .modalAddDock .dock').click(function(e) {
         e.preventDefault();
 		
 		nextIdDock++;

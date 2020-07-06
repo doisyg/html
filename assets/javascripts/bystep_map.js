@@ -170,25 +170,31 @@ function InitTest()
 	
 	var indexLi = 0;
 	
-	$.each(pois, function(indexInArray, poi){
-		indexLi++;
-		$('#install_by_step_test_map .list_test').append('' +
-			'<li id="list_test_'+indexLi+'" data-index_li="'+indexLi+'" data-type="Poi" data-id="' + poi.id_poi + '">'+
-			'	<span>' + poi.name + '</span>'+
-			'	<a href="#" class="bExecuteTest btn btn-xs btn-circle btn-warning pull-right"><i class="fa fa-play"></i></a>'+
-			'</li>'
-			);
-	});
+	if (pois.length > 0)
+	{
+		$.each(pois, function(indexInArray, poi){
+			indexLi++;
+			$('#install_by_step_test_map .list_test').append('' +
+				'<li id="list_test_'+indexLi+'" data-index_li="'+indexLi+'" data-type="Poi" data-id="' + poi.id_poi + '">'+
+				'	<span>' + poi.name + '</span>'+
+				'	<a href="#" class="bExecuteTest btn btn-xs btn-circle btn-warning pull-right"><i class="fa fa-play"></i></a>'+
+				'</li>'
+				);
+		});
+	}
 	
-	$.each(docks, function(indexInArray, dock){
-		indexLi++;
-		$('#install_by_step_test_map .list_test').append('' +
-			'<li id="list_test_'+indexLi+'" data-index_li="'+indexLi+'" data-type="Dock" data-id="' + dock.id_docking_station + '">'+
-			'	<span>' + dock.name + '</span>'+
-			'	<a href="#" class="bExecuteTest btn btn-xs btn-circle btn-warning pull-right"><i class="fa fa-play"></i></a>'+
-			'</li>'
-			);
-	});
+	if (docks.length > 0)
+	{
+		$.each(docks, function(indexInArray, dock){
+			indexLi++;
+			$('#install_by_step_test_map .list_test').append('' +
+				'<li id="list_test_'+indexLi+'" data-index_li="'+indexLi+'" data-type="Dock" data-id="' + dock.id_docking_station + '">'+
+				'	<span>' + dock.name + '</span>'+
+				'	<a href="#" class="bExecuteTest btn btn-xs btn-circle btn-warning pull-right"><i class="fa fa-play"></i></a>'+
+				'</li>'
+				);
+		});
+	}
 }
 
 function ByStepDisplayBlockZoom()

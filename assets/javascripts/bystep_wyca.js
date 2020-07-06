@@ -185,24 +185,58 @@ $(document).ready(function(e) {
 		}
 		else
 		{
-			wycaApi.GetCurrentSite(function(data) {
-				data.D.name = $('#pages_install_by_step .i_site_name').val();
-				wycaApi.SetSite(data.D, function(data){
-					$.ajax({
-						type: "POST",
-						url: 'ajax/install_by_step_site.php',
-						data: {
-						},
-						dataType: 'json',
-						success: function(data) {
-						},
-						error: function(e) {
-							alert_wyca('Error step site ; ' + e.responseText);
-						}
-					});
-					$('#pages_install_by_step a.install_by_step_site_next').click();
+			if (create_new_site)
+			{
+				newSite = { "id_site":-1, "comment":"", name:$('#pages_install_by_step .i_site_name').val() };
+				wycaApi.SetSite(newSite, function(data){
+					if (data.A != wycaApi.AnswerCode.NO_ERROR) 
+						alert_wyca('Error navigation stop ; ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M);
+					else
+					{
+						wycaApi.SetSiteAsCurrent(data.D, function(data) {
+							if (data.A != wycaApi.AnswerCode.NO_ERROR) 
+								alert_wyca('Error navigation stop ; ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M);
+							else
+							{
+								$.ajax({
+									type: "POST",
+									url: 'ajax/install_by_step_site.php',
+									data: {
+									},
+									dataType: 'json',
+									success: function(data) {
+									},
+									error: function(e) {
+										alert_wyca('Error step site ; ' + e.responseText);
+									}
+								});
+								$('#pages_install_by_step a.install_by_step_site_next').click();
+							}
+						});
+					}
 				});
-			});
+			}
+			else
+			{
+				wycaApi.GetCurrentSite(function(data) {
+					data.D.name = $('#pages_install_by_step .i_site_name').val();
+					wycaApi.SetSite(data.D, function(data){
+						$.ajax({
+							type: "POST",
+							url: 'ajax/install_by_step_site.php',
+							data: {
+							},
+							dataType: 'json',
+							success: function(data) {
+							},
+							error: function(e) {
+								alert_wyca('Error step site ; ' + e.responseText);
+							}
+						});
+						$('#pages_install_by_step a.install_by_step_site_next').click();
+					});
+				});
+			}
 		}
 	});
 	
@@ -265,7 +299,6 @@ $(document).ready(function(e) {
         img.src = 'assets/images/vide.png';
 		
 		wycaApi.MappingStop(function(data) {
-			$('#install_by_step_mapping_fin .loading_fin_create_map').hide();
 			var img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
             img.src = 'data:image/png;base64,' + data.D;
 			
@@ -285,6 +318,7 @@ $(document).ready(function(e) {
 				canvas.getContext('2d').drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
 				
 				CalculateMapTrinary();
+				$('#install_by_step_mapping_fin .loading_fin_create_map').hide();
 			}, 100);
 		});
 		mappingStarted = false;
@@ -292,7 +326,8 @@ $(document).ready(function(e) {
 		$('#install_by_step_mapping .mapping_view').hide();
 		$('#install_by_step_mapping .bMappingStart').show();
 		
-		$('#install_by_step_mapping_fin .bMappingCancelMap').show();
+		$('#install_by_step_mapping_fin .bMappingCancelMap2').show();
+		$('#install_by_step_mapping_fin .bMappingSaveMap').show();
 		
 		if (intervalMap != null)
 		{
@@ -386,7 +421,11 @@ $(document).ready(function(e) {
 										
 										$('#install_by_step_mapping_fin .install_by_step_mapping_fin_next').click();
 										
-										ByStepInitMap();
+			
+										setTimeout(function(){
+											ByStepInitMap();
+											ByStepResizeSVG();
+										},500); 
 									  
 										var img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
 										img.src = "assets/images/vide.png";
