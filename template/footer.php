@@ -14,8 +14,8 @@
         
         <script>
 		var lang = '<?php echo $currentLang->iso;?>';
-		var robot_host = '<?php echo (file_exists('C:\\'))?'192.168.0.30:9095':'elodie.wyca-solutions.com:9095';?>';
-		//var robot_host = '<?php echo (file_exists('C:\\'))?'10.0.0.44:9095':'elodie.wyca-solutions.com:9095';?>';
+		//var robot_host = '<?php echo (file_exists('C:\\'))?'192.168.0.30:9095':'elodie.wyca-solutions.com:9095';?>';
+		var robot_host = '<?php echo (file_exists('C:\\'))?'10.0.0.44:9095':'elodie.wyca-solutions.com:9095';?>';
 		var user_api_key = '<?php echo $_SESSION["api_key"];?>';
 		// TODO var id_map_last = <?php // echo $currentIdMap;?>;
 		var textSelectOnOrMoreTops = "<?php echo addslashes(stripslashes(__('You must select one or more tops')));?>";

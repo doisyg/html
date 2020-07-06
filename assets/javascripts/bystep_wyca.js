@@ -421,26 +421,53 @@ $(document).ready(function(e) {
 										
 										$('#install_by_step_mapping_fin .install_by_step_mapping_fin_next').click();
 										
+										
+										wycaApi.SetMapAsCurrent(id_map, function(data){
+											if (data.A == wycaApi.AnswerCode.NO_ERROR)
+											{
+												wycaApi.NavigationStartFromMapping(function(data) {
+													
+													if (data.A != wycaApi.AnswerCode.NO_ERROR) { alert_wyca('Error navigation start ; ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M);} 
+													$('#install_by_step_mapping_use .install_by_step_mapping_use_next').click();
+													
+													setTimeout(function(){
+														ByStepInitMap();
+														ByStepResizeSVG();
+													},500); 
+																
+													$.ajax({
+														type: "POST",
+														url: 'ajax/install_by_step_save_mapping.php',
+														data: {},
+														dataType: 'json',
+														success: function(data) {
+														},
+														error: function(e) {
+														}
+													});
+												});
+											}
+											else
+											{
+												text = wycaApi.AnswerCodeToString(data.A);
+												if (data.M != '')
+													text += ' : ' + data.M;
+												alert_wyca(text);
+												
+												$('#install_by_step_mapping_use .bUseThisMapNowYes').show();
+												$('#install_by_step_mapping_use .bUseThisMapNowNo').show();
+												$('#install_by_step_mapping_use .modalUseThisMapNowTitle1').show();
+												$('#install_by_step_mapping_use .modalUseThisMapNowTitle2').hide();
+												$('#install_by_step_mapping_use .modalUseThisMapNowContent').hide();
+											}
+										});
 			
-										setTimeout(function(){
-											ByStepInitMap();
-											ByStepResizeSVG();
-										},500); 
+										
 									  
 										var img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
 										img.src = "assets/images/vide.png";
 										
 										
-										$.ajax({
-											type: "POST",
-											url: 'ajax/install_by_step_save_mapping.php',
-											data: {},
-											dataType: 'json',
-											success: function(data) {
-											},
-											error: function(e) {
-											}
-										});
 									}
 									else
 									{

@@ -319,7 +319,7 @@
             <footer>
             	<a href="#" class="btn btn-warning button_goto bMappingCancelMap2" data-goto="install_by_step_mapping" style="position:absolute; width:50%; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>           
                 <a href="#" class="btn btn-primary bMappingSaveMap" style="width:50%; position:absolute; right:0; bottom:0px; left:auto; font-size:30px;"><?php echo __('Save');?></a>
-                <a href="#" class="install_by_step_mapping_fin_next button_goto" data-goto="install_by_step_mapping_use" style="display:none;"></a>   
+                <a href="#" class="install_by_step_mapping_fin_next button_goto" data-goto="install_by_step_edit_map" style="display:none;"></a>   
             </footer>
         </section>
         <section id="install_by_step_mapping_use" class="page hide_photo_back with_footer">
