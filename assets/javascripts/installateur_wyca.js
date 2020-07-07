@@ -329,8 +329,8 @@ $(document).ready(function(e) {
 	$('#pages_install_normal a.bImportTopDo').click(function(e) {
         e.preventDefault();
 		
-		$('.modalImportTop_loading').hide();
-		$('.modalImportTop_content').show();
+		$('#pages_install_normal .modalImportTop_loading').hide();
+		$('#pages_install_normal .modalImportTop_content').show();
 		
 		file = $('#pages_install_normal .file_import_top')[0].files[0];
 		var reader = new FileReader();
@@ -338,8 +338,8 @@ $(document).ready(function(e) {
 			wycaApi.InstallNewTopWithoutKey(btoa(reader.result), function(data) { 
 				if (data.A == wycaApi.AnswerCode.NO_ERROR)
 				{
-					$('.modalImportTop_loading').hide();
-					$('.modalImportTop_content').show();
+					$('#pages_install_normal .modalImportTop_loading').hide();
+					$('#pages_install_normal .modalImportTop_content').show();
 					
 					$('#pages_install_normal .modalImportTop').modal('hide');
 					InitTopsNormal();
@@ -361,8 +361,8 @@ $(document).ready(function(e) {
 	$('#pages_install_normal a.import_top').click(function(e) {
         e.preventDefault();
 		
-		$('.modalImportTop_loading').hide();
-		$('.modalImportTop_content').show();
+		$('#pages_install_normal .modalImportTop_loading').hide();
+		$('#pages_install_normal .modalImportTop_content').show();
 		
 		$('#pages_install_normal .modalImportTop').modal('show');
 	});

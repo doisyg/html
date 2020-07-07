@@ -102,6 +102,12 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 	#install_by_step_mapping_divOptionTrinary { position:absolute; bottom:30px; left:5%; width:90%; z-index:300; color:#0088cc; text-align:left; }
 	#install_by_step_mapping_divOptionTrinary .panel-body { background-color:rgba(255,255,255,0.5); }
 	#install_by_step_mapping_divOptionTrinary h3 { display:none; }
+	
+	
+	#install_normal_setup_trinary_divResultTrinary { z-index:200; }
+	#install_normal_setup_trinary_divOptionTrinary { position:absolute; bottom:30px; left:5%; width:90%; z-index:300; color:#0088cc; text-align:left; }
+	#install_normal_setup_trinary_divOptionTrinary .panel-body { background-color:rgba(255,255,255,0.5); }
+	#install_normal_setup_trinary_divOptionTrinary h3 { display:none; }
 }
 
 .table_wifi img { width:25px; }

@@ -48,6 +48,11 @@ $(window).on("popstate", function(e) {
 
 $(document).ready(function(e) {
 	
+	$('.popupHelp').click(function(e) {
+        e.preventDefault();
+		$(this).hide(200);
+    });
+	
 	history.pushState({ current_groupe:$('.menu_groupe .active').attr('id'), current_page:'' }, $('.menu_groupe .active').html(), "/#"+$('.menu_groupe .active').html());
 	
 	$('.popup_error .panel-heading .fa-times').click(function(e) {
@@ -135,6 +140,7 @@ $(document).ready(function(e) {
 		if (next == 'install_normal_manager') GetManagersNormal();
 		if (next == 'install_normal_service_book') GetServiceBooksNormal();
 		if (next == 'install_normal_edit_map') GetInfosCurrentMapNormal();
+		if (next == 'install_normal_setup_trinary') NormalInitTrinary();
 		
 		if (next == 'manager_edit_map') GetInfosCurrentMapManager();
 		if (next == 'manager_top') InitTopsActiveManager();

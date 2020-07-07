@@ -276,10 +276,6 @@ var currentDockNormalLongTouch = null;
 var currentPoiNormalLongTouch = null;
 
 $(document).ready(function(e) {
-	$('.popupHelp').click(function(e) {
-        e.preventDefault();
-		$(this).hide(200);
-    });
 	$('#install_normal_edit_map_svg').on('touchend', function(e) { 
 		$('#install_normal_edit_map_zoom_popup').hide();
 		if (timerNormalLongPress != null)

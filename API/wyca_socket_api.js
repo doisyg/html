@@ -102,6 +102,7 @@ function WycaAPI(options){
 	 
 		GET_PATH			: 0x0115,
 		GET_PATH_FROM_CURRENT_POSE			: 0x0116,
+		GET_MOVE_IN_PROGRESS			: 0x011F,
 	 
 	// Services DB
 		CHECK_USER_KEY			: 0x6109,
@@ -216,6 +217,7 @@ function WycaAPI(options){
 		DOCKING_STATE			: 0x0005,
 		POI_POSES			: 0x0010,
 		LATENCY_RETURN			: 0x3006,
+		MOVE_IN_PROGRESS			: 0x0015,
 	 
 	// Actions
 		MAPPING_START_FEEDBACK			: 0x4004,
@@ -1073,6 +1075,9 @@ function WycaAPI(options){
 						case this.EventCode.POI_POSES:
 							if (_this.options.onPOIsDetect != undefined) { _this.options.onPOIsDetect(msg.D.D); }
 							break;
+						case this.EventCode.MOVE_IN_PROGRESS:
+							if (_this.options.onMoveInProgress != undefined) { _this.options.onMoveInProgress(msg.D.D); }
+							break;
 					}				
 					break;
 				case this.CommandCode.UNSUBSCRIBE:
@@ -1212,6 +1217,9 @@ function WycaAPI(options){
 				case this.EventCode.POI_POSES:
 					if (_this.options.onPOIsDetect != undefined) { _this.options.onPOIsDetect(msg.D); }
 					break;
+				case this.EventCode.MOVE_IN_PROGRESS:
+					if (_this.options.onMoveInProgress != undefined) { _this.options.onMoveInProgress(msg.D); }
+					break;
 			}
 		}
 	}
@@ -1331,6 +1339,7 @@ function WycaAPI(options){
 		if (_this.options.onIsSafetyStop != undefined) { var n=_this.EventCode.IS_SAFETY_STOP; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onDockingState != undefined) { var n=_this.EventCode.DOCKING_STATE; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onPOIsDetect != undefined) { var n=_this.EventCode.POI_POSES; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
+		if (_this.options.onMoveInProgress != undefined) { var n=_this.EventCode.MOVE_IN_PROGRESS; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		
 		if (_this.options.onInitialized != undefined) _this.options.onInitialized();
 	}
@@ -1364,6 +1373,7 @@ function WycaAPI(options){
 			case 'onIsSafetyStop': ev_code = _this.EventCode.IS_SAFETY_STOP; break;
 			case 'onDockingState': ev_code = _this.EventCode.DOCKING_STATE; break;
 			case 'onPOIsDetect': ev_code = _this.EventCode.POI_POSES; break;
+			case 'onMoveInProgress': ev_code = _this.EventCode.MOVE_IN_PROGRESS; break;
 		}
 		
 		if (ev_code == 0 && _this.options.id_robot == 'not_robot')
@@ -1429,6 +1439,7 @@ function WycaAPI(options){
 			case 'onIsSafetyStop': ev_code = _this.CommandCode.IS_SAFETY_STOP; break;
 			case 'onDockingState': ev_code = _this.CommandCode.DOCKING_STATE; break;
 			case 'onPOIsDetect': ev_code = _this.CommandCode.POI_POSES; break;
+			case 'onMoveInProgress': ev_code = _this.CommandCode.MOVE_IN_PROGRESS; break;
 		}
 		
 		if (ev_code == 0 && _this.options.id_robot == 'not_robot')
@@ -1503,6 +1514,14 @@ function WycaAPI(options){
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}	
+	this.FactoryDataReset  = function(callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.FACTORY_DATA_RESET] = callback;
+		var action = {
+			"O": _this.CommandCode.FACTORY_DATA_RESET
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
 	this.InstallNewTop  = function(api_key, crypted_file_b64, callback){
 		if (callback != undefined)
 			this.callbacks[_this.CommandCode.INSTALL_NEW_TOP] = callback;
@@ -1704,6 +1723,14 @@ function WycaAPI(options){
 				"Y": y,
 				"T": theta
 			}
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	this.GetMoveInProgress = function(callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.GET_MOVE_IN_PROGRESS] = callback;
+		var action = {
+			"O": _this.CommandCode.GET_MOVE_IN_PROGRESS
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}

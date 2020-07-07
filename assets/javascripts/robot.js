@@ -105,10 +105,21 @@ $(document).ready(function(e) {
 		onGoToPoiResult: onGoToPoiResult,
 		onGoToChargeResult: onGoToChargeResult,
 		onGoToPoseResult: onGoToPoseResult,
+		onMoveInProgress: function(data){
+			if (data)
+				$('body > header .stop_move').show();
+			else
+				$('body > header .stop_move').hide();
+		}
 	});
 	
 	
 	wycaApi.init();	
+	
+	$('body > header .stop_move').click(function(e) {
+        e.preventDefault();
+		wycaApi.StopMove();
+    });
 });
 
 function onGoToPoseResult(data)
@@ -124,15 +135,15 @@ function onGoToChargeResult(data)
 function InitDockingState()
 {
 	if (dockingStateLast == "docked")
-	{
 		$('.ifDocked').show();
-		$('.ifUndocked').hide();
-	}
 	else
-	{
 		$('.ifDocked').hide();
+	
+	if (dockingStateLast == 'undocked')
 		$('.ifUndocked').show();
-	}
+	else
+		$('.ifUndocked').hide();
+		
 	
 	// Le jpystick s'affiche quand le robot passe de docker à dédocker, donc on recheck l'initialisation du joystick
 	InitJoystick();
@@ -212,9 +223,8 @@ function initStateRobot(etat)
 	}
 	else if (robotCurrentState == 'undocked')
 	{
-		$('.idUndocked').show();
+		$('.ifUndocked').show();
 	}
-	
 }
 
 firstInitRobotPose = true;

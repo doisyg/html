@@ -231,10 +231,6 @@ var currentDockManagerLongTouch = null;
 var currentPoiManagerLongTouch = null;
 
 $(document).ready(function(e) {
-	$('.popupHelp').click(function(e) {
-        e.preventDefault();
-		$(this).hide(200);
-    });
 	$('#manager_edit_map_svg').on('touchend', function(e) { 
 		$('#manager_edit_map_zoom_popup').hide();
 		if (timerManagerLongPress != null)

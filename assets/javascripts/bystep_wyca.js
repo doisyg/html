@@ -60,8 +60,8 @@ $(document).ready(function(e) {
 	$('#pages_install_by_step a.bImportTopDo').click(function(e) {
         e.preventDefault();
 		
-		$('.modalImportTop_loading').hide();
-		$('.modalImportTop_content').show();
+		$('#pages_install_by_step .modalImportTop_loading').hide();
+		$('#pages_install_by_step .modalImportTop_content').show();
 		
 		file = $('#pages_install_by_step .file_import_top')[0].files[0];
 		var reader = new FileReader();
@@ -70,8 +70,8 @@ $(document).ready(function(e) {
 				if (data.A == wycaApi.AnswerCode.NO_ERROR)
 				{
 					
-					$('.modalImportTop_loading').hide();
-					$('.modalImportTop_content').show();
+					$('#pages_install_by_step .modalImportTop_loading').hide();
+					$('#pages_install_by_step .modalImportTop_content').show();
 					
 					$('#pages_install_by_step .modalImportTop').modal('hide');
 					InitTopsByStep();
@@ -91,8 +91,8 @@ $(document).ready(function(e) {
 	$('#pages_install_by_step a.import_top').click(function(e) {
         e.preventDefault();
 		
-		$('.modalImportTop_loading').hide();
-		$('.modalImportTop_content').show();
+		$('#pages_install_by_step .modalImportTop_loading').hide();
+		$('#pages_install_by_step .modalImportTop_content').show();
 		
 		$('#pages_install_by_step .modalImportTop').modal('show');
 	});
@@ -270,7 +270,7 @@ $(document).ready(function(e) {
 				$('#install_by_step_mapping .progressStartMapping h3').html(textStartMapping);
 				timerCreateMap = 5;
 				timerCreateMapCurrent = 5;
-				$('.progressStartMapping').show();
+				$('#install_by_step_mapping .progressStartMapping').show();
 				NextTimerCreateMap();
 			}
 			else
@@ -318,7 +318,6 @@ $(document).ready(function(e) {
 				canvas.getContext('2d').drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
 				
 				CalculateMapTrinary();
-				$('#install_by_step_mapping_fin .loading_fin_create_map').hide();
 			}, 100);
 		});
 		mappingStarted = false;
@@ -1027,9 +1026,9 @@ function NextTimerCreateMap()
 	if (timerCreateMapCurrent < 0)
 	{
 		setTimeout(function() {
-			$('.progressStartMapping').hide();
-			$('.bMappingStop').show();
-			$('.mapping_view').show();
+			$('#install_by_step_mapping .progressStartMapping').hide();
+			$('#install_by_step_mapping .bMappingStop').show();
+			$('#install_by_step_mapping .mapping_view').show();
 				
 			img = document.getElementById("install_by_step_mapping_img_map_saved");
 			img.src = "assets/images/vide.png";
@@ -1050,12 +1049,12 @@ function NextTimerCreateMap()
 				mappingStarted = true;
 			});
 			
-			$('.progressStartMapping h3').html(textStartMapping);
+			$('#install_by_step_mapping .progressStartMapping h3').html(textStartMapping);
 		}
 		
 		valeur = 100-parseInt(timerCreateMapCurrent / timerCreateMap * 100);
 
-		$('.createMapProgress .progress-bar').css('width', valeur+'%').attr('aria-valuenow', valeur); 
+		$('#install_by_step_mapping .createMapProgress .progress-bar').css('width', valeur+'%').attr('aria-valuenow', valeur); 
 	
 		timerCreateMapCurrent -= 0.1;	
 		timerCreateMapCurrent = parseInt(timerCreateMapCurrent*10)/10;
@@ -1096,20 +1095,20 @@ function CalculateMapTrinaryDo()
 	threshold_occupied_255 = 255 - threshold_occupied / 100 * 255;
 	
 	buffer = new Uint8ClampedArray(width * height * 4); // have enough bytes
+
+	var pixelsData = canvas.getContext('2d').getImageData(0, 0, width, height).data;	
 	
 	for(var y = 0; y < height; y++)
 	{
 		for(var x = 0; x < width; x++)
 		{
-			var pixelData = canvas.getContext('2d').getImageData(x, y, 1, 1).data;
-			
 			var pos = (y * width + x) * 4; // position in buffer based on x and y
 			
-			if (pixelData[3] == 0) // Alpha 0
+			if (pixelsData[pos+3] == 0) // Alpha 0
 				color = color_unknow;
-			else if (pixelData[0] > threshold_free_255)
+			else if (pixelsData[pos] > threshold_free_255)
 				color = color_free;
-			else if (pixelData[0] < threshold_occupied_255)
+			else if (pixelsData[pos] < threshold_occupied_255)
 				color = color_occupied;
 			else
 				color = color_unknow;
@@ -1130,5 +1129,7 @@ function CalculateMapTrinaryDo()
 	var idata = ctx.createImageData(width, height);
 	idata.data.set(buffer);
 	ctx.putImageData(idata, 0, 0);
+	
+	$('#install_by_step_mapping_fin .loading_fin_create_map').hide();
 }
 

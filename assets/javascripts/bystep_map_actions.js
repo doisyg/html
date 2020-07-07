@@ -539,42 +539,44 @@ $(document).ready(function() {
 		$('#install_by_step_edit_map_dock_name').val(dock.name);
 		$('#install_by_step_edit_map_dock_comment').val(dock.comment);
 		
-		$('.modalDockOptions .list_undock_procedure li').remove();
+		$('#install_by_step_edit_map_container_all .modalDockOptions .list_undock_procedure li').remove();
 		
-		$.each(dock.undock_path, function( indexConfig, undock_step ) {
-
-			console.log(undock_step);
-			indexDockElem++;
-			
-			if (undock_step.linear_distance != 0)
-			{				
-				distance = undock_step.linear_distance;
-				direction = undock_step.linear_distance > 0 ? 'front':'back';
+		if (dock.undock_path.length > 0)
+		{
+			$.each(dock.undock_path, function( indexConfig, undock_step ) {
+	
+				console.log(undock_step);
+				indexDockElem++;
 				
-				$('.modalDockOptions .list_undock_procedure').append('' +
-					'<li id="install_by_step_edit_map_list_undock_procedure_elem_'+indexDockElem+'" data-index_dock_procedure="'+indexDockElem+'" data-action="move" data-distance="' + distance + '">'+
-					'	<span>Move ' + ((direction == 'back')?'back':'front') + ' ' + ((direction == 'back')?distance*-1:distance) + 'm</span>'+
-					'	<a href="#" class="bByStepUndockProcedureDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
-					'	<a href="#" class="bByStepUndockProcedureEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
-					'</li>'
-					);
-			}
-			else
-			{	
-				angle = undock_step.angular_distance * 180 / Math.PI;
-				angle = Math.round(angle*100)/100;
+				if (undock_step.linear_distance != 0)
+				{				
+					distance = undock_step.linear_distance;
+					direction = undock_step.linear_distance > 0 ? 'front':'back';
+					
+					$('#install_by_step_edit_map_container_all .modalDockOptions .list_undock_procedure').append('' +
+						'<li id="install_by_step_edit_map_list_undock_procedure_elem_'+indexDockElem+'" data-index_dock_procedure="'+indexDockElem+'" data-action="move" data-distance="' + distance + '">'+
+						'	<span>Move ' + ((direction == 'back')?'back':'front') + ' ' + ((direction == 'back')?distance*-1:distance) + 'm</span>'+
+						'	<a href="#" class="bByStepUndockProcedureDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="bByStepUndockProcedureEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
+						'</li>'
+						);
+				}
+				else
+				{	
+					angle = undock_step.angular_distance * 180 / Math.PI;
+					angle = Math.round(angle*100)/100;
+					
+					$('#install_by_step_edit_map_container_all .modalDockOptions .list_undock_procedure').append('' +
+						'<li id="install_by_step_edit_map_list_undock_procedure_elem_'+indexDockElem+'" data-index_dock_procedure="'+indexDockElem+'" data-action="rotate" data-angle="'+angle+'">'+
+						'	<span>Rotate '+angle+'°</span>'+
+						'	<a href="#" class="bByStepUndockProcedureDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="bByStepUndockProcedureEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
+						'</li>'
+						);
+				}
 				
-				$('.modalDockOptions .list_undock_procedure').append('' +
-					'<li id="install_by_step_edit_map_list_undock_procedure_elem_'+indexDockElem+'" data-index_dock_procedure="'+indexDockElem+'" data-action="rotate" data-angle="'+angle+'">'+
-					'	<span>Rotate '+angle+'°</span>'+
-					'	<a href="#" class="bByStepUndockProcedureDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
-					'	<a href="#" class="bByStepUndockProcedureEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
-					'</li>'
-					);
-			}
-			
-		});		
-		
+			});		
+		}
 		
 		$('#install_by_step_edit_map_container_all .modalDockOptions').modal('show');
     });
@@ -648,41 +650,44 @@ $(document).ready(function() {
 		$('#install_by_step_edit_map_poi_name').val(poi.name);
 		$('#install_by_step_edit_map_poi_comment').val(poi.comment);
 		
-		$('.modalPoiOptions .list_undock_procedure_poi li').remove();
+		$('#install_by_step_edit_map_container_all .modalPoiOptions .list_undock_procedure_poi li').remove();
 		
-		$.each(poi.undock_path, function( indexConfig, undock_step ) {
-
-			console.log(undock_step);
-			indexPoiElem++;
-			
-			if (undock_step.linear_distance != 0)
-			{				
-				distance = undock_step.linear_distance;
-				direction = undock_step.linear_distance > 0 ? 'front':'back';
+		if (poi.undock_path.length > 0)
+		{
+			$.each(poi.undock_path, function( indexConfig, undock_step ) {
+	
+				console.log(undock_step);
+				indexPoiElem++;
 				
-				$('.modalPoiOptions .list_undock_procedure_poi').append('' +
-					'<li id="install_by_step_edit_map_list_undock_procedure_poi_elem_'+indexPoiElem+'" data-index_poi_procedure="'+indexPoiElem+'" data-action="move" data-distance="' + distance + '">'+
-					'	<span>Move ' + ((direction == 'back')?'back':'front') + ' ' + ((direction == 'back')?distance*-1:distance) + 'm</span>'+
-					'	<a href="#" class="bByStepUndockProcedurePoiDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
-					'	<a href="#" class="bByStepUndockProcedurePoiEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
-					'</li>'
-					);
-			}
-			else
-			{	
-				angle = undock_step.angular_distance * 180 / Math.PI;
-				angle = Math.round(angle*100)/100;
+				if (undock_step.linear_distance != 0)
+				{				
+					distance = undock_step.linear_distance;
+					direction = undock_step.linear_distance > 0 ? 'front':'back';
+					
+					$('#install_by_step_edit_map_container_all .modalPoiOptions .list_undock_procedure_poi').append('' +
+						'<li id="install_by_step_edit_map_list_undock_procedure_poi_elem_'+indexPoiElem+'" data-index_poi_procedure="'+indexPoiElem+'" data-action="move" data-distance="' + distance + '">'+
+						'	<span>Move ' + ((direction == 'back')?'back':'front') + ' ' + ((direction == 'back')?distance*-1:distance) + 'm</span>'+
+						'	<a href="#" class="bByStepUndockProcedurePoiDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="bByStepUndockProcedurePoiEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
+						'</li>'
+						);
+				}
+				else
+				{	
+					angle = undock_step.angular_distance * 180 / Math.PI;
+					angle = Math.round(angle*100)/100;
+					
+					$('#install_by_step_edit_map_container_all .modalPoiOptions .list_undock_procedure_poi').append('' +
+						'<li id="install_by_step_edit_map_list_undock_procedure_poi_elem_'+indexPoiElem+'" data-index_poi_procedure="'+indexPoiElem+'" data-action="rotate" data-angle="'+angle+'">'+
+						'	<span>Rotate '+angle+'°</span>'+
+						'	<a href="#" class="bByStepUndockProcedurePoiDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="bByStepUndockProcedurePoiEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
+						'</li>'
+						);
+				}
 				
-				$('.modalPoiOptions .list_undock_procedure_poi').append('' +
-					'<li id="install_by_step_edit_map_list_undock_procedure_poi_elem_'+indexPoiElem+'" data-index_poi_procedure="'+indexPoiElem+'" data-action="rotate" data-angle="'+angle+'">'+
-					'	<span>Rotate '+angle+'°</span>'+
-					'	<a href="#" class="bByStepUndockProcedurePoiDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
-					'	<a href="#" class="bByStepUndockProcedurePoiEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
-					'</li>'
-					);
-			}
-			
-		});		
+			});
+		}
 		
 		$('#install_by_step_edit_map_container_all .modalPoiOptions').modal('show');
 		
@@ -1389,11 +1394,20 @@ $(document).ready(function() {
 		ByStepHideMenus();
 		if (bystepCanChangeMenu)
 		{
+			$('#install_by_step_edit_map_container_all .texts_add_dock').hide();
+			$('#install_by_step_edit_map_container_all .text_prepare_robot').show();
+			
+			$('#install_by_step_edit_map_container_all .modalAddDock .dock').hide();
 			$('#install_by_step_edit_map_container_all .modalAddDock').modal('show');
 		}
 		else
 			ByStepAvertCantChange();
 	});
+	
+	$('#install_by_step_edit_map_container_all .modalAddDock .joystickDiv .curseur').on('touchstart', function(e) {
+		$('#install_by_step_edit_map_container_all .modalAddDock .dock').hide();
+	});
+	
 	$('#install_by_step_edit_map_container_all .modalAddDock .bScanAddDock').click(function(e) {
 		$('#install_by_step_edit_map_container_all .modalAddDock .bScanAddDock').addClass('disabled');
 		
@@ -1408,6 +1422,12 @@ $(document).ready(function() {
 				$('#install_by_step_edit_map_container_all .modalAddDock .dock').hide();
 				
 				posRobot = $('#install_by_step_edit_map_container_all .modalAddDock #install_by_step_edit_map_modalAddDock_robot').offset();
+				
+				$('#install_by_step_edit_map_container_all .texts_add_dock').hide();
+				if (data.D.length > 0)
+					$('#install_by_step_edit_map_container_all .text_set_dock').show();
+				else
+					$('#install_by_step_edit_map_container_all .text_prepare_robot').show();
 				
 				for (i=0; i< data.D.length; i++)
 				{
@@ -1468,8 +1488,23 @@ $(document).ready(function() {
 		approch_pose_y = $(this).data('y') + Math.sin($(this).data('theta')) * distance_approche_robot_fiducial;
 		approch_pose_t = $(this).data('theta') + Math.PI;
 		
+		dock_master = false;
+		if (docks.length == 1)
+		{
+			// First dock
+			dock_master = true;
+		}
+		if (!dock_master && docks.length > 0)
+		{
+			dock_master = true;
+			$.each(docks, function( index, dock ) {
+				if (dock.is_master)
+					dock_master = false;
+			});
+		}
+		
 		num = GetMaxNumDock()+1;
-		d = {'id_docking_station':nextIdDock, 'id_map':id_map, 'id_fiducial':$(this).data('id_fiducial'), 'final_pose_x':final_pose_x, 'final_pose_y':final_pose_y, 'final_pose_t':final_pose_t, 'approch_pose_x':approch_pose_x, 'approch_pose_y':approch_pose_y, 'approch_pose_t':approch_pose_t, 'num':parseInt(num), 'fiducial_pose_x':$(this).data('x'), 'fiducial_pose_y':$(this).data('y'), 'fiducial_pose_t':$(this).data('theta'), 'name':'Dock '+num, 'comment':'', 'advanced':true, 'undock_path':[{'linear_distance':-0.3, 'angular_distance':0}], 'is_master':false};
+		d = {'id_docking_station':nextIdDock, 'id_map':id_map, 'id_fiducial':$(this).data('id_fiducial'), 'final_pose_x':final_pose_x, 'final_pose_y':final_pose_y, 'final_pose_t':final_pose_t, 'approch_pose_x':approch_pose_x, 'approch_pose_y':approch_pose_y, 'approch_pose_t':approch_pose_t, 'num':parseInt(num), 'fiducial_pose_x':$(this).data('x'), 'fiducial_pose_y':$(this).data('y'), 'fiducial_pose_t':$(this).data('theta'), 'name':'Dock '+num, 'comment':'', 'advanced':true, 'undock_path':[{'linear_distance':-0.3, 'angular_distance':0}], 'is_master':dock_master};
 		ByStepAddHistorique({'action':'add_dock', 'data':d});
         docks.push(d);
 		ByStepTraceDock(docks.length-1);
@@ -1479,13 +1514,17 @@ $(document).ready(function() {
 		currentDockIndex = docks.length-1;
 		dock = docks[currentDockIndex];
 		
+		$('#install_by_step_edit_map_dock_name').val(dock.name);
+		$('#install_by_step_edit_map_dock_comment').val(dock.comment);
 		$('#install_by_step_edit_map_dock_number').val(dock.num);
+		$('#install_by_step_edit_map_dock_is_master').prop('checked', dock.is_master);
 		
-		$('.modalDockOptions .list_undock_procedure li').remove();
+		
+		$('#install_by_step_edit_map_container_all .modalDockOptions .list_undock_procedure li').remove();
 		
 		indexDockElem++;
 		
-		$('.modalDockOptions .list_undock_procedure').append('' +
+		$('#install_by_step_edit_map_container_all .modalDockOptions .list_undock_procedure').append('' +
 			'<li id="install_by_step_edit_map_list_undock_procedure_elem_'+indexDockElem+'" data-index_dock_procedure="'+indexDockElem+'" data-action="move" data-distance="-0.3">'+
 			'	<span>Move back 0.3m</span>'+
 			'	<a href="#" class="bByStepUndockProcedureDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
@@ -1497,84 +1536,100 @@ $(document).ready(function() {
     });
 	
 	$('#install_by_step_edit_map_bDockSaveConfig').click(function(e) {
-		dock = docks[currentDockIndex];
-		saveCurrentDock = JSON.stringify(dock);
-				
-		dock.name = $('#install_by_step_edit_map_dock_name').val();
-		dock.num = parseInt($('#install_by_step_edit_map_dock_number').val());
-		dock.comment = $('#install_by_step_edit_map_dock_comment').val();
-		if ($('#install_by_step_edit_map_dock_is_master').prop('checked'))
+		firstAction = $('#install_by_step_edit_map_container_all .modalDockOptions .list_undock_procedure li').first();
+		if (firstAction.data('action') == 'rotate')
 		{
-			// Désactive les autres
-			$.each(docks, function( index, dock ) {
-				dock.is_master = false;
-			});
+			e.preventDefault();
+			alert_wyca('You cannot start with a rotation');
 		}
-		dock.is_master = $('#install_by_step_edit_map_dock_is_master').prop('checked');
-			
-		dock.undock_path = Array();
-		
-		$('.modalDockOptions .list_undock_procedure li').each(function(index, element) {
-			if ($(this).data('action') == 'rotate')
+		else if (firstAction.data('action') != 'rotate' && firstAction.data('distance') > 0)
+		{
+			e.preventDefault();
+			alert_wyca('You cannot start with moving forward');
+		}
+		else
+		{
+			dock = docks[currentDockIndex];
+			saveCurrentDock = JSON.stringify(dock);
+					
+			dock.name = $('#install_by_step_edit_map_dock_name').val();
+			dock.num = parseInt($('#install_by_step_edit_map_dock_number').val());
+			dock.comment = $('#install_by_step_edit_map_dock_comment').val();
+			if ($('#install_by_step_edit_map_dock_is_master').prop('checked'))
 			{
-				angle_rad = parseFloat($(this).data('angle')) * Math.PI/180;
-				dock.undock_path.push({'linear_distance':0, 'angular_distance':angle_rad});
+				// Désactive les autres
+				$.each(docks, function( index, dock ) {
+					dock.is_master = false;
+				});
 			}
-			else
-				dock.undock_path.push({'linear_distance':$(this).data('distance'), 'angular_distance':0});
-        });
-		
-		docks[currentDockIndex] = dock;
+			dock.is_master = $('#install_by_step_edit_map_dock_is_master').prop('checked');
 				
-		if (bystepCurrentAction == 'editDock')
-			ByStepAddHistorique({'action':'edit_dock', 'data':{'index':currentDockIndex, 'old':saveCurrentDock, 'new':JSON.stringify(docks[currentDockIndex])}});
-		
-		ByStepTraceDock(currentDockIndex);
+			dock.undock_path = Array();
+			
+			$('#install_by_step_edit_map_container_all .modalDockOptions .list_undock_procedure li').each(function(index, element) {
+				if ($(this).data('action') == 'rotate')
+				{
+					angle_rad = parseFloat($(this).data('angle')) * Math.PI/180;
+					dock.undock_path.push({'linear_distance':0, 'angular_distance':angle_rad});
+				}
+				else
+					dock.undock_path.push({'linear_distance':$(this).data('distance'), 'angular_distance':0});
+			});
+			
+			docks[currentDockIndex] = dock;
+					
+			if (bystepCurrentAction == 'editDock')
+				ByStepAddHistorique({'action':'edit_dock', 'data':{'index':currentDockIndex, 'old':saveCurrentDock, 'new':JSON.stringify(docks[currentDockIndex])}});
+			
+			ByStepTraceDock(currentDockIndex);
+			
+			$('#install_by_step_edit_map_container_all .modalDockOptions').modal('hide');
+		}
 	});
 	
-	$('.modalDockOptions .bByStepUndockProcedureAddElem').click(function(e) {
+	$('#install_by_step_edit_map_container_all .modalDockOptions .bByStepUndockProcedureAddElem').click(function(e) {
         e.preventDefault();
 		
 		$('#install_by_step_edit_map_up_elem_action_move').prop('checked', false);
 		$('#install_by_step_edit_map_up_elem_action_rotate').prop('checked', false);
 		
 		$('#install_by_step_edit_map_up_elem_direction_back').prop('checked', true);
-		$('.up_elem_action_move').hide();
-		$('.up_elem_action_rotate').hide();
+		$('#install_by_step_edit_map_container_all .up_elem_action_move').hide();
+		$('#install_by_step_edit_map_container_all .up_elem_action_rotate').hide();
 		
 		$('#install_by_step_edit_map_container_all .modalDockElemOptions').data('index_dock_procedure', -1);
 		
 		$('#install_by_step_edit_map_container_all .modalDockElemOptions').modal('show');
     });
 	
-	$('.modalDockElemOptions input:radio[name="up_elem_action"]').change(function () {
-		action = $("input[name='up_elem_action']:checked").val()
-		$('.up_elem_action_move').hide();
-		$('.up_elem_action_rotate').hide();
+	$('#install_by_step_edit_map_container_all .modalDockElemOptions input:radio[name="up_elem_action"]').change(function () {
+		action = $("#install_by_step_edit_map_container_all input[name='up_elem_action']:checked").val()
+		$('#install_by_step_edit_map_container_all .up_elem_action_move').hide();
+		$('#install_by_step_edit_map_container_all .up_elem_action_rotate').hide();
 		if (action == 'move') {
 			
-			$('.up_elem_action_move').show();
+			$('#install_by_step_edit_map_container_all .up_elem_action_move').show();
 		}
 		else if (action == 'rotate') {
-			$('.up_elem_action_rotate').show();
+			$('#install_by_step_edit_map_container_all .up_elem_action_rotate').show();
 		}
 	});
 		
-	$('.modalDockElemOptions .bDockElemSave').click(function(e) {
+	$('#install_by_step_edit_map_container_all .modalDockElemOptions .bDockElemSave').click(function(e) {
 		
 		index_dock_procedure = $('#install_by_step_edit_map_container_all .modalDockElemOptions').data('index_dock_procedure');
 		if (index_dock_procedure == -1)
 		{
 			indexDockElem++;
 			
-			action = $("input[name='up_elem_action']:checked").val();
+			action = $("#install_by_step_edit_map_container_all input[name='up_elem_action']:checked").val();
 			
 			if (action == 'move') {
 				
 				distance = parseFloat($("#install_by_step_edit_map_up_elem_move_distance").val());
-				direction = $("input[name='up_elem_direction']:checked").val();
+				direction = $("#install_by_step_edit_map_container_all input[name='up_elem_direction']:checked").val();
 							
-				$('.modalDockOptions .list_undock_procedure').append('' +
+				$('#install_by_step_edit_map_container_all .modalDockOptions .list_undock_procedure').append('' +
 					'<li id="install_by_step_edit_map_list_undock_procedure_elem_'+indexDockElem+'" data-index_dock_procedure="'+indexDockElem+'" data-action="move" data-distance="' + ((direction == 'back')?distance*-1:distance) + '">'+
 					'	<span>Move ' + ((direction == 'back')?'back':'front') + ' ' + distance + 'm</span>'+
 					'	<a href="#" class="bByStepUndockProcedureDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
@@ -1586,7 +1641,7 @@ $(document).ready(function() {
 				
 				angle = $("#install_by_step_edit_map_up_elem_rotate_angle").val();
 				
-				$('.modalDockOptions .list_undock_procedure').append('' +
+				$('#install_by_step_edit_map_container_all .modalDockOptions .list_undock_procedure').append('' +
 					'<li id="install_by_step_edit_map_list_undock_procedure_elem_'+indexDockElem+'" data-index_dock_procedure="'+indexDockElem+'" data-action="rotate" data-angle="'+angle+'">'+
 					'	<span>Rotate '+angle+'°</span>'+
 					'	<a href="#" class="bByStepUndockProcedureDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
@@ -1597,11 +1652,11 @@ $(document).ready(function() {
 		}
 		else
 		{
-			action = $("input[name='up_elem_action']:checked").val();
+			action = $("#install_by_step_edit_map_container_all input[name='up_elem_action']:checked").val();
 			if (action == 'move') {
 				
 				distance = parseFloat($("#install_by_step_edit_map_up_elem_move_distance").val());
-				direction = $("input[name='up_elem_direction']:checked").val();
+				direction = $("#install_by_step_edit_map_container_all input[name='up_elem_direction']:checked").val();
 				
 				li = $('#install_by_step_edit_map_list_undock_procedure_elem_'+ index_dock_procedure);
 				span = $('#install_by_step_edit_map_list_undock_procedure_elem_'+ index_dock_procedure + ' span');
@@ -1624,31 +1679,31 @@ $(document).ready(function() {
 		}
     });
 	
-	$(document).on('click', '.modalDockOptions .bByStepUndockProcedureDeleteElem', function(e) {
+	$(document).on('click', '#install_by_step_edit_map_container_all .modalDockOptions .bByStepUndockProcedureDeleteElem', function(e) {
 		e.preventDefault();
 		
 		$(this).closest('li').remove();
 	});
 	
-	$(document).on('click', '.modalDockOptions .bByStepUndockProcedureEditElem', function(e) {
+	$(document).on('click', '#install_by_step_edit_map_container_all .modalDockOptions .bByStepUndockProcedureEditElem', function(e) {
 		e.preventDefault();
 		
 		$('#install_by_step_edit_map_up_elem_action_move').prop('checked', false);
 		$('#install_by_step_edit_map_up_elem_action_rotate').prop('checked', false);
 		
-		$('.up_elem_action_move').hide();
-		$('.up_elem_action_rotate').hide();
+		$('#install_by_step_edit_map_container_all .up_elem_action_move').hide();
+		$('#install_by_step_edit_map_container_all .up_elem_action_rotate').hide();
 		
 		li = $(this).closest('li');
 		if (li.data('action') == 'rotate')
 		{
-			$('.up_elem_action_rotate').show();
+			$('#install_by_step_edit_map_container_all .up_elem_action_rotate').show();
 			$('#install_by_step_edit_map_up_elem_action_rotate').prop('checked', true);
 			$("#install_by_step_edit_map_up_elem_rotate_angle").val(li.data('angle'));
 		}
 		else
 		{
-			$('.up_elem_action_move').show();
+			$('#install_by_step_edit_map_container_all .up_elem_action_move').show();
 			$('#install_by_step_edit_map_up_elem_action_move').prop('checked', true);
 			distance = li.data('distance');
 			if (distance < 0)
@@ -1671,8 +1726,9 @@ $(document).ready(function() {
 		ByStepHideMenus();
 		if (bystepCanChangeMenu)
 		{
-			$('.texts_add_poi').hide();
-			$('.text_prepare_approch').show();
+			$('#install_by_step_edit_map_container_all .modalAddPoi .poi').hide();
+			$('#install_by_step_edit_map_container_all .texts_add_poi').hide();
+			$('#install_by_step_edit_map_container_all .text_prepare_approch').show();
 			currentStepAddPoi = 'set_approch';
 			
 			$('#install_by_step_edit_map_container_all .modalAddPoi').modal('show');
@@ -1680,6 +1736,11 @@ $(document).ready(function() {
 		else
 			ByStepAvertCantChange();
 	});
+	
+	$('#install_by_step_edit_map_container_all .modalAddPoi .joystickDiv .curseur').on('touchstart', function(e) {
+		$('#install_by_step_edit_map_container_all .modalAddPoi .poi').hide();
+	});
+	
 	$('#install_by_step_edit_map_container_all .modalAddPoi .bScanAddPoi').click(function(e) {
 		$('#install_by_step_edit_map_container_all .modalAddPoi .bScanAddPoi').addClass('disabled');
 		
@@ -1697,40 +1758,43 @@ $(document).ready(function() {
 				
 				if (data.D.length > 0)
 				{
-					$('.texts_add_poi').hide();
+					$('#install_by_step_edit_map_container_all .texts_add_poi').hide();
 					if (currentStepAddPoi != 'set_final')
-						$('.text_set_approch').show();
+						$('#install_by_step_edit_map_container_all .text_set_approch').show();
 					else
-						$('.text_set_final').show();
+						$('#install_by_step_edit_map_container_all .text_set_final').show();
 				}
 				
 				for (i=0; i< data.D.length; i++)
 				{
 					if (data.D[i].TY != 'Dock')
 					{
-						new_point = RotatePoint (data.D[i].P, lastRobotPose, lastRobotPose.T - Math.PI/2);
-						x_from_robot = new_point.X - lastRobotPose.X;
-						y_from_robot = new_point.Y - lastRobotPose.Y;
-						
-						// 1px / cm
-						
-						$('#install_by_step_edit_map_container_all .modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).show();
-						$('#install_by_step_edit_map_container_all .modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).css('left', posRobot.left + x_from_robot * 100); // lidar : y * -1
-						$('#install_by_step_edit_map_container_all .modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).css('top', posRobot.top - y_from_robot * 100); // +20 position lidar, - 12.5 pour le centre
-						//angle = (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
-						
-						angle = 0 - (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
-						
-						$('#install_by_step_edit_map_container_all .modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).css({'-webkit-transform' : 'rotate('+ angle +'deg)',
-																 '-moz-transform' : 'rotate('+ angle +'deg)',
-																 '-ms-transform' : 'rotate('+ angle +'deg)',
-																 'transform' : 'rotate('+ angle +'deg)'});
-						
-						
-						$('#install_by_step_edit_map_container_all .modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).data('id_fiducial', data.D[i].ID);
-						$('#install_by_step_edit_map_container_all .modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).data('x', data.D[i].P.X);
-						$('#install_by_step_edit_map_container_all .modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).data('y', data.D[i].P.Y);
-						$('#install_by_step_edit_map_container_all .modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).data('theta', data.D[i].P.T);
+						if (currentStepAddPoi == 'set_approch' || poi_temp_add.id_fiducial == data.D[i].ID)
+						{
+							new_point = RotatePoint (data.D[i].P, lastRobotPose, lastRobotPose.T - Math.PI/2);
+							x_from_robot = new_point.X - lastRobotPose.X;
+							y_from_robot = new_point.Y - lastRobotPose.Y;
+							
+							// 1px / cm
+							
+							$('#install_by_step_edit_map_container_all .modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).show();
+							$('#install_by_step_edit_map_container_all .modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).css('left', posRobot.left + x_from_robot * 100); // lidar : y * -1
+							$('#install_by_step_edit_map_container_all .modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).css('top', posRobot.top - y_from_robot * 100); // +20 position lidar, - 12.5 pour le centre
+							//angle = (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
+							
+							angle = 0 - (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
+							
+							$('#install_by_step_edit_map_container_all .modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).css({'-webkit-transform' : 'rotate('+ angle +'deg)',
+																	 '-moz-transform' : 'rotate('+ angle +'deg)',
+																	 '-ms-transform' : 'rotate('+ angle +'deg)',
+																	 'transform' : 'rotate('+ angle +'deg)'});
+							
+							
+							$('#install_by_step_edit_map_container_all .modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).data('id_fiducial', data.D[i].ID);
+							$('#install_by_step_edit_map_container_all .modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).data('x', data.D[i].P.X);
+							$('#install_by_step_edit_map_container_all .modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).data('y', data.D[i].P.Y);
+							$('#install_by_step_edit_map_container_all .modalAddPoi #install_by_step_edit_map_modalAddPoi_poi'+i).data('theta', data.D[i].P.T);
+						}
 					}
 				}
 			}
@@ -1753,8 +1817,8 @@ $(document).ready(function() {
 			$('#install_by_step_edit_map_container_all .modalAddPoi .poi').hide();
 			
  			currentStepAddPoi = 'set_final';
-			$('.texts_add_poi').hide();
-			$('.text_prepare_final').show();
+			$('#install_by_step_edit_map_container_all .texts_add_poi').hide();
+			$('#install_by_step_edit_map_container_all .text_prepare_final').show();
 		}
 		else
 		{
@@ -1771,11 +1835,15 @@ $(document).ready(function() {
 			currentPoiIndex = pois.length-1;
 			poi = pois[currentPoiIndex];
 			
-			$('.modalPoiOptions .list_undock_procedure_poi li').remove();
+			$('#install_by_step_edit_map_container_all .modalPoiOptions .list_undock_procedure_poi li').remove();
+			
+			$('#install_by_step_edit_map_poi_name').val(poi.name);
+			$('#install_by_step_edit_map_poi_comment').val(poi.comment);
+			
 			
 			indexPoiElem++;
 			
-			$('.modalPoiOptions .list_undock_procedure_poi').append('' +
+			$('#install_by_step_edit_map_container_all .modalPoiOptions .list_undock_procedure_poi').append('' +
 				'<li id="install_by_step_edit_map_list_undock_procedure_poi_elem_'+indexPoiElem+'" data-index_poi_procedure="'+indexPoiElem+'" data-action="move" data-distance="-0.3">'+
 				'	<span>Move back 0.3m</span>'+
 				'	<a href="#" class="bByStepUndockProcedurePoiDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
@@ -1783,6 +1851,7 @@ $(document).ready(function() {
 				'</li>'
 				);
 			
+			$('#install_by_step_edit_map_bPoiCancelConfig').hide();
 			$('#install_by_step_edit_map_container_all .modalPoiOptions').modal('show');
 		}
     });
@@ -1796,7 +1865,7 @@ $(document).ready(function() {
 			
 		poi.undock_path = Array();
 		
-		$('.modalPoiOptions .list_undock_procedure_poi li').each(function(index, element) {
+		$('#install_by_step_edit_map_container_all .modalPoiOptions .list_undock_procedure_poi li').each(function(index, element) {
 			if ($(this).data('action') == 'rotate')
 			{
 				angle_rad = parseFloat($(this).data('angle')) * Math.PI/180;
@@ -1807,6 +1876,8 @@ $(document).ready(function() {
         });
 		
 		pois[currentPoiIndex] = poi;
+		
+		$('#install_by_step_edit_map_bPoiCancelConfig').show();
 				
 		if (bystepCurrentAction == 'editPoi')
 			ByStepAddHistorique({'action':'edit_poi', 'data':{'index':currentPoiIndex, 'old':saveCurrentPoi, 'new':JSON.stringify(pois[currentPoiIndex])}});
@@ -1814,48 +1885,48 @@ $(document).ready(function() {
 		ByStepTracePoi(currentPoiIndex);
 	});
 	
-	$('.modalPoiOptions .bByStepUndockProcedurePoiAddElem').click(function(e) {
+	$('#install_by_step_edit_map_container_all .modalPoiOptions .bByStepUndockProcedurePoiAddElem').click(function(e) {
         e.preventDefault();
 		
 		$('#install_by_step_edit_map_up_poi_elem_action_move').prop('checked', false);
 		$('#install_by_step_edit_map_up_poi_elem_action_rotate').prop('checked', false);
 		
 		$('#install_by_step_edit_map_up_poi_elem_direction_back').prop('checked', true);
-		$('.up_poi_elem_action_move').hide();
-		$('.up_poi_elem_action_rotate').hide();
+		$('#install_by_step_edit_map_container_all .up_poi_elem_action_move').hide();
+		$('#install_by_step_edit_map_container_all .up_poi_elem_action_rotate').hide();
 		
 		$('#install_by_step_edit_map_container_all .modalPoiElemOptions').data('index_poi_procedure', -1);
 		
 		$('#install_by_step_edit_map_container_all .modalPoiElemOptions').modal('show');
     });
 	
-	$('.modalPoiElemOptions input:radio[name="up_poi_elem_action"]').change(function () {
-		action = $("input[name='up_poi_elem_action']:checked").val()
-		$('.up_poi_elem_action_move').hide();
-		$('.up_poi_elem_action_rotate').hide();
+	$('#install_by_step_edit_map_container_all .modalPoiElemOptions input:radio[name="up_poi_elem_action"]').change(function () {
+		action = $("#install_by_step_edit_map_container_all input[name='up_poi_elem_action']:checked").val()
+		$('#install_by_step_edit_map_container_all .up_poi_elem_action_move').hide();
+		$('#install_by_step_edit_map_container_all .up_poi_elem_action_rotate').hide();
 		if (action == 'move') {
-			$('.up_poi_elem_action_move').show();
+			$('#install_by_step_edit_map_container_all .up_poi_elem_action_move').show();
 		}
 		else if (action == 'rotate') {
-			$('.up_poi_elem_action_rotate').show();
+			$('#install_by_step_edit_map_container_all .up_poi_elem_action_rotate').show();
 		}
 	});
 		
-	$('.modalPoiElemOptions .bPoiElemSave').click(function(e) {
+	$('#install_by_step_edit_map_container_all .modalPoiElemOptions .bPoiElemSave').click(function(e) {
 		
 		index_poi_procedure = $('#install_by_step_edit_map_container_all .modalPoiElemOptions').data('index_poi_procedure');
 		if (index_poi_procedure == -1)
 		{
 			indexPoiElem++;
 			
-			action = $("input[name='up_poi_elem_action']:checked").val();
+			action = $("#install_by_step_edit_map_container_all input[name='up_poi_elem_action']:checked").val();
 			
 			if (action == 'move') {
 				
 				distance = parseFloat($("#install_by_step_edit_map_up_poi_elem_move_distance").val());
-				direction = $("input[name='up_poi_elem_direction']:checked").val();
+				direction = $("#install_by_step_edit_map_container_all input[name='up_poi_elem_direction']:checked").val();
 							
-				$('.modalPoiOptions .list_undock_procedure_poi').append('' +
+				$('#install_by_step_edit_map_container_all .modalPoiOptions .list_undock_procedure_poi').append('' +
 					'<li id="install_by_step_edit_map_list_undock_procedure_poi_elem_'+indexPoiElem+'" data-index_poi_procedure="'+indexPoiElem+'" data-action="move" data-distance="' + ((direction == 'back')?distance*-1:distance) + '">'+
 					'	<span>Move ' + ((direction == 'back')?'back':'front') + ' ' + distance + 'm</span>'+
 					'	<a href="#" class="bByStepUndockProcedurePoiDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
@@ -1867,7 +1938,7 @@ $(document).ready(function() {
 				
 				angle = $("#install_by_step_edit_map_up_poi_elem_rotate_angle").val();
 				
-				$('.modalPoiOptions .list_undock_procedure_poi').append('' +
+				$('#install_by_step_edit_map_container_all .modalPoiOptions .list_undock_procedure_poi').append('' +
 					'<li id="install_by_step_edit_map_list_undock_procedure_poi_elem_'+indexPoiElem+'" data-index_poi_procedure="'+indexPoiElem+'" data-action="rotate" data-angle="'+angle+'">'+
 					'	<span>Rotate '+angle+'°</span>'+
 					'	<a href="#" class="bByStepUndockProcedurePoiDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
@@ -1878,11 +1949,11 @@ $(document).ready(function() {
 		}
 		else
 		{
-			action = $("input[name='up_poi_elem_action']:checked").val();
+			action = $("#install_by_step_edit_map_container_all input[name='up_poi_elem_action']:checked").val();
 			if (action == 'move') {
 				
 				distance = parseFloat($("#install_by_step_edit_map_up_poi_elem_move_distance").val());
-				direction = $("input[name='up_poi_elem_direction']:checked").val();
+				direction = $("#install_by_step_edit_map_container_all input[name='up_poi_elem_direction']:checked").val();
 				
 				li = $('#install_by_step_edit_map_list_undock_procedure_poi_elem_'+ index_poi_procedure);
 				span = $('#install_by_step_edit_map_list_undock_procedure_poi_elem_'+ index_poi_procedure + ' span');
@@ -1905,31 +1976,31 @@ $(document).ready(function() {
 		}
     });
 	
-	$(document).on('click', '.modalPoiOptions .bByStepUndockProcedurePoiDeleteElem', function(e) {
+	$(document).on('click', '#install_by_step_edit_map_container_all .modalPoiOptions .bByStepUndockProcedurePoiDeleteElem', function(e) {
 		e.preventDefault();
 		
 		$(this).closest('li').remove();
 	});
 	
-	$(document).on('click', '.modalPoiOptions .bByStepUndockProcedurePoiEditElem', function(e) {
+	$(document).on('click', '#install_by_step_edit_map_container_all .modalPoiOptions .bByStepUndockProcedurePoiEditElem', function(e) {
 		e.preventDefault();
 		
 		$('#install_by_step_edit_map_up_poi_elem_action_move').prop('checked', false);
 		$('#install_by_step_edit_map_up_poi_elem_action_rotate').prop('checked', false);
 		
-		$('.up_poi_elem_action_move').hide();
-		$('.up_poi_elem_action_rotate').hide();
+		$('#install_by_step_edit_map_container_all .up_poi_elem_action_move').hide();
+		$('#install_by_step_edit_map_container_all .up_poi_elem_action_rotate').hide();
 		
 		li = $(this).closest('li');
 		if (li.data('action') == 'rotate')
 		{
-			$('.up_poi_elem_action_rotate').show();
+			$('#install_by_step_edit_map_container_all .up_poi_elem_action_rotate').show();
 			$('#install_by_step_edit_map_up_poi_elem_action_rotate').prop('checked', true);
 			$("#install_by_step_edit_map_up_poi_elem_rotate_angle").val(li.data('angle'));
 		}
 		else
 		{
-			$('.up_poi_elem_action_move').show();
+			$('#install_by_step_edit_map_container_all .up_poi_elem_action_move').show();
 			$('#install_by_step_edit_map_up_poi_elem_action_move').prop('checked', true);
 			distance = li.data('distance');
 			if (distance < 0)
@@ -3233,7 +3304,7 @@ function AreaCancel()
 }
 function ForbiddenSave()
 {
-	$('.forbidden_elem_current').remove();
+	$('#install_by_step_edit_map_container_all .forbidden_elem_current').remove();
 	
 	if (bystepCurrentAction == 'addForbiddenArea')
 	{

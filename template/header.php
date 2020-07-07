@@ -59,6 +59,7 @@
                 </ul>
             </div>
             <div class="pull-right">
+                <a href="#" class="stop_move btn btn-danger btn-circle" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="<?php echo __('Stop move');?>"><i class="fa fa-stop battery-ko"></i></a>
             	<a href="#" class="btn btn-circle btn-default"><i class="fa fa-question"></i></a>
             </div>
         	<div>

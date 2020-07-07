@@ -314,10 +314,6 @@ var currentDockByStepLongTouch = null;
 var currentPoiByStepLongTouch = null;
 
 $(document).ready(function(e) {
-	$('.popupHelp').click(function(e) {
-        e.preventDefault();
-		$(this).hide(200);
-    });
 	$('#install_by_step_edit_map_svg').on('touchend', function(e) { 
 		$('#install_by_step_edit_map_zoom_popup').hide();
 		if (timerByStepLongPress != null)

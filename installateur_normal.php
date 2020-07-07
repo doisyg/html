@@ -190,7 +190,7 @@
                                         <div style="clear:both;"></div>
                                        
                                         <a href="#" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
-                                        <a href="#" class="btn btn-warning bTestDock" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Continue');?></a>
+                                        <a href="#" class="btn btn-warning bTestDock" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Go');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -223,7 +223,7 @@
                                         <div style="clear:both;"></div>
                                        
                                         <a href="#" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
-                                        <a href="#" class="btn btn-warning bTestPoi" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Continue');?></a>
+                                        <a href="#" class="btn btn-warning bTestPoi" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Go');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -342,7 +342,10 @@
                                                     
                                                 </div>
                                             
-                                                <p><?php echo stripslashes(__('Move the robot in front of the dock and click on the "Scan" button'));?></p>
+                                            	<div style="color:#CC0000;">
+                                                    <p class="texts_add_dock text_prepare_robot"><?php echo stripslashes(__('Move the robot in front of the dock and click on the "Scan" button'));?></p>
+                                                    <p class="texts_add_dock text_set_dock"><?php echo stripslashes(__('Click on the fiducial to create the docking station'));?></p>
+                                                </div>
                                                 <p><a href="#" class="btn btn-primary bScanAddDock">Scan</a></p>
                                                 
                                                 <div style="position:absolute; bottom:50px; left:0; width:100%; z-index:2000;">
@@ -379,12 +382,15 @@
                                                         <input type="text" id="install_normal_edit_map_dock_name" name="dock_name" value="" class="form-control input-sm mb-md" />
                                                     </div>
                                                 </div>
+                                                <!--
                                                 <div class="form-group">
                                                     <label class="col-xs-4 control-label">Number</label>
                                                     <div class="col-xs-8">
                                                         <input type="number" id="install_normal_edit_map_dock_number" name="dock_number" value="1" class="form-control input-sm mb-md" />
                                                     </div>
                                                 </div>
+                                                -->
+                                                <input type="hidden" id="install_normal_edit_map_dock_number" name="dock_number" value="1" />
                                                 
                                                 <div class="form-group">
                                                     <label for="dock_is_master" class="col-xs-10 control-label">Is default docking station for this robot</label>
@@ -401,7 +407,7 @@
                                                 <fieldset>
                                                 	<legend>Undock procedure</legend>
                                                     <div style="text-align:left;">
-                                                        <a href="#" class="bUndockProcedureAddElem btn btn-circle btn-default"><i class="fa fa-plus"></i></a>
+                                                        <a href="#" class="bNormalUndockProcedureAddElem btn btn-circle btn-default"><i class="fa fa-plus"></i></a>
                                                         <ul class="list_undock_procedure list_elem">
                                                         </ul>
                                                      </div>
@@ -412,14 +418,13 @@
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" id="install_normal_edit_map_bDockSaveConfig" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
+                                        <a href="#" id="install_normal_edit_map_bDockSaveConfig" class="btn btn-primary" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
                                         <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
                     <div class="modal fade modalDockElemOptions" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
                         <div class="modal-dialog" role="dialog">
                             <div class="modal-content">
@@ -486,6 +491,7 @@
                             </div>
                         </div>
                     </div>
+                    
                     
                     <div class="modal fade modalAddPoi" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
                         <div class="modal-dialog" role="dialog">
@@ -561,7 +567,7 @@
                                                 <fieldset>
                                                 	<legend>Undock procedure</legend>
                                                     <div style="text-align:left;">
-                                                        <a href="#" class="bUndockProcedurePoiAddElem btn btn-circle btn-default"><i class="fa fa-plus"></i></a>
+                                                        <a href="#" class="bNormalUndockProcedurePoiAddElem btn btn-circle btn-default"><i class="fa fa-plus"></i></a>
                                                         <ul class="list_undock_procedure_poi list_elem">
                                                         </ul>
                                                      </div>
@@ -573,7 +579,7 @@
                                         <div style="clear:both;"></div>
                                        
                                         <a href="#" id="install_normal_edit_map_bPoiSaveConfig" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
-                                        <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+                                        <a href="#" id="install_normal_edit_map_bPoiCancelConfig" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -687,16 +693,115 @@
             <div class="content">
                 <ul class="tuiles row">
                     <li class="col-xs-4"><a class="button_goto anim_tuiles tuile1" data-goto="install_normal_setup_sites" href="#"><i class="fa fa-building"></i><?php echo __('Sites');?></a></li>
+                    <!--<li class="col-xs-4"><a class="button_goto anim_tuiles tuile2" data-goto="install_normal_setup_trinary" href="#"><i class="fa fa-map-o"></i><?php echo __('Map trinary');?></a></li>-->
                     <li class="col-xs-4"><a class="button_goto anim_tuiles tuile2" data-goto="install_normal_setup_language" href="#"><i class="fa fa-language"></i><?php echo __('Language');?></a></li>
                     <li class="col-xs-4"><a class="button_goto anim_tuiles tuile3" data-goto="install_normal_setup_wifi" href="#"><i class="fa fa-gear"></i><?php echo __('Wifi');?></a></li>
                     <li class="col-xs-4"><a class="button_goto anim_tuiles tuile4" data-goto="install_normal_setup_vehicule" href="#"><i class="fa fa-android"></i><?php echo __('Vehicule');?></a></li>
                     <li class="col-xs-4"><a class="button_goto anim_tuiles tuile5" data-goto="install_normal_setup_tops" href="#"><i class="fa fa-cube"></i><?php echo __('Tops');?></a></li>
                     <li class="col-xs-4"><a class="button_goto anim_tuiles tuile6 todo" data-goto="install_normal_setup_export" href="#"><i class="fa fa-upload"></i><?php echo __('Save config');?></a></li>
                     <li class="col-xs-4"><a class="button_goto anim_tuiles tuile7 todo" data-goto="install_normal_setup_import" href="#"><i class="fa fa-download"></i><?php echo __('Load config');?></a></li>
+                    <li class="col-xs-4"><a class="button_goto anim_tuiles tuile8" data-goto="install_normal_setup_reset" href="#"><i class="fa fa-eraser"></i><?php echo __('Factory data reset');?></a></li>
                 </ul>
             </div>
             <footer>
                 <a href="#" class="btn btn-wyca button_goto" data-goto="install_normal_dashbord"><i class="fa fa-chevron-left"></i> <?php echo __('Back');?></a>
+            </footer>
+        </section>
+        
+        
+        
+        <section id="install_normal_setup_reset" class="page hide_photo_back with_footer">
+	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Factory data reset');?></h2>
+            </header>
+            <div class="content">
+                
+                <div style="text-align:center;">
+                
+                    <h2 style="color:#C00"><?php echo __('This action will delete all data from the robot!');?></h2>
+                    
+                    <div style="margin-top:50px;"><input type="checkbox" class="cb_confirm" id="install_normal_setup_reset_cbConfirm" name="cb_confirm" />  <label for="install_normal_setup_reset_cbConfirm" style="font-size:16px; color:#000000;"><?php echo __('I confirm that I want to delete all data.');?></label></div>
+                    
+                </div>         
+            </div>
+            <footer>
+            	<a href="#" class="btn btn-primary button_goto" data-goto="install_normal_setup" style="position:absolute; width:50%; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>           
+                <a href="#" class="btn btn-danger bReset" style="width:50%; position:absolute; right:0; bottom:0px; left:auto; font-size:30px;"><?php echo __('Reset');?></a>
+                <a href="#" class="button_goto bGotoReset" data-goto="install_normal_setup_reset_do" style="display:none;"></a>
+            </footer>
+        </section>
+        
+        <section id="install_normal_setup_reset_do" class="page hide_photo_back with_footer">
+	        <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Factory data reset');?></h2>
+            </header>
+            <div class="content">
+                
+                <div style="text-align:center;">
+                
+                	<i style="font-size:100px; margin-top:50px;" class="fa fa-spinner fa-pulse"></i>
+                    
+                </div>         
+            </div>
+            <footer>
+            </footer>
+        </section>
+        
+        
+        <section id="install_normal_setup_trinary" class="page hide_photo_back with_footer">
+	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Trinary');?></h2>
+            </header>
+            <div class="content">
+                
+                <div style="text-align:center;">
+                
+                    <form id="install_normal_setup_trinary_form" method="post">
+                        <input type="hidden" name="todo" value="saveMapping" />
+                        <input type="hidden" id="install_normal_setup_trinary_from_image" name="image" value="" />
+                        <input type="hidden" id="install_normal_setup_trinary_from_image_tri" name="image_tri" value="" />
+                        <input type="hidden" id="install_normal_setup_trinary_from_ros_hauteur" name="ros_hauteur" value="" />
+                        <input type="hidden" id="install_normal_setup_trinary_from_ros_largeur" name="ros_largeur" value="" />
+                        <input type="hidden" id="install_normal_setup_trinary_from_threshold_free" name="threshold_free" value="" />
+                        <input type="hidden" id="install_normal_setup_trinary_from_threshold_occupied" name="threshold_occupied" value="" />
+                    </form>
+                
+                    <div class="fin_mapping_view" style="height:65vh; width:100%; margin:10px 0; border:1px solid #EFEFEF; position:relative; background-color:#F0F0F0;">
+                        <img id="install_normal_setup_trinary_img_map_saved_fin" src="" style="z-index:200; display:none; max-width:100%;" />
+                        <div id="install_normal_setup_trinary_divOptionTrinary">
+                            <div id="install_normal_setup_trinary_threshold_free_slider_elem" class="mt-lg mb-lg slider-primary" data-plugin-slider data-plugin-options='{ "value": 25, "range": "min", "max": 100 }' data-plugin-slider-output="#install_normal_setup_trinary_threshold_free_slider">
+                                <input id="install_normal_setup_trinary_threshold_free_slider" type="hidden" value="25" />
+                            </div>
+                            <p id="install_normal_setup_trinary_threshold_free_output">Threshold free: <b>25</b></p>
+                                                
+                            <div id="install_normal_setup_trinary_threshold_occupied_slider_elem" class="mt-lg mb-lg slider-primary" data-plugin-slider data-plugin-options='{ "value": 65, "range": "min", "max": 100 }' data-plugin-slider-output="#install_normal_setup_trinary_threshold_occupied_slider">
+                                <input id="install_normal_setup_trinary_threshold_occupied_slider" type="hidden" value="65" />
+                            </div>
+                            <p id="install_normal_setup_trinary_threshold_occupied_output">Threshold occupied: <b>65</b></p>
+                            
+                            <a href="#" class="btn btn-xs btn-primary bResetValueThreshold"><?php echo __('Reset values');?></a>
+                            
+                        </div>
+                        <div id="install_normal_setup_trinary_divResultTrinary">
+                            <div style="height:80vh; overflow:auto;">
+                                <i style="font-size:60px; position:absolute; top:50px;" class="fa fa-spinner fa-pulse loading_fin_create_map"></i>
+                                <canvas id="install_normal_setup_trinary_canvas_result_trinary" width="" height="" style="max-width:100%; max-height:65vh;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="clear:both; height:10px;"></div>
+                    
+                </div>         
+            </div>
+            <footer>
+            	<a href="#" class="btn btn-warning button_goto" data-goto="install_normal_setup" style="position:absolute; width:50%; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>           
+                <a href="#" class="btn btn-primary bSaveTrinaryMap" style="width:50%; position:absolute; right:0; bottom:0px; left:auto; font-size:30px;"><?php echo __('Save');?></a>
             </footer>
         </section>
         

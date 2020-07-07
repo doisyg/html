@@ -521,7 +521,7 @@
                                         <div style="clear:both;"></div>
                                        
                                         <a href="#" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
-                                        <a href="#" class="btn btn-warning bTestDock" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Continue');?></a>
+                                        <a href="#" class="btn btn-warning bTestDock" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Go');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -554,13 +554,12 @@
                                         <div style="clear:both;"></div>
                                        
                                         <a href="#" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
-                                        <a href="#" class="btn btn-warning bTestPoi" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Continue');?></a>
+                                        <a href="#" class="btn btn-warning bTestPoi" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Go');?></a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
                     
                     <div class="modal fade modalAreaOptions" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
                         <div class="modal-dialog" role="dialog">
@@ -673,7 +672,10 @@
                                                     
                                                 </div>
                                             
-                                                <p><?php echo stripslashes(__('Move the robot in front of the dock and click on the "Scan" button'));?></p>
+                                            	<div style="color:#CC0000;">
+                                                    <p class="texts_add_dock text_prepare_robot"><?php echo stripslashes(__('Move the robot in front of the dock and click on the "Scan" button'));?></p>
+                                                    <p class="texts_add_dock text_set_dock"><?php echo stripslashes(__('Click on the fiducial to create the docking station'));?></p>
+                                                </div>
                                                 <p><a href="#" class="btn btn-primary bScanAddDock">Scan</a></p>
                                                 
                                                 <div style="position:absolute; bottom:50px; left:0; width:100%; z-index:2000;">
@@ -710,12 +712,15 @@
                                                         <input type="text" id="install_by_step_edit_map_dock_name" name="dock_name" value="" class="form-control input-sm mb-md" />
                                                     </div>
                                                 </div>
+                                                <!--
                                                 <div class="form-group">
                                                     <label class="col-xs-4 control-label">Number</label>
                                                     <div class="col-xs-8">
                                                         <input type="number" id="install_by_step_edit_map_dock_number" name="dock_number" value="1" class="form-control input-sm mb-md" />
                                                     </div>
                                                 </div>
+                                                -->
+                                                <input type="hidden" id="install_by_step_edit_map_dock_number" name="dock_number" value="1" />
                                                 
                                                 <div class="form-group">
                                                     <label for="dock_is_master" class="col-xs-10 control-label">Is default docking station for this robot</label>
@@ -732,7 +737,7 @@
                                                 <fieldset>
                                                 	<legend>Undock procedure</legend>
                                                     <div style="text-align:left;">
-                                                        <a href="#" class="bUndockProcedureAddElem btn btn-circle btn-default"><i class="fa fa-plus"></i></a>
+                                                        <a href="#" class="bByStepUndockProcedureAddElem btn btn-circle btn-default"><i class="fa fa-plus"></i></a>
                                                         <ul class="list_undock_procedure list_elem">
                                                         </ul>
                                                      </div>
@@ -743,7 +748,7 @@
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" id="install_by_step_edit_map_bDockSaveConfig" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
+                                        <a href="#" id="install_by_step_edit_map_bDockSaveConfig" class="btn btn-primary" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
                                         <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
                                     </div>
                                 </div>
@@ -892,7 +897,7 @@
                                                 <fieldset>
                                                 	<legend>Undock procedure</legend>
                                                     <div style="text-align:left;">
-                                                        <a href="#" class="bUndockProcedurePoiAddElem btn btn-circle btn-default"><i class="fa fa-plus"></i></a>
+                                                        <a href="#" class="bByStepUndockProcedurePoiAddElem btn btn-circle btn-default"><i class="fa fa-plus"></i></a>
                                                         <ul class="list_undock_procedure_poi list_elem">
                                                         </ul>
                                                      </div>
@@ -904,7 +909,7 @@
                                         <div style="clear:both;"></div>
                                        
                                         <a href="#" id="install_by_step_edit_map_bPoiSaveConfig" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
-                                        <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+                                        <a href="#" id="install_by_step_edit_map_bPoiCancelConfig" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
                                     </div>
                                 </div>
                             </div>
