@@ -88,7 +88,6 @@ $(document).ready(function(e) {
 			$('#install_normal_setup_reset .bGotoReset').click();
 			wycaApi.FactoryDataReset(function(){
 				
-				/*
 				$.ajax({
 					type: "POST",
 					url: 'ajax/reset.php',
@@ -101,8 +100,6 @@ $(document).ready(function(e) {
 					error: function(e) {
 					}
 				});
-				*/
-				
 			});
 		}
 		else
