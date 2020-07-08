@@ -566,6 +566,11 @@ function NormalResizeSVG()
 {	
 	NormalTraceRobot(lastRobotPose.X, lastRobotPose.Y, lastRobotPose.T);
 	
+	$('#install_normal_edit_map_svg .gomme_elem').remove();
+	$.each(gommes, function( index, gomme ) {
+		NormalTraceCurrentGomme(gomme, index)
+	});
+	
 	$('#install_normal_edit_map_svg .forbidden_elem').remove();
 	$.each(forbiddens, function( index, forbidden ) {
 		NormalTraceForbidden(index);

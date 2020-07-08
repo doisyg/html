@@ -1501,7 +1501,7 @@ $(document).ready(function() {
 		
 		
 		dock_master = false;
-		if (docks.length == 1)
+		if (docks.length == 0)
 		{
 			// First dock
 			dock_master = true;
@@ -1510,7 +1510,7 @@ $(document).ready(function() {
 		{
 			dock_master = true;
 			$.each(docks, function( index, dock ) {
-				if (dock.is_master)
+				if (dock.is_master && (dock.deleted == undefined || !dock.deleted))
 					dock_master = false;
 			});
 		}
