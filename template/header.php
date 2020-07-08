@@ -24,7 +24,7 @@
         <meta name="msapplication-TileImage" content="<?php echo $_CONFIG['URL'];?>assets/images/favicon/favicon-144.png">
         <meta name="msapplication-TileColor" content="#FFFFFF"> 
         
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 		<link href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/fonts/opensans/opensans.css" rel="stylesheet" type="text/css">
 
