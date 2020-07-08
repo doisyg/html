@@ -119,5 +119,17 @@ $_LANG['11087d84f70335d1fec3aa9e72c8b1d5'] = 'Tops';
 $_LANG['6bdade84aea01b81c7a914e866e4603a'] = 'Seclect active top';
 $_LANG['271535966b6ca5b894deb92d2a14b581'] = 'Set active top';
 $_LANG['bfca0b2f3b4ba454bdcf4db3e3f6fc16'] = 'Move the robot at the final position desired and click on the \"Add POI\" button';
+$_LANG['5f075ae3e1f9d0382bb8c4632991f96f'] = 'Go';
+$_LANG['5d753ec6ad52e4c0b8b03eb8c9e19336'] = 'Click on the fiducial to create the docking station';
+$_LANG['59cbfd5c02b38bc2d902a4891702936e'] = 'Map trinary';
+$_LANG['bb62dc37ed3d83c0b93ff869b0aa2bc0'] = 'Trinary';
+$_LANG['0020a80f19c05f02be9bf3e02b3dc75d'] = 'Stop move';
+$_LANG['c1e05f0d11586ac20def24f90f8e34ad'] = 'Factory data reset';
+$_LANG['0365fd73bdaab3b9932f5a7fb0a4262d'] = 'This action will delete all data from the robot!';
+$_LANG['e907d9afbf98a0fd592901c8f736c87e'] = 'I confirm that I want to delete all data.';
+$_LANG['526d688f37a86d3c3f27d0c5016eb71d'] = 'Reset';
+$_LANG['8f244b1bfc0cef932d0b750d495654e1'] = 'Remember to save the map before launching a test';
+$_LANG['b46807becab96e587ff1299be9a69a8f'] = 'You can change the position of the robot before the test';
+$_LANG['4016eccf3aa8c7d26356249dd3574147'] = 'Move robot';
 
 ?>

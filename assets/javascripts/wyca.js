@@ -120,6 +120,19 @@ $(document).ready(function(e) {
 		});
     });
 	
+	$('.bMoveRobotTest').click(function(e) {
+        e.preventDefault();
+		$(this).closest('.row').hide();
+		$(this).closest('.h100vh_160').children('.teleop').show();
+    });
+	
+	$('.bInitModalTest').click(function(e) {
+        $(this).parent().find('.row').show();
+		$(this).parent().find('.teleop').hide();
+		$(this).parent().find('.bSaveMapTestPoi i').removeClass('fa-check fa-spinner fa-pulse fa-remove');
+		$(this).parent().find('.bSaveMapTestDock i').removeClass('fa-check fa-spinner fa-pulse fa-remove');
+    });
+	
 	$( 'body' ).on( 'click', '.button_goto', function(e) {
         e.preventDefault();
 		history.pushState({ current_groupe:$('.menu_groupe .active').attr('id'), current_page:$(this).data('goto')}, $(this).data('goto'), "/#"+$(this).data('goto'));

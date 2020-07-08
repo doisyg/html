@@ -288,53 +288,61 @@ $(document).ready(function() {
 	
 	$('#manager_edit_map .bTestDock').click(function(e) {
         e.preventDefault();
-		ManagerHideMenus();
 		
-		wycaApi.on('onGoToChargeResult', function (data){
-			$('#manager_edit_map_bStop').hide();
-			if (data.A == wycaApi.AnswerCode.NO_ERROR)
-			{
-				$('#manager_edit_map .modalFinTest section.panel-success').show();
-				$('#manager_edit_map .modalFinTest section.panel-danger').hide();
-			}
-			else
-			{
-				$('#manager_edit_map .modalFinTest section.panel-success').hide();
-				$('#manager_edit_map .modalFinTest section.panel-danger').show();
-				
-				if (data.M != '')
-					$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+		if (currentDockManagerLongTouch.data('id_docking_station') >= 300000)
+		{
+			alert_wyca('You must save the map before testing a new docking station');
+		}
+		else
+		{
+			ManagerHideMenus();
+			
+			wycaApi.on('onGoToChargeResult', function (data){
+				$('#manager_edit_map_bStop').hide();
+				if (data.A == wycaApi.AnswerCode.NO_ERROR)
+				{
+					$('#manager_edit_map .modalFinTest section.panel-success').show();
+					$('#manager_edit_map .modalFinTest section.panel-danger').hide();
+				}
 				else
-					$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
-			}
-			
-			// On rebranche l'ancienne fonction
-			wycaApi.on('onGoToChargeResult', onGoToChargeResult);
-			
-			$('#manager_edit_map .modalFinTest').modal('show');
-		});
-		wycaApi.GoToCharge(currentDockManagerLongTouch.data('id_docking_station'), function (data){
-			
-			if (data.A == wycaApi.AnswerCode.NO_ERROR)
-			{
-				$('#manager_edit_map_bStop').show();
-			}
-			else
-			{
-				$('#manager_edit_map .modalFinTest section.panel-success').hide();
-				$('#manager_edit_map .modalFinTest section.panel-danger').show();
-				
-				if (data.M != '')
-					$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
-				else
-					$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
+				{
+					$('#manager_edit_map .modalFinTest section.panel-success').hide();
+					$('#manager_edit_map .modalFinTest section.panel-danger').show();
+					
+					if (data.M != '')
+						$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+					else
+						$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
+				}
 				
 				// On rebranche l'ancienne fonction
 				wycaApi.on('onGoToChargeResult', onGoToChargeResult);
 				
 				$('#manager_edit_map .modalFinTest').modal('show');
-			}
-		});
+			});
+			wycaApi.GoToCharge(currentDockManagerLongTouch.data('id_docking_station'), function (data){
+				
+				if (data.A == wycaApi.AnswerCode.NO_ERROR)
+				{
+					$('#manager_edit_map_bStop').show();
+				}
+				else
+				{
+					$('#manager_edit_map .modalFinTest section.panel-success').hide();
+					$('#manager_edit_map .modalFinTest section.panel-danger').show();
+					
+					if (data.M != '')
+						$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+					else
+						$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
+					
+					// On rebranche l'ancienne fonction
+					wycaApi.on('onGoToChargeResult', onGoToChargeResult);
+					
+					$('#manager_edit_map .modalFinTest').modal('show');
+				}
+			});
+		}
     });
 	
 	$('#manager_edit_map_menu_poi .bDeletePoi').click(function(e) {
@@ -361,54 +369,62 @@ $(document).ready(function() {
 	
 	$('#manager_edit_map .bTestPoi').click(function(e) {
         e.preventDefault();
-		ManagerHideMenus();
 		
-		wycaApi.on('onGoToPoiResult', function (data){
-			$('#manager_edit_map_bStop').hide();
-			if (data.A == wycaApi.AnswerCode.NO_ERROR)
-			{
-				$('#manager_edit_map .modalFinTest section.panel-success').show();
-				$('#manager_edit_map .modalFinTest section.panel-danger').hide();
-			}
-			else
-			{
-				$('#manager_edit_map .modalFinTest section.panel-success').hide();
-				$('#manager_edit_map .modalFinTest section.panel-danger').show();
-				
-				if (data.M != '')
-					$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+		if (currentPoiManagerLongTouch.data('id_poi') >= 300000)
+		{
+			alert_wyca('You must save the map before testing a new POI');
+		}
+		else
+		{
+			ManagerHideMenus();
+			
+			wycaApi.on('onGoToPoiResult', function (data){
+				$('#manager_edit_map_bStop').hide();
+				if (data.A == wycaApi.AnswerCode.NO_ERROR)
+				{
+					$('#manager_edit_map .modalFinTest section.panel-success').show();
+					$('#manager_edit_map .modalFinTest section.panel-danger').hide();
+				}
 				else
-					$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
-			}
-			
-			// On rebranche l'ancienne fonction
-			wycaApi.on('onGoToPoiResult', onGoToPoiResult);
-		
-			$('#manager_edit_map .modalFinTest').modal('show');
-		});
-		
-		wycaApi.GoToPoi(currentPoiManagerLongTouch.data('id_poi'), function (data){
-			
-			if (data.A == wycaApi.AnswerCode.NO_ERROR)
-			{
-				$('#manager_edit_map_bStop').show();
-			}
-			else
-			{
-				$('#manager_edit_map .modalFinTest section.panel-success').hide();
-				$('#manager_edit_map .modalFinTest section.panel-danger').show();
+				{
+					$('#manager_edit_map .modalFinTest section.panel-success').hide();
+					$('#manager_edit_map .modalFinTest section.panel-danger').show();
+					
+					if (data.M != '')
+						$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+					else
+						$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
+				}
 				
-				if (data.M != '')
-					$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
-				else
-					$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
-			
 				// On rebranche l'ancienne fonction
 				wycaApi.on('onGoToPoiResult', onGoToPoiResult);
-				
+			
 				$('#manager_edit_map .modalFinTest').modal('show');
-			}
-		});
+			});
+			
+			wycaApi.GoToPoi(currentPoiManagerLongTouch.data('id_poi'), function (data){
+				
+				if (data.A == wycaApi.AnswerCode.NO_ERROR)
+				{
+					$('#manager_edit_map_bStop').show();
+				}
+				else
+				{
+					$('#manager_edit_map .modalFinTest section.panel-success').hide();
+					$('#manager_edit_map .modalFinTest section.panel-danger').show();
+					
+					if (data.M != '')
+						$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+					else
+						$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
+				
+					// On rebranche l'ancienne fonction
+					wycaApi.on('onGoToPoiResult', onGoToPoiResult);
+					
+					$('#manager_edit_map .modalFinTest').modal('show');
+				}
+			});
+		}
     });
 	
 	/**************************/

@@ -171,16 +171,35 @@
                                     <div class="actions mh100vh_55">
                                         <div class="h100vh_160" style="overflow:auto; text-align:center">
                                             
-                                            <h3 style="color:#F90; padding-bottom:20px;">Remember to save the map before launching a test</h3>
+                                            <div class="row" style="margin-top:30px;">
+                                                <div class="col-xs-8">
+                                                    <span style="font-size:16px; color:#F90; padding-bottom:20px;"><?php echo __('Remember to save the map before launching a test');?></span>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <a href="#" class="btn btn-primary bSaveMapTestDock" style="margin-top:7px;"><?php echo __('Save map');?> <i class="fa"></i></a>
+                                                </div>
+                                            </div>
                                             
-                                            <a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
-                                        
-                                        	<div class="ifUndocked">
-                                                
-                                                <div style="text-align:center; width:100%; z-index:2000; margin-top:50px;">
-                                                    <div class="joystickDiv" draggable="false" style="margin:auto;">
-                                                        <div class="fond"></div>
-                                                        <div class="curseur"></div>
+                                            
+                                            <div class="row" style="margin-top:30px;">
+                                                <div class="col-xs-8">
+                                                    <span style="font-size:16px; padding-bottom:20px;"><?php echo __('You can change the position of the robot before the test');?></span>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <a href="#" class="btn btn-primary bMoveRobotTest" style="margin-top:7px;"><?php echo __('Move robot');?></a>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="teleop" style="display:none; margin-top:30px;">
+                                                <a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
+                                            
+                                                <div class="ifUndocked">
+                                                    
+                                                    <div style="text-align:center; width:100%; z-index:2000; margin-top:50px;">
+                                                        <div class="joystickDiv" draggable="false" style="margin:auto;">
+                                                            <div class="fond"></div>
+                                                            <div class="curseur"></div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -189,8 +208,8 @@
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
-                                        <a href="#" class="btn btn-warning bTestDock" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Go');?></a>
+                                        <a href="#" class="btn btn-primary bInitModalTest" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+                                        <a href="#" class="btn btn-warning bInitModalTest bTestDock" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Go');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -204,26 +223,44 @@
                                     <div class="actions mh100vh_55">
                                         <div class="h100vh_160" style="overflow:auto; text-align:center">
                                             
-                                            <h3 style="color:#F90; padding-bottom:20px;">Remember to save the map before launching a test</h3>
-                                            
-                                            <a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
-                                        
-                                        	<div class="ifUndocked">
-                                                
-                                                <div style="text-align:center; width:100%; z-index:2000; margin-top:50px;">
-                                                    <div class="joystickDiv" draggable="false" style="margin:auto;">
-                                                        <div class="fond"></div>
-                                                        <div class="curseur"></div>
-                                                    </div>
+                                            <div class="row" style="margin-top:30px;">
+                                                <div class="col-xs-8">
+                                                    <span style="font-size:16px; color:#F90; padding-bottom:20px;"><?php echo __('Remember to save the map before launching a test');?></span>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <a href="#" class="btn btn-primary bSaveMapTestPoi" style="margin-top:7px;"><?php echo __('Save map');?> <i class="fa"></i></a>
                                                 </div>
                                             </div>
                                             
+                                            
+                                            <div class="row" style="margin-top:30px;">
+                                                <div class="col-xs-8">
+                                                    <span style="font-size:16px; padding-bottom:20px;"><?php echo __('You can change the position of the robot before the test');?></span>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <a href="#" class="btn btn-primary bMoveRobotTest" style="margin-top:7px;"><?php echo __('Move robot');?></a>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="teleop" style="display:none; margin-top:30px;">
+                                                <a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
+                                            
+                                                <div class="ifUndocked">
+                                                    
+                                                    <div style="text-align:center; width:100%; z-index:2000; margin-top:50px;">
+                                                        <div class="joystickDiv" draggable="false" style="margin:auto;">
+                                                            <div class="fond"></div>
+                                                            <div class="curseur"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
-                                        <a href="#" class="btn btn-warning bTestPoi" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Go');?></a>
+                                        <a href="#" class="btn btn-primary bInitModalTest" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+                                        <a href="#" class="btn btn-warning bInitModalTest bTestPoi" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Go');?></a>
                                     </div>
                                 </div>
                             </div>
