@@ -488,6 +488,18 @@ $(document).ready(function(e) {
         img.src = 'assets/images/vide.png';
 		
 		wycaApi.MappingStop(function(data) {
+		
+			$.ajax({
+				type: "POST",
+				url: 'install_by_step_fin_mapping.php',
+				data: {},
+				dataType: 'json',
+				success: function(data) {
+				},
+				error: function(e) {
+				}
+			});
+			
 			var img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
             img.src = 'data:image/png;base64,' + data.D;
 			
@@ -622,7 +634,7 @@ $(document).ready(function(e) {
 														ByStepInitMap();
 														ByStepResizeSVG();
 													},500); 
-																
+													
 													$.ajax({
 														type: "POST",
 														url: 'ajax/install_by_step_save_mapping.php',

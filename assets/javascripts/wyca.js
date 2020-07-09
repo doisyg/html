@@ -564,6 +564,68 @@ function InitTopsByStep()
 	}
 }
 
+function GetLastMappingByStep()
+{
+	$('#install_by_step_mapping_fin .loading_fin_create_map').show();
+	
+	img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
+	img.src = 'assets/images/vide.png';
+	
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetLastMapping(function(data) {
+			
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+			
+				var img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
+				img.src = 'data:image/png;base64,' + data.D;
+				
+				finalMapData = 'data:image/png;base64,' + data.D;
+				
+				setTimeout(function() {
+					canvas = document.createElement('canvas');
+					
+					width = img.naturalWidth;
+					height = img.naturalHeight;
+					
+					$('#install_by_step_mapping_canvas_result_trinary').attr('width', img.naturalWidth);
+					$('#install_by_step_mapping_canvas_result_trinary').attr('height', img.naturalHeight);
+					
+					canvas.width = img.naturalWidth;
+					canvas.height = img.naturalHeight;
+					canvas.getContext('2d').drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
+					
+					CalculateMapTrinary();
+				}, 100);
+			}
+			else
+			{
+				$('#install_by_step_mapping_fin .loading_fin_create_map').hide();
+				
+				alert_wyca('Recovery mapping error ; ' + data.M);
+			}
+		});
+		
+		mappingStarted = false;
+		$('#install_by_step_mapping .bMappingStop').hide();
+		$('#install_by_step_mapping .mapping_view').hide();
+		$('#install_by_step_mapping .bMappingStart').show();
+		
+		$('#install_by_step_mapping_fin .bMappingCancelMap2').show();
+		$('#install_by_step_mapping_fin .bMappingSaveMap').show();
+		
+		if (intervalMap != null)
+		{
+			clearInterval(intervalMap);
+			intervalMap = null;
+		}
+	}
+	else
+	{
+		setTimeout(GetLastMappingByStep, 500);
+	}
+}
 
 function InitTopsActiveByStep()
 {

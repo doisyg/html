@@ -267,7 +267,7 @@
             	<a href="#" class="bMappingStop btn btn-primary button_goto" data-goto="install_by_step_mapping_fin" style="display:none; position:absolute; right:0; bottom:0px; width:100%; z-index:2001; font-size:30px;"><i class="fa fa-stop"></i> <?php echo __('Mapping done');?></a>
             </footer>
         </section>
-        <section id="install_by_step_mapping_fin" class="page hide_photo_back with_footer">
+        <section id="install_by_step_mapping_fin" class="page <?php echo $INSTALL_STEP == 8?'active':'';?> hide_photo_back with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_mapping"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
@@ -349,7 +349,7 @@
             </footer>
         </section>
         
-        <section id="install_by_step_edit_map" class="page <?php echo $INSTALL_STEP == 8?'active':'';?> hide_photo_back with_footer">
+        <section id="install_by_step_edit_map" class="page <?php echo $INSTALL_STEP == 9?'active':'';?> hide_photo_back with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_mapping"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
