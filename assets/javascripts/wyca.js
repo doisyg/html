@@ -208,8 +208,104 @@ $(document).ready(function(e) {
 		
 		InitJoystick();
     });
+	
+	$(document).on('touchstart', '.ui-slider-handle', function(event) {
+		var self = this;
+	
+		// Ignore the event if another widget is already being handled
+		if (touchHandled) {
+		  return;
+		}
+	
+		// Set the flag to prevent other widgets from inheriting the touch event
+		touchHandled = true;
+	
+		// Track movement to determine if interaction was a click
+		self._touchMoved = false;
+	
+		// Simulate the mouseover event
+		simulateMouseEvent(event, 'mouseover');
+	
+		// Simulate the mousemove event
+		simulateMouseEvent(event, 'mousemove');
+	
+		// Simulate the mousedown event
+		simulateMouseEvent(event, 'mousedown');
+	});
+	
+	$(document).on('touchmove', '.ui-slider-handle', function(event) {
+		// Ignore event if not handled
+		if (!touchHandled) {
+		  return;
+		}
+	
+		// Interaction was not a click
+		this._touchMoved = true;
+	
+		// Simulate the mousemove event
+		simulateMouseEvent(event, 'mousemove');
+	});
+	
+	$(document).on('touchend', '.ui-slider-handle', function(event) {
+		// Ignore event if not handled
+		if (!touchHandled) {
+		  return;
+		}
+	
+		// Simulate the mouseup event
+		simulateMouseEvent(event, 'mouseup');
+	
+		// Simulate the mouseout event
+		simulateMouseEvent(event, 'mouseout');
+	
+		// If the touch interaction did not move, it should trigger a click
+		if (!this._touchMoved) {
+	
+		  // Simulate the click event
+		  simulateMouseEvent(event, 'click');
+		}
+	
+		// Unset the flag to allow other widgets to inherit the touch event
+		touchHandled = false;
+	});
 });
 
+var touchHandled = false;
+
+function simulateMouseEvent (event, simulatedType) {
+
+    // Ignore multi-touch events
+    if (event.originalEvent.touches.length > 1) {
+      return;
+    }
+
+    event.preventDefault();
+
+    var touch = event.originalEvent.changedTouches[0],
+        simulatedEvent = document.createEvent('MouseEvents');
+
+    // Initialize the simulated mouse event using the touch event's coordinates
+    simulatedEvent.initMouseEvent(
+      simulatedType,    // type
+      true,             // bubbles
+      true,             // cancelable
+      window,           // view
+      1,                // detail
+      touch.screenX,    // screenX
+      touch.screenY,    // screenY
+      touch.clientX,    // clientX
+      touch.clientY,    // clientY
+      false,            // ctrlKey
+      false,            // altKey
+      false,            // shiftKey
+      false,            // metaKey
+      0,                // button
+      null              // relatedTarget
+    );
+
+    // Dispatch the simulated event to the target element
+    event.target.dispatchEvent(simulatedEvent);
+  }
 
 function GetServiceBooksNormal()
 {
