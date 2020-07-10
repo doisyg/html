@@ -35,7 +35,7 @@ $(document).ready(function(e) {
 		
 		id_site_to_delete = parseInt($(this).closest('li').data('id_site'));
 		
-		wycaApi.DeleteSite(id_site, function(data) {
+		wycaApi.DeleteSite(id_site_to_delete, function(data) {
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
 				$('#install_normal_setup_sites_list_site_elem_'+id_site_to_delete).remove();
