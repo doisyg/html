@@ -38,8 +38,8 @@
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/skins/default.css" />
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/skins/extension.css" />
         
-		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/wyca.css" />
-		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/map.css" />
+		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/wyca.css?v=20200710" />
+		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/map.css?v=20200710" />
     
 
 	</head>
