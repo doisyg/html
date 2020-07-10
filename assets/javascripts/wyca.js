@@ -428,8 +428,8 @@ function GetSitesNormal()
 					$('#install_normal_setup_sites .list_sites').append('' +
 						'<li id="install_normal_setup_sites_list_site_elem_'+value.id_site+'" data-id_site="'+value.id_site+'">'+
 						'	<span class="societe">'+value.name+'</span>'+
-						(current_site.id_site != value.id_site?'	<a href="#" class="bSiteDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>':'')+
-						(current_site.id_site != value.id_site?'	<a href="#" class="bSiteSetCurrentElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-check"></i></a>':'')+
+						(current_site.id_site != value.id_site?'	<a href="#" class="bSiteDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>':'')+
+						(current_site.id_site != value.id_site?'	<a href="#" class="bSiteSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-check"></i></a>':'')+
 						'</li>'
 						);
 				});
