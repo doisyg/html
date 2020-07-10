@@ -560,7 +560,7 @@ function InitTopsNormal()
 		wycaApi.GetTopsList(function(data) {
 			console.log(data);
 			$.each(data.D,function(index, value){
-				$('#install_normal_setup_tops .tuiles').append('<li class="col-xs-4">'+
+				$('#install_normal_setup_tops .tuiles').append('<li class="col-xs-4 col-md-3 col-lg-2">'+
 				'	<a class="is_checkbox '+(value.active?'active no_update':'')+' '+(value.available?'checked':'')+' anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'" href="#">'+
 				'		<i class="fa fa-check"></i>'+
 				'		<img src="data:image/png;base64, '+value.image_b64+'" />'+value.name+''+
@@ -588,7 +588,7 @@ function InitTopsActiveManager()
 			$.each(data.D,function(index, value){
 				if (value.available)
 				{
-					$('#manager_top .tuiles').append('<li class="col-xs-4 bTop' + value.id_top + '">'+
+					$('#manager_top .tuiles').append('<li class="col-xs-4 col-md-3 col-lg-2 bTop' + value.id_top + '">'+
 					'	<a href="#" class="is_checkbox set_top '+(value.active?'checked':'')+' anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'">'+
 					'		<i class="fa fa-check"></i>'+
 					'		<img src="data:image/png;base64, '+value.image_b64+'" />'+value.name+''+
@@ -617,7 +617,7 @@ function InitTopsActiveNormal()
 			$.each(data.D,function(index, value){
 				if (value.available)
 				{
-					$('#install_normal_setup_top .tuiles').append('<li class="col-xs-4 bTop' + value.id_top + '">'+
+					$('#install_normal_setup_top .tuiles').append('<li class="col-xs-4 col-md-3 col-lg-2 bTop' + value.id_top + '">'+
 					'	<a href="#" class="is_checkbox set_top '+(value.active?'checked':'')+' anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'">'+
 					'		<i class="fa fa-check"></i>'+
 					'		<img src="data:image/png;base64, '+value.image_b64+'" />'+value.name+''+
@@ -644,7 +644,7 @@ function InitTopsByStep()
 		wycaApi.GetTopsList(function(data) {
 			console.log(data);
 			$.each(data.D,function(index, value){
-				$('#install_by_step_tops .tuiles').append('<li class="col-xs-4">'+
+				$('#install_by_step_tops .tuiles').append('<li class="col-xs-4 col-md-3 col-lg-2">'+
 				'	<a class="is_checkbox '+(value.available?'checked':'')+' anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'" href="#">'+
 				'		<i class="fa fa-check"></i>'+
 				'		<img src="data:image/png;base64, '+value.image_b64+'" />'+value.name+''+
@@ -733,7 +733,7 @@ function InitTopsActiveByStep()
 			$.each(data.D,function(index, value){
 				if (value.available)
 				{
-					$('#install_by_step_top .tuiles').append('<li class="col-xs-4 bTop' + value.id_top + '">'+
+					$('#install_by_step_top .tuiles').append('<li class="col-xs-4 col-md-3 col-lg-2 bTop' + value.id_top + '">'+
 					'	<a href="#" class="set_top button_goto anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'" data-goto="install_by_step_check">'+
 					'		<img src="data:image/png;base64, '+value.image_b64+'" />'+value.name+''+
 					'	</a>'+

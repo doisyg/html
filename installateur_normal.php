@@ -7,13 +7,13 @@
             </header>
             <div class="content">
                 <ul class="tuiles row">
-                    <li class="col-xs-4"><a class="button_goto anim_tuiles tuile1" data-goto="install_normal_edit_map" href="#"><i class="fa fa-map-o"></i><?php echo __('Map');?></a></li>
-                    <li class="col-xs-4"><a class="button_goto anim_tuiles tuile2" data-goto="install_normal_move" href="#"><i class="fa fa-gamepad"></i><?php echo __('Control robot');?></a></li>
-                    <li class="col-xs-4"><a class="button_goto anim_tuiles tuile3" data-goto="install_normal_recovery" href="#"><i class="fa fa-search"></i><?php echo __('Recovery');?></a></li>
-                    <li class="col-xs-4"><a class="button_goto anim_tuiles tuile4" data-goto="install_normal_setup" href="#"><i class="fa fa-gears"></i><?php echo __('Setup');?></a></li>
-                    <li class="col-xs-4"><a class="button_goto anim_tuiles tuile5" data-goto="install_normal_manager" href="#"><i class="fa fa-group"></i><?php echo __('Managers');?></a></li>
-                    <li class="col-xs-4"><a class="button_goto anim_tuiles tuile6" data-goto="install_normal_service_book" href="#"><i class="fa fa-book"></i><?php echo __('Service book');?></a></li>
-                    <li class="col-xs-4"><a class="button_goto anim_tuiles tuile7 todo" data-goto="install_normal_help" href="#"><i class="fa fa-question"></i><?php echo __('Help');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile1" data-goto="install_normal_edit_map" href="#"><i class="fa fa-map-o"></i><?php echo __('Map');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="install_normal_move" href="#"><i class="fa fa-gamepad"></i><?php echo __('Control robot');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="install_normal_recovery" href="#"><i class="fa fa-search"></i><?php echo __('Recovery');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="install_normal_setup" href="#"><i class="fa fa-gears"></i><?php echo __('Setup');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5" data-goto="install_normal_manager" href="#"><i class="fa fa-group"></i><?php echo __('Managers');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" data-goto="install_normal_service_book" href="#"><i class="fa fa-book"></i><?php echo __('Service book');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7 todo" data-goto="install_normal_help" href="#"><i class="fa fa-question"></i><?php echo __('Help');?></a></li>
                 </ul>
             </div>
         </section>
@@ -729,15 +729,15 @@
             </header>
             <div class="content">
                 <ul class="tuiles row">
-                    <li class="col-xs-4"><a class="button_goto anim_tuiles tuile1" data-goto="install_normal_setup_sites" href="#"><i class="fa fa-building"></i><?php echo __('Sites');?></a></li>
-                    <!--<li class="col-xs-4"><a class="button_goto anim_tuiles tuile2" data-goto="install_normal_setup_trinary" href="#"><i class="fa fa-map-o"></i><?php echo __('Map trinary');?></a></li>-->
-                    <li class="col-xs-4"><a class="button_goto anim_tuiles tuile2" data-goto="install_normal_setup_language" href="#"><i class="fa fa-language"></i><?php echo __('Language');?></a></li>
-                    <li class="col-xs-4"><a class="button_goto anim_tuiles tuile3" data-goto="install_normal_setup_wifi" href="#"><i class="fa fa-gear"></i><?php echo __('Wifi');?></a></li>
-                    <li class="col-xs-4"><a class="button_goto anim_tuiles tuile4" data-goto="install_normal_setup_vehicule" href="#"><i class="fa fa-android"></i><?php echo __('Vehicule');?></a></li>
-                    <li class="col-xs-4"><a class="button_goto anim_tuiles tuile5" data-goto="install_normal_setup_tops" href="#"><i class="fa fa-cube"></i><?php echo __('Tops');?></a></li>
-                    <li class="col-xs-4"><a class="button_goto anim_tuiles tuile6 todo" data-goto="install_normal_setup_export" href="#"><i class="fa fa-upload"></i><?php echo __('Save config');?></a></li>
-                    <li class="col-xs-4"><a class="button_goto anim_tuiles tuile7 todo" data-goto="install_normal_setup_import" href="#"><i class="fa fa-download"></i><?php echo __('Load config');?></a></li>
-                    <li class="col-xs-4"><a class="button_goto anim_tuiles tuile8" data-goto="install_normal_setup_reset" href="#"><i class="fa fa-eraser"></i><?php echo __('Factory data reset');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile1" data-goto="install_normal_setup_sites" href="#"><i class="fa fa-building"></i><?php echo __('Sites');?></a></li>
+                    <!--<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="install_normal_setup_trinary" href="#"><i class="fa fa-map-o"></i><?php echo __('Map trinary');?></a></li>-->
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="install_normal_setup_language" href="#"><i class="fa fa-language"></i><?php echo __('Language');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="install_normal_setup_wifi" href="#"><i class="fa fa-gear"></i><?php echo __('Wifi');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="install_normal_setup_vehicule" href="#"><i class="fa fa-android"></i><?php echo __('Vehicule');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5" data-goto="install_normal_setup_tops" href="#"><i class="fa fa-cube"></i><?php echo __('Tops');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6 todo" data-goto="install_normal_setup_export" href="#"><i class="fa fa-upload"></i><?php echo __('Save config');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7 todo" data-goto="install_normal_setup_import" href="#"><i class="fa fa-download"></i><?php echo __('Load config');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8" data-goto="install_normal_setup_reset" href="#"><i class="fa fa-eraser"></i><?php echo __('Factory data reset');?></a></li>
                 </ul>
             </div>
             <footer>
@@ -872,12 +872,12 @@
             <div class="content">
             
             	<ul class="tuiles heightauto row">
-                	<li class="col-xs-4">
+                	<li class="col-xs-4 col-md-3 col-lg-2">
                         <a href="#" class="select_langue anim_tuiles tuile_img tuile1" data-id_lang="1">
                             <img src="assets/images/lang/fr_big.jpg" />
                         </a>
                     </li>
-                	<li class="col-xs-4">
+                	<li class="col-xs-4 col-md-3 col-lg-2">
                         <a href="#" class="select_langue anim_tuiles tuile_img tuile2" data-id_lang="2">
                             <img src="assets/images/lang/en_big.jpg" />
                         </a>

@@ -363,6 +363,11 @@ $(document).ready(function() {
 		if (!$('#install_normal_edit_map_bNormalUndo').hasClass('disabled'))
 			NormalUndo();
 	});
+	$('#install_normal_edit_map_bNormalUndo').on('mousedon', function(e) { 
+		e.preventDefault();
+		if (!$('#install_normal_edit_map_bNormalUndo').hasClass('disabled'))
+			NormalUndo();
+	});
 	$('#install_normal_edit_map_bNormalUndo').on('touchstart', function(e) { 
 		e.preventDefault();
 		if (!$('#install_normal_edit_map_bNormalUndo').hasClass('disabled'))
@@ -374,12 +379,39 @@ $(document).ready(function() {
 		if (!$('#install_normal_edit_map_bNormalRedo').hasClass('disabled'))
 			NormalRedo();
     });
+	$('#install_normal_edit_map_bNormalRedo').on('mousedown', function(e) { 
+		e.preventDefault();
+		if (!$('#install_normal_edit_map_bNormalRedo').hasClass('disabled'))
+			NormalRedo();
+	});
 	$('#install_normal_edit_map_bNormalRedo').on('touchstart', function(e) { 
 		e.preventDefault();
 		if (!$('#install_normal_edit_map_bNormalRedo').hasClass('disabled'))
 			NormalRedo();
 	});
 	
+	$(document).on('mousedown', '#install_normal_edit_map_svg .movable', function(e) {
+		if (normalCurrentAction != 'gomme')
+		{
+			touchStarted = true;
+			downOnMovable = true;
+			movableDown = $(this);
+			//normalDownOnSVG_x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX);
+			//normalDownOnSVG_y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY);
+			normalDownOnSVG_x = parseFloat($(this).attr('x')) + parseFloat($(this).attr('width'))/2;
+			normalDownOnSVG_y = parseFloat($(this).attr('y')) + parseFloat($(this).attr('height'))/2;
+			
+			p = $('#install_normal_edit_map_svg image').position();
+			zoom = NormalGetZoom();
+			
+			normalDownOnSVG_x = normalDownOnSVG_x / zoom + p.left;
+			normalDownOnSVG_y = normalDownOnSVG_y / zoom + p.top;
+			
+			NormalSaveElementNeeded(true);
+			
+			blockZoom = true;
+		}
+    });
 	$(document).on('touchstart', '#install_normal_edit_map_svg .movable', function(e) {
 		if (normalCurrentAction != 'gomme')
 		{
@@ -404,13 +436,13 @@ $(document).ready(function() {
     });
 	
 	
-	$(document).on('touchstart', '#install_normal_edit_map_svg .secable', function(e) {
+	$(document).on('mousedown', '#install_normal_edit_map_svg .secable', function(e) {
 		zoom = NormalGetZoom();
 		if (normalCurrentAction == 'editForbiddenArea' || normalCurrentAction == 'addForbiddenArea')
 		{
 			p = $('#install_normal_edit_map_svg image').position();
-			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[e.changedTouches.length-1].pageX) - p.left;
-			y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[e.changedTouches.length-1].pageY) - p.top;
+			x = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[e.changedTouches.length-1].pageX) : event.pageX ) - p.left;
+			y = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[e.changedTouches.length-1].pageY) : event.pageY ) - p.top;
 			x = x * zoom;
 			y = ros_hauteur - (y * zoom);
 			
@@ -427,8 +459,47 @@ $(document).ready(function() {
 		else if (normalCurrentAction == 'editArea' || normalCurrentAction == 'addArea')
 		{
 			p = $('#install_normal_edit_map_svg image').position();
-			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[e.changedTouches.length-1].pageX) - p.left;
-			y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[e.changedTouches.length-1].pageY) - p.top;
+			x = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[e.changedTouches.length-1].pageX) : event.pageX ) - p.left;
+			y = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[e.changedTouches.length-1].pageY) : event.pageY ) - p.top;
+			x = x * zoom;
+			y = ros_hauteur - (y * zoom);
+			
+			xRos = x * ros_resolution / 100;
+			yRos = y * ros_resolution / 100;
+			
+			tailleArea = 1*zoom;
+			tailleArea = 1;
+			
+			
+			areas[currentAreaIndex].points.splice($(this).data('index_point'), 0, {x:xRos, y:yRos});
+			NormalTraceArea(currentAreaIndex);
+		}
+    });
+	$(document).on('touchstart', '#install_normal_edit_map_svg .secable', function(e) {
+		zoom = NormalGetZoom();
+		if (normalCurrentAction == 'editForbiddenArea' || normalCurrentAction == 'addForbiddenArea')
+		{
+			p = $('#install_normal_edit_map_svg image').position();
+			x = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[e.changedTouches.length-1].pageX) : event.pageX ) - p.left;
+			y = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[e.changedTouches.length-1].pageY) : event.pageY ) - p.top;
+			x = x * zoom;
+			y = ros_hauteur - (y * zoom);
+			
+			xRos = x * ros_resolution / 100;
+			yRos = y * ros_resolution / 100;
+			
+			tailleArea = 1*zoom;
+			tailleArea = 1;
+			
+			
+			forbiddens[currentForbiddenIndex].points.splice($(this).data('index_point'), 0, {x:xRos, y:yRos});
+			NormalTraceForbidden(currentForbiddenIndex);
+		}
+		else if (normalCurrentAction == 'editArea' || normalCurrentAction == 'addArea')
+		{
+			p = $('#install_normal_edit_map_svg image').position();
+			x = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[e.changedTouches.length-1].pageX) : event.pageX ) - p.left;
+			y = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[e.changedTouches.length-1].pageY) : event.pageY ) - p.top;
 			x = x * zoom;
 			y = ros_hauteur - (y * zoom);
 			
@@ -840,7 +911,7 @@ $(document).ready(function() {
 		window.panZoomNormal.pan({'x':x, 'y':y});
 	});
 	
-	$('#install_normal_edit_map_zone_zoom_click').on('touchstart', function(e) {
+	$('#install_normal_edit_map_zone_zoom_click').on('mousedown', function(e) {
        e.preventDefault();
 	   downOnZoomClick = true;
 	   
@@ -852,8 +923,8 @@ $(document).ready(function() {
 		
 		r = document.getElementById("install_normal_edit_map_zoom_carte_container").getBoundingClientRect();
 		
-		x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - r.left;
-		y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - r.top;
+		x = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) : event.pageX) - r.left;
+		y = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) : event.pageX) - r.top;
 		
 		x = x - wZoom / 2;
 		y = y - hZoom / 2;
@@ -869,9 +940,71 @@ $(document).ready(function() {
 		window.panZoomNormal.pan({'x':x, 'y':y});
 	   
     });
+	$('#install_normal_edit_map_zone_zoom_click').on('touchstart', function(e) {
+       e.preventDefault();
+	   downOnZoomClick = true;
+	   
+	    w = $('#install_normal_edit_map_zoom_carte').width();
+		h = $('#install_normal_edit_map_zoom_carte').height();
+		
+		wZoom = $('#install_normal_edit_map_zone_zoom').width();
+		hZoom = $('#install_normal_edit_map_zone_zoom').height();
+		
+		r = document.getElementById("install_normal_edit_map_zoom_carte_container").getBoundingClientRect();
+		
+		x = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) : event.pageX) - r.left;
+		y = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) : event.pageY) - r.top;
+		
+		x = x - wZoom / 2;
+		y = y - hZoom / 2;
+				
+		//zoom = ros_largeur / $('#install_normal_edit_map_svg').width() / window.panZoomNormal.getZoom();
+		zoom = NormalGetZoom();
+		
+		largeur_img = ros_largeur / zoom
+		
+		x = - x / w * largeur_img;
+		y = - y / w * largeur_img;
+		
+		window.panZoomNormal.pan({'x':x, 'y':y});
+	   
+    });
+	$('#install_normal_edit_map_zone_zoom_click').on('mouseup', function(e) {
+       e.preventDefault();
+	   downOnZoomClick = false;
+    });
 	$('#install_normal_edit_map_zone_zoom_click').on('touchend', function(e) {
        e.preventDefault();
 	   downOnZoomClick = false;
+    });
+	$('#install_normal_edit_map_zone_zoom_click').on('mousemove', function(e) {
+       e.preventDefault();
+	   if (downOnZoomClick)
+	   {
+		    w = $('#install_normal_edit_map_zoom_carte').width();
+			h = $('#install_normal_edit_map_zoom_carte').height();
+			
+			wZoom = $('#install_normal_edit_map_zone_zoom').width();
+			hZoom = $('#install_normal_edit_map_zone_zoom').height();
+			
+			r = document.getElementById("install_normal_edit_map_zoom_carte_container").getBoundingClientRect();
+		
+			x = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) : event.pageX)- r.left;
+			y = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) : event.pageY)- r.top;
+			
+			x = x - wZoom / 2;
+			y = y - hZoom / 2;
+					
+			//zoom = ros_largeur / $('#install_normal_edit_map_svg').width() / window.panZoomNormal.getZoom();
+			zoom = NormalGetZoom();
+			
+			largeur_img = ros_largeur / zoom
+			
+			x = - x / w * largeur_img;
+			y = - y / w * largeur_img;
+			
+			window.panZoomNormal.pan({'x':x, 'y':y});
+	   }
     });
 	$('#install_normal_edit_map_zone_zoom_click').on('touchmove', function(e) {
        e.preventDefault();
@@ -885,8 +1018,8 @@ $(document).ready(function() {
 			
 			r = document.getElementById("install_normal_edit_map_zoom_carte_container").getBoundingClientRect();
 		
-			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - r.left;
-			y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - r.top;
+			x = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) : event.pageX) - r.left;
+			y = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) : event.pageY) - r.top;
 			
 			x = x - wZoom / 2;
 			y = y - hZoom / 2;
@@ -1083,8 +1216,8 @@ $(document).ready(function() {
 		
 		zoom = NormalGetZoom();
 		p = $('#install_normal_edit_map_svg image').position();
-		x = (eventTouchStart.originalEvent.targetTouches[0] ? eventTouchStart.originalEvent.targetTouches[0].pageX : eventTouchStart.originalEvent.changedTouches[e.changedTouches.length-1].pageX) - p.left;
-		y = (eventTouchStart.originalEvent.targetTouches[0] ? eventTouchStart.originalEvent.targetTouches[0].pageY : eventTouchStart.originalEvent.changedTouches[e.changedTouches.length-1].pageY) - p.top;
+		x = (eventTouchStart.originalEvent.targetTouches ? (eventTouchStart.originalEvent.targetTouches[0] ? eventTouchStart.originalEvent.targetTouches[0].pageX : eventTouchStart.originalEvent.changedTouches[e.changedTouches.length-1].pageX) : eventTouchStart.originalEvent.pageX) - p.left;
+		y = (eventTouchStart.originalEvent.targetTouches ? (eventTouchStart.originalEvent.targetTouches[0] ? eventTouchStart.originalEvent.targetTouches[0].pageY : eventTouchStart.originalEvent.changedTouches[e.changedTouches.length-1].pageY) : eventTouchStart.originalEvent.pageY) - p.top;
 		x = x * zoom;
 		y = ros_hauteur - (y * zoom);
 		
@@ -1198,8 +1331,8 @@ $(document).ready(function() {
 			zoom = NormalGetZoom();
 			
 			p = $('#install_normal_edit_map_svg image').position();
-			x = (eventTouchStart.originalEvent.targetTouches[0] ? eventTouchStart.originalEvent.targetTouches[0].pageX : eventTouchStart.originalEvent.changedTouches[e.changedTouches.length-1].pageX) - p.left;
-			y = (eventTouchStart.originalEvent.targetTouches[0] ? eventTouchStart.originalEvent.targetTouches[0].pageY : eventTouchStart.originalEvent.changedTouches[e.changedTouches.length-1].pageY) - p.top;
+			x = (eventTouchStart.originalEvent.targetTouches ? (eventTouchStart.originalEvent.targetTouches[0] ? eventTouchStart.originalEvent.targetTouches[0].pageX : eventTouchStart.originalEvent.changedTouches[e.changedTouches.length-1].pageX) : eventTouchStart.originalEvent.pageX) - p.left;
+			y = (eventTouchStart.originalEvent.targetTouches ? (eventTouchStart.originalEvent.targetTouches[0] ? eventTouchStart.originalEvent.targetTouches[0].pageY : eventTouchStart.originalEvent.changedTouches[e.changedTouches.length-1].pageY) : eventTouchStart.originalEvent.pageY) - p.top;
 			x = x * zoom;
 			y = ros_hauteur - (y * zoom);
 			
@@ -1284,8 +1417,8 @@ $(document).ready(function() {
 			nextIdArea++;
 			zoom = NormalGetZoom();
 			p = $('#install_normal_edit_map_svg image').position();
-			x = (eventTouchStart.originalEvent.targetTouches[0] ? eventTouchStart.originalEvent.targetTouches[0].pageX : eventTouchStart.originalEvent.changedTouches[e.changedTouches.length-1].pageX) - p.left;
-			y = (eventTouchStart.originalEvent.targetTouches[0] ? eventTouchStart.originalEvent.targetTouches[0].pageY : eventTouchStart.originalEvent.changedTouches[e.changedTouches.length-1].pageY) - p.top;
+			x = (eventTouchStart.originalEvent.targetTouches ? (eventTouchStart.originalEvent.targetTouches[0] ? eventTouchStart.originalEvent.targetTouches[0].pageX : eventTouchStart.originalEvent.changedTouches[e.changedTouches.length-1].pageX) : eventTouchStart.originalEvent.pageX) - p.left;
+			y = (eventTouchStart.originalEvent.targetTouches ? (eventTouchStart.originalEvent.targetTouches[0] ? eventTouchStart.originalEvent.targetTouches[0].pageY : eventTouchStart.originalEvent.changedTouches[e.changedTouches.length-1].pageY) : eventTouchStart.originalEvent.pageY) - p.top;
 			x = x * zoom;
 			y = ros_hauteur - (y * zoom);
 			
@@ -1415,6 +1548,9 @@ $(document).ready(function() {
 			NormalAvertCantChange();
 	});
 	
+	$('#install_normal_edit_map_container_all .modalAddDock .joystickDiv .curseur').on('mousedown', function(e) {
+		$('#install_normal_edit_map_container_all .modalAddDock .dock').hide();
+	});
 	$('#install_normal_edit_map_container_all .modalAddDock .joystickDiv .curseur').on('touchstart', function(e) {
 		$('#install_normal_edit_map_container_all .modalAddDock .dock').hide();
 	});
@@ -1749,6 +1885,9 @@ $(document).ready(function() {
 			NormalAvertCantChange();
 	});
 	
+	$('#install_normal_edit_map_container_all .modalAddPoi .joystickDiv .curseur').on('mousedown', function(e) {
+		$('#install_normal_edit_map_container_all .modalAddPoi .poi').hide();
+	});
 	$('#install_normal_edit_map_container_all .modalAddPoi .joystickDiv .curseur').on('touchstart', function(e) {
 		$('#install_normal_edit_map_container_all .modalAddPoi .poi').hide();
 	});
@@ -2242,6 +2381,40 @@ $(document).ready(function() {
 		 return false;
 	};
 	
+	$(document).on('mousedown', '#install_normal_edit_map_bRotateRight', function(e) {
+		NormalSaveElementNeeded(true);
+		if (timerRotate != null)
+		{
+			clearInterval(timerRotate);
+			timerRotate = null;
+		}
+		timerRotate = setInterval(function() { 
+			if (normalCurrentAction == 'addPoi')
+			{
+				currentPoiPose.approch_pose_t = parseFloat(currentPoiPose.approch_pose_t) + Math.PI / 90;
+				
+				NormalTraceCurrentPoi(currentPoiPose);
+			}
+			else if (normalCurrentAction == 'addDock')
+			{
+				currentDockPose.approch_pose_t = parseFloat(currentDockPose.approch_pose_t) + Math.PI / 90;
+				
+				NormalTraceCurrentDock(currentDockPose);
+			}
+			else if (normalCurrentAction == 'editPoi')
+			{
+				poi = pois[currentPoiIndex];
+				poi.approch_pose_t = parseFloat(poi.approch_pose_t) + Math.PI / 90;
+				NormalTracePoi(currentPoiIndex);			
+			}
+			else if (normalCurrentAction == 'editDock')
+			{
+				dock = docks[currentDockIndex];
+				dock.approch_pose_t = parseFloat(dock.approch_pose_t) + Math.PI / 90;
+				NormalTraceDock(currentDockIndex);		
+			}
+		}, 100);
+    });
 	$(document).on('touchstart', '#install_normal_edit_map_bRotateRight', function(e) {
 		NormalSaveElementNeeded(true);
 		if (timerRotate != null)
@@ -2275,6 +2448,13 @@ $(document).ready(function() {
 				NormalTraceDock(currentDockIndex);		
 			}
 		}, 100);
+    });
+	$(document).on('mouseup', '#install_normal_edit_map_bRotateRight', function(e) {
+		if (timerRotate != null)
+		{
+			clearInterval(timerRotate);
+			timerRotate = null;
+		}
     });
 	$(document).on('touchend', '#install_normal_edit_map_bRotateRight', function(e) {
 		if (timerRotate != null)
@@ -2310,6 +2490,40 @@ $(document).ready(function() {
 			NormalTraceDock(currentDockIndex);
 		}
     });
+	$(document).on('mousedown', '#install_normal_edit_map_bRotateLeft', function(e) {
+		NormalSaveElementNeeded(true);
+		if (timerRotate != null)
+		{
+			clearInterval(timerRotate);
+			timerRotate = null;
+		}
+		timerRotate = setInterval(function() { 
+			if (normalCurrentAction == 'addPoi')
+			{
+				currentPoiPose.approch_pose_t = parseFloat(currentPoiPose.approch_pose_t) - Math.PI / 90;
+				
+				NormalTraceCurrentPoi(currentPoiPose);
+			}
+			else if (normalCurrentAction == 'addDock')
+			{
+				currentDockPose.approch_pose_t = parseFloat(currentDockPose.approch_pose_t) - Math.PI / 90;
+				
+				NormalTraceCurrentDock(currentDockPose);
+			}
+			else if (normalCurrentAction == 'editPoi')
+			{
+				poi = pois[currentPoiIndex];
+				poi.approch_pose_t = parseFloat(poi.approch_pose_t) - Math.PI / 90;
+				NormalTracePoi(currentPoiIndex);			
+			}
+			else if (normalCurrentAction == 'editDock')
+			{
+				dock = docks[currentDockIndex];
+				dock.approch_pose_t = parseFloat(dock.approch_pose_t) - Math.PI / 90;
+				NormalTraceDock(currentDockIndex);
+			}
+		}, 100);
+    });
 	$(document).on('touchstart', '#install_normal_edit_map_bRotateLeft', function(e) {
 		NormalSaveElementNeeded(true);
 		if (timerRotate != null)
@@ -2343,6 +2557,13 @@ $(document).ready(function() {
 				NormalTraceDock(currentDockIndex);
 			}
 		}, 100);
+    });
+	$(document).on('mouseup', '#install_normal_edit_map_bRotateLeft', function(e) {
+		if (timerRotate != null)
+		{
+			clearInterval(timerRotate);
+			timerRotate = null;
+		}
     });
 	$(document).on('touchend', '#install_normal_edit_map_bRotateLeft', function(e) {
 		if (timerRotate != null)
@@ -2387,7 +2608,7 @@ $(document).ready(function() {
 	
 	NormalSetModeSelect();
 	
-	$('#install_normal_edit_map_svg').on('touchstart', function(e) {
+	$('#install_normal_edit_map_svg').on('mousedown', function(e) {
 		touchStarted = true;
 		
 		//zoom = ros_largeur / $('#install_normal_edit_map_svg').width() / window.panZoomNormal.getZoom();
@@ -2402,8 +2623,8 @@ $(document).ready(function() {
 				//gommes[gommes.length-1].push({x:0, y:0}); // Point du curseur
 				
 				p = $('#install_normal_edit_map_svg image').position();
-				x = (e.originalEvent.targetTouches[0] ? e.originalEvent.targetTouches[0].pageX : e.originalEvent.changedTouches[e.changedTouches.length-1].pageX) - p.left;
-				y = (e.originalEvent.targetTouches[0] ? e.originalEvent.targetTouches[0].pageY : e.originalEvent.changedTouches[e.changedTouches.length-1].pageY) - p.top;
+				x = (e.originalEvent.targetTouches ? (e.originalEvent.targetTouches[0] ? e.originalEvent.targetTouches[0].pageX : e.originalEvent.changedTouches[e.changedTouches.length-1].pageX) : e.originalEvent.pageX) - p.left;
+				y = (e.originalEvent.targetTouches ? (e.originalEvent.targetTouches[0] ? e.originalEvent.targetTouches[0].pageY : e.originalEvent.changedTouches[e.changedTouches.length-1].pageY) : e.originalEvent.pageY) - p.top;
 				x = x * zoom;
 				y = ros_hauteur - (y * zoom);
 				
@@ -2421,8 +2642,8 @@ $(document).ready(function() {
 		else if (normalCurrentAction == 'addDock' && currentStep=='setPose')
 		{
 			p = $('#install_normal_edit_map_svg image').position();
-			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
-			y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+			x = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) : event.pageX) - p.left;
+			y = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) : event.pageY) - p.top;
 			x = x * zoom;
 			y = ros_hauteur - (y * zoom);
 			
@@ -2455,8 +2676,150 @@ $(document).ready(function() {
 		else if (normalCurrentAction == 'addPoi' && currentStep=='setPose')
 		{
 			p = $('#install_normal_edit_map_svg image').position();
+			x = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) : event.pageX) - p.left;
+			y = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) : event.pageY) - p.top;
+			x = x * zoom;
+			y = ros_hauteur - (y * zoom);
+			
+			xRos = x * ros_resolution / 100;
+			yRos = y * ros_resolution / 100;
+			
+			currentPoiPose.approch_pose_x = xRos;
+			currentPoiPose.approch_pose_y = yRos;
+			currentPoiPose.approch_pose_t = 0;
+			
+			NormalTraceCurrentPoi(currentPoiPose);
+		}
+		/*
+		else if (normalCurrentAction == 'addDock' && currentStep=='setDir')
+		{
+			p = $('#install_normal_edit_map_svg image').position();
 			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
 			y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+			x = x * zoom;
+			y = ros_hauteur - (y * zoom);
+			
+			xRos = x * ros_resolution / 100;
+			yRos = y * ros_resolution / 100;
+			
+			currentPoiPose.approch_pose_t = GetAngleRadian(currentPoiPose.approch_pose_x, currentPoiPose.approch_pose_y, xRos, yRos) + Math.PI;
+							
+			NormalTraceCurrentPoi(currentPoiPose);
+		}
+		*/
+		/*
+		else if (normalCurrentAction == 'addForbiddenArea' && currentStep=='trace')
+		{
+			e.preventDefault();
+			
+			//x = e.offsetX;
+			//y = $('#install_normal_edit_map_mapBox').height() - e.offsetY;
+			p = $('#install_normal_edit_map_svg image').position();
+			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
+			y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+			x = x * zoom;
+			y = ros_hauteur - (y * zoom);
+			
+			xRos = x * ros_resolution / 100;
+			yRos = y * ros_resolution / 100;
+			
+			currentForbiddenPoints.pop(); // Point du curseur
+			currentForbiddenPoints.push({x:xRos, y:yRos});
+			//currentForbiddenPoints.push({x:xRos, y:yRos}); // Point du curseur
+			NormalTraceCurrentForbidden(currentForbiddenPoints);
+		}
+		else if (normalCurrentAction == 'addArea' && currentStep=='trace')
+		{
+			e.preventDefault();
+			
+			//x = e.offsetX;
+			//y = $('#install_normal_edit_map_mapBox').height() - e.offsetY;
+			p = $('#install_normal_edit_map_svg image').position();
+			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
+			y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+			x = x * zoom;
+			y = ros_hauteur - (y * zoom);
+			
+			xRos = x * ros_resolution / 100;
+			yRos = y * ros_resolution / 100;
+		
+			currentAreaPoints.pop(); // Point du curseur
+			currentAreaPoints.push({x:xRos, y:yRos});
+			//currentAreaPoints.push({x:xRos, y:yRos}); // Point du curseur
+			NormalTraceCurrentArea(currentAreaPoints);
+		}
+		*/
+	});
+	$('#install_normal_edit_map_svg').on('touchstart', function(e) {
+		touchStarted = true;
+		
+		//zoom = ros_largeur / $('#install_normal_edit_map_svg').width() / window.panZoomNormal.getZoom();
+		zoom = NormalGetZoom();
+		
+		if (normalCurrentAction == 'gomme' && currentStep=='')
+		{
+			currentStep='trace';
+			if (gommes.length == 0 || gommes[gommes.length-1].length > 0)
+			{
+				gommes[gommes.length] = Array();
+				//gommes[gommes.length-1].push({x:0, y:0}); // Point du curseur
+				
+				p = $('#install_normal_edit_map_svg image').position();
+				x = (e.originalEvent.targetTouches ? (e.originalEvent.targetTouches[0] ? e.originalEvent.targetTouches[0].pageX : e.originalEvent.changedTouches[e.changedTouches.length-1].pageX) : e.originalEvent.pageX) - p.left;
+				y = (e.originalEvent.targetTouches ? (e.originalEvent.targetTouches[0] ? e.originalEvent.targetTouches[0].pageY : e.originalEvent.changedTouches[e.changedTouches.length-1].pageY) : e.originalEvent.pageY) - p.top;
+				x = x * zoom;
+				y = ros_hauteur - (y * zoom);
+				
+				xRos = x * ros_resolution / 100;
+				yRos = y * ros_resolution / 100;
+								
+				gommes[gommes.length-1].push({x:xRos, y:yRos});
+				gommes[gommes.length-1].push({x:xRos+0.01, y:yRos+0.01}); // Point du curseur
+				NormalTraceCurrentGomme(gommes[gommes.length-1], gommes.length-1);
+				
+				normalCanChangeMenu = false;
+				$('#install_normal_edit_map_bEndGomme').show();
+			}
+		}
+		else if (normalCurrentAction == 'addDock' && currentStep=='setPose')
+		{
+			p = $('#install_normal_edit_map_svg image').position();
+			x = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) : event.pageX) - p.left;
+			y = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) : event.pageY) - p.top;
+			x = x * zoom;
+			y = ros_hauteur - (y * zoom);
+			
+			xRos = x * ros_resolution / 100;
+			yRos = y * ros_resolution / 100;
+			
+			currentDockPose.approach_pose_x = xRos;
+			currentDockPose.approach_pose_y = yRos;
+			currentDockPose.approach_pose_t = 0;
+			
+			NormalTraceCurrentDock(currentDockPose);
+		}
+		/*
+		else if (normalCurrentAction == 'addDock' && currentStep=='setDir')
+		{
+			p = $('#install_normal_edit_map_svg image').position();
+			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
+			y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+			x = x * zoom;
+			y = ros_hauteur - (y * zoom);
+			
+			xRos = x * ros_resolution / 100;
+			yRos = y * ros_resolution / 100;
+			
+			currentDockPose.approch_pose_t = GetAngleRadian(currentDockPose.approch_pose_x, currentDockPose.approch_pose_y, xRos, yRos) + Math.PI;
+							
+			NormalTraceCurrentDock(currentDockPose);
+		}
+		*/
+		else if (normalCurrentAction == 'addPoi' && currentStep=='setPose')
+		{
+			p = $('#install_normal_edit_map_svg image').position();
+			x = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) : event.pageX) - p.left;
+			y = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) : event.pageY) - p.top;
 			x = x * zoom;
 			y = ros_hauteur - (y * zoom);
 			
@@ -2530,6 +2893,366 @@ $(document).ready(function() {
 		*/
 	});
 	
+	$('#install_normal_edit_map_svg').on('mousemove', function(e) {
+		
+		if ($('#install_normal_edit_map_boutonsRotate').is(':visible'))
+		{
+			//zoom = ros_largeur / $('#install_normal_edit_map_svg').width() / window.panZoomNormal.getZoom();
+			zoom = NormalGetZoom();
+			 if (normalCurrentAction == 'addDock')
+			 {
+				p = $('#install_normal_edit_map_svg image').position();
+				
+				x = currentDockPose.approach_pose_x * 100 / 5;
+				y = currentDockPose.approach_pose_y * 100 / 5;
+				
+				x = x / zoom;
+				y = (ros_hauteur - y) / zoom;
+				
+				x = x + p.left;
+				y = y + p.top;
+				
+				$('#install_normal_edit_map_boutonsRotate').css('left', x - $('#install_normal_edit_map_boutonsRotate').width()/2);
+				$('#install_normal_edit_map_boutonsRotate').css('top', y - 60);
+				$('#install_normal_edit_map_boutonsRotate').show();
+			 }
+			 else if (normalCurrentAction == 'addPoi')
+			 {
+				p = $('#install_normal_edit_map_svg image').position();
+			
+				x = currentPoiPose.approach_pose_x * 100 / 5;
+				y = currentPoiPose.approach_pose_y * 100 / 5;
+				
+				x = x / zoom;
+				y = (ros_hauteur - y) / zoom;
+				
+				x = x + p.left;
+				y = y + p.top;
+				
+				$('#install_normal_edit_map_boutonsRotate').css('left', x - $('#install_normal_edit_map_boutonsRotate').width()/2);
+				$('#install_normal_edit_map_boutonsRotate').css('top', y - 60);
+				$('#install_normal_edit_map_boutonsRotate').show();
+			 }
+			 else if (normalCurrentAction == 'editDock')
+			 {
+				dock = docks[currentDockIndex];
+				
+				p = $('#install_normal_edit_map_svg image').position();
+				
+				
+				x = dock.approch_pose_x * 100 / 5;
+				y = dock.approch_pose_y * 100 / 5;
+				
+				x = x / zoom;
+				y = (ros_hauteur - y) / zoom;
+				
+				x = x + p.left;
+				y = y + p.top;
+				
+				$('#install_normal_edit_map_boutonsRotate').css('left', x - $('#install_normal_edit_map_boutonsRotate').width()/2);
+				$('#install_normal_edit_map_boutonsRotate').css('top', y - 60);
+				$('#install_normal_edit_map_boutonsRotate').show();
+			 }
+			 else if (normalCurrentAction == 'editPoi')
+			 {
+				poi = pois[currentPoiIndex];
+				
+				p = $('#install_normal_edit_map_svg image').position();
+				
+				
+				x = poi.approch_pose_x * 100 / 5;
+				y = poi.approch_pose_y * 100 / 5;
+				
+				x = x / zoom;
+				y = (ros_hauteur - y) / zoom;
+				
+				x = x + p.left;
+				y = y + p.top;
+				
+				$('#install_normal_edit_map_boutonsRotate').css('left', x - $('#install_normal_edit_map_boutonsRotate').width()/2);
+				$('#install_normal_edit_map_boutonsRotate').css('top', y - 60);
+				$('#install_normal_edit_map_boutonsRotate').show();
+			 }
+		}
+		
+		if (touchStarted)
+		{
+			//zoom = 1;
+			zoom = NormalGetZoom();
+			if (downOnMovable)
+			{
+			   if (movableDown.data('element_type') == 'dock')
+			   {
+				   e.preventDefault();
+				    
+				   dock = GetDockFromID(movableDown.data('id_docking_station'));
+				   
+				   pageX = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) : event.pageX);
+				   pageY = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) : event.pageY);
+				  
+				  	x = dock.approch_pose_x * 100 / ros_resolution;
+					y = ros_hauteur - (dock.approch_pose_y * 100 / ros_resolution);
+				  
+					$('#install_normal_edit_map_dock_'+movableDown.data('id_docking_station')).attr('transform', 'rotate('+0+', '+x+', '+y+')');
+					$('#install_normal_edit_map_dock_connect_'+movableDown.data('id_docking_station')).attr('transform', 'rotate('+0+', '+x+', '+y+')');
+				  
+					delta = (normalDownOnSVG_x - pageX) * zoom * ros_resolution / 100;
+					dock.approch_pose_x = parseFloat(dock.approch_pose_x) - delta;
+					delta = (normalDownOnSVG_y - pageY) * zoom * ros_resolution / 100;
+					dock.approch_pose_y = parseFloat(dock.approch_pose_y) + delta;
+					
+					//movableDown.attr('x', dock.approch_pose_x * 100 / ros_resolution - 5);
+					//movableDown.attr('y', ros_hauteur - (dock.approch_pose_y * 100 / ros_resolution) - 5); 
+					
+					
+					$('#install_normal_edit_map_dock_'+movableDown.data('id_docking_station')).attr('x', dock.approch_pose_x * 100 / ros_resolution - 5);
+					$('#install_normal_edit_map_dock_'+movableDown.data('id_docking_station')).attr('y', ros_hauteur - (dock.approch_pose_y * 100 / ros_resolution) - 1); 
+					
+					$('#install_normal_edit_map_dock_connect_'+movableDown.data('id_docking_station')).attr('x1', dock.approch_pose_x * 100 / ros_resolution - 1);
+					$('#install_normal_edit_map_dock_connect_'+movableDown.data('id_docking_station')).attr('y1', ros_hauteur - (dock.approch_pose_y * 100 / ros_resolution) - 1); 
+					$('#install_normal_edit_map_dock_connect_'+movableDown.data('id_docking_station')).attr('x2', dock.approch_pose_x * 100 / ros_resolution + 1);
+					$('#install_normal_edit_map_dock_connect_'+movableDown.data('id_docking_station')).attr('y2', ros_hauteur - (dock.approch_pose_y * 100 / ros_resolution) - 1); 
+					
+					x = dock.approch_pose_x * 100 / ros_resolution;
+					y = ros_hauteur - (dock.approch_pose_y * 100 / ros_resolution);	
+					angle = 0 - dock.approch_pose_t * 180 / Math.PI - 90;
+					
+					$('#install_normal_edit_map_dock_'+movableDown.data('id_docking_station')).attr('transform', 'rotate('+angle+', '+x+', '+y+')');
+					$('#install_normal_edit_map_dock_connect_'+movableDown.data('id_docking_station')).attr('transform', 'rotate('+angle+', '+x+', '+y+')');
+					
+					//NormalTraceDock(GetDockIndexFromID(movableDown.data('id_docking_station')));
+				    
+					normalDownOnSVG_x = pageX;
+					normalDownOnSVG_y = pageY;
+			   }
+			   else if (movableDown.data('element_type') == 'poi')
+			   {
+				   e.preventDefault();
+				    
+				   poi = GetPoiFromID(movableDown.data('id_poi'));
+				   
+				   pageX = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) : event.pageX);
+				   pageY = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) : event.pageY);
+				  
+				  	x = poi.approch_pose_x * 100 / ros_resolution;
+					y = ros_hauteur - (poi.approch_pose_y * 100 / ros_resolution);
+				  
+					$('#install_normal_edit_map_poi_sens_'+movableDown.data('id_poi')).attr('transform', 'rotate('+0+', '+x+', '+y+')');
+				  
+					delta = (normalDownOnSVG_x - pageX) * zoom * ros_resolution / 100;
+					poi.approch_pose_x = parseFloat(poi.approch_pose_x) - delta;
+					delta = (normalDownOnSVG_y - pageY) * zoom * ros_resolution / 100;
+					poi.approch_pose_y = parseFloat(poi.approch_pose_y) + delta;
+					
+					//movableDown.attr('x', dock.approch_pose_x * 100 / ros_resolution - 5);
+					//movableDown.attr('y', ros_hauteur - (dock.approch_pose_y * 100 / ros_resolution) - 5); 
+					
+					x = poi.approch_pose_x * 100 / ros_resolution;
+					y = ros_hauteur - (poi.approch_pose_y * 100 / ros_resolution);	
+					angle = 0 - poi.approch_pose_t * 180 / Math.PI;
+					
+					$('#install_normal_edit_map_poi_secure_'+movableDown.data('id_poi')).attr('cx', x);
+					$('#install_normal_edit_map_poi_secure_'+movableDown.data('id_poi')).attr('cy', y); 
+					
+					$('#install_normal_edit_map_poi_robot_'+movableDown.data('id_poi')).attr('cx', x);
+					$('#install_normal_edit_map_poi_robot_'+movableDown.data('id_poi')).attr('cy', y);
+										
+					$('#install_normal_edit_map_poi_sens_'+movableDown.data('id_poi')).attr('points', (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2));
+					$('#install_normal_edit_map_poi_sens_'+movableDown.data('id_poi')).attr('transform', 'rotate('+angle+', '+x+', '+y+')');
+					
+					//NormalTraceDock(GetDockIndexFromID(movableDown.data('id_docking_station')));
+				    
+					normalDownOnSVG_x = pageX;
+					normalDownOnSVG_y = pageY;
+			   }
+			   else if (movableDown.data('element_type') == 'forbidden')
+			   {
+				   e.preventDefault();
+				    
+				   forbidden = GetForbiddenFromID(movableDown.data('id_area'));
+				   
+				   pageX = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) : event.pageX);
+				   pageY = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) : event.pageY);
+				  
+					delta = (normalDownOnSVG_x - pageX) * zoom * ros_resolution / 100;
+					forbidden.points[movableDown.data('index_point')].x = parseFloat(forbidden.points[movableDown.data('index_point')].x) - delta;
+					delta = (normalDownOnSVG_y - pageY) * zoom * ros_resolution / 100;
+					forbidden.points[movableDown.data('index_point')].y = parseFloat(forbidden.points[movableDown.data('index_point')].y) + delta;
+					
+					movableDown.attr('x', forbidden.points[movableDown.data('index_point')].x * 100 / ros_resolution - 5);
+					movableDown.attr('y', ros_hauteur - (forbidden.points[movableDown.data('index_point')].y * 100 / ros_resolution) - 5); 
+				
+					NormalTraceForbidden(GetForbiddenIndexFromID(movableDown.data('id_area')));
+				    
+					normalDownOnSVG_x = pageX;
+					normalDownOnSVG_y = pageY;
+			   }
+			   else if (movableDown.data('element_type') == 'area')
+			   {
+				   e.preventDefault();
+				    
+				   area = GetAreaFromID(movableDown.data('id_area'));
+				   
+				   pageX = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) : event.pageX);
+				   pageY = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) : event.pageY);
+				  
+					delta = (normalDownOnSVG_x - pageX) * zoom * ros_resolution / 100;
+					area.points[movableDown.data('index_point')].x = parseFloat(area.points[movableDown.data('index_point')].x) - delta;
+					delta = (normalDownOnSVG_y - pageY) * zoom * ros_resolution / 100;
+					area.points[movableDown.data('index_point')].y = parseFloat(area.points[movableDown.data('index_point')].y) + delta;
+					
+					movableDown.attr('x', area.points[movableDown.data('index_point')].x * 100 / ros_resolution - 5);
+					movableDown.attr('y', ros_hauteur - (area.points[movableDown.data('index_point')].y * 100 / ros_resolution) - 5); 
+				
+					NormalTraceArea(GetAreaIndexFromID(movableDown.data('id_area')));
+				    
+					normalDownOnSVG_x = pageX;
+					normalDownOnSVG_y = pageY;
+			   }
+			}
+			else if (clickSelectSVG && normalCurrentAction == 'select')
+			{
+				e.preventDefault();
+				
+				//clickSelectSVG_x_last = e.offsetX;
+				//clickSelectSVG_y_last = e.offsetY;
+				p = $('#install_normal_edit_map_svg image').position();
+				clickSelectSVG_x_last = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) : event.pageX) - p.left;
+				clickSelectSVG_y_last = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) : event.pageY) - p.top;
+				
+				NormalTraceSection(clickSelectSVG_x, clickSelectSVG_y, clickSelectSVG_x_last, clickSelectSVG_y_last);
+			}
+			else if (normalCurrentAction == 'gomme' && (currentStep=='trace' || currentStep=='traced'))
+			{
+				e.preventDefault();
+				currentStep ='traced';
+				
+				//x = e.offsetX;
+				//y = $('#install_normal_edit_map_mapBox').height() - e.offsetY;
+				p = $('#install_normal_edit_map_svg image').position();
+				x = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) : event.pageX) - p.left;
+				y = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) : event.pageY) - p.top;
+				x = x * zoom;
+				y = ros_hauteur - (y * zoom);
+				
+				xRos = x * ros_resolution / 100;
+				yRos = y * ros_resolution / 100;
+								
+				gommes[gommes.length-1].pop(); // Point du curseur
+				gommes[gommes.length-1].push({x:xRos, y:yRos});
+				gommes[gommes.length-1].push({x:xRos, y:yRos}); // Point du curseur
+				NormalTraceCurrentGomme(gommes[gommes.length-1], gommes.length-1);
+			}
+			else if (normalCurrentAction == 'addDock' && currentStep=='setPose')
+			{
+				p = $('#install_normal_edit_map_svg image').position();
+				x = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) :  event.pageX) - p.left;
+				y = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) :  event.pageY) - p.top;
+				x = x * zoom;
+				y = ros_hauteur - (y * zoom);
+				
+				xRos = x * ros_resolution / 100;
+				yRos = y * ros_resolution / 100;
+				
+				currentDockPose.approach_pose_x = xRos;
+				currentDockPose.approach_pose_y = yRos;
+				currentDockPose.approach_pose_t = 0;
+				
+				NormalTraceCurrentDock(currentDockPose);
+			}
+			/*
+			else if (normalCurrentAction == 'addDock' && currentStep=='setDir')
+			{
+				p = $('#install_normal_edit_map_svg image').position();
+				x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
+				y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+				x = x * zoom;
+				y = ros_hauteur - (y * zoom);
+				
+				xRos = x * ros_resolution / 100;
+				yRos = y * ros_resolution / 100;
+				
+				currentDockPose.approch_pose_t = GetAngleRadian(currentDockPose.approch_pose_x, currentDockPose.approch_pose_y, xRos, yRos) + Math.PI;
+								
+				NormalTraceCurrentDock(currentDockPose);
+			}
+			*/
+			else if (normalCurrentAction == 'addPoi' && currentStep=='setPose')
+			{
+				p = $('#install_normal_edit_map_svg image').position();
+				x = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) : event.pageX) - p.left;
+				y = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) : event.pageY) - p.top;
+				x = x * zoom;
+				y = ros_hauteur - (y * zoom);
+				
+				xRos = x * ros_resolution / 100;
+				yRos = y * ros_resolution / 100;
+				
+				currentPoiPose.approch_pose_x = xRos;
+				currentPoiPose.approch_pose_y = yRos;
+				currentPoiPose.approch_pose_t = 0;
+				
+				NormalTraceCurrentPoi(currentPoiPose);
+			}
+			/*
+			else if (normalCurrentAction == 'addPoi' && currentStep=='setDir')
+			{
+				p = $('#install_normal_edit_map_svg image').position();
+				x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
+				y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+				x = x * zoom;
+				y = ros_hauteur - (y * zoom);
+				
+				xRos = x * ros_resolution / 100;
+				yRos = y * ros_resolution / 100;
+				
+				currentPoiPose.approch_pose_t = GetAngleRadian(currentPoiPose.approch_pose_x, currentPoiPose.approch_pose_y, xRos, yRos) + Math.PI;
+								
+				NormalTraceCurrentPoi(currentPoiPose);
+			}
+			*/
+			/*
+			else if (normalCurrentAction == 'addForbiddenArea' && currentStep=='trace')
+			{
+				e.preventDefault();
+				
+				//x = e.offsetX;
+				//y = $('#install_normal_edit_map_mapBox').height() - e.offsetY;
+				p = $('#install_normal_edit_map_svg image').position();
+				x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
+				y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+				x = x * zoom;
+				y = ros_hauteur - (y * zoom);
+				
+				xRos = x * ros_resolution / 100;
+				yRos = y * ros_resolution / 100;
+				
+				currentForbiddenPoints.pop(); // Point du curseur
+				currentForbiddenPoints.push({x:xRos, y:yRos});
+				NormalTraceCurrentForbidden(currentForbiddenPoints);
+			}
+			else if (normalCurrentAction == 'addArea' && currentStep=='trace')
+			{
+				e.preventDefault();
+				
+				//x = e.offsetX;
+				//y = $('#install_normal_edit_map_mapBox').height() - e.offsetY;
+				p = $('#install_normal_edit_map_svg image').position();
+				x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
+				y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+				x = x * zoom;
+				y = ros_hauteur - (y * zoom);
+				
+				xRos = x * ros_resolution / 100;
+				yRos = y * ros_resolution / 100;
+				
+				currentAreaPoints.pop(); // Point du curseur
+				currentAreaPoints.push({x:xRos, y:yRos});
+				NormalTraceCurrentArea(currentAreaPoints);
+			}
+			*/
+		}
+	});
 	$('#install_normal_edit_map_svg').on('touchmove', function(e) {
 		
 		if ($('#install_normal_edit_map_boutonsRotate').is(':visible'))
@@ -2624,8 +3347,8 @@ $(document).ready(function() {
 				    
 				   dock = GetDockFromID(movableDown.data('id_docking_station'));
 				   
-				   pageX = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX);
-				   pageY = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY);
+				   pageX = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) : event.pageX);
+				   pageY = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) : event.pageY);
 				  
 				  	x = dock.approch_pose_x * 100 / ros_resolution;
 					y = ros_hauteur - (dock.approch_pose_y * 100 / ros_resolution);
@@ -2668,8 +3391,8 @@ $(document).ready(function() {
 				    
 				   poi = GetPoiFromID(movableDown.data('id_poi'));
 				   
-				   pageX = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX);
-				   pageY = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY);
+				   pageX = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) : event.pageX);
+				   pageY = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) : event.pageY);
 				  
 				  	x = poi.approch_pose_x * 100 / ros_resolution;
 					y = ros_hauteur - (poi.approch_pose_y * 100 / ros_resolution);
@@ -2708,8 +3431,8 @@ $(document).ready(function() {
 				    
 				   forbidden = GetForbiddenFromID(movableDown.data('id_area'));
 				   
-				   pageX = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX);
-				   pageY = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY);
+				   pageX = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) : event.pageX);
+				   pageY = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) : event.pageY);
 				  
 					delta = (normalDownOnSVG_x - pageX) * zoom * ros_resolution / 100;
 					forbidden.points[movableDown.data('index_point')].x = parseFloat(forbidden.points[movableDown.data('index_point')].x) - delta;
@@ -2730,8 +3453,8 @@ $(document).ready(function() {
 				    
 				   area = GetAreaFromID(movableDown.data('id_area'));
 				   
-				   pageX = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX);
-				   pageY = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY);
+				   pageX = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) : event.pageX);
+				   pageY = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) : event.pageY);
 				  
 					delta = (normalDownOnSVG_x - pageX) * zoom * ros_resolution / 100;
 					area.points[movableDown.data('index_point')].x = parseFloat(area.points[movableDown.data('index_point')].x) - delta;
@@ -2754,8 +3477,8 @@ $(document).ready(function() {
 				//clickSelectSVG_x_last = e.offsetX;
 				//clickSelectSVG_y_last = e.offsetY;
 				p = $('#install_normal_edit_map_svg image').position();
-				clickSelectSVG_x_last = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
-				clickSelectSVG_y_last = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+				clickSelectSVG_x_last = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) : event.pageX) - p.left;
+				clickSelectSVG_y_last = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) : event.pageY) - p.top;
 				
 				NormalTraceSection(clickSelectSVG_x, clickSelectSVG_y, clickSelectSVG_x_last, clickSelectSVG_y_last);
 			}
@@ -2767,8 +3490,8 @@ $(document).ready(function() {
 				//x = e.offsetX;
 				//y = $('#install_normal_edit_map_mapBox').height() - e.offsetY;
 				p = $('#install_normal_edit_map_svg image').position();
-				x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
-				y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+				x = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) : event.pageX) - p.left;
+				y = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) : event.pageY) - p.top;
 				x = x * zoom;
 				y = ros_hauteur - (y * zoom);
 				
@@ -2783,8 +3506,8 @@ $(document).ready(function() {
 			else if (normalCurrentAction == 'addDock' && currentStep=='setPose')
 			{
 				p = $('#install_normal_edit_map_svg image').position();
-				x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
-				y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+				x = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) : event.pageX) - p.left;
+				y = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) : event.pageY) - p.top;
 				x = x * zoom;
 				y = ros_hauteur - (y * zoom);
 				
@@ -2817,8 +3540,8 @@ $(document).ready(function() {
 			else if (normalCurrentAction == 'addPoi' && currentStep=='setPose')
 			{
 				p = $('#install_normal_edit_map_svg image').position();
-				x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
-				y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+				x = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) : event.pageX) - p.left;
+				y = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) : event.pageY) - p.top;
 				x = x * zoom;
 				y = ros_hauteur - (y * zoom);
 				
@@ -2891,7 +3614,7 @@ $(document).ready(function() {
 		}
 	});
 	
-	$('#install_normal_edit_map_svg').on('touchend', function(e) {
+	$('#install_normal_edit_map_svg').on('mouseup', function(e) {
 		touchStarted = false;
 		zoom = NormalGetZoom();
 		if (downOnMovable)
@@ -2917,8 +3640,8 @@ $(document).ready(function() {
 		else if (normalCurrentAction == 'addDock' && currentStep=='setPose')
 		{
 			p = $('#install_normal_edit_map_svg image').position();
-			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
-			y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+			x = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) : event.pageX) - p.left;
+			y = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) : event.pageY) - p.top;
 			x = x * zoom;
 			y = ros_hauteur - (y * zoom);
 			
@@ -2972,8 +3695,191 @@ $(document).ready(function() {
 		else if (normalCurrentAction == 'addPoi' && currentStep=='setPose')
 		{
 			p = $('#install_normal_edit_map_svg image').position();
+			x = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) : event.pageX) - p.left;
+			y = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) : event.pageY) - p.top;
+			x = x * zoom;
+			y = ros_hauteur - (y * zoom);
+			
+			xRos = x * ros_resolution / 100;
+			yRos = y * ros_resolution / 100;
+			
+			currentPoiPose.approach_pose_x = xRos;
+			currentPoiPose.approach_pose_y = yRos;
+			currentPoiPose.approach_pose_t = 0;
+			
+			NormalTraceCurrentPoi(currentPoiPose);
+			
+			zoom = ros_largeur / $('#install_normal_edit_map_svg').width() / window.panZoomNormal.getZoom();		
+			p = $('#install_normal_edit_map_svg image').position();
+			
+			
+			x = currentPoiPose.approach_pose_x * 100 / 5;
+			y = currentPoiPose.approach_pose_y * 100 / 5;
+			
+			x = x / zoom;
+			y = (ros_hauteur - y) / zoom;
+			
+			x = x + p.left;
+			y = y + p.top;
+			
+			$('#install_normal_edit_map_boutonsRotate').css('left', x - $('#install_normal_edit_map_boutonsRotate').width()/2);
+			$('#install_normal_edit_map_boutonsRotate').css('top', y - 60);
+			$('#install_normal_edit_map_boutonsRotate').show();
+			$('#install_normal_edit_map_bPoiSave').show();
+			
+			//currentStep='setDir';
+			//$('#install_normal_edit_map_message_aide').html(textClickOnMapDir);
+		}
+		/*
+		else if (normalCurrentAction == 'addPoi' && currentStep=='setDir')
+		{
+			p = $('#install_normal_edit_map_svg image').position();
 			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
 			y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+			x = x * zoom;
+			y = ros_hauteur - (y * zoom);
+			
+			xRos = x * ros_resolution / 100;
+			yRos = y * ros_resolution / 100;
+			
+			currentPoiPose.approch_pose_t = GetAngleRadian(currentPoiPose.approch_pose_x, currentPoiPose.approch_pose_y, xRos, yRos) + Math.PI;
+							
+			NormalTraceCurrentPoi(currentPoiPose);
+			
+			$('#install_normal_edit_map_boutonsPoi #install_normal_edit_map_bPoiSave').show();
+		}
+		*/
+		/*
+		else if (normalCurrentAction == 'addForbiddenArea' && currentStep=='trace')
+		{
+			e.preventDefault();
+			
+			//x = e.offsetX;
+			//y = $('#install_normal_edit_map_mapBox').height() - e.offsetY;
+			p = $('#install_normal_edit_map_svg image').position();
+			
+			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
+			y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+
+			x = x * zoom;
+			y = ros_hauteur - (y * zoom);
+			
+			xRos = x * ros_resolution / 100;
+			yRos = y * ros_resolution / 100;
+			
+			currentForbiddenPoints.pop(); // Point du curseur
+			currentForbiddenPoints.push({x:xRos, y:yRos});
+			currentForbiddenPoints.push({x:xRos, y:yRos}); // Point du curseur
+			NormalTraceCurrentForbidden(currentForbiddenPoints);
+		}
+		else if (normalCurrentAction == 'addArea' && currentStep=='trace')
+		{
+			e.preventDefault();
+			
+			//x = e.offsetX;
+			//y = $('#install_normal_edit_map_mapBox').height() - e.offsetY;
+			p = $('#install_normal_edit_map_svg image').position();
+			
+			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
+			y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+
+			x = x * zoom;
+			y = ros_hauteur - (y * zoom);
+			
+			xRos = x * ros_resolution / 100;
+			yRos = y * ros_resolution / 100;
+			
+			
+			currentAreaPoints.pop(); // Point du curseur
+			currentAreaPoints.push({x:xRos, y:yRos});
+			currentAreaPoints.push({x:xRos, y:yRos}); // Point du curseur
+			NormalTraceCurrentArea(currentAreaPoints);
+		}
+		*/
+	});
+	$('#install_normal_edit_map_svg').on('touchend', function(e) {
+		touchStarted = false;
+		zoom = NormalGetZoom();
+		if (downOnMovable)
+		{
+			downOnMovable = false;
+			touchStarted = false;
+			blockZoom = false;
+			
+			if (movableDown.data('element_type') == 'forbidden')
+			{
+				NormalTraceForbidden(GetForbiddenIndexFromID(movableDown.data('id_area')));
+			}
+			else if (movableDown.data('element_type') == 'area')
+			{
+				NormalTraceArea(GetAreaIndexFromID(movableDown.data('id_area')));
+			}
+		}
+		if (normalCurrentAction == 'gomme' && currentStep=='traced')
+		{
+			currentStep='';
+			NormalAddHistorique({'action':'gomme', 'data':gommes[gommes.length-1]});
+		}
+		else if (normalCurrentAction == 'addDock' && currentStep=='setPose')
+		{
+			p = $('#install_normal_edit_map_svg image').position();
+			x = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) : event.pageX) - p.left;
+			y = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) : event.pageY) - p.top;
+			x = x * zoom;
+			y = ros_hauteur - (y * zoom);
+			
+			xRos = x * ros_resolution / 100;
+			yRos = y * ros_resolution / 100;
+			
+			currentDockPose.approach_pose_x = xRos;
+			currentDockPose.approach_pose_y = yRos;
+			currentDockPose.approach_pose_t = 0;
+			
+			NormalTraceCurrentDock(currentDockPose);
+			
+			
+			x = currentDockPose.approach_pose_x * 100 / 5;
+			y = currentDockPose.approach_pose_y * 100 / 5;
+			
+			x = x / zoom;
+			y = (ros_hauteur - y) / zoom;
+			
+			x = x + p.left;
+			y = y + p.top;
+			
+			$('#install_normal_edit_map_boutonsRotate').css('left', x - $('#install_normal_edit_map_boutonsRotate').width()/2);
+			$('#install_normal_edit_map_boutonsRotate').css('top', y - 60);
+			$('#install_normal_edit_map_boutonsRotate').show();
+			$('#install_normal_edit_map_bDockSave').show();
+			
+			//currentStep='setDir';
+			//$('#install_normal_edit_map_message_aide').html(textClickOnMapDir);
+			
+		}
+		/*
+		else if (normalCurrentAction == 'addDock' && currentStep=='setDir')
+		{
+			p = $('#install_normal_edit_map_svg image').position();
+			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
+			y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
+			x = x * zoom;
+			y = ros_hauteur - (y * zoom);
+			
+			xRos = x * ros_resolution / 100;
+			yRos = y * ros_resolution / 100;
+			
+			currentDockPose.approch_pose_t = GetAngleRadian(currentDockPose.approch_pose_x, currentDockPose.approch_pose_y, xRos, yRos) + Math.PI;
+							
+			NormalTraceCurrentDock(currentDockPose);
+			
+			$('#install_normal_edit_map_boutonsDock #install_normal_edit_map_bDockSave').show();
+		}
+		*/
+		else if (normalCurrentAction == 'addPoi' && currentStep=='setPose')
+		{
+			p = $('#install_normal_edit_map_svg image').position();
+			x = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) : event.pageX) - p.left;
+			y = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) : event.pageY) - p.top;
 			x = x * zoom;
 			y = ros_hauteur - (y * zoom);
 			

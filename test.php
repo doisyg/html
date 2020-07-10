@@ -9,12 +9,12 @@ include ('template/header_test.php');
     </header>
     <div class="content">
         <ul class="tuiles row">
-        	<li class="col-xs-4"><a class="button_goto anim_tuiles tuile1" data-goto="install_map" href="#"><i class="fa fa-map-o"></i>Maps</a></li>
-        	<li class="col-xs-4"><a class="button_goto anim_tuiles tuile2" data-goto="install_setup" href="#"><i class="fa fa-gears"></i>Setup</a></li>
-        	<li class="col-xs-4"><a class="button_goto anim_tuiles tuile3" data-goto="install_move" href="#"><i class="fa fa-gamepad"></i>Control robot</a></li>
-        	<li class="col-xs-4"><a class="button_goto anim_tuiles tuile4" data-goto="install_users" href="#"><i class="fa fa-group"></i>Managers</a></li>
-        	<li class="col-xs-4"><a class="button_goto anim_tuiles tuile4" data-goto="install_servicebook" href="#"><i class="fa fa-book"></i>Service book</a></li>
-        	<li class="col-xs-4"><a class="button_goto anim_tuiles tuile6" data-goto="install_help" href="#"><i class="fa fa-question"></i>Help</a></li>
+        	<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile1" data-goto="install_map" href="#"><i class="fa fa-map-o"></i>Maps</a></li>
+        	<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="install_setup" href="#"><i class="fa fa-gears"></i>Setup</a></li>
+        	<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="install_move" href="#"><i class="fa fa-gamepad"></i>Control robot</a></li>
+        	<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="install_users" href="#"><i class="fa fa-group"></i>Managers</a></li>
+        	<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="install_servicebook" href="#"><i class="fa fa-book"></i>Service book</a></li>
+        	<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" data-goto="install_help" href="#"><i class="fa fa-question"></i>Help</a></li>
         </ul>
     </div>
 </section>
@@ -39,11 +39,11 @@ include ('template/header_test.php');
     </header>
     <div class="content">
         <ul class="tuiles row">
-        	<li class="col-xs-4"><a class="button_goto anim_tuiles tuile1" data-goto="install_map" href="#"><i class="fa fa-gear"></i>System</a></li>
-        	<li class="col-xs-4"><a class="button_goto anim_tuiles tuile2" data-goto="install_setup" href="#"><i class="fa fa-building"></i>Sites</a></li>
-        	<li class="col-xs-4"><a class="button_goto anim_tuiles tuile3" data-goto="install_move" href="#"><i class="fa fa-android"></i>Vehicule</a></li>
-        	<li class="col-xs-4"><a class="button_goto anim_tuiles tuile4" data-goto="install_users" href="#"><i class="fa fa-upload"></i>Save config</a></li>
-        	<li class="col-xs-4"><a class="button_goto anim_tuiles tuile4" data-goto="install_servicebook" href="#"><i class="fa fa-download"></i>Load config</a></li>
+        	<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile1" data-goto="install_map" href="#"><i class="fa fa-gear"></i>System</a></li>
+        	<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="install_setup" href="#"><i class="fa fa-building"></i>Sites</a></li>
+        	<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="install_move" href="#"><i class="fa fa-android"></i>Vehicule</a></li>
+        	<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="install_users" href="#"><i class="fa fa-upload"></i>Save config</a></li>
+        	<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="install_servicebook" href="#"><i class="fa fa-download"></i>Load config</a></li>
         </ul>
     </div>
     <footer>

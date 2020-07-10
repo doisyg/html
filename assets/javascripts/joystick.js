@@ -53,7 +53,12 @@ $(document).ready(function(e) {
 	});
 	$(document).mousemove(function(e) {
 		if(isDown)
+		{
 			SetCurseurV2(e.pageX, e.pageY);
+		
+			if (intervalSendCommande == null)
+				intervalSendCommande = setInterval(SendCommande, 200);
+		}
 	});
 	
 	$('.joystickDiv .curseur').on('touchmove', function(e){

@@ -7,12 +7,12 @@
             </header>
             <div class="content">
             	<ul class="tuiles heightauto row">
-                	<li class="col-xs-4">
+                	<li class="col-xs-4 col-md-3 col-lg-2">
                         <a href="#" class="select_langue button_goto anim_tuiles tuile_img tuile1" data-goto="install_by_step_wifi" data-id_lang="1">
                             <img src="assets/images/lang/fr_big.jpg" />
                         </a>
                     </li>
-                	<li class="col-xs-4">
+                	<li class="col-xs-4 col-md-3 col-lg-2">
                         <a href="#" class="select_langue button_goto anim_tuiles tuile_img tuile2" data-goto="install_by_step_wifi" data-id_lang="2">
                             <img src="assets/images/lang/en_big.jpg" />
                         </a>
@@ -156,7 +156,7 @@
             </header>
             <div class="content">
                 <ul class="tuiles row">
-                    <li class="col-xs-4">
+                    <li class="col-xs-4 col-md-3 col-lg-2">
                     	<div class="is_checkbox test anim_tuiles tuile_img tuile1">
                             <i class="fa fa-check"></i>
                     		<i class="fa fa fa-spinner fa-pulse"></i>
@@ -164,7 +164,7 @@
 							<?php echo __('Lidar');?>
                         </div>
                     </li>
-                    <li class="col-xs-4">
+                    <li class="col-xs-4 col-md-3 col-lg-2">
                     	<div class="is_checkbox anim_tuiles tuile_img tuile1">
                             <i class="fa fa-check"></i>
                     		<i class="fa fa fa-spinner fa-pulse"></i>
@@ -172,7 +172,7 @@
 							<?php echo __('US');?>
                         </div>
                     </li>
-                    <li class="col-xs-4">
+                    <li class="col-xs-4 col-md-3 col-lg-2">
                     	<div class="is_checkbox anim_tuiles tuile_img tuile1">
                             <i class="fa fa-check"></i>
                     		<i class="fa fa fa-spinner fa-pulse"></i>
@@ -180,7 +180,7 @@
 							<?php echo __('Motor card');?>
                         </div>
                     </li>
-                    <li class="col-xs-4">
+                    <li class="col-xs-4 col-md-3 col-lg-2">
                     	<div class="is_checkbox anim_tuiles tuile_img tuile1">
                             <i class="fa fa-check"></i>
                     		<i class="fa fa fa-spinner fa-pulse"></i>
@@ -188,7 +188,7 @@
 							<?php echo __('BMS');?>
                         </div>
                     </li>
-                    <li class="col-xs-4">
+                    <li class="col-xs-4 col-md-3 col-lg-2">
                     	<div class="is_checkbox anim_tuiles tuile_img tuile1">
                             <i class="fa fa-check"></i>
                     		<i class="fa fa fa-spinner fa-pulse"></i>
@@ -196,7 +196,7 @@
 							<?php echo __('3D cams');?>
                         </div>
                     </li>
-                    <li class="col-xs-4">
+                    <li class="col-xs-4 col-md-3 col-lg-2">
                     	<div class="is_checkbox anim_tuiles tuile_img tuile1">
                             <i class="fa fa-check"></i>
                     		<i class="fa fa fa-spinner fa-pulse"></i>
