@@ -1791,11 +1791,6 @@ function WycaAPI(options){
 		_this.wycaSend(JSON.stringify(action));
 	}
 	this.GoToCharge = function(id_dock, callback){
-		
-		/// POUR TEST
-		id_dock = -2;
-		
-		
 		if (callback != undefined)
 			this.callbacks[_this.CommandCode.GO_TO_CHARGE] = callback;
 		var action = {
