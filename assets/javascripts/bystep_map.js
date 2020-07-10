@@ -177,7 +177,7 @@ function InitTest()
 			$('#install_by_step_test_map .list_test').append('' +
 				'<li id="list_test_'+indexLi+'" data-index_li="'+indexLi+'" data-type="Poi" data-id="' + poi.id_poi + '">'+
 				'	<span>' + poi.name + '</span>'+
-				'	<a href="#" class="bExecuteTest btn btn-xs btn-circle btn-warning pull-right"><i class="fa fa-play"></i></a>'+
+				'	<a href="#" class="bExecuteTest btn btn-sm btn-circle btn-warning pull-right"><i class="fa fa-play"></i></a>'+
 				'</li>'
 				);
 		});
@@ -190,7 +190,7 @@ function InitTest()
 			$('#install_by_step_test_map .list_test').append('' +
 				'<li id="list_test_'+indexLi+'" data-index_li="'+indexLi+'" data-type="Dock" data-id="' + dock.id_docking_station + '">'+
 				'	<span>' + dock.name + '</span>'+
-				'	<a href="#" class="bExecuteTest btn btn-xs btn-circle btn-warning pull-right"><i class="fa fa-play"></i></a>'+
+				'	<a href="#" class="bExecuteTest btn btn-sm btn-circle btn-warning pull-right"><i class="fa fa-play"></i></a>'+
 				'</li>'
 				);
 		});

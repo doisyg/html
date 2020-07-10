@@ -552,8 +552,8 @@ $(document).ready(function() {
 					$('#install_normal_edit_map_container_all .modalDockOptions .list_undock_procedure').append('' +
 						'<li id="install_normal_edit_map_list_undock_procedure_elem_'+indexDockElem+'" data-index_dock_procedure="'+indexDockElem+'" data-action="move" data-distance="' + distance + '">'+
 						'	<span>Move ' + ((direction == 'back')?'back':'front') + ' ' + ((direction == 'back')?distance*-1:distance) + 'm</span>'+
-						'	<a href="#" class="bNormalUndockProcedureDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
-						'	<a href="#" class="bNormalUndockProcedureEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
+						'	<a href="#" class="bNormalUndockProcedureDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="bNormalUndockProcedureEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
 						'</li>'
 						);
 				}
@@ -565,8 +565,8 @@ $(document).ready(function() {
 					$('#install_normal_edit_map_container_all .modalDockOptions .list_undock_procedure').append('' +
 						'<li id="install_normal_edit_map_list_undock_procedure_elem_'+indexDockElem+'" data-index_dock_procedure="'+indexDockElem+'" data-action="rotate" data-angle="'+angle+'">'+
 						'	<span>Rotate '+angle+'°</span>'+
-						'	<a href="#" class="bNormalUndockProcedureDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
-						'	<a href="#" class="bNormalUndockProcedureEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
+						'	<a href="#" class="bNormalUndockProcedureDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="bNormalUndockProcedureEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
 						'</li>'
 						);
 				}
@@ -671,8 +671,8 @@ $(document).ready(function() {
 					$('#install_normal_edit_map_container_all .modalPoiOptions .list_undock_procedure_poi').append('' +
 						'<li id="install_normal_edit_map_list_undock_procedure_poi_elem_'+indexPoiElem+'" data-index_poi_procedure="'+indexPoiElem+'" data-action="move" data-distance="' + distance + '">'+
 						'	<span>Move ' + ((direction == 'back')?'back':'front') + ' ' + ((direction == 'back')?distance*-1:distance) + 'm</span>'+
-						'	<a href="#" class="bNormalUndockProcedurePoiDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
-						'	<a href="#" class="bNormalUndockProcedurePoiEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
+						'	<a href="#" class="bNormalUndockProcedurePoiDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="bNormalUndockProcedurePoiEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
 						'</li>'
 						);
 				}
@@ -684,8 +684,8 @@ $(document).ready(function() {
 					$('#install_normal_edit_map_container_all .modalPoiOptions .list_undock_procedure_poi').append('' +
 						'<li id="install_normal_edit_map_list_undock_procedure_poi_elem_'+indexPoiElem+'" data-index_poi_procedure="'+indexPoiElem+'" data-action="rotate" data-angle="'+angle+'">'+
 						'	<span>Rotate '+angle+'°</span>'+
-						'	<a href="#" class="bNormalUndockProcedurePoiDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
-						'	<a href="#" class="bNormalUndockProcedurePoiEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
+						'	<a href="#" class="bNormalUndockProcedurePoiDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="bNormalUndockProcedurePoiEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
 						'</li>'
 						);
 				}
@@ -1538,8 +1538,8 @@ $(document).ready(function() {
 		$('#install_normal_edit_map_container_all .modalDockOptions .list_undock_procedure').append('' +
 			'<li id="install_normal_edit_map_list_undock_procedure_elem_'+indexDockElem+'" data-index_dock_procedure="'+indexDockElem+'" data-action="move" data-distance="-0.3">'+
 			'	<span>Move back 0.3m</span>'+
-			'	<a href="#" class="bNormalUndockProcedureDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
-			'	<a href="#" class="bNormalUndockProcedureEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
+			'	<a href="#" class="bNormalUndockProcedureDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+			'	<a href="#" class="bNormalUndockProcedureEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
 			'</li>'
 			);
 		
@@ -1644,8 +1644,8 @@ $(document).ready(function() {
 				$('#install_normal_edit_map_container_all .modalDockOptions .list_undock_procedure').append('' +
 					'<li id="install_normal_edit_map_list_undock_procedure_elem_'+indexDockElem+'" data-index_dock_procedure="'+indexDockElem+'" data-action="move" data-distance="' + ((direction == 'back')?distance*-1:distance) + '">'+
 					'	<span>Move ' + ((direction == 'back')?'back':'front') + ' ' + distance + 'm</span>'+
-					'	<a href="#" class="bNormalUndockProcedureDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
-					'	<a href="#" class="bNormalUndockProcedureEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
+					'	<a href="#" class="bNormalUndockProcedureDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+					'	<a href="#" class="bNormalUndockProcedureEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
 					'</li>'
 					);
 			}
@@ -1656,8 +1656,8 @@ $(document).ready(function() {
 				$('#install_normal_edit_map_container_all .modalDockOptions .list_undock_procedure').append('' +
 					'<li id="install_normal_edit_map_list_undock_procedure_elem_'+indexDockElem+'" data-index_dock_procedure="'+indexDockElem+'" data-action="rotate" data-angle="'+angle+'">'+
 					'	<span>Rotate '+angle+'°</span>'+
-					'	<a href="#" class="bNormalUndockProcedureDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
-					'	<a href="#" class="bNormalUndockProcedureEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
+					'	<a href="#" class="bNormalUndockProcedureDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+					'	<a href="#" class="bNormalUndockProcedureEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
 					'</li>'
 					);
 			}
@@ -1857,8 +1857,8 @@ $(document).ready(function() {
 			$('#install_normal_edit_map_container_all .modalPoiOptions .list_undock_procedure_poi').append('' +
 				'<li id="install_normal_edit_map_list_undock_procedure_poi_elem_'+indexPoiElem+'" data-index_poi_procedure="'+indexPoiElem+'" data-action="move" data-distance="-0.3">'+
 				'	<span>Move back 0.3m</span>'+
-				'	<a href="#" class="bNormalUndockProcedurePoiDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
-				'	<a href="#" class="bNormalUndockProcedurePoiEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
+				'	<a href="#" class="bNormalUndockProcedurePoiDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+				'	<a href="#" class="bNormalUndockProcedurePoiEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
 				'</li>'
 				);
 			
@@ -1940,8 +1940,8 @@ $(document).ready(function() {
 				$('#install_normal_edit_map_container_all .modalPoiOptions .list_undock_procedure_poi').append('' +
 					'<li id="install_normal_edit_map_list_undock_procedure_poi_elem_'+indexPoiElem+'" data-index_poi_procedure="'+indexPoiElem+'" data-action="move" data-distance="' + ((direction == 'back')?distance*-1:distance) + '">'+
 					'	<span>Move ' + ((direction == 'back')?'back':'front') + ' ' + distance + 'm</span>'+
-					'	<a href="#" class="bNormalUndockProcedurePoiDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
-					'	<a href="#" class="bNormalUndockProcedurePoiEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
+					'	<a href="#" class="bNormalUndockProcedurePoiDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+					'	<a href="#" class="bNormalUndockProcedurePoiEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
 					'</li>'
 					);
 			}
@@ -1952,8 +1952,8 @@ $(document).ready(function() {
 				$('#install_normal_edit_map_container_all .modalPoiOptions .list_undock_procedure_poi').append('' +
 					'<li id="install_normal_edit_map_list_undock_procedure_poi_elem_'+indexPoiElem+'" data-index_poi_procedure="'+indexPoiElem+'" data-action="rotate" data-angle="'+angle+'">'+
 					'	<span>Rotate '+angle+'°</span>'+
-					'	<a href="#" class="bNormalUndockProcedurePoiDeleteElem btn btn-xs btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
-					'	<a href="#" class="bNormalUndockProcedurePoiEditElem btn btn-xs btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
+					'	<a href="#" class="bNormalUndockProcedurePoiDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+					'	<a href="#" class="bNormalUndockProcedurePoiEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
 					'</li>'
 					);
 			}
