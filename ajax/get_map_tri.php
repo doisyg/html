@@ -39,7 +39,7 @@ if (strlen($_POST['image_tri']) > 22)
 			$imagick->transformImageColorspace(Imagick::COLORSPACE_TRANSPARENT);
 			$imagick->setImageType(Imagick::IMGTYPE_GRAYSCALE);
 			$imagick->setImageFormat('png32');
-			//$imagick->setImageAlphaChannel(Imagick::ALPHACHANNEL_ACTIVATE );		
+			$imagick->setImageAlphaChannel(Imagick::ALPHACHANNEL_ACTIVATE );		
 					
 			ob_start();
 			echo $imagick;

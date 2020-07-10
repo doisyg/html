@@ -39,7 +39,9 @@ function WycaAPI(options){
 		UNKNOW_REFLECTOR            : 0x145,
 		NO_REFLECTOR_DETECTED       : 0x146,
 		DOCKING   				    : 0x147,
-		UNDOCKED			        : 0x148
+		UNDOCKED			        : 0x148,
+		WRONG_GOAL					: 0x149,
+		CLOSE_FAILURE				: 0x14A
 	};
 	
 	// API Commands list
@@ -1318,6 +1320,8 @@ function WycaAPI(options){
 			case _this.AnswerCode.NO_REFLECTOR_DETECTED : return 'No reflector detected around the robot'; break;
 			case _this.AnswerCode.DOCKING : return 'Robot trying to dock'; break; // Robot trying to dock
 			case _this.AnswerCode.UNDOCKED : return 'Robot is undocked'; break; // Robot is undocked
+			case _this.AnswerCode.WRONG_GOAL : return 'Wrong goal: Fiducial type and id must be defined'; break;
+			case _this.AnswerCode.CLOSE_FAILURE : return 'Dock fail too close to dock'; break;
 			default: return 'Unknow error code';
 		}
 	}
@@ -1787,6 +1791,11 @@ function WycaAPI(options){
 		_this.wycaSend(JSON.stringify(action));
 	}
 	this.GoToCharge = function(id_dock, callback){
+		
+		/// POUR TEST
+		id_dock = -2;
+		
+		
 		if (callback != undefined)
 			this.callbacks[_this.CommandCode.GO_TO_CHARGE] = callback;
 		var action = {

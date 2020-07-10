@@ -1,5 +1,50 @@
 $(document).ready(function(e) {
 	
+	$('#install_normal_setup_trinary .bSaveTrinaryMap').click(function(e) {
+		
+		var canvasDessin = document.getElementById('install_normal_setup_trinary_canvas_result_trinary');
+		$.ajax({
+				type: "POST",
+				url: 'ajax/get_map_tri.php',
+				data: {
+					'image_tri':canvasDessin.toDataURL()
+				},
+				dataType: 'json',
+				success: function(data_img) {
+					if (!data_img.error)
+					{
+						data = GetDataMapToSave();
+						
+						map = current_map_obj;
+						map.image_tri = data_img.image;
+						map.threshold_free = parseInt($('#install_normal_setup_trinary_threshold_free_slider').val());
+						map.threshold_occupied = parseInt($('#install_normal_setup_trinary_threshold_occupied_slider').val());
+						
+						wycaApi.SetMap(map, function(data){
+							if (data.A == wycaApi.AnswerCode.NO_ERROR)
+							{	
+								success_wyca('Map saved')
+							}
+							else
+							{
+								alert_wyca('Save map error : ' + wycaApi.AnswerCodeToString(data.A) + '<br>'+ data.M);
+							}							
+						});
+					}
+									
+					
+				},
+				error: function(e) {
+					
+					var img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
+        			img.src = "assets/images/vide.png";
+					
+					alert_wyca('Error get map trinary ; ' + e.responseText);
+				}
+			});
+		
+	});
+	
 	$('#install_normal_edit_map .bSaveMapTestPoi').click(function(e) {
 		e.preventDefault();
 		
@@ -314,6 +359,8 @@ function NormalInitTrinary()
 	}
 }
 
+var current_map_obj = {};
+
 function NormalInitTrinaryDo()
 {
 	$('#install_normal_setup_trinary .loading_fin_create_map').show();
@@ -327,6 +374,8 @@ function NormalInitTrinaryDo()
 			console.log(data);
 			img_normal = document.getElementById("install_normal_setup_trinary_img_map_saved_fin");
 			img_normal.src = 'data:image/png;base64,' + data.D.image;
+			
+			current_map_obj = data.D;
 			
 			finalMapData = 'data:image/png;base64,' + data.D.image;
 			
