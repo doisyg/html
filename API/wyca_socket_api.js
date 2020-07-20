@@ -1748,7 +1748,7 @@ function WycaAPI(options){
 		_this.wycaSend(JSON.stringify(action));
 	}
 	
-	this.StopMove = function(id_dock, callback){
+	this.StopMove = function(callback){
 		if (callback != undefined)
 			this.callbacks[_this.CommandCode.STOP_MOVE] = callback;
 		var action = {
