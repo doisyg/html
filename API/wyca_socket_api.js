@@ -221,6 +221,7 @@ function WycaAPI(options){
 		POI_POSES			: 0x0010,
 		LATENCY_RETURN			: 0x3006,
 		MOVE_IN_PROGRESS			: 0x0015,
+		LIDAR_DATA			: 0x3007,
 	 
 	// Actions
 		MAPPING_START_FEEDBACK			: 0x4004,
@@ -1072,6 +1073,9 @@ function WycaAPI(options){
 						case this.EventCode.IS_SAFETY_STOP:
 							if (_this.options.onIsSafetyStop != undefined) { _this.options.onIsSafetyStop(msg.D.D); }
 							break;
+						case this.EventCode.LIDAR_DATA:
+							if (_this.options.onLidarData != undefined) { _this.options.onLidarData(msg.D.D); }
+							break;
 						case this.EventCode.DOCKING_STATE:
 							if (_this.options.onDockingState != undefined) { _this.options.onDockingState(msg.D.D); }
 							break;
@@ -1214,6 +1218,9 @@ function WycaAPI(options){
 				case this.EventCode.IS_SAFETY_STOP:
 					if (_this.options.onIsSafetyStop != undefined) { _this.options.onIsSafetyStop(msg.D); }
 					break;
+				case this.EventCode.LIDAR_DATA:
+					if (_this.options.onLidarData != undefined) { _this.options.onLidarData(msg.D); }
+					break;
 				case this.EventCode.DOCKING_STATE:
 					if (_this.options.onDockingState != undefined) { _this.options.onDockingState(msg.D); }
 					break;
@@ -1342,6 +1349,7 @@ function WycaAPI(options){
 		if (_this.options.onNavigationRobotPose != undefined) { var n=_this.EventCode.NAVIGATION_ROBOT_POSE; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onIsFreewheel != undefined) { var n=_this.EventCode.IS_FREEWHEEL; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onIsSafetyStop != undefined) { var n=_this.EventCode.IS_SAFETY_STOP; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
+		if (_this.options.onLidarData != undefined) { var n=_this.EventCode.LIDAR_DATA; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onDockingState != undefined) { var n=_this.EventCode.DOCKING_STATE; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onPOIsDetect != undefined) { var n=_this.EventCode.POI_POSES; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onMoveInProgress != undefined) { var n=_this.EventCode.MOVE_IN_PROGRESS; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
@@ -1376,6 +1384,7 @@ function WycaAPI(options){
 			case 'onNavigationRobotPose': ev_code = _this.EventCode.NAVIGATION_ROBOT_POSE; break;
 			case 'onIsFreewheel': ev_code = _this.EventCode.IS_FREEWHEEL; break;
 			case 'onIsSafetyStop': ev_code = _this.EventCode.IS_SAFETY_STOP; break;
+			case 'onLidarData': ev_code = _this.EventCode.LIDAR_DATA; break;
 			case 'onDockingState': ev_code = _this.EventCode.DOCKING_STATE; break;
 			case 'onPOIsDetect': ev_code = _this.EventCode.POI_POSES; break;
 			case 'onMoveInProgress': ev_code = _this.EventCode.MOVE_IN_PROGRESS; break;
@@ -1442,6 +1451,7 @@ function WycaAPI(options){
 			case 'onNavigationRobotPose': ev_code = _this.CommandCode.NAVIGATION_ROBOT_POSE; break;
 			case 'onIsFreewheel': ev_code = _this.CommandCode.IS_FREEWHEEL; break;
 			case 'onIsSafetyStop': ev_code = _this.CommandCode.IS_SAFETY_STOP; break;
+			case 'onLidarData': ev_code = _this.CommandCode.LIDAR_DATA; break;
 			case 'onDockingState': ev_code = _this.CommandCode.DOCKING_STATE; break;
 			case 'onPOIsDetect': ev_code = _this.CommandCode.POI_POSES; break;
 			case 'onMoveInProgress': ev_code = _this.CommandCode.MOVE_IN_PROGRESS; break;
