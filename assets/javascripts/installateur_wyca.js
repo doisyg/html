@@ -8,9 +8,10 @@ $(document).ready(function(e) {
 		
 		create_new_site = true;
 		
-		$('#pages_install_normal').hide();
+		$('#pages_install_normal').removeClass('active');
 		$('#pages_install_by_step section.page').hide();
-		$('#pages_install_by_step').show();
+		
+		$('#pages_install_by_step').addClass('active');
 		$('#install_by_step_site').show();
 	});
 	

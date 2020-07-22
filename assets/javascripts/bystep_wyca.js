@@ -1189,6 +1189,11 @@ $(document).ready(function(e) {
 		$('#pages_install_by_step').removeClass('active');
 		$('#pages_install_normal').addClass('active');
 		
+		if ($('#install_normal_setup_sites').is(':visible'))
+		{
+			GetSitesNormal();
+		}
+		
 		
 		$('.menu_groupe button').show();
 		
