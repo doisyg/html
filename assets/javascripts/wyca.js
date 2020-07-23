@@ -144,6 +144,7 @@ $(document).ready(function(e) {
 		if (next == 'install_by_step_config') GetConfigurationsByStep();
 		if (next == 'install_by_step_manager') GetManagersByStep();
 		if (next == 'install_by_step_service_book') GetServiceBooksByStep();
+		if (next == 'install_by_step_mapping') InitMappingByStep();
 		
 		if (next == 'install_normal_setup_sites') GetSitesNormal();
 		if (next == 'install_normal_setup_tops') InitTopsNormal();
@@ -657,6 +658,37 @@ function InitTopsByStep()
 	else
 	{
 		setTimeout(InitTopsByStep, 500);
+	}
+}
+
+
+function InitMappingByStep()
+{
+	imgMappingLoaded = true;
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.MappingIsStarted(function(data) {
+			if (data.D)
+			{
+				$('#install_by_step_mapping .bMappingStart').hide();
+				$('#install_by_step_mapping .progressStartMapping').hide();
+				$('#install_by_step_mapping .bMappingStop').show();
+				$('#install_by_step_mapping .mapping_view').show();
+					
+				img = document.getElementById("install_by_step_mapping_img_map_saved");
+				img.src = "assets/images/vide.png";
+				
+				if (intervalMap != null)
+				{
+					clearInterval(intervalMap);
+					intervalMap = null;
+				}
+			}
+		});
+	}
+	else
+	{
+		setTimeout(InitMappingByStep, 500);
 	}
 }
 

@@ -32,6 +32,8 @@ var teleopEnable = false;
 var lastRobotPose = {'X':0, 'Y':0, 'T':0 };
 var mappingLastOrigin = {'x':0, 'y':0 };
 
+var imgMappingLoaded = true;
+
 $(document).ready(function(e) {
 	wycaApi = new WycaAPI({
 		host:robot_host, //192.168.1.32:9090', // host:'192.168.100.245:9090',
@@ -90,11 +92,25 @@ $(document).ready(function(e) {
         onMappingMapInConstruction: function(data){
 			if (data.M != undefined)
 			{
-				var img = document.getElementById("install_by_step_mapping_img_map_saved");
-				img.src = 'data:image/png;base64,' + data.M;
-				mappingLastOrigin = {'x':parseFloat(data.X), 'y':parseFloat(data.Y) };
+				if (imgMappingLoaded)
+				{
+					imgMappingLoaded = false;
+					var img = document.getElementById("install_by_step_mapping_img_map_saved");
+					img.onload = function () {
+						imgMappingLoaded = true;	
+						 InitPosCarteMapping();
+					};
+					img.src = 'data:image/png;base64,' + data.M;
+					mappingLastOrigin = {'x':parseFloat(data.X), 'y':parseFloat(data.Y) };
+				}
 			}
         },
+		onMappingStartResult: function(data){
+            InitMappingByStep();
+		},
+		onNavigationStartResult: function(data){
+            if (data.A != wycaApi.AnswerCode.NO_ERROR) { alert_wyca('Error navigation start ; ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M);}
+		},
 		onDockingState: function(data){
             if (dockingStateLast != data)
 			{
