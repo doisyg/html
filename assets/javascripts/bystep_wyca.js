@@ -488,10 +488,10 @@ $(document).ready(function(e) {
         img.src = 'assets/images/vide.png';
 		
 		wycaApi.MappingStop(function(data) {
-		
+			if (data.A != wycaApi.AnswerCode.NO_ERROR) alert_wyca('Error navigation stop ; ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M);
 			$.ajax({
 				type: "POST",
-				url: 'install_by_step_fin_mapping.php',
+				url: 'ajax/install_by_step_fin_mapping.php',
 				data: {},
 				dataType: 'json',
 				success: function(data) {
@@ -628,6 +628,7 @@ $(document).ready(function(e) {
 												wycaApi.NavigationStartFromMapping(function(data) {
 													
 													if (data.A != wycaApi.AnswerCode.NO_ERROR) { alert_wyca('Error navigation start ; ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M);} 
+													
 													$('#install_by_step_mapping_use .install_by_step_mapping_use_next').click();
 													
 													setTimeout(function(){
