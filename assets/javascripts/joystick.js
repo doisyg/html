@@ -167,7 +167,7 @@ function SendCommande()
 			if (nbCall0 < 5)
 			{
 				nbCall0++;
-				wycaApi.Teleop(lastValueX * -0.5, lastValueY * -1.2);
+				wycaApi.Teleop(lastValueX * -0.7, lastValueY * -1.2);
 			}
 			else
 			{
@@ -178,7 +178,7 @@ function SendCommande()
 		else if (isDown)
 		{
 			nbCall0 = 0;
-			wycaApi.Teleop(lastValueX * -0.5, lastValueY * -1.2);
+			wycaApi.Teleop(lastValueX * -0.7, lastValueY * -1.2);
 		}
 	}
 }
