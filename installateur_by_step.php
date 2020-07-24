@@ -1079,7 +1079,7 @@
         </section>
         
         
-        <section id="install_by_step_config" class="page <?php echo $INSTALL_STEP == 9?'active':'';?> with_footer">
+        <section id="install_by_step_config" class="page <?php echo $INSTALL_STEP == 10?'active':'';?> with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_test_map"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
@@ -1121,7 +1121,7 @@
         
         </section>
         
-        <section id="install_by_step_manager" class="page <?php echo $INSTALL_STEP == 10?'active':'';?> with_footer">
+        <section id="install_by_step_manager" class="page <?php echo $INSTALL_STEP == 11?'active':'';?> with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_config"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
