@@ -31,6 +31,10 @@ $(document).ready(function(e) {
 							}							
 						});
 					}
+					else
+					{
+						alert_wyca('Error save image trinary');
+					}
 									
 					
 				},

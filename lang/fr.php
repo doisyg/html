@@ -131,5 +131,16 @@ $_LANG['526d688f37a86d3c3f27d0c5016eb71d'] = 'Reset';
 $_LANG['8f244b1bfc0cef932d0b750d495654e1'] = 'Remember to save the map before launching a test';
 $_LANG['b46807becab96e587ff1299be9a69a8f'] = 'You can change the position of the robot before the test';
 $_LANG['4016eccf3aa8c7d26356249dd3574147'] = 'Move robot';
+$_LANG['e5e6fd289ce57b2686f403b013583f68'] = 'Demo mode Start';
+$_LANG['585dec1a6114cab3d33eb1ce6a5c4c1d'] = 'Demo mode Stop';
+$_LANG['ab713ec29681d7158e165ee87d2d3104'] = 'Domo mode config';
+$_LANG['948a2986c50ad6bb8c90b4d93ae5c04d'] = 'Demo mode';
+$_LANG['9a7b768938a9e551fa88faf99acac139'] = 'Add wait step';
+$_LANG['0b4ded1cc6ee7723c2331e5af5255880'] = 'Start / Stop';
+$_LANG['fa535ffb25e1fd20341652f9be21e06e'] = 'Config';
+$_LANG['a6122a65eaa676f700ae68d393054a37'] = 'Start';
+$_LANG['11a755d598c0c417f9a36758c3da7481'] = 'Stop';
+$_LANG['2807031730d75e38fb2b3579711081cb'] = 'Demo mode Start / Stop';
+$_LANG['5050505df1a51030bd67f5406dd477d3'] = 'Demo mode configuration';
 
 ?>

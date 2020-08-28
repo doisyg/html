@@ -24,7 +24,7 @@
         <meta name="msapplication-TileImage" content="<?php echo $_CONFIG['URL'];?>assets/images/favicon/favicon-144.png">
         <meta name="msapplication-TileColor" content="#FFFFFF"> 
         
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover, shrink-to-fir=nouser-scalable=no, target-densityDpi=device-dpi" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover, shrink-to-fir=no, user-scalable=no, target-densityDpi=device-dpi" />
         <meta name="HandheldFriendly" content="true">
 
 		<link href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/fonts/opensans/opensans.css" rel="stylesheet" type="text/css">
@@ -49,7 +49,7 @@
         
         	<div class="menu_groupe">
             	<div class="btn-group pull-left" role="group" aria-label="Change group">
-	            	<?php if ($_SESSION['id_groupe_user'] <= 1) { ?><button id="bPagesWyca" type="button" data-groupe="pages_wyca" data-btn_class="btn-danger" class="btn_change_group btn btn-sm btn-<?php echo $_SESSION['id_groupe_user'] == 1?'danger active':'default';?>">Wyca</button><?php }?>
+                	<?php if ($_SESSION['id_groupe_user'] <= 1) { ?><button id="bPagesWyca" type="button" data-groupe="pages_wyca" data-btn_class="btn-danger" class="btn_change_group btn btn-sm btn-<?php echo $_SESSION['id_groupe_user'] == 1?'danger active':'default';?>">Wyca</button><?php }?>
 	            	<?php if ($_SESSION['id_groupe_user'] <= 2) { ?><button id="bPagesInstall" type="button" data-groupe="pages_install" data-btn_class="btn-warning" class="btn_change_group btn btn-sm btn-<?php echo $_SESSION['id_groupe_user'] == 2?'warning active':'default';?>">Install</button><?php }?>
                     <?php
 					$INSTALL_STEP = Configuration::GetValue('INSTALL_STEP');

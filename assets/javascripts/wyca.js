@@ -161,6 +161,9 @@ $(document).ready(function(e) {
 		if (next == 'manager_users') GetUsers();
 		if (next == 'user_edit_map') GetInfosCurrentMapUser();
 		
+		if (next == 'wyca_demo_mode_config') InitWycaDemo();
+		if (next == 'wyca_demo_mode_start_stop') InitWycaDemoState();
+		
 		
 		
 		// Anim HIDE
@@ -307,6 +310,7 @@ function simulateMouseEvent (event, simulatedType) {
     // Dispatch the simulated event to the target element
     event.target.dispatchEvent(simulatedEvent);
   }
+
 
 function GetServiceBooksNormal()
 {

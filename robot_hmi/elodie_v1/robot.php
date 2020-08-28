@@ -25,15 +25,15 @@ $_CONFIG['URL_API'] = 'https://elodie.wyca-solutions.com/API/';
 	
 	<link href="<?php echo $_CONFIG['URL_API'];?>css/map_wyca.css" rel="stylesheet">
     <script src="<?php echo $_CONFIG['URL_API'];?>extern/jquery-1.11.3.min.js"></script>
-	<script src="<?php echo $_CONFIG['URL_API'];?>extern/roslib.js"></script>
     <script src="<?php echo $_CONFIG['URL_API'];?>webrtc.wyca2.min.js"></script>
-    <script src="<?php echo $_CONFIG['URL_API'];?>wyca_api.latest.min.php?api_key=5LGU.LaYMMncJaA0i42HwsX9ZX-RCNgj-9V17ROFXt71st<?php /*&v=<?php echo date('YmdHis');*/?>"></script>
+    <script src="<?php echo $_CONFIG['URL_API'];?>wyca_socket_api.js"></script>
     
     <script src="<?php echo $_CONFIG['URL'];?>js/bootstrap.js"></script>
     
     <script>
 	var nbDockAttemptMax = 3;
 	var delayBeforeRetryDock = 30000;
+	var robot_host = '<?php echo (file_exists('C:\\'))?'10.0.0.44:9095':'elodie.wyca-solutions.com:9095';?>';
 	</script>
     
     <script src="<?php echo $_CONFIG['URL'];?>js/robot.js<?php /*?v=<?php echo date('YmdHis');*/?>"></script>
