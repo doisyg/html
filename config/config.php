@@ -1,6 +1,6 @@
 <?php
 $_CONFIG = array();
-$_CONFIG['URL'] = "http://wyca.run/";
+$_CONFIG['URL'] = "https://wyca.run/";
 $_CONFIG['URL_API'] = $_CONFIG['URL']."API/";
 $_CONFIG['URL_SERVER_TODO'] = "https://integrator.wyca-solutions.com:7458";
 
