@@ -141,8 +141,8 @@ $(document).ready(function(e) {
 		}
 		else
 		{
-			//var robot_host = '<?php echo (file_exists('C:\\'))?'192.168.0.30:9095':'elodie.wyca-solutions.com:9095';?>';
-			var robot_host = '<?php echo (file_exists('C:\\'))?'10.0.0.44:9095':'elodie.wyca-solutions.com:9095';?>';
+			var robot_host = '<?php echo (file_exists('C:\\'))?'192.168.0.30:9095':'wyca.run:9095';?>';
+			//var robot_host = '<?php echo (file_exists('C:\\'))?'10.0.0.44:9095':'wyca.run:9095';?>';
 			
 			if ("WebSocket" in window) {
 				ws = new WebSocket('wss://'+ robot_host);
