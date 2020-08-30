@@ -310,7 +310,7 @@ function WycaAPI(options){
 		webcam_name: "",
 		serveurWyca : 'https://integrator.wyca-solutions.com/',
 		on_error_webcam_try_without : true,
-		host : 'elodie.wyca-solutions.com:9095',
+		host : 'wyca.run:9095',
 		api_key:''
     };
     this.options = $.extend({}, defaults, options || {});
