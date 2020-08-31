@@ -7,9 +7,9 @@ require_once ('./config/config.php');
 $_SESSION['is_robot'] = 1;
 session_write_close();
 
-$_CONFIG['URL_ROOT'] = 'https://elodie.wyca-solutions.com/';
-$_CONFIG['URL'] = 'https://elodie.wyca-solutions.com/robot_hmi/elodie_v1/';
-$_CONFIG['URL_API'] = 'https://elodie.wyca-solutions.com/API/';
+$_CONFIG['URL_ROOT'] = 'https://wyca.run/';
+$_CONFIG['URL'] = 'https://wyca.run/robot_hmi/elodie_v1/';
+$_CONFIG['URL_API'] = 'https://wyca.run/API/';
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -33,7 +33,7 @@ $_CONFIG['URL_API'] = 'https://elodie.wyca-solutions.com/API/';
     <script>
 	var nbDockAttemptMax = 3;
 	var delayBeforeRetryDock = 30000;
-	var robot_host = '<?php echo (file_exists('C:\\'))?'10.0.0.44:9095':'elodie.wyca-solutions.com:9095';?>';
+	var robot_host = '<?php echo (file_exists('C:\\'))?'10.0.0.44:9095':'wyca.run:9095';?>';
 	</script>
     
     <script src="<?php echo $_CONFIG['URL'];?>js/robot.js<?php /*?v=<?php echo date('YmdHis');*/?>"></script>
