@@ -72,7 +72,9 @@
                 <ul class="list_all_poi list_elem">
                 </ul>
             
-                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#wyca_demo_mode_config_modalWaitOptions"><?php echo __('Add wait step');?></a>
+                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#wyca_demo_mode_config_modalWaitOptions" style="margin-bottom:50px;"><?php echo __('Add wait step');?></a>
+                
+               	<div style="clear:both;"></div>
                 
                 <div id="wyca_demo_mode_config_modalWaitOptions" class="modal fade modalWaitOptions" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
                     <div class="modal-dialog" role="dialog">
