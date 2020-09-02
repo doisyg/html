@@ -10,20 +10,27 @@ function InitWycaDemoState()
 	{
 		wycaApi.GetGlobalVehiculePersistanteDataStorage(function(data){
 			
-			dataStorage = JSON.parse(data.D);
-			
-			$('#wyca_demo_mode_start_stop .tuiles a').addClass('todo');
-			if (typeof dataStorage.wycaDemoStarted != "undefined" && dataStorage.wycaDemoStarted)
+			if (data.D == '')
 			{
-				$('#wyca_demo_mode_start_stop #wyca_demo_mode_start_stop_bStop').removeClass('todo');
+				dataStorage = {};
 			}
 			else
 			{
-				$('#wyca_demo_mode_start_stop #wyca_demo_mode_start_stop_bStart').removeClass('todo');
+				dataStorage = JSON.parse(data.D);
+				
+				$('#wyca_demo_mode_start_stop .tuiles a').addClass('todo');
+				if (typeof dataStorage.wycaDemoStarted != "undefined" && dataStorage.wycaDemoStarted)
+				{
+					$('#wyca_demo_mode_start_stop #wyca_demo_mode_start_stop_bStop').removeClass('todo');
+				}
+				else
+				{
+					$('#wyca_demo_mode_start_stop #wyca_demo_mode_start_stop_bStart').removeClass('todo');
+				}
+				
+				$('#wyca_demo_mode_start_stop .wyca_demo_mode_start_stop_loading').hide();
+				$('#wyca_demo_mode_start_stop .loaded').show();
 			}
-			
-			$('#wyca_demo_mode_start_stop .wyca_demo_mode_start_stop_loading').hide();
-			$('#wyca_demo_mode_start_stop .loaded').show();
 		});
 	}
 	else
