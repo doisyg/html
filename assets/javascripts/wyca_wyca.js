@@ -50,7 +50,10 @@ function InitWycaDemo()
 	{
 		wycaApi.GetGlobalVehiculePersistanteDataStorage(function(data){
 			
-			dataStorage = JSON.parse(data.D);
+			if (data.D == '')
+				dataStorage = {};
+			else
+				dataStorage = JSON.parse(data.D);
 			
 			wycaApi.GetCurrentMapComplete(function(data) {
 				if (data.A == wycaApi.AnswerCode.NO_ERROR)
