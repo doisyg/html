@@ -23,6 +23,8 @@ var robotMoveToDock = false;
 var loaded = true;
 var gotoPoiInProgress = false;
 
+var actionListInProgress = false;
+
 $(document).ready(function(e) {
 	
 	wycaApi = new WycaAPI({
@@ -53,6 +55,7 @@ $(document).ready(function(e) {
 		onGoToPoiResult: function(data){
 			queueState = 'done';
 			gotoPoiInProgress = false;
+			actionListInProgress = false;
 			if (currentBatteryState < dataStorage.min_goto_charge)
 			{
 				if (!robotMoveToDock && robotCurrentState == 'undocked')
@@ -166,6 +169,7 @@ function ResultSendToDock(data)
 	}
 	else
 	{
+		actionListInProgress = false;
 		if (timeoutRetryDock != null)
 		{
 			clearTimeout(timeoutRetryDock);
@@ -307,22 +311,25 @@ function RefreshConfigs()
 
 function NextAction()
 {
-	if (dataStorage.wycaDemoStarted && dataStorage.wycaDemo.length > 0)
+	if (!actionListInProgress)
 	{
-		currentIndexStep++;
-		if (currentIndexStep >= dataStorage.wycaDemo.length) currentIndexStep = 0
-		currentTask = dataStorage.wycaDemo[currentIndexStep];
-	
-		ExecAction(currentTask);
-	}
-	else
-	{
-		if (!dataStorage.wycaDemoStarted)
-			$('#current_action').html('');
+		if (dataStorage.wycaDemoStarted && dataStorage.wycaDemo.length > 0)
+		{
+			currentIndexStep++;
+			if (currentIndexStep >= dataStorage.wycaDemo.length) currentIndexStep = 0
+			currentTask = dataStorage.wycaDemo[currentIndexStep];
+		
+			ExecAction(currentTask);
+		}
 		else
-			$('#current_action').html('No task currently');
-		currentTask = null;
-		setTimeout(NextAction, 5000);
+		{
+			if (!dataStorage.wycaDemoStarted)
+				$('#current_action').html('');
+			else
+				$('#current_action').html('No task currently');
+			currentTask = null;
+			setTimeout(NextAction, 5000);
+		}
 	}
 }
 
@@ -331,6 +338,7 @@ var waitInterval = null;
 
 function ExecAction(action)
 {
+	actionListInProgress = true;
 	if (action.type == 'Poi')
 	{
 		gotoPoiInProgress = true;
@@ -373,6 +381,7 @@ function NextTimeRemaining()
 		waitInterval = null;
 		$('#waitTime').hide();
 		
+		actionListInProgress = false;
 		NextAction();
 	}
 }

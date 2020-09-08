@@ -169,8 +169,6 @@ function InitWycaDemo()
 						});
 					}
 					
-					/*
-					On ne met pas les docks
 					if (docks.length > 0)
 					{
 						$.each(docks, function(indexInArray, dock){
@@ -183,7 +181,6 @@ function InitWycaDemo()
 								);
 						});
 					}
-					*/
 					
 					$('#wyca_demo_mode_config .wyca_demo_mode_config_loading').hide();
 					$('#wyca_demo_mode_config .loaded').show();
