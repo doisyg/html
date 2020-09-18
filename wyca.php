@@ -71,6 +71,10 @@
                 <h4 style="margin-top:20px;">POI list</h4>
                 <ul class="list_all_poi list_elem">
                 </ul>
+
+                <h4 style="margin-top:20px;">Docking stations list</h4>
+                <ul class="list_all_dock list_elem">
+                </ul>
             
                 <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#wyca_demo_mode_config_modalWaitOptions" style="margin-bottom:50px;"><?php echo __('Add wait step');?></a>
                 

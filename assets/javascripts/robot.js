@@ -35,6 +35,13 @@ var mappingLastOrigin = {'x':0, 'y':0 };
 var imgMappingLoaded = true;
 
 $(document).ready(function(e) {
+	
+	var img = document.getElementById("install_by_step_mapping_img_map_saved");
+	img.onload = function () {
+		imgMappingLoaded = true;	
+		InitPosCarteMapping();
+	};
+	
 	wycaApi = new WycaAPI({
 		host:robot_host, //192.168.1.32:9090', // host:'192.168.100.245:9090',
 		api_key:user_api_key,
@@ -96,10 +103,6 @@ $(document).ready(function(e) {
 				{
 					imgMappingLoaded = false;
 					var img = document.getElementById("install_by_step_mapping_img_map_saved");
-					img.onload = function () {
-						imgMappingLoaded = true;	
-						 InitPosCarteMapping();
-					};
 					img.src = 'data:image/png;base64,' + data.M;
 					mappingLastOrigin = {'x':parseFloat(data.X), 'y':parseFloat(data.Y) };
 				}
