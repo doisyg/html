@@ -81,6 +81,7 @@ $(document).ready(function(e) {
 						gommes = Array();
 						docks = data.D.docks;
 						pois = data.D.pois;
+						augmented_poses = data.D.augmented_poses;
 						
 						$('#install_normal_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
 						
@@ -145,17 +146,19 @@ $(document).ready(function(e) {
 		});
     });
 	
-	$('#install_normal_edit_map .bSaveMapTestDock').click(function(e) {
+	$('#install_normal_edit_map .bSaveMapTestAugmentedPose').click(function(e) {
 		e.preventDefault();
 		
+		$('#install_normal_edit_map .bSaveMapTestAugmentedPose i').removeClass('fa-check fa-spinner fa-pulse fa-remove');
+		$('#install_normal_edit_map .bSaveMapTestAugmentedPose i').addClass('fa-spinner fa-pulse');
 		
-		$('#install_normal_edit_map .bSaveMapTestDock i').removeClass('fa-check fa-spinner fa-pulse fa-remove');
-		$('#install_normal_edit_map .bSaveMapTestDock i').addClass('fa-spinner fa-pulse');
+		id_augmented_pose_test = currentAugmentedPoseNormalLongTouch.data('id_augmented_pose');
+		i = GetAugmentedPoseIndexFromID(currentAugmentedPoseNormalLongTouch.data('id_augmented_pose'));
 		
-		id_dock_test = currentDockNormalLongTouch.data('id_docking_station');
-		i = GetDockIndexFromID(currentDockNormalLongTouch.data('id_docking_station'));
-		
-		id_fiducial_test = docks[i].id_fiducial;
+		id_fiducial_test = augmented_poses[i].id_fiducial;
+		final_pose_x_test = augmented_poses[i].final_pose_x;
+		final_pose_y_test = augmented_poses[i].final_pose_y;
+		final_pose_t_test = augmented_poses[i].final_pose_t;
 	
 		data = GetDataMapToSave();
 		gotoTest = false;
@@ -175,6 +178,7 @@ $(document).ready(function(e) {
 						gommes = Array();
 						docks = data.D.docks;
 						pois = data.D.pois;
+						augmented_poses = data.D.augmented_poses;
 						
 						$('#install_normal_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
 						
@@ -207,7 +211,102 @@ $(document).ready(function(e) {
 						NormalInitMap();
 						NormalResizeSVG();
 						
-						// On recherche le nouveau poi créé avec le bon id
+						// On recherche le nouveau augmented_pose créé avec le bon id
+						if (id_augmented_pose_test >= 300000)
+						{
+							$.each(augmented_poses, function( index, augmented_pose ) {
+								
+								if (augmented_pose.id_fiducial == id_fiducial_test && augmented_pose.final_pose_x == final_pose_x_test && augmented_pose.final_pose_y == final_pose_y_test && augmented_pose.final_pose_t == final_pose_t_test)
+								{
+									currentAugmentedPoseNormalLongTouch = $('#install_normal_edit_map_augmented_pose_robot_'+augmented_pose.id_augmented_pose);
+								}
+							});
+						}
+						
+						$('#install_normal_edit_map .bSaveMapTestAugmentedPose i').removeClass('fa-check fa-spinner fa-pulse fa-remove');
+						$('#install_normal_edit_map .bSaveMapTestAugmentedPose i').addClass('fa-check');
+					}
+					else
+					{
+						alert_wyca('Init map error : ' + wycaApi.AnswerCodeToString(data.A));
+					}
+				});
+				
+				
+			}
+			else
+			{
+				$('#install_normal_edit_map .bSaveMapTestAugmentedPose i').removeClass('fa-check fa-spinner fa-pulse fa-remove');
+				$('#install_normal_edit_map .bSaveMapTestAugmentedPose i').addClass('fa-remove');
+				alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' + data.M);
+			}
+		});
+    });
+	
+	$('#install_normal_edit_map .bSaveMapTestDock').click(function(e) {
+		e.preventDefault();
+		
+		
+		$('#install_normal_edit_map .bSaveMapTestDock i').removeClass('fa-check fa-spinner fa-pulse fa-remove');
+		$('#install_normal_edit_map .bSaveMapTestDock i').addClass('fa-spinner fa-pulse');
+		
+		id_dock_test = currentDockNormalLongTouch.data('id_docking_station');
+		i = GetDockIndexFromID(currentDockNormalLongTouch.data('id_docking_station'));
+		
+		id_fiducial_test = docks[i].id_fiducial;
+	
+		data = GetDataMapToSave();
+		gotoTest = false;
+		
+		wycaApi.SetCurrentMapData(data, function(data){
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{	
+				wycaApi.GetCurrentMapComplete(function(data) {
+					if (data.A == wycaApi.AnswerCode.NO_ERROR)
+					{
+						console.log(data.D); 
+						id_map = data.D.id_map;
+						id_map_last = data.D.id_map;
+						
+						forbiddens = data.D.forbiddens;
+						areas = data.D.areas;
+						gommes = Array();
+						docks = data.D.docks;
+						pois = data.D.pois;
+						augmented_poses = data.D.augmented_poses;
+						
+						$('#install_normal_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
+						
+						largeurSlam = data.D.ros_width;
+						hauteurSlam = data.D.ros_height;
+						largeurRos = data.D.ros_width;
+						hauteurRos = data.D.ros_height;
+						
+						ros_largeur = data.D.ros_width;
+						ros_hauteur = data.D.ros_height;
+						ros_resolution = data.D.ros_resolution;
+						
+						$('#install_normal_edit_map_svg').attr('width', data.D.ros_width);
+						$('#install_normal_edit_map_svg').attr('height', data.D.ros_height);
+						
+						$('#install_normal_edit_map_image').attr('width', data.D.ros_width);
+						$('#install_normal_edit_map_image').attr('height', data.D.ros_height);
+						$('#install_normal_edit_map_image').attr('xlink:href', 'data:image/png;base64,'+data.D.image_tri);
+					  
+						$('#install_normal_mapping_use .bUseThisMapNowYes').show();
+						$('#install_normal_mapping_use .bUseThisMapNowNo').show();
+						$('#install_normal_mapping_use .modalUseThisMapNowTitle1').show();
+						$('#install_normal_mapping_use .modalUseThisMapNowTitle2').hide();
+						$('#install_normal_mapping_use .modalUseThisMapNowContent').hide();
+						
+						normalHistoriques = Array();
+						normalHistoriqueIndex = -1;
+						NormalRefreshHistorique();
+						
+						NormalInitMap();
+						NormalResizeSVG();
+						
+						// On recherche le nouveau dock créé avec le bon id
 						if (id_dock_test >= 300000)
 						{
 							$.each(docks, function( index, dock ) {

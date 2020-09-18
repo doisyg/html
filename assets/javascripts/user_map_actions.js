@@ -19,7 +19,7 @@ var saveCurrentArea = null;
 var currentDockIndex = -1;
 var saveCurrentDock = null;
 var currentPoiIndex = -1;
-var saveCurrentPio = null;
+var saveCurrentPoi = null;
 
 var currentDockPose = {};
 var currentPoiPose = {};

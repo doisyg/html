@@ -192,6 +192,12 @@ function WycaAPI(options){
 		DOCK_RECOVERY_CANCEL			: 0x0104,
 		RECOVERY_FROM_FIDUCIAL			: 0x0117,
 		RECOVERY_FROM_FIDUCIAL_CANCEL			: 0x0118,
+		GO_TO_POSE_ACCURATE			: 0x0123,
+		GO_TO_POSE_ACCURATE_CANCEL	: 0x0124,
+		GO_TO_POSE_FLEXIBLE			: 0x0125,
+		GO_TO_POSE_FLEXIBLE_CANCEL	: 0x0126,
+		GO_TO_AUGMENTED_POSE		: 0x0127,
+		GO_TO_AUGMENTED_POSE_CANCEL	: 0x0128,
 	 
 	// Wifi
 		GET_WIFI_LIST			: 0x7102,
@@ -247,6 +253,12 @@ function WycaAPI(options){
 		SET_ACTIVE_TOP_RESULT			: 0x6002,
 		INSTALL_NEW_TOP_FEEDBACK		: 0x1001,
 		INSTALL_NEW_TOP_RESULT			: 0x1002,
+		GO_TO_POSE_ACCURATE_FEEDBACK	: 0x0019,
+		GO_TO_POSE_ACCURATE_RESULT		: 0x001A,
+		GO_TO_POSE_FLEXIBLE_FEEDBACK	: 0x001B,
+		GO_TO_POSE_FLEXIBLE_RESULT		: 0x001C,
+		GO_TO_AUGMENTED_POSE_FEEDBACK	: 0x001D,
+		GO_TO_AUGMENTED_POSE_RESULT		: 0x001E
 	 
 	};
 
@@ -697,6 +709,12 @@ function WycaAPI(options){
 								case _this.EventCode.GO_TO_POI_RESULT:
 								case _this.EventCode.GO_TO_POSE_FEEDBACK:
 								case _this.EventCode.GO_TO_POSE_RESULT:
+								case _this.EventCode.GO_TO_POSE_ACCURATE_FEEDBACK:
+								case _this.EventCode.GO_TO_POSE_ACCURATE_RESULT:
+								case _this.EventCode.GO_TO_POSE_FLEXIBLE_FEEDBACK:
+								case _this.EventCode.GO_TO_POSE_FLEXIBLE_RESULT:
+								case _this.EventCode.GO_TO_AUGMENTED_POSE_FEEDBACK:
+								case _this.EventCode.GO_TO_AUGMENTED_POSE_RESULT:
 								case _this.EventCode.DOCK_FEEDBACK:
 								case _this.EventCode.DOCK_RESULT:
 								case _this.EventCode.UNDOCK_FEEDBACK:
@@ -729,6 +747,21 @@ function WycaAPI(options){
 						{
 							_this.subscribeOnWebrtc[_this.EventCode.GO_TO_POSE_FEEDBACK] = 'subscribed';
 							_this.subscribeOnWebrtc[_this.EventCode.GO_TO_POSE_RESULT] = 'subscribed';
+						}
+						if (json.O == _this.CommandCode.GO_TO_POSE_ACCURATE)
+						{
+							_this.subscribeOnWebrtc[_this.EventCode.GO_TO_POSE_ACCURATE_FEEDBACK] = 'subscribed';
+							_this.subscribeOnWebrtc[_this.EventCode.GO_TO_POSE_ACCURATE_RESULT] = 'subscribed';
+						}
+						if (json.O == _this.CommandCode.GO_TO_POSE_FLEXIBLE)
+						{
+							_this.subscribeOnWebrtc[_this.EventCode.GO_TO_POSE_FLEXIBLE_FEEDBACK] = 'subscribed';
+							_this.subscribeOnWebrtc[_this.EventCode.GO_TO_POSE_FLEXIBLE_RESULT] = 'subscribed';
+						}
+						if (json.O == _this.CommandCode.GO_TO_AUGMENTED_POSE)
+						{
+							_this.subscribeOnWebrtc[_this.EventCode.GO_TO_AUGMENTED_POSE_FEEDBACK] = 'subscribed';
+							_this.subscribeOnWebrtc[_this.EventCode.GO_TO_AUGMENTED_POSE_RESULT] = 'subscribed';
 						}
 						if (json.O == _this.CommandCode.DOCK)
 						{
@@ -1131,6 +1164,24 @@ function WycaAPI(options){
 				case this.EventCode.GO_TO_POSE_RESULT:
 					if (_this.options.onGoToPoseResult != undefined) { delete msg.E; _this.options.onGoToPoseResult(msg); }
 					break;
+				case this.EventCode.GO_TO_POSE_ACCURATE_FEEDBACK:
+					if (_this.options.onGoToPoseAccurateFeedback != undefined) { delete msg.E; _this.options.onGoToPoseAccurateFeedback(msg); }
+					break;
+				case this.EventCode.GO_TO_POSE_ACCURATE_RESULT:
+					if (_this.options.onGoToPoseAccurateResult != undefined) { delete msg.E; _this.options.onGoToPoseAccurateResult(msg); }
+					break;
+				case this.EventCode.GO_TO_POSE_FLEXIBLE_FEEDBACK:
+					if (_this.options.onGoToPoseFlexibleFeedback != undefined) { delete msg.E; _this.options.onGoToPoseFlexibleFeedback(msg); }
+					break;
+				case this.EventCode.GO_TO_POSE_FLEXIBLE_RESULT:
+					if (_this.options.onGoToPoseFlexibleResult != undefined) { delete msg.E; _this.options.onGoToPoseFlexibleResult(msg); }
+					break;
+				case this.EventCode.GO_TO_AUGMENTED_POSE_FEEDBACK:
+					if (_this.options.onGoToAugmentedPoseFeedback != undefined) { delete msg.E; _this.options.onGoToAugmentedPoseFeedback(msg); }
+					break;
+				case this.EventCode.GO_TO_AUGMENTED_POSE_RESULT:
+					if (_this.options.onGoToAugmentedPoseResult != undefined) { delete msg.E; _this.options.onGoToAugmentedPoseResult(msg); }
+					break;
 				case this.EventCode.DOCK_FEEDBACK:
 					if (_this.options.onDockFeedback != undefined) { delete msg.E; _this.options.onDockFeedback(msg); }
 					break;
@@ -1411,6 +1462,12 @@ function WycaAPI(options){
 				case 'onGoToPoiResult': ev_code = _this.EventCode.GO_TO_POI_RESULT; break;
 				case 'onGoToPoseFeedback': ev_code = _this.EventCode.GO_TO_POSE_FEEDBACK; break;
 				case 'onGoToPoseResult': ev_code = _this.EventCode.GO_TO_POSE_RESULT; break;
+				case 'onGoToPoseAccurateFeedback': ev_code = _this.EventCode.GO_TO_POSE_ACCURATE_FEEDBACK; break;
+				case 'onGoToPoseAccurateResult': ev_code = _this.EventCode.GO_TO_POSE_ACCURATE_RESULT; break;
+				case 'onGoToPoseFlexibleFeedback': ev_code = _this.EventCode.GO_TO_POSE_FLEXIBLE_FEEDBACK; break;
+				case 'onGoToPoseFlexibleResult': ev_code = _this.EventCode.GO_TO_POSE_FLEXIBLE_RESULT; break;
+				case 'onGoToAugmentedPoseFeedback': ev_code = _this.EventCode.GO_TO_AUGMENTED_POSE_FEEDBACK; break;
+				case 'onGoToAugmentedPoseResult': ev_code = _this.EventCode.GO_TO_AUGMENTED_POSE_RESULT; break;
 				case 'onDockFeedback': ev_code = _this.EventCode.DOCK_FEEDBACK; break;
 				case 'onDockResult': ev_code = _this.EventCode.DOCK_RESULT; break;
 				case 'onUndockFeedback': ev_code = _this.EventCode.UNDOCK_FEEDBACK; break;
@@ -1479,6 +1536,12 @@ function WycaAPI(options){
 				case 'onGoToPoiResult': ev_code = _this.EventCode.GO_TO_POI_RESULT; break;
 				case 'onGoToPoseFeedback': ev_code = _this.EventCode.GO_TO_POSE_FEEDBACK; break;
 				case 'onGoToPoseResult': ev_code = _this.EventCode.GO_TO_POSE_RESULT; break;
+				case 'onGoToPoseAccurateFeedback': ev_code = _this.EventCode.GO_TO_POSE_ACCURATE_FEEDBACK; break;
+				case 'onGoToPoseAccurateResult': ev_code = _this.EventCode.GO_TO_POSE_ACCURATE_RESULT; break;
+				case 'onGoToPoseFlexibleFeedback': ev_code = _this.EventCode.GO_TO_POSE_FLEXIBLE_FEEDBACK; break;
+				case 'onGoToPoseFlexibleResult': ev_code = _this.EventCode.GO_TO_POSE_FLEXIBLE_RESULT; break;
+				case 'onGoToAugmentedPoseFeedback': ev_code = _this.EventCode.GO_TO_AUGMENTED_POSE_FEEDBACK; break;
+				case 'onGoToAugmentedPoseResult': ev_code = _this.EventCode.GO_TO_AUGMENTED_POSE_RESULT; break;
 				case 'onDockFeedback': ev_code = _this.EventCode.DOCK_FEEDBACK; break;
 				case 'onDockResult': ev_code = _this.EventCode.DOCK_RESULT; break;
 				case 'onUndockFeedback': ev_code = _this.EventCode.UNDOCK_FEEDBACK; break;
@@ -1862,6 +1925,67 @@ function WycaAPI(options){
 			this.callbacks[_this.CommandCode.GO_TO_POSE_CANCEL] = callback;
 		var action = {
 			"O": _this.CommandCode.GO_TO_POSE_CANCEL,
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	this.GoToPoseAccurate = function(x, y, theta, callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.GO_TO_POSE_ACCURATE] = callback;
+		var action = {
+			"O": _this.CommandCode.GO_TO_POSE_ACCURATE,
+			"P": {
+				"X":x,
+				"Y":y,
+				"T":theta
+			}
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	this.GoToPoseAccurateCancel = function(callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.GO_TO_POSE_ACCURATE_CANCEL] = callback;
+		var action = {
+			"O": _this.CommandCode.GO_TO_POSE_ACCURATE_CANCEL,
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	this.GoToPoseFlexible = function(x, y, theta, distance_tolerance, angle_tolerance, callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.GO_TO_POSE_FLEXIBLE] = callback;
+		var action = {
+			"O": _this.CommandCode.GO_TO_POSE_FLEXIBLE,
+			"P": {
+				"X":x,
+				"Y":y,
+				"T":theta,
+				"DT":distance_tolerance,
+				"AT":angle_tolerance
+			}
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	this.GoToPoseFlexibleCancel = function(callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.GO_TO_POSE_FLEXIBLE_CANCEL] = callback;
+		var action = {
+			"O": _this.CommandCode.GO_TO_POSE_FLEXIBLE_CANCEL,
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	this.GoToAugmentedPose = function(id_augmented_pose, callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.GO_TO_AUGMENTED_POSE] = callback;
+		var action = {
+			"O": _this.CommandCode.GO_TO_AUGMENTED_POSE,
+			"P": id_augmented_pose
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	this.GoToAugmentedPoseCancel = function(callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.GO_TO_AUGMENTED_POSE_CANCEL] = callback;
+		var action = {
+			"O": _this.CommandCode.GO_TO_AUGMENTED_POSE_CANCEL,
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}

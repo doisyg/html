@@ -215,6 +215,7 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 
 .modalAddDock .dock { position:absolute; top:130px; margin-left:-12.5px; z-index:300; display:none; }
 .modalAddPoi .poi { position:absolute; top:130px; margin-left:-12.5px; z-index:300; display:none; }
+.modalAddAugmentedPose .augmented_pose { position:absolute; top:130px; margin-left:-12.5px; z-index:300; display:none; }
 
 
 

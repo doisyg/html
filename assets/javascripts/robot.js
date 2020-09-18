@@ -122,6 +122,7 @@ $(document).ready(function(e) {
 			}
 		},
 		onGoToPoiResult: onGoToPoiResult,
+		onGoToAugmentedPoseResult: onGoToAugmentedPoseResult,
 		onGoToChargeResult: onGoToChargeResult,
 		onGoToPoseResult: onGoToPoseResult,
 		onMoveInProgress: function(data){
@@ -145,6 +146,9 @@ function onGoToPoseResult(data)
 {
 }
 function onGoToPoiResult(data)
+{
+}
+function onGoToAugmentedPoseResult(data)
 {
 }
 function onGoToChargeResult(data)

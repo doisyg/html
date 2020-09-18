@@ -67,6 +67,7 @@ function InitWycaDemo()
 					gommes = Array();
 					docks = data.D.docks;
 					pois = data.D.pois;
+					augmented_poses = data.D.augmented_poses;
 					
 					largeurSlam = data.D.ros_width;
 					hauteurSlam = data.D.ros_height;

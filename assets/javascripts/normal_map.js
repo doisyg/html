@@ -46,11 +46,13 @@ var zoom_carte = 1;
 var nextIdArea = 300000;
 var nextIdDock = 300000;
 var nextIdPoi = 300000;
+var nextIdAugmentedPose = 300000;
 var forbiddens = Array();
 var areas = Array();
 var gommes = Array();
 var docks = Array();
 var pois = Array();
+var augmented_poses = Array();
 
 var blockZoom = false;
 var gotoTest = false;
@@ -81,6 +83,7 @@ function GetInfosCurrentMapDoNormal()
 			gommes = Array();
 			docks = data.D.docks;
 			pois = data.D.pois;
+			augmented_poses = data.D.augmented_poses;
 			
 			$('#install_normal_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
 			
@@ -120,43 +123,6 @@ function GetInfosCurrentMapDoNormal()
 			alert_wyca('Init map error : ' + wycaApi.AnswerCodeToString(data.A));
 		}
 	});
-}
-
-function GetDataMapToSave()
-{
-	data = {};
-	
-	data.forbiddens = forbiddens;
-	$.each(data.forbiddens, function(indexInArray, forbidden){
-		if (forbidden.id_area >= 300000)
-		{
-			data.forbiddens[indexInArray].id_area = -1;
-		}
-	});
-	data.areas = areas;
-	$.each(data.areas, function(indexInArray, area){
-		if (area.id_area >= 300000)
-		{
-			data.areas[indexInArray].id_area = -1;
-		}
-	});
-	data.gommes = gommes;
-	data.docks = docks;
-	$.each(data.docks, function(indexInArray, dock){
-		if (dock.id_docking_station >= 300000)
-		{
-			data.docks[indexInArray].id_docking_station = -1;
-		}
-	});
-	data.pois = pois;
-	$.each(data.pois, function(indexInArray, poi){
-		if (poi.id_poi >= 300000)
-		{
-			data.pois[indexInArray].id_poi = -1;
-		}
-	});
-	
-	return data;
 }
 
 function NormalDisplayBlockZoom()
@@ -274,6 +240,7 @@ var currentForbiddenNormalLongTouch = null;
 var currentAreaNormalLongTouch = null;
 var currentDockNormalLongTouch = null;
 var currentPoiNormalLongTouch = null;
+var currentAugmentedPoseNormalLongTouch = null;
 
 $(document).ready(function(e) {
 	
@@ -600,6 +567,60 @@ $(document).ready(function(e) {
 		}
 		NormalDisplayBlockZoom();
 	});
+	
+	$(document).on('touchend', '#install_normal_edit_map_svg .augmented_pose_elem', function(e) {
+		$('#install_normal_edit_map_zoom_popup').hide();
+		if (timerNormalLongPress != null)
+		{
+			clearTimeout(timerNormalLongPress);
+			timerNormalLongPress = null;
+		}
+		if (timerNormalVeryLongPress != null)
+		{
+			clearTimeout(timerNormalVeryLongPress);
+			timerNormalVeryLongPress = null;
+		}
+	});
+	
+	$(document).on('touchstart', '#install_normal_edit_map_svg .augmented_pose_elem', function(e) {
+		if (timerNormalLongPress != null)
+		{
+			clearTimeout(timerNormalLongPress);
+			timerNormalLongPress = null;
+		}
+		if (timerNormalVeryLongPress != null)
+		{
+			clearTimeout(timerNormalVeryLongPress);
+			timerNormalVeryLongPress = null;
+		}
+		
+		if (normalCanChangeMenu)
+		{
+			timerNormalLongPress = setTimeout(NormalLongPressAugmentedPose, 500);
+			//timerNormalVeryLongPress = setTimeout(NormalLongVeryPressSVG, 1500);
+			eventTouchStart = e;
+			currentAugmentedPoseNormalLongTouch = $(this);
+		}
+		NormalDisplayBlockZoom();
+		
+		NormalHideMenus();
+		
+	});
+	
+	$(document).on('touchmove', '#install_normal_edit_map_svg .augmented_pose_elem', function(e) {
+    	NormalHideMenus();
+		if (timerNormalLongPress != null)
+		{
+			clearTimeout(timerNormalLongPress);
+			timerNormalLongPress = null;
+		}
+		if (timerNormalVeryLongPress != null)
+		{
+			clearTimeout(timerNormalVeryLongPress);
+			timerNormalVeryLongPress = null;
+		}
+		NormalDisplayBlockZoom();
+	});
 });
 
 function NormalHideMenus()
@@ -610,6 +631,7 @@ function NormalHideMenus()
 	$('#install_normal_edit_map_menu_area li').hide();
 	$('#install_normal_edit_map_menu_dock li').hide();
 	$('#install_normal_edit_map_menu_poi li').hide();
+	$('#install_normal_edit_map_menu_augmented_pose li').hide();
 	$('.popupHelp').hide();
 }
 
@@ -689,6 +711,11 @@ function NormalLongPressPoi()
 {
 	timerNormalLongPress = null;
 	NormalDisplayMenu('install_normal_edit_map_menu_poi');
+}
+function NormalLongPressAugmentedPose()
+{
+	timerNormalLongPress = null;
+	NormalDisplayMenu('install_normal_edit_map_menu_augmented_pose');
 }
 
 function NormalLongPressPointDeletable()

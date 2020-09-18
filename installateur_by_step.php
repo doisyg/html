@@ -388,6 +388,7 @@
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddForbiddenArea"><i class="fa fa-ban"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddArea"><i class="fa fa-square"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddPOI"><i class="fa fa-map-marker"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddAugmentedPose"><i class="fa fa-map-marker" style="color:#F00;"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddDock"><i class="fa fa-flash"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg bGomme"><i class="fa fa-eraser"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg bMoveTo"><i class="fa fa-crosshairs"></i></a></li>
@@ -423,6 +424,13 @@
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg bConfigPoi"><i class="fa fa-gears"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg bDeletePoi"><i class="fa fa-trash"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg" data-toggle="modal" data-target="#install_by_step_edit_map_modalDoSaveBeforeTestPoi"><i class="fa fa-check"></i></a></li>
+                        </ul>
+                    </div>
+                    <div id="install_by_step_edit_map_menu_augmented_pose" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
+                    	<ul>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bConfigAugmentedPose"><i class="fa fa-gears"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bDeleteAugmentedPose"><i class="fa fa-trash"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg" data-toggle="modal" data-target="#install_by_step_edit_map_modalDoSaveBeforeTestAugmentedPose"><i class="fa fa-check"></i></a></li>
                         </ul>
                     </div>
                     
@@ -593,6 +601,58 @@
                                        
                                         <a href="#" class="btn btn-primary bInitModalTest" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
                                         <a href="#" class="btn btn-warning bInitModalTest bTestPoi" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Go');?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="install_by_step_edit_map_modalDoSaveBeforeTestAugmentedPose" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+                                        <div class="h100vh_160" style="overflow:auto; text-align:center">
+                                            
+                                            <div class="row" style="margin-top:30px;">
+                                                <div class="col-xs-8">
+                                                    <span style="font-size:16px; color:#F90; padding-bottom:20px;"><?php echo __('Remember to save the map before launching a test');?></span>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <a href="#" class="btn btn-primary bSaveMapTestAugmentedPose" style="margin-top:7px;"><?php echo __('Save map');?> <i class="fa"></i></a>
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                            <div class="row" style="margin-top:30px;">
+                                                <div class="col-xs-8">
+                                                    <span style="font-size:16px; padding-bottom:20px;"><?php echo __('You can change the position of the robot before the test');?></span>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <a href="#" class="btn btn-primary bMoveRobotTest" style="margin-top:7px;"><?php echo __('Move robot');?></a>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="teleop" style="display:none; margin-top:30px;">
+                                                <a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
+                                            
+                                                <div class="ifUndocked">
+                                                    
+                                                    <div style="text-align:center; width:100%; z-index:2000; margin-top:50px;">
+                                                        <div class="joystickDiv" draggable="false" style="margin:auto;">
+                                                            <div class="fond"></div>
+                                                            <div class="curseur"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        
+                                        <div style="clear:both;"></div>
+                                       
+                                        <a href="#" class="btn btn-primary bInitModalTest" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+                                        <a href="#" class="btn btn-warning bInitModalTest bTestAugmentedPose" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Go');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -1021,17 +1081,178 @@
                         </div>
                     </div>
                     
+                    <div class="modal fade modalAddAugmentedPose" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+                                        <div class="h100vh_160" style="overflow:auto; text-align:center">
+                                        
+                                        	<a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
+                                        
+                                        	<div class="ifUndocked">
+                                                
+                                                <div style="height:200px; position:relative;">
+                                                
+                                                    <img id="install_by_step_edit_map_modalAddAugmentedPose_robot" src="assets/images/robot-dessus.png" width="50" style="position:absolute; top:130px; margin-left:-25px; z-index:300;" />
+                                                    
+                                                    <img id="install_by_step_edit_map_modalAddAugmentedPose_augmented_pose0" class="augmented_pose" src="assets/images/reflector.png" width="25" />
+                                                    <img id="install_by_step_edit_map_modalAddAugmentedPose_augmented_pose1" class="augmented_pose" src="assets/images/reflector.png" width="25" />
+                                                    <img id="install_by_step_edit_map_modalAddAugmentedPose_augmented_pose2" class="augmented_pose" src="assets/images/reflector.png" width="25" />
+                                                    <img id="install_by_step_edit_map_modalAddAugmentedPose_augmented_pose3" class="augmented_pose" src="assets/images/reflector.png" width="25" />
+                                                    <img id="install_by_step_edit_map_modalAddAugmentedPose_augmented_pose4" class="augmented_pose" src="assets/images/reflector.png" width="25" />
+                                                    <img id="install_by_step_edit_map_modalAddAugmentedPose_augmented_pose5" class="augmented_pose" src="assets/images/reflector.png" width="25" />
+                                                    
+                                                </div>
+                                            
+                                            	<div style="color:#CC0000;">
+                                                    <p class="texts_add_augmented_pose text_prepare_approch"><?php echo stripslashes(__('Move the robot at the approach position desired and click on the "Scan" button'));?></p>
+                                                    <p class="texts_add_augmented_pose text_set_approch"><?php echo stripslashes(__('Click on the fiducial to set the approch position'));?></p>
+                                                    <p class="texts_add_augmented_pose text_prepare_final"><?php echo stripslashes(__('Move the robot at the final position desired and click on the "Scan" button'));?></p>
+                                                    <p class="texts_add_augmented_pose text_set_final"><?php echo stripslashes(__('Click on the fiducial to set the final position'));?></p>
+                                                </div>                                                
+                                                <p><a href="#" class="btn btn-primary bScanAddAugmentedPose">Scan</a></p>
+                                                
+                                                <div style="position:absolute; bottom:50px; left:0; width:100%; z-index:2000;">
+                                                    <div class="joystickDiv" draggable="false" style="margin:auto;">
+                                                        <div class="fond"></div>
+                                                        <div class="curseur"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div style="clear:both;"></div>
+                                       
+                                        <a href="#" id="install_by_step_edit_map_bModalAddAugmentedPoseSave" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
+                                        <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal fade modalAugmentedPoseOptions" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+                                        <div class="h100vh_160" style="overflow:auto; text-align:center">
+                                        
+                                        	<form>
+                                                <div class="form-group">
+                                                    <label class="col-xs-4 control-label">Name</label>
+                                                    <div class="col-xs-8">
+                                                        <input type="text" id="install_by_step_edit_map_augmented_pose_name" name="augmented_pose_name" value="" class="form-control input-sm mb-md" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-xs-4 control-label">Comment</label>
+                                                    <div class="col-xs-8">
+                                                        <textarea id="install_by_step_edit_map_augmented_pose_comment" name="augmented_pose_comment" class="form-control input-sm mb-md"></textarea>
+                                                    </div>
+                                                </div>
+                                                <fieldset>
+                                                	<legend>Undock procedure</legend>
+                                                    <div style="text-align:left;">
+                                                        <a href="#" class="bByStepUndockProcedureAugmentedPoseAddElem btn btn-circle btn-default"><i class="fa fa-plus"></i></a>
+                                                        <ul class="list_undock_procedure_augmented_pose list_elem">
+                                                        </ul>
+                                                     </div>
+                                                </fieldset>
+                                            </form>
+                                            
+                                        </div>
+                                        
+                                        <div style="clear:both;"></div>
+                                       
+                                        <a href="#" id="install_by_step_edit_map_bAugmentedPoseSaveConfig" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
+                                        <a href="#" id="install_by_step_edit_map_bAugmentedPoseCancelConfig" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal fade modalAugmentedPoseElemOptions" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+                                        <div class="h100vh_160" style="overflow:auto; text-align:center">
+                                        
+                                        	<form>
+                                                <div class="form-group">
+                                                    <label class="col-xs-12 control-label">Action</label>
+                                                    <div class="col-xs-6">
+                                                        <input type="radio" id="install_by_step_edit_map_up_augmented_pose_elem_action_move" name="up_augmented_pose_elem_action" value="move" class="form-control" />
+                                                    	<label for="up_augmented_pose_elem_action_move" class="control-label">Move</label>    
+                                                    </div>
+                                                    <div class="col-xs-6">
+                                                        <input type="radio" id="install_by_step_edit_map_up_augmented_pose_elem_action_rotate" name="up_augmented_pose_elem_action" value="rotate" class="form-control" />
+                                                    	<label for="up_augmented_pose_elem_action_rotate" class="control-label">Rotate</label>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="up_augmented_pose_elem_action_move">
+                                                    <div class="form-group">
+                                                        <label class="col-xs-12 control-label">Direction</label>
+                                                        <div class="col-xs-6">
+                                                            <input type="radio" id="install_by_step_edit_map_up_augmented_pose_elem_direction_front" name="up_augmented_pose_elem_direction" value="front" class="form-control" />
+                                                            <label for="up_augmented_pose_elem_direction_front" class="control-label">Front</label>    
+                                                        </div>
+                                                        <div class="col-xs-6">
+                                                            <input type="radio" id="install_by_step_edit_map_up_augmented_pose_elem_direction_back" name="up_augmented_pose_elem_direction" value="back" class="form-control" />
+                                                            <label for="up_augmented_pose_elem_direction_back" class="control-label">Back</label>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="form-group">
+                                                        <label class="col-xs-12 control-label">Distance</label>
+                                                        <div class="col-md-6 input-group mb-md">
+                                                            <input type="text" value="0" class="form-control" name="up_augmented_pose_elem_move_distance" id="install_by_step_edit_map_up_augmented_pose_elem_move_distance" />
+                                                            <span class="input-group-addon">m</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                
+                                                <div class="up_augmented_pose_elem_action_rotate">
+                                                    <div class="form-group">
+                                                        <label class="col-xs-12 control-label">Angle</label>
+                                                        <div class="col-md-6 input-group mb-md">
+                                                            <input type="text" value="0" class="form-control" name="up_augmented_pose_elem_rotate_angle" id="install_by_step_edit_map_up_augmented_pose_elem_rotate_angle" />
+                                                            <span class="input-group-addon ">°</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                            </form>
+                                            
+                                        </div>
+                                        
+                                        <div style="clear:both;"></div>
+                                       
+                                        <a href="#" class="btn btn-primary bAugmentedPoseElemSave" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
+                                        <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div class="popupHelp">
                     	<h2>Help</h2>
                     	<ul style="color:#000;">
                         	<li><i class="fa fa-ban"></i><span class="description">Add forbidden area</span></li>
                         	<li><i class="fa fa-square"></i><span class="description">Add custom area</span></li>
                         	<li><i class="fa fa-map-marker"></i><span class="description">Add POI</span></li>
+                        	<li><i class="fa fa-map-marker" style="color:#FF0000;"></i><span class="description">Add Augmented pose</span></li>
                         	<li><i class="fa fa-flash"></i><span class="description">Add docking station</span></li>
                         	<li><i class="fa fa-eraser"></i><span class="description">Erase pixel</span></li>
                         	<li><i class="fa fa-crosshairs"></i><span class="description">Move the robot to this point</span></li>
                         	<li><i class="fa fa-gamepad"></i><span class="description">Teleop the robot</span></li>
-                        	<li><i class="fa fa-check"></i><span class="description">Test go to POI or dock</span></li>
+                        	<li><i class="fa fa-check"></i><span class="description">Test go to POI, dock or augmented pose</span></li>
                         	<li><span style="display:inline-block; margin-right:25px; width:15px; height:15px; border-radius:100%; background-color:#009900;"></span><span class="description">Robot position</span></li>
                         </ul>
                         

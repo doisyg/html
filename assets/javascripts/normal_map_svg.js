@@ -517,6 +517,114 @@ function NormalTracePoi(indexPoi)
 		AddClass('#install_normal_edit_map_svg .poi_elem_'+poi.id_poi, 'active');
 }
 
+function NormalTraceCurrentAugmentedPose(pose)
+{
+	$('#install_normal_edit_map_svg .augmented_pose_elem_current').remove();
+	
+	x = pose.final_pose_x * 100 / ros_resolution;
+	y = ros_hauteur - (pose.final_pose_y * 100 / ros_resolution);
+	angle = 0 - pose.final_pose_t * 180 / Math.PI;
+	
+	rayonRobot = (26 / ros_resolution);
+	rayonRobotSecure = ((26+15) / ros_resolution);
+	
+	path = makeSVGElement('circle', { cx: x,
+									cy: y,
+								   r: rayonRobotSecure,
+								   'class': 'augmented_pose_elem augmented_pose_elem_current',
+								   });
+	path.style.fill = '#AAAAAA';
+	svgNormal.appendChild(path);
+	
+	path = makeSVGElement('circle', { cx: x,
+									cy: y,
+								   r: rayonRobot,
+								   'class': 'augmented_pose_elem augmented_pose_elem_current',
+								   });
+	path.style.fill = '#589FB1';
+	svgNormal.appendChild(path);
+	
+	path = makeSVGElement('polyline', { 'points': (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2),
+									'stroke':'#FFFFFF',
+									'stroke-width':1,
+									'fill':'none',
+									'stroke-linejoin':'round',
+									'stroke-linecap':'round',
+								   'class': 'augmented_pose_elem augmented_pose_elem_current',
+								   'transform':'rotate('+angle+', '+x+', '+y+')',
+								   });
+	svgNormal.appendChild(path);
+}
+function NormalTraceAugmentedPose(indexAugmentedPose)
+{
+	augmented_pose = augmented_poses[indexAugmentedPose];
+	if (augmented_pose.deleted != undefined && augmented_pose.deleted) { $('#install_normal_edit_map_svg .augmented_pose_elem_'+augmented_pose.id_augmented_pose).remove(); return; }
+	
+	is_active = false;
+	if ($('#install_normal_edit_map_svg .augmented_pose_elem_'+augmented_pose.id_augmented_pose).length > 0)
+	{
+		t = $('#install_normal_edit_map_svg .augmented_pose_elem_'+augmented_pose.id_augmented_pose);
+		if (t.attr('class') != t.attr('class').replace('active', ''))
+		{
+			is_active = true;
+		}
+	}
+	
+	if (downOnMovable && movableDown.data('element_type') == 'augmented_pose')
+	{
+		index_point_movable = movableDown.data('index_point');
+	}
+	else
+		$('#install_normal_edit_map_svg .augmented_pose_elem_'+augmented_pose.id_augmented_pose).remove();
+	
+	x = augmented_pose.final_pose_x * 100 / ros_resolution;
+	y = ros_hauteur - (augmented_pose.final_pose_y * 100 / ros_resolution);	
+	angle = 0 - augmented_pose.final_pose_t * 180 / Math.PI;
+	
+	rayonRobot = (26 / ros_resolution);
+	rayonRobotSecure = ((26+15) / ros_resolution);
+	
+	path = makeSVGElement('circle', { cx: x,
+									cy: y,
+								   r: rayonRobotSecure,
+								   'class': 'augmented_pose_elem augmented_pose_elem_secure augmented_pose_elem_'+augmented_pose.id_augmented_pose,
+								   'id': 'install_normal_edit_map_augmented_pose_secure_'+augmented_pose.id_augmented_pose,
+								   'data-id_augmented_pose': augmented_pose.id_augmented_pose,
+								   'data-element_type': 'augmented_pose',
+								   'data-element': 'augmented_pose'
+								   });
+	svgNormal.appendChild(path);
+	
+	path = makeSVGElement('circle', { cx: x,
+									cy: y,
+								   r: rayonRobot,
+								   'class': 'augmented_pose_elem augmented_pose_elem_fond augmented_pose_elem_'+augmented_pose.id_augmented_pose,
+								   'id': 'install_normal_edit_map_augmented_pose_robot_'+augmented_pose.id_augmented_pose,
+								   'data-id_augmented_pose': augmented_pose.id_augmented_pose,
+								   'data-element_type': 'augmented_pose',
+								   'data-element': 'augmented_pose'
+								   });
+	svgNormal.appendChild(path);
+	
+	path = makeSVGElement('polyline', { 'points': (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2),
+									'stroke':'#FFFFFF',
+									'stroke-width':1,
+									'fill':'none',
+									'stroke-linejoin':'round',
+									'stroke-linecap':'round',
+								   'class': 'augmented_pose_elem augmented_pose_elem_'+augmented_pose.id_augmented_pose,
+								   'transform':'rotate('+angle+', '+x+', '+y+')',
+								   'id': 'install_normal_edit_map_augmented_pose_sens_'+augmented_pose.id_augmented_pose,
+								   'data-id_augmented_pose': augmented_pose.id_augmented_pose,
+								   'data-element_type': 'augmented_pose',
+								   'data-element': 'augmented_pose'
+								   });
+	svgNormal.appendChild(path);
+	
+	if (is_active)
+		AddClass('#install_normal_edit_map_svg .augmented_pose_elem_'+augmented_pose.id_augmented_pose, 'active');
+}
+
 var robot_traced_normal = false;
 function NormalTraceRobot(robot_x, robot_y, robot_theta)
 {
@@ -586,5 +694,9 @@ function NormalResizeSVG()
 	$('#install_normal_edit_map_svg .poi_elem').remove();
 	$.each(pois, function( index, poi ) {
 		NormalTracePoi(index);
+	});
+	$('#install_normal_edit_map_svg .augmented_pose_elem').remove();
+	$.each(augmented_poses, function( index, augmented_pose ) {
+		NormalTraceAugmentedPose(index);
 	});
 }
