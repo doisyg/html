@@ -473,59 +473,78 @@ $(document).ready(function(e) {
 		}
 		else
 		{
-			if (create_new_site)
-			{
-				newSite = { "id_site":-1, "comment":"", name:$('#pages_install_by_step .i_site_name').val() };
-				wycaApi.SetSite(newSite, function(data){
-					if (data.A != wycaApi.AnswerCode.NO_ERROR) 
-						alert_wyca('Error navigation stop ; ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M);
-					else
-					{
-						wycaApi.SetSiteAsCurrent(data.D, function(data) {
-							if (data.A != wycaApi.AnswerCode.NO_ERROR) 
-								alert_wyca('Error navigation stop ; ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M);
-							else
-							{
-								$.ajax({
-									type: "POST",
-									url: 'ajax/install_by_step_site.php',
-									data: {
-									},
-									dataType: 'json',
-									success: function(data) {
-									},
-									error: function(e) {
-										alert_wyca('Error step site ; ' + e.responseText);
+			let site_names = Array();
+			// AFFICHER LOADING GIF
+			wycaApi.GetSitesList(function(data){
+				// HIDE LOADING GIF
+				if (data.A != wycaApi.AnswerCode.NO_ERROR){
+					alert_wyca('Error in scanning site\'s names ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M)
+				}else{
+					data.D.forEach(function(item){
+						site_names.push(item.name);
+					});
+					if(!site_names.includes($('#pages_install_by_step .i_site_name').val())){
+						if (create_new_site)
+						{
+							
+								newSite = { "id_site":-1, "comment":"", name:$('#pages_install_by_step .i_site_name').val() };
+								wycaApi.SetSite(newSite, function(data){
+									if (data.A != wycaApi.AnswerCode.NO_ERROR) 
+										alert_wyca('Error navigation stop ; ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M);
+									else
+									{
+										wycaApi.SetSiteAsCurrent(data.D, function(data) {
+											if (data.A != wycaApi.AnswerCode.NO_ERROR) 
+												alert_wyca('Error navigation stop ; ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M);
+											else
+											{
+												$.ajax({
+													type: "POST",
+													url: 'ajax/install_by_step_site.php',
+													data: {
+													},
+													dataType: 'json',
+													success: function(data) {
+													},
+													error: function(e) {
+														alert_wyca('Error step site ; ' + e.responseText);
+													}
+												});
+												$('#pages_install_by_step a.install_by_step_site_next').click();
+											}
+										});
 									}
 								});
-								$('#pages_install_by_step a.install_by_step_site_next').click();
-							}
-						});
-					}
-				});
-			}
-			else
-			{
-				wycaApi.GetCurrentSite(function(data) {
-					data.D.name = $('#pages_install_by_step .i_site_name').val();
-					wycaApi.SetSite(data.D, function(data){
-						$.ajax({
-							type: "POST",
-							url: 'ajax/install_by_step_site.php',
-							data: {
-							},
-							dataType: 'json',
-							success: function(data) {
-							},
-							error: function(e) {
-								alert_wyca('Error step site ; ' + e.responseText);
-							}
-						});
-						$('#pages_install_by_step a.install_by_step_site_next').click();
-					});
-				});
-			}
-		}
+							
+						}
+						else
+						{
+							wycaApi.GetCurrentSite(function(data) {
+								data.D.name = $('#pages_install_by_step .i_site_name').val();
+								wycaApi.SetSite(data.D, function(data){
+									$.ajax({
+										type: "POST",
+										url: 'ajax/install_by_step_site.php',
+										data: {
+										},
+										dataType: 'json',
+										success: function(data) {
+										},
+										error: function(e) {
+											alert_wyca('Error step site ; ' + e.responseText);
+										}
+									});
+									$('#pages_install_by_step a.install_by_step_site_next').click();
+								});
+							});
+						}
+					}else{
+						alert_wyca('Name already used please change');
+					}	
+				}
+			})
+			
+		};
 	});
 	
 	
@@ -1364,7 +1383,11 @@ function StartAnimCheckComposantInstall()
 		}
 		else
 		{
-			$('#install_by_step_check .install_by_step_check_next').show();
+			//$('#install_by_step_check .install_by_step_check_next').show();
+			$('.install_by_step_check_next').removeClass('disabled');
+			$('.install_by_step_check_next').text('Next');
+			
+		
 		}
 	}	
 }
