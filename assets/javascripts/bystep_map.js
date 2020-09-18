@@ -291,7 +291,7 @@ var currentForbiddenByStepLongTouch = null;
 var currentAreaByStepLongTouch = null;
 var currentDockByStepLongTouch = null;
 var currentPoiByStepLongTouch = null;
-var currentAdvancedPoseByStepLongTouch = null;
+var currentAugmentedPoseByStepLongTouch = null;
 
 $(document).ready(function(e) {
 	$('#install_by_step_edit_map_svg').on('touchend', function(e) { 

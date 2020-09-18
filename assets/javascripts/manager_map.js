@@ -438,13 +438,6 @@ function ManagerLongPressDock()
 function ManagerLongPressPoi()
 {
 	timerManagerLongPress = null;
-	
-	currentPoiIndex = GetPoiIndexFromID(currentPoiManagerLongTouch.data('id_poi'));
-	if (pois[currentPoiIndex].advanced)
-		$('#manager_edit_map_menu_poi .bDeletePoi').addClass('disabled');
-	else
-		$('#manager_edit_map_menu_poi .bDeletePoi').removeClass('disabled');
-	
 	ManagerDisplayMenu('manager_edit_map_menu_poi');
 }
 

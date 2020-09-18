@@ -719,7 +719,7 @@ $(document).ready(function() {
 		
 		nextIdPoi++;
 			
-		poi_temp_add = {'id_poi':nextIdPoi, 'id_map':id_map, 'id_fiducial':-1, 'fiducial_pose_x':-1, 'fiducial_pose_y':-1, 'fiducial_pose_t':-1, 'final_pose_x':lastRobotPose.X, 'final_pose_y':lastRobotPose.Y, 'final_pose_t':lastRobotPose.T, 'approch_pose_x':-1, 'approch_pose_y':-1, 'approch_pose_t':-1, 'name':'POI', 'comment':'', 'color':'', 'advanced':false, 'icon':'', 'active':true};
+		poi_temp_add = {'id_poi':nextIdPoi, 'id_map':id_map, 'id_fiducial':-1, 'fiducial_pose_x':-1, 'fiducial_pose_y':-1, 'fiducial_pose_t':-1, 'final_pose_x':lastRobotPose.X, 'final_pose_y':lastRobotPose.Y, 'final_pose_t':lastRobotPose.T, 'approch_pose_x':-1, 'approch_pose_y':-1, 'approch_pose_t':-1, 'name':'POI', 'comment':'', 'color':'', 'icon':'', 'active':true};
 		
 		ManagerAddHistorique({'action':'add_poi', 'data':poi_temp_add});
 		pois.push(poi_temp_add);
@@ -755,7 +755,7 @@ $(document).ready(function() {
 			ManagerSaveElementNeeded(false);
 			
 			nextIdPoi++;
-			p = {'id_poi':nextIdPoi, 'id_map':id_map, 'id_fiducial':-1, 'final_pose_x':currentPoiPose.final_pose_x, 'final_pose_y':currentPoiPose.final_pose_y, 'final_pose_t':currentPoiPose.final_pose_t, 'approch_pose_x':currentPoiPose.approch_pose_x, 'approch_pose_y':currentPoiPose.approch_pose_y, 'approch_pose_t':currentPoiPose.approch_pose_t, 'fiducial_pose_x':currentPoiPose.fiducial_pose_x, 'fiducial_pose_y':currentPoiPose.fiducial_pose_y, 'fiducial_pose_t':currentPoiPose.fiducial_pose_t, 'name':$('#manager_edit_map_poi_name').val(), 'comment':'', 'icon':'', 'color':'', 'advanced':true, 'icon':'', 'active':true};
+			p = {'id_poi':nextIdPoi, 'id_map':id_map, 'id_fiducial':-1, 'final_pose_x':currentPoiPose.final_pose_x, 'final_pose_y':currentPoiPose.final_pose_y, 'final_pose_t':currentPoiPose.final_pose_t, 'approch_pose_x':currentPoiPose.approch_pose_x, 'approch_pose_y':currentPoiPose.approch_pose_y, 'approch_pose_t':currentPoiPose.approch_pose_t, 'fiducial_pose_x':currentPoiPose.fiducial_pose_x, 'fiducial_pose_y':currentPoiPose.fiducial_pose_y, 'fiducial_pose_t':currentPoiPose.fiducial_pose_t, 'name':$('#manager_edit_map_poi_name').val(), 'comment':'', 'icon':'', 'color':'', 'icon':'', 'active':true};
 			ManagerAddHistorique({'action':'add_poi', 'data':p});
 			
 			pois.push(p);
@@ -922,17 +922,14 @@ function ManagerDeletePoi(indexInArray)
 {
 	if ($('.cancel:visible').length > 0) $('.cancel:visible').click();
 	
-	if (!pois[indexInArray].advanced)
-	{
-		pois[indexInArray].deleted = true;
-		
-		ManagerAddHistorique({'action':'delete_poi', 'data':indexInArray});
-		
-		data = pois[indexInArray];
-		$('#manager_edit_map_svg .poi_elem_'+data.id_poi).remove();
-		
-		RemoveClass('#manager_edit_map_svg .active', 'active');
-	}
+	pois[indexInArray].deleted = true;
+	
+	ManagerAddHistorique({'action':'delete_poi', 'data':indexInArray});
+	
+	data = pois[indexInArray];
+	$('#manager_edit_map_svg .poi_elem_'+data.id_poi).remove();
+	
+	RemoveClass('#manager_edit_map_svg .active', 'active');
 	
 	managerCurrentAction = '';
 	currentStep = '';

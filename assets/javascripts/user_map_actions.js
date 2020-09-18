@@ -716,17 +716,14 @@ function UserDeletePoi(indexInArray)
 {
 	if ($('.cancel:visible').length > 0) $('.cancel:visible').click();
 	
-	if (!pois[indexInArray].advanced)
-	{
-		pois[indexInArray].deleted = true;
-		
-		UserAddHistorique({'action':'delete_poi', 'data':indexInArray});
-		
-		data = pois[indexInArray];
-		$('#user_edit_map_svg .poi_elem_'+data.id_poi).remove();
-		
-		RemoveClass('#user_edit_map_svg .active', 'active');
-	}
+	pois[indexInArray].deleted = true;
+	
+	UserAddHistorique({'action':'delete_poi', 'data':indexInArray});
+	
+	data = pois[indexInArray];
+	$('#user_edit_map_svg .poi_elem_'+data.id_poi).remove();
+	
+	RemoveClass('#user_edit_map_svg .active', 'active');
 	
 	userCurrentAction = '';
 	currentStep = '';

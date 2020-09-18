@@ -142,5 +142,6 @@ $_LANG['a6122a65eaa676f700ae68d393054a37'] = 'Start';
 $_LANG['11a755d598c0c417f9a36758c3da7481'] = 'Stop';
 $_LANG['2807031730d75e38fb2b3579711081cb'] = 'Demo mode Start / Stop';
 $_LANG['5050505df1a51030bd67f5406dd477d3'] = 'Demo mode configuration';
+$_LANG['bbbfad552182f24e1fe7d4764b0a999a'] = 'Add POI';
 
 ?>

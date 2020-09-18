@@ -931,27 +931,10 @@
                                         	<a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
                                         
                                         	<div class="ifUndocked">
-                                                
-                                                <div style="height:200px; position:relative;">
-                                                
-                                                    <img id="install_by_step_edit_map_modalAddPoi_robot" src="assets/images/robot-dessus.png" width="50" style="position:absolute; top:130px; margin-left:-25px; z-index:300;" />
-                                                    
-                                                    <img id="install_by_step_edit_map_modalAddPoi_poi0" class="poi" src="assets/images/reflector.png" width="25" />
-                                                    <img id="install_by_step_edit_map_modalAddPoi_poi1" class="poi" src="assets/images/reflector.png" width="25" />
-                                                    <img id="install_by_step_edit_map_modalAddPoi_poi2" class="poi" src="assets/images/reflector.png" width="25" />
-                                                    <img id="install_by_step_edit_map_modalAddPoi_poi3" class="poi" src="assets/images/reflector.png" width="25" />
-                                                    <img id="install_by_step_edit_map_modalAddPoi_poi4" class="poi" src="assets/images/reflector.png" width="25" />
-                                                    <img id="install_by_step_edit_map_modalAddPoi_poi5" class="poi" src="assets/images/reflector.png" width="25" />
-                                                    
-                                                </div>
                                             
                                             	<div style="color:#CC0000;">
-                                                    <p class="texts_add_poi text_prepare_approch"><?php echo stripslashes(__('Move the robot at the approach position desired and click on the "Scan" button'));?></p>
-                                                    <p class="texts_add_poi text_set_approch"><?php echo stripslashes(__('Click on the fiducial to set the approch position'));?></p>
-                                                    <p class="texts_add_poi text_prepare_final"><?php echo stripslashes(__('Move the robot at the final position desired and click on the "Scan" button'));?></p>
-                                                    <p class="texts_add_poi text_set_final"><?php echo stripslashes(__('Click on the fiducial to set the final position'));?></p>
+                                                    <p><?php echo stripslashes(__('Move the robot at the final position desired and click on the "Add POI" button'));?></p>
                                                 </div>                                                
-                                                <p><a href="#" class="btn btn-primary bScanAddPoi">Scan</a></p>
                                                 
                                                 <div style="position:absolute; bottom:50px; left:0; width:100%; z-index:2000;">
                                                     <div class="joystickDiv" draggable="false" style="margin:auto;">
@@ -959,13 +942,14 @@
                                                         <div class="curseur"></div>
                                                     </div>
                                                 </div>
+                                                
                                             </div>
                                         </div>
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" id="install_by_step_edit_map_bModalAddPoiSave" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
-                                        <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+                                        <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+                                        <a href="#" id="install_by_step_edit_map_bModalAddPoiSave" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Add POI');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -992,14 +976,6 @@
                                                         <textarea id="install_by_step_edit_map_poi_comment" name="poi_comment" class="form-control input-sm mb-md"></textarea>
                                                     </div>
                                                 </div>
-                                                <fieldset>
-                                                	<legend>Undock procedure</legend>
-                                                    <div style="text-align:left;">
-                                                        <a href="#" class="bByStepUndockProcedurePoiAddElem btn btn-circle btn-default"><i class="fa fa-plus"></i></a>
-                                                        <ul class="list_undock_procedure_poi list_elem">
-                                                        </ul>
-                                                     </div>
-                                                </fieldset>
                                             </form>
                                             
                                         </div>
@@ -1008,73 +984,6 @@
                                        
                                         <a href="#" id="install_by_step_edit_map_bPoiSaveConfig" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
                                         <a href="#" id="install_by_step_edit_map_bPoiCancelConfig" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="modal fade modalPoiElemOptions" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
-                        <div class="modal-dialog" role="dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <div class="actions mh100vh_55">
-                                        <div class="h100vh_160" style="overflow:auto; text-align:center">
-                                        
-                                        	<form>
-                                                <div class="form-group">
-                                                    <label class="col-xs-12 control-label">Action</label>
-                                                    <div class="col-xs-6">
-                                                        <input type="radio" id="install_by_step_edit_map_up_poi_elem_action_move" name="up_poi_elem_action" value="move" class="form-control" />
-                                                    	<label for="up_poi_elem_action_move" class="control-label">Move</label>    
-                                                    </div>
-                                                    <div class="col-xs-6">
-                                                        <input type="radio" id="install_by_step_edit_map_up_poi_elem_action_rotate" name="up_poi_elem_action" value="rotate" class="form-control" />
-                                                    	<label for="up_poi_elem_action_rotate" class="control-label">Rotate</label>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="up_poi_elem_action_move">
-                                                    <div class="form-group">
-                                                        <label class="col-xs-12 control-label">Direction</label>
-                                                        <div class="col-xs-6">
-                                                            <input type="radio" id="install_by_step_edit_map_up_poi_elem_direction_front" name="up_poi_elem_direction" value="front" class="form-control" />
-                                                            <label for="up_poi_elem_direction_front" class="control-label">Front</label>    
-                                                        </div>
-                                                        <div class="col-xs-6">
-                                                            <input type="radio" id="install_by_step_edit_map_up_poi_elem_direction_back" name="up_poi_elem_direction" value="back" class="form-control" />
-                                                            <label for="up_poi_elem_direction_back" class="control-label">Back</label>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <div class="form-group">
-                                                        <label class="col-xs-12 control-label">Distance</label>
-                                                        <div class="col-md-6 input-group mb-md">
-                                                            <input type="text" value="0" class="form-control" name="up_poi_elem_move_distance" id="install_by_step_edit_map_up_poi_elem_move_distance" />
-                                                            <span class="input-group-addon">m</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                                
-                                                <div class="up_poi_elem_action_rotate">
-                                                    <div class="form-group">
-                                                        <label class="col-xs-12 control-label">Angle</label>
-                                                        <div class="col-md-6 input-group mb-md">
-                                                            <input type="text" value="0" class="form-control" name="up_poi_elem_rotate_angle" id="install_by_step_edit_map_up_poi_elem_rotate_angle" />
-                                                            <span class="input-group-addon ">°</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                            </form>
-                                            
-                                        </div>
-                                        
-                                        <div style="clear:both;"></div>
-                                       
-                                        <a href="#" class="btn btn-primary bPoiElemSave" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
-                                        <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
                                     </div>
                                 </div>
                             </div>

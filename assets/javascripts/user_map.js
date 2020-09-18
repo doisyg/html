@@ -445,10 +445,7 @@ function UserLongPressPoi()
 	timerUserLongPress = null;
 	
 	currentPoiIndex = GetPoiIndexFromID(currentPoiUserLongTouch.data('id_poi'));
-	if (pois[currentPoiIndex].advanced)
-		$('#user_edit_map_menu_poi .bDeletePoi').addClass('disabled');
-	else
-		$('#user_edit_map_menu_poi .bDeletePoi').removeClass('disabled');
+	$('#user_edit_map_menu_poi .bDeletePoi').addClass('disabled');
 	
 	UserDisplayMenu('user_edit_map_menu_poi');
 }
