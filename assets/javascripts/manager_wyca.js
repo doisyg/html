@@ -147,7 +147,7 @@ $(document).ready(function(e) {
 		id_fiducial_test = docks[i].id_fiducial;
 		
 		data = GetDataMapToSave();
-		gotoTest = false;
+		gotoTest = false;f
 		
 		wycaApi.SetCurrentMapData(data, function(data){
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)

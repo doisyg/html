@@ -389,6 +389,60 @@ $(document).ready(function() {
 		});
     });
 	
+	
+	$('#user_edit_map .bTestAugmentedPose').click(function(e) {
+        e.preventDefault();
+		UserHideMenus();
+		
+		wycaApi.on('onGoToAugmentedPoseResult', function (data){
+			$('#user_edit_map_bStop').hide();
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$('#user_edit_map .modalFinTest section.panel-success').show();
+				$('#user_edit_map .modalFinTest section.panel-danger').hide();
+			}
+			else
+			{
+				$('#user_edit_map .modalFinTest section.panel-success').hide();
+				$('#user_edit_map .modalFinTest section.panel-danger').show();
+				
+				if (data.M != '')
+					$('#user_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+				else
+					$('#user_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
+			}
+			
+			// On rebranche l'ancienne fonction
+			wycaApi.on('onGoToAugmentedPoseResult', onGoToAugmentedPoseResult);
+		
+			$('#user_edit_map .modalFinTest').modal('show');
+		});
+		
+		wycaApi.GoToAugmentedPose(currentAugmentedPoseUserLongTouch.data('id_augmented_pose'), function (data){
+			
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$('#user_edit_map_bStop').show();
+			}
+			else
+			{
+				$('#user_edit_map .modalFinTest section.panel-success').hide();
+				$('#user_edit_map .modalFinTest section.panel-danger').show();
+				
+				if (data.M != '')
+					$('#user_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+				else
+					$('#user_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
+			
+				// On rebranche l'ancienne fonction
+				wycaApi.on('onGoToAugmentedPoseResult', onGoToAugmentedPoseResult);
+				
+				$('#user_edit_map .modalFinTest').modal('show');
+			}
+		});
+    });
+	
+	
 	/**************************/
 	/*        ZOOM            */
 	/**************************/
@@ -522,6 +576,12 @@ $(document).ready(function() {
 		e.preventDefault();
 		
 		$('#user_edit_map_modalDoSaveBeforeTestPoi').modal('show');
+	});
+	
+	$(document).on('click', '#user_edit_map_svg .augmented_pose_elem', function(e) {
+		e.preventDefault();
+		
+		$('#user_edit_map_modalDoSaveBeforeTestAugmentedPose').modal('show');
 	});
 	
 	/**************************/

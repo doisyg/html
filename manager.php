@@ -68,6 +68,11 @@
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg" data-toggle="modal" data-target="#manager_edit_map_modalDoSaveBeforeTestPoi"><i class="fa fa-check"></i></a></li>
                         </ul>
                     </div>
+                    <div id="manager_edit_map_menu_augmented_pose" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
+                    	<ul>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg" data-toggle="modal" data-target="#manager_edit_map_modalDoSaveBeforeTestAugmentedPose"><i class="fa fa-check"></i></a></li>
+                        </ul>
+                    </div>
                     
                     <div id="manager_edit_map_modalTeleop" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
                         <div class="modal-dialog" role="dialog">
@@ -238,6 +243,48 @@
                                        
                                         <a href="#" class="btn btn-primary bInitModalTest" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
                                         <a href="#" class="btn btn-warning bInitModalTest bTestPoi" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Continue');?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="manager_edit_map_modalDoSaveBeforeTestAugmentedPose" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+                                        <div class="h100vh_160" style="overflow:auto; text-align:center">
+                                            
+                                            <div class="row" style="margin-top:30px;">
+                                                <div class="col-xs-8">
+                                                    <span style="font-size:16px; padding-bottom:20px;"><?php echo __('You can change the position of the robot before the test');?></span>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <a href="#" class="btn btn-primary bMoveRobotTest" style="margin-top:7px;"><?php echo __('Move robot');?></a>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="teleop" style="display:none; margin-top:30px;">
+                                                <a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
+                                            
+                                                <div class="ifUndocked">
+                                                    
+                                                    <div style="text-align:center; width:100%; z-index:2000; margin-top:50px;">
+                                                        <div class="joystickDiv" draggable="false" style="margin:auto;">
+                                                            <div class="fond"></div>
+                                                            <div class="curseur"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        
+                                        <div style="clear:both;"></div>
+                                       
+                                        <a href="#" class="btn btn-primary bInitModalTest" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+                                        <a href="#" class="btn btn-warning bInitModalTest bTestAugmentedPose" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Continue');?></a>
                                     </div>
                                 </div>
                             </div>

@@ -193,6 +193,7 @@ var currentForbiddenUserLongTouch = null;
 var currentAreaUserLongTouch = null;
 var currentDockUserLongTouch = null;
 var currentPoiUserLongTouch = null;
+var currentAugmentedPoseUserLongTouch = null;
 
 $(document).ready(function(e) {
 	$('.popupHelp').click(function(e) {
@@ -355,6 +356,58 @@ $(document).ready(function(e) {
 		}
 		UserDisplayBlockZoom();
 	});
+	
+	$(document).on('touchend', '#user_edit_map_svg .augmented_pose_elem', function(e) {
+		$('#user_edit_map_zoom_popup').hide();
+		if (timerUserLongPress != null)
+		{
+			clearTimeout(timerUserLongPress);
+			timerUserLongPress = null;
+		}
+		if (timerUserVeryLongPress != null)
+		{
+			clearTimeout(timerUserVeryLongPress);
+			timerUserVeryLongPress = null;
+		}
+	});
+	$(document).on('touchstart', '#user_edit_map_svg .augmented_pose_elem', function(e) {
+		if (timerUserLongPress != null)
+		{
+			clearTimeout(timerUserLongPress);
+			timerUserLongPress = null;
+		}
+		if (timerUserVeryLongPress != null)
+		{
+			clearTimeout(timerUserVeryLongPress);
+			timerUserVeryLongPress = null;
+		}
+		
+		if (userCanChangeMenu)
+		{
+			timerUserLongPress = setTimeout(UserLongPressAugmentedPose, 500);
+			//timerUserVeryLongPress = setTimeout(UserLongVeryPressSVG, 1500);
+			eventTouchStart = e;
+			currentAugmentedPoseUserLongTouch = $(this);
+		}
+		UserDisplayBlockZoom();
+		
+		UserHideMenus();
+		
+	});
+	$(document).on('touchmove', '#user_edit_map_svg .augmented_pose_elem', function(e) {
+    	UserHideMenus();
+		if (timerUserLongPress != null)
+		{
+			clearTimeout(timerUserLongPress);
+			timerUserLongPress = null;
+		}
+		if (timerUserVeryLongPress != null)
+		{
+			clearTimeout(timerUserVeryLongPress);
+			timerUserVeryLongPress = null;
+		}
+		UserDisplayBlockZoom();
+	});
 });
 
 function UserHideMenus()
@@ -365,6 +418,7 @@ function UserHideMenus()
 	$('#user_edit_map_menu_area li').hide();
 	$('#user_edit_map_menu_dock li').hide();
 	$('#user_edit_map_menu_poi li').hide();
+	$('#user_edit_map_menu_augmented_pose li').hide();
 	$('.popupHelp').hide();
 }
 
@@ -449,6 +503,15 @@ function UserLongPressPoi()
 	
 	UserDisplayMenu('user_edit_map_menu_poi');
 }
+function UserLongPressAugmentedPose()
+{
+	timerUserLongPress = null;
+	
+	currentAugmentedPoseIndex = GetAugmentedPoseIndexFromID(currentAugmentedPoseUserLongTouch.data('id_augmented_pose'));
+	
+	UserDisplayMenu('user_edit_map_menu_augmented_pose');
+}
+
 
 function UserLongPressPointDeletable()
 {

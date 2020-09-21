@@ -20,6 +20,8 @@ var currentDockIndex = -1;
 var saveCurrentDock = null;
 var currentPoiIndex = -1;
 var saveCurrentPoi = null;
+var currentAugmentedPoseIndex = -1;
+var saveCurrentAugmentedPose = null;
 
 var currentDockPose = {};
 var currentPoiPose = {};
@@ -427,6 +429,59 @@ $(document).ready(function() {
 		}
     });
 	
+	$('#manager_edit_map .bTestAugmentedPose').click(function(e) {
+        e.preventDefault();
+		
+		ManagerHideMenus();
+		
+		wycaApi.on('onGoToAugmentedPoseResult', function (data){
+			$('#manager_edit_map_bStop').hide();
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$('#manager_edit_map .modalFinTest section.panel-success').show();
+				$('#manager_edit_map .modalFinTest section.panel-danger').hide();
+			}
+			else
+			{
+				$('#manager_edit_map .modalFinTest section.panel-success').hide();
+				$('#manager_edit_map .modalFinTest section.panel-danger').show();
+				
+				if (data.M != '')
+					$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+				else
+					$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
+			}
+			
+			// On rebranche l'ancienne fonction
+			wycaApi.on('onGoToAugmentedPoseResult', onGoToAugmentedPoseResult);
+		
+			$('#manager_edit_map .modalFinTest').modal('show');
+		});
+		
+		wycaApi.GoToAugmentedPose(currentAugmentedPoseManagerLongTouch.data('id_augmented_pose'), function (data){
+			
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$('#manager_edit_map_bStop').show();
+			}
+			else
+			{
+				$('#manager_edit_map .modalFinTest section.panel-success').hide();
+				$('#manager_edit_map .modalFinTest section.panel-danger').show();
+				
+				if (data.M != '')
+					$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+				else
+					$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
+			
+				// On rebranche l'ancienne fonction
+				wycaApi.on('onGoToAugmentedPoseResult', onGoToAugmentedPoseResult);
+				
+				$('#manager_edit_map .modalFinTest').modal('show');
+			}
+		});
+    });
+	
 	/**************************/
 	/*        ZOOM            */
 	/**************************/
@@ -630,6 +685,44 @@ $(document).ready(function() {
 			AddClass('#manager_edit_map_svg .poi_elem_'+poi.id_poi, 'active');
 			if (poi.id_fiducial < 1) // Movable que si il n'est pas lié à un reflecteur
 				AddClass('#manager_edit_map_svg .poi_elem_'+poi.id_poi, 'movable');
+		}
+		else
+			ManagerAvertCantChange();
+	});
+	
+	$(document).on('click', '#manager_edit_map_svg .augmented_pose_elem', function(e) {
+		e.preventDefault();
+		
+		if (managerCurrentAction == 'gomme')
+		{
+		}
+		else if (managerCanChangeMenu)
+		{
+			RemoveClass('#manager_edit_map_svg .active', 'active');
+			RemoveClass('#manager_edit_map_svg .activ_select', 'activ_select'); 
+			RemoveClass('#manager_edit_map_svg .augmented_pose_elem', 'movable');
+						
+			currentSelectedItem = Array();
+			currentSelectedItem.push({'type':'augmented_pose', 'id':$(this).data('id_augmented_pose')});	
+			ManagerHideCurrentMenuNotSelect();
+			
+			$('#manager_edit_map_boutonsAugmentedPose').show();
+			
+            $('#manager_edit_map_boutonsStandard').hide();
+			
+			$('#manager_edit_map_boutonsAugmentedPose a').show();
+			
+			$('body').removeClass('no_current select');
+			$('.select').css("strokeWidth", minStokeWidth);
+			
+			managerCurrentAction = 'editAugmentedPose';	
+			currentStep = '';
+			
+			currentAugmentedPoseIndex = GetAugmentedPoseIndexFromID($(this).data('id_augmented_pose'));
+			augmented_pose = augmented_poses[currentAugmentedPoseIndex];
+			saveCurrentAugmentedPose = JSON.stringify(augmented_pose);
+			
+			AddClass('#manager_edit_map_svg .augmented_pose_elem_'+augmented_pose.id_augmented_pose, 'active');
 		}
 		else
 			ManagerAvertCantChange();

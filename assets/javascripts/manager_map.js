@@ -192,6 +192,7 @@ var currentForbiddenManagerLongTouch = null;
 var currentAreaManagerLongTouch = null;
 var currentDockManagerLongTouch = null;
 var currentPoiManagerLongTouch = null;
+var currentAugmentedPoseManagerLongTouch = null;
 
 $(document).ready(function(e) {
 	$('#manager_edit_map_svg').on('touchend', function(e) { 
@@ -350,6 +351,58 @@ $(document).ready(function(e) {
 		}
 		ManagerDisplayBlockZoom();
 	});
+	
+	$(document).on('touchend', '#manager_edit_map_svg .augmented_pose_elem', function(e) {
+		$('#manager_edit_map_zoom_popup').hide();
+		if (timerManagerLongPress != null)
+		{
+			clearTimeout(timerManagerLongPress);
+			timerManagerLongPress = null;
+		}
+		if (timerManagerVeryLongPress != null)
+		{
+			clearTimeout(timerManagerVeryLongPress);
+			timerManagerVeryLongPress = null;
+		}
+	});
+	$(document).on('touchstart', '#manager_edit_map_svg .augmented_pose_elem', function(e) {
+		if (timerManagerLongPress != null)
+		{
+			clearTimeout(timerManagerLongPress);
+			timerManagerLongPress = null;
+		}
+		if (timerManagerVeryLongPress != null)
+		{
+			clearTimeout(timerManagerVeryLongPress);
+			timerManagerVeryLongPress = null;
+		}
+		
+		if (managerCanChangeMenu)
+		{
+			timerManagerLongPress = setTimeout(ManagerLongPressAugmentedPose, 500);
+			//timerManagerVeryLongPress = setTimeout(ManagerLongVeryPressSVG, 1500);
+			eventTouchStart = e;
+			currentAugmentedPoseManagerLongTouch = $(this);
+		}
+		ManagerDisplayBlockZoom();
+		
+		ManagerHideMenus();
+		
+	});
+	$(document).on('touchmove', '#manager_edit_map_svg .augmented_pose_elem', function(e) {
+    	ManagerHideMenus();
+		if (timerManagerLongPress != null)
+		{
+			clearTimeout(timerManagerLongPress);
+			timerManagerLongPress = null;
+		}
+		if (timerManagerVeryLongPress != null)
+		{
+			clearTimeout(timerManagerVeryLongPress);
+			timerManagerVeryLongPress = null;
+		}
+		ManagerDisplayBlockZoom();
+	});
 });
 
 function ManagerHideMenus()
@@ -360,6 +413,7 @@ function ManagerHideMenus()
 	$('#manager_edit_map_menu_area li').hide();
 	$('#manager_edit_map_menu_dock li').hide();
 	$('#manager_edit_map_menu_poi li').hide();
+	$('#manager_edit_map_menu_augmented_pose li').hide();
 	$('.popupHelp').hide();
 }
 
@@ -439,6 +493,11 @@ function ManagerLongPressPoi()
 {
 	timerManagerLongPress = null;
 	ManagerDisplayMenu('manager_edit_map_menu_poi');
+}
+function ManagerLongPressAugmentedPose()
+{
+	timerManagerLongPress = null;
+	ManagerDisplayMenu('manager_edit_map_menu_augmented_pose');
 }
 
 function ManagerLongPressPointDeletable()
