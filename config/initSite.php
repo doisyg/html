@@ -17,6 +17,18 @@ if (isset($_SESSION["id_user"]) && $_SESSION["IP"] != $_SERVER["REMOTE_ADDR"] &&
 }
 
 require_once(dirname(__FILE__)."/config.php");
+
+// Check if http or https
+if ( (! empty($_SERVER['REQUEST_SCHEME']) && $_SERVER['REQUEST_SCHEME'] == 'https') ||
+     (! empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ||
+     (! empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443') ) {
+	$server_request_scheme = 'https';
+    $_CONFIG['URL'] = "https://wyca.run/";
+} else {
+	$server_request_scheme = 'http';
+    $_CONFIG['URL'] = "http://wyca.run/";
+}
+
 require_once(dirname(__FILE__)."/../lib/lib.php");
 require_once (dirname(__FILE__)."/../classes/includes.php");
 

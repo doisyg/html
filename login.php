@@ -1,4 +1,5 @@
 <?php 
+header("Access-Control-Allow-Origin: *");
 include_once('./config/initSite.php');
 ?>
 <!doctype html>
@@ -117,6 +118,7 @@ include_once('./config/initSite.php');
 </html>
 
 <script>
+
 function DisplayError(text)
 {
 	 $('.popup_error .panel-body').html(text);
@@ -126,6 +128,26 @@ function DisplayError(text)
 var ws;
 
 $(document).ready(function(e) {
+
+	<?php if ($server_request_scheme == 'http')
+	{
+		// on test si on peux faire du https
+		?>
+		$.ajax({
+			type: "GET",
+			url: 'https://wyca.run/login.php',
+			success: function(data) {
+				// HTTPS OK
+				console.log("ok");
+				location.href = 'https://wyca.run/login.php';
+			},
+			error: function(e) {
+				// No HTTPS availabme, pb certificate
+			}
+		});
+		<?php
+	}
+	?>
 	
 	$('.popup_error .panel-heading .fa-times').click(function(e) {
         e.preventDefault();
