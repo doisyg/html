@@ -126,10 +126,11 @@ function DisplayError(text)
 }
 
 var ws;
+var use_ssl = <?php echo $server_request_scheme == 'http'?'false':'true';?>;
 
 $(document).ready(function(e) {
 
-	<?php if ($server_request_scheme == 'http')
+	<?php if ($server_request_scheme == 'http') // && false) // pour test
 	{
 		// on test si on peux faire du https
 		?>
@@ -163,13 +164,13 @@ $(document).ready(function(e) {
 		}
 		else
 		{
-			var robot_host = '<?php echo (file_exists('C:\\'))?((file_exists('C:\\Users\\F'))?'10.0.0.39:9095':'192.168.0.30:9095'):'wyca.run:9095';?>';
-			//var robot_host = '<?php echo (file_exists('C:\\'))?'10.0.0.44:9095':'wyca.run:9095';?>';
+			var robot_host = '<?php echo (file_exists('C:\\'))?((file_exists('C:\\Users\\F'))?'10.0.0.39:'.($server_request_scheme == 'http'?'9094':'9095'):'192.168.0.30:'.($server_request_scheme == 'http'?'9094':'9095')):'wyca.run:'.($server_request_scheme == 'http'?'9094':'9095');?>';
+			//var robot_host = '<?php echo (file_exists('C:\\'))?'10.0.0.44:'.($server_request_scheme == 'http'?'9094':'9095'):'wyca.run:'.($server_request_scheme == 'http'?'9094':'9095');?>';
 			
 			if ("WebSocket" in window) {
-				ws = new WebSocket('wss://'+ robot_host);
+				ws = new WebSocket((use_ssl?'wss':'ws') + '://'+ robot_host);
 			} else if ("MozWebSocket" in window) {
-				ws = new MozWebSocket('wss://'+ robot_host);
+				ws = new MozWebSocket((use_ssl?'wss':'ws') + '://'+ robot_host);
 			} else {
 				throw new Error('This Browser does not support WebSockets')
 			}

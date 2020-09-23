@@ -323,7 +323,8 @@ function WycaAPI(options){
 		serveurWyca : 'https://integrator.wyca-solutions.com/',
 		on_error_webcam_try_without : true,
 		host : 'wyca.run:9095',
-		api_key:''
+		api_key:'',
+		use_ssl:true
     };
     this.options = $.extend({}, defaults, options || {});
    	
@@ -1298,9 +1299,9 @@ function WycaAPI(options){
 		if (_this.options.id_robot != 'not_robot')
 		{
 			if ("WebSocket" in window) {
-				_this.ws = new WebSocket('wss://'+_this.options.host);
+				_this.ws = new WebSocket( (use_ssl?'wss':'ws') + '://'+_this.options.host);
 			} else if ("MozWebSocket" in window) {
-				_this.ws = new MozWebSocket('wss://'+_this.options.host);
+				_this.ws = new MozWebSocket( (use_ssl?'wss':'ws') + '://'+_this.options.host);
 			} else {
 				throw new Error('This Browser does not support WebSockets')
 			}
