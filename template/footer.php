@@ -27,6 +27,8 @@
 		var textStopNavigation = "<?php echo addslashes(stripslashes(__('Stop navigation')));?>";
 		var textBuildingMap = "<?php echo addslashes(stripslashes(__('Building the map')));?>";
 		var textStartAutonomous = "<?php echo addslashes(stripslashes(__('Start autonomous navigation')));?>";
+		var textBtnCheckTest = "<?php echo addslashes(stripslashes(__('Testing')));?>";
+		var textBtnCheckNext = "<?php echo addslashes(stripslashes(__('Next')));?>";
 		</script>
 
 		<!-- Vendor -->
@@ -103,6 +105,9 @@
 			<?php }?>
 			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 12) {?>
 			GetServiceBooksByStep();
+			<?php }?>
+			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 5) {?>
+			 setTimeout(StartAnimCheckComposantInstall, 2000);
 			<?php }?>
         });
 		</script>

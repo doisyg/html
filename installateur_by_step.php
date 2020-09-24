@@ -135,7 +135,7 @@
             </div>
             <footer>
 				<a href="#" class="button_goto btn btn-default" data-goto="install_by_step_wifi" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?= __('Back')?></a>
-				<a href="#" class="button_goto btn btn-primary" data-goto="install_by_step_top" style=" left:auto; width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?= __('Next')?></a>
+				<a href="#" class="save_tops btn btn-primary" style=" left:auto; width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?= __('Next')?></a>
             </footer>
         </section>
         
@@ -153,8 +153,7 @@
                 <div style="clear:both; height:20px;"></div>
             </div>
 			<footer>
-				<a href="#" class="button_goto btn btn-default" data-goto="install_by_step_tops" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?= __('Back')?></a>
-				<a href="#" class="button_goto btn btn-primary" onClick="$('install_by_step_check_next').addClass('disabled');" data-goto="install_by_step_check" style=" left:auto; width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?= __('Next')?></a>
+				<a href="#" class="button_goto btn btn-default" data-goto="install_by_step_tops" style="width:100%; position:absolute; left:0; bottom:0px; font-size:30px;"><?= __('Back')?></a>
             </footer>
         </section>
         
@@ -220,7 +219,7 @@
             </div>
 			<footer>
 				<a href="#" class="button_goto btn btn-default" data-goto="install_by_step_top" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?= __('Back')?></a>
-				<a href="#" class="button_goto install_by_step_check_next btn btn-primary" data-goto="install_by_step_site" style=" left:auto; width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?= __('Testing')?></a>
+				<a href="#" class="button_goto install_by_step_check_next btn btn-primary" data-goto="install_by_step_site" style=" left:auto; width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><i class="fa fa fa-spinner fa-pulse"></i> <?= __('Testing')?></a>
             </footer>
         </section>
         <section id="install_by_step_site" class="page <?php echo $INSTALL_STEP == 6?'active':'';?>">

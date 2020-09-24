@@ -145,7 +145,7 @@ $(document).ready(function(e) {
 		if (next == 'install_by_step_manager') GetManagersByStep();
 		if (next == 'install_by_step_service_book') GetServiceBooksByStep();
 		if (next == 'install_by_step_mapping') InitMappingByStep();
-		
+		if (next == 'install_by_step_check') InitCheckByStep();		
 		if (next == 'install_normal_setup_sites') GetSitesNormal();
 		if (next == 'install_normal_setup_tops') InitTopsNormal();
 		if (next == 'install_normal_setup_top') InitTopsActiveNormal();
@@ -694,6 +694,18 @@ function InitMappingByStep()
 	{
 		setTimeout(InitMappingByStep, 500);
 	}
+}
+
+function InitCheckByStep()
+{
+	if(timer_anim_check!=undefined){clearTimeout(timer_anim_check);timer_anim_check=undefined;}
+	$('#install_by_step_check .test').removeClass('test');
+	$('#install_by_step_check li:first-child .is_checkbox').addClass('test');
+	$('#install_by_step_check .checked').removeClass('checked');
+	$('#install_by_step_check_next').removeAttr('disabled');
+	$('#install_by_step_check_next').attr('disabled','disabled');
+	$('#install_by_step_check_next').text('<i class="fa fa fa-spinner fa-pulse"></i>'+textBtnCheckTest);
+	setTimeout(StartAnimCheckComposantInstall, 2000);
 }
 
 function GetLastMappingByStep()
