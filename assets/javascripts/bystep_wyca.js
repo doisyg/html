@@ -2,7 +2,7 @@
 
 var selectedWifi = '';
 var json_user = {};
-
+var timer_anim_check = undefined;
 $(document).ready(function(e) {
 	
 	$('#install_by_step_edit_map .bSaveMapTestPoi').click(function(e) {
@@ -292,8 +292,8 @@ $(document).ready(function(e) {
 			}
 		});
     });
-	//IF LOAD ON TEST COMPONENT TEST
-	if ($('#install_by_step_check').is(':visible')) setTimeout(StartAnimCheckComposantInstall, 2000);
+	
+	
 	
 	$('#pages_install_by_step a.select_langue').click(function(e) {
         e.preventDefault();
@@ -389,7 +389,7 @@ $(document).ready(function(e) {
 		
 		var listAvailableTops = Array();
 		$('#pages_install_by_step .install_by_step_top li').hide();
-		$(this).parent().find('.is_checkbox.checked').each(function(index, element) {
+		$(this).parent().parent().find('.is_checkbox.checked').each(function(index, element) {
             listAvailableTops.push($(this).data('id_top'));
 			$('#pages_install_by_step .install_by_step_top .bTop'+$(this).data('id_top')).show();
         });
@@ -420,7 +420,6 @@ $(document).ready(function(e) {
 				{
 					wycaApi.SetActiveTop(listAvailableTops[0], function(data){
 						$('#pages_install_by_step a.save_tops_next_check').click();
-						setTimeout(StartAnimCheckComposantInstall, 2000);
 					});
 				}
 				else
@@ -446,7 +445,7 @@ $(document).ready(function(e) {
 			}
 		});
 		
-		setTimeout(StartAnimCheckComposantInstall, 2000);
+		
     });
 	
 	$('#pages_install_by_step a.install_by_step_check_next').click(function(e) {
@@ -539,7 +538,7 @@ $(document).ready(function(e) {
 							});
 						}
 					}else{
-						alert_wyca('Name already used please change');
+						alert_wyca(textNameUsed);
 					}	
 				}
 			})
@@ -1371,7 +1370,7 @@ var currentTestIndex = -1;
 
 function StartAnimCheckComposantInstall()
 {
-	console.log('anim started');
+	timer_anim_check = undefined;
 	if ($('#install_by_step_check .test').length > 0)
 	{
 		$('#install_by_step_check .test').addClass('checked');
@@ -1380,13 +1379,13 @@ function StartAnimCheckComposantInstall()
 		if ($('#install_by_step_check div.is_checkbox:not(".checked")').length > 0)
 		{
 			$('#install_by_step_check div.is_checkbox:not(".checked")').first().addClass('test');
-			setTimeout(StartAnimCheckComposantInstall, Math.floor(Math.random() * 1500 + 500));
+			timer_anim_check = setTimeout(StartAnimCheckComposantInstall, Math.floor(Math.random() * 1500 + 500));
 		}
 		else
 		{
 			//$('#install_by_step_check .install_by_step_check_next').show();
 			$('.install_by_step_check_next').removeClass('disabled');
-			$('.install_by_step_check_next').text('Next');
+			$('.install_by_step_check_next').html(textBtnCheckNext);
 			
 		
 		}

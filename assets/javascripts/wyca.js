@@ -141,6 +141,7 @@ $(document).ready(function(e) {
 		if (next == 'install_by_step_wifi') InitInstallWifiPageByStep();
 		if (next == 'install_by_step_tops') InitTopsByStep();
 		if (next == 'install_by_step_top') InitTopsActiveByStep();
+		if (next == 'install_by_step_check') InitCheckByStep();		
 		if (next == 'install_by_step_config') GetConfigurationsByStep();
 		if (next == 'install_by_step_manager') GetManagersByStep();
 		if (next == 'install_by_step_service_book') GetServiceBooksByStep();
@@ -696,6 +697,19 @@ function InitMappingByStep()
 	{
 		setTimeout(InitMappingByStep, 500);
 	}
+}
+
+function InitCheckByStep()
+{
+	console.log('InitCheckByStep');
+	if(timer_anim_check!=undefined){clearTimeout(timer_anim_check);timer_anim_check=undefined;}
+	$('#install_by_step_check .test').removeClass('test');
+	$('#install_by_step_check li:first-child .is_checkbox').addClass('test');
+	$('#install_by_step_check .checked').removeClass('checked');
+	$('.install_by_step_check_next').removeClass('disabled');
+	$('.install_by_step_check_next').addClass('disabled');
+	$('.install_by_step_check_next').html('<i class="fa fa fa-spinner fa-pulse"></i> '+textBtnCheckTest);
+	setTimeout(StartAnimCheckComposantInstall, 2000);
 }
 
 function GetLastMappingByStep()

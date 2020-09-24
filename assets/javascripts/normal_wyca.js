@@ -433,7 +433,7 @@ $(document).ready(function(e) {
 					},
 					dataType: 'json',
 					success: function(data) {
-						window.location.href = 'https://elodie.wyca-solutions.com';
+						window.location.href = 'https://wyca.run';
 					},
 					error: function(e) {
 					}
