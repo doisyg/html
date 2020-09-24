@@ -36,10 +36,14 @@
         
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
         
+		<?php $lastUpdate = date('Ymd'); ?>
+		<?php //$lastUpdate = '20200924_3'; ?>
+
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/skins/default.css" />
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/skins/extension.css" />
         
-		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/wyca.css?v=20200710" />
+		
+		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/wyca.css?v=20200924" />
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/map.css?v=20200710" />
 			
 		
@@ -69,10 +73,10 @@
 					</div>  
 					<div class="icone_header safety_stop" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="<?php echo __('Emergency stop');?>"><i class="fa fa-exclamation-circle battery-ko"></i></div>
 					<a href="#" class="stop_move btn btn-danger btn-circle" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="<?php echo __('Stop move');?>"><i class="fa fa-stop battery-ko"></i></a>
-					<a href="#" class="btn btn-circle btn-default"><i class="fa fa-question"></i></a>
+					<a href="#" class="btn btn-circle btn-default"><i class="fa fa-info"></i></a>
 				</div>
-				<div class="pull-left" style="display:none">
-					<img class="nav_logo" src="assets/images/logo.png">
+				<div class="pull-left">
+					<img class="nav_logo" src="assets/images/logo_white.png">
 					<h1 class="title_section">Titre</h1>
 				</div>
 				<div style="clear:both;"></div>
