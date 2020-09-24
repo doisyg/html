@@ -538,7 +538,7 @@ $(document).ready(function(e) {
 							});
 						}
 					}else{
-						alert_wyca('Name already used please change');
+						alert_wyca(textNameUsed);
 					}	
 				}
 			})

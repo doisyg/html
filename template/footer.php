@@ -23,6 +23,7 @@
 		// TODO var id_map_last = <?php // echo $currentIdMap;?>;
 		var textSelectOnOrMoreTops = "<?php echo addslashes(stripslashes(__('You must select one or more tops')));?>";
 		var textIndicateAName = "<?php echo addslashes(stripslashes(__('You must indicate a name')));?>";
+		var textNameUsed = "<?php echo addslashes(stripslashes(__('Name already used please change')));?>";
 		var textStartMapping = "<?php echo addslashes(stripslashes(__('Start mapping')));?>";
 		var textStopNavigation = "<?php echo addslashes(stripslashes(__('Stop navigation')));?>";
 		var textBuildingMap = "<?php echo addslashes(stripslashes(__('Building the map')));?>";
