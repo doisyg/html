@@ -154,7 +154,7 @@
             </div>
 			<footer>
 				<a href="#" class="button_goto btn btn-default" data-goto="install_by_step_tops" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?= __('Back')?></a>
-				<a href="#" class="button_goto btn btn-primary" onClick="$('install_by_step_check_next').addClass('disabled');" data-goto="install_by_step_check" style=" left:auto; width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?= __('Next')?></a>
+				<a href="#" class="button_goto btn btn-primary" onClick="$('.install_by_step_check_next').addClass('disabled');" data-goto="install_by_step_check" style=" left:auto; width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?= __('Next')?></a>
             </footer>
         </section>
         
@@ -195,7 +195,7 @@
                             <i class="fa fa-check"></i>
                     		<i class="fa fa fa-spinner fa-pulse"></i>
                     		<i class="fa fa-battery-4"></i>
-							<?php echo __('BMS');?>
+							<?php echo __('Battery');?>
                         </div>
                     </li>
                     <li class="col-xs-4 col-md-3 col-lg-2">
@@ -203,7 +203,7 @@
                             <i class="fa fa-check"></i>
                     		<i class="fa fa fa-spinner fa-pulse"></i>
                     		<i class="fa fa-camera"></i>
-							<?php echo __('3D cams');?>
+							<?php echo __('3D Scan');?>
                         </div>
                     </li>
                     <li class="col-xs-4 col-md-3 col-lg-2">
@@ -211,12 +211,10 @@
                             <i class="fa fa-check"></i>
                     		<i class="fa fa fa-spinner fa-pulse"></i>
                     		<i class="fa fa-spinner"></i>
-							<?php echo __('Leds');?>
+							<?php echo __('Com. Leds');?>
                         </div>
                     </li>
-                </ul>   
-                
-                <a href="#" class="install_by_step_check_next button_goto btn btn-default pull-right" data-goto="install_by_step_site" style="display:none;">Next <i class="fa fa-chevron-right"></i></a>
+                </ul>  
             </div>
 			<footer>
 				<a href="#" class="button_goto btn btn-default" data-goto="install_by_step_top" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?= __('Back')?></a>

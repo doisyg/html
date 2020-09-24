@@ -1,4 +1,4 @@
-body{color:#777;font-family:"Open Sans",Arial,sans-serif;line-height:22px;margin:0;font-size:13px;overflow-x:hidden;overflow-y:scroll; background-image:url(../images/elodie.png); background-position:right bottom; background-size:80%; background-repeat:no-repeat; height:100vh; height: calc(var(--vh, 1vh) * 100);}
+body{color:#777;font-family:"Open Sans",Arial,sans-serif;line-height:22px;margin:0;font-size:13px;overflow-x:hidden;overflow-y:scroll; background-position:right bottom; background-size:80%; background-repeat:no-repeat; height:100vh; height: calc(var(--vh, 1vh) * 100);}
 @media (min-width: 768px) { 
 	body { background-size:20%;  }
 }
@@ -451,24 +451,24 @@ ul.list_test li.done { color:#006600; border-color:#006600; }
 
 .mh100vh_55 {
 	min-height: calc(100vh - 55px);
-  	min-height: calc(var(--vh, 1vh) * 100 - 55px);
+  	min-height: calc(var(--vh, 1vh) * 100 - 3px);
 	padding:1px;
 }
 
 .mh100vh_100 {
 	min-height: calc(100vh - 100px);
-  	min-height: calc(var(--vh, 1vh) * 100 - 100px);
+  	min-height: calc(var(--vh, 1vh) * 100 - 48px);
 	padding:1px;
 }
 
 .mh100vh_110 {
 	min-height: calc(100vh - 110px);
-  	min-height: calc(var(--vh, 1vh) * 100 - 110px);
+  	min-height: calc(var(--vh, 1vh) * 100 - 58px);
 	padding:1px;
 }
 .mh100vh_160 {
 	min-height: calc(100vh - 160px);
-  	min-height: calc(var(--vh, 1vh) * 100 - 160px);
+  	min-height: calc(var(--vh, 1vh) * 100 - 108px);
 	padding:1px;
 }
 
@@ -480,24 +480,24 @@ ul.list_test li.done { color:#006600; border-color:#006600; }
 
 .h100vh_55 {
 	height: calc(100vh - 55px);
-  	height: calc(var(--vh, 1vh) * 100 - 55px);
+  	height: calc(var(--vh, 1vh) * 100 - 3px);
 	padding:1px;
 }
 
 .h100vh_100 {
 	height: calc(100vh - 100px);
-  	height: calc(var(--vh, 1vh) * 100 - 100px);
+  	height: calc(var(--vh, 1vh) * 100 - 48px);
 	padding:1px;
 }
 
 .h100vh_110 {
 	height: calc(100vh - 110px);
-  	height: calc(var(--vh, 1vh) * 100 - 110px);
+  	height: calc(var(--vh, 1vh) * 100 - 58px);
 	padding:1px;
 }
 .h100vh_160 {
 	height: calc(100vh - 160px);
-  	height: calc(var(--vh, 1vh) * 100 - 160px);
+  	height: calc(var(--vh, 1vh) * 100 - 108px);
 	padding:1px;
 }
 
@@ -507,3 +507,21 @@ ul.list_test li.done { color:#006600; border-color:#006600; }
 
 .list_actions li:first-child a.bUpToAction { visibility:hidden; }
 .list_actions li:last-child a.bDownToAction { visibility:hidden; }
+
+
+img.nav_logo{
+	height: 50px;
+    padding: 10px;
+	display:inline-flex;
+}
+
+.title_section{
+	display:inline-block;
+	font-size:36px;
+	margin:0;
+	vertical-align: middle;
+}
+
+section > header {
+	display:none
+}

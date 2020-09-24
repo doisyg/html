@@ -144,6 +144,11 @@ $_LANG['2807031730d75e38fb2b3579711081cb'] = 'Demo mode Start / Stop';
 $_LANG['5050505df1a51030bd67f5406dd477d3'] = 'Demo mode configuration';
 $_LANG['bbbfad552182f24e1fe7d4764b0a999a'] = 'Add POI';
 $_LANG['72ef2b9b6965d078e3c7f95487a82d1c'] = 'Skip';
+$_LANG['f1ce872de257f6ae9245e838b7a7915b'] = 'Import new top';
+$_LANG['f5b24cdb32a93000ac7cba2be000ea4d'] = 'Import top';
 $_LANG['fa6a5a3224d7da66d9e0bdec25f62cf0'] = 'Testing';
+$_LANG['d67c92867cc3d7fdf47f32cf70ab1b24'] = 'Battery';
+$_LANG['b048f17b0fa390d71e71f5694bd04a3e'] = '3D Scan';
+$_LANG['d32741f0f08b1b97d305e1d9e741e83f'] = 'Com. Leds';
 
 ?>

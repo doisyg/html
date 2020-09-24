@@ -292,7 +292,7 @@ $(document).ready(function(e) {
 			}
 		});
     });
-	
+	//IF LOAD ON TEST COMPONENT TEST
 	if ($('#install_by_step_check').is(':visible')) setTimeout(StartAnimCheckComposantInstall, 2000);
 	
 	$('#pages_install_by_step a.select_langue').click(function(e) {
@@ -1371,6 +1371,7 @@ var currentTestIndex = -1;
 
 function StartAnimCheckComposantInstall()
 {
+	console.log('anim started');
 	if ($('#install_by_step_check .test').length > 0)
 	{
 		$('#install_by_step_check .test').addClass('checked');

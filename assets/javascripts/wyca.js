@@ -209,7 +209,9 @@ $(document).ready(function(e) {
             });
 		}
 		
-		
+		// ADD TITLE CHANGE 
+			console.log($('#'+next+' > header > h2').text());
+		//
 		InitJoystick();
     });
 	
