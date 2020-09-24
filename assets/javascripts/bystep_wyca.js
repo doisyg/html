@@ -1385,7 +1385,7 @@ function StartAnimCheckComposantInstall()
 		{
 			//$('#install_by_step_check .install_by_step_check_next').show();
 			$('.install_by_step_check_next').removeClass('disabled');
-			$('.install_by_step_check_next').text('Next');
+			$('.install_by_step_check_next').html(textBtnCheckNext);
 			
 		
 		}
