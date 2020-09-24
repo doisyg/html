@@ -28,6 +28,7 @@ if ( (! empty($_SERVER['REQUEST_SCHEME']) && $_SERVER['REQUEST_SCHEME'] == 'http
 	$server_request_scheme = 'http';
     $_CONFIG['URL'] = "http://wyca.run/";
 }
+$_CONFIG['URL_API'] = $_CONFIG['URL']."API/";
 
 require_once(dirname(__FILE__)."/../lib/lib.php");
 require_once (dirname(__FILE__)."/../classes/includes.php");

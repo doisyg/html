@@ -1299,9 +1299,9 @@ function WycaAPI(options){
 		if (_this.options.id_robot != 'not_robot')
 		{
 			if ("WebSocket" in window) {
-				_this.ws = new WebSocket( (use_ssl?'wss':'ws') + '://'+_this.options.host);
+				_this.ws = new WebSocket( (_this.options.use_ssl?'wss':'ws') + '://'+_this.options.host);
 			} else if ("MozWebSocket" in window) {
-				_this.ws = new MozWebSocket( (use_ssl?'wss':'ws') + '://'+_this.options.host);
+				_this.ws = new MozWebSocket( (_this.options.use_ssl?'wss':'ws') + '://'+_this.options.host);
 			} else {
 				throw new Error('This Browser does not support WebSockets')
 			}

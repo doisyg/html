@@ -130,20 +130,19 @@ var use_ssl = <?php echo $server_request_scheme == 'http'?'false':'true';?>;
 
 $(document).ready(function(e) {
 
-	<?php if ($server_request_scheme == 'http') // && false) // pour test
+	<?php if ($server_request_scheme == 'http')
 	{
-		// on test si on peux faire du https
+		// We test if we can do https
 		?>
 		$.ajax({
 			type: "GET",
 			url: 'https://wyca.run/login.php',
 			success: function(data) {
 				// HTTPS OK
-				console.log("ok");
 				location.href = 'https://wyca.run/login.php';
 			},
 			error: function(e) {
-				// No HTTPS availabme, pb certificate
+				// No HTTPS availabme, pb chrome to validate certificate
 			}
 		});
 		<?php
@@ -191,6 +190,9 @@ $(document).ready(function(e) {
 			
 				if (e.data == 'ack') return;
 				msg = JSON.parse(e.data);
+				
+				ws.close()
+				
 				if (msg.A > 0)
 				{
 					DisplayError(msg.M);

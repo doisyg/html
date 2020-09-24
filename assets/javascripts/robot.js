@@ -44,6 +44,7 @@ $(document).ready(function(e) {
 	
 	wycaApi = new WycaAPI({
 		host:robot_host, //192.168.1.32:9090', // host:'192.168.100.245:9090',
+		use_ssl: use_ssl,
 		api_key:user_api_key,
 		nick:'robot',
 		
