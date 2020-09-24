@@ -141,11 +141,12 @@ $(document).ready(function(e) {
 		if (next == 'install_by_step_wifi') InitInstallWifiPageByStep();
 		if (next == 'install_by_step_tops') InitTopsByStep();
 		if (next == 'install_by_step_top') InitTopsActiveByStep();
+		if (next == 'install_by_step_check') InitCheckByStep();		
 		if (next == 'install_by_step_config') GetConfigurationsByStep();
 		if (next == 'install_by_step_manager') GetManagersByStep();
 		if (next == 'install_by_step_service_book') GetServiceBooksByStep();
 		if (next == 'install_by_step_mapping') InitMappingByStep();
-		if (next == 'install_by_step_check') InitCheckByStep();		
+		
 		if (next == 'install_normal_setup_sites') GetSitesNormal();
 		if (next == 'install_normal_setup_tops') InitTopsNormal();
 		if (next == 'install_normal_setup_top') InitTopsActiveNormal();
