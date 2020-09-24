@@ -645,7 +645,7 @@ function NormalDisplayMenu(id_menu)
 	
 	$('#'+id_menu).css({top: topCenter, left: leftCenter});
 	
-	rayon = 70;
+	rayon = 80;
 	
 	decallageX = 0;
 	decallageY = 0;
@@ -660,7 +660,7 @@ function NormalDisplayMenu(id_menu)
 	maxTop = -100;
 	
 	$('#'+id_menu+' li').each(function(index, element) {
-		angle = (angleDep + 48*index) * Math.PI/180;
+		angle = (angleDep + 45*index) * Math.PI/180;
 		// x = rsin(θ), y = rcos(θ)
 		l = rayon * Math.sin(angle) - 25;
 		t = rayon * Math.cos(angle) - 25;

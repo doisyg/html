@@ -107,7 +107,7 @@
 			GetServiceBooksByStep();
 			<?php }?>
 			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 5) {?>
-			 setTimeout(StartAnimCheckComposantInstall, 2000);
+			InitCheckByStep();
 			<?php }?>
         });
 		</script>
