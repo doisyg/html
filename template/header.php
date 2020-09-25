@@ -47,16 +47,13 @@
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/map.css?v=<?php echo $lastUpdate;?>" />
 			
 		
-		<!-- Fontawesome  -->
-		<link rel="stylesheet" href="<?= $_CONFIG['URL'] ?>assets/vendor/fontawesome-free-5.13.0-web/css/all.css" />
-
-
+	
 	</head>
 	<body>
         <header class="header">
         
         	<div class="menu_groupe">
-            	<div class="btn-group pull-left" style="display:none" role="group" aria-label="Change group">
+            	<div class="btn-group pull-left" role="group" aria-label="Change group">
                 	<?php if ($_SESSION['id_groupe_user'] <= 1) { ?><button id="bPagesWyca" type="button" data-groupe="pages_wyca" data-btn_class="btn-danger" class="btn_change_group btn btn-sm btn-<?php echo $_SESSION['id_groupe_user'] == 1?'danger active':'default';?>">Wyca</button><?php }?>
 	            	<?php if ($_SESSION['id_groupe_user'] <= 2) { ?><button id="bPagesInstall" type="button" data-groupe="pages_install" data-btn_class="btn-warning" class="btn_change_group btn btn-sm btn-<?php echo $_SESSION['id_groupe_user'] == 2?'warning active':'default';?>">Install</button><?php }?>
                     <?php
@@ -66,21 +63,19 @@
 	            	<?php if ($_SESSION['id_groupe_user'] <= 3) { ?><button id="bPagesManger" type="button" data-groupe="pages_manager" data-btn_class="btn-primary" class="btn_change_group btn btn-sm btn-<?php echo $_SESSION['id_groupe_user'] == 3?'primary active':'default';?>" <?php echo ($INSTALL_STEP < 100)?'style="display:none;"':'';?>>Manager</button><?php }?>
 	            	<?php if ($_SESSION['id_groupe_user'] <= 4) { ?><button id="bPagesUser" type="button" data-groupe="pages_user" data-btn_class="btn-success" class="btn_change_group btn btn-sm btn-<?php echo $_SESSION['id_groupe_user'] == 4?'success active':'default';?>" <?php echo ($INSTALL_STEP < 100)?'style="display:none;"':'';?>>User</button><?php }?>
 				</div>
-				<div class="pull-right">
-					<div id="icoBattery" class="icone_header" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="<?php echo __('Battery level');?>">
-						<i class="fa fa-battery-0"></i>
-						<span>100 %</span>
-					</div>  
-					<div class="icone_header safety_stop" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="<?php echo __('Emergency stop');?>"><i class="fa fa-exclamation-circle battery-ko"></i></div>
-					<a href="#" class="stop_move btn btn-danger btn-circle" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="<?php echo __('Stop move');?>"><i class="fa fa-stop battery-ko"></i></a>
-					<a href="#" class="btn btn-circle btn-default"><i class="fa fa-info"></i></a>
-				</div>
-				<div class="pull-left">
-					<img class="nav_logo" src="assets/images/logo_white.png">
-					<h1 class="title_section">Titre</h1>
-				</div>
-				<div style="clear:both;"></div>
 			</div>
+			<div class="pull-right">
+                <a href="#" class="stop_move btn btn-danger btn-circle" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="<?php echo __('Stop move');?>"><i class="fa fa-stop battery-ko"></i></a>
+            	<a href="#" class="btn btn-circle btn-default"><i class="fa fa-question"></i></a>
+            </div>
+        	<div>
+                <div id="icoBattery" class="icone_header" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="<?php echo __('Battery level');?>">
+                	<i class="fa fa-battery-0"></i>
+                	<span>100 %</span>
+                </div>  
+                <div class="icone_header safety_stop" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="<?php echo __('Emergency stop');?>"><i class="fa fa-exclamation-circle battery-ko"></i></div>
+            </div>
+            <div style="clear:both;"></div>
 		</header>
         <div id="contentAll">
 

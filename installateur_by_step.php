@@ -21,7 +21,7 @@
             </div>
         </section>
     
-    	<section id="install_by_step_wifi" class="page with_footer <?php echo $INSTALL_STEP == 1?'active':'';?>">
+    	<section id="install_by_step_wifi" class="page <?php echo $INSTALL_STEP == 1?'active':'';?> with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_lang"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
@@ -1196,9 +1196,9 @@
             
             	
                 
-            	<a href="#" class="btn btn-success button_goto bSaveEditMap btn_footer_w50_left" data-goto="install_by_step_test_map" ><?php echo __('Test');?></a>
-				<a href="#" class="btn btn-primary bSaveEditMap btn_footer_w50_right"><?php echo __('Save map');?></a>
-            
+            	
+				<a href="#" class="btn btn-success bSaveEditMap btn_footer_w50_left"><?php echo __('Save map');?></a>
+				<a href="#" class="btn btn-primary button_goto bSaveEditMap btn_footer_w50_right" data-goto="install_by_step_test_map" ><?php echo __('Next');?></a>
             </footer>
         </section>
         
@@ -1232,10 +1232,10 @@
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
                 <h2><?php echo __('Configuration');?></h2>
             </header>
-            <form class="form_site" action="" method="post" style="margin-bottom:20px;">
+            
             <div class="content">
-                
-                <div class="install_by_step_config_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
+                <form class="form_site" action="" method="post">
+                <div class="install_by_step_config_loading loading_big" style="padding-top:20px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
                 
                 <div class="loaded col-md-12" style="padding-top:50px;">
                     
@@ -1259,12 +1259,12 @@
                     
                     <a href="#" class="install_by_step_config_next button_goto" data-goto="install_by_step_manager" style="display:none;"></a>   
                 </div>
-                
+                </form>
             </div>
             <footer>
             	<a href="#" class="bConfigurationSave btn btn-primary btn_footer_w100" data-goto="install_by_step_manager"><?php echo __('Save');?></a>
             </footer>
-            </form>
+            
         
         </section>
         
