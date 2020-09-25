@@ -1219,9 +1219,9 @@
             <footer>
             
             	
-                <a href="#" class="btn btn-default button_goto btn_footer_w50_left" data-goto="install_by_step_edit_map"><?php echo __('Cancel');?></a>
+                <a href="#" class="btn btn-default button_goto btn_footer_w50_left" data-goto="install_by_step_edit_map"><?php echo __('Back');?></a>
             
-            	<a href="#" class="btn btn-primary button_goto bTestFinish btn_footer_w50_right" data-goto="install_by_step_config"><?php echo __('Confirm');?></a>
+            	<a href="#" class="btn btn-primary button_goto bTestFinish btn_footer_w50_right" data-goto="install_by_step_config"><?php echo __('Next');?></a>
             </footer>
         </section>
         
@@ -1262,7 +1262,8 @@
                 </form>
             </div>
             <footer>
-            	<a href="#" class="bConfigurationSave btn btn-primary btn_footer_w100" data-goto="install_by_step_manager"><?php echo __('Save');?></a>
+				<a href="#" class="btn btn-default button_goto btn_footer_w50_left" data-goto="install_by_step_test_map"><?php echo __('Back');?></a>
+            	<a href="#" class="bConfigurationSave btn btn-primary btn_footer_w50_right" data-goto="install_by_step_manager"><?php echo __('Save');?></a>
             </footer>
             
         
@@ -1344,7 +1345,8 @@
                 
             </div>
             <footer>
-            	<a href="#" class="btn btn-primary button_goto bValidManager btn_footer_w100" data-goto="install_by_step_service_book" style="z-index:2001;"><?php echo __('Next');?></a>
+				<a href="#" class="btn btn-default button_goto btn_footer_w50_left" data-goto="install_by_step_config"><?php echo __('Back');?></a>
+            	<a href="#" class="btn btn-primary button_goto bValidManager btn_footer_w50_right" data-goto="install_by_step_service_book" style="z-index:2001;"><?php echo __('Next');?></a>
             </footer>
         </section>
                 
@@ -1398,7 +1400,8 @@
 				</div>                
             </div>
             <footer>
-            	<a href="#" class="btn btn-primary button_goto bFinishInstallation btn_footer_w100" data-goto="install_by_step_end" style="z-index:2001"><?php echo __('Finish installation');?></a>
+				<a href="#" class="btn btn-default button_goto btn_footer_w50_left" data-goto="install_by_step_manager"><?php echo __('Back');?></a>
+            	<a href="#" class="btn btn-primary button_goto bFinishInstallation btn_footer_w50_right" data-goto="install_by_step_end" style="z-index:2001"><?php echo __('Finish');?></a>
             </footer>
         </section>
         
