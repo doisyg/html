@@ -152,5 +152,6 @@ $_LANG['b048f17b0fa390d71e71f5694bd04a3e'] = '3D Scan';
 $_LANG['d32741f0f08b1b97d305e1d9e741e83f'] = 'Com. Leds';
 $_LANG['098b4b635da678a6a3eba7b796027c78'] = 'Name already used please change';
 $_LANG['49ab28040dfa07f53544970c6d147e1e'] = 'Connect';
+$_LANG['a20ddccbb6f808ec42cd66323e6c6061'] = 'Finish';
 
 ?>

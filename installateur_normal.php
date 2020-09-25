@@ -457,8 +457,8 @@
                                         <div style="clear:both;"></div>
                                                                                 
                                         
-                                        <a href="#" class="btn btn-primary btn_footer_w50_left" data-dismiss="modal" ><?php echo __('Cancel');?></a>
-										<a href="#" id="install_normal_edit_map_bModalAddDockSave" class="btn btn-default btn_footer_w50_right" data-dismiss="modal" ><?php echo __('Save');?></a>
+                                        <a href="#" class="btn btn-default btn_footer_w50_left" data-dismiss="modal" ><?php echo __('Cancel');?></a>
+										<a href="#" id="install_normal_edit_map_bModalAddDockSave" class="btn btn-primary btn_footer_w50_right" data-dismiss="modal" ><?php echo __('Save');?></a>
                                     </div>
                                 </div>
                             </div>
