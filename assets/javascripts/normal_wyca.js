@@ -1,4 +1,36 @@
+var currentNameSiteExport = '';
 $(document).ready(function(e) {
+	
+	
+	$(document).on('click', '#install_normal_setup_export .bSiteExportElem', function(e) {
+        $('#install_normal_setup_export .bSiteExportElem').addClass('disabled');
+		
+		currentNameSiteExport = $(this).find('.societe').text();
+		
+		wycaApi.ExportSite($(this).data('id_site'), function(data){
+			console.log(data);
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$('#install_normal_setup_export .bSiteExportElem').removeClass('disabled');
+				var a = document.createElement("a");
+					document.body.appendChild(a);
+					a.style = "display: none";
+					
+					var blob = new Blob([data.D], {type: "octet/stream"}),
+						url = window.URL.createObjectURL(blob);
+					a.href = url;
+					a.download = 'export_site_'+currentNameSiteExport+'.wyca';
+					a.click();
+					window.URL.revokeObjectURL(url);
+			}
+			else
+			{
+				$('#install_normal_setup_export .bSiteExportElem').removeClass('disabled');
+				alert_wyca('Save map error : ' + wycaApi.AnswerCodeToString(data.A) + '<br>'+ data.M);
+			}							
+		});
+		
+    });
 	
 	$('#install_normal_setup_trinary .bSaveTrinaryMap').click(function(e) {
 		

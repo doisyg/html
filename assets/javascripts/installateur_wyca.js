@@ -327,6 +327,37 @@ $(document).ready(function(e) {
 		});
     });
 	
+	$('#pages_install_normal a.bImportSiteDo').click(function(e) {
+        e.preventDefault();
+		
+		$('#pages_install_normal .install_normal_setup_import_loading').hide();
+		$('#pages_install_normal .install_normal_setup_import_content').show();
+		
+		file = $('#pages_install_normal .file_import_site')[0].files[0];
+		var reader = new FileReader();
+		reader.onload = function(event) { 
+			wycaApi.ImportSite(btoa(reader.result), function(data) { 
+				if (data.A == wycaApi.AnswerCode.NO_ERROR)
+				{
+					$('#pages_install_normal .install_normal_setup_import_loading').hide();
+					$('#pages_install_normal .install_normal_setup_import_content').show();
+					
+					success_wyca('Imported');
+					
+					$('.bImportSiteBack').click();
+				}
+				else
+				{
+					console.log(JSON.stringify(data)); 
+					text = wycaApi.AnswerCodeToString(data.A);
+					if (data.M != '') text += '<br />'+data.M;
+					alert_wyca(text);
+				}
+			});
+		};
+		reader.readAsText(file);
+    });
+	
 	$('#pages_install_normal a.bImportTopDo').click(function(e) {
         e.preventDefault();
 		

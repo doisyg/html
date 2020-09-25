@@ -146,5 +146,7 @@ $_LANG['bbbfad552182f24e1fe7d4764b0a999a'] = 'Add POI';
 $_LANG['72ef2b9b6965d078e3c7f95487a82d1c'] = 'Skip';
 $_LANG['fa6a5a3224d7da66d9e0bdec25f62cf0'] = 'Testing';
 $_LANG['098b4b635da678a6a3eba7b796027c78'] = 'Name already used please change';
+$_LANG['c574f3278127aded5e5691fd75701a7c'] = 'Export site';
+$_LANG['d516b85b13c2b8a3804b297efaecfbf6'] = 'Import Site';
 
 ?>
