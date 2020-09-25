@@ -213,6 +213,7 @@ $(document).ready(function(e) {
 		
 		// ADD TITLE CHANGE 
 			console.log('Title ',$('#'+next+' > header > h2').text());
+			$('.title_section').html($('#'+next+' > header > h2').text());
 		//
 		InitJoystick();
     });

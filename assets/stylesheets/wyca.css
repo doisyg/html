@@ -451,7 +451,7 @@ ul.list_test li.done { color:#006600; border-color:#006600; }
 
 .mh100vh_55 {
 	min-height: calc(100vh - 55px);
-  	min-height: calc(var(--vh, 1vh) * 100 - 7px);
+  	min-height: calc(var(--vh, 1vh) * 100 - 56px);
 	padding:1px;
 }
 
@@ -480,7 +480,7 @@ ul.list_test li.done { color:#006600; border-color:#006600; }
 
 .h100vh_55 {
 	height: calc(100vh - 55px);
-  	height: calc(var(--vh, 1vh) * 100 - 7px);
+  	height: calc(var(--vh, 1vh) * 100 - 56px);
 	padding:1px;
 }
 
@@ -522,7 +522,7 @@ img.nav_logo{
 	margin:0;
 	vertical-align: middle;
 	margin-left:5px;
-	max-width:66px;
+	max-width:66%;
 }
 
 section > header {
@@ -530,20 +530,20 @@ section > header {
 }
 
 .btn.btn_footer_w100{
-	width:100%; position:absolute; left:0; right:0; bottom:0px; font-size:30px;
+	width:100%; position:absolute; left:0; right:0; bottom:0px; font-size:30px;border-radius:0px;
 }
 .btn.btn_footer_w50_left{
-	width:50%; position:absolute; left:0; right:auto; bottom:0px; font-size:30px;
+	width:50%; position:absolute; left:0; right:auto; bottom:0px; font-size:30px;border-radius:0px;
 }
 .btn.btn_footer_w50_right{
-	left:auto; width:50%; position:absolute; right:0; bottom:0px; font-size:30px;
+	left:auto; width:50%; position:absolute; right:0; bottom:0px; font-size:30px;border-radius:0px;
 }
 .btn.btn_footer_w33_left{
-	left:auto; width:33%; position:absolute; right:0; bottom:0px; font-size:30px;
+	left:auto; width:33%; position:absolute; right:0; bottom:0px; font-size:30px;border-radius:0px;
 }
 .btn.btn_footer_w33_center{
-	left:33%; width:33%; position:absolute; right:33%; bottom:0px; font-size:30px;
+	left:33%; width:33%; position:absolute; right:33%; bottom:0px; font-size:30px;border-radius:0px;
 }
 .btn.btn_footer_w33_right{
-	left:66%; width:33%; position:absolute; right:0; bottom:0px; font-size:30px;
+	left:66%; width:33%; position:absolute; right:0; bottom:0px; font-size:30px;border-radius:0px;
 }
