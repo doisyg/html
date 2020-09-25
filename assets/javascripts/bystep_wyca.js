@@ -473,6 +473,7 @@ $(document).ready(function(e) {
 		else
 		{
 			let site_names = Array();
+			$('.install_by_step_site_save').addClass('disabled');
 			// AFFICHER LOADING GIF
 			wycaApi.GetSitesList(function(data){
 				// HIDE LOADING GIF
@@ -540,6 +541,7 @@ $(document).ready(function(e) {
 					}else{
 						alert_wyca(textNameUsed);
 					}	
+					$('.install_by_step_site_save').removeClass('disabled');
 				}
 			})
 			

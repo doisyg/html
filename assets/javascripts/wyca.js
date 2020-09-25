@@ -138,6 +138,7 @@ $(document).ready(function(e) {
 		history.pushState({ current_groupe:$('.menu_groupe .active').attr('id'), current_page:$(this).data('goto')}, $(this).data('goto'), "/#"+$(this).data('goto'));
 		
 		next = $(this).data('goto');
+		console.log('next ',next);
 		if (next == 'install_by_step_wifi') InitInstallWifiPageByStep();
 		if (next == 'install_by_step_tops') InitTopsByStep();
 		if (next == 'install_by_step_top') InitTopsActiveByStep();
@@ -211,7 +212,7 @@ $(document).ready(function(e) {
 		}
 		
 		// ADD TITLE CHANGE 
-			console.log($('#'+next+' > header > h2').text());
+			console.log('Title ',$('#'+next+' > header > h2').text());
 		//
 		InitJoystick();
     });

@@ -43,8 +43,8 @@
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/skins/extension.css" />
         
 		
-		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/wyca.css?v=20200924" />
-		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/map.css?v=20200710" />
+		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/wyca.css?v=<?php echo $lastUpdate;?>" />
+		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/map.css?v=<?php echo $lastUpdate;?>" />
 			
 		
 		<!-- Fontawesome  -->
