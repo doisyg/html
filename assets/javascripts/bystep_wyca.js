@@ -1,5 +1,5 @@
 
-
+var form_sended = false; //Boolean pour disable a form "en traitement"
 var selectedWifi = '';
 var json_user = {};
 var timer_anim_check = undefined;
@@ -472,79 +472,84 @@ $(document).ready(function(e) {
 		}
 		else
 		{
-			let site_names = Array();
-			$('.install_by_step_site_save').addClass('disabled');
-			// AFFICHER LOADING GIF
-			wycaApi.GetSitesList(function(data){
-				// HIDE LOADING GIF
-				if (data.A != wycaApi.AnswerCode.NO_ERROR){
-					alert_wyca('Error in scanning site\'s names ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M)
-				}else{
-					data.D.forEach(function(item){
-						site_names.push(item.name);
-					});
-					if(!site_names.includes($('#pages_install_by_step .i_site_name').val())){
-						if (create_new_site)
-						{
-							
-								newSite = { "id_site":-1, "comment":"", name:$('#pages_install_by_step .i_site_name').val() };
-								wycaApi.SetSite(newSite, function(data){
-									if (data.A != wycaApi.AnswerCode.NO_ERROR) 
-										alert_wyca('Error navigation stop ; ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M);
-									else
-									{
-										wycaApi.SetSiteAsCurrent(data.D, function(data) {
-											if (data.A != wycaApi.AnswerCode.NO_ERROR) 
-												alert_wyca('Error navigation stop ; ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M);
-											else
-											{
-												$.ajax({
-													type: "POST",
-													url: 'ajax/install_by_step_site.php',
-													data: {
-													},
-													dataType: 'json',
-													success: function(data) {
-													},
-													error: function(e) {
-														alert_wyca('Error step site ; ' + e.responseText);
-													}
-												});
-												$('#pages_install_by_step a.install_by_step_site_next').click();
-											}
-										});
-									}
-								});
-							
-						}
-						else
-						{
-							wycaApi.GetCurrentSite(function(data) {
-								data.D.name = $('#pages_install_by_step .i_site_name').val();
-								wycaApi.SetSite(data.D, function(data){
-									$.ajax({
-										type: "POST",
-										url: 'ajax/install_by_step_site.php',
-										data: {
-										},
-										dataType: 'json',
-										success: function(data) {
-										},
-										error: function(e) {
-											alert_wyca('Error step site ; ' + e.responseText);
+			if(!form_sended){
+				let site_names = Array();
+				form_sended = true ;
+				$('.install_by_step_site_save').addClass('disabled');
+				// AFFICHER LOADING GIF
+				wycaApi.GetSitesList(function(data){
+					// HIDE LOADING GIF
+					if (data.A != wycaApi.AnswerCode.NO_ERROR){
+						alert_wyca('Error in scanning site\'s names ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M)
+					}else{
+						data.D.forEach(function(item){
+							site_names.push(item.name);
+						});
+						if(!site_names.includes($('#pages_install_by_step .i_site_name').val())){
+							if (create_new_site)
+							{
+								
+									newSite = { "id_site":-1, "comment":"", name:$('#pages_install_by_step .i_site_name').val() };
+									wycaApi.SetSite(newSite, function(data){
+										if (data.A != wycaApi.AnswerCode.NO_ERROR) 
+											alert_wyca('Error navigation stop ; ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M);
+										else
+										{
+											wycaApi.SetSiteAsCurrent(data.D, function(data) {
+												if (data.A != wycaApi.AnswerCode.NO_ERROR) 
+													alert_wyca('Error navigation stop ; ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M);
+												else
+												{
+													$.ajax({
+														type: "POST",
+														url: 'ajax/install_by_step_site.php',
+														data: {
+														},
+														dataType: 'json',
+														success: function(data) {
+														},
+														error: function(e) {
+															alert_wyca('Error step site ; ' + e.responseText);
+														}
+													});
+													$('#pages_install_by_step a.install_by_step_site_next').click();
+												}
+											});
 										}
 									});
-									$('#pages_install_by_step a.install_by_step_site_next').click();
+								
+							}
+							else
+							{
+								wycaApi.GetCurrentSite(function(data) {
+									data.D.name = $('#pages_install_by_step .i_site_name').val();
+									wycaApi.SetSite(data.D, function(data){
+										$.ajax({
+											type: "POST",
+											url: 'ajax/install_by_step_site.php',
+											data: {
+											},
+											dataType: 'json',
+											success: function(data) {
+											},
+											error: function(e) {
+												alert_wyca('Error step site ; ' + e.responseText);
+											}
+										});
+										$('#pages_install_by_step a.install_by_step_site_next').click();
+									});
 								});
-							});
-						}
-					}else{
-						alert_wyca(textNameUsed);
-					}	
-					$('.install_by_step_site_save').removeClass('disabled');
-				}
-			})
-			
+							}
+						}else{
+							alert_wyca(textNameUsed);
+						}	
+						form_sended = false;
+						$('.install_by_step_site_save').removeClass('disabled');
+					}
+				})
+			}else{
+				return false;
+			}
 		};
 	});
 	
@@ -816,7 +821,11 @@ $(document).ready(function(e) {
 			});
 		}
 	});
-	
+	$('#install_by_step_mapping_form').submit(function(){
+		
+		
+		
+	});
 	$('#install_by_step_mapping_use .bUseThisMapNowYes').click(function(e) {
 		e.preventDefault();
         

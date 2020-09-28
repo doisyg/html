@@ -1235,30 +1235,26 @@
             
             <div class="content">
                 <form class="form_site" action="" method="post">
-                <div class="install_by_step_config_loading loading_big" style="padding-top:20px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
-                
-                <div class="loaded col-md-12" style="padding-top:50px;">
-                    
-                    
-                    
-                    <div class="form-group">
-                        <label for="i_level_min_gotocharge" class="col-xs-12 col-md-6 control-label"><?php echo __('Emergency battery level (execute a go to charge if the battery drops below this level)');?></label>
-                        <div class="col-md-6 input-group mb-md">
-                            <input type="text" value="0" class="form-control" name="i_level_min_gotocharge" id="install_by_step_config_i_level_min_gotocharge" />
-                            <span class="input-group-addon">%</span>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="i_level_min_dotask" class="col-xs-12 col-md-6 control-label"><?php echo __('Minimum battery level before move:');?></label>
-                        <div class="col-md-6 input-group mb-md">
-                            <input type="text" value="0" class="form-control" name="i_level_min_dotask" id="install_by_step_config_i_level_min_dotask" />
-                            <span class="input-group-addon">%</span>
-                        </div>
-                    </div>
-                    
-                    <a href="#" class="install_by_step_config_next button_goto" data-goto="install_by_step_manager" style="display:none;"></a>   
-                </div>
+					<div class="install_by_step_config_loading loading_big" style="padding-top:20px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
+					<div class="loaded col-md-12" style="padding-top:50px;">
+						<div class="form-group">
+							<label for="i_level_min_gotocharge" class="col-xs-12 col-md-6 control-label"><?php echo __('Emergency battery level (execute a go to charge if the battery drops below this level)');?></label>
+							<div class="col-md-6 input-group mb-md">
+								<input type="text" value="0" class="form-control" name="i_level_min_gotocharge" id="install_by_step_config_i_level_min_gotocharge" />
+								<span class="input-group-addon">%</span>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="i_level_min_dotask" class="col-xs-12 col-md-6 control-label"><?php echo __('Minimum battery level before move:');?></label>
+							<div class="col-md-6 input-group mb-md">
+								<input type="text" value="0" class="form-control" name="i_level_min_dotask" id="install_by_step_config_i_level_min_dotask" />
+								<span class="input-group-addon">%</span>
+							</div>
+						</div>
+						
+						<a href="#" class="install_by_step_config_next button_goto" data-goto="install_by_step_manager" style="display:none;"></a>   
+					</div>
                 </form>
             </div>
             <footer>
