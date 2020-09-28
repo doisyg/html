@@ -99,7 +99,7 @@
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" class="btn btn-primary" data-dismiss="modal" style="width:100%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Close');?></a>
+                                        <a href="#" class="btn btn-default btn_footer_w100" data-dismiss="modal"><?php echo __('Close');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -136,7 +136,7 @@
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" class="btn btn-primary" data-dismiss="modal" style="width:100%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Close');?></a>
+                                        <a href="#" class="btn btn-default btn_footer_w100" data-dismiss="modal" ><?php echo __('Close');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -189,8 +189,8 @@
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" class="btn btn-primary bInitModalTest" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
-                                        <a href="#" class="btn btn-warning bInitModalTest bTestDock" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Continue');?></a>
+                                        <a href="#" class="btn btn-default btn_footer_w50_left bInitModalTest" data-dismiss="modal" ><?php echo __('Cancel');?></a>
+                                        <a href="#" class="btn btn-primary bInitModalTest bTestDock btn_footer_w50_right" data-dismiss="modal" ><?php echo __('Continue');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -241,8 +241,8 @@
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" class="btn btn-primary bInitModalTest" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
-                                        <a href="#" class="btn btn-warning bInitModalTest bTestPoi" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Continue');?></a>
+                                        <a href="#" class="btn btn-default btn_footer_w50_left bInitModalTest" data-dismiss="modal"><?php echo __('Cancel');?></a>
+                                        <a href="#" class="btn btn-primary bInitModalTest bTestPoi btn_footer_w50_right" data-dismiss="modal"><?php echo __('Continue');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -283,8 +283,8 @@
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" class="btn btn-primary bInitModalTest" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
-                                        <a href="#" class="btn btn-warning bInitModalTest bTestAugmentedPose" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Continue');?></a>
+                                        <a href="#" class="btn btn-default btn_footer_w50_left bInitModalTest" data-dismiss="modal"><?php echo __('Cancel');?></a>
+                                        <a href="#" class="btn btn-primary bInitModalTest bTestAugmentedPose btn_footer_w50_right" data-dismiss="modal" ><?php echo __('Continue');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -318,7 +318,7 @@
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:100%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+                                        <a href="#" class="btn btn-default btn_footer_w100" data-dismiss="modal" style="width:100%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -351,8 +351,9 @@
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" id="manager_edit_map_bPoiSaveConfig" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
-                                        <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+                                        
+                                        <a href="#" class="btn btn-default btn_footer_w50_left" data-dismiss="modal"><?php echo __('Cancel');?></a>
+										<a href="#" id="manager_edit_map_bPoiSaveConfig" class="btn btn-primary btn_footer_w50_right" data-dismiss="modal" ><?php echo __('Save');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -381,8 +382,8 @@
                 </div>
             </div>
         <footer>
-            <a href="#" class="btn btn-primary button_goto" data-goto="manager_dashbord" style="position:absolute; width:50%; left:0; bottom:0px; font-size:30px;"><i class="fa fa-chevron-left"></i> <?php echo __('Back');?></a>
-            <a href="#" class="btn btn-warning bSaveEditMap" style="position:absolute; width:50%; right:0; left:auto; bottom:0px; font-size:30px;"><?php echo __('Save map');?></a>
+            <a href="#" class="btn btn-default button_goto btn_footer_w50_left" data-goto="manager_dashbord"><?php echo __('Back');?></a>
+            <a href="#" class="btn btn-success bSaveEditMap btn_footer_w50_right" ><?php echo __('Save map');?></a>
         </footer>
     </section>
         
@@ -405,7 +406,7 @@
                 </div>
             </div>
         <footer>
-            <a href="#" class="btn btn-wyca button_goto" data-goto="manager_dashbord"><i class="fa fa-chevron-left"></i> <?php echo __('Back');?></a>
+            <a href="#" class="btn btn-default button_goto btn_footer_w100" data-goto="manager_dashbord"><?php echo __('Back');?></a>
         </footer>
     </section>
         
@@ -447,7 +448,7 @@
                 
             </div>
         <footer>
-            <a href="#" class="btn btn-wyca button_goto" data-goto="manager_dashbord"><i class="fa fa-chevron-left"></i> <?php echo __('Back');?></a>
+            <a href="#" class="btn btn-default button_goto btn_footer_w100" data-goto="manager_dashbord"><?php echo __('Back');?></a>
         </footer>
     </section>
         
@@ -467,7 +468,7 @@
                                         
                 <div class="ifUndocked">
                     
-                    <div style="text-align:center; width:100%; z-index:2000; margin-top:50px;">
+                    <div style="text-align:center; width:100%; z-index:2000; margin-top:20px;">
                         <div class="joystickDiv" draggable="false" style="margin:auto;">
                             <div class="fond"></div>
                             <div class="curseur"></div>
@@ -476,7 +477,7 @@
                 </div>
             </div>
         <footer>
-            <a href="#" class="btn btn-wyca button_goto" data-goto="manager_dashbord"><i class="fa fa-chevron-left"></i> <?php echo __('Back');?></a>
+            <a href="#" class="btn btn-default button_goto btn_footer_w100" data-goto="manager_dashbord"><?php echo __('Back');?></a>
         </footer>
     </section>
         
@@ -544,8 +545,9 @@
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" id="manager_users_bUserSave" class="btn btn-primary" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
-                                        <a href="#" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+                                       
+                                        <a href="#" class="btn btn-default btn_footer_w50_left" data-dismiss="modal" ><?php echo __('Cancel');?></a>
+										<a href="#" id="manager_users_bUserSave" class="btn btn-primary btn_footer_w50_right"><?php echo __('Save');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -554,7 +556,7 @@
                 </div>
             </div>
         <footer>
-            <a href="#" class="btn btn-wyca button_goto" data-goto="manager_dashbord"><i class="fa fa-chevron-left"></i> <?php echo __('Back');?></a>
+            <a href="#" class="btn btn-default btn_footer_w100 button_goto" data-goto="manager_dashbord"><?php echo __('Back');?></a>
         </footer>
     </section>
         
@@ -567,7 +569,7 @@
             <?php echo __('Comming soon');?>
         </div>
         <footer>
-            <a href="#" class="btn btn-wyca button_goto" data-goto="manager_dashbord"><i class="fa fa-chevron-left"></i> <?php echo __('Back');?></a>
+            <a href="#" class="btn btn-default btn_footer_w100 button_goto" data-goto="manager_dashbord"><?php echo __('Back');?></a>
         </footer>
     </section>
 </div>

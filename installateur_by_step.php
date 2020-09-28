@@ -21,7 +21,7 @@
             </div>
         </section>
     
-    	<section id="install_by_step_wifi" class="page with_footer <?php echo $INSTALL_STEP == 1?'active':'';?>">
+    	<section id="install_by_step_wifi" class="page <?php echo $INSTALL_STEP == 1?'active':'';?> with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_lang"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
@@ -1196,9 +1196,9 @@
             
             	
                 
-            	<a href="#" class="btn btn-success button_goto bSaveEditMap btn_footer_w50_left" data-goto="install_by_step_test_map" ><?php echo __('Test');?></a>
-				<a href="#" class="btn btn-primary bSaveEditMap btn_footer_w50_right"><?php echo __('Save map');?></a>
-            
+            	
+				<a href="#" class="btn btn-success bSaveEditMap btn_footer_w50_left"><?php echo __('Save map');?></a>
+				<a href="#" class="btn btn-primary button_goto bSaveEditMap btn_footer_w50_right" data-goto="install_by_step_test_map" ><?php echo __('Next');?></a>
             </footer>
         </section>
         
@@ -1219,9 +1219,9 @@
             <footer>
             
             	
-                <a href="#" class="btn btn-default button_goto btn_footer_w50_left" data-goto="install_by_step_edit_map"><?php echo __('Cancel');?></a>
+                <a href="#" class="btn btn-default button_goto btn_footer_w50_left" data-goto="install_by_step_edit_map"><?php echo __('Back');?></a>
             
-            	<a href="#" class="btn btn-primary button_goto bTestFinish btn_footer_w50_right" data-goto="install_by_step_config"><?php echo __('Confirm');?></a>
+            	<a href="#" class="btn btn-primary button_goto bTestFinish btn_footer_w50_right" data-goto="install_by_step_config"><?php echo __('Next');?></a>
             </footer>
         </section>
         
@@ -1232,39 +1232,36 @@
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
                 <h2><?php echo __('Configuration');?></h2>
             </header>
-            <form class="form_site" action="" method="post" style="margin-bottom:20px;">
+            
             <div class="content">
-                
-                <div class="install_by_step_config_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
-                
-                <div class="loaded col-md-12" style="padding-top:50px;">
-                    
-                    
-                    
-                    <div class="form-group">
-                        <label for="i_level_min_gotocharge" class="col-xs-12 col-md-6 control-label"><?php echo __('Emergency battery level (execute a go to charge if the battery drops below this level)');?></label>
-                        <div class="col-md-6 input-group mb-md">
-                            <input type="text" value="0" class="form-control" name="i_level_min_gotocharge" id="install_by_step_config_i_level_min_gotocharge" />
-                            <span class="input-group-addon">%</span>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="i_level_min_dotask" class="col-xs-12 col-md-6 control-label"><?php echo __('Minimum battery level before move:');?></label>
-                        <div class="col-md-6 input-group mb-md">
-                            <input type="text" value="0" class="form-control" name="i_level_min_dotask" id="install_by_step_config_i_level_min_dotask" />
-                            <span class="input-group-addon">%</span>
-                        </div>
-                    </div>
-                    
-                    <a href="#" class="install_by_step_config_next button_goto" data-goto="install_by_step_manager" style="display:none;"></a>   
-                </div>
-                
+                <form class="form_site" action="" method="post">
+					<div class="install_by_step_config_loading loading_big" style="padding-top:20px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
+					<div class="loaded col-md-12" style="padding-top:50px;">
+						<div class="form-group">
+							<label for="i_level_min_gotocharge" class="col-xs-12 col-md-6 control-label"><?php echo __('Emergency battery level (execute a go to charge if the battery drops below this level)');?></label>
+							<div class="col-md-6 input-group mb-md">
+								<input type="text" value="0" class="form-control" name="i_level_min_gotocharge" id="install_by_step_config_i_level_min_gotocharge" />
+								<span class="input-group-addon">%</span>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="i_level_min_dotask" class="col-xs-12 col-md-6 control-label"><?php echo __('Minimum battery level before move:');?></label>
+							<div class="col-md-6 input-group mb-md">
+								<input type="text" value="0" class="form-control" name="i_level_min_dotask" id="install_by_step_config_i_level_min_dotask" />
+								<span class="input-group-addon">%</span>
+							</div>
+						</div>
+						
+						<a href="#" class="install_by_step_config_next button_goto" data-goto="install_by_step_manager" style="display:none;"></a>   
+					</div>
+                </form>
             </div>
             <footer>
-            	<a href="#" class="bConfigurationSave btn btn-primary btn_footer_w100" data-goto="install_by_step_manager"><?php echo __('Save');?></a>
+				<a href="#" class="btn btn-default button_goto btn_footer_w50_left" data-goto="install_by_step_test_map"><?php echo __('Back');?></a>
+            	<a href="#" class="bConfigurationSave btn btn-primary btn_footer_w50_right" data-goto="install_by_step_manager"><?php echo __('Save');?></a>
             </footer>
-            </form>
+            
         
         </section>
         
@@ -1344,7 +1341,8 @@
                 
             </div>
             <footer>
-            	<a href="#" class="btn btn-primary button_goto bValidManager btn_footer_w100" data-goto="install_by_step_service_book" style="z-index:2001;"><?php echo __('Next');?></a>
+				<a href="#" class="btn btn-default button_goto btn_footer_w50_left" data-goto="install_by_step_config"><?php echo __('Back');?></a>
+            	<a href="#" class="btn btn-primary button_goto bValidManager btn_footer_w50_right" data-goto="install_by_step_service_book" style="z-index:2001;"><?php echo __('Next');?></a>
             </footer>
         </section>
                 
@@ -1398,7 +1396,8 @@
 				</div>                
             </div>
             <footer>
-            	<a href="#" class="btn btn-primary button_goto bFinishInstallation btn_footer_w100" data-goto="install_by_step_end" style="z-index:2001"><?php echo __('Finish installation');?></a>
+				<a href="#" class="btn btn-default button_goto btn_footer_w50_left" data-goto="install_by_step_manager"><?php echo __('Back');?></a>
+            	<a href="#" class="btn btn-primary button_goto bFinishInstallation btn_footer_w50_right" data-goto="install_by_step_end" style="z-index:2001"><?php echo __('Finish');?></a>
             </footer>
         </section>
         
