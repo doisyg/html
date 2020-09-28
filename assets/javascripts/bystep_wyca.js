@@ -352,28 +352,30 @@ $(document).ready(function(e) {
 		$('#pages_install_by_step .modalImportTop_content').show();
 		
 		file = $('#pages_install_by_step .file_import_top')[0].files[0];
-		var reader = new FileReader();
-		reader.onload = function(event) { 
-			wycaApi.InstallNewTopWithoutKey(btoa(reader.result), function(data) { 
-				if (data.A == wycaApi.AnswerCode.NO_ERROR)
-				{
+		if(file != undefined){
+			var reader = new FileReader();
+			reader.onload = function(event) { 
+				wycaApi.InstallNewTopWithoutKey(btoa(reader.result), function(data) { 
+					if (data.A == wycaApi.AnswerCode.NO_ERROR)
+					{
+						
+						$('#pages_install_by_step .modalImportTop_loading').hide();
+						$('#pages_install_by_step .modalImportTop_content').show();
+						
+						$('#pages_install_by_step .modalImportTop').modal('hide');
+						InitTopsByStep();
+					}
+					else
+					{
+						console.log(JSON.stringify(data)); 
+						alert_wyca(wycaApi.AnswerCodeToString(data.A));
+					}
 					
-					$('#pages_install_by_step .modalImportTop_loading').hide();
-					$('#pages_install_by_step .modalImportTop_content').show();
 					
-					$('#pages_install_by_step .modalImportTop').modal('hide');
-					InitTopsByStep();
-				}
-				else
-				{
-					console.log(JSON.stringify(data)); 
-					alert_wyca(wycaApi.AnswerCodeToString(data.A));
-				}
-				
-				
-			});
-		};
-		reader.readAsText(file);
+				});
+			};
+			reader.readAsText(file);
+		}
     });
 	
 	$('#pages_install_by_step a.import_top').click(function(e) {

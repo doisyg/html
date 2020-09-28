@@ -47,6 +47,7 @@ $(window).on("popstate", function(e) {
 
 
 $(document).ready(function(e) {
+	$('.title_section').html($('div.global_page.active > div.global_sub_page.active > section.page.active  > header > h2').text()); // TITLE INIT
 	
 	$('.popupHelp').click(function(e) {
         e.preventDefault();
@@ -212,8 +213,8 @@ $(document).ready(function(e) {
 		}
 		
 		// ADD TITLE CHANGE 
-			console.log('Title ',$('#'+next+' > header > h2').text());
-			$('.title_section').html($('#'+next+' > header > h2').text());
+			
+		$('.title_section').html($('#'+next+' > header > h2').text());
 		//
 		InitJoystick();
     });

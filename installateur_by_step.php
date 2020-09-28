@@ -117,14 +117,18 @@
                                     
                                         <div class="modalImportTop_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
                                         <div class="modalImportTop_content">
-	                                        <input class="file_import_top" type="file" class="form-control" />
+	                                        <div class="file_import_top_wrapper">
+												<input class="file_import_top" type="file" class="form-control" accept=".wyca" required/>
+												<p><i class="fas fa-2x fa-file-import"></i><br><?= __('Import')?><br><?= __('your')?><br><?= __('Top')?></p>
+											</div>
+											<img class="img-responsive" id="elodie_import_top" src="assets/images/elodie_form.png">
                                         </div>
                                         
                                     </div>
                                     
                                     <div style="clear:both;"></div>                                   
-                                    <a href="#" class="btn btn-default" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
-									<a href="#" class="btn btn-primary bImportTopDo" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Import');?></a>
+                                    <a href="#" class="btn btn-default btn_footer_w50_left" data-dismiss="modal"><?php echo __('Cancel');?></a>
+									<a href="#" class="btn btn-primary bImportTopDo btn_footer_w50_right" ><?php echo __('Import');?></a>
                                 </div>
                             </div>
                         </div>
@@ -164,55 +168,71 @@
                 <h2><?php echo __('Check components');?></h2>
             </header>
             <div class="content">
-                <ul class="tuiles row">
-                    <li class="col-xs-4 col-md-3 col-lg-2">
+                <ul class="tuiles row" style="position:relative">
+                    <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
                     	<div class="is_checkbox test anim_tuiles tuile_img tuile1 no_update">
                             <i class="fa fa-check"></i>
                     		<i class="fa fa fa-spinner fa-pulse"></i>
-                    		<i class="fa fa-wifi"></i>
+                    		<img class="i" src="assets/images/radar_icon.png">
 							<?php echo __('Lidar');?>
                         </div>
                     </li>
-                    <li class="col-xs-4 col-md-3 col-lg-2">
+                    <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
                     	<div class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
                             <i class="fa fa-check"></i>
                     		<i class="fa fa fa-spinner fa-pulse"></i>
-                    		<i class="fa fa-volume-up"></i>
-							<?php echo __('US');?>
+                    		<img class="i" src="assets/images/ultrasound.svg">
+							<?php echo __('Ultrasound');?>
                         </div>
+						<span class="trait_legende" style="width:calc(var(--vh, 1vh) * 20);transform:rotate(50deg)translateX(0px)translateY(0px);"></span>
                     </li>
-                    <li class="col-xs-4 col-md-3 col-lg-2">
+                    <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
                     	<div class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
                             <i class="fa fa-check"></i>
                     		<i class="fa fa fa-spinner fa-pulse"></i>
-                    		<i class="fa fa-gear"></i>
+                    		<img class="i" src="assets/images/motor.png">
 							<?php echo __('Motor card');?>
                         </div>
+						<span class="trait_legende" style="width:calc(var(--vh, 1vh) * 20);transform:rotate(50deg)translateX(0px)translateY(0px);"></span>
                     </li>
-                    <li class="col-xs-4 col-md-3 col-lg-2">
+                    <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
+                    	<img class="img-responsive" id="elodie_import_top" src="assets/images/elodie_form.png">
+                    </li>
+                    <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
                     	<div class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
                             <i class="fa fa-check"></i>
                     		<i class="fa fa fa-spinner fa-pulse"></i>
                     		<i class="fa fa-battery-4"></i>
-							<?php echo __('Battery');?>
+							<?php echo __('Com. Battery');?>
                         </div>
                     </li>
-                    <li class="col-xs-4 col-md-3 col-lg-2">
+                    <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
                     	<div class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
                             <i class="fa fa-check"></i>
                     		<i class="fa fa fa-spinner fa-pulse"></i>
-                    		<i class="fa fa-camera"></i>
-							<?php echo __('3D Scan');?>
+                    		<img class="i" src="assets/images/3d_sensor.png">
+							<?php echo __('3D Sensor');?>
                         </div>
                     </li>
-                    <li class="col-xs-4 col-md-3 col-lg-2">
+                    <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
                     	<div class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
                             <i class="fa fa-check"></i>
                     		<i class="fa fa fa-spinner fa-pulse"></i>
-                    		<i class="fa fa-spinner"></i>
+                    		<img class="i" src="assets/images/strip_led2.png">
 							<?php echo __('Com. Leds');?>
                         </div>
                     </li>
+					
+					<svg class="svg_legende" xmlns="http://www.w3.org/2000/svg">
+						<line x1="65" y1="142" x2="109" y2="226" stroke-width="1" stroke="#343434" class="line_lidar"/>
+						<line x1="187" y1="122" x2="168" y2="197" stroke-width="1" stroke="#343434" class="line_us"/>
+						<line x1="187" y1="122" x2="134" y2="197" stroke-width="1" stroke="#343434" class="line_us"/>
+						<line x1="308" y1="142" x2="226" y2="281" stroke-width="1" stroke="#343434" class="line_motor"/>
+						<line x1="65" y1="351" x2="109" y2="286" stroke-width="1" stroke="#343434" class="line_battery"/>
+						<line x1="187" y1="371" x2="155" y2="265" stroke-width="1" stroke="#343434" class="line_sensor"/>
+						<line x1="308" y1="351" x2="174" y2="286" stroke-width="1" stroke="#343434" class="line_leds"/>
+					</svg>
+					
                 </ul>  
             </div>
 			<footer>
