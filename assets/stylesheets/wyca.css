@@ -706,3 +706,7 @@ ul.tuiles li img.i {
 	max-height:unset;
 	max-width:unset;
 }
+img.fi-robot{
+	max-height: 59px!important;
+    padding: 6px!important;
+}
