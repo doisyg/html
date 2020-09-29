@@ -25,6 +25,7 @@ class Configuration
 			else{
 				self::$data = array();
 				if ($fd = fopen($file_path, 'w')){
+					//CREER C.CONF IF DO NOT EXIST
 					fwrite($fd, json_encode(self::$data));
 					fclose($fd);
 				}else{
