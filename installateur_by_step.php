@@ -118,7 +118,7 @@
                                         <div class="modalImportTop_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
                                         <div class="modalImportTop_content">
 	                                        <div class="file_import_top_wrapper">
-												<input class="file_import_top" type="file" class="form-control" accept=".wyca" required/>
+												<input class="file_import_top" type="file" class="form-control" accept=".wyca"/>
 												<p><i class="fas fa-2x fa-file-import"></i><br><?= __('Import')?><br><?= __('your')?><br><?= __('Top')?></p>
 											</div>
 											<img class="img-responsive" id="elodie_import_top" src="assets/images/elodie_form.png">

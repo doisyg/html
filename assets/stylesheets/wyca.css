@@ -573,8 +573,39 @@ section.page > header {
     line-height: 70px;
     transform: translateY(-50%);
 	z-index:0;
+	text-align: center;
 }
 .file_import_top{
+	width: 100%;
+    height: 100%;
+    opacity: 0;
+	position:absolute;
+	z-index:1;
+}
+.file_import_site_wrapper{
+	width: 50%;
+    margin: 0 auto;
+    border: 2px dashed #343434;
+    height: calc(var(--vh, 1vh) * 70);
+    background: #589fb26e;
+    border-radius: 0.5rem;	
+	position:relative;
+	margin-bottom:15px;
+}
+.file_import_site_wrapper > p{
+	position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    color: #343434;
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 70px;
+    transform: translateY(-50%);
+	z-index:0;
+	text-align: center;
+}
+.file_import_site{
 	width: 100%;
     height: 100%;
     opacity: 0;

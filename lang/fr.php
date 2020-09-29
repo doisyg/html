@@ -153,7 +153,6 @@ $_LANG['d516b85b13c2b8a3804b297efaecfbf6'] = 'Import Site';
 $_LANG['d67c92867cc3d7fdf47f32cf70ab1b24'] = 'Battery';
 $_LANG['b048f17b0fa390d71e71f5694bd04a3e'] = '3D Scan';
 $_LANG['d32741f0f08b1b97d305e1d9e741e83f'] = 'Com. Leds';
-$_LANG['098b4b635da678a6a3eba7b796027c78'] = 'Name already used please change';
 $_LANG['49ab28040dfa07f53544970c6d147e1e'] = 'Connect';
 $_LANG['a20ddccbb6f808ec42cd66323e6c6061'] = 'Finish';
 $_LANG['62cc0b4ebb0b57b40778179234246c38'] = 'your';
@@ -168,5 +167,6 @@ $_LANG['ed05038e3abbbd11f6b48c5dd723c135'] = 'Move Robot to start point';
 $_LANG['4edf4bd031ac3dbfacbe9698252bd665'] = 'Start Mapping';
 $_LANG['89931c55e52435a6bf3ac08f69d5e781'] = 'Move robot to start point';
 $_LANG['f92965e2c8a7afb3c1b9a5c09a263636'] = 'Done';
+$_LANG['98defd6ee70dfb1dea416cecdf391f58'] = 'site';
 
 ?>

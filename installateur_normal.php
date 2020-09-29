@@ -949,7 +949,10 @@
                 
                 <div class="install_normal_setup_import_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
                 <div class="install_normal_setup_import_content">
-	                <input class="file_import_site" type="file" class="form-control" />
+					<div class="file_import_site_wrapper">
+						<input class="file_import_site" type="file" class="form-control" accept=".wyca"/>
+						<p><i class="fas fa-2x fa-file-import"></i><br><?= __('Import')?><br><?= __('your')?><br><?= __('site')?></p>
+					</div>
     			</div>
             </div>
             <footer>
