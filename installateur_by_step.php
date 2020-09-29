@@ -120,6 +120,7 @@
 	                                        <div class="file_import_top_wrapper">
 												<input class="file_import_top" type="file" class="form-control" accept=".wyca"/>
 												<p><i class="fas fa-2x fa-file-import"></i><br><?= __('Import')?><br><?= __('your')?><br><?= __('Top')?></p>
+												<span class="filename_import_top" style="display:none">Test</span>
 											</div>
 											<img class="img-responsive" id="elodie_import_top" src="assets/images/elodie_form.png">
                                         </div>

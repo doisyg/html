@@ -151,6 +151,7 @@ $(document).ready(function(e) {
 		
 		if (next == 'install_normal_setup_sites') GetSitesNormal();
 		if (next == 'install_normal_setup_export') GetSitesForExportNormal();
+		if (next == 'install_normal_setup_import') InitSiteImport();
 		if (next == 'install_normal_setup_tops') InitTopsNormal();
 		if (next == 'install_normal_setup_top') InitTopsActiveNormal();
 		if (next == 'install_normal_setup_vehicule') GetConfigurationsNormal();
@@ -159,7 +160,7 @@ $(document).ready(function(e) {
 		if (next == 'install_normal_service_book') GetServiceBooksNormal();
 		if (next == 'install_normal_edit_map') GetInfosCurrentMapNormal();
 		if (next == 'install_normal_setup_trinary') NormalInitTrinary();
-		
+				
 		if (next == 'manager_edit_map') GetInfosCurrentMapManager();
 		if (next == 'manager_top') InitTopsActiveManager();
 		if (next == 'manager_users') GetUsers();
@@ -318,6 +319,18 @@ function simulateMouseEvent (event, simulatedType) {
     event.target.dispatchEvent(simulatedEvent);
   }
 
+function InitSiteImport(){
+	$('#pages_install_normal .filename_import_site').html('');
+	$('#pages_install_normal .filename_import_site').hide();
+	$('#pages_install_normal .file_import_site_wrapper').css('background-color','#589fb26e');
+	$('#pages_install_normal .file_import_site').val('');
+}
+function InitTopImport(){
+	$('#pages_install_by_step .filename_import_top').html('');
+	$('#pages_install_by_step .filename_import_top').hide();
+	$('#pages_install_by_step .file_import_top_wrapper').css('background-color','#589fb26e');
+	$('#pages_install_by_step .file_import_top').val('');
+}
 
 function GetServiceBooksNormal()
 {

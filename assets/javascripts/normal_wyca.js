@@ -17,7 +17,7 @@ $(document).ready(function(e) {
 					a.style = "display: none";
 					
 					var blob = new Blob([data.D], {type: "octet/stream"}),
-						url = window.URL.createObjectURL(blob);
+					url = window.URL.createObjectURL(blob);
 					a.href = url;
 					a.download = 'export_site_'+currentNameSiteExport+'.wyca';
 					a.click();

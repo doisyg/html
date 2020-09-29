@@ -551,7 +551,32 @@ section.page > header {
 	font-size:30px;
 	border-radius:0px;
 }
+.shake{
+  animation: shake 0.82s cubic-bezier(.36, .07, .19, .97) both infinite;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
 
+@keyframes shake {
+  10%,
+  90% {
+	transform: translate3d(-1px, 0, 0);
+  }
+  20%,
+  80% {
+	transform: translate3d(2px, 0, 0);
+  }
+  30%,
+  50%,
+  70% {
+	transform: translate3d(-4px, 0, 0);
+  }
+  40%,
+  60% {
+	transform: translate3d(4px, 0, 0);
+  }
+}
 .file_import_top_wrapper{
 	width: 50%;
     margin: 0 auto;
@@ -561,6 +586,7 @@ section.page > header {
     border-radius: 0.5rem;	
 	position:relative;
 	margin-bottom:15px;
+	transition:1s all;	
 }
 .file_import_top_wrapper > p{
 	position: absolute;
@@ -570,7 +596,7 @@ section.page > header {
     color: #343434;
     font-weight: 700;
     font-size: 26px;
-    line-height: 70px;
+    line-height:45px;
     transform: translateY(-50%);
 	z-index:0;
 	text-align: center;
@@ -582,8 +608,25 @@ section.page > header {
 	position:absolute;
 	z-index:1;
 }
+.filename_import_top{
+	font-size:16px;
+	display:none;
+	position:absolute;
+	bottom:5%;
+	left:0;
+	right:0;
+	color: #343434;
+    font-weight: 700;
+	text-align:center;
+}
+
+#elodie_import_top{
+	width:50%;
+	margin:0 auto
+}
+
 .file_import_site_wrapper{
-	width: 50%;
+	width: 100%;
     margin: 0 auto;
     border: 2px dashed #343434;
     height: calc(var(--vh, 1vh) * 70);
@@ -591,6 +634,7 @@ section.page > header {
     border-radius: 0.5rem;	
 	position:relative;
 	margin-bottom:15px;
+	transition:1s all;
 }
 .file_import_site_wrapper > p{
 	position: absolute;
@@ -612,9 +656,16 @@ section.page > header {
 	position:absolute;
 	z-index:1;
 }
-#elodie_import_top{
-	width:50%;
-	margin:0 auto
+.filename_import_site{
+	font-size:16px;
+	display:none;
+	position:absolute;
+	bottom:5%;
+	left:0;
+	right:0;
+	color: #343434;
+    font-weight: 700;
+	text-align:center;
 }
 
 

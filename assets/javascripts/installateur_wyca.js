@@ -326,69 +326,50 @@ $(document).ready(function(e) {
 			}
 		});
     });
-	
+	$('#pages_install_normal .file_import_site').change(function(){
+		//console.log('here');
+		$('#pages_install_normal .filename_import_site').html($(this)[0].files[0].name);
+		$('#pages_install_normal .filename_import_site').show();
+		$('#pages_install_normal .file_import_site_wrapper').css('background-color','#47a4476e');
+		
+	})
 	$('#pages_install_normal a.bImportSiteDo').click(function(e) {
         e.preventDefault();
-		
-		$('#pages_install_normal .install_normal_setup_import_loading').hide();
-		$('#pages_install_normal .install_normal_setup_import_content').show();
-		
 		file = $('#pages_install_normal .file_import_site')[0].files[0];
-		var reader = new FileReader();
-		reader.onload = function(event) { 
-			wycaApi.ImportSite(btoa(reader.result), function(data) { 
-				if (data.A == wycaApi.AnswerCode.NO_ERROR)
-				{
-					$('#pages_install_normal .install_normal_setup_import_loading').hide();
-					$('#pages_install_normal .install_normal_setup_import_content').show();
-					
-					success_wyca('Imported');
-					
-					$('.bImportSiteBack').click();
-				}
-				else
-				{
-					console.log(JSON.stringify(data)); 
-					text = wycaApi.AnswerCodeToString(data.A);
-					if (data.M != '') text += '<br />'+data.M;
-					alert_wyca(text);
-				}
-			});
-		};
-		reader.readAsText(file);
+		if(file != undefined){
+			
+			$('#pages_install_normal .install_normal_setup_import_loading').show();
+			$('#pages_install_normal .install_normal_setup_import_content').hide();
+			
+			var reader = new FileReader();
+			reader.onload = function(event) { 
+				wycaApi.ImportSite(btoa(reader.result), function(data) { 
+					if (data.A == wycaApi.AnswerCode.NO_ERROR)
+					{
+						$('#pages_install_normal .install_normal_setup_import_loading').hide();
+						$('#pages_install_normal .install_normal_setup_import_content').show();
+						
+						success_wyca('Imported');
+						
+						$('.bImportSiteBack').click();
+					}
+					else
+					{
+						console.log(JSON.stringify(data)); 
+						text = wycaApi.AnswerCodeToString(data.A);
+						if (data.M != '') text += '<br />'+data.M;
+						alert_wyca(text);
+					}
+				});
+			};
+			reader.readAsText(file);
+		}else{
+			let icon = $('#pages_install_normal .file_import_site_wrapper > p > i');
+			icon.toggleClass('shake');
+			setTimeout(function(){icon.toggleClass('shake')},2000);
+		}
     });
 	
-	$('#pages_install_normal a.bImportTopDo').click(function(e) {
-        e.preventDefault();
-		
-		$('#pages_install_normal .modalImportTop_loading').hide();
-		$('#pages_install_normal .modalImportTop_content').show();
-		
-		file = $('#pages_install_normal .file_import_top')[0].files[0];
-		var reader = new FileReader();
-		reader.onload = function(event) { 
-			wycaApi.InstallNewTopWithoutKey(btoa(reader.result), function(data) { 
-				if (data.A == wycaApi.AnswerCode.NO_ERROR)
-				{
-					$('#pages_install_normal .modalImportTop_loading').hide();
-					$('#pages_install_normal .modalImportTop_content').show();
-					
-					$('#pages_install_normal .modalImportTop').modal('hide');
-					InitTopsNormal();
-				}
-				else
-				{
-					console.log(JSON.stringify(data)); 
-					text = wycaApi.AnswerCodeToString(data.A);
-					if (data.M != '') text += '<br />'+data.M;
-					alert_wyca(text);
-				}
-				
-				
-			});
-		};
-		reader.readAsText(file);
-    });
 	
 	$('#pages_install_normal a.import_top').click(function(e) {
         e.preventDefault();

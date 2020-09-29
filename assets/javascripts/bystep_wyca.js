@@ -344,15 +344,22 @@ $(document).ready(function(e) {
 			}
 		});
     });
+
+	$('#pages_install_by_step .file_import_top').change(function(){
+		//console.log('here');
+		$('#pages_install_by_step .filename_import_top').html($(this)[0].files[0].name);
+		$('#pages_install_by_step .filename_import_top').show();
+		$('#pages_install_by_step .file_import_top_wrapper').css('background-color','#47a4476e');
+		
+	})
 	
 	$('#pages_install_by_step a.bImportTopDo').click(function(e) {
         e.preventDefault();
 		
-		$('#pages_install_by_step .modalImportTop_loading').hide();
-		$('#pages_install_by_step .modalImportTop_content').show();
-		
 		file = $('#pages_install_by_step .file_import_top')[0].files[0];
 		if(file != undefined){
+			$('#pages_install_by_step .modalImportTop_loading').show();
+			$('#pages_install_by_step .modalImportTop_content').hide();
 			var reader = new FileReader();
 			reader.onload = function(event) { 
 				wycaApi.InstallNewTopWithoutKey(btoa(reader.result), function(data) { 
@@ -375,6 +382,10 @@ $(document).ready(function(e) {
 				});
 			};
 			reader.readAsText(file);
+		}else{
+			let icon = $('#pages_install_by_step .file_import_top_wrapper > p > i');
+			icon.toggleClass('shake');
+			setTimeout(function(){icon.toggleClass('shake')},2000);
 		}
     });
 	
@@ -385,6 +396,7 @@ $(document).ready(function(e) {
 		$('#pages_install_by_step .modalImportTop_content').show();
 		
 		$('#pages_install_by_step .modalImportTop').modal('show');
+		InitTopImport();
 	});
 	$('#pages_install_by_step a.save_tops').click(function(e) {
         e.preventDefault();

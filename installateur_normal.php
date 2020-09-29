@@ -951,7 +951,8 @@
                 <div class="install_normal_setup_import_content">
 					<div class="file_import_site_wrapper">
 						<input class="file_import_site" type="file" class="form-control" accept=".wyca"/>
-						<p><i class="fas fa-2x fa-file-import"></i><br><?= __('Import')?><br><?= __('your')?><br><?= __('site')?></p>
+						<p><i class="fas fa-2x fa-file-import"></i><br><?= __('Import your site')?></p>
+						<span class="filename_import_site" style="display:none">Test</span>
 					</div>
     			</div>
             </div>
