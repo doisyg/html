@@ -468,7 +468,6 @@ $(document).ready(function(e) {
 	
 	$('#pages_install_by_step form.form_site').submit(function(e) {
         e.preventDefault();
-		console.log('Form sended bool : ',form_sended);
 		if ($('#pages_install_by_step .i_site_name').val() == '')
 		{
 			alert_wyca(textIndicateAName);
@@ -487,21 +486,16 @@ $(document).ready(function(e) {
 					}else{
 						data.D.forEach(function(item){
 							site_names.push(item.name);
-						});
-						console.log('Sites récupérés');
-						
+						});						
 						if(!site_names.includes($('#pages_install_by_step .i_site_name').val())){
 							if (create_new_site) // BOOLEAN INSTALLATEUR_WYCA.JS GESTION DES SITES
 							{
-									console.log('2');
 									newSite = { "id_site":-1, "comment":"", name:$('#pages_install_by_step .i_site_name').val() };
 									wycaApi.SetSite(newSite, function(data){
-										console.log('Set site');
 										if (data.A != wycaApi.AnswerCode.NO_ERROR) 
 											alert_wyca('Error navigation stop ; ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M);
 										else
 										{
-											console.log('Set site currentr');
 											wycaApi.SetSiteAsCurrent(data.D, function(data) {
 												if (data.A != wycaApi.AnswerCode.NO_ERROR) 
 													alert_wyca('Error navigation stop ; ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M);
@@ -532,12 +526,9 @@ $(document).ready(function(e) {
 							}
 							else
 							{
-								console.log('3');
 								wycaApi.GetCurrentSite(function(data) {
-									console.log('4');
 									data.D.name = $('#pages_install_by_step .i_site_name').val();
 									wycaApi.SetSite(data.D, function(data){
-										console.log('5');
 										//REFRESH FORM SUBMIT
 										setTimeout(function(){form_sended = false},1000);
 										$('.install_by_step_site_save').removeClass('disabled');
@@ -558,13 +549,11 @@ $(document).ready(function(e) {
 								});
 							}
 						}else{
-							console.log('Already Used');
 							alert_wyca(textNameUsed);
 							//REFRESH FORM SUBMIT
 							setTimeout(function(){form_sended = false},1000);
 							$('.install_by_step_site_save').removeClass('disabled');
 						}	
-						console.log('6');
 					}
 				})
 			}else{
@@ -610,6 +599,7 @@ $(document).ready(function(e) {
 			{
 				$('#install_by_step_mapping .progressStartMapping').hide();
 				$('#install_by_step_mapping .bMappingStop').show();
+				$('.ifMapping').show();
 				$('#install_by_step_mapping .mapping_view').show();
 					
 				img = document.getElementById("install_by_step_mapping_img_map_saved");
@@ -1437,7 +1427,6 @@ function NextTimerCreateMap()
 			$('#install_by_step_mapping .progressStartMapping').hide();
 			$('#install_by_step_mapping .bMappingStop').show();
 			$('#install_by_step_mapping .mapping_view').show();
-				
 			img = document.getElementById("install_by_step_mapping_img_map_saved");
 			img.src = "assets/images/vide.png";
 			

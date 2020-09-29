@@ -153,5 +153,17 @@ $_LANG['d32741f0f08b1b97d305e1d9e741e83f'] = 'Com. Leds';
 $_LANG['098b4b635da678a6a3eba7b796027c78'] = 'Name already used please change';
 $_LANG['49ab28040dfa07f53544970c6d147e1e'] = 'Connect';
 $_LANG['a20ddccbb6f808ec42cd66323e6c6061'] = 'Finish';
+$_LANG['62cc0b4ebb0b57b40778179234246c38'] = 'your';
+$_LANG['a4ffdcf0dc1f31b9acaf295d75b51d00'] = 'Top';
+$_LANG['8282bb16cc2cf57f62950ef2fe8cda4f'] = 'Com. Battery';
+$_LANG['48b6dafa931dd4c9126e404a559acde3'] = '3D Sensor';
+$_LANG['0cf16fe494d28207e0f1419f296cfb97'] = 'Ultrasound';
+$_LANG['cad0cb6245e85556e25c0a467f4fdc9e'] = 'Auto Diag';
+$_LANG['0ca3d6fbf046a5a156b850809755083c'] = 'Sonar';
+$_LANG['b33538179f5661a86cbe327a1793e199'] = 'Motor';
+$_LANG['ed05038e3abbbd11f6b48c5dd723c135'] = 'Move Robot to start point';
+$_LANG['4edf4bd031ac3dbfacbe9698252bd665'] = 'Start Mapping';
+$_LANG['89931c55e52435a6bf3ac08f69d5e781'] = 'Move robot to start point';
+$_LANG['f92965e2c8a7afb3c1b9a5c09a263636'] = 'Done';
 
 ?>

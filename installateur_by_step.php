@@ -258,7 +258,7 @@
                 <a href="#" class="install_by_step_site_next button_goto" data-goto="install_by_step_mapping" style="display:none;"></a>   
             </div>
 			<footer>
-				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50" data-goto="install_by_step_check "><?= __('Back')?></a>
+				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50" data-goto="install_by_step_check"><?= __('Back')?></a>
 				<a href="#" onClick="$('#form_site').submit();" class="install_by_step_site_save btn btn-primary btn_footer_right btn_50"><?= __('Next')?></a>
             </footer>
         </section>
@@ -273,7 +273,7 @@
                 <div style="text-align:center; font-size:26px;">
                 
                 	
-                    <h3><?php echo __('Move robot to start point');?></h3>
+                    <h3 class="ifNMapping"><?php echo __('Move robot to start point');?></h3>
                     
                     <div class="progressStartMapping" style="display:none;">
                         <h3><?php echo __('Start mapping');?></h3>
@@ -299,8 +299,10 @@
                 </div>         
             </div>
             <footer>
-            	<a href="#" class="btn btn-default button_goto btn_footer_left btn_33" data-goto="install_by_step_site" ><?php echo __('Back');?></a>
-            	<a href="#" class="bMappingStop btn btn-primary button_goto btn_footer_right btn_66" data-goto="install_by_step_mapping_fin" ><?php echo __('Start Mapping');?></a>
+            	<a href="#" class="ifNMapping btn btn-default button_goto btn_footer_left btn_33" data-goto="install_by_step_site" ><?php echo __('Back');?></a>
+            	<a href="#" class="ifNMapping bMappingStart btn btn-primary btn_footer_right btn_66" ><?php echo __('Start Mapping');?></a>
+				<a href="#" class="ifMapping btn btn-default btn_footer_left btn_50" style="display:none"><?php echo __('Cancel');?></a>
+            	<a href="#" class="ifMapping bMappingStop button_goto btn btn-primary btn_footer_right btn_50" data-goto="install_by_step_mapping_fin" style="display:none"><?php echo __('Done');?></a>
             </footer>
         </section>
         <section id="install_by_step_mapping_fin" class="page <?php echo $INSTALL_STEP == 8?'active':'';?> hide_photo_back with_footer">

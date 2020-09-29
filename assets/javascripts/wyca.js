@@ -684,7 +684,8 @@ function InitMappingByStep()
 				$('#install_by_step_mapping .progressStartMapping').hide();
 				$('#install_by_step_mapping .bMappingStop').show();
 				$('#install_by_step_mapping .mapping_view').show();
-					
+				$('.ifMapping').show();
+				$('.ifNMapping').hide();
 				img = document.getElementById("install_by_step_mapping_img_map_saved");
 				img.src = "assets/images/vide.png";
 				
@@ -693,6 +694,9 @@ function InitMappingByStep()
 					clearInterval(intervalMap);
 					intervalMap = null;
 				}
+			}else{
+				$('.ifMapping').hide();
+				$('.ifNMapping').show();
 			}
 		});
 	}

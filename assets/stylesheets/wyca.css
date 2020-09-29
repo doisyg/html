@@ -525,7 +525,7 @@ img.nav_logo{
 	max-width:66%;
 }
 
-section > header {
+section.page > header {
 	display:none
 }
 
