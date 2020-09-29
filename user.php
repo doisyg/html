@@ -74,7 +74,7 @@
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" class="btn btn-primary btn_footer_w100" data-dismiss="modal" ><?php echo __('Close');?></a>
+                                        <a href="#" class="btn btn-primary btn_footer_left btn_100" data-dismiss="modal" ><?php echo __('Close');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -111,7 +111,7 @@
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" class="btn btn-primary btn_footer_w100" data-dismiss="modal" ><?php echo __('Close');?></a>
+                                        <a href="#" class="btn btn-primary btn_footer_left btn_100" data-dismiss="modal" ><?php echo __('Close');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -131,8 +131,8 @@
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" class="btn btn-default btn_footer_w50_left" data-dismiss="modal" ><?php echo __('Cancel');?></a>
-                                        <a href="#" class="btn btn-primary btn_footer_w50_right bTestDock" data-dismiss="modal"><?php echo __('Continue');?></a>
+                                        <a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Cancel');?></a>
+                                        <a href="#" class="btn btn-primary btn_footer_right btn_50 bTestDock" data-dismiss="modal"><?php echo __('Continue');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -152,8 +152,8 @@
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" class="btn btn-default btn_footer_w50_left" data-dismiss="modal"><?php echo __('Cancel');?></a>
-                                        <a href="#" class="btn btn-primary btn_footer_w50_right bTestPoi" data-dismiss="modal"><?php echo __('Continue');?></a>
+                                        <a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal"><?php echo __('Cancel');?></a>
+                                        <a href="#" class="btn btn-primary btn_footer_right btn_50 bTestPoi" data-dismiss="modal"><?php echo __('Continue');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -173,8 +173,8 @@
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" class="btn btn-default btn_footer_w50_left" data-dismiss="modal"><?php echo __('Cancel');?></a>
-                                        <a href="#" class="btn btn-primary bTestAugmentedPose btn_footer_w50_right" data-dismiss="modal"><?php echo __('Continue');?></a>
+                                        <a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal"><?php echo __('Cancel');?></a>
+                                        <a href="#" class="btn btn-primary bTestAugmentedPose btn_footer_right btn_50" data-dismiss="modal"><?php echo __('Continue');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -202,7 +202,7 @@
                 </div>
             </div>
         <footer>
-            <a href="#" class="btn btn-default btn_footer_w100 button_goto" data-goto="user_dashbord"><?php echo __('Back');?></a>
+            <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="user_dashbord"><?php echo __('Back');?></a>
         </footer>
     </section>
         
@@ -225,7 +225,7 @@
                 </div>
             </div>
         <footer>
-            <a href="#" class="btn btn-default btn_footer_w100 button_goto" data-goto="user_dashbord"><?php echo __('Back');?></a>
+            <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="user_dashbord"><?php echo __('Back');?></a>
         </footer>
     </section>
         
@@ -254,7 +254,7 @@
                 </div>
             </div>
         <footer>
-            <a href="#" class="btn btn-default btn_footer_w100 button_goto" data-goto="user_dashbord"><?php echo __('Back');?></a>
+            <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="user_dashbord"><?php echo __('Back');?></a>
         </footer>
     </section>
         
@@ -267,7 +267,7 @@
             <?php echo __('Comming soon');?>
         </div>
         <footer>
-            <a href="#" class="btn btn-default btn_footer_w100 button_goto" data-goto="user_dashbord"><?php echo __('Back');?></a>
+            <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="user_dashbord"><?php echo __('Back');?></a>
         </footer>
     </section>
 </div>

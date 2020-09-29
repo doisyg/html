@@ -529,24 +529,29 @@ section > header {
 	display:none
 }
 
-.btn.btn_footer_w100{
-	width:100%; position:absolute; left:0; right:0; bottom:0px; font-size:30px;border-radius:0px;
+.btn.btn_25{width:25%;}
+.btn.btn_33{width:33.3333%;}
+.btn.btn_50{width:50%;}
+.btn.btn_66{width:66.6667%;}
+.btn.btn_100{width:100%;}
+
+.btn.btn_footer_left{
+	position:absolute; 
+	left:0; 
+	right:unset; 
+	bottom:0px; 
+	font-size:30px;
+	border-radius:0px;
 }
-.btn.btn_footer_w50_left{
-	width:50%; position:absolute; left:0; right:auto; bottom:0px; font-size:30px;border-radius:0px;
+.btn.btn_footer_right{
+	position:absolute; 
+	left:unset; 
+	right:0; 
+	bottom:0px; 
+	font-size:30px;
+	border-radius:0px;
 }
-.btn.btn_footer_w50_right{
-	left:auto; width:50%; position:absolute; right:0; bottom:0px; font-size:30px;border-radius:0px;
-}
-.btn.btn_footer_w33_left{
-	left:auto; width:33%; position:absolute; right:0; bottom:0px; font-size:30px;border-radius:0px;
-}
-.btn.btn_footer_w33_center{
-	left:33%; width:33%; position:absolute; right:33%; bottom:0px; font-size:30px;border-radius:0px;
-}
-.btn.btn_footer_w33_right{
-	left:66%; width:33%; position:absolute; right:0; bottom:0px; font-size:30px;border-radius:0px;
-}
+
 .file_import_top_wrapper{
 	width: 50%;
     margin: 0 auto;

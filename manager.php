@@ -99,7 +99,7 @@
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" class="btn btn-default btn_footer_w100" data-dismiss="modal"><?php echo __('Close');?></a>
+                                        <a href="#" class="btn btn-default btn_footer_left btn_100" data-dismiss="modal"><?php echo __('Close');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -136,7 +136,7 @@
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" class="btn btn-default btn_footer_w100" data-dismiss="modal" ><?php echo __('Close');?></a>
+                                        <a href="#" class="btn btn-default btn_footer_left btn_100" data-dismiss="modal" ><?php echo __('Close');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -189,8 +189,8 @@
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" class="btn btn-default btn_footer_w50_left bInitModalTest" data-dismiss="modal" ><?php echo __('Cancel');?></a>
-                                        <a href="#" class="btn btn-primary bInitModalTest bTestDock btn_footer_w50_right" data-dismiss="modal" ><?php echo __('Continue');?></a>
+                                        <a href="#" class="btn btn-default btn_footer_left btn_50 bInitModalTest" data-dismiss="modal" ><?php echo __('Cancel');?></a>
+                                        <a href="#" class="btn btn-primary bInitModalTest bTestDock btn_footer_right btn_50" data-dismiss="modal" ><?php echo __('Continue');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -241,8 +241,8 @@
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" class="btn btn-default btn_footer_w50_left bInitModalTest" data-dismiss="modal"><?php echo __('Cancel');?></a>
-                                        <a href="#" class="btn btn-primary bInitModalTest bTestPoi btn_footer_w50_right" data-dismiss="modal"><?php echo __('Continue');?></a>
+                                        <a href="#" class="btn btn-default btn_footer_left btn_50 bInitModalTest" data-dismiss="modal"><?php echo __('Cancel');?></a>
+                                        <a href="#" class="btn btn-primary bInitModalTest bTestPoi btn_footer_right btn_50" data-dismiss="modal"><?php echo __('Continue');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -283,8 +283,8 @@
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" class="btn btn-default btn_footer_w50_left bInitModalTest" data-dismiss="modal"><?php echo __('Cancel');?></a>
-                                        <a href="#" class="btn btn-primary bInitModalTest bTestAugmentedPose btn_footer_w50_right" data-dismiss="modal" ><?php echo __('Continue');?></a>
+                                        <a href="#" class="btn btn-default btn_footer_left btn_50 bInitModalTest" data-dismiss="modal"><?php echo __('Cancel');?></a>
+                                        <a href="#" class="btn btn-primary bInitModalTest bTestAugmentedPose btn_footer_right btn_50" data-dismiss="modal" ><?php echo __('Continue');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -318,7 +318,7 @@
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" class="btn btn-default btn_footer_w100" data-dismiss="modal" style="width:100%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+                                        <a href="#" class="btn btn-default btn_footer_left btn_100" data-dismiss="modal" style="width:100%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -352,8 +352,8 @@
                                         <div style="clear:both;"></div>
                                        
                                         
-                                        <a href="#" class="btn btn-default btn_footer_w50_left" data-dismiss="modal"><?php echo __('Cancel');?></a>
-										<a href="#" id="manager_edit_map_bPoiSaveConfig" class="btn btn-primary btn_footer_w50_right" data-dismiss="modal" ><?php echo __('Save');?></a>
+                                        <a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal"><?php echo __('Cancel');?></a>
+										<a href="#" id="manager_edit_map_bPoiSaveConfig" class="btn btn-primary btn_footer_right btn_50" data-dismiss="modal" ><?php echo __('Save');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -382,8 +382,8 @@
                 </div>
             </div>
         <footer>
-            <a href="#" class="btn btn-default button_goto btn_footer_w50_left" data-goto="manager_dashbord"><?php echo __('Back');?></a>
-            <a href="#" class="btn btn-success bSaveEditMap btn_footer_w50_right" ><?php echo __('Save map');?></a>
+            <a href="#" class="btn btn-default button_goto btn_footer_left btn_50" data-goto="manager_dashbord"><?php echo __('Back');?></a>
+            <a href="#" class="btn btn-success bSaveEditMap btn_footer_right btn_50" ><?php echo __('Save map');?></a>
         </footer>
     </section>
         
@@ -406,7 +406,7 @@
                 </div>
             </div>
         <footer>
-            <a href="#" class="btn btn-default button_goto btn_footer_w100" data-goto="manager_dashbord"><?php echo __('Back');?></a>
+            <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="manager_dashbord"><?php echo __('Back');?></a>
         </footer>
     </section>
         
@@ -448,7 +448,7 @@
                 
             </div>
         <footer>
-            <a href="#" class="btn btn-default button_goto btn_footer_w100" data-goto="manager_dashbord"><?php echo __('Back');?></a>
+            <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="manager_dashbord"><?php echo __('Back');?></a>
         </footer>
     </section>
         
@@ -477,7 +477,7 @@
                 </div>
             </div>
         <footer>
-            <a href="#" class="btn btn-default button_goto btn_footer_w100" data-goto="manager_dashbord"><?php echo __('Back');?></a>
+            <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="manager_dashbord"><?php echo __('Back');?></a>
         </footer>
     </section>
         
@@ -546,8 +546,8 @@
                                         <div style="clear:both;"></div>
                                        
                                        
-                                        <a href="#" class="btn btn-default btn_footer_w50_left" data-dismiss="modal" ><?php echo __('Cancel');?></a>
-										<a href="#" id="manager_users_bUserSave" class="btn btn-primary btn_footer_w50_right"><?php echo __('Save');?></a>
+                                        <a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Cancel');?></a>
+										<a href="#" id="manager_users_bUserSave" class="btn btn-primary btn_footer_right btn_50"><?php echo __('Save');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -556,7 +556,7 @@
                 </div>
             </div>
         <footer>
-            <a href="#" class="btn btn-default btn_footer_w100 button_goto" data-goto="manager_dashbord"><?php echo __('Back');?></a>
+            <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="manager_dashbord"><?php echo __('Back');?></a>
         </footer>
     </section>
         
@@ -569,7 +569,7 @@
             <?php echo __('Comming soon');?>
         </div>
         <footer>
-            <a href="#" class="btn btn-default btn_footer_w100 button_goto" data-goto="manager_dashbord"><?php echo __('Back');?></a>
+            <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="manager_dashbord"><?php echo __('Back');?></a>
         </footer>
     </section>
 </div>
