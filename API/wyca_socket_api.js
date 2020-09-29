@@ -41,7 +41,9 @@ function WycaAPI(options){
 		DOCKING   				    : 0x147,
 		UNDOCKED			        : 0x148,
 		WRONG_GOAL					: 0x149,
-		CLOSE_FAILURE				: 0x14A
+		CLOSE_FAILURE				: 0x14A,
+		MOVE_BASIC_FAILED           : 0x14B,
+    		GOTOPOSE_FAILED             : 0x14C
 	};
 	
 	// API Commands list
@@ -174,6 +176,8 @@ function WycaAPI(options){
 		GET_TOP_PERSISTANTE_DATA_STORAGE			: 0x6139,
 		SET_TOP_PERSISTANTE_DATA_STORAGE			: 0x613A,
 		SIZE_TOP_PERSISTANTE_DATA_STORAGE			: 0x6134,
+		EXPORT_SITE			: 0x6143,
+		IMPORT_SITE			: 0x6144,
 	 
 	 
 	// Actions
@@ -1388,6 +1392,8 @@ function WycaAPI(options){
 			case _this.AnswerCode.UNDOCKED : return 'Robot is undocked'; break; // Robot is undocked
 			case _this.AnswerCode.WRONG_GOAL : return 'Wrong goal: Fiducial type and id must be defined'; break;
 			case _this.AnswerCode.CLOSE_FAILURE : return 'Dock fail too close to dock'; break;
+			case _this.AnswerCode.MOVE_BASIC_FAILED : return 'Move basic action failed'; break;
+	    		case _this.AnswerCode.GOTOPOSE_FAILED : return 'Go to pose action failed'; break;
 			default: return 'Unknow error code';
 		}
 	}
@@ -2653,6 +2659,28 @@ function WycaAPI(options){
 			this.callbacks[_this.CommandCode.SET_TOP_PERSISTANTE_DATA_STORAGE] = callback;
 		var action = {
 			"O": _this.CommandCode.SET_TOP_PERSISTANTE_DATA_STORAGE,
+			"P": data
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	
+	
+	this.ExportSite = function(id_site, callback){
+		if (callback != undefined)
+		{
+			this.callbacks[_this.CommandCode.EXPORT_SITE] = callback;
+			var action = {
+				"O": _this.CommandCode.EXPORT_SITE,
+				"P": id_site
+			};
+			_this.wycaSend(JSON.stringify(action));
+		}
+	}
+	this.ImportSite = function(data, callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.IMPORT_SITE] = callback;
+		var action = {
+			"O": _this.CommandCode.IMPORT_SITE,
 			"P": data
 		};
 		_this.wycaSend(JSON.stringify(action));

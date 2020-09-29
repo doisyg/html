@@ -150,6 +150,7 @@ $(document).ready(function(e) {
 		if (next == 'install_by_step_mapping') InitMappingByStep();
 		
 		if (next == 'install_normal_setup_sites') GetSitesNormal();
+		if (next == 'install_normal_setup_export') GetSitesForExportNormal();
 		if (next == 'install_normal_setup_tops') InitTopsNormal();
 		if (next == 'install_normal_setup_top') InitTopsActiveNormal();
 		if (next == 'install_normal_setup_vehicule') GetConfigurationsNormal();
@@ -447,6 +448,41 @@ function GetSitesNormal()
 				
 				$('.install_normal_setup_sites_loading').hide();
 				$('#install_normal_setup_sites .loaded').show();
+			});
+		});
+	}
+	else
+	{
+		setTimeout(GetSitesNormal, 500);
+	}
+}
+
+function GetSitesForExportNormal()
+{
+	$('.install_normal_setup_export_loading').show();
+	$('#install_normal_setup_export .loaded').hide();
+	if (wycaApi.websocketAuthed)
+	{
+		
+		wycaApi.GetCurrentSite(function(data) {
+			current_site = data.D;
+			console.log(current_site);
+			wycaApi.GetSitesList(function(data) {
+				
+				$('#install_normal_setup_export .list_sites').html('');
+				
+				if (data.D != undefined)
+				$.each(data.D,function(index, value){
+					$('#install_normal_setup_export .list_sites').append('' +
+						'<li id="install_normal_setup_export_list_site_elem_'+value.id_site+'" data-id_site="'+value.id_site+'" class="bSiteExportElem">'+
+						'	<span class="societe">'+value.name+'</span>'+
+						'	<a href="#" class="btn btn-sm btn-circle btn-success pull-right"><i class="fa fa-upload"></i></a>'+
+						'</li>'
+						);
+				});
+				
+				$('.install_normal_setup_export_loading').hide();
+				$('#install_normal_setup_export .loaded').show();
 			});
 		});
 	}

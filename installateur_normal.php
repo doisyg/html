@@ -868,8 +868,8 @@
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="install_normal_setup_wifi" href="#"><i class="fa fa-gear"></i><?php echo __('Wifi');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="install_normal_setup_vehicule" href="#"><i class="fa fa-android"></i><?php echo __('Vehicule');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5" data-goto="install_normal_setup_tops" href="#"><i class="fa fa-cube"></i><?php echo __('Tops');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6 todo" data-goto="install_normal_setup_export" href="#"><i class="fa fa-upload"></i><?php echo __('Save config');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7 todo" data-goto="install_normal_setup_import" href="#"><i class="fa fa-download"></i><?php echo __('Load config');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" data-goto="install_normal_setup_export" href="#"><i class="fa fa-upload"></i><?php echo __('Export site');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7" data-goto="install_normal_setup_import" href="#"><i class="fa fa-download"></i><?php echo __('Import Site');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8" data-goto="install_normal_setup_reset" href="#"><i class="fa fa-eraser"></i><?php echo __('Factory data reset');?></a></li>
                 </ul>
             </div>
@@ -918,6 +918,45 @@
             </div>
         </section>
         
+        <section id="install_normal_setup_export" class="page with_footer">
+	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Sites');?></h2>
+            </header>
+            <div class="content">
+                
+                <div class="install_normal_setup_export_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
+                
+                <div class="loaded col-md-12" style="padding-top:30px;">
+                	<ul class="list_sites list_elem">
+                    </ul>
+                </div>
+            </div>
+            <footer>
+                <a href="#" class="btn btn-wyca button_goto" data-goto="install_normal_setup"><i class="fa fa-chevron-left"></i> <?php echo __('Back');?></a>
+            </footer>
+        </section>
+        
+        
+        <section id="install_normal_setup_import" class="page with_footer">
+	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Sites');?></h2>
+            </header>
+            <div class="content">
+                
+                <div class="install_normal_setup_import_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
+                <div class="install_normal_setup_import_content">
+	                <input class="file_import_site" type="file" class="form-control" />
+    			</div>
+            </div>
+            <footer>
+                <a href="#" class="btn btn-default button_goto bImportSiteBack" data-goto="install_normal_setup" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><i class="fa fa-chevron-left"></i> <?php echo __('Back');?></a>
+                <a href="#" class="btn btn-primary bImportSiteDo" style="left:auto; width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Import');?></a>
+            </footer>
+        </section>
         
         <section id="install_normal_setup_trinary" class="page hide_photo_back with_footer">
 	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
