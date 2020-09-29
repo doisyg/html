@@ -165,10 +165,10 @@
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_top"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
-                <h2><?php echo __('Check components');?></h2>
+                <h2><?php echo __('Auto Diag');?></h2>
             </header>
             <div class="content">
-                <ul class="tuiles row" style="position:relative">
+                <ul class="tuiles row" style="position:relative;margin: auto -20px;">
                     <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
                     	<div class="is_checkbox test anim_tuiles tuile_img tuile1 no_update">
                             <i class="fa fa-check"></i>
@@ -182,7 +182,7 @@
                             <i class="fa fa-check"></i>
                     		<i class="fa fa fa-spinner fa-pulse"></i>
                     		<img class="i" src="assets/images/ultrasound.svg">
-							<?php echo __('Ultrasound');?>
+							<?php echo __('Sonar');?>
                         </div>
 						<span class="trait_legende" style="width:calc(var(--vh, 1vh) * 20);transform:rotate(50deg)translateX(0px)translateY(0px);"></span>
                     </li>
@@ -191,7 +191,7 @@
                             <i class="fa fa-check"></i>
                     		<i class="fa fa fa-spinner fa-pulse"></i>
                     		<img class="i" src="assets/images/motor.png">
-							<?php echo __('Motor card');?>
+							<?php echo __('Motor');?>
                         </div>
 						<span class="trait_legende" style="width:calc(var(--vh, 1vh) * 20);transform:rotate(50deg)translateX(0px)translateY(0px);"></span>
                     </li>
@@ -273,8 +273,7 @@
                 <div style="text-align:center; font-size:26px;">
                 
                 	
-                    <a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
-                    <a href="#" class="bMappingStart btn btn-primary btn_big_popup ifUndocked"><i class="fa fa-play"></i> <?php echo __('Start mapping');?></a>
+                    <h3><?php echo __('Move Robot to start point');?></h3>
                     
                     <div class="progressStartMapping" style="display:none;">
                         <h3><?php echo __('Start mapping');?></h3>
@@ -288,7 +287,8 @@
                         <img id="install_by_step_mapping_mapping_robot" src="assets/images/robot-dessus.png" width="6" style="position:absolute; bottom:400px; margin-left:-3px; z-index:300;" />
                         <img class="map_dyn" id="install_by_step_mapping_img_map_saved" src="" style="position:absolute; z-index:200" />
                     </div>
-                    
+					
+                    <a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked" style="position: absolute;bottom: 50px;z-index: 2000;display: none;left:50%;transform:translateX(-50%)"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
                     <div class="ifUndocked" style="position:absolute; bottom:50px; left:0; width:100%; z-index:2000;">
                         <div class="joystickDiv" draggable="false" style="margin:auto;">
                             <div class="fond"></div>
@@ -299,7 +299,8 @@
                 </div>         
             </div>
             <footer>
-            	<a href="#" class="bMappingStop btn btn-primary button_goto btn_footer_w100" data-goto="install_by_step_mapping_fin" ><?php echo __('Mapping done');?></a>
+            	<a href="#" class="bMappingStop btn btn-default button_goto btn_footer_w33_left" data-goto="install_by_step_mapping_fin" ><?php echo __('Back');?></a>
+            	<a href="#" class="bMappingStop btn btn-primary button_goto btn_footer_w50_right" data-goto="install_by_step_mapping_fin" ><?php echo __('Start Mapping');?></a>
             </footer>
         </section>
         <section id="install_by_step_mapping_fin" class="page <?php echo $INSTALL_STEP == 8?'active':'';?> hide_photo_back with_footer">
