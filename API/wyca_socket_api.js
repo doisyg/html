@@ -41,7 +41,9 @@ function WycaAPI(options){
 		DOCKING   				    : 0x147,
 		UNDOCKED			        : 0x148,
 		WRONG_GOAL					: 0x149,
-		CLOSE_FAILURE				: 0x14A
+		CLOSE_FAILURE				: 0x14A,
+		MOVE_BASIC_FAILED           : 0x14B,
+    		GOTOPOSE_FAILED             : 0x14C
 	};
 	
 	// API Commands list
@@ -1390,6 +1392,8 @@ function WycaAPI(options){
 			case _this.AnswerCode.UNDOCKED : return 'Robot is undocked'; break; // Robot is undocked
 			case _this.AnswerCode.WRONG_GOAL : return 'Wrong goal: Fiducial type and id must be defined'; break;
 			case _this.AnswerCode.CLOSE_FAILURE : return 'Dock fail too close to dock'; break;
+			case _this.AnswerCode.MOVE_BASIC_FAILED : return 'Move basic action failed'; break;
+	    		case _this.AnswerCode.GOTOPOSE_FAILED : return 'Go to pose action failed'; break;
 			default: return 'Unknow error code';
 		}
 	}
