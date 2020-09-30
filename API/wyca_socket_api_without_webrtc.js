@@ -315,664 +315,29 @@ function WycaAPI(options){
 	}
 	
 	var defaults = {
-		id_robot: 'not_init',
-        webcam_name : 'default',
-		with_audio : true,
-		with_video : true,
-		delay_no_reply : 30,
-	  	delay_lost_connexion : 30,
-		checkLostConnection: true,
-		webcam_id : "",
-		webcam_name: "",
-		serveurWyca : 'https://integrator.wyca-solutions.com/',
-		on_error_webcam_try_without : true,
 		host : 'wyca.run:9095',
-		api_key:'',
+		top_key:'',
 		use_ssl:true
     };
     this.options = $.extend({}, defaults, options || {});
    	
-	if (this.options.id_robot == undefined || this.options.id_robot == '')
-		throw new Error('WycaAPI - you need to indicate id_robot in options')
-		
-	if (this.options.nick == '' && this.options.id_robot != 'not_init')
-	{
-		if (this.options.id_robot != 'not_robot')
-			this.options.nick = 'robot'+this.options.id_robot;
-		else
-			this.options.nick = 'server';
-	}
-	
-	
-	this.websocketStarted = false;
-	this.websocketAuthed = false;
-	this.websocketError = false;
-	this.timeoutReconnect = null;
 	this.callbacks = Array();
 	this.authentificated = false;
 	this.timerSink = null;
 	
-	var timerNoResponceCall = null
-	var timerFinCall = null;
-	
-	this.webrtc = null;
 	this.closing = false;
-	this.other_id = '';
 	
-	this.call_from_admin = false;
-	
-	var pc_config = null;
 	var isStarted = false;
-	
-	var multiStreamRecorder;
-	
-	var audioVideoBlobs = {};
-	var recordingInterval = 0;
 	
 	var container;
 	var index = 1;
-	var localStream = null;
-	var videoElement;
-	var indexVideo = 0;
-	var haveVideoOpe = false;
-	this.reply = false;
-	
-	this.connectedTodo = false;
-	this.socketTodo;
-	this.connectedWebRTC = false;
-	
-	this.subscribeOnWebrtc = Array();
 	
 	var _this = this;
 	
-	pc_config = {"iceServers": 
-		[
-			{"urls":["stun:wyca-solutions.com:3478"], "username":"wyca", "credential":"wyca2016"},
-			{"urls":["turn:wyca-solutions.com:3478"], "username":"wyca", "credential":"wyca2016"}
-		]
-	  };
-	if (isStarted) _this.StartWebRTC();
-	
-	this.setIdRobot = function (_id_robot)
-	{
-		_this.options.id_robot = _id_robot;
-		if (this.options.nick == '' || this.options.nick == 'robotnot_init')
-		{
-			if (_this.options.id_robot != 'not_robot')
-				_this.options.nick = 'robot'+this.options.id_robot;
-			else
-				_this.options.nick = 'server';
-		}
-		
-		_this.init();
-	},
-	
-	
 	this.init = function (){
 		
-		if (_this.options.id_robot != 'not_init')
-		{
-			$.getScript('https://integrator.wyca-solutions.com:7458/socket.io/socket.io.js', function()
-			{
-				_this.socketTodo = io('https://integrator.wyca-solutions.com:7458');
-				_this.socketTodo.on('connect', function(){
-					_this.socketTodo.emit('authentication', {id_robot: _this.options.id_robot, id_user:-1, t:"t", api_key: _this.options.api_key});
-				});
-				_this.socketTodo.on('authenticated', function() {
-					_this.connectedTodo = true;
-					if (_this.options.id_robot != 'not_robot')
-						_this.socketTodo.emit('set_robot_name', 'robot_' + _this.options.id_robot);
-					else
-					{
-						if (_this.options.nick != '')
-							_this.socketTodo.emit('set_server_name', _this.options.nick);
-						else
-							_this.socketTodo.emit('set_server_name', 'server_' + _this.options.id_robot);
-					}
-					
-					if (_this.options.onServerMessageOpen != undefined)
-						_this.options.onServerMessageOpen();
-				});
-				_this.socketTodo.on('unauthorized', function(err){
-					console.log("There was an error with the authentication:", err.message);
-				});
-				
-				_this.socketTodo.on('message', function(msg){
-					
-				});
-				_this.socketTodo.on('message_todo', function(msg){
-					//_this.socketTodo.emit('sendMessageToServer', { "to":"all","message":{ "action":"received", "details":msg.message.action } }, function(result) { });
-					if (_this.options.onNewServerMessage != undefined)
-						_this.options.onNewServerMessage(msg);
-				});
-				
-				_this.socketTodo.on('disconnect', function(){
-					_this.connectedTodo = false;
-				});
-			});
-		}
-		
-		if (_this.options.id_robot != 'not_robot')
-			this.WsConnect();
+		this.WsConnect();
 	};
-	
-	/*** FUNCTIONS MESSAGING ***/
-	
-	
-	this.SendWebRTCMessage = function(message)
-	{
-		_this.webrtc.sendToAll('wyca', {message: message, nick: _this.webrtc.config.nick});
-	}
-	
-	this.SendServerMessage = function(data) {
-		if (_this.connectedTodo)
-			_this.socketTodo.emit('sendMessageToServer', { "to":"all","message":data }, function(result) { });
-	}
-	this.SendServerMessageToServer = function(server_name, data) {
-		if (_this.connectedTodo)
-			_this.socketTodo.emit('sendMessageToServer', { "to":server_name, "message":data }, function(result) { });
-	}
-	this.SendServerMessageToRobot = function(id_robot, data) {
-		
-		if (_this.connectedTodo)
-			_this.socketTodo.emit('sendMessageToRobot', { "to":"robot_"+id_robot,"message":data }, function(result) { });
-	}
-	
-	/*** WEBRTC ***/
-	
-	this.SetRoom = function(room)
-	{
-		this.options.room = room;
-	}
-	
-	
-	this.WithVideo = function(use_video)
-	{
-		this.options.with_video = use_video;
-	}
-	this.WithAudio = function(use_audio)
-	{
-		this.options.with_audio = use_audio;
-	}
-	
-	this.StartWebRTCWithRobot = function (id_robot)
-	{
-		this.call_from_admin = true;
-		if (this.options.room == '' || this.options.room == undefined)
-			this.options.room = "Room"+id_robot;
-		this.SendServerMessageToRobot(id_robot, 'StartCall|'+_this.options.room);
-		this.StartWebRTC(false);
-	}
-	
-	this.StartWebRTC = function(reply)
-	{
-		this.reply = reply;
-		isStarted = true;
-		if (pc_config != null)
-		{
-			index = 1;
-			indexVideo = 0;
-			
-			var _this = this;
-			
-			if (_this.options.room == undefined || _this.options.room == '')
-				_this.options.room = "Room"+_this.options.nick;
-			
-			if (this.options.with_video)
-			{
-				if (this.options.webcam_name != '')
-				{
-					navigator.mediaDevices.enumerateDevices().then(function (devices) {
-					  trouve = false;	
-					
-					  for (var i = 0; i !== devices.length; ++i) {
-						  var device = devices[i];
-						  if (device.kind === 'videoinput' && device.label == _this.options.webcam_name) {
-							  trouve = true;
-							  mediaoptions = {"audio": _this.options.with_audio, "video": { "deviceId": device.deviceId }};
-							  _this.StartWebRTCReal(reply, mediaoptions);
-						  }
-					  }
-					  
-					  if (!trouve)
-					  {
-						  if(_this.options.webcam_id != '')
-							mediaoptions = {"audio": _this.options.with_audio, "video": { "deviceId": _this.options.webcam_id }};
-						  else
-							mediaoptions = {"audio": _this.options.with_audio, "video": true };
-						  _this.StartWebRTCReal(reply, mediaoptions);
-					  }
-					});
-				}
-				else
-				{
-					if(this.options.webcam_id != '')
-						mediaoptions = {"audio": _this.options.with_audio, "video": { "deviceId": _this.options.webcam_id }};
-					else
-						mediaoptions = {"audio": _this.options.with_audio, "video": true };
-						
-					this.StartWebRTCReal(reply, mediaoptions);
-				}
-			}
-			else
-			{
-				mediaoptions = {"audio": _this.options.with_audio, "video": false };
-				this.StartWebRTCReal(reply, mediaoptions);
-			}
-		}
-	}
-	
-	this.StartWebRTCReal = function(reply, mediaoptions)
-	{	
-		
-		_this.webrtc = new WycaWebRTC({
-			// immediately ask for camera access
-			localVideoEl: _this.options.video_element_id,
-			autoRequestMedia: true,
-			media: mediaoptions,
-			nick: _this.options.nick,
-			peerConnectionConfig:pc_config
-		});
-		
-		
-		_this.webrtc.on('readyToCall', function () {
-			if (!_this.options.with_audio && !_this.options.with_video) // Pas d'audio ni de video
-			{
-				if (_this.options.onEquipmentOK  != undefined)
-					_this.options.onEquipmentOK();
-				
-				if (!_this.reply)
-				{
-					if (!_this.call_from_admin)
-						_this.SendServerMessage('StartCall|'+_this.options.room);
-				}
-				
-				_this.reply = false;
-			}
-			
-			_this.webrtc.joinRoom(_this.options.room);
-		});
-		
-		_this.webrtc.on('channelClose', function (data) {
-			if (data.label == 'wycawebrtc' && data.readyState == 'closed')
-			{
-				_this.connectedWebRTC = false;
-				if (_this.options.id_robot != 'not_robot')
-					_this.UnsubscribeWebRTC();
-					
-				if (!_this.closing)
-				{
-					if (_this.options.onLostConnection  != undefined)
-						_this.options.onLostConnection();
-					if (_this.options.checkLostConnection && timerFinCall == null)
-						timerFinCall = setTimeout(_this.finCallDeconnect, _this.options.delay_lost_connexion * 1000);
-				}
-				else
-				{
-					_this.closing = false;
-					//if (_this.options.onSessionClosed  != undefined)
-					//	_this.options.onSessionClosed();
-				}
-			}
-		});
-		_this.webrtc.on('channelOpen', function (data) {
-			if (data.label == 'wycawebrtc' && data.readyState == 'open')
-			{
-				_this.connectedWebRTC = true;
-				_this.subscribeOnWebrtc = Array();
-				
-				if (_this.options.onChannelOpen  != undefined)
-					_this.options.onChannelOpen();
-					
-				if (timerNoResponceCall != null)
-				{
-					clearTimeout(timerNoResponceCall);
-					timerNoResponceCall = null;
-				}
-				if (timerFinCall != null)
-				{
-					if (_this.options.onRestoreConnection  != undefined)
-						_this.options.onRestoreConnection();
-					clearTimeout(timerFinCall);
-					timerFinCall = null;
-				}
-				
-				if (_this.options.id_robot == 'not_robot')
-				{
-					_this.Subscribe();
-				}
-			}
-		});
-		
-		_this.webrtc.on('videoAdded', function (video, peer) {
-			
-			_this.other_id = peer.id;
-			
-			if (!_this.options.with_audio)
-				video.volume = 0;
-			if (_this.options.onVideoAdded != undefined)
-				_this.options.onVideoAdded(peer.nick, video);
-			
-			if (timerNoResponceCall != null)
-			{
-				clearTimeout(timerNoResponceCall);
-				timerNoResponceCall = null;
-			}
-			if (timerFinCall != null)
-			{
-				if (_this.options.onRestoreConnection  != undefined)
-					_this.options.onRestoreConnection();
-				clearTimeout(timerFinCall);
-				timerFinCall = null;
-			}
-			
-			
-		});
-		
-		_this.webrtc.connection.on('message', function(data){
-			if (data.payload != undefined && data.payload.nick != _this.nick)
-			{
-				if(data.type === 'wyca')
-				{
-					if (data.payload.message == 'CloseSession')
-					{
-						_this.CloseWebRTC('CloseFromOther');
-					}
-					else
-					{
-						if (_this.options.onNewWebRTCMessage != undefined)
-							_this.options.onNewWebRTCMessage(data.payload.message);
-					}
-				}
-				else if(data.type === 'wyca_api')
-				{
-					// Transférer à la partie WS + stockage si abo event pour transfert après et call op pour réponse
-					if (_this.options.id_robot != 'not_robot')
-					{
-						// On sauvegarde si c'est un abonnement au topic pour pouvoir le retransférer plus tard
-						json = JSON.parse(data.payload.message);
-						
-						doTransfert = true;
-						
-						if (json.O == _this.CommandCode.SUBSCRIBE_ON_EVENT ||
-							json.O == _this.CommandCode.SUBSCRIBE_ON_CHANGE)
-						{
-							
-							if (json.O == _this.CommandCode.SUBSCRIBE_ON_EVENT)
-									event_code = json.P.E;
-							else
-									event_code = json.P;
-							
-							_this.subscribeOnWebrtc[event_code] = 'subscribed';
-							
-							switch (event_code)
-							{
-								/********** Actions *********/
-								case _this.EventCode.GO_TO_CHARGE_FEEDBACK: 
-								case _this.EventCode.GO_TO_CHARGE_RESULT:
-								case _this.EventCode.GO_TO_POI_FEEDBACK:
-								case _this.EventCode.GO_TO_POI_RESULT:
-								case _this.EventCode.GO_TO_POSE_FEEDBACK:
-								case _this.EventCode.GO_TO_POSE_RESULT:
-								case _this.EventCode.GO_TO_POSE_ACCURATE_FEEDBACK:
-								case _this.EventCode.GO_TO_POSE_ACCURATE_RESULT:
-								case _this.EventCode.GO_TO_POSE_FLEXIBLE_FEEDBACK:
-								case _this.EventCode.GO_TO_POSE_FLEXIBLE_RESULT:
-								case _this.EventCode.GO_TO_AUGMENTED_POSE_FEEDBACK:
-								case _this.EventCode.GO_TO_AUGMENTED_POSE_RESULT:
-								case _this.EventCode.DOCK_FEEDBACK:
-								case _this.EventCode.DOCK_RESULT:
-								case _this.EventCode.UNDOCK_FEEDBACK:
-								case _this.EventCode.UNDOCK_RESULT:
-								case _this.EventCode.MAPPING_START_FEEDBACK:
-								case _this.EventCode.MAPPING_START_RESULT:
-								case _this.EventCode.NAVIGATION_START_FEEDBACK:
-								case _this.EventCode.NAVIGATION_START_RESULT:
-								case _this.EventCode.DOCK_RECOVERY_FEEDBACK:
-								case _this.EventCode.DOCK_RECOVERY_RESULT:
-								case _this.EventCode.RECOVERY_FROM_FIDUCIAL_FEEDBACK:
-								case _this.EventCode.RECOVERY_FROM_FIDUCIAL_RESULT:
-								case _this.EventCode.SET_ACTIVE_TOP_FEEDBACK:
-								case _this.EventCode.SET_ACTIVE_TOP_RESULT:
-								case _this.EventCode.INSTALL_NEW_TOP_FEEDBACK:
-								case _this.EventCode.INSTALL_NEW_TOP_RESULT:
-									doTransfert = false;
-									break;
-							}
-						}
-						
-						if (json.O == _this.CommandCode.UNSUBSCRIBE)
-						{
-							_this.subscribeOnWebrtc[json.P] = 'notsubscribed';
-							doTransfert = false; // TODO A améliorer : à retourner si le robot lui même n'est pas abonné
-						}
-						
-						// On sauvegarde les abonnement au réponses des actions
-						if (json.O == _this.CommandCode.GO_TO_POSE)
-						{
-							_this.subscribeOnWebrtc[_this.EventCode.GO_TO_POSE_FEEDBACK] = 'subscribed';
-							_this.subscribeOnWebrtc[_this.EventCode.GO_TO_POSE_RESULT] = 'subscribed';
-						}
-						if (json.O == _this.CommandCode.GO_TO_POSE_ACCURATE)
-						{
-							_this.subscribeOnWebrtc[_this.EventCode.GO_TO_POSE_ACCURATE_FEEDBACK] = 'subscribed';
-							_this.subscribeOnWebrtc[_this.EventCode.GO_TO_POSE_ACCURATE_RESULT] = 'subscribed';
-						}
-						if (json.O == _this.CommandCode.GO_TO_POSE_FLEXIBLE)
-						{
-							_this.subscribeOnWebrtc[_this.EventCode.GO_TO_POSE_FLEXIBLE_FEEDBACK] = 'subscribed';
-							_this.subscribeOnWebrtc[_this.EventCode.GO_TO_POSE_FLEXIBLE_RESULT] = 'subscribed';
-						}
-						if (json.O == _this.CommandCode.GO_TO_AUGMENTED_POSE)
-						{
-							_this.subscribeOnWebrtc[_this.EventCode.GO_TO_AUGMENTED_POSE_FEEDBACK] = 'subscribed';
-							_this.subscribeOnWebrtc[_this.EventCode.GO_TO_AUGMENTED_POSE_RESULT] = 'subscribed';
-						}
-						if (json.O == _this.CommandCode.DOCK)
-						{
-							_this.subscribeOnWebrtc[_this.EventCode.DOCK_FEEDBACK] = 'subscribed';
-							_this.subscribeOnWebrtc[_this.EventCode.DOCK_RESULT] = 'subscribed';
-						}
-						if (json.O == _this.CommandCode.UNDOCK)
-						{
-							_this.subscribeOnWebrtc[_this.EventCode.UNDOCK_FEEDBACK] = 'subscribed';
-							_this.subscribeOnWebrtc[_this.EventCode.UNDOCK_RESULT] = 'subscribed';
-						}
-						if (json.O == _this.CommandCode.GO_TO_CHARGE)
-						{
-							_this.subscribeOnWebrtc[_this.EventCode.GO_TO_CHARGE_FEEDBACK] = 'subscribed';
-							_this.subscribeOnWebrtc[_this.EventCode.GO_TO_CHARGE_RESULT] = 'subscribed';
-						}
-						if (json.O == _this.CommandCode.GO_TO_POI)
-						{
-							_this.subscribeOnWebrtc[_this.EventCode.GO_TO_POI_FEEDBACK] = 'subscribed';
-							_this.subscribeOnWebrtc[_this.EventCode.GO_TO_POI_RESULT] = 'subscribed';
-						}
-						if (json.O == _this.CommandCode.DOCK_RECOVERY)
-						{
-							_this.subscribeOnWebrtc[_this.EventCode.DOCK_RECOVERY_FEEDBACK] = 'subscribed';
-							_this.subscribeOnWebrtc[_this.EventCode.DOCK_RECOVERY_RESULT] = 'subscribed';
-						}
-						if (json.O == _this.CommandCode.RECOVERY_FROM_FIDUCIAL)
-						{
-							_this.subscribeOnWebrtc[_this.EventCode.RECOVERY_FROM_FIDUCIAL_FEEDBACK] = 'subscribed';
-							_this.subscribeOnWebrtc[_this.EventCode.RECOVERY_FROM_FIDUCIAL_RESULT] = 'subscribed';
-						}
-						if (json.O == _this.CommandCode.SET_ACTIVE_TOP)
-						{
-							_this.subscribeOnWebrtc[_this.EventCode.SET_ACTIVE_TOP_FEEDBACK] = 'subscribed';
-							_this.subscribeOnWebrtc[_this.EventCode.SET_ACTIVE_TOP_RESULT] = 'subscribed';
-						}
-						if (json.O == _this.CommandCode.INSTALL_NEW_TOP)
-						{
-							_this.subscribeOnWebrtc[_this.EventCode.INSTALL_NEW_TOP_FEEDBACK] = 'subscribed';
-							_this.subscribeOnWebrtc[_this.EventCode.INSTALL_NEW_TOP_RESULT] = 'subscribed';
-						}
-												
-						// On transfère au robot
-						if (doTransfert) _this.wycaSend(data.payload.message);
-					}
-					else
-					{
-						// On traite la réponse du robot
-						_this.ProcessMessage(data.payload.message);
-					}
-				}
-			}
-		});
-		_this.webrtc.on('signalingStateChange', function(param){
-		});
-		_this.webrtc.on('videoRemoved', function (video, peer) {
-			
-			if (_this.other_id == peer.id) // On n'emet que si c'est le dernier connecté (sinon pb en cas de courpure de connexion temporaire)
-			{
-				if (_this.options.onVideoRemoved != undefined)
-					_this.options.onVideoRemoved(peer.nick, video);
-			}
-		});
-		
-		_this.webrtc.on('iceFailed', function (peer) {
-			if (_this.options.onLostConnection  != undefined)
-				_this.options.onLostConnection();
-			if (_this.options.checkLostConnection && timerFinCall == null)
-				timerFinCall = setTimeout(_this.finCallDeconnect, _this.options.delay_lost_connexion * 1000);
-		});
-		
-		_this.webrtc.on('connectivityError', function (peer) {
-			if (_this.options.onLostConnection  != undefined)
-				_this.options.onLostConnection();
-			if (_this.options.checkLostConnection && timerFinCall == null)
-				timerFinCall = setTimeout(_this.finCallDeconnect, _this.options.delay_lost_connexion * 1000);
-		});
-		
-		_this.webrtc.on('localMediaError', function (err) {
-			
-			if (_this.options.with_video && _this.options.on_error_webcam_try_without)
-			{
-				if (_this.options.onEquipmentErrorTryWithoutWebcam != undefined)
-					_this.options.onEquipmentErrorTryWithoutWebcam();
-					
-				try { _this.webrtc.stopLocalVideo(); } catch (e) {}
-				try { _this.webrtc.mute(); } catch (e) {}
-				try { _this.webrtc.leaveRoom(); } catch (e) {}
-				_this.webrtc.connection.disconnect();
-				
-				try { window.stream.getTracks()[0].stop(); } catch (e) {}
-				try { window.stream.getTracks()[1].stop(); } catch (e) {}
-				
-				if (timerNoResponceCall != null)
-				{
-					clearTimeout(timerNoResponceCall);
-					timerNoResponceCall = null;
-				}
-				if (timerFinCall != null)
-				{
-					clearTimeout(timerFinCall);
-					timerFinCall = null;
-				}
-				_this.closing = false;
-				
-				
-				// On relance qu'avec l'audio
-				
-				_this.options.with_video = false;
-				_this.StartWebRTC();
-			}
-			else
-			{
-				if (_this.options.onEquipmentError != undefined)
-					_this.options.onEquipmentError();
-			}
-		
-		});
-				
-		_this.webrtc.on('localMediaAdded', function (err) {
-			
-			if (_this.options.onEquipmentOK  != undefined)
-				_this.options.onEquipmentOK();
-			
-			if (!_this.reply && !_this.call_from_admin)
-			{
-				_this.SendServerMessage('StartCall|'+_this.options.room);
-			}
-			
-			_this.reply = false;
-		});
-
-		if (timerNoResponceCall != null)
-		{
-			clearTimeout(timerNoResponceCall);
-			timerNoResponceCall = null;
-		}
-		if (_this.options.checkLostConnection)
-			timerNoResponceCall = setTimeout(_this.finCallNoResponse, _this.options.delay_no_reply * 1000);
-	}
-	
-	this.StartCloseWebRTC = function()
-	{
-		this.CloseWebRTC('CloseFromMe');
-	}
-	
-	this.CloseWebRTC = function(reason)
-	{
-		_this.closing = true;
-		this.SendWebRTCMessage('CloseSession');
-		this.SendServerMessage('CloseSession');
-		
-		$('#'+_this.options.video_element_id).html('');
-		
-		if (this.options.onStartSessionClose  != undefined)
-			this.options.onStartSessionClose(reason);
-		
-		this.CloseWebRTCReal();
-		
-		//if (reason == 'CloseFromOther' || reason == 'NoReply')
-		//{
-			if (_this.options.onSessionClosed  != undefined)
-				_this.options.onSessionClosed();
-		//}
-	}
-	
-	this.CloseWebRTCReal = function()
-	{			
-		try { _this.webrtc.stopLocalVideo(); } catch (e) {}
-		try { _this.webrtc.mute(); } catch (e) {}
-		try { _this.webrtc.leaveRoom(); } catch (e) {}
-		_this.webrtc.connection.disconnect();
-		
-		try { window.stream.getTracks()[0].stop(); } catch (e) {}
-		try { window.stream.getTracks()[1].stop(); } catch (e) {}
-		
-		if (timerNoResponceCall != null)
-		{
-			clearTimeout(timerNoResponceCall);
-			timerNoResponceCall = null;
-		}
-		if (timerFinCall != null)
-		{
-			clearTimeout(timerFinCall);
-			timerFinCall = null;
-		}
-	}
-	
-	this.finCallDeconnect = function()
-	{
-		timerFinCall = null;
-		_this.CloseWebRTC('LostConnexion');
-	}
-	
-	this.finCallNoResponse = function()
-	{
-		timerNoResponceCall = null;
-		_this.CloseWebRTC('NoReply');
-	}
-	
-	this.UnsubscribeWebRTC = function()
-	{
-		this.UnsubscribeAll();
-		this.subscribeOnWebrtc = Array();
-		this.Subscribe();
-	}
 	
 	/****************/
 	/** Websockets **/
@@ -987,11 +352,11 @@ function WycaAPI(options){
 			_this.options.onRobotConnexionOpen();
 		}
 		
-		if (this.options.api_key != '')
+		if (this.options.top_key != '')
 		{
 			var auth = {
-				"O": this.CommandCode.AUTH_USER,
-				"P": this.options.api_key
+				"O": this.CommandCode.AUTH_TOP,
+				"P": this.options.top_key
 			  };		
 			
 			_this.ws.send(JSON.stringify(auth));
@@ -1046,15 +411,10 @@ function WycaAPI(options){
 		}
 		if (msg.O != undefined)
 		{
-			if (_this.options.id_robot != 'not_robot' && _this.connectedWebRTC)
-			{
-				_this.webrtc.sendToAll('wyca_api', {message: JSON.stringify(msg), nick: _this.webrtc.config.nick});
-			}
-			
 			switch(msg.O)
 			{
 				case this.CommandCode.SINK: break;
-				case this.CommandCode.AUTH_USER:
+				case this.CommandCode.AUTH_TOP:
 					if (msg.A == _this.AnswerCode.NO_ERROR)
 					{
 						_this.websocketAuthed = true;
@@ -1140,14 +500,6 @@ function WycaAPI(options){
 		
 		if (msg.E != undefined) // False pour test retour subscribe
 		{
-			if (_this.options.id_robot != 'not_robot' && _this.connectedWebRTC)
-			{
-				if (_this.subscribeOnWebrtc[msg.E] != undefined && _this.subscribeOnWebrtc[msg.E] == 'subscribed')
-				{
-					_this.webrtc.sendToAll('wyca_api', {message: JSON.stringify(msg), nick: _this.webrtc.config.nick});
-				}
-			}
-			
 			switch(msg.E)
 			{
 				/********** Actions *********/
@@ -1300,49 +652,41 @@ function WycaAPI(options){
 	this.WsConnect = function()
 	{
 		_this.timeoutReconnect = null;
-		if (_this.options.id_robot != 'not_robot')
-		{
-			if ("WebSocket" in window) {
-				_this.ws = new WebSocket( (_this.options.use_ssl?'wss':'ws') + '://'+_this.options.host);
-			} else if ("MozWebSocket" in window) {
-				_this.ws = new MozWebSocket( (_this.options.use_ssl?'wss':'ws') + '://'+_this.options.host);
-			} else {
-				throw new Error('This Browser does not support WebSockets')
-			}
-			_this.ws.onopen = jQuery.proxy(_this.wsOnOpen, _this);
-			_this.ws.onerror = jQuery.proxy(_this.wsOnError, _this);
-			_this.ws.onclose = jQuery.proxy(_this.wsOnClose , _this);
-			_this.ws.onmessage = jQuery.proxy(_this.wsOnMessage , _this);
+		
+		if ("WebSocket" in window) {
+			_this.ws = new WebSocket( (_this.options.use_ssl?'wss':'ws') + '://'+_this.options.host);
+		} else if ("MozWebSocket" in window) {
+			_this.ws = new MozWebSocket( (_this.options.use_ssl?'wss':'ws') + '://'+_this.options.host);
+		} else {
+			throw new Error('This Browser does not support WebSockets')
 		}
+		_this.ws.onopen = jQuery.proxy(_this.wsOnOpen, _this);
+		_this.ws.onerror = jQuery.proxy(_this.wsOnError, _this);
+		_this.ws.onclose = jQuery.proxy(_this.wsOnClose , _this);
+		_this.ws.onmessage = jQuery.proxy(_this.wsOnMessage , _this);
+
 	}
 	
 	this.wycaSend = function (msg) {
 		
-		if (_this.options.id_robot != 'not_robot')
-		{	
-			if (!_this.websocketStarted)
-				_this.websocketAuthed = false;
-			else
-			{
-				if (_this.websocketAuthed)
-				{
-					_this.ws.send(msg);
-					
-					// Envoie d'une deuxième requete après 50ms pour forcer le mobile à envoyer la précédente commande.
-					if (_this.timerSink != null)
-					{
-						clearTimeout(_this.timerSink);
-						_this.timerSink = null;
-					}
-					_this.timerSink = setTimeout(function() { _this.timerSink = null; _this.ws.send("{\"O\":" + _this.CommandCode.SINK + "}");}, 50);
-				}
-				else
-					console.error('No auth');
-			}
-		}
+		if (!_this.websocketStarted)
+			_this.websocketAuthed = false;
 		else
 		{
-			_this.webrtc.sendToAll('wyca_api', {message: msg, nick: _this.webrtc.config.nick});
+			if (_this.websocketAuthed)
+			{
+				_this.ws.send(msg);
+				
+				// Envoie d'une deuxième requete après 50ms pour forcer le mobile à envoyer la précédente commande.
+				if (_this.timerSink != null)
+				{
+					clearTimeout(_this.timerSink);
+					_this.timerSink = null;
+				}
+				_this.timerSink = setTimeout(function() { _this.timerSink = null; _this.ws.send("{\"O\":" + _this.CommandCode.SINK + "}");}, 50);
+			}
+			else
+				console.error('No auth');
 		}
 	}
 	
@@ -1457,43 +801,6 @@ function WycaAPI(options){
 			case 'onMoveInProgress': ev_code = _this.EventCode.MOVE_IN_PROGRESS; break;
 		}
 		
-		if (ev_code == 0 && _this.options.id_robot == 'not_robot')
-		{
-			// On envoi la commande, juste pour indiquer au webrtc que l'on souhaite avoir ces évènements
-			switch (event_name)
-			{
-				/********** Actions *********/
-				case 'onGoToChargeFeedback': ev_code = _this.EventCode.GO_TO_CHARGE_FEEDBACK; break;
-				case 'onGoToChargeResult': ev_code = _this.EventCode.GO_TO_CHARGE_RESULT; break;
-				case 'onGoToPoiFeedback': ev_code = _this.EventCode.GO_TO_POI_FEEDBACK; break;
-				case 'onGoToPoiResult': ev_code = _this.EventCode.GO_TO_POI_RESULT; break;
-				case 'onGoToPoseFeedback': ev_code = _this.EventCode.GO_TO_POSE_FEEDBACK; break;
-				case 'onGoToPoseResult': ev_code = _this.EventCode.GO_TO_POSE_RESULT; break;
-				case 'onGoToPoseAccurateFeedback': ev_code = _this.EventCode.GO_TO_POSE_ACCURATE_FEEDBACK; break;
-				case 'onGoToPoseAccurateResult': ev_code = _this.EventCode.GO_TO_POSE_ACCURATE_RESULT; break;
-				case 'onGoToPoseFlexibleFeedback': ev_code = _this.EventCode.GO_TO_POSE_FLEXIBLE_FEEDBACK; break;
-				case 'onGoToPoseFlexibleResult': ev_code = _this.EventCode.GO_TO_POSE_FLEXIBLE_RESULT; break;
-				case 'onGoToAugmentedPoseFeedback': ev_code = _this.EventCode.GO_TO_AUGMENTED_POSE_FEEDBACK; break;
-				case 'onGoToAugmentedPoseResult': ev_code = _this.EventCode.GO_TO_AUGMENTED_POSE_RESULT; break;
-				case 'onDockFeedback': ev_code = _this.EventCode.DOCK_FEEDBACK; break;
-				case 'onDockResult': ev_code = _this.EventCode.DOCK_RESULT; break;
-				case 'onUndockFeedback': ev_code = _this.EventCode.UNDOCK_FEEDBACK; break;
-				case 'onUndockResult': ev_code = _this.EventCode.UNDOCK_RESULT; break;
-				case 'onMappingStartFeedback': ev_code = _this.EventCode.MAPPING_START_FEEDBACK; break;
-				case 'onMappingStartResult': ev_code = _this.EventCode.MAPPING_START_RESULT; break;
-				case 'onNavigationStartFeedback': ev_code = _this.EventCode.NAVIGATION_START_FEEDBACK; break;
-				case 'onNavigationStartResult': ev_code = _this.EventCode.NAVIGATION_START_RESULT; break;
-				case 'onDockRecoveryFeedback': ev_code = _this.EventCode.DOCK_RECOVERY_FEEDBACK; break;
-				case 'onDockRecoveryResult': ev_code = _this.EventCode.DOCK_RECOVERY_RESULT; break;
-				case 'onRecoveryFromFiducialFeedback': ev_code = _this.EventCode.RECOVERY_FROM_FIDUCIAL_FEEDBACK; break;
-				case 'onRecoveryFromFiducialResult': ev_code = _this.EventCode.RECOVERY_FROM_FIDUCIAL_RESULT; break;
-				case 'onSetActiveTopFeedback': ev_code = _this.EventCode.SET_ACTIVE_TOP_FEEDBACK; break;
-				case 'onSetActiveTopResult': ev_code = _this.EventCode.SET_ACTIVE_TOP_RESULT; break;
-				case 'onInstallNewTopFeedback': ev_code = _this.EventCode.INSTALL_NEW_TOP_FEEDBACK; break;
-				case 'onInstallNewTopResult': ev_code = _this.EventCode.INSTALL_NEW_TOP_RESULT; break;
-			}
-		}
-		
 		//if (_this.options.onInitialized != undefined) _this.options.onInitialized();
 		if (ev_code > 0)
 		{
@@ -1529,43 +836,6 @@ function WycaAPI(options){
 			case 'onDockingState': ev_code = _this.CommandCode.DOCKING_STATE; break;
 			case 'onPOIsDetect': ev_code = _this.CommandCode.POI_POSES; break;
 			case 'onMoveInProgress': ev_code = _this.CommandCode.MOVE_IN_PROGRESS; break;
-		}
-		
-		if (ev_code == 0 && _this.options.id_robot == 'not_robot')
-		{
-			// On envoi la commande, juste pour indiquer au webrtc que l'on souhaite avoir ces évènements
-			switch (event_name)
-			{
-				/********** Actions *********/
-				case 'onGoToChargeFeedback': ev_code = _this.EventCode.GO_TO_CHARGE_FEEDBACK; break;
-				case 'onGoToChargeResult': ev_code = _this.EventCode.GO_TO_CHARGE_RESULT; break;
-				case 'onGoToPoiFeedback': ev_code = _this.EventCode.GO_TO_POI_FEEDBACK; break;
-				case 'onGoToPoiResult': ev_code = _this.EventCode.GO_TO_POI_RESULT; break;
-				case 'onGoToPoseFeedback': ev_code = _this.EventCode.GO_TO_POSE_FEEDBACK; break;
-				case 'onGoToPoseResult': ev_code = _this.EventCode.GO_TO_POSE_RESULT; break;
-				case 'onGoToPoseAccurateFeedback': ev_code = _this.EventCode.GO_TO_POSE_ACCURATE_FEEDBACK; break;
-				case 'onGoToPoseAccurateResult': ev_code = _this.EventCode.GO_TO_POSE_ACCURATE_RESULT; break;
-				case 'onGoToPoseFlexibleFeedback': ev_code = _this.EventCode.GO_TO_POSE_FLEXIBLE_FEEDBACK; break;
-				case 'onGoToPoseFlexibleResult': ev_code = _this.EventCode.GO_TO_POSE_FLEXIBLE_RESULT; break;
-				case 'onGoToAugmentedPoseFeedback': ev_code = _this.EventCode.GO_TO_AUGMENTED_POSE_FEEDBACK; break;
-				case 'onGoToAugmentedPoseResult': ev_code = _this.EventCode.GO_TO_AUGMENTED_POSE_RESULT; break;
-				case 'onDockFeedback': ev_code = _this.EventCode.DOCK_FEEDBACK; break;
-				case 'onDockResult': ev_code = _this.EventCode.DOCK_RESULT; break;
-				case 'onUndockFeedback': ev_code = _this.EventCode.UNDOCK_FEEDBACK; break;
-				case 'onUndockResult': ev_code = _this.EventCode.UNDOCK_RESULT; break;
-				case 'onMappingStartFeedback': ev_code = _this.EventCode.MAPPING_START_FEEDBACK; break;
-				case 'onMappingStartResult': ev_code = _this.EventCode.MAPPING_START_RESULT; break;
-				case 'onNavigationStartFeedback': ev_code = _this.EventCode.NAVIGATION_START_FEEDBACK; break;
-				case 'onNavigationStartResult': ev_code = _this.EventCode.NAVIGATION_START_RESULT; break;
-				case 'onDockRecoveryFeedback': ev_code = _this.EventCode.DOCK_RECOVERY_FEEDBACK; break;
-				case 'onDockRecoveryResult': ev_code = _this.EventCode.DOCK_RECOVERY_RESULT; break;
-				case 'onRecoveryFromFiducialFeedback': ev_code = _this.EventCode.RECOVERY_FROM_FIDUCIAL_FEEDBACK; break;
-				case 'onRecoveryFromFiducialResult': ev_code = _this.EventCode.RECOVERY_FROM_FIDUCIAL_RESULT; break;
-				case 'onSetActiveTopFeedback': ev_code = _this.EventCode.SET_ACTIVE_TOP_FEEDBACK; break;
-				case 'onSetActiveTopResult': ev_code = _this.EventCode.SET_ACTIVE_TOP_RESULT; break;
-				case 'onInstallNewTopFeedback': ev_code = _this.EventCode.INSTALL_NEW_TOP_FEEDBACK; break;
-				case 'onInstallNewTopResult': ev_code = _this.EventCode.INSTALL_NEW_TOP_RESULT; break;
-			}
 		}
 		
 		if (ev_code > 0)
