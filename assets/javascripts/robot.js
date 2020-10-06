@@ -274,8 +274,8 @@ function InitPosCarteMapping()
 		img_map_save_contener_id = '#install_by_step_mapping';
 	}
 	
-    originWidth = $(img_map_save_id).prop('naturalWidth');
-    originHeight = $(img_map_save_id).prop('naturalHeight');
+    originWidth = $(img_map_save_id).prop('naturalWidth') * 2;
+    originHeight = $(img_map_save_id).prop('naturalHeight') * 2;
     if (originWidth > 0 && originHeight > 0) //mappingLastInfo != null)
     {
         hauteurCm = originHeight * 5;
