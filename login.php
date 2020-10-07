@@ -142,7 +142,25 @@ $(document).ready(function(e) {
 				location.href = 'https://wyca.run/login.php';
 			},
 			error: function(e) {
-				// No HTTPS availabme, pb chrome to validate certificate
+				// No HTTPS available, pb chrome to validate certificate
+			}
+		});
+		<?php
+	}
+	else
+	{
+		// We are in https but maybe with security exception
+		?>
+		$.ajax({
+			type: "GET",
+			url: 'https://wyca.run:9095',
+			success: function(data) {
+				// HTTPS OK
+				
+			},
+			error: function(e) {
+				location.href = 'http://wyca.run/login.php';
+				// No HTTPS available, pb chrome to validate certificate
 			}
 		});
 		<?php
