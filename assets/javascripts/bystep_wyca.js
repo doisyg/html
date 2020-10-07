@@ -593,6 +593,8 @@ $(document).ready(function(e) {
 					clearInterval(intervalMap);
 					intervalMap = null;
 				}
+				
+				GetMappingInConstruction();
 			}
 		}
 	});
@@ -651,6 +653,13 @@ $(document).ready(function(e) {
 			clearInterval(intervalMap);
 			intervalMap = null;
 		}
+		
+		if (timerGetMappingInConstruction != null)
+		{
+			clearInterval(timerGetMappingInConstruction);
+			timerGetMappingInConstruction = null;
+		}
+		
 	});
 	
 	$('#install_by_step_mapping_fin .bMappingSaveMap').click(function(e) {
@@ -1416,6 +1425,8 @@ function NextTimerCreateMap()
 				intervalMap = null;
 			}
 			//intervalMap = setInterval(GetMap, 1000);
+			
+			GetMappingInConstruction();
 		}, 500);
 	}
 	else	
