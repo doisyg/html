@@ -724,6 +724,8 @@ function InitMappingByStep()
 					clearInterval(intervalMap);
 					intervalMap = null;
 				}
+				
+				GetMappingInConstruction();
 			}
 		});
 	}

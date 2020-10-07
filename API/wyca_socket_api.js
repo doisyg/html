@@ -75,6 +75,7 @@ function WycaAPI(options){
 		MAPPING_START_CANCEL			: 0x4103,
 		MAPPING_STOP			: 0x4104,
 		GET_LAST_MAPPING			: 0x4105,
+		GET_MAPPING_IN_CONSTRUCTION			: 0x4106,
 		NAVIGATION_GET_IS_STARTED			: 0x0110,
 		NAVIGATION_START_FROM_MAPPING			: 0x0112,
 		NAVIGATION_START_FROM_POSE			: 0x0113,
@@ -1659,6 +1660,14 @@ function WycaAPI(options){
 			this.callbacks[_this.CommandCode.GET_LAST_MAPPING] = callback;
 		var action = {
 			"O": _this.CommandCode.GET_LAST_MAPPING,
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	this.GetMappingInConstruction = function(callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.GET_MAPPING_IN_CONSTRUCTION] = callback;
+		var action = {
+			"O": _this.CommandCode.GET_MAPPING_IN_CONSTRUCTION,
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
