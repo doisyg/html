@@ -132,11 +132,11 @@ $(document).ready(function(e) {
 
 	<?php if ($server_request_scheme == 'http')
 	{
-		// We test if we can do https
+		// We test if we can do https on webservice
 		?>
 		$.ajax({
 			type: "GET",
-			url: 'https://wyca.run/login.php',
+			url: 'https://wyca.run:9095',
 			success: function(data) {
 				// HTTPS OK
 				location.href = 'https://wyca.run/login.php';
