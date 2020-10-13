@@ -147,6 +147,7 @@ $(document).ready(function(e) {
 
 var timerGetMappingInConstruction = null;
 var haveReplyFromGetMappingInConstruction = false;
+var liveMapping = true;
 
 function TimeoutGetMappingInConstruction()
 {
@@ -160,30 +161,34 @@ function TimeoutGetMappingInConstruction()
 
 function GetMappingInConstruction()
 {
-	haveReplyFromGetMappingInConstruction = false;
-	timerGetMappingInConstruction = setTimeout(TimeoutGetMappingInConstruction, 1000);
-	
-	wycaApi.GetMappingInConstruction(function(data) {
+	if (liveMapping)
+	{
+		haveReplyFromGetMappingInConstruction = false;
+		timerGetMappingInConstruction = setTimeout(TimeoutGetMappingInConstruction, 1000);
 		
-		haveReplyFromGetMappingInConstruction = true;
-		if (timerGetMappingInConstruction == null)
-		{
-			// Le timer a déjà sauté, on relance l'appel
-			GetMappingInConstruction();
-		}
-		
-		if (data.A == wycaApi.AnswerCode.NO_ERROR)
-		{
-			if (imgMappingLoaded)
+		wycaApi.GetMappingInConstruction(function(data) {
+			
+			haveReplyFromGetMappingInConstruction = true;
+			if (timerGetMappingInConstruction == null)
 			{
-				imgMappingLoaded = false;
-				var img = document.getElementById("install_by_step_mapping_img_map_saved");
-				//img.src = 'data:image/png;base64,' + data.D.M;
-				img.src = '/mapping/last_mapping.jpg?v='+ Date.now();
-				mappingLastOrigin = {'x':parseFloat(data.D.X), 'y':parseFloat(data.D.Y) };
+				// Le timer a déjà sauté, on relance l'appel
+				GetMappingInConstruction();
 			}
-		}
-	});
+			
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				if (imgMappingLoaded)
+				{
+					imgMappingLoaded = false;
+					var img = document.getElementById("install_by_step_mapping_img_map_saved");
+					//img.src = 'data:image/png;base64,' + data.D.M;
+					//img.src = '/mapping/last_mapping.jpg?v='+ Date.now();
+					img.src = 'http://192.168.0.30/mapping/last_mapping.jpg?v='+ Date.now();
+					mappingLastOrigin = {'x':parseFloat(data.D.X), 'y':parseFloat(data.D.Y) };
+				}
+			}
+		});
+	}
 }
 
 function onGoToPoseResult(data)
@@ -339,8 +344,6 @@ function InitPosCarteMapping()
 
 			decallageLeft  = centreVueLeft - posLeft;
             decallageBottom  = posBottom + centreVueBottom + 3;
-            
-            console.log("left", decallageLeft, "bottom", decallageBottom);
 
             $(img_map_save_id).css('left', decallageLeft);
             $(img_map_save_id).css('bottom', decallageBottom);
