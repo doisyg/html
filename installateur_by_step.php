@@ -407,6 +407,13 @@
             <div class="content">
                 
                 <div id="install_by_step_edit_map_container_all">
+					<div id="">
+						<div class="btn-circle btn-lg burger_menu" data-open="install_by_step_edit_map_menu">
+							<div class="burger_menu_trait"></div>
+							<div class="burger_menu_trait"></div>
+							<div class="burger_menu_trait"></div>
+						</div>
+					</div>
                     <div id="install_by_step_edit_map_zoom_carte_container">
                         <div id="install_by_step_edit_map_zoom_carte">
                             <img src=""  class="img-responsive" style="max-width:100%; max-height:100%;" />
@@ -434,14 +441,14 @@
                     
                     <div id="install_by_step_edit_map_menu" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddForbiddenArea"><i class="fa fa-ban"></i></a></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddArea"><i class="fa fa-square"></i></a></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddPOI"><i class="fa fa-map-marker"></i></a></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddAugmentedPose"><i class="fa fa-map-marker" style="color:#F00;"></i></a></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddDock"><i class="fa fa-flash"></i></a></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bGomme"><i class="fa fa-eraser"></i></a></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bMoveTo"><i class="fa fa-crosshairs"></i></a></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bMove" data-toggle="modal" data-target="#install_by_step_edit_map_modalTeleop"><i class="fa fa-gamepad"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddForbiddenArea"><i class="fa fa-minus-circle"></i></a> <?= _('Add Forbidden Area') ?></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddArea"><i class="fa fa-square"></i></a> <?= _('Add Customizable Area') ?></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddPOI"><i class="fa fa-map-marker-alt"></i></a> <?= _('Add POI') ?></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddAugmentedPose"><i class="fa fa-map-marker-alt" style="color:#F00;"></i></a> <?= _('Add Advanced Pose') ?></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddDock"><i class="fa fa-flash"></i></a> <?= _('Add Docking Station') ?></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bGomme"><i class="fa fa-eraser"></i></a> <?= _('Erase Walls') ?></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bMoveTo"><i class="fa fa-crosshairs"></i></a> <?= _('Go to Pose') ?></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bMove" data-toggle="modal" data-target="#install_by_step_edit_map_modalTeleop"><i class="fa fa-gamepad"></i></a> <?= _('Remote Control') ?></li>
                         </ul>
                     </div>
                     

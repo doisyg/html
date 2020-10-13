@@ -662,6 +662,15 @@ $(document).ready(function(e) {
 		}
 		ByStepDisplayBlockZoom();
 	});
+	
+	$('.burger_menu').on('touchstart', function(e) {
+		if($(this).hasClass('burger_menu_open')){
+			ByStepHideMenus()
+		}else{
+			$(this).addClass('burger_menu_open');
+			ByStepDisplayMenu( $(this).data('open'))
+		}
+	});
 });
 
 function ByStepHideMenus()
@@ -674,6 +683,8 @@ function ByStepHideMenus()
 	$('#install_by_step_edit_map_menu_poi li').hide();
 	$('#install_by_step_edit_map_menu_augmented_pose li').hide();
 	$('.popupHelp').hide();
+	
+	$('.burger_menu_open').removeClass('burger_menu_open');
 }
 
 function ByStepDisplayMenu(id_menu)
@@ -681,56 +692,19 @@ function ByStepDisplayMenu(id_menu)
 	$('#'+id_menu+' li').hide();
 	$('#'+id_menu).show();
 
-	topCenter = eventTouchStart.originalEvent.targetTouches[0].clientY - $('#install_by_step_edit_map_container_all').offset().top;
-	leftCenter = eventTouchStart.originalEvent.targetTouches[0].clientX - $('#install_by_step_edit_map_container_all').offset().left;
+	topMenu = '5px';
+	leftMenu = '5px' ;
 	
-	$('#'+id_menu).css({top: topCenter, left: leftCenter});
+	decallageY = 60;
 	
-	rayon = 80;
-	
-	decallageX = 0;
-	decallageY = 0;
-	angleDep = 21;
-	
-	if (leftCenter > $('#install_by_step_edit_map_container_all').width() - 100)
-		angleDep += 180;
-	
-	minLeft = 10000;
-	maxLeft = -100;
-	minTop = 10000;
-	maxTop = -100;
+	$('#'+id_menu).css({top: topMenu, left: leftMenu});
 	
 	$('#'+id_menu+' li').each(function(index, element) {
-		angle = (angleDep + 45*index) * Math.PI/180;
-		// x = rsin(θ), y = rcos(θ)
-		l = rayon * Math.sin(angle) - 25;
-		t = rayon * Math.cos(angle) - 25;
-		
-		if (l < minLeft) minLeft = l;
-		if (l > maxLeft) maxLeft = l;
-		if (t < minTop) minTop = t;
-		if (t > maxTop) maxTop = t;
-		
+		l = leftMenu;
+		t = 'calc('+topMenu+ ' + ' + ((index+1)*decallageY) + 'px ) ';
 		$(this).css({left: l, top: t});
 		$(this).delay(100*index).fadeIn();
     });
-		
-	if (leftCenter - 25 + minLeft < 20)
-		decallageX = 20 - (leftCenter - 25 + minLeft);
-	if (leftCenter + maxLeft + 50 > $('#install_by_step_edit_map_container_all').width() - 20)
-		decallageX = ($('#install_by_step_edit_map_container_all').width() - 20) - (leftCenter + maxLeft + 50);
-	
-	if (topCenter + minTop < 20)
-		decallageY = 20 - (topCenter + minTop);
-	if (topCenter + maxTop + 50 > $('#install_by_step_edit_map_container_all').height() - 20)
-		decallageY = ($('#install_by_step_edit_map_container_all').height() - 20) - (topCenter + maxTop + 50);
-		
-	if (decallageX != 0 || decallageY != 0)
-	{
-		$('#'+id_menu+' li').each(function(index, element) {
-			$(this).css({left: '+='+decallageX, top: '+='+decallageY});
-    	});
-	}
 }
 
 function ByStepLongPressForbidden()

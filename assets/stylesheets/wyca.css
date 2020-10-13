@@ -166,8 +166,8 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 
 
 .menu_icon_touch { position:absolute; display:none; z-index:1100; }
-.menu_icon_touch ul { list-style:none; padding:0; margin:0; }
-.menu_icon_touch li { padding:0; margin:0; position:absolute; }
+.menu_icon_touch ul { list-style:none; padding:0; margin:0; overflow-y: scroll;}
+.menu_icon_touch li { padding:0; margin:0; position:absolute;white-space: nowrap;font-size:16px;}
 
 .btn-circle { width: 30px; height: 30px; text-align: center; padding: 6px 0; font-size: 12px; line-height: 1.428571429; border-radius: 15px; }
 .btn-circle.btn-lg { width: 50px; height: 50px; padding: 10px 16px; font-size: 18px; line-height: 1.33; border-radius: 25px; }
@@ -745,4 +745,39 @@ img.fi-robot{
 	position: relative;
     left: 50%;
     transform: translateX(-50%);
+}
+
+.burger_menu{
+	display:flex;
+	align-items:center;
+	flex-direction:column;
+	justify-content:center;
+	border: 1px solid transparent;
+	position:absolute;
+	top:10px;
+	left:10px;
+	z-index:9999999;
+	background:#DCDCDC;
+}
+
+.burger_menu_open{
+	
+}
+.burger_menu_open :nth-child(1){
+	transform: translate(0,9px)rotate(45deg);
+}
+.burger_menu_open :nth-child(2){
+	opacity:0;
+}
+.burger_menu_open :nth-child(3){
+	transform: translate(0,-9px)rotate(-45deg);
+	
+}
+.burger_menu_trait{
+	width: 30px;
+    height: 5px;
+    margin: 2px 0;
+    background: #707070;
+    transition: 0.5s all;
+    border-radius: 15px;
 }
