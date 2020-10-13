@@ -178,7 +178,8 @@ function GetMappingInConstruction()
 			{
 				imgMappingLoaded = false;
 				var img = document.getElementById("install_by_step_mapping_img_map_saved");
-				img.src = 'data:image/png;base64,' + data.D.M;
+				//img.src = 'data:image/png;base64,' + data.D.M;
+				img.src = '/mapping/last_mapping.jpg?v='+ Date.now();
 				mappingLastOrigin = {'x':parseFloat(data.D.X), 'y':parseFloat(data.D.Y) };
 			}
 		}
@@ -338,6 +339,8 @@ function InitPosCarteMapping()
 
 			decallageLeft  = centreVueLeft - posLeft;
             decallageBottom  = posBottom + centreVueBottom + 3;
+            
+            console.log("left", decallageLeft, "bottom", decallageBottom);
 
             $(img_map_save_id).css('left', decallageLeft);
             $(img_map_save_id).css('bottom', decallageBottom);
