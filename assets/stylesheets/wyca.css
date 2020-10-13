@@ -111,7 +111,7 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 @media only screen and (max-width: 767px)
 {
 	#install_by_step_mapping_divResultTrinary { z-index:200; }
-	#install_by_step_mapping_divOptionTrinary { position:absolute; bottom:30px; left:5%; width:90%; z-index:300; color:#0088cc; text-align:left; }
+	#install_by_step_mapping_divOptionTrinary { position:absolute; bottom:20px; left:5%; width:90%; z-index:300; color:#0088cc; text-align:left; }
 	#install_by_step_mapping_divOptionTrinary .panel-body { background-color:rgba(255,255,255,0.5); }
 	#install_by_step_mapping_divOptionTrinary h3 { display:none; }
 	
@@ -709,4 +709,40 @@ ul.tuiles li img.i {
 img.fi-robot{
 	max-height: 59px!important;
     padding: 6px!important;
+}
+.threshold_wrapper{
+	clear:both;
+}
+
+.threshold_wrapper p{
+	clear:both;
+}
+
+.slider_wrapper{
+	min-height:1px;
+	height:25px;
+}
+.slider_wrapper > .btn{
+	float:left;
+	max-width:10%;
+	width:10%;
+	font-size:20px;
+	padding:0;
+	height:30px;
+}
+.slider_wrapper > .ui-slider{
+	width:80%;
+	float:left;
+	top:11px;
+}
+.btn_slider_plus{
+	
+}
+.btn_slider_minus{
+	
+}
+.bResetValueThreshold{
+	position: relative;
+    left: 50%;
+    transform: translateX(-50%);
 }

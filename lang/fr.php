@@ -169,5 +169,7 @@ $_LANG['89931c55e52435a6bf3ac08f69d5e781'] = 'Move robot to start point';
 $_LANG['f92965e2c8a7afb3c1b9a5c09a263636'] = 'Done';
 $_LANG['98defd6ee70dfb1dea416cecdf391f58'] = 'site';
 $_LANG['eeb626d01bda8047008d18eae4489615'] = 'Import your site';
+$_LANG['97dbd1efa432e7cf29e8389929ebccac'] = 'Empty area threshold';
+$_LANG['9e20018b40b560419468404753d5eadb'] = 'Object detection threshold';
 
 ?>

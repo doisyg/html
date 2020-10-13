@@ -219,6 +219,8 @@ $(document).ready(function(e) {
 		$('.title_section').html($('#'+next+' > header > h2').text());
 		//
 		InitJoystick();
+
+		
     });
 	
 	$(document).on('touchstart', '.ui-slider-handle', function(event) {
@@ -280,6 +282,90 @@ $(document).ready(function(e) {
 		// Unset the flag to allow other widgets to inherit the touch event
 		touchHandled = false;
 	});
+			
+		
+		
+	//GESTION BUTTON +/- ON SLIDERS
+	
+	//CLICK
+	$('.btn_slider_plus').on('touchstart',function(){
+		let step = 1;
+		let input;
+		input = $(this).parent().find('input');
+		input.val(parseFloat(input.val())+step);
+		input.change();
+	})
+	//LONGPRESS
+	$('.btn_slider_plus').on('touchstart',function(){
+		let step = 1;
+		let input;
+		input = $(this).parent().find('input');
+		window.timer_btn_slider = setTimeout(function(){add_sub_input('+',step,input,0)},500);
+		return false;		
+	}).on('touchend',function(){
+		clearTimeout(window.timer_btn_slider);
+		return false;		
+	}).on('touchleave',function(){
+		clearTimeout(window.timer_btn_slider);
+		return false;		
+	}).on('touchcancel',function(){
+		clearTimeout(window.timer_btn_slider);
+		return false;		
+	});
+	
+	//CLICK
+	$('.btn_slider_minus').on('touchstart',function(){
+		let step = 1;
+		let input;
+		input = $(this).parent().find('input');
+		input.val(parseFloat(input.val())-step);
+		input.change();
+	})
+	//LONGPRESS
+	$('.btn_slider_minus').on('touchstart',function(){
+		let step = 1;
+		let input;
+		input = $(this).parent().find('input');
+		window.timer_btn_slider = setTimeout(function(){add_sub_input('-',step,input,0)},500);
+		return false;		
+	}).on('touchend',function(){
+		clearTimeout(window.timer_btn_slider);
+		return false;		
+	}).on('touchleave',function(){
+		clearTimeout(window.timer_btn_slider);
+		return false;		
+	}).on('touchcancel',function(){
+		clearTimeout(window.timer_btn_slider);
+		return false;		
+	});
+	
+	function add_sub_input(bool,step,input,iterations){
+		if(bool == '+'){
+			input.val(parseFloat(input.val())+step);
+		}else{
+			input.val(parseFloat(input.val())-step);
+		}
+		input.change();
+		iterations++;
+		let delay = (500/iterations) < 50 ? 50 : 500/iterations;
+		window.timer_btn_slider = setTimeout(function(){add_sub_input(bool,step,input,iterations)},delay);
+	}
+	//UPDATE SLIDER 
+	$('.ui-slider > input[type=hidden]').change(function(){
+		let slider =  $(this).parent();
+		let opt = slider.data('plugin-options');
+		let max = opt.max || 100;
+		let min = opt.min || 0;
+		let value = $(this).val();
+		value > max ? value = max : '';
+		value < min ? value = min : '';
+		$(this).val(value);
+		let etendue = max-min;
+		let temp = (value-min)*100/etendue;
+		slider.data('plugin-options').value=value;
+		slider.find('.ui-slider-range').css('width',temp+'%');
+		slider.find('.ui-slider-handle').css('left',temp+'%');
+	})	
 });
 
 var touchHandled = false;
@@ -443,7 +529,7 @@ function GetSitesNormal()
 		
 		wycaApi.GetCurrentSite(function(data) {
 			current_site = data.D;
-			console.log(current_site);
+			//console.log(current_site);
 			wycaApi.GetSitesList(function(data) {
 				
 				$('#install_normal_setup_sites .list_sites').html('');
@@ -479,7 +565,7 @@ function GetSitesForExportNormal()
 		
 		wycaApi.GetCurrentSite(function(data) {
 			current_site = data.D;
-			console.log(current_site);
+			//console.log(current_site);
 			wycaApi.GetSitesList(function(data) {
 				
 				$('#install_normal_setup_export .list_sites').html('');
@@ -618,7 +704,7 @@ function InitTopsNormal()
 	if (wycaApi.websocketAuthed)
 	{
 		wycaApi.GetTopsList(function(data) {
-			console.log(data);
+			//console.log(data);
 			$.each(data.D,function(index, value){
 				$('#install_normal_setup_tops .tuiles').append('<li class="col-xs-4 col-md-3 col-lg-2">'+
 				'	<a class="is_checkbox '+(value.active?'active no_update':'')+' '+(value.available?'checked':'')+' anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'" href="#">'+
@@ -644,7 +730,7 @@ function InitTopsActiveManager()
 	if (wycaApi.websocketAuthed)
 	{
 		wycaApi.GetTopsList(function(data) {
-			console.log(data);
+			//console.log(data);
 			$.each(data.D,function(index, value){
 				if (value.available)
 				{
@@ -673,7 +759,7 @@ function InitTopsActiveNormal()
 	if (wycaApi.websocketAuthed)
 	{
 		wycaApi.GetTopsList(function(data) {
-			console.log(data);
+			//console.log(data);
 			$.each(data.D,function(index, value){
 				if (value.available)
 				{
@@ -702,7 +788,7 @@ function InitTopsByStep()
 	if (wycaApi.websocketAuthed)
 	{
 		wycaApi.GetTopsList(function(data) {
-			console.log(data);
+			//console.log(data);
 			$.each(data.D,function(index, value){
 				$('#install_by_step_tops .tuiles').append('<li class="col-xs-4 col-md-3 col-lg-2">'+
 				'	<a class="is_checkbox '+(value.available?'checked':'')+' anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'" href="#">'+
@@ -757,7 +843,7 @@ function InitMappingByStep()
 
 function InitCheckByStep()
 {
-	console.log('InitCheckByStep');
+	//console.log('InitCheckByStep');
 	if(timer_anim_check!=undefined){clearTimeout(timer_anim_check);timer_anim_check=undefined;}
 	$('#install_by_step_check .test').removeClass('test');
 	$('#install_by_step_check li:first-child .is_checkbox').addClass('test');
