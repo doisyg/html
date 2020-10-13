@@ -441,10 +441,10 @@
                     
                     <div id="install_by_step_edit_map_menu" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddForbiddenArea"><i class="fa fa-minus-circle"></i></a> <?= _('Add Forbidden Area') ?></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddForbiddenArea"><i class="fa fa-minus-circle" style="color:#da3939;"></i></a> <?= _('Add Forbidden Area') ?></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddArea"><i class="fa fa-square"></i></a> <?= _('Add Customizable Area') ?></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddPOI"><i class="fa fa-map-marker-alt"></i></a> <?= _('Add POI') ?></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddAugmentedPose"><i class="fa fa-map-marker-alt" style="color:#F00;"></i></a> <?= _('Add Advanced Pose') ?></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddAugmentedPose"><i class="fa fa-map-marker-alt" style="color:#da3939;"></i></a> <?= _('Add Advanced Pose') ?></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddDock"><i class="fa fa-flash"></i></a> <?= _('Add Docking Station') ?></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg bGomme"><i class="fa fa-eraser"></i></a> <?= _('Erase Walls') ?></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg bMoveTo"><i class="fa fa-crosshairs"></i></a> <?= _('Go to Pose') ?></li>

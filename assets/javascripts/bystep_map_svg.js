@@ -201,7 +201,7 @@ function ByStepTraceForbidden(indexForbidden)
 							   'id':'install_by_step_edit_map_forbidden_'+forbidden.id_area,
 							   'data-id_area': forbidden.id_area
 							  });
-		path.style.fill = 'rgba(0,0,0,0.5)'
+		path.style.fill = 'rgba(255,0,0,0.3)'
 		svgByStep.appendChild(path);
 		
 		lastPointIndex = points.length-1;

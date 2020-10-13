@@ -71,7 +71,7 @@
 						<i class="fa fa-battery-0"></i>
 						<span>100 %</span>
 					</div>  
-					<div class="icone_header safety_stop" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="<?php echo __('Emergency stop');?>"><i class="fa fa-exclamation-circle battery-ko"></i></div>
+					<div class="icone_header safety_stop" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="<?php echo __('Emergency stop');?>"><img src="assets/images/emergency-stop-button.png"></div>
 					<a href="#" class="stop_move btn btn-danger btn-circle" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="<?php echo __('Stop move');?>"><i class="fa fa-stop battery-ko"></i></a>
 					<a href="#" class="btn btn-circle btn-default"><i class="fa fa-info"></i></a>
 				</div>

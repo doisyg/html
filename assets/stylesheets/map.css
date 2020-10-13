@@ -3,6 +3,7 @@
 .movable { display:none; }
 .movable.dock_elem { display:block; }
 .secable { stroke:#589FB2; display:none; }
+.forbidden_elem.secable { stroke:#da3939; display:none; }
 
 body .poly, body.addForbidden .forbidden_elem_current, body.addArea .area_elem_current, body.addPoly .poly_elem_current {  fill:rgba(204,102,0, 0.5); stroke:#00CCFF; display:block; }
 body.addForbidden rect.forbidden_elem_current, body.addArea rect.area_elem_current { fill:#000; stroke:#000; display:block; }
