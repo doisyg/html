@@ -48,7 +48,8 @@ $(document).ready(function(e) {
 						data = GetDataMapToSave();
 						
 						map = current_map_obj;
-						map.image_tri = data_img.image;
+						map.image_amcl = data_img.image;
+						map.image_tri = '';
 						map.threshold_free = parseInt($('#install_normal_setup_trinary_threshold_free_slider').val());
 						map.threshold_occupied = parseInt($('#install_normal_setup_trinary_threshold_occupied_slider').val());
 						
