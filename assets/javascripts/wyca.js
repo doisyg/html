@@ -135,92 +135,104 @@ $(document).ready(function(e) {
     });
 	
 	$( 'body' ).on( 'click', '.button_goto', function(e) {
-        e.preventDefault();
-		history.pushState({ current_groupe:$('.menu_groupe .active').attr('id'), current_page:$(this).data('goto')}, $(this).data('goto'), "/#"+$(this).data('goto'));
-		
-		next = $(this).data('goto');
-		console.log('next ',next);
-		if (next == 'install_by_step_wifi') InitInstallWifiPageByStep();
-		if (next == 'install_by_step_tops') InitTopsByStep();
-		if (next == 'install_by_step_top') InitTopsActiveByStep();
-		if (next == 'install_by_step_check') InitCheckByStep();		
-		if (next == 'install_by_step_config') GetConfigurationsByStep();
-		if (next == 'install_by_step_manager') GetManagersByStep();
-		if (next == 'install_by_step_service_book') GetServiceBooksByStep();
-		if (next == 'install_by_step_mapping') InitMappingByStep();
-		
-		if (next == 'install_normal_setup_sites') GetSitesNormal();
-		if (next == 'install_normal_setup_export') GetSitesForExportNormal();
-		if (next == 'install_normal_setup_import') InitSiteImport();
-		if (next == 'install_normal_setup_tops') InitTopsNormal();
-		if (next == 'install_normal_setup_top') InitTopsActiveNormal();
-		if (next == 'install_normal_setup_vehicule') GetConfigurationsNormal();
-		if (next == 'install_normal_setup_wifi') InitInstallWifiPageNormal();
-		if (next == 'install_normal_manager') GetManagersNormal();
-		if (next == 'install_normal_service_book') GetServiceBooksNormal();
-		if (next == 'install_normal_edit_map') GetInfosCurrentMapNormal();
-		if (next == 'install_normal_setup_trinary') NormalInitTrinary();
+		if($(this).hasClass('btn_back')){
+			$('#bModalBackOk').attr('data-goto','');
+			let target=$(this).data('goto');
+			$('#bModalBackOk').attr('data-goto',target);
+			$('#bModalBackOk').data('goto',target);
+			
+			$('#modalBack').modal('show');
+		}else{
+			e.preventDefault();
+			history.pushState({ current_groupe:$('.menu_groupe .active').attr('id'), current_page:$(this).data('goto')}, $(this).data('goto'), "/#"+$(this).data('goto'));
+			next = $(this).data('goto');
+			
+			$('#modalBack').modal('hide');
+			$('section.active').removeClass('active');
+			$('section.page').hide();
+			
+			console.log('next ',next);
+			if (next == 'install_by_step_wifi') InitInstallWifiPageByStep();
+			if (next == 'install_by_step_tops') InitTopsByStep();
+			if (next == 'install_by_step_top') InitTopsActiveByStep();
+			if (next == 'install_by_step_check') InitCheckByStep();		
+			if (next == 'install_by_step_config') GetConfigurationsByStep();
+			if (next == 'install_by_step_manager') GetManagersByStep();
+			if (next == 'install_by_step_service_book') GetServiceBooksByStep();
+			if (next == 'install_by_step_mapping') InitMappingByStep();
+			
+			if (next == 'install_normal_setup_sites') GetSitesNormal();
+			if (next == 'install_normal_setup_export') GetSitesForExportNormal();
+			if (next == 'install_normal_setup_import') InitSiteImport();
+			if (next == 'install_normal_setup_tops') InitTopsNormal();
+			if (next == 'install_normal_setup_top') InitTopsActiveNormal();
+			if (next == 'install_normal_setup_vehicule') GetConfigurationsNormal();
+			if (next == 'install_normal_setup_wifi') InitInstallWifiPageNormal();
+			if (next == 'install_normal_manager') GetManagersNormal();
+			if (next == 'install_normal_service_book') GetServiceBooksNormal();
+			if (next == 'install_normal_edit_map') GetInfosCurrentMapNormal();
+			if (next == 'install_normal_setup_trinary') NormalInitTrinary();
+					
+			if (next == 'manager_edit_map') GetInfosCurrentMapManager();
+			if (next == 'manager_top') InitTopsActiveManager();
+			if (next == 'manager_users') GetUsers();
+			if (next == 'user_edit_map') GetInfosCurrentMapUser();
+			
+			if (next == 'wyca_demo_mode_config') InitWycaDemo();
+			if (next == 'wyca_demo_mode_start_stop') InitWycaDemoState();
+			
+			
+			
+			// Anim HIDE
+			var startShowAfter = 0;
+			if ($(this).closest('section').hasClass('hmi_tuile'))
+			{
+				nbTuiles = $(this).closest('section').find('.anim_tuiles').length;
+				delay = 70;
+				for (i=1; i <= nbTuiles; i++)
+				{
+					setTimeout(HideTuile, delay * (i - 1), $(this).closest('section').find('.tuile' + (nbTuiles - i + 1)));
+				}
 				
-		if (next == 'manager_edit_map') GetInfosCurrentMapManager();
-		if (next == 'manager_top') InitTopsActiveManager();
-		if (next == 'manager_users') GetUsers();
-		if (next == 'user_edit_map') GetInfosCurrentMapUser();
-		
-		if (next == 'wyca_demo_mode_config') InitWycaDemo();
-		if (next == 'wyca_demo_mode_start_stop') InitWycaDemoState();
-		
-		
-		
-		// Anim HIDE
-		var startShowAfter = 0;
-		if ($(this).closest('section').hasClass('hmi_tuile'))
-		{
-			nbTuiles = $(this).closest('section').find('.anim_tuiles').length;
-			delay = 70;
-			for (i=1; i <= nbTuiles; i++)
+				startShowAfter = nbTuiles * 70;
+				$(this).closest('section').delay(startShowAfter+250).fadeOut(500, function() {
+				   $(this).removeClass('active');
+				});
+			}
+			else
 			{
-				setTimeout(HideTuile, delay * (i - 1), $(this).closest('section').find('.tuile' + (nbTuiles - i + 1)));
+				$(this).closest('section').fadeOut(500);
 			}
 			
-			startShowAfter = nbTuiles * 70;
-			$(this).closest('section').delay(startShowAfter+250).fadeOut(500, function() {
-               $(this).removeClass('active');
-            });
-		}
-		else
-		{
-			$(this).closest('section').fadeOut(500);
-		}
-		
-		// Anim SHOW
-		next = $(this).data('goto');
-		if ($('#'+next).hasClass('hmi_tuile'))
-		{
-			nbTuiles = $('#'+next).find('.anim_tuiles').length;
-			delay = 70;
-			for (i=1; i <= nbTuiles; i++)
+			// Anim SHOW
+			next = $(this).data('goto');
+			if ($('#'+next).hasClass('hmi_tuile'))
 			{
-				setTimeout(ShowTuile, 700 + delay * (i - 1), $('#'+next).find('.tuile' + i));
+				nbTuiles = $('#'+next).find('.anim_tuiles').length;
+				delay = 70;
+				for (i=1; i <= nbTuiles; i++)
+				{
+					setTimeout(ShowTuile, 700 + delay * (i - 1), $('#'+next).find('.tuile' + i));
+				}
+				
+				$('#'+next).delay(startShowAfter+250).fadeIn(500, function() {
+				   $(this).addClass('active');
+				});
+			}
+			else
+			{
+				$('#'+next).delay(startShowAfter).fadeIn(500, function() {
+				   $(this).addClass('active');
+				});
 			}
 			
-			$('#'+next).delay(startShowAfter+250).fadeIn(500, function() {
-               $(this).addClass('active');
-            });
-		}
-		else
-		{
-			$('#'+next).delay(startShowAfter).fadeIn(500, function() {
-               $(this).addClass('active');
-            });
-		}
-		
-		// ADD TITLE CHANGE 
-			
-		$('.title_section').html($('#'+next+' > header > h2').text());
-		//
-		InitJoystick();
+			// ADD TITLE CHANGE 
+				
+			$('.title_section').html($('#'+next+' > header > h2').text());
+			//
+			InitJoystick();
 
-		
+				}
     });
 	
 	$(document).on('touchstart', '.ui-slider-handle', function(event) {
