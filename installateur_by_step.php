@@ -338,11 +338,11 @@
                         <div id="install_by_step_mapping_divOptionTrinary">
 							<div class="threshold_wrapper">
 								<div class="slider_wrapper">
-									<span class="btn btn_slider_minus" style="margin-right:2%"><i class="fas fa-minus-square"></i></span>
+									<span class="btn btn_slider_minus"><i class="fas fa-minus-square"></i></span>
 									<div id="install_by_step_mapping_threshold_free_slider_elem" class="mt-lg mb-lg slider-primary" data-plugin-slider data-plugin-options='{ "value": 25, "range": "min", "max": 100 }' data-plugin-slider-output="#install_by_step_mapping_threshold_free_slider">
 										<input id="install_by_step_mapping_threshold_free_slider" type="hidden" value="25" />
 									</div>
-									<span class="btn btn_slider_plus" style="margin-left:2%"><i class="fas fa-plus-square"></i></span>
+									<span class="btn btn_slider_plus"><i class="fas fa-plus-square"></i></span>
 								</div>
 								<p id="install_by_step_mapping_threshold_free_output"><?php echo __('Empty area threshold');?> : <b>25</b></p>
                             </div>

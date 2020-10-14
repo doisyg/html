@@ -736,10 +736,10 @@ img.fi-robot{
 	top:11px;
 }
 .btn_slider_plus{
-	
+	margin-left:2%
 }
 .btn_slider_minus{
-	
+	margin-right:2%
 }
 .bResetValueThreshold{
 	position: relative;
