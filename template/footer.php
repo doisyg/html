@@ -80,14 +80,18 @@
         <script>
 		$(document).ready(function(e) {
 			
-            <?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 1) {?>
-			InitInstallWifiPageByStep();
-			<?php }?>
-            <?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 3) {?>
+           
+            <?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 2) {?>
 			InitTopsByStep();
 			<?php }?>
-            <?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 4) {?>
+            <?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 3) {?>
 			InitTopsActiveByStep();
+			<?php }?>
+			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 4) {?>
+			InitCheckByStep();
+			<?php }?>
+			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 6) {?>
+			InitInstallWifiPageByStep();
 			<?php }?>
             <?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 7) {?>
 			InitMappingByStep();
@@ -107,9 +111,7 @@
 			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 12) {?>
 			GetServiceBooksByStep();
 			<?php }?>
-			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 5) {?>
-			InitCheckByStep();
-			<?php }?>
+			
         });
 		</script>
 	</body>

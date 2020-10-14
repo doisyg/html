@@ -124,7 +124,6 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 
 .table_wifi img { width:25px; }
 .table_wifi tr.active {color: #343434; font-weight: bold;}
-
 .wifi_connexion_progress { text-align:center; font-size:40px; display:none; }
 
 .loading_big { text-align:center; font-size:40px; display:none; }
