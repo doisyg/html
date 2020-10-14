@@ -1,6 +1,6 @@
 
 	<div id="pages_install_by_step" class="global_sub_page <?php echo $INSTALL_STEP < 100?'active':'';?>">
-    	<section id="install_by_step_lang" class="page hmi_tuile <?php echo $INSTALL_STEP == 0?'active':'';?>">
+    	<section id="install_by_step_lang" class="page hmi_tuile <?php echo $INSTALL_STEP == 1?'active':'';?>">
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
                 <h2><?php echo __('Select language');?></h2>
@@ -27,57 +27,7 @@
             </div>
         </section>
     
-    	<section id="install_by_step_wifi" class="page <?php echo $INSTALL_STEP == 1?'active':'';?> with_footer">
-        	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_lang"></a>
-            <header>
-                <div class="pull-left"><img src="assets/images/logo.png" /></div>
-                <h2><?php echo __('Wifi');?></h2>
-            </header>
-            <div class="content">
-            
-            	<h3><?php echo __('Configure Wifi');?></h3>
-                
-                <table class="table table_wifi">
-                	<tbody class="tbody_wifi">
-                    </tbody>
-                </table>
-                
-                <a href="#" class="refresh_wifi btn btn-default pull-left"><i class="fa fa-refresh"></i></a>
-            </div>
-			<footer>
-				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50 btn_back" data-goto="install_by_step_lang" ><?= __('Back')?></a>
-				<a href="#" class="skip_wifi button_goto btn btn-primary btn_footer_right btn_50" data-goto="install_by_step_tops"><?= __('Skip')?></a>
-                <a href="#" class="set_passwd_wifi button_goto" data-goto="install_by_step_wifi_password" style="display:none;"></a>
-            </footer>
-        </section>
-        <section id="install_by_step_wifi_password" class="page with_footer">
-        	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_wifi"></a>
-            <header>
-                <div class="pull-left"><img src="assets/images/logo.png" /></div>
-                <h2><?php echo __('Wifi');?></h2>
-            </header>
-			<div class="content">
-			
-				<h3><?php echo __('Set password');?></h3>
-				
-				<form id="form_connect_wifi"class="form_site" action="" method="post" style="margin-bottom:20px;">
-					<input type="password" class="form-control i_wifi_passwd_name" value="" />
-				</form>  
-				
-				
-				<div class="wifi_connexion_error"></div>
-				
-				<div class="wifi_connexion_progress"><i class="fa fa fa-spinner fa-pulse"></i></div>
-				
-				
-			</div>
-			<footer>
-				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50 btn_back" data-goto="install_by_step_wifi"><?= __('Back')?></a>
-				<a href="#" onClick="$('#form_connect_wifi').submit();" class="install_by_step_wifi_password_save btn btn-primary btn_footer_right btn_50"><?= __('Connect')?></a>
-			</footer>
-        </section>
-        
-    
+    	
     	<!--
     	<section id="install_by_step_date" class="page <?php echo $INSTALL_STEP == 2?'active':'';?>">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_wifi"></a>
@@ -96,7 +46,7 @@
             </div>
         </section>-->
         
-        <section id="install_by_step_tops" class="page with_footer hmi_tuile <?php echo $INSTALL_STEP == 3?'active':'';?>">
+        <section id="install_by_step_tops" class="page with_footer hmi_tuile <?php echo $INSTALL_STEP == 2?'active':'';?>">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_wifi"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
@@ -150,7 +100,7 @@
             </footer>
         </section>
         
-        <section id="install_by_step_top" class="page hmi_tuile <?php echo $INSTALL_STEP == 4?'active':'';?> with_footer">
+        <section id="install_by_step_top" class="page hmi_tuile <?php echo $INSTALL_STEP == 3?'active':'';?> with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_tops"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
@@ -168,7 +118,7 @@
             </footer>
         </section>
         
-        <section id="install_by_step_check" class="page hmi_tuile <?php echo $INSTALL_STEP == 5?'active':'';?> with_footer">
+        <section id="install_by_step_check" class="page hmi_tuile <?php echo $INSTALL_STEP == 4?'active':'';?> with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_top"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
@@ -247,7 +197,7 @@
 				<a href="#" class="button_goto install_by_step_check_next btn btn-primary btn_footer_right btn_50" data-goto="install_by_step_site"><i class="fa fa fa-spinner fa-pulse"></i> <?= __('Testing')?></a>
             </footer>
         </section>
-        <section id="install_by_step_site" class="page <?php echo $INSTALL_STEP == 6?'active':'';?> with_footer">
+        <section id="install_by_step_site" class="page <?php echo $INSTALL_STEP == 5?'active':'';?> with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_check"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
@@ -262,13 +212,64 @@
 	                
                 </form>
                 
-                <a href="#" class="install_by_step_site_next button_goto" data-goto="install_by_step_mapping" style="display:none;"></a>   
+                <a href="#" class="install_by_step_site_next button_goto" data-goto="install_by_step_wifi" style="display:none;"></a>   
             </div>
 			<footer>
 				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50 btn_back" data-goto="install_by_step_check"><?= __('Back')?></a>
 				<a href="#" onClick="$('#form_site').submit();" class="install_by_step_site_save btn btn-primary btn_footer_right btn_50"><?= __('Next')?></a>
             </footer>
         </section>
+		
+		<section id="install_by_step_wifi" class="page <?php echo $INSTALL_STEP == 6?'active':'';?> with_footer">
+        	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_lang"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Wifi');?></h2>
+            </header>
+            <div class="content">
+            
+            	<h3><?php echo __('Configure Wifi');?></h3>
+                <div class="install_bystep_setup_wifi_loading loading_big" style="display:block"><i class="fa fa fa-spinner fa-pulse"></i></div>
+                <table class="table table_wifi">
+                	<tbody class="tbody_wifi">
+                    </tbody>
+                </table>
+                
+                <a href="#" class="refresh_wifi btn btn-default pull-left"><i class="fa fa-refresh"></i></a>
+            </div>
+			<footer>
+				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50 btn_back" data-goto="install_by_step_site" ><?= __('Back')?></a>
+				<a href="#" class="skip_wifi button_goto btn btn-primary btn_footer_right btn_50" data-goto="install_by_step_mapping"><?= __('Skip')?></a>
+                <a href="#" class="set_passwd_wifi button_goto" data-goto="install_by_step_wifi_password" style="display:none;"></a>
+            </footer>
+        </section>
+        <section id="install_by_step_wifi_password" class="page with_footer">
+        	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_wifi"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Wifi');?></h2>
+            </header>
+			<div class="content">
+			
+				<h3><?php echo __('Set password');?></h3>
+				
+				<form id="form_connect_wifi"class="form_site" action="" method="post" style="margin-bottom:20px;">
+					<input type="password" class="form-control i_wifi_passwd_name" value="" />
+				</form>  
+				
+				
+				<div class="wifi_connexion_error"></div>
+				
+				<div class="wifi_connexion_progress"><i class="fa fa fa-spinner fa-pulse"></i></div>
+				
+				
+			</div>
+			<footer>
+				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50 btn_back" data-goto="install_by_step_wifi"><?= __('Back')?></a>
+				<a href="#" onClick="$('#form_connect_wifi').submit();" class="install_by_step_wifi_password_save btn btn-primary btn_footer_right btn_50"><?= __('Connect')?></a>
+			</footer>
+        </section>
+				
         <section id="install_by_step_mapping" class="page <?php echo $INSTALL_STEP == 7?'active':'';?> hide_photo_back with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_site"></a>
             <header>
@@ -307,7 +308,7 @@
                 </div>         
             </div>
             <footer>
-            	<a href="#" class="ifNMapping bMappingBack btn btn-default button_goto btn_footer_left btn_33 btn_back" data-goto="install_by_step_site" ><?php echo __('Back');?></a>
+            	<a href="#" class="ifNMapping bMappingBack btn btn-default button_goto btn_footer_left btn_33 btn_back" data-goto="install_by_step_wifi" ><?php echo __('Back');?></a>
             	<a href="#" class="ifNMapping bMappingStart btn btn-primary btn_footer_right btn_66" ><?php echo __('Start Mapping');?></a>
             	<a href="#" class="ifMapping bMappingStop button_goto btn btn-primary btn_footer_right btn_100" data-goto="install_by_step_mapping_fin" style="display:none"><?php echo __('Done');?></a>
             </footer>

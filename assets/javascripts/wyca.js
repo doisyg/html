@@ -168,10 +168,11 @@ $(document).ready(function(e) {
 			$('section.page').hide();
 			
 			console.log('next ',next);
-			if (next == 'install_by_step_wifi') InitInstallWifiPageByStep();
+			
 			if (next == 'install_by_step_tops') InitTopsByStep();
 			if (next == 'install_by_step_top') InitTopsActiveByStep();
 			if (next == 'install_by_step_check') InitCheckByStep();		
+			if (next == 'install_by_step_wifi') InitInstallWifiPageByStep();
 			if (next == 'install_by_step_config') GetConfigurationsByStep();
 			if (next == 'install_by_step_manager') GetManagersByStep();
 			if (next == 'install_by_step_service_book') GetServiceBooksByStep();
@@ -1022,7 +1023,9 @@ function InitInstallWifiPageByStep()
 {
 	if (wycaApi.websocketAuthed)
 	{
+		
 		wycaApi.GetWifiList(function(data) {
+			$('.install_bystep_setup_wifi_loading').hide();
 			$('#install_by_step_wifi tr').hide();
 			if (data.D.length > 0)
 			{
@@ -1040,7 +1043,10 @@ function InitInstallWifiPageByStep()
 					}
 					else
 					{
-						$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td>'+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
+						if (value.state == 'active')
+							$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td><i class="fas fa-check"></i> '+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
+						else
+							$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td>'+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
 					}
 				});
 			}
