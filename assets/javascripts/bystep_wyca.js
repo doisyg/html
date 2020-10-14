@@ -480,7 +480,8 @@ $(document).ready(function(e) {
 	
 	$('#pages_install_by_step form.form_site').submit(function(e) {
         e.preventDefault();
-		if ($('#pages_install_by_step .i_site_name').val() == '')
+		window.site_name = $('#pages_install_by_step .i_site_name').val();
+		if (window.site_name == '')
 		{
 			alert_wyca(textIndicateAName);
 		}
@@ -498,11 +499,12 @@ $(document).ready(function(e) {
 					}else{
 						data.D.forEach(function(item){
 							site_names.push(item.name);
-						});						
-						if(!site_names.includes($('#pages_install_by_step .i_site_name').val())){
+						});
+						
+						if(!site_names.includes(window.site_name)){
 							if (create_new_site) // BOOLEAN INSTALLATEUR_WYCA.JS GESTION DES SITES
 							{
-									newSite = { "id_site":-1, "comment":"", name:$('#pages_install_by_step .i_site_name').val() };
+									newSite = { "id_site":-1, "comment":"", name:window.site_name };
 									wycaApi.SetSite(newSite, function(data){
 										if (data.A != wycaApi.AnswerCode.NO_ERROR) 
 											alert_wyca('Error navigation stop ; ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M);
@@ -580,8 +582,10 @@ $(document).ready(function(e) {
 	$('#install_by_step_mapping .bMappingStart').click(function(e) {
 		e.preventDefault();
 		
+		$('#install_by_step_mapping .bMappingBack').hide();
 		$('#install_by_step_mapping .bMappingStart').hide();
-		
+		$('.ifMappingInit').show();
+		$('.ifNMappingInit').hide();
 		if (navLaunched)
 		{
 			wycaApi.NavigationStop(function(data) { if (data.A != wycaApi.AnswerCode.NO_ERROR) alert_wyca('Error navigation stop ; ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M);});
@@ -683,13 +687,18 @@ $(document).ready(function(e) {
 	});
 	
 	$('#install_by_step_mapping_fin .bMappingSaveMap').click(function(e) {
-		if ($('#install_by_step_mapping_from_name').val() == '')
+		window.map_name = $('#install_by_step_mapping_from_name').val();
+		if (window.map_name == '')
 		{
 			alert_wyca(textIndicateAName);
 			e.preventDefault();
 		}
 		else
 		{
+			//ADD CHECK NOM MAP 
+			
+			
+			//
 			var canvasDessin = document.getElementById('install_by_step_mapping_canvas_result_trinary');
 		
 			$('#install_by_step_mapping_fin .bMappingCancelMap2').hide();
@@ -716,7 +725,7 @@ $(document).ready(function(e) {
 						map = {
 							'id_map': -1,
 							'id_site': -1,
-							'name': $('#install_by_step_mapping_from_name').val(),
+							'name': window.map_name,
 							'comment': '',
 							'image': finalMapData,
 							'image_tri': data.image,

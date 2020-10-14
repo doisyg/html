@@ -177,6 +177,12 @@ $(document).ready(function(e) {
 			if (next == 'install_by_step_service_book') GetServiceBooksByStep();
 			if (next == 'install_by_step_mapping') InitMappingByStep();
 			
+			if (next == 'install_by_step_mapping_fin'){
+				if(typeof(window.site_name) != undefined && window.site_name != ""){
+					$('#install_by_step_mapping_from_name').val(window.site_name)
+				}
+			}
+			
 			if (next == 'install_normal_setup_sites') GetSitesNormal();
 			if (next == 'install_normal_setup_export') GetSitesForExportNormal();
 			if (next == 'install_normal_setup_import') InitSiteImport();
