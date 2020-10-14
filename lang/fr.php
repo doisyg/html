@@ -173,5 +173,6 @@ $_LANG['97dbd1efa432e7cf29e8389929ebccac'] = 'Empty area threshold';
 $_LANG['9e20018b40b560419468404753d5eadb'] = 'Object detection threshold';
 $_LANG['727b63583e01fa2b3952dab580c84dc2'] = 'Abort';
 $_LANG['e0aa021e21dddbd6d8cecec71e9cf564'] = 'OK';
+$_LANG['45fe2cb9d87014584bc5b71277833fd7'] = 'Mapping Init';
 
 ?>

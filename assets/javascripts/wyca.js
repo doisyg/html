@@ -142,6 +142,22 @@ $(document).ready(function(e) {
 			$('#bModalBackOk').data('goto',target);
 			
 			$('#modalBack').modal('show');
+			console.log('back',target)
+			if(target == 'install_by_step_mapping'){ //UPDATE INSTALL STEP ON BACK FROM MAPPING
+				console.log('here');
+				$.ajax({
+					type: "POST",
+					url: 'ajax/install_by_step_site.php',
+					data: {
+					},
+					dataType: 'json',
+					success: function(data) {
+					},
+					error: function(e) {
+						alert_wyca('Error step site ; ' + e.responseText);
+					}
+				});
+			}
 		}else{
 			e.preventDefault();
 			history.pushState({ current_groupe:$('.menu_groupe .active').attr('id'), current_page:$(this).data('goto')}, $(this).data('goto'), "/#"+$(this).data('goto'));
@@ -232,7 +248,7 @@ $(document).ready(function(e) {
 			//
 			InitJoystick();
 
-				}
+			}
     });
 	
 	$(document).on('touchstart', '.ui-slider-handle', function(event) {
@@ -832,6 +848,7 @@ function InitMappingByStep()
 				$('#install_by_step_mapping .bMappingStop').show();
 				$('#install_by_step_mapping .mapping_view').show();
 				$('.ifMapping').show();
+				$('.ifMappingInit').hide();
 				$('.ifNMapping').hide();
 				img = document.getElementById("install_by_step_mapping_img_map_saved");
 				img.src = "assets/images/vide.png";
@@ -843,6 +860,7 @@ function InitMappingByStep()
 				}
 			}else{
 				$('.ifMapping').hide();
+				$('.ifMappingInit').hide();
 				$('.ifNMapping').show();
 			}
 		});
