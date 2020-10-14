@@ -7,15 +7,21 @@
             </header>
             <div class="content">
             	<ul class="tuiles heightauto row">
-                	<li class="col-xs-4 col-md-3 col-lg-2">
-                        <a href="#" class="select_langue button_goto anim_tuiles tuile_img tuile1" data-goto="install_by_step_wifi" data-id_lang="1">
+                	<li class="col-xs-6 col-md-6 col-lg-6">
+                        <a href="#" class="select_langue button_goto anim_tuiles tuile_img tuile1" data-goto="install_by_step_tops" data-id_lang="1">
                             <img src="assets/images/lang/fr_big.jpg" />
                         </a>
                     </li>
-                	<li class="col-xs-4 col-md-3 col-lg-2">
-                        <a href="#" class="select_langue button_goto anim_tuiles tuile_img tuile2" data-goto="install_by_step_wifi" data-id_lang="2">
+                	<li class="col-xs-6 col-md-6 col-lg-6">
+                        <h2 style="margin-top:35px"><?= _('Français') ?></h2>
+                    </li>
+                	<li class="col-xs-6 col-md-6 col-lg-6" style="clear:both; margin-top:20px">
+                        <a href="#" class="select_langue button_goto anim_tuiles tuile_img tuile2" data-goto="install_by_step_tops" data-id_lang="2">
                             <img src="assets/images/lang/en_big.jpg" />
                         </a>
+                    </li>
+					<li class="col-xs-6 col-md-6 col-lg-6" style="margin-top:20px">
+                        <h2 style="margin-top:35px"><?= _('English') ?></h2>
                     </li>
                 </ul>
             </div>
@@ -39,7 +45,7 @@
                 <a href="#" class="refresh_wifi btn btn-default pull-left"><i class="fa fa-refresh"></i></a>
             </div>
 			<footer>
-				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50" data-goto="install_by_step_lang" ><?= __('Back')?></a>
+				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50 btn_back" data-goto="install_by_step_lang" ><?= __('Back')?></a>
 				<a href="#" class="skip_wifi button_goto btn btn-primary btn_footer_right btn_50" data-goto="install_by_step_tops"><?= __('Skip')?></a>
                 <a href="#" class="set_passwd_wifi button_goto" data-goto="install_by_step_wifi_password" style="display:none;"></a>
             </footer>
@@ -66,7 +72,7 @@
 				
 			</div>
 			<footer>
-				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50" data-goto="install_by_step_wifi"><?= __('Back')?></a>
+				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50 btn_back" data-goto="install_by_step_wifi"><?= __('Back')?></a>
 				<a href="#" onClick="$('#form_connect_wifi').submit();" class="install_by_step_wifi_password_save btn btn-primary btn_footer_right btn_50"><?= __('Connect')?></a>
 			</footer>
         </section>
@@ -139,7 +145,7 @@
                 
             </div>
             <footer>
-				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50" data-goto="install_by_step_wifi"><?= __('Back')?></a>
+				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50 btn_back" data-goto="install_by_step_wifi"><?= __('Back')?></a>
 				<a href="#" class="save_tops btn btn-primary btn_footer_right btn_50"><?= __('Next')?></a>
             </footer>
         </section>
@@ -158,7 +164,7 @@
                 <div style="clear:both; height:20px;"></div>
             </div>
 			<footer>
-				<a href="#" class="button_goto btn btn-default btn_footer_left btn_100" data-goto="install_by_step_tops"><?= __('Back')?></a>
+				<a href="#" class="button_goto btn btn-default btn_footer_left btn_100 btn_back" data-goto="install_by_step_tops"><?= __('Back')?></a>
             </footer>
         </section>
         
@@ -237,7 +243,7 @@
                 </ul>  
             </div>
 			<footer>
-				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50" data-goto="install_by_step_top"><?= __('Back')?></a>
+				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50 btn_back" data-goto="install_by_step_top"><?= __('Back')?></a>
 				<a href="#" class="button_goto install_by_step_check_next btn btn-primary btn_footer_right btn_50" data-goto="install_by_step_site"><i class="fa fa fa-spinner fa-pulse"></i> <?= __('Testing')?></a>
             </footer>
         </section>
@@ -259,7 +265,7 @@
                 <a href="#" class="install_by_step_site_next button_goto" data-goto="install_by_step_mapping" style="display:none;"></a>   
             </div>
 			<footer>
-				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50" data-goto="install_by_step_check"><?= __('Back')?></a>
+				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50 btn_back" data-goto="install_by_step_check"><?= __('Back')?></a>
 				<a href="#" onClick="$('#form_site').submit();" class="install_by_step_site_save btn btn-primary btn_footer_right btn_50"><?= __('Next')?></a>
             </footer>
         </section>
@@ -300,7 +306,7 @@
                 </div>         
             </div>
             <footer>
-            	<a href="#" class="ifNMapping btn btn-default button_goto btn_footer_left btn_33" data-goto="install_by_step_site" ><?php echo __('Back');?></a>
+            	<a href="#" class="ifNMapping btn btn-default button_goto btn_footer_left btn_33 btn_back" data-goto="install_by_step_site" ><?php echo __('Back');?></a>
             	<a href="#" class="ifNMapping bMappingStart btn btn-primary btn_footer_right btn_66" ><?php echo __('Start Mapping');?></a>
 				<a href="#" class="ifMapping btn btn-default btn_footer_left btn_50" style="display:none"><?php echo __('Cancel');?></a>
             	<a href="#" class="ifMapping bMappingStop button_goto btn btn-primary btn_footer_right btn_50" data-goto="install_by_step_mapping_fin" style="display:none"><?php echo __('Done');?></a>
@@ -1260,7 +1266,7 @@
             <footer>
             
             	
-                <a href="#" class="btn btn-default button_goto btn_footer_left btn_50" data-goto="install_by_step_edit_map"><?php echo __('Back');?></a>
+                <a href="#" class="btn btn-default button_goto btn_footer_left btn_50 btn_back" data-goto="install_by_step_edit_map"><?php echo __('Back');?></a>
             
             	<a href="#" class="btn btn-primary button_goto bTestFinish btn_footer_right btn_50" data-goto="install_by_step_config"><?php echo __('Next');?></a>
             </footer>
@@ -1299,7 +1305,7 @@
                 </form>
             </div>
             <footer>
-				<a href="#" class="btn btn-default button_goto btn_footer_left btn_50" data-goto="install_by_step_test_map"><?php echo __('Back');?></a>
+				<a href="#" class="btn btn-default button_goto btn_footer_left btn_50 btn_back" data-goto="install_by_step_test_map"><?php echo __('Back');?></a>
             	<a href="#" class="bConfigurationSave btn btn-primary btn_footer_right btn_50" data-goto="install_by_step_manager"><?php echo __('Save');?></a>
             </footer>
             
@@ -1382,7 +1388,7 @@
                 
             </div>
             <footer>
-				<a href="#" class="btn btn-default button_goto btn_footer_left btn_50" data-goto="install_by_step_config"><?php echo __('Back');?></a>
+				<a href="#" class="btn btn-default button_goto btn_footer_left btn_50 btn_back" data-goto="install_by_step_config"><?php echo __('Back');?></a>
             	<a href="#" class="btn btn-primary button_goto bValidManager btn_footer_right btn_50" data-goto="install_by_step_service_book" style="z-index:2001;"><?php echo __('Next');?></a>
             </footer>
         </section>
@@ -1437,7 +1443,7 @@
 				</div>                
             </div>
             <footer>
-				<a href="#" class="btn btn-default button_goto btn_footer_left btn_50" data-goto="install_by_step_manager"><?php echo __('Back');?></a>
+				<a href="#" class="btn btn-default button_goto btn_footer_left btn_50 btn_back" data-goto="install_by_step_manager"><?php echo __('Back');?></a>
             	<a href="#" class="btn btn-primary button_goto bFinishInstallation btn_footer_right btn_50" data-goto="install_by_step_end" style="z-index:2001"><?php echo __('Finish');?></a>
             </footer>
         </section>
@@ -1465,6 +1471,27 @@
             	<a href="#" class="btn btn-primary bCloseInstallation btn_footer_left btn_100" style="z-index:2001"><?php echo __('Close installation');?></a>
             </footer>
         </section>
+		<div class="modal fade" id="modalBack" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+			<div class="modal-dialog" role="dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<div class="actions mh100vh_55">
+							<section class="panel panel-warning">
+								<header class="panel-heading">
+									<h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fa fa-question-circle"></i></h2>
+								</header>
+								<div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
+									<h1>You're about to cancel all information not saved.</h1>
+								</div>
+							</section>
+							<div style="clear:both;"></div>
+							<a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Abort');?></a>
+							<a href="#" id="bModalBackOk" data-goto="" class="btn btn-warning btn_footer_right btn_50 button_goto" ><?php echo __('OK');?></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
     </div>
 
 	

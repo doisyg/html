@@ -171,5 +171,7 @@ $_LANG['98defd6ee70dfb1dea416cecdf391f58'] = 'site';
 $_LANG['eeb626d01bda8047008d18eae4489615'] = 'Import your site';
 $_LANG['97dbd1efa432e7cf29e8389929ebccac'] = 'Empty area threshold';
 $_LANG['9e20018b40b560419468404753d5eadb'] = 'Object detection threshold';
+$_LANG['727b63583e01fa2b3952dab580c84dc2'] = 'Abort';
+$_LANG['e0aa021e21dddbd6d8cecec71e9cf564'] = 'OK';
 
 ?>
