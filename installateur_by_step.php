@@ -1246,10 +1246,10 @@
                 
             	
 				<a href="#" class="btn btn-success bSaveEditMap btn_footer_left btn_50"><?php echo __('Save map');?></a>
-				<a href="#" class="btn btn-primary button_goto bSaveEditMap btn_footer_right btn_50" data-goto="install_by_step_test_map" ><?php echo __('Next');?></a>
+				<a href="#" class="btn btn-primary button_goto bSaveEditMap btn_footer_right btn_50" data-goto="install_by_step_config" ><?php echo __('Next');?></a>
             </footer>
         </section>
-        
+        <!--
         <section id="install_by_step_test_map" class="page with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_edit_map"></a>
             <header>
@@ -1272,10 +1272,10 @@
             	<a href="#" class="btn btn-primary button_goto bTestFinish btn_footer_right btn_50" data-goto="install_by_step_config"><?php echo __('Next');?></a>
             </footer>
         </section>
-        
+        -->
         
         <section id="install_by_step_config" class="page <?php echo $INSTALL_STEP == 10?'active':'';?> with_footer">
-        	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_test_map"></a>
+        	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_edit_map"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
                 <h2><?php echo __('Configuration');?></h2>
