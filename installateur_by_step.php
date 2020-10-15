@@ -1,6 +1,5 @@
-
 	<div id="pages_install_by_step" class="global_sub_page <?php echo $INSTALL_STEP < 100?'active':'';?>">
-    	<section id="install_by_step_lang" class="page hmi_tuile <?php echo $INSTALL_STEP == 1?'active':'';?>">
+    	<section id="install_by_step_lang" class="page hmi_tuile <?php echo $INSTALL_STEP <= 1?'active':'';?>">
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
                 <h2><?php echo __('Select language');?></h2>
