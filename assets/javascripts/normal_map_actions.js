@@ -1904,6 +1904,7 @@ $(document).ready(function() {
 	$('#install_normal_edit_map_container_all .modalAddPoi #install_normal_edit_map_bModalAddPoiSave').click(function(e) {
         e.preventDefault();
 		
+		nextIdPoi++;
 		poi_temp_add = {'id_poi':nextIdPoi, 'id_map':id_map, 'final_pose_x':lastRobotPose.X, 'final_pose_y':lastRobotPose.Y, 'final_pose_t':lastRobotPose.T, 'name':'POI', 'comment':'', 'color':'', 'icon':'', 'active':true};
 		
 		NormalAddHistorique({'action':'add_poi', 'data':poi_temp_add});

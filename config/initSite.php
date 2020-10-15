@@ -44,7 +44,7 @@ foreach ($_POST as $key => $value)
 			if ($k != 'b64' && $k!='imageData')
 				$_POST[$key][$k] = xss_clean($v); 
 	}
-	elseif ($key != 'b64' && $key!='imageData')
+	elseif ($key != 'b64' && $key!='imageData' && $key!='image_tri')
 		$_POST[$key] = xss_clean($value); 
 
 if (isset($_SESSION['id_lang']))

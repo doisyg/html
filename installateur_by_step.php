@@ -280,6 +280,10 @@
                 
                 <div style="text-align:center; font-size:26px;">
                 
+                	<div class="switchLiveMapping switch switch-sm switch-primary" style="position:absolute; top:20px; right:20px; display:none; z-index:1001; ">
+                        <input type="checkbox" name="switch" data-plugin-ios-switch checked="checked" />
+                    </div>
+                	
                 	
                     <h3 class="ifNMapping ifNMappingInit"><?php echo __('Move robot to start point');?></h3>
                     <h3 class="ifMappingInit" style="display:none"><?php echo __('Mapping Init');?></h3>
