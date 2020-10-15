@@ -1361,18 +1361,25 @@
 											<div class="h100vh_160" style="overflow:auto; text-align:center">
 												<div class="modalRealTestResult_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
 												<div class="modalRealTestResult_content text-center">
-													<p<?= _('Processing real test') ?></p>
-													<p id="start_point"><?= _('Go to start point')?><br><span id="start_point_text"></span></p>
-													<div class="startRealTestprogress progress progress-striped light active m-md">
-														<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;"></div>
+													<p><?= _('Processing real test') ?></p>
+													<div id="start_point">
+														<h4><?= _('Go to start point')?></h4>
+														<span id="start_point_text"></span>
+														<div class="startRealTestprogress progress progress-striped light active m-md">
+															<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;"></div>
+														</div>
 													</div>
-													<p id="end_point"><?= _('Go to arrival point')?> <br><span id="end_point_text"></span></p>
-													<div class="endRealTestprogress progress progress-striped light active m-md">
-														<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;"></div>
+													<div id="end_point">
+														<h4><?= _('Go to arrival point')?></h4>
+														<span id="end_point_text"></span>
+														<div class="endRealTestprogress progress progress-striped light active m-md">
+															<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;"></div>
+														</div>
 													</div>
-													<p></p>
-													<p><?= _('Use this result as reference for battery configuration') ?></p>
-													<a href="#" class="btn btn-success"><?php echo __('Use');?></a>
+													<div id="result_wrapper">
+														<p><?= _('Use this result as reference for battery configuration') ?></p>
+														<a href="#" class="btn btn-success"><?php echo __('Use');?></a>
+													</div>
 												</div>
 											</div>
 											<div style="clear:both;"></div>

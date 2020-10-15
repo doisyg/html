@@ -1258,10 +1258,70 @@ $(document).ready(function(e) {
 		if(start.val()!='' && end.val()!='' && end.val()!=start.val()){
 			$('#pages_install_by_step .modalRealTest').modal('hide');
 			$('#pages_install_by_step .modalRealTestResult').modal('show');
-			$("#start_point_text").html(start.html());
-			$("#end_point_text").html(end.html());
 			
+			$(".modalRealTestResult_content #start_point").show()
+			$(".modalRealTestResult_content #end_point").hide()
+			$(".modalRealTestResult_content #result_wrapper").hide();
 			
+			$(".modalRealTestResult_content #start_point_text").html(start.html());
+			$(".modalRealTestResult_content #end_point_text").html(end.html());
+			//GO TO START 
+			switch(start.data('type')){
+				case 'poi':
+					//AJOUTER ECOUTER RESULT + REBIND OLS FUNCTION FIN ECOUTEUR
+					
+					x = start.data('x');
+					y = start.data('y');
+					theta = start.data('t');
+					wycaApi.GoToPose(x,y,theta,function(data){
+						if (data.A == wycaApi.AnswerCode.NO_ERROR)
+						{
+							
+						}else{
+							if (data.M != '')
+								alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+							else
+								alert_wyca(wycaApi.AnswerCodeToString(data.A));
+						}
+					})
+				break;
+				case 'dock':
+					//AJOUTER ECOUTER RESULT + REBIND OLS FUNCTION FIN ECOUTEUR
+					
+					id = start.data('id');
+					wycaApi.GoToCharge(id,function(data){
+						if (data.A == wycaApi.AnswerCode.NO_ERROR)
+						{
+							
+						}else{
+							if (data.M != '')
+								alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+							else
+								alert_wyca(wycaApi.AnswerCodeToString(data.A));
+						}
+					})
+					
+				break;
+				case 'augmented_pose':
+					//AJOUTER ECOUTER RESULT + REBIND OLS FUNCTION FIN ECOUTEUR
+					
+					id = start.data('id');
+					wycaApi.GoToAugmentedPose(id,function(data){
+						if (data.A == wycaApi.AnswerCode.NO_ERROR)
+						{
+							
+						}else{
+							if (data.M != '')
+								alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+							else
+								alert_wyca(wycaApi.AnswerCodeToString(data.A));
+						}						
+					})
+				break;
+			}
+			// LAUNCH PROGRESS BAR ANIM
+			
+			//ECOUTER GOTOXX RESULT 
 			
 		}
 	});
@@ -1273,43 +1333,7 @@ $(document).ready(function(e) {
 	
 	function NextTimerStartRealTest()
 	{
-		if (timerStartRealTestCurrent < 0)
-		{
-			setTimeout(function() {
-				$('#install_by_step_mapping .progressStartMapping').hide();
-				$('#install_by_step_mapping .bMappingStop').show();
-				$('#install_by_step_mapping .mapping_view').show();
-				img = document.getElementById("install_by_step_mapping_img_map_saved");
-				img.src = "assets/images/vide.png";
-				
-				if (intervalMap != null)
-				{
-					clearInterval(intervalMap);
-					intervalMap = null;
-				}
-				//intervalMap = setInterval(GetMap, 1000);
-			}, 500);
-		}
-		else	
-		{
-			if (timerStartRealTestCurrent == 5 && timerStartRealTest == 10) // Stop navigation before
-			{
-				wycaApi.MappingStart(function(r) { 
-					mappingStarted = true;
-				});
-				
-				$('#install_by_step_mapping .progressStartMapping h3').html(textStartMapping);
-			}
-			
-			valeur = 100-parseInt(timerStartRealTestCurrent / timerStartRealTest * 100);
-
-			$('#install_by_step_mapping .createMapProgress .progress-bar').css('width', valeur+'%').attr('aria-valuenow', valeur); 
 		
-			timerStartRealTestCurrent -= 0.1;	
-			timerStartRealTestCurrent = parseInt(timerStartRealTestCurrent*10)/10;
-			
-			setTimeout(NextTimerCreateMap, 100);
-		}
 	}
 		
 	$('#install_by_step_config .bConfigurationSave').click(function(e) {
