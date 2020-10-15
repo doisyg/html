@@ -746,6 +746,21 @@ img.fi-robot{
     transform: translateX(-50%);
 }
 
+
+.form-fa > option{
+	
+	font-family: "Font Awesome 5 Free", Open Sans;
+	font-weight:501;
+}
+.form-fa{
+	
+	font-family: "Font Awesome 5 Free", Open Sans;
+	font-weight:501;
+}
+
+/* BURGER MENU MAP */
+
+
 .burger_menu{
 	display:flex;
 	align-items:center;
@@ -758,10 +773,6 @@ img.fi-robot{
 	z-index:9999999;
 	background:#DCDCDC;
 }
-
-/* BURGER MENU MAP */
-
-
 .burger_menu_open{
 	
 }
@@ -814,23 +825,34 @@ img.fi-robot{
 .iconForbiddenArea{
 	position:relative;
 }
-.iconForbiddenArea .fa-draw-polygon{
-    left: 5px;
-    font-size: 22px;
+.iconForbiddenArea .fa-vector-square{
+    left: 1.5px;
+    font-size: 25px;
     z-index: 2;
-    top: 5px;
+    top: 1px;
     position: absolute;
 }
 .iconForbiddenArea .fa-minus-circle{
-    font-size: 14px;
-    top: 0px;
-    left: 0px;
+    font-size: 12px;
+    top: 8px;
+    left: 8px;
     background: white;
     border-radius: 15px;
     z-index: 3;
     position: absolute;
 }
-.iconMenuBlue{color:#1b48c7}
+.iconMenuBlue{color:#589fb2}
 .iconMenuGreen{color:#187f18}
 .iconMenuRed{color:#da3939}
 .iconMenuPurple{color:#5d24cb}
+
+
+/* REAL TEST */
+#start_point_text{
+	font-family: "Font Awesome 5 Free", Open Sans;
+	font-weight:501;
+}
+#end_point_text{
+	font-family: "Font Awesome 5 Free", Open Sans;
+	font-weight:501;
+}

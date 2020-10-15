@@ -449,10 +449,10 @@
                     <div id="install_by_step_edit_map_menu" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
                         	<li><a href="#" class="btn btn-circle btn-default bAddForbiddenArea btn-menu" data-orientation="V">
-								<div class="iconForbiddenArea"><i class="fas fa-draw-polygon"></i><i class="fa fa-minus-circle iconMenuRed"></i></div>
+								<div class="iconForbiddenArea"><i class="fas fa-vector-square"></i><i class="fa fa-minus-circle iconMenuRed"></i></div>
 							</a></li>
                         	<li><a href="#" class="btn btn-circle btn-default bAddArea btn-menu" data-orientation="V">
-								<i class="fas fa-draw-polygon iconMenuGreen"></i>
+								<i class="fas fa-draw-polygon iconMenuGreen" style="font-size:24px"></i>
 							</a></li>
                         	<li><a href="#" class="btn btn-circle btn-default bAddPOI btn-menu" data-orientation="V">
 								<i class="fa fa-map-marker-alt iconMenuBlue"></i>
@@ -467,7 +467,7 @@
 								<i class="fa fa-eraser "></i>
 							</a></li>
                         	<li><a href="#" class="btn btn-circle btn-default bMoveTo btn-menu" data-orientation="H">
-								<i class="fa fa-crosshairs iconMenuBlue"></i>
+								<i class="fa fa-crosshairs iconMenuBlue" style="font-size:24px"></i>
 							</a></li>
                         	<li><a href="#" class="btn btn-circle btn-default bMove btn-menu" data-orientation="H" data-toggle="modal" data-target="#install_by_step_edit_map_modalTeleop">
 								<i class="fa fa-gamepad iconMenuPurple"></i>
@@ -1372,7 +1372,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="col-xs-12 col-md-3 control-label" for="email"><?php echo __('Email');?></label>
+                                                    <label class="col-xs-12 col-md-3 control-label" for="email"><?php echo __('Login');?></label>
                                                     <div class="col-xs-12 col-md-6">
                                                         <input id="install_by_step_manager_i_manager_email" name="email" type="text" class="form-control">
                                                     </div>
