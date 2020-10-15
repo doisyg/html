@@ -448,14 +448,30 @@
                     
                     <div id="install_by_step_edit_map_menu" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddForbiddenArea"><i class="fa fa-minus-circle" style="color:#da3939;"></i></a> <?= _('Add Forbidden Area') ?></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddArea"><i class="fa fa-square"></i></a> <?= _('Add Customizable Area') ?></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddPOI"><i class="fa fa-map-marker-alt"></i></a> <?= _('Add POI') ?></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddAugmentedPose"><i class="fa fa-map-marker-alt" style="color:#da3939;"></i></a> <?= _('Add Advanced Pose') ?></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddDock"><i class="fa fa-flash"></i></a> <?= _('Add Docking Station') ?></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bGomme"><i class="fa fa-eraser"></i></a> <?= _('Erase Walls') ?></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bMoveTo"><i class="fa fa-crosshairs"></i></a> <?= _('Go to Pose') ?></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bMove" data-toggle="modal" data-target="#install_by_step_edit_map_modalTeleop"><i class="fa fa-gamepad"></i></a> <?= _('Remote Control') ?></li>
+                        	<li><a href="#" class="btn btn-circle btn-default bAddForbiddenArea btn-menu" data-orientation="V">
+								<div class="iconForbiddenArea"><i class="fas fa-draw-polygon"></i><i class="fa fa-minus-circle iconMenuRed"></i></div>
+							</a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default bAddArea btn-menu" data-orientation="V">
+								<i class="fas fa-draw-polygon iconMenuGreen"></i>
+							</a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default bAddPOI btn-menu" data-orientation="V">
+								<i class="fa fa-map-marker-alt iconMenuBlue"></i>
+							</a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default bAddAugmentedPose btn-menu" data-orientation="V">
+								<div class="iconAugmentedPose"><i class="fas fa-map-marker-alt iconMenuBlue"></i><i class="fas fa-barcode"></i></div>
+							</a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default bAddDock btn-menu" data-orientation="V">
+								<i class="fas fa-charging-station iconMenuGreen" style="position: relative;top: -1px;left: 2px;"></i>
+							</a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default bGomme btn-menu" data-orientation="V">
+								<i class="fa fa-eraser "></i>
+							</a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default bMoveTo btn-menu" data-orientation="H">
+								<i class="fa fa-crosshairs iconMenuBlue"></i>
+							</a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default bMove btn-menu" data-orientation="H" data-toggle="modal" data-target="#install_by_step_edit_map_modalTeleop">
+								<i class="fa fa-gamepad iconMenuPurple"></i>
+							</a></li>
                         </ul>
                     </div>
                     

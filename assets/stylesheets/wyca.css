@@ -759,6 +759,9 @@ img.fi-robot{
 	background:#DCDCDC;
 }
 
+/* BURGER MENU MAP */
+
+
 .burger_menu_open{
 	
 }
@@ -780,3 +783,54 @@ img.fi-robot{
     transition: 0.5s all;
     border-radius: 15px;
 }
+.btn-circle.btn-menu{
+	width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    padding: 5px 5px;
+    font-size: 22px;
+    line-height: 1.33;
+	border-color: #555151;
+}
+.iconAugmentedPose{
+	position:relative;
+}
+.iconAugmentedPose .fa-map-marker-alt{
+    left: 6px;
+    font-size: 22px;
+    z-index: 2;
+	top: 0px;
+	position: absolute;
+}
+.iconAugmentedPose .fa-barcode{
+    font-size: 18px;
+    top: 10px;
+    left: 5px;
+    background: white;
+    z-index: 1;
+    transform: skew(32deg, -16deg);
+	position: absolute;
+}
+.iconForbiddenArea{
+	position:relative;
+}
+.iconForbiddenArea .fa-draw-polygon{
+    left: 5px;
+    font-size: 22px;
+    z-index: 2;
+    top: 5px;
+    position: absolute;
+}
+.iconForbiddenArea .fa-minus-circle{
+    font-size: 14px;
+    top: 0px;
+    left: 0px;
+    background: white;
+    border-radius: 15px;
+    z-index: 3;
+    position: absolute;
+}
+.iconMenuBlue{color:#1b48c7}
+.iconMenuGreen{color:#187f18}
+.iconMenuRed{color:#da3939}
+.iconMenuPurple{color:#5d24cb}

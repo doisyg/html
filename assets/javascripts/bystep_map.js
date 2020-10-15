@@ -692,18 +692,42 @@ function ByStepDisplayMenu(id_menu)
 	$('#'+id_menu+' li').hide();
 	$('#'+id_menu).show();
 
-	topMenu = '5px';
-	leftMenu = '5px' ;
+	topMenu = 7.5; //px
+	leftMenu = 7.5; //px
 	
-	decallageY = 60;
+	decallageY = 45;
+	decallageX = 45;
+	let idxH = 1;
+	let idxV = 1;
+	let idxD = 1;
 	
 	$('#'+id_menu).css({top: topMenu, left: leftMenu});
 	
 	$('#'+id_menu+' li').each(function(index, element) {
-		l = leftMenu;
-		t = 'calc('+topMenu+ ' + ' + ((index+1)*decallageY) + 'px ) ';
+		let orientation = $(element).find('a.btn-menu').data('orientation');
+		switch(orientation){
+			case 'V' : 
+				l = leftMenu;
+				t = topMenu + (idxH * decallageY+10)
+				idxH++; 
+			break;
+			case 'H' :  
+				l = leftMenu + (idxV * decallageX+10)
+				t = topMenu ;
+				idxV++;
+			break;
+			case 'D' : 
+				l = leftMenu + (idxD * decallageX+10)
+				t = topMenu + (idxD * decallageY+10) ;
+				idxD++;
+			break;
+		}
+		console.log('l',l)
+		console.log('t',t)
+		l = l+'px';
+		t = t+'px';
 		$(this).css({left: l, top: t});
-		$(this).delay(100*index).fadeIn();
+		$(this).delay(15*index).fadeIn();
     });
 }
 
