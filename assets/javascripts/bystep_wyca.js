@@ -1178,6 +1178,106 @@ $(document).ready(function(e) {
 		});
     });
 	
+	$('#pages_install_by_step a.real_test').click(function(e) {
+        e.preventDefault();
+		$('#pages_install_by_step .modalRealTest_loading').show();
+		$('#pages_install_by_step .modalRealTest_content').hide();
+		$('#pages_install_by_step .modalRealTest').modal('show');
+		wycaApi.GetCurrentMapComplete(function(data){
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$('#pages_install_by_step .modalRealTest_loading').hide();
+				$('#pages_install_by_step .modalRealTest_content').show();
+				$('select#real_test_start > option').hide();
+				$('select#real_test_end > option').hide();
+				//ADD POIS
+				$.each(data.D.pois,function(i, item){
+					$('select#real_test_start').append('<option value="poi_'+item.id_poi+'" data-type="poi" data-x="'+item.final_pose_x+'" data-y="'+item.final_pose_y+'" data-t="'+item.final_pose_t+'">&#xf3c5 - POI - '+item.name+'</option>' );
+					$('select#real_test_end').append('<option value="poi_'+item.id_poi+'" data-type="poi" data-x="'+item.final_pose_x+'" data-y="'+item.final_pose_y+'" data-t="'+item.final_pose_t+'">&#xf3c5 - POI - '+item.name+'</option>' );
+				});
+				//ADD DOCKS
+				$.each(data.D.docks,function(i, item){
+					$('select#real_test_start').append('<option value="dock_'+item.id_docking_station+'" data-type="dock" data-id="'+item.id_docking_station+'" >&#xf5e7 - Dock - '+item.name+'</option>' );
+					$('select#real_test_end').append('<option value="dock_'+item.id_docking_station+'" data-type="dock" data-id="'+item.id_docking_station+'" >&#xf5e7 - Dock - '+item.name+'</option>' );
+				});
+				//ADD A POSES
+				$.each(data.D.augmented_poses,function(i, item){
+					$('select#real_test_start').append('<option value="augmented_pose_'+item.id_docking_station+'" data-type="augmented_pose" data-id="'+item.id_augmented_pose+'" >&#xf02a; &#xf3c5;   - A. pose - '+item.name+'</option>' );
+					$('select#real_test_end').append('<option value="augmented_pose_'+item.id_docking_station+'" data-type="augmented_pose" data-id="'+item.id_augmented_pose+'" >&#xf02a; &#xf3c5; - A. pose - '+item.name+'</option>' );
+				});
+				
+			}
+			else
+			{
+				$('#pages_install_by_step .modalRealTest').modal('hide');
+			}
+		
+		})		
+		
+	});
+	
+	$('#pages_install_by_step a.bRealTestDo').click(function(e) {
+        e.preventDefault();
+		let start = $('select#real_test_start option:selected');
+		let end = $('select#real_test_end option:selected');
+		console.log(start.data('type'))
+		if(start.val()!='' && end.val()!='' && end.val()!=start.val()){
+			$('#pages_install_by_step .modalRealTest').modal('hide');
+			$('#pages_install_by_step .modalRealTestResult').modal('show');
+			$("#start_point_text").html(start.html());
+			$("#end_point_text").html(end.html());
+			
+			
+			
+		}
+	});
+	
+	/* FONCTION PROGRESS BAR REAL TEST */
+	
+	var timerStartRealTest = 5;
+	var timerStartRealTestCurrent = 5;
+	
+	function NextTimerStartRealTest()
+	{
+		if (timerStartRealTestCurrent < 0)
+		{
+			setTimeout(function() {
+				$('#install_by_step_mapping .progressStartMapping').hide();
+				$('#install_by_step_mapping .bMappingStop').show();
+				$('#install_by_step_mapping .mapping_view').show();
+				img = document.getElementById("install_by_step_mapping_img_map_saved");
+				img.src = "assets/images/vide.png";
+				
+				if (intervalMap != null)
+				{
+					clearInterval(intervalMap);
+					intervalMap = null;
+				}
+				//intervalMap = setInterval(GetMap, 1000);
+			}, 500);
+		}
+		else	
+		{
+			if (timerStartRealTestCurrent == 5 && timerStartRealTest == 10) // Stop navigation before
+			{
+				wycaApi.MappingStart(function(r) { 
+					mappingStarted = true;
+				});
+				
+				$('#install_by_step_mapping .progressStartMapping h3').html(textStartMapping);
+			}
+			
+			valeur = 100-parseInt(timerStartRealTestCurrent / timerStartRealTest * 100);
+
+			$('#install_by_step_mapping .createMapProgress .progress-bar').css('width', valeur+'%').attr('aria-valuenow', valeur); 
+		
+			timerStartRealTestCurrent -= 0.1;	
+			timerStartRealTestCurrent = parseInt(timerStartRealTestCurrent*10)/10;
+			
+			setTimeout(NextTimerCreateMap, 100);
+		}
+	}
+		
 	$('#install_by_step_config .bConfigurationSave').click(function(e) {
 		wycaApi.SetEnergyConfiguration(parseInt($('#install_by_step_config #install_by_step_config_i_level_min_gotocharge').val()), parseInt($('#install_by_step_config #install_by_step_config_i_level_min_dotask').val()), function(data) {
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
