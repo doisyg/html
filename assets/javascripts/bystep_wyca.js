@@ -1594,10 +1594,15 @@ $(document).ready(function(e) {
 	$('#install_by_step_manager .modalManager #install_by_step_manager_bManagerSave').click(function(e) {
         e.preventDefault();
 		
-		if ($('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_password').val() != $('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_cpassword').val())
+		if ($('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_password').val() != $('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_cpassword').val() || $('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_cpassword').val() == '' || !$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_cpassword')[0].checkValidity())
 		{
 			alert_wyca('Invalid password or confirm');
 		}
+		else if (!$('#install_by_step_manager_i_manager_email')[0].checkValidity())
+		{
+			alert_wyca('Error in login');
+		}
+		/*
 		else if ($('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_societe').val() == "" )
 		{
 			alert_wyca('Company is required');
@@ -1609,7 +1614,7 @@ $(document).ready(function(e) {
 		else if ($('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_nom').val() == "" )
 		{
 			alert_wyca('Lastname is required');
-		}
+		}*/
 		else
 		{
 			json_user = {
@@ -1631,16 +1636,18 @@ $(document).ready(function(e) {
 					{
 						$('#install_by_step_manager_list_manager_elem_'+id_user+' span.email').html(json_user.email);
 						$('#install_by_step_manager_list_manager_elem_'+id_user+' span.societe').html(json_user.company);
+						/*
 						$('#install_by_step_manager_list_manager_elem_'+id_user+' span.prenom').html(json_user.firstname);
 						$('#install_by_step_manager_list_manager_elem_'+id_user+' span.nom').html(json_user.lastname);
+						*/
 					}
 					else
 					{
 						$('#install_by_step_manager .list_managers').append('' +
 							'<li id="install_by_step_manager_list_manager_elem_'+id_user+'" data-id_user="'+id_user+'">'+
-							'	<span class="societe">'+json_user.company+'</span><br /><span class="prenom">'+json_user.firstname+'</span> <span class="nom">'+json_user.lastname+'</span><br /><span class="email">'+json_user.email+'</span>'+
+							'	<span class="email">'+json_user.email+'</span>'+
 							'	<a href="#" class="bManagerDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
-							'	<a href="#" class="bManagerEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
+							'	<a href="#" class="bManagerEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pen"></i></a>'+
 							'</li>'
 							);
 					}

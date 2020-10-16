@@ -692,9 +692,9 @@ function GetManagersByStep()
 				{
 					$('#install_by_step_manager .list_managers').append('' +
 						'<li id="install_by_step_manager_list_manager_elem_'+value.id_user+'" data-id_user="'+value.id_user+'">'+
-						'	<span class="societe">'+value.company+'</span><br /><span class="prenom">'+value.firstname+'</span> <span class="nom">'+value.lastname+'</span><br /><span class="email">'+value.email+'</span>'+
+						'	<span class="email">'+value.email+'</span>'+
 						'	<a href="#" class="bManagerDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
-						'	<a href="#" class="bManagerEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
+						'	<a href="#" class="bManagerEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pen"></i></a>'+
 						'</li>'
 						);
 				}

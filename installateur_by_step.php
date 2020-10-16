@@ -1436,19 +1436,19 @@
                                         <div class="h100vh_160" style="overflow:auto">
                                             <form>
                                             	<input type="hidden" name="i_id_manager" id="install_by_step_manager_i_id_manager" value="-1" />
-                                                <div class="form-group d-none">
+                                                <div class="form-group" style="display:none">
                                                     <label class="col-xs-12 col-md-3 control-label" for="societe"><?php echo __('Company');?></label>
                                                     <div class="col-xs-12 col-md-6">
                                                         <input id="install_by_step_manager_i_manager_societe" value="company" name="societe" type="text" class="form-control">
                                                     </div>
                                                 </div>
-                                                <div class="form-group d-none">
+                                                <div class="form-group" style="display:none">
                                                     <label class="col-xs-12 col-md-3 control-label" for="prenom"><?php echo __('Firstname');?></label>
                                                     <div class="col-xs-12 col-md-6">
                                                         <input id="install_by_step_manager_i_manager_prenom" value="fname" name="prenom" type="text" class="form-control">
                                                     </div>
                                                 </div>
-                                                <div class="form-group d-none">
+                                                <div class="form-group" style="display:none">
                                                     <label class="col-xs-12 col-md-3 control-label" for="nom"><?php echo __('Lastname');?></label>
                                                     <div class="col-xs-12 col-md-6">
                                                         <input id="install_by_step_manager_i_manager_nom" value="lname" name="nom" type="text" class="form-control">
@@ -1457,19 +1457,19 @@
                                                 <div class="form-group">
                                                     <label class="col-xs-12 col-md-3 control-label" for="email"><?php echo __('Login');?></label>
                                                     <div class="col-xs-12 col-md-6">
-                                                        <input id="install_by_step_manager_i_manager_email" name="email" type="text" class="form-control">
+                                                        <input id="install_by_step_manager_i_manager_email" name="email" type="email" required="required" pattern="[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,}" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-xs-12 col-md-3 control-label" for="password"><?php echo __('Password');?></label>
                                                     <div class="col-xs-12 col-md-6">
-                                                        <input id="install_by_step_manager_i_manager_password" name="password" type="password" class="form-control">
+                                                        <input id="install_by_step_manager_i_manager_password" name="password" type="password" required="required" class="form-control"> <!-- pattern="(?=^.{8,}$)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" -->
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-xs-12 col-md-3 control-label" for="cpassword"><?php echo __('Confirm password');?></label>
                                                     <div class="col-xs-12 col-md-6">
-                                                        <input id="install_by_step_manager_i_manager_cpassword" name="cpassword" type="password" class="form-control">
+                                                        <input id="install_by_step_manager_i_manager_cpassword" name="cpassword" type="password" required="required" class="form-control"> <!-- pattern="(?=^.{8,}$)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" -->
                                                     </div>
                                                 </div>
                                             </form>
