@@ -1923,7 +1923,7 @@ function WycaAPI(options){
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
-	this.GoToPose = function(x, y, theta, callback){
+	this.GoToPose = function(x, y, theta, pdt, callback){
 		if (callback != undefined)
 			this.callbacks[_this.CommandCode.GO_TO_POSE] = callback;
 		var action = {
@@ -1931,7 +1931,8 @@ function WycaAPI(options){
 			"P": {
 				"X":x,
 				"Y":y,
-				"T":theta
+				"T":theta,
+				"PDT":pdt
 			}
 		};
 		_this.wycaSend(JSON.stringify(action));
@@ -1944,7 +1945,7 @@ function WycaAPI(options){
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
-	this.GoToPoseAccurate = function(x, y, theta, callback){
+	this.GoToPoseAccurate = function(x, y, theta, pdt, callback){
 		if (callback != undefined)
 			this.callbacks[_this.CommandCode.GO_TO_POSE_ACCURATE] = callback;
 		var action = {
@@ -1952,7 +1953,8 @@ function WycaAPI(options){
 			"P": {
 				"X":x,
 				"Y":y,
-				"T":theta
+				"T":theta,
+				"PDT":pdt
 			}
 		};
 		_this.wycaSend(JSON.stringify(action));
@@ -1965,7 +1967,7 @@ function WycaAPI(options){
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
-	this.GoToPoseFlexible = function(x, y, theta, distance_tolerance, angle_tolerance, callback){
+	this.GoToPoseFlexible = function(x, y, theta, distance_tolerance, angle_tolerance, pdt, callback){
 		if (callback != undefined)
 			this.callbacks[_this.CommandCode.GO_TO_POSE_FLEXIBLE] = callback;
 		var action = {
@@ -1975,7 +1977,8 @@ function WycaAPI(options){
 				"Y":y,
 				"T":theta,
 				"DT":distance_tolerance,
-				"AT":angle_tolerance
+				"AT":angle_tolerance,
+				"PDT":pdt
 			}
 		};
 		_this.wycaSend(JSON.stringify(action));

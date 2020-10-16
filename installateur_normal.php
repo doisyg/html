@@ -61,6 +61,7 @@
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddDock"><i class="fa fa-flash"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg bGomme"><i class="fa fa-eraser"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg bMoveTo"><i class="fa fa-crosshairs"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bMoveToFlexible"><i class="fa fa-crosshairs" style="color:#F00;"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-lg bMove" data-toggle="modal" data-target="#install_normal_edit_map_modalTeleop"><i class="fa fa-gamepad"></i></a></li>
                         </ul>
                     </div>
