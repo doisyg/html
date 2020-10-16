@@ -1335,16 +1335,16 @@
 									<div class="h100vh_160" style="overflow:auto; text-align:center">
 										<div class="modalRealTest_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i><br><?= _('Loading map\'s data') ?></div>
 										<div class="modalRealTest_content">
-											<p><?= _('Please choose a start point')?></p>
+											<p><?= _('Please choose a start position')?></p>
 											<div class="form-group">
 												<select class="form-control form-fa" id="real_test_start">
-													<option value=""><?= _('Start point')?></option>
+													<option value=""><?= _('Start position')?></option>
 												</select>
 											</div>
 											<p><?= _('Please choose an arrival point')?></p>
 											<div class="form-group">
 												<select class="form-control form-fa" id="real_test_end">
-													<option value=""><?= _('Arrival point')?></option>		
+													<option value=""><?= _('Arrival position')?></option>		
 												</select>
 											</div>
 										</div>
@@ -1366,7 +1366,7 @@
 										<div class="modalRealTestResult_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
 										<div class="modalRealTestResult_content text-center">
 											<div id="start_point">
-												<h4><?= _('Go to start pose')?></h4>
+												<h4><?= _('Go to start position')?></h4>
 												<span id="start_point_text"></span>
 												<div class="row">
 													<div class="col-xs-3"></div>
@@ -1379,7 +1379,7 @@
 												</div>														
 											</div>
 											<div id="end_point">
-												<h4><?= _('Go to arrival pose')?></h4>
+												<h4><?= _('Go to arrival position')?></h4>
 												<span id="end_point_text"></span>
 												<div class="row">
 													<div class="col-xs-3"></div>
