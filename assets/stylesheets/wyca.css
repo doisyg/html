@@ -844,7 +844,10 @@ img.fi-robot{
 .iconMenuRed{color:#da3939}
 .iconMenuPurple{color:#5d24cb}
 
-
+img.fi-route{
+	max-height: 59px!important;
+    padding: 6px!important;
+}
 /* REAL TEST */
 #start_point_text{
 	font-family: "Font Awesome 5 Free", Open Sans;
