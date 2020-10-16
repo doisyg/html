@@ -11,7 +11,6 @@
                 <div class="panel-body"></div>
             </section>
         </div>
-        
         <script>
 		var lang = '<?php echo $currentLang->iso;?>';
 
@@ -111,6 +110,14 @@
 			InitCheckByStep();
 			<?php }?>
         });
+		</script>
+		
+		<script>
+			$(document).ready(function(e) {
+				if(screen.height < 600){
+					alert_wyca('The screen\'s height of your telephone is too small for the app. Some features can be impacted');
+				}
+			})
 		</script>
 	</body>
 </html>
