@@ -735,163 +735,198 @@ $(document).ready(function(e) {
 		}
 		else
 		{
-			//ADD CHECK NOM MAP 
-			
-			
-			//
-			var canvasDessin = document.getElementById('install_by_step_mapping_canvas_result_trinary');
-		
-			$('#install_by_step_mapping_fin .bMappingCancelMap2').hide();
-			$('#install_by_step_mapping_fin .bMappingSaveMap').hide();
-		
-			$('#install_by_step_mapping_from_image').val(finalMapData);
-			$('#install_by_step_mapping_from_image_tri').val(canvasDessin.toDataURL());
-			$('#install_by_step_mapping_from_ros_largeur').val($('#install_by_step_mapping_img_map_saved_fin').prop('naturalWidth'));
-			$('#install_by_step_mapping_from_ros_hauteur').val($('#install_by_step_mapping_img_map_saved_fin').prop('naturalHeight'));
-			$('#install_by_step_mapping_from_threshold_free').val($('#install_by_step_mapping_threshold_free_slider').val());
-			$('#install_by_step_mapping_from_threshold_occupied').val($('#install_by_step_mapping_threshold_occupied_slider').val());
-			//$('#form_mapping').submit();
-			
-			$.ajax({
-				type: "POST",
-				url: 'ajax/get_map_tri.php',
-				data: {
-					'image_tri':canvasDessin.toDataURL()
-				},
-				dataType: 'json',
-				success: function(data) {
-					if (!data.error)
-					{
-						map = {
-							'id_map': -1,
-							'id_site': -1,
-							'name': window.map_name,
-							'comment': '',
-							'image': finalMapData,
-							'image_tri': data.image,
-							'ros_resolution': 5,
-							'ros_width': $('#install_by_step_mapping_img_map_saved_fin').prop('naturalWidth'),
-							'ros_height': $('#install_by_step_mapping_img_map_saved_fin').prop('naturalHeight'),
-							'threshold_free': parseInt($('#install_by_step_mapping_threshold_free_slider').val()),
-							'threshold_occupied': parseInt($('#install_by_step_mapping_threshold_occupied_slider').val())
-						};
+			if(!form_sended){
+				let map_names = Array();
+				form_sended = true ;
+				
+				$('.bMappingSaveMap').addClass('disabled');
+				
+				wycaApi.GetCurrentSite(function(data){
+					if (data.A != wycaApi.AnswerCode.NO_ERROR){
+						alert_wyca('Error in scanning map names ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M)
+					}else{
 						
-						wycaApi.SetMap(map, function(data){
-							if (data.A == wycaApi.AnswerCode.NO_ERROR)
-							{
-								id_map_last = data.D;
-								id_map = data.D;
-								wycaApi.GetMapComplete(id_map, function(data){
-									if (data.A == wycaApi.AnswerCode.NO_ERROR)
-									{
-										forbiddens = data.D.forbiddens;
-										areas = data.D.areas;
-										gommes = Array();
-										docks = data.D.docks;
-										pois = data.D.pois;
-										augmented_poses = data.D.augmented_poses;
+						wycaApi.GetMapsList(data.D.id_site,function(data){
+							if (data.A != wycaApi.AnswerCode.NO_ERROR){
+								alert_wyca('Error in scanning map names ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M)
+							}else{
+								data.D.forEach(function(item){
+									map_names.push(item.name);
+								});
+								console.log('Site ',data.D.id_site);
+								console.log('Maps ',map_names);
+								console.log('Map ',window.map_name);
+								if(map_names.includes(window.map_name)){
+									alert_wyca(textNameUsed);
+									setTimeout(function(){form_sended = false},1000);
+									$('.bMappingSaveMap').removeClass('disabled');
+								}else{
+																
+										//
+										var canvasDessin = document.getElementById('install_by_step_mapping_canvas_result_trinary');
+									
+										$('#install_by_step_mapping_fin .bMappingCancelMap2').hide();
+										$('#install_by_step_mapping_fin .bMappingSaveMap').hide();
+									
+										$('#install_by_step_mapping_from_image').val(finalMapData);
+										$('#install_by_step_mapping_from_image_tri').val(canvasDessin.toDataURL());
+										$('#install_by_step_mapping_from_ros_largeur').val($('#install_by_step_mapping_img_map_saved_fin').prop('naturalWidth'));
+										$('#install_by_step_mapping_from_ros_hauteur').val($('#install_by_step_mapping_img_map_saved_fin').prop('naturalHeight'));
+										$('#install_by_step_mapping_from_threshold_free').val($('#install_by_step_mapping_threshold_free_slider').val());
+										$('#install_by_step_mapping_from_threshold_occupied').val($('#install_by_step_mapping_threshold_occupied_slider').val());
+										//$('#form_mapping').submit();
 										
-										$('#install_by_step_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
-										
-										largeurSlam = data.D.ros_width;
-										hauteurSlam = data.D.ros_height;
-										largeurRos = data.D.ros_width;
-										hauteurRos = data.D.ros_height;
-										
-										ros_largeur = data.D.ros_width;
-										ros_hauteur = data.D.ros_height;
-										ros_resolution = data.D.ros_resolution;
-										
-										$('#install_by_step_edit_map_svg').attr('width', data.D.ros_width);
-										$('#install_by_step_edit_map_svg').attr('height', data.D.ros_height);
-										
-										$('#install_by_step_edit_map_image').attr('width', data.D.ros_width);
-										$('#install_by_step_edit_map_image').attr('height', data.D.ros_height);
-										$('#install_by_step_edit_map_image').attr('xlink:href', 'data:image/png;base64,'+data.D.image_tri);
-									  
-										$('#install_by_step_mapping_use .bUseThisMapNowYes').show();
-										$('#install_by_step_mapping_use .bUseThisMapNowNo').show();
-										$('#install_by_step_mapping_use .modalUseThisMapNowTitle1').show();
-										$('#install_by_step_mapping_use .modalUseThisMapNowTitle2').hide();
-										$('#install_by_step_mapping_use .modalUseThisMapNowContent').hide();
-										
-										$('#install_by_step_mapping_fin .install_by_step_mapping_fin_next').click();
-										
-										
-										wycaApi.SetMapAsCurrent(id_map, function(data){
-											if (data.A == wycaApi.AnswerCode.NO_ERROR)
-											{
-												wycaApi.NavigationStartFromMapping(function(data) {
+										$.ajax({
+											type: "POST",
+											url: 'ajax/get_map_tri.php',
+											data: {
+												'image_tri':canvasDessin.toDataURL()
+											},
+											dataType: 'json',
+											success: function(data) {
+												if (!data.error)
+												{
+													map = {
+														'id_map': -1,
+														'id_site': -1,
+														'name': window.map_name,
+														'comment': '',
+														'image': finalMapData,
+														'image_tri': data.image,
+														'ros_resolution': 5,
+														'ros_width': $('#install_by_step_mapping_img_map_saved_fin').prop('naturalWidth'),
+														'ros_height': $('#install_by_step_mapping_img_map_saved_fin').prop('naturalHeight'),
+														'threshold_free': parseInt($('#install_by_step_mapping_threshold_free_slider').val()),
+														'threshold_occupied': parseInt($('#install_by_step_mapping_threshold_occupied_slider').val())
+													};
 													
-													if (data.A != wycaApi.AnswerCode.NO_ERROR) { alert_wyca('Error navigation start ; ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M);} 
-													
-													$('#install_by_step_mapping_use .install_by_step_mapping_use_next').click();
-													
-													setTimeout(function(){
-														ByStepInitMap();
-														ByStepResizeSVG();
-													},500); 
-													
-													$.ajax({
-														type: "POST",
-														url: 'ajax/install_by_step_save_mapping.php',
-														data: {},
-														dataType: 'json',
-														success: function(data) {
-														},
-														error: function(e) {
+													wycaApi.SetMap(map, function(data){
+														if (data.A == wycaApi.AnswerCode.NO_ERROR)
+														{
+															id_map_last = data.D;
+															id_map = data.D;
+															wycaApi.GetMapComplete(id_map, function(data){
+																if (data.A == wycaApi.AnswerCode.NO_ERROR)
+																{
+																	forbiddens = data.D.forbiddens;
+																	areas = data.D.areas;
+																	gommes = Array();
+																	docks = data.D.docks;
+																	pois = data.D.pois;
+																	augmented_poses = data.D.augmented_poses;
+																	
+																	$('#install_by_step_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
+																	
+																	largeurSlam = data.D.ros_width;
+																	hauteurSlam = data.D.ros_height;
+																	largeurRos = data.D.ros_width;
+																	hauteurRos = data.D.ros_height;
+																	
+																	ros_largeur = data.D.ros_width;
+																	ros_hauteur = data.D.ros_height;
+																	ros_resolution = data.D.ros_resolution;
+																	
+																	$('#install_by_step_edit_map_svg').attr('width', data.D.ros_width);
+																	$('#install_by_step_edit_map_svg').attr('height', data.D.ros_height);
+																	
+																	$('#install_by_step_edit_map_image').attr('width', data.D.ros_width);
+																	$('#install_by_step_edit_map_image').attr('height', data.D.ros_height);
+																	$('#install_by_step_edit_map_image').attr('xlink:href', 'data:image/png;base64,'+data.D.image_tri);
+																  
+																	$('#install_by_step_mapping_use .bUseThisMapNowYes').show();
+																	$('#install_by_step_mapping_use .bUseThisMapNowNo').show();
+																	$('#install_by_step_mapping_use .modalUseThisMapNowTitle1').show();
+																	$('#install_by_step_mapping_use .modalUseThisMapNowTitle2').hide();
+																	$('#install_by_step_mapping_use .modalUseThisMapNowContent').hide();
+																	
+																	$('#install_by_step_mapping_fin .install_by_step_mapping_fin_next').click();
+																	
+																	
+																	wycaApi.SetMapAsCurrent(id_map, function(data){
+																		if (data.A == wycaApi.AnswerCode.NO_ERROR)
+																		{
+																			wycaApi.NavigationStartFromMapping(function(data) {
+																				
+																				if (data.A != wycaApi.AnswerCode.NO_ERROR) { alert_wyca('Error navigation start ; ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M);} 
+																				
+																				$('#install_by_step_mapping_use .install_by_step_mapping_use_next').click();
+																				
+																				setTimeout(function(){
+																					ByStepInitMap();
+																					ByStepResizeSVG();
+																				},500); 
+																				
+																				$.ajax({
+																					type: "POST",
+																					url: 'ajax/install_by_step_save_mapping.php',
+																					data: {},
+																					dataType: 'json',
+																					success: function(data) {
+																					},
+																					error: function(e) {
+																					}
+																				});
+																			});
+																		}
+																		else
+																		{
+																			text = wycaApi.AnswerCodeToString(data.A);
+																			if (data.M != '')
+																				text += ' : ' + data.M;
+																			alert_wyca(text);
+																			
+																			$('#install_by_step_mapping_use .bUseThisMapNowYes').show();
+																			$('#install_by_step_mapping_use .bUseThisMapNowNo').show();
+																			$('#install_by_step_mapping_use .modalUseThisMapNowTitle1').show();
+																			$('#install_by_step_mapping_use .modalUseThisMapNowTitle2').hide();
+																			$('#install_by_step_mapping_use .modalUseThisMapNowContent').hide();
+																		}
+																	});
+										
+																	
+																  
+																	var img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
+																	img.src = "assets/images/vide.png";
+																	
+																	
+																}
+																else
+																{
+																	alert_wyca('Get map error : ' + wycaApi.AnswerCodeToString(data.A));
+																}		
+																
+															});
 														}
+														else
+														{
+															alert_wyca('Save map error : ' + wycaApi.AnswerCodeToString(data.A));
+														}							
 													});
-												});
-											}
-											else
-											{
-												text = wycaApi.AnswerCodeToString(data.A);
-												if (data.M != '')
-													text += ' : ' + data.M;
-												alert_wyca(text);
+												}
+																
 												
-												$('#install_by_step_mapping_use .bUseThisMapNowYes').show();
-												$('#install_by_step_mapping_use .bUseThisMapNowNo').show();
-												$('#install_by_step_mapping_use .modalUseThisMapNowTitle1').show();
-												$('#install_by_step_mapping_use .modalUseThisMapNowTitle2').hide();
-												$('#install_by_step_mapping_use .modalUseThisMapNowContent').hide();
+											},
+											error: function(e) {
+												
+												var img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
+												img.src = "assets/images/vide.png";
+												
+												alert_wyca('Error get map trinary ; ' + e.responseText);
 											}
 										});
-			
 										
-									  
-										var img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
-										img.src = "assets/images/vide.png";
-										
-										
-									}
-									else
-									{
-										alert_wyca('Get map error : ' + wycaApi.AnswerCodeToString(data.A));
-									}		
-									
-								});
+																
+									setTimeout(function(){form_sended = false},1000);
+									$('.bMappingSaveMap').removeClass('disabled');
+								}							
 							}
-							else
-							{
-								alert_wyca('Save map error : ' + wycaApi.AnswerCodeToString(data.A));
-							}							
-						});
+						})
 					}
-									
-					
-				},
-				error: function(e) {
-					
-					var img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
-        			img.src = "assets/images/vide.png";
-					
-					alert_wyca('Error get map trinary ; ' + e.responseText);
-				}
-			});
+				})
+			}
 		}
 	});
+	
 	$('#install_by_step_mapping_form').submit(function(){
 		
 		
