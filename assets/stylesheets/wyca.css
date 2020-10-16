@@ -438,9 +438,7 @@ ul.list_test li.done { color:#006600; border-color:#006600; }
 .list_service_books li { background-color:#EFEFEF; }
 .list_service_books li .title { font-weight:bold; }
 .list_service_books li .comment { white-space: pre; }
-
-.list_service_books .date { float:right; }
-
+.list_service_books li .date { float:right;font-style: italic; }
 
 .mh100vh {
 	min-height: 100vh;

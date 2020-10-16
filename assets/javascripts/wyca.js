@@ -508,10 +508,19 @@ function GetServiceBooksByStep()
 			
 			if (data.D != undefined)
 			$.each(data.D,function(index, value){
+				let d = new Date(value.date * 1000);
+				let d_txt="";
+				switch(lang){
+					case 'fr': d_txt = d.getDate() + '/' + (d.getMonth()+1) + '/' +  d.getFullYear() ; break;
+					case 'en': d_txt = (d.getMonth()+1) + '/' + d.getDate() + '/' +  d.getFullYear() ; break;
+					default: break;
+				}
+				let date = 
 				$('#install_by_step_service_book .list_service_books').append('' +
 						'<li>'+
 						'	<div class="title">'+value.title+'</div>'+
 						'	<div class="comment">'+value.comment+'</div>'+
+						'	<div class="date">'+d_txt+'</div>'+
 						'</li>'
 						);
 			});
