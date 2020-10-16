@@ -856,3 +856,8 @@ img.fi-robot{
 	font-family: "Font Awesome 5 Free", Open Sans;
 	font-weight:501;
 }
+#result_RealTest{
+    border-top: 1px solid #DCDCDC;
+    margin-top: 10px;
+    padding-top: 20px;
+}

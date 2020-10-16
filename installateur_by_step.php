@@ -1323,82 +1323,93 @@
 						<p><?= _('For more precise values, try to test battery in real conditions') ?></p>
 						<a href="#" class="real_test btn btn-lg btn-success" style="margin-left:50%; transform:translateX(-50%)"><i class="fas fa-route"></i> <?=('Real Test')?></a>
 						
-						<div class="modal fade modalRealTest" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
-							<div class="modal-dialog" role="dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<div class="actions mh100vh_55">
-											<div class="h100vh_160" style="overflow:auto; text-align:center">
-												<div class="modalRealTest_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i><br><?= _('Loading map\'s data') ?></div>
-												<div class="modalRealTest_content">
-													<p><?= _('Please choose a start point')?></p>
-													<div class="form-group">
-														<select class="form-control form-fa" id="real_test_start">
-															<option value=""><?= _('Start point')?></option>
-														</select>
-													</div>
-													<p><?= _('Please choose an arrival point')?></p>
-													<div class="form-group">
-														<select class="form-control form-fa" id="real_test_end">
-															<option value=""><?= _('Arrival point')?></option>		
-														</select>
-													</div>
-												</div>
-											</div>
-											<div style="clear:both;"></div>                                   
-											<a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal"><?php echo __('Cancel');?></a>
-											<a href="#" class="btn btn-primary bRealTestDo btn_footer_right btn_50" ><?php echo __('Go');?></a>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="modal fade modalRealTestResult" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
-							<div class="modal-dialog" role="dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<div class="actions mh100vh_55">
-											<div class="h100vh_160" style="overflow:auto; text-align:center">
-												<div class="modalRealTestResult_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
-												<div class="modalRealTestResult_content text-center">
-													<p><?= _('Processing real test') ?></p>
-													<div id="start_point">
-														<h4><?= _('Go to start point')?></h4>
-														<span id="start_point_text"></span>
-														<div class="startRealTestprogress progress progress-striped light active m-md">
-															<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;"></div>
-														</div>
-													</div>
-													<div id="end_point">
-														<h4><?= _('Go to arrival point')?></h4>
-														<span id="end_point_text"></span>
-														<div class="endRealTestprogress progress progress-striped light active m-md">
-															<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;"></div>
-														</div>
-													</div>
-													<div id="result_wrapper">
-														<p><?= _('Use this result as reference for battery configuration') ?></p>
-														<a href="#" class="btn btn-success"><?php echo __('Use');?></a>
-													</div>
-												</div>
-											</div>
-											<div style="clear:both;"></div>
-											<a href="#" class="btn btn-default btn_footer_left btn_100" data-dismiss="modal"><?php echo __('Cancel');?></a>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+						
 						<a href="#" class="install_by_step_config_next button_goto" data-goto="install_by_step_manager" style="display:none;"></a>   
 					</div>
                 </form>
+				<div class="modal fade modalRealTest" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+					<div class="modal-dialog" role="dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<div class="actions mh100vh_55">
+									<div class="h100vh_160" style="overflow:auto; text-align:center">
+										<div class="modalRealTest_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i><br><?= _('Loading map\'s data') ?></div>
+										<div class="modalRealTest_content">
+											<p><?= _('Please choose a start point')?></p>
+											<div class="form-group">
+												<select class="form-control form-fa" id="real_test_start">
+													<option value=""><?= _('Start point')?></option>
+												</select>
+											</div>
+											<p><?= _('Please choose an arrival point')?></p>
+											<div class="form-group">
+												<select class="form-control form-fa" id="real_test_end">
+													<option value=""><?= _('Arrival point')?></option>		
+												</select>
+											</div>
+										</div>
+									</div>
+									<div style="clear:both;"></div>                                   
+									<a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal"><?php echo __('Cancel');?></a>
+									<a href="#" class="btn btn-primary bRealTestDo btn_footer_right btn_50" ><?php echo __('Go');?></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal fade modalRealTestResult" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+					<div class="modal-dialog" role="dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<div class="actions mh100vh_55">
+									<div class="h100vh_160" style="overflow:auto; text-align:center">
+										<div class="modalRealTestResult_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
+										<div class="modalRealTestResult_content text-center">
+											<div id="start_point">
+												<h4><?= _('Go to start pose')?></h4>
+												<span id="start_point_text"></span>
+												<div class="row">
+													<div class="col-xs-3"></div>
+													<div class="col-xs-6 startRealTestprogress progress progress-striped light active m-md" style="margin: 6px 0;padding:0">
+														<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;"></div>
+													</div>
+													<div class="col-xs-3">
+														<i class="fas fa-check checkStart fa-2x iconMenuGreen"></i>
+													</div>														
+												</div>														
+											</div>
+											<div id="end_point">
+												<h4><?= _('Go to arrival pose')?></h4>
+												<span id="end_point_text"></span>
+												<div class="row">
+													<div class="col-xs-3"></div>
+													<div class="col-xs-6 endRealTestprogress progress progress-striped light active m-md" style="margin: 6px 0;padding:0">
+														<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;"></div>
+													</div>
+													<div class="col-xs-3">
+														<i class="fas fa-check checkEnd fa-2x iconMenuGreen"></i>
+													</div>														
+												</div>
+											</div>
+											<div id="result_RealTest" style="border-top:1px solid #DCDCDC">
+												<h4><?= _('Battery used :') ?> <span id="battery_used">0</span> %</h4>
+												<p><?= _('Use this result as reference for battery configuration') ?></p>
+												<a href="#" id="bUseRealTest" class="btn btn-success"><?php echo __('Use');?></a>
+											</div>
+										</div>
+									</div>
+									<div style="clear:both;"></div>
+									<a href="#" class="btn btn-default btn_footer_left btn_100" data-dismiss="modal" <!-- onClick="wycaApi.StopMove()"--> ><?php echo __('Cancel');?></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
             </div>
             <footer>
 				<a href="#" class="btn btn-default button_goto btn_footer_left btn_50 btn_back" data-goto="install_by_step_test_map"><?php echo __('Back');?></a>
             	<a href="#" class="bConfigurationSave btn btn-primary btn_footer_right btn_50" data-goto="install_by_step_manager"><?php echo __('Save');?></a>
             </footer>
-            
-        
         </section>
         
         <section id="install_by_step_manager" class="page <?php echo $INSTALL_STEP == 11?'active':'';?> with_footer">

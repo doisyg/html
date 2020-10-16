@@ -174,5 +174,7 @@ $_LANG['9e20018b40b560419468404753d5eadb'] = 'Object detection threshold';
 $_LANG['727b63583e01fa2b3952dab580c84dc2'] = 'Abort';
 $_LANG['e0aa021e21dddbd6d8cecec71e9cf564'] = 'OK';
 $_LANG['45fe2cb9d87014584bc5b71277833fd7'] = 'Mapping Init';
+$_LANG['ad8783089f828b927473fb61d51940ec'] = 'Use';
+$_LANG['a983b7f9a472c1b8cb98a106cc2ed932'] = 'Less than 1';
 
 ?>

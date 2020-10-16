@@ -3,6 +3,12 @@ var form_sended = false; //Boolean pour disable a form "en traitement"
 var selectedWifi = '';
 var json_user = {};
 var timer_anim_check = undefined;
+var battery_lvl_start = 0;
+var battery_lvl_needed = 0;
+var timerRealTestStart = 0;
+var timerRealTestEnd = 0;
+var statuslRealTestStart = 0;
+var statusRealTestEnd = false;
 $(document).ready(function(e) {
 	
 	$('#install_by_step_edit_map .bSaveMapTestPoi').click(function(e) {
@@ -1226,8 +1232,8 @@ $(document).ready(function(e) {
 				$('select#real_test_end > option').hide();
 				//ADD POIS
 				$.each(data.D.pois,function(i, item){
-					$('select#real_test_start').append('<option value="poi_'+item.id_poi+'" data-type="poi" data-x="'+item.final_pose_x+'" data-y="'+item.final_pose_y+'" data-t="'+item.final_pose_t+'">&#xf3c5 - POI - '+item.name+'</option>' );
-					$('select#real_test_end').append('<option value="poi_'+item.id_poi+'" data-type="poi" data-x="'+item.final_pose_x+'" data-y="'+item.final_pose_y+'" data-t="'+item.final_pose_t+'">&#xf3c5 - POI - '+item.name+'</option>' );
+					$('select#real_test_start').append('<option value="poi_'+item.id_poi+'" data-type="poi" data-id="'+item.id_poi+'" >&#xf3c5 - POI - '+item.name+'</option>' );
+					$('select#real_test_end').append('<option value="poi_'+item.id_poi+'" data-type="poi" data-id="'+item.id_poi+'">&#xf3c5 - POI - '+item.name+'</option>' );
 				});
 				//ADD DOCKS
 				$.each(data.D.docks,function(i, item){
@@ -1250,91 +1256,300 @@ $(document).ready(function(e) {
 		
 	});
 	
+	/* REAL TEST */
+	
+	/* FONCTION PROGRESS BAR REAL TEST */
+	
+	
+	function TimerRealTest(step)
+	{
+		if(step=='start'){			
+			if(statusRealTestStart > 0){
+				if(statusRealTestStart == 2 && timerRealTestStart==100){
+					statusRealTestStart=0;
+					timerRealTestStart=0;
+					$('.checkStart').show();
+				}else{
+					$('.checkStart').hide();
+					delay = statusRealTestStart == 2 ? 1 : 200;
+					timerRealTestStart++;
+					if(timerRealTestStart == 101)timerRealTestStart=0;
+					$('#install_by_step_config .startRealTestprogress .progress-bar').css('width', timerRealTestStart+'%').attr('aria-valuenow', timerRealTestStart); 
+					setTimeout(TimerRealTest,delay,step);
+				}
+			}
+		}
+		else if(step=='end'){			
+			if(statusRealTestEnd > 0){
+				if(statusRealTestEnd == 2 && timerRealTestEnd==100){
+					statusRealTestEnd=0;
+					timerRealTestEnd=0;
+					$('.checkEnd').show();
+				}else{
+					$('.checkEnd').hide();
+					delay = statusRealTestEnd == 2 ? 1 : 200;
+					timerRealTestEnd++;
+					if(timerRealTestEnd == 101)timerRealTestEnd=0;
+					$('#install_by_step_config .endRealTestprogress .progress-bar').css('width', timerRealTestEnd+'%').attr('aria-valuenow', timerRealTestEnd); 
+					setTimeout(TimerRealTest,delay,step);
+				}
+			}
+		}
+		
+	}
+	
 	$('#pages_install_by_step a.bRealTestDo').click(function(e) {
         e.preventDefault();
 		let start = $('select#real_test_start option:selected');
 		let end = $('select#real_test_end option:selected');
-		console.log(start.data('type'))
 		if(start.val()!='' && end.val()!='' && end.val()!=start.val()){
 			$('#pages_install_by_step .modalRealTest').modal('hide');
 			$('#pages_install_by_step .modalRealTestResult').modal('show');
 			
-			$(".modalRealTestResult_content #start_point").show()
-			$(".modalRealTestResult_content #end_point").hide()
-			$(".modalRealTestResult_content #result_wrapper").hide();
+			$(".modalRealTestResult_content #start_point").hide();
+			$(".modalRealTestResult_content #end_point").hide();
+			$(".modalRealTestResult_content #result_RealTest").hide();
 			
 			$(".modalRealTestResult_content #start_point_text").html(start.html());
 			$(".modalRealTestResult_content #end_point_text").html(end.html());
-			//GO TO START 
-			switch(start.data('type')){
-				case 'poi':
-					//AJOUTER ECOUTER RESULT + REBIND OLS FUNCTION FIN ECOUTEUR
-					
-					x = start.data('x');
-					y = start.data('y');
-					theta = start.data('t');
-					wycaApi.GoToPose(x,y,theta,function(data){
-						if (data.A == wycaApi.AnswerCode.NO_ERROR)
-						{
-							
-						}else{
-							if (data.M != '')
-								alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
-							else
-								alert_wyca(wycaApi.AnswerCodeToString(data.A));
-						}
-					})
-				break;
-				case 'dock':
-					//AJOUTER ECOUTER RESULT + REBIND OLS FUNCTION FIN ECOUTEUR
-					
-					id = start.data('id');
-					wycaApi.GoToCharge(id,function(data){
-						if (data.A == wycaApi.AnswerCode.NO_ERROR)
-						{
-							
-						}else{
-							if (data.M != '')
-								alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
-							else
-								alert_wyca(wycaApi.AnswerCodeToString(data.A));
-						}
-					})
-					
-				break;
-				case 'augmented_pose':
-					//AJOUTER ECOUTER RESULT + REBIND OLS FUNCTION FIN ECOUTEUR
-					
-					id = start.data('id');
-					wycaApi.GoToAugmentedPose(id,function(data){
-						if (data.A == wycaApi.AnswerCode.NO_ERROR)
-						{
-							
-						}else{
-							if (data.M != '')
-								alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
-							else
-								alert_wyca(wycaApi.AnswerCodeToString(data.A));
-						}						
-					})
-				break;
-			}
-			// LAUNCH PROGRESS BAR ANIM
 			
-			//ECOUTER GOTOXX RESULT 
-			
+			RealTestGotoStart(start,end);
 		}
 	});
 	
-	/* FONCTION PROGRESS BAR REAL TEST */
-	
-	var timerStartRealTest = 5;
-	var timerStartRealTestCurrent = 5;
-	
-	function NextTimerStartRealTest()
-	{
+	function RealTestGotoStart(start,end){
+		console.log('Go to start');
+		console.log(start.data('type'),' id ',start.data('id'));
+		switch(start.data('type')){
+			case 'poi':
+				//AJOUTER ECOUTER RESULT + REBIND OLS FUNCTION FIN ECOUTEUR
+				wycaApi.on('onGoToPoiResult', function (data){
+					if (data.A == wycaApi.AnswerCode.NO_ERROR){
+						battery_lvl_start = battery_lvl_current; // STOCKAGE BATTERY LVL
+						// GO TO END
+						RealTestGotoEnd(end);
+						
+						
+					}else{
+						if (data.M != '')
+							alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+						else
+							alert_wyca(wycaApi.AnswerCodeToString(data.A));
+						
+					}
+					if(end.data('type')!='poi') // On rebranche l'ancienne fonction
+						wycaApi.on('onGoToPoiResult', onGoToPoiResult);
+				});
+				
+				id = start.data('id');
+				wycaApi.GoToPoi(id,function(data){
+					if (data.A == wycaApi.AnswerCode.NO_ERROR){
+						$(".modalRealTestResult_content #start_point").show();
+						
+						statusRealTestStart = 1;
+						timerRealTestStart = 0;
+						TimerRealTest('start');
+						
+					}else{
+						$('#pages_install_by_step .modalRealTestResult').modal('hide');
+						if (data.M != '')
+							alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+						else
+							alert_wyca(wycaApi.AnswerCodeToString(data.A));
+					}
+				})
+			break;
+			case 'dock':
+				//AJOUTER ECOUTER RESULT + REBIND OLS FUNCTION FIN ECOUTEUR
+				wycaApi.on('onGoToChargeResult', function (data){
+					if (data.A == wycaApi.AnswerCode.NO_ERROR){
+						battery_lvl_start = battery_lvl_current; // STOCKAGE BATTERY LVL
+						// GO TO END
+						RealTestGotoEnd(end);
+					}else{
+						if (data.M != '')
+							alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+						else
+							alert_wyca(wycaApi.AnswerCodeToString(data.A));
+					}
+					if(end.data('type')!='dock') // On rebranche l'ancienne fonction
+						wycaApi.on('onGoToChargeResult', onGoToChargeResult);
+				});
+				
+				id = start.data('id');
+				
+				wycaApi.GoToCharge(id,function(data){
+					if (data.A == wycaApi.AnswerCode.NO_ERROR){
+						$(".modalRealTestResult_content #start_point").show();
+					
+						statusRealTestStart = 1;
+						timerRealTestStart = 0;
+						TimerRealTest('start');
+						
+					}else{
+						$('#pages_install_by_step .modalRealTestResult').modal('hide');
+						if (data.M != '')
+							alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+						else
+							alert_wyca(wycaApi.AnswerCodeToString(data.A));
+					}
+				})
+				
+			break;
+			case 'augmented_pose':
+				//AJOUTER ECOUTER RESULT + REBIND OLS FUNCTION FIN ECOUTEUR
+				wycaApi.on('onGoToAugmentedPoseResult', function (data){
+					if (data.A == wycaApi.AnswerCode.NO_ERROR){
+						battery_lvl_start = battery_lvl_current; // STOCKAGE BATTERY LVL
+						// GO TO END
+						RealTestGotoEnd(end);
+					}else{
+						
+						if (data.M != '')
+							alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+						else
+							alert_wyca(wycaApi.AnswerCodeToString(data.A));
+					}
+					if(end.data('type')!='augmented_pose') // On rebranche l'ancienne fonction
+						wycaApi.on('onGoToAugmentedPoseResult', onGoToAugmentedPoseResult);
+				});
+				
+				id = start.data('id');
+				
+				wycaApi.GoToAugmentedPose(id,function(data){
+					if (data.A == wycaApi.AnswerCode.NO_ERROR){
+						$(".modalRealTestResult_content #start_point").show();
+					
+						statusRealTestStart = 1;
+						timerRealTestStart = 0;
+						TimerRealTest('start');
+						
+					}else{
+						$('#pages_install_by_step .modalRealTestResult').modal('hide');
+						if (data.M != '')
+							alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+						else
+							alert_wyca(wycaApi.AnswerCodeToString(data.A));
+					}						
+				})
+			break;
+		}
 		
 	}
+	
+	function RealTestGotoEnd(end){
+		console.log('Go to end');
+		console.log(end.data('type'),' id ',end.data('id'));
+		statusRealTestStart = 2;
+		
+		statusRealTestEnd = 1;
+		timerRealTestEnd = 0;
+		TimerRealTest('end');
+						
+		switch(end.data('type')){
+			case 'poi':
+				//AJOUTER ECOUTER RESULT + REBIND OLS FUNCTION FIN ECOUTEUR
+				wycaApi.on('onGoToPoiResult', function (data){
+					if (data.A == wycaApi.AnswerCode.NO_ERROR){
+						statusRealTestEnd = 2;
+						battery_lvl_needed = battery_lvl_start - battery_lvl_current; // STOCKAGE BATTERY LVL NEEDED
+						textDisplay = battery_lvl_needed == 0 ? textLessThanOne : battery_lvl_needed;
+						$('#battery_used').html(textDisplay);
+						$(".modalRealTestResult_content #result_RealTest").show();
+					}else{
+						if (data.M != '')
+							alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+						else
+							alert_wyca(wycaApi.AnswerCodeToString(data.A));
+					}
+					// On rebranche l'ancienne fonction
+					wycaApi.on('onGoToPoiResult', onGoToPoiResult);
+				});
+				
+				id = end.data('id');
+				
+				wycaApi.GoToPoi(id,function(data){
+					if (data.A == wycaApi.AnswerCode.NO_ERROR){
+						$(".modalRealTestResult_content #end_point").show()
+					}else{
+						if (data.M != '')
+							alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+						else
+							alert_wyca(wycaApi.AnswerCodeToString(data.A));
+					}
+				})
+			break;
+			case 'dock':
+				//AJOUTER ECOUTER RESULT + REBIND OLS FUNCTION FIN ECOUTEUR
+				wycaApi.on('onGoToChargeResult', function (data){
+					if (data.A == wycaApi.AnswerCode.NO_ERROR){
+						statusRealTestEnd = 2;
+						battery_lvl_needed = battery_lvl_start - battery_lvl_current; // STOCKAGE BATTERY LVL NEEDED
+						textDisplay = battery_lvl_needed == 0 ? textLessThanOne : battery_lvl_needed;
+						$('#battery_used').html(textDisplay);
+						$(".modalRealTestResult_content #result_RealTest").show();
+					}else{
+						if (data.M != '')
+							alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+						else
+							alert_wyca(wycaApi.AnswerCodeToString(data.A));
+					}
+					// On rebranche l'ancienne fonction
+					wycaApi.on('onGoToChargeResult', onGoToChargeResult);
+				});
+				
+				id = end.data('id');
+				
+				wycaApi.GoToCharge(id,function(data){
+					if (data.A == wycaApi.AnswerCode.NO_ERROR){
+						$(".modalRealTestResult_content #end_point").show()
+					}else{
+						if (data.M != '')
+							alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+						else
+							alert_wyca(wycaApi.AnswerCodeToString(data.A));
+					}
+				})
+				
+			break;
+			case 'augmented_pose':
+				//AJOUTER ECOUTER RESULT + REBIND OLS FUNCTION FIN ECOUTEUR
+				wycaApi.on('onGoToAugmentedPoseResult', function (data){
+					if (data.A == wycaApi.AnswerCode.NO_ERROR){
+						statusRealTestEnd = 2;
+						battery_lvl_needed = battery_lvl_start - battery_lvl_current; // STOCKAGE BATTERY LVL NEEDED
+						textDisplay = battery_lvl_needed == 0 ? textLessThanOne : battery_lvl_needed;
+						$('#battery_used').html(textDisplay);
+						$(".modalRealTestResult_content #result_RealTest").show();
+					}else{
+						if (data.M != '')
+							alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+						else
+							alert_wyca(wycaApi.AnswerCodeToString(data.A));
+					}
+					// On rebranche l'ancienne fonction
+					wycaApi.on('onGoToAugmentedPoseResult', onGoToAugmentedPoseResult);
+				});
+				
+				id = end.data('id');
+				
+				wycaApi.GoToAugmentedPose(id,function(data){
+					if (data.A == wycaApi.AnswerCode.NO_ERROR){
+						$(".modalRealTestResult_content #end_point").show()
+					}else{
+						if (data.M != '')
+							alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+						else
+							alert_wyca(wycaApi.AnswerCodeToString(data.A));
+					}						
+				})
+			break;
+		}
+		
+		// LAUNCH PROGRESS BAR ANIM
+	}
+	
+	
 		
 	$('#install_by_step_config .bConfigurationSave').click(function(e) {
 		wycaApi.SetEnergyConfiguration(parseInt($('#install_by_step_config #install_by_step_config_i_level_min_gotocharge').val()), parseInt($('#install_by_step_config #install_by_step_config_i_level_min_dotask').val()), function(data) {

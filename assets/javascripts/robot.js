@@ -34,6 +34,7 @@ var mappingLastOrigin = {'x':0, 'y':0 };
 
 var imgMappingLoaded = true;
 
+var battery_lvl_current=0;
 $(document).ready(function(e) {
 	
 	var img = document.getElementById("install_by_step_mapping_img_map_saved");
@@ -258,6 +259,7 @@ function initPoweredState(data)
 
 function initBatteryState(data)
 {
+	battery_lvl_current = data;
 	$('#icoBattery i').removeClass('fa-battery-0 fa-battery-1 fa-battery-2 fa-battery-3 fa-battery-4');
     $('#icoBattery').removeClass('battery-ko');
     if (data < 15)

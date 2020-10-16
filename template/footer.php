@@ -30,6 +30,7 @@
 		var textStartAutonomous = "<?php echo addslashes(stripslashes(__('Start autonomous navigation')));?>";
 		var textBtnCheckTest = "<?php echo addslashes(stripslashes(__('Testing')));?>";
 		var textBtnCheckNext = "<?php echo addslashes(stripslashes(__('Next')));?>";
+		var textLessThanOne = "<?php echo addslashes(stripslashes(__('Less than 1')));?>";
 		</script>
 
 		<!-- Vendor -->
