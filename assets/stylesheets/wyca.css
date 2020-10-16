@@ -188,17 +188,17 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 .popupHelp ul li;first-child { border-top:1px solid #EEEEEE; }
 .popupHelp ul li i { font-size:24px; min-width:40px; }
 
-#install_by_step_edit_map_bEndGomme, #install_by_step_edit_map_bSaveCurrentElem, #install_by_step_edit_map_bStop { position:absolute; top:10px; left:10px; padding:0; display:none; }
-#install_by_step_edit_map_bCancelCurrentElem { position:absolute; top:10px; left:80px; padding:0; display:none; }
+#install_by_step_edit_map_bEndGomme, #install_by_step_edit_map_bSaveCurrentElem, #install_by_step_edit_map_bStop { position:absolute; top:10px; left:10px; padding:0; display:none; z-index:4}
+#install_by_step_edit_map_bCancelCurrentElem { position:absolute; top:10px; left:80px; padding:0; display:none; z-index:4}
 
-#install_normal_edit_map_bEndGomme, #install_normal_edit_map_bSaveCurrentElem, #install_normal_edit_map_bStop { position:absolute; top:10px; left:10px; padding:0; display:none; }
-#install_normal_edit_map_bCancelCurrentElem { position:absolute; top:10px; left:80px; padding:0; display:none; }
+#install_normal_edit_map_bEndGomme, #install_normal_edit_map_bSaveCurrentElem, #install_normal_edit_map_bStop { position:absolute; top:10px; left:10px; padding:0; display:none; z-index:4}
+#install_normal_edit_map_bCancelCurrentElem { position:absolute; top:10px; left:80px; padding:0; display:none; z-index:4}
 
-#manager_edit_map_bEndGomme, #manager_edit_map_bSaveCurrentElem, #manager_edit_map_bStop { position:absolute; top:10px; left:10px; padding:0; display:none; }
-#manager_edit_map_bCancelCurrentElem { position:absolute; top:10px; left:80px; padding:0; display:none; }
+#manager_edit_map_bEndGomme, #manager_edit_map_bSaveCurrentElem, #manager_edit_map_bStop { position:absolute; top:10px; left:10px; padding:0; display:none; z-index:4}
+#manager_edit_map_bCancelCurrentElem { position:absolute; top:10px; left:80px; padding:0; display:none;z-index:4}
 
-#user_edit_map_bEndGomme, #user_edit_map_bSaveCurrentElem, #user_edit_map_bStop { position:absolute; top:10px; left:10px; padding:0; display:none; }
-#user_edit_map_bCancelCurrentElem { position:absolute; top:10px; left:80px; padding:0; display:none; }
+#user_edit_map_bEndGomme, #user_edit_map_bSaveCurrentElem, #user_edit_map_bStop { position:absolute; top:10px; left:10px; padding:0; display:none; z-index:4}
+#user_edit_map_bCancelCurrentElem { position:absolute; top:10px; left:80px; padding:0; display:none; z-index:4}
 
 .h100vh_160 { height:calc(100vh - 60px); height: calc(var(--vh, 1vh) * 100 - 60px); }
 
@@ -770,7 +770,7 @@ img.fi-robot{
 	position:absolute;
 	top:10px;
 	left:10px;
-	z-index:9999999;
+	z-index:3;
 	background:#DCDCDC;
 }
 .burger_menu_open{

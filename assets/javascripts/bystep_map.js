@@ -685,10 +685,19 @@ function ByStepHideMenus()
 	$('.popupHelp').hide();
 	
 	$('.burger_menu_open').removeClass('burger_menu_open');
+	$('.burger_menu').css('display','flex');
 }
 
 function ByStepDisplayMenu(id_menu)
 {
+	let idxH = 1;
+	let idxV = 1;
+	let idxD = 1;
+	console.log(id_menu);
+	if(id_menu != 'install_by_step_edit_map_menu'){
+		$('.burger_menu').hide();
+		
+	}
 	$('#'+id_menu+' li').hide();
 	$('#'+id_menu).show();
 
@@ -697,9 +706,7 @@ function ByStepDisplayMenu(id_menu)
 	
 	decallageY = 45;
 	decallageX = 45;
-	let idxH = 1;
-	let idxV = 1;
-	let idxD = 1;
+	
 	
 	$('#'+id_menu).css({top: topMenu, left: leftMenu});
 	
@@ -721,9 +728,12 @@ function ByStepDisplayMenu(id_menu)
 				t = topMenu + (idxD * decallageY+10) ;
 				idxD++;
 			break;
+			default:
+				l = leftMenu;
+				t = topMenu + (idxH * decallageY+10)
+				idxH++; 
+			break;
 		}
-		console.log('l',l)
-		console.log('t',t)
 		l = l+'px';
 		t = t+'px';
 		$(this).css({left: l, top: t});

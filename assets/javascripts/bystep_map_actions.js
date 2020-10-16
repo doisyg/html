@@ -4186,6 +4186,7 @@ function GetForbiddenIndexFromID(id)
 
 function DeleteArea(indexInArray)
 {
+	console.log('Delete Area');
 	if ($('.cancel:visible').length > 0) $('.cancel:visible').click();
 	
 	areas[indexInArray].deleted = true;
