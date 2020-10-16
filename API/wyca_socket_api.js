@@ -383,6 +383,7 @@ function WycaAPI(options){
 	this.connectedWebRTC = false;
 	
 	this.subscribeOnWebrtc = Array();
+	this.segementedMessages = Array();
 	
 	var _this = this;
 	
@@ -1045,6 +1046,38 @@ function WycaAPI(options){
 			console.log("ERROR", msg);
 			console.log(_this.AnswerCodeToString(msg.A));
 		}
+		
+		if (msg.SEGMENTED != undefined && msg.SEGMENTED)
+		{
+			if (msg.O != undefined)
+				name = "O"+msg.O;
+			else
+				name = "E"+msg.E;
+			console.log('Received ' + msg.D.I + '/' + msg.D.NB);
+			if (msg.D.I == 1)
+			{
+				_this.segementedMessages[name] = msg;
+				_this.segementedMessages[name].D = msg.D.M;
+				return;
+			}
+			
+			_this.segementedMessages[name].D += msg.D.M;
+			
+			if (msg.D.I == msg.D.NB)
+			{
+				// dernier message
+				msg = _this.segementedMessages[name];
+				_this.segementedMessages[name] = null;
+				msg.D = JSON.parse(msg.D);
+			}
+			else
+			{
+				return;
+			}
+			
+		}
+		
+		
 		if (msg.O != undefined)
 		{
 			if (_this.options.id_robot != 'not_robot' && _this.connectedWebRTC)

@@ -40,6 +40,12 @@ $(document).ready(function(e) {
 	img.onload = function () {
 		imgMappingLoaded = true;	
 		InitPosCarteMapping();
+		
+		if (timerGetMappingInConstruction == null)
+		{
+			// Le timer a déjà sauté, on relance l'appel
+			GetMappingInConstruction();
+		}
 	};
 	
 	wycaApi = new WycaAPI({
@@ -160,17 +166,14 @@ function TimeoutGetMappingInConstruction()
 
 function GetMappingInConstruction()
 {
+	
 	haveReplyFromGetMappingInConstruction = false;
 	timerGetMappingInConstruction = setTimeout(TimeoutGetMappingInConstruction, 1000);
 	
+	console.log("GetMappingInConstruction start");
 	wycaApi.GetMappingInConstruction(function(data) {
-		
+		console.log("GetMappingInConstruction reply");
 		haveReplyFromGetMappingInConstruction = true;
-		if (timerGetMappingInConstruction == null)
-		{
-			// Le timer a déjà sauté, on relance l'appel
-			GetMappingInConstruction();
-		}
 		
 		if (data.A == wycaApi.AnswerCode.NO_ERROR)
 		{
