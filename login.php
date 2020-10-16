@@ -116,7 +116,13 @@ include_once('./config/initSite.php');
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/bootstrap/js/bootstrap.js"></script>
 	</body>
 </html>
-
+<script>
+	$(document).ready(function(e) {
+		if(screen.height < 600){
+			DisplayError('The screen\'s height of your telephone is too small for the app. Some features can be impacted');
+		}
+	})
+</script>
 <script>
 
 function DisplayError(text)
