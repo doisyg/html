@@ -181,6 +181,13 @@ $(document).ready(function(e) {
 			if (next == 'install_by_step_mapping_fin'){
 				if(typeof(window.site_name) != undefined && window.site_name != ""){
 					$('#install_by_step_mapping_from_name').val(window.site_name)
+				}else{
+					wycaApi.GetCurrentSite(function(data){
+						if (data.A == wycaApi.AnswerCode.NO_ERROR){
+							window.site_name=data.D.name;
+							$('#install_by_step_mapping_from_name').val(window.site_name)
+						}
+					})
 				}
 			}
 			
