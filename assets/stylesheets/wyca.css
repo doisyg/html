@@ -183,10 +183,13 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 #user_edit_map_zoom_carte { overflow:hidden; }
 
 .popupHelp { position:absolute; z-index:20000; background-color:rgba(255,255,255,0.8); top:0; left:0; right:0; bottom:0; display:none; padding:20px; }
-.popupHelp ul { list-style:none; margin:0; padding:50px 20px; }
+.popupHelp ul { list-style:none; margin:0; padding:0px 20px; }
 .popupHelp ul li { font-size:18px; padding:10px 0; border-bottom:1px solid #CCC; }
 .popupHelp ul li;first-child { border-top:1px solid #EEEEEE; }
-.popupHelp ul li i { font-size:24px; min-width:40px; }
+.popupHelp ul li > i { font-size:24px; min-width:40px; }
+.popupHelp ul li > div {    left: -4px;}
+.popupHelp ul li > div + span { margin-left:40px; }
+.popupHelp ul li .route {  width:40px; padding:7px!important;  position: relative; top: -4px; left: -10px;}
 
 #install_by_step_edit_map_bEndGomme, #install_by_step_edit_map_bSaveCurrentElem, #install_by_step_edit_map_bStop { position:absolute; top:10px; left:10px; padding:0; display:none; z-index:4}
 #install_by_step_edit_map_bCancelCurrentElem { position:absolute; top:10px; left:80px; padding:0; display:none; z-index:4}
@@ -770,6 +773,7 @@ img.fi-robot{
 	left:10px;
 	z-index:3;
 	background:#DCDCDC;
+	border:1px solid #707070;
 }
 .burger_menu_open{
 	
@@ -826,6 +830,7 @@ img.fi-robot{
 .iconForbiddenArea .fa-vector-square{
     left: 1.5px;
     font-size: 25px;
+	line-height:25px;
     z-index: 2;
     top: 1px;
     position: absolute;
@@ -844,9 +849,67 @@ img.fi-robot{
 .iconMenuRed{color:#da3939}
 .iconMenuPurple{color:#5d24cb}
 
-img.fi-route{
-	max-height: 59px!important;
+img.fi-route {
+    max-height: 59px!important;
     padding: 6px!important;
+    position: relative;
+    top: -7px;
+    left: -10px;
+}
+.icon_menu{
+	display:none;
+    border: 1px solid transparent;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 3;
+    background: #fff;
+	border:1px solid #707070;
+	overflow:hidden;
+}
+
+.icon_menu i{
+	line-height:30px!important;
+	position: relative;
+    left: -4px;
+}
+
+
+div.icon_menu .iconAugmentedPose .fa-map-marker-alt{
+	left: -1px;
+    font-size: 26px;
+    z-index: 2;
+    top: -7px;
+    position: absolute;
+}
+div.icon_menu .iconAugmentedPose .fa-barcode{
+	font-size: 22px;
+    top: 5px;
+    left: -2px;
+    background:transparent;
+    z-index: 1;
+    transform: skew(32deg, -16deg);
+    position: absolute;
+}
+
+div.icon_menu .iconForbiddenArea .fa-vector-square{
+	left: -6.5px;
+    /* font-size: 25px; */
+    line-height: 25px;
+    z-index: 2;
+	top: -1px;
+    position: absolute;
+	color:#343434;
+}
+div.icon_menu .iconForbiddenArea .fa-minus-circle{
+    font-size: 16px;
+    top: 5.5px;
+    left: 0.5px;
+    background: white;
+    border-radius: 15px;
+    z-index: 3;
+    line-height: 16px!important;
+    position: absolute;
 }
 /* REAL TEST */
 #start_point_text{

@@ -119,7 +119,7 @@ function GetInfosCurrentMapDoByStep()
 			},500); 
 			
 			if (gotoTest) InitTest();
-			
+			$('#bHeaderInfo').attr('onTouchStart',"$('.popupHelp').toggle('fast')");
 			gotoTest = false;
 		}
 		else
@@ -671,6 +671,9 @@ $(document).ready(function(e) {
 			ByStepDisplayMenu( $(this).data('open'))
 		}
 	});
+	$('.icon_menu').on('touchstart', function(e) {
+		ByStepHideMenus()
+	});
 });
 
 function ByStepHideMenus()
@@ -685,7 +688,10 @@ function ByStepHideMenus()
 	$('.popupHelp').hide();
 	
 	$('.burger_menu_open').removeClass('burger_menu_open');
+	
 	$('.burger_menu').css('display','flex');
+	
+	$('.icon_menu').hide('fast');
 }
 
 function ByStepDisplayMenu(id_menu)
@@ -694,10 +700,17 @@ function ByStepDisplayMenu(id_menu)
 	let idxV = 1;
 	let idxD = 1;
 	console.log(id_menu);
+	
+	//ICONE CORRESPONDANTE INSTEAD BURGER MENU
+	let icon_menu = $('.icon_menu[data-menu="'+id_menu+'"]');
+	if(icon_menu.lentgh != 0)
+		icon_menu.show('fast');
+	
+	
 	if(id_menu != 'install_by_step_edit_map_menu'){
-		$('.burger_menu').hide();
-		
+		$('.burger_menu').hide('fast');
 	}
+	
 	$('#'+id_menu+' li').hide();
 	$('#'+id_menu).show();
 
@@ -737,8 +750,10 @@ function ByStepDisplayMenu(id_menu)
 		l = l+'px';
 		t = t+'px';
 		$(this).css({left: l, top: t});
-		$(this).delay(15*index).fadeIn();
+		delay = 15 * index + 25;
+		$(this).delay(delay).fadeIn();
     });
+	
 }
 
 function ByStepLongPressForbidden()

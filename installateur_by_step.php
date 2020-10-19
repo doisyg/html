@@ -417,13 +417,32 @@
             <div class="content">
                 
                 <div id="install_by_step_edit_map_container_all">
-					<div id="">
-						<div class="btn-circle btn-lg burger_menu" data-open="install_by_step_edit_map_menu">
-							<div class="burger_menu_trait"></div>
-							<div class="burger_menu_trait"></div>
-							<div class="burger_menu_trait"></div>
-						</div>
+					
+					<div class="btn-circle btn-lg burger_menu" data-open="install_by_step_edit_map_menu">
+						<div class="burger_menu_trait"></div>
+						<div class="burger_menu_trait"></div>
+						<div class="burger_menu_trait"></div>
 					</div>
+					
+					<div class="btn-circle btn-lg icon_menu" data-menu="install_by_step_edit_map_menu_point">
+						<i class="fas fa-draw-polygon icon_menu_point iconMenuGreen" style="transform: scale(2.5);left: 17px;top: -23px;"></i>
+					</div>
+					<div class="btn-circle btn-lg icon_menu" data-menu="install_by_step_edit_map_menu_forbidden">
+						<div class="iconForbiddenArea"><i class="fas fa-vector-square"></i><i class="fa fa-minus-circle iconMenuRed"></i></div>
+					</div>
+					<div class="btn-circle btn-lg icon_menu" data-menu="install_by_step_edit_map_menu_area">
+						<i class="fas fa-draw-polygon iconMenuGreen"></i>
+					</div>
+					<div class="btn-circle btn-lg icon_menu" data-menu="install_by_step_edit_map_menu_dock">
+						<i class="fas fa-charging-station iconMenuGreen" style="position: relative;top: -1px;left:-5px;"></i>
+					</div>
+					<div class="btn-circle btn-lg icon_menu" data-menu="install_by_step_edit_map_menu_poi">
+						<i class="fa fa-map-marker-alt iconMenuBlue"></i>
+					</div>
+					<div class="btn-circle btn-lg icon_menu" data-menu="install_by_step_edit_map_menu_augmented_pose">
+						<div class="iconAugmentedPose"><i class="fas fa-map-marker-alt iconMenuBlue"></i><i class="fas fa-barcode"></i></div>
+					</div>
+					
                     <div id="install_by_step_edit_map_zoom_carte_container">
                         <div id="install_by_step_edit_map_zoom_carte">
                             <img src=""  class="img-responsive" style="max-width:100%; max-height:100%;" />
@@ -496,16 +515,16 @@
                     </div>
                     <div id="install_by_step_edit_map_menu_dock" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
+							<li><a href="#" class="btn btn-circle btn-default btn-menu" data-toggle="modal" data-target="#install_by_step_edit_map_modalDoSaveBeforeTestDock"><img class="fi-route" src="assets/images/route_green.svg"/></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-menu bConfigDock"><i class="fa fa-gears iconMenuBlue"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-menu bDeleteDock"><i class="fa fa-trash iconMenuRed"></i></a></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-menu" data-toggle="modal" data-target="#install_by_step_edit_map_modalDoSaveBeforeTestDock"><img class="fi-route" src="assets/images/route_green.svg"/></a></li>
                         </ul>
                     </div>
                     <div id="install_by_step_edit_map_menu_poi" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
+							<li><a href="#" class="btn btn-circle btn-default btn-menu" data-toggle="modal" data-target="#install_by_step_edit_map_modalDoSaveBeforeTestPoi"><img class="fi-route" src="assets/images/route_green.svg"/></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-menu bConfigPoi"><i class="fa fa-gears iconMenuBlue"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-menu bDeletePoi"><i class="fa fa-trash iconMenuRed"></i></a></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-menu" data-toggle="modal" data-target="#install_by_step_edit_map_modalDoSaveBeforeTestPoi"><img class="fi-route" src="assets/images/route_green.svg"/></a></li>
                         </ul>
                     </div>
                     <div id="install_by_step_edit_map_menu_augmented_pose" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
@@ -920,7 +939,7 @@
                                                         <a href="#" class="bByStepUndockProcedureAddElem btn btn-circle btn-default"><i class="fa fa-plus"></i></a>
                                                         <ul class="list_undock_procedure list_elem">
                                                         </ul>
-                                                     </div>
+													</div>
                                                 </fieldset>
                                             </form>
                                             
@@ -1236,19 +1255,18 @@
                     <div class="popupHelp">
                     	<h2>Help</h2>
                     	<ul style="color:#000;">
-                        	<li><i class="fa fa-ban"></i><span class="description">Add forbidden area</span></li>
-                        	<li><i class="fa fa-square"></i><span class="description">Add custom area</span></li>
-                        	<li><i class="fa fa-map-marker"></i><span class="description">Add POI</span></li>
-                        	<li><i class="fa fa-map-marker" style="color:#FF0000;"></i><span class="description">Add Augmented pose</span></li>
-                        	<li><i class="fa fa-flash"></i><span class="description">Add docking station</span></li>
-                        	<li><i class="fa fa-eraser"></i><span class="description">Erase pixel</span></li>
-                        	<li><i class="fa fa-crosshairs"></i><span class="description">Move the robot to this point</span></li>
-                        	<li><i class="fa fa-gamepad"></i><span class="description">Teleop the robot</span></li>
-                        	<li><i class="fa fa-check"></i><span class="description">Test go to POI, dock or augmented pose</span></li>
-                        	<li><span style="display:inline-block; margin-right:25px; width:15px; height:15px; border-radius:100%; background-color:#009900;"></span><span class="description">Robot position</span></li>
+                        	<li><div class="iconForbiddenArea"><i class="fas fa-vector-square"></i><i class="fa fa-minus-circle iconMenuRed"></i></div><span class="description"><?= _('Add forbidden area')?></span></li>
+                        	<li><i class="fa fa-draw-polygon iconMenuGreen" style="font-size: 26px;"></i><span class="description"><?= _('Add custom area')?></span></li>
+                        	<li><i class="fa fa-map-marker-alt iconMenuBlue"></i><span class="description"><?= _('Add POI')?></span></li>
+                        	<li><div class="iconAugmentedPose"><i class="fas fa-map-marker-alt iconMenuBlue"></i><i class="fas fa-barcode"></i></div><span class="description"><?= _('Add Augmented pose')?></span></li>
+                        	<li><i class="fa fa-charging-station iconMenuGreen"></i><span class="description"><?= _('Add docking station')?></span></li>
+                        	<li><i class="fa fa-eraser"></i><span class="description"><?= _('Erase pixel')?></span></li>
+                        	<li><i class="fa fa-crosshairs iconMenuBlue"></i><span class="description"><?= _('Move the robot to this point')?></span></li>
+                        	<li><i class="fa fa-gamepad iconMenuPurple"></i><span class="description"><?= _('Teleop the robot')?></span></li>
+                        	<li><img class="route" src="assets/images/route_green.svg"/><span class="description"><?= _('Test go to POI, dock or augmented pose')?></span></li>
+                        	<li><span style="display:inline-block; margin-right:25px; width:15px; height:15px; border-radius:100%; background-color:#009900;"></span><span class="description"><?= _('Robot position')?></span></li>
                         </ul>
-                        
-                        <p>Click to hide</p>
+                        <p><?= _('Click to hide')?></p>
                     </div>
                     
                     
