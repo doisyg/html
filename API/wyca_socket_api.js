@@ -64,6 +64,7 @@ function WycaAPI(options){
 		UNSUBSCRIBE			: 0x110C,
 		UNSUBSCRIBE_ALL			: 0x110D,
 		INSTALL_NEW_TOP_WITHOUT_KEY			: 0x1106,
+		SET_USE_SEGMENTED_MESSAGE			: 0x110F,
 	 
 		CANCEL_CURRENT_ACTION			: 0x1103,
 	 
@@ -383,6 +384,7 @@ function WycaAPI(options){
 	this.connectedWebRTC = false;
 	
 	this.subscribeOnWebrtc = Array();
+	this.segementedMessages = Array();
 	
 	var _this = this;
 	
@@ -1045,6 +1047,44 @@ function WycaAPI(options){
 			console.log("ERROR", msg);
 			console.log(_this.AnswerCodeToString(msg.A));
 		}
+		
+		if (msg.SEGMENTED != undefined && msg.SEGMENTED)
+		{
+			// On renvoi un ack
+			_this.wycaSend("ack_segmented");
+			
+			if (msg.O != undefined)
+				name = "O"+msg.O;
+			else
+				name = "E"+msg.E;
+			console.log('Received ' + msg.D.I + '/' + msg.D.NB);
+			
+			if (_this.options.onReceviedSegmented != undefined && msg.O != undefined) { _this.options.onReceviedSegmented({"O":msg.O, "I":msg.D.I, "NB":msg.D.NB}); }
+			
+			if (msg.D.I == 1)
+			{
+				_this.segementedMessages[name] = msg;
+				_this.segementedMessages[name].D = msg.D.M;
+				return;
+			}
+			
+			_this.segementedMessages[name].D += msg.D.M;
+			
+			if (msg.D.I == msg.D.NB)
+			{
+				// dernier message
+				msg = _this.segementedMessages[name];
+				_this.segementedMessages[name] = null;
+				msg.D = JSON.parse(msg.D);
+			}
+			else
+			{
+				return;
+			}
+			
+		}
+		
+		
 		if (msg.O != undefined)
 		{
 			if (_this.options.id_robot != 'not_robot' && _this.connectedWebRTC)
@@ -1059,6 +1099,7 @@ function WycaAPI(options){
 					if (msg.A == _this.AnswerCode.NO_ERROR)
 					{
 						_this.websocketAuthed = true;
+						_this.wycaSend('{"O":'+_this.CommandCode.SET_USE_SEGMENTED_MESSAGE+', "P": true}');
 						_this.Subscribe();
 					}
 					else
