@@ -64,6 +64,7 @@ function WycaAPI(options){
 		UNSUBSCRIBE			: 0x110C,
 		UNSUBSCRIBE_ALL			: 0x110D,
 		INSTALL_NEW_TOP_WITHOUT_KEY			: 0x1106,
+		SET_USE_SEGMENTED_MESSAGE			: 0x110F,
 	 
 		CANCEL_CURRENT_ACTION			: 0x1103,
 	 
@@ -1049,6 +1050,9 @@ function WycaAPI(options){
 		
 		if (msg.SEGMENTED != undefined && msg.SEGMENTED)
 		{
+			// On renvoi un ack
+			_this.wycaSend("ack_segmented");
+			
 			if (msg.O != undefined)
 				name = "O"+msg.O;
 			else
@@ -1092,6 +1096,7 @@ function WycaAPI(options){
 					if (msg.A == _this.AnswerCode.NO_ERROR)
 					{
 						_this.websocketAuthed = true;
+						_this.wycaSend('{"O":'+_this.CommandCode.SET_USE_SEGMENTED_MESSAGE+', "P": true}');
 						_this.Subscribe();
 					}
 					else
