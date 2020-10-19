@@ -3,7 +3,7 @@ require_once ('../config/initSite.php');
 if (!isset($_SESSION["id_user"])) die();
 if ($_SESSION['id_groupe_user'] > 2) die();
 
-Configuration::SetValue('INSTALL_STEP', 1);
+Configuration::SetValue('INSTALL_STEP',2);
 
 if ($_POST['id_lang'] != Configuration::GetValue('ID_LANG'))
 {

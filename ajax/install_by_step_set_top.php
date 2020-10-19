@@ -4,7 +4,7 @@ if (!isset($_SESSION["id_user"])) die();
 if ($_SESSION['id_groupe_user'] > 2) die();
 
 
-Configuration::SetValue('INSTALL_STEP', 5);
+Configuration::SetValue('INSTALL_STEP',4);
 
 echo json_encode(array('error' => ''));
 
