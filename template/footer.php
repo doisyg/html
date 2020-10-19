@@ -1,5 +1,30 @@
 		</div>
         
+        
+        <div id="modalLoading" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog" role="dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="actions mh100vh_55">
+                            <div class="h100vh_160" style="overflow:auto; text-align:center;">
+                                
+                                <div style="height:60px;"></div>
+                                
+                                <h3>Loading</h3>
+                                <div class="loadingProgress progress progress-striped light active m-md">
+                                    <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;">
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
+                            <div style="clear:both;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <div class="popup_error">
         	<section class="panel panel-secondary" data-portlet-item="">
                 <header class="panel-heading">
@@ -11,7 +36,6 @@
                 <div class="panel-body"></div>
             </section>
         </div>
-        
         <script>
 		var lang = '<?php echo $currentLang->iso;?>';
 
@@ -39,6 +63,7 @@
         <script src="<?php echo $_CONFIG['URL'];?>assets/vendor/jquery-ui-touch-punch/jquery.ui.touch-punch.js"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/bootstrap/js/bootstrap.js"></script>
         <script src="<?php echo $_CONFIG['URL'];?>assets/vendor/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/ios7-switch/ios7-switch.js"></script>
 		<!-- Specific Page Vendor -->
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js"></script>
         
@@ -47,7 +72,7 @@
         <script src="<?php echo $_CONFIG['URL'];?>assets/vendor/svg-pan-zoom/svg-pan-zoom.js"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/svg-pan-zoom/hammer.js"></script>
 
-		<?php $lastUpdate = '20201019';?>
+		<?php $lastUpdate = '20201019_2';?>
 
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/plugins.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/joystick.js?v=<?php echo $lastUpdate;?>"></script>

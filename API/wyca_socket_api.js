@@ -1058,6 +1058,9 @@ function WycaAPI(options){
 			else
 				name = "E"+msg.E;
 			console.log('Received ' + msg.D.I + '/' + msg.D.NB);
+			
+			if (_this.options.onReceviedSegmented != undefined && msg.O != undefined) { _this.options.onReceviedSegmented({"O":msg.O, "I":msg.D.I, "NB":msg.D.NB}); }
+			
 			if (msg.D.I == 1)
 			{
 				_this.segementedMessages[name] = msg;

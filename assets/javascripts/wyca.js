@@ -713,6 +713,7 @@ function InitMappingByStep()
 			{
 				$('#install_by_step_mapping .bMappingStart').hide();
 				$('#install_by_step_mapping .progressStartMapping').hide();
+				$('#install_by_step_mapping .switchLiveMapping').show();
 				$('#install_by_step_mapping .bMappingStop').show();
 				$('#install_by_step_mapping .mapping_view').show();
 					
@@ -792,6 +793,7 @@ function GetLastMappingByStep()
 		});
 		
 		mappingStarted = false;
+		$('#install_by_step_mapping .switchLiveMapping').hide();
 		$('#install_by_step_mapping .bMappingStop').hide();
 		$('#install_by_step_mapping .mapping_view').hide();
 		$('#install_by_step_mapping .bMappingStart').show();
