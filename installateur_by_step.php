@@ -1417,7 +1417,7 @@
 										</div>
 									</div>
 									<div style="clear:both;"></div>
-									<a href="#" class="btn btn-default btn_footer_left btn_100" data-dismiss="modal" <!-- onClick="wycaApi.StopMove()"--> ><?php echo __('Cancel');?></a>
+									<a href="#" class="btn btn-default btn_footer_left btn_100" data-dismiss="modal"><!-- onClick="wycaApi.StopMove()"--> > <?php echo __('Cancel');?></a>
 								</div>
 							</div>
 						</div>
