@@ -871,7 +871,7 @@
                                                     
                                                 </div>
                                             
-                                            	<div style="color:#CC0000;">
+                                            	<div class ="modal-advice">
                                                     <p class="texts_add_dock text_prepare_robot"><?php echo stripslashes(__('Move the robot in front of the dock and click on the "Scan" button'));?></p>
                                                     <p class="texts_add_dock text_set_dock"><?php echo stripslashes(__('Click on the fiducial to create the docking station'));?></p>
                                                 </div>
@@ -1033,7 +1033,7 @@
                                         
                                         	<div class="ifUndocked">
                                             
-                                            	<div style="color:#CC0000;">
+                                            	<div class ="modal-advice">
                                                     <p><?php echo stripslashes(__('Move the robot at the final position desired and click on the "Add POI" button'));?></p>
                                                 </div>                                                
                                                 
@@ -1115,7 +1115,7 @@
                                                     
                                                 </div>
                                             
-                                            	<div style="color:#CC0000;">
+                                            	<div class ="modal-advice">
                                                     <p class="texts_add_augmented_pose text_prepare_approch"><?php echo stripslashes(__('Move the robot at the approach position desired and click on the "Scan" button'));?></p>
                                                     <p class="texts_add_augmented_pose text_set_approch"><?php echo stripslashes(__('Click on the fiducial to set the approch position'));?></p>
                                                     <p class="texts_add_augmented_pose text_prepare_final"><?php echo stripslashes(__('Move the robot at the final position desired and click on the "Scan" button'));?></p>

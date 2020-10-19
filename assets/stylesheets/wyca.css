@@ -437,7 +437,11 @@ ul.list_test li.ko { color:#CC0000; border-color:#CC0000; }
 ul.list_test li.done { color:#006600; border-color:#006600; }
 
 .modal { z-index:10000; }
-
+.modal-advice{font-size:16px;}
+@media only screen and (max-height: 620px)
+{
+	.modal-advice{font-size:12px;}
+}
 .list_service_books li { background-color:#EFEFEF; }
 .list_service_books li .title { font-weight:bold; }
 .list_service_books li .comment { white-space: pre; }
@@ -710,6 +714,8 @@ img.fi-robot{
 	max-height: 59px!important;
     padding: 6px!important;
 }
+
+/* THRESHOLD DISPLAY*/
 .threshold_wrapper{
 	clear:both;
 }
@@ -758,7 +764,20 @@ img.fi-robot{
 	font-family: "Font Awesome 5 Free", Open Sans;
 	font-weight:501;
 }
-
+/* REAL TEST */
+#start_point_text{
+	font-family: "Font Awesome 5 Free", Open Sans;
+	font-weight:501;
+}
+#end_point_text{
+	font-family: "Font Awesome 5 Free", Open Sans;
+	font-weight:501;
+}
+#result_RealTest{
+    border-top: 1px solid #DCDCDC;
+    margin-top: 10px;
+    padding-top: 20px;
+}
 /* BURGER MENU MAP */
 
 
@@ -910,18 +929,4 @@ div.icon_menu .iconForbiddenArea .fa-minus-circle{
     z-index: 3;
     line-height: 16px!important;
     position: absolute;
-}
-/* REAL TEST */
-#start_point_text{
-	font-family: "Font Awesome 5 Free", Open Sans;
-	font-weight:501;
-}
-#end_point_text{
-	font-family: "Font Awesome 5 Free", Open Sans;
-	font-weight:501;
-}
-#result_RealTest{
-    border-top: 1px solid #DCDCDC;
-    margin-top: 10px;
-    padding-top: 20px;
 }
