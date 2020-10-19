@@ -1253,6 +1253,21 @@ $(document).ready(function(e) {
 		});
     });
 	
+	$('#install_by_step_edit_map .bSaveEditMap').click(function(e) {
+		$.ajax({
+			type: "POST",
+			url: 'ajax/install_by_step_edit_map_finish.php',
+			data: {
+			},
+			dataType: 'json',
+			success: function(data) {
+			},
+			error: function(e) {
+				alert_wyca('Error step finish ; ' + e.responseText);
+			}
+		});
+    });
+	
 	$('#pages_install_by_step a.real_test').click(function(e) {
         e.preventDefault();
 		$('#pages_install_by_step .modalRealTest_loading').show();
