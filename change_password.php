@@ -1,6 +1,11 @@
 <?php 
 header("Access-Control-Allow-Origin: *");
 include_once('./config/initSite.php');
+
+if(isset($_GET['ns'])){
+	$message=_("New passwords don't match");
+	$erreur=true;
+}
 ?>
 <!doctype html>
 <html class="fixed">
@@ -59,14 +64,14 @@ include_once('./config/initSite.php');
                             </div>
                             <?php
                         }?>
-						<form method="post" id="formLogin">
+						<form method="post" id="formChangePassword">
 							<div class="form-group mb-lg">
-								<label><?php echo __('Login');?></label>
+								<label><?php echo __('Password');?></label>
 								<div class="input-group input-group-icon">
-									<input id="login_email" name="email" type="text" class="form-control input-lg" />
+									<input id="password" name="password" type="password" class="form-control input-lg" />
 									<span class="input-group-addon">
 										<span class="icon icon-lg">
-											<i class="fa fa-user"></i>
+											<i class="fa fa-lock"></i>
 										</span>
 									</span>
 								</div>
@@ -74,11 +79,11 @@ include_once('./config/initSite.php');
 
 							<div class="form-group mb-lg">
 								<div class="clearfix">
-									<label class="pull-left"><?php echo __('Password');?></label>
+									<label class="pull-left"><?php echo __('Confirm Password');?></label>
 									<!--<a href="#" id="bLostPassword" class="pull-right"><?php echo __('Lost Password?');?></a>-->
 								</div>
 								<div class="input-group input-group-icon">
-									<input id="login_password" name="password" type="password" class="form-control input-lg" />
+									<input id="confirm_password" name="confirm_password" type="password" class="form-control input-lg" />
 									<span class="input-group-addon">
 										<span class="icon icon-lg">
 											<i class="fa fa-lock"></i>
@@ -89,8 +94,8 @@ include_once('./config/initSite.php');
 
 							<div class="row">
 								<div class="col-sm-12 text-right">
-									<button type="submit" class="btn btn-primary hidden-xs"><?php echo __('Sign In');?></button>
-									<button type="submit" class="btn btn-primary btn-block btn-lg visible-xs mt-lg"><?php echo __('Sign In');?></button>
+									<button type="submit" class="btn btn-primary hidden-xs"><?php echo __('Change password');?></button>
+									<button type="submit" class="btn btn-primary btn-block btn-lg visible-xs mt-lg"><?php echo __('Change password');?></button>
 								</div>
 							</div>
 
@@ -172,12 +177,15 @@ $(document).ready(function(e) {
 		$(this).closest('.popup_error').hide();
     });
 	
-    $('#formLogin').submit(function(e) {
+    $('#formChangePassword').submit(function(e) {
         e.preventDefault();
 	
-		if ($('#login_email').val() == '' || $('#login_password').val() == '')
+		if ($('#password').val() == '' || $('#confirm_password').val() == '')
 		{
 			DisplayError('Login and password required.');
+		}else if($('#password').val() == '' || $('#confirm_password').val() == ''){
+			
+			DisplayError('Passwords not matching.');
 		}
 		else
 		{
@@ -195,8 +203,8 @@ $(document).ready(function(e) {
 				var auth = {
 				"O": 0x6108, // CHECK_USER_CONNEXION
 				"P": {
-					"L":$('#login_email').val(),
-					"P":$('#login_password').val()
+					"L":$('#password').val(),
+					"P":$('#confirm_password').val()
 				}
 			  };		
 			
@@ -227,13 +235,7 @@ $(document).ready(function(e) {
 							g: msg.D.GROUP
 						},
 						success: function(data) {
-							location.href = 'index.php';//ADD TEST IF CHANGE PASSWORD 
-							/*
-=							if(something)
-								location.href = 'index.php';
-							else
-								location.href = 'change_password.php';
-							*/
+							location.href = 'index.php'; //SI CHANGE PASSWORD OK !
 						},
 						error: function(e) {
 							alert(e.responseText);
