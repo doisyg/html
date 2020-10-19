@@ -41,7 +41,7 @@ $(document).ready(function(e) {
 		imgMappingLoaded = true;	
 		InitPosCarteMapping();
 		
-		if (timerGetMappingInConstruction == null)
+		if (mappingStarted && timerGetMappingInConstruction == null)
 		{
 			// Le timer a déjà sauté, on relance l'appel
 			GetMappingInConstruction();
@@ -172,7 +172,7 @@ var liveMapping = true;
 function TimeoutGetMappingInConstruction()
 {
 	timerGetMappingInConstruction = null;
-	if (haveReplyFromGetMappingInConstruction)
+	if (mappingStarted && haveReplyFromGetMappingInConstruction)
 	{
 		// Le timer a sauté, on a déjà eu une réponse de GetMappingInConstruction, on relance l'appel
 		GetMappingInConstruction();
@@ -181,7 +181,7 @@ function TimeoutGetMappingInConstruction()
 
 function GetMappingInConstruction()
 {
-	if (liveMapping)
+	if (mappingStarted && liveMapping)
 	{
 		haveReplyFromGetMappingInConstruction = false;
 		timerGetMappingInConstruction = setTimeout(TimeoutGetMappingInConstruction, 1000);
