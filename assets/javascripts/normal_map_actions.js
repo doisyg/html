@@ -1274,7 +1274,95 @@ $(document).ready(function() {
 		
 		console.log('GoToPose', xRos, yRos);
 		
-		wycaApi.GoToPose(xRos, yRos, 0, function (data){
+		wycaApi.GetPathFromCurrentPose(xRos, yRos, 0, 0, function (data){
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				alert('Get path ok, d:' + data.D.D);
+			}
+			else
+			{
+				alert('Get error, ' + data.M);
+			}
+		});
+		
+		wycaApi.GoToPose(xRos, yRos, 0, 0, function (data){
+			
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$('#install_normal_edit_map_bStop').show();
+			}
+			else
+			{
+				$('#install_normal_edit_map .modalFinTest section.panel-success').hide();
+				$('#install_normal_edit_map .modalFinTest section.panel-danger').show();
+				
+				if (data.M != '')
+					$('#install_normal_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+				else
+					$('#install_normal_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
+			
+				// On rebranche l'ancienne fonction
+				wycaApi.on('onGoToPoseResult', onGoToPoseResult);
+				
+				$('#install_normal_edit_map .modalFinTest').modal('show');
+			}
+		});
+		
+    });
+	
+	$('#install_normal_edit_map_menu .bMoveToFlexible').click(function(e) {
+        e.preventDefault();
+		
+		NormalHideMenus();
+		
+		zoom = NormalGetZoom();
+		p = $('#install_normal_edit_map_svg image').position();
+		x = (eventTouchStart.originalEvent.targetTouches ? (eventTouchStart.originalEvent.targetTouches[0] ? eventTouchStart.originalEvent.targetTouches[0].pageX : eventTouchStart.originalEvent.changedTouches[e.changedTouches.length-1].pageX) : eventTouchStart.originalEvent.pageX) - p.left;
+		y = (eventTouchStart.originalEvent.targetTouches ? (eventTouchStart.originalEvent.targetTouches[0] ? eventTouchStart.originalEvent.targetTouches[0].pageY : eventTouchStart.originalEvent.changedTouches[e.changedTouches.length-1].pageY) : eventTouchStart.originalEvent.pageY) - p.top;
+		x = x * zoom;
+		y = ros_hauteur - (y * zoom);
+		
+		xRos = x * ros_resolution / 100;
+		yRos = y * ros_resolution / 100;
+		
+		wycaApi.on('onGoToPoseResult', function (data){
+			$('#install_normal_edit_map_bStop').hide();
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$('#install_normal_edit_map .modalFinTest section.panel-success').show();
+				$('#install_normal_edit_map .modalFinTest section.panel-danger').hide();
+			}
+			else
+			{
+				$('#install_normal_edit_map .modalFinTest section.panel-success').hide();
+				$('#install_normal_edit_map .modalFinTest section.panel-danger').show();
+				
+				if (data.M != '')
+					$('#install_normal_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+				else
+					$('#install_normal_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
+			}
+			
+			// On rebranche l'ancienne fonction
+			wycaApi.on('onGoToAugmentedPoseResult', onGoToPoseResult);
+		
+			$('#install_normal_edit_map .modalFinTest').modal('show');
+		});
+		
+		console.log('GoToPose', xRos, yRos);
+		
+		wycaApi.GetPathFromCurrentPose(xRos, yRos, 0, 1, function (data){
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				alert('Get path ok, d:' + data.D.D);
+			}
+			else
+			{
+				alert('Get error, ' + data.M);
+			}
+		});
+		
+		wycaApi.GoToPose(xRos, yRos, 0, 1, function (data){
 			
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
