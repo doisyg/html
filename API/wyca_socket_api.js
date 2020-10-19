@@ -1809,7 +1809,7 @@ function WycaAPI(options){
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
-	this.GetPath = function(x1, y1, theta1, x2, y2, theta2, callback){
+	this.GetPath = function(x1, y1, theta1, x2, y2, theta2, pdt, callback){
 		if (callback != undefined)
 			this.callbacks[_this.CommandCode.GET_PATH] = callback;
 		var action = {
@@ -1820,12 +1820,13 @@ function WycaAPI(options){
 				"T1": theta1,
 				"X2": x2,
 				"Y2": y2,
-				"T2": theta2
+				"T2": theta2,
+				"PDT": pdt
 			}
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
-	this.GetPathFromCurrentPose = function(x, y, theta, callback){
+	this.GetPathFromCurrentPose = function(x, y, theta, pdt, callback){
 		if (callback != undefined)
 			this.callbacks[_this.CommandCode.GET_PATH_FROM_CURRENT_POSE] = callback;
 		var action = {
@@ -1833,7 +1834,8 @@ function WycaAPI(options){
 			"P": {
 				"X": x,
 				"Y": y,
-				"T": theta
+				"T": theta,
+				"PDT": pdt
 			}
 		};
 		_this.wycaSend(JSON.stringify(action));

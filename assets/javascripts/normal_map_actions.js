@@ -1274,6 +1274,17 @@ $(document).ready(function() {
 		
 		console.log('GoToPose', xRos, yRos);
 		
+		wycaApi.GetPathFromCurrentPose(xRos, yRos, 0, 0, function (data){
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				alert('Get path ok, d:' + data.D.D);
+			}
+			else
+			{
+				alert('Get error, ' + data.M);
+			}
+		});
+		
 		wycaApi.GoToPose(xRos, yRos, 0, 0, function (data){
 			
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
@@ -1339,6 +1350,17 @@ $(document).ready(function() {
 		});
 		
 		console.log('GoToPose', xRos, yRos);
+		
+		wycaApi.GetPathFromCurrentPose(xRos, yRos, 0, 1, function (data){
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				alert('Get path ok, d:' + data.D.D);
+			}
+			else
+			{
+				alert('Get error, ' + data.M);
+			}
+		});
 		
 		wycaApi.GoToPose(xRos, yRos, 0, 1, function (data){
 			
