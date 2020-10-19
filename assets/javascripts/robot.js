@@ -182,8 +182,8 @@ function GetMappingInConstruction()
 				imgMappingLoaded = false;
 				var img = document.getElementById("install_by_step_mapping_img_map_saved");
 				//img.src = 'data:image/png;base64,' + data.D.M;
-				//img.src = '/mapping/last_mapping.jpg?v='+ Date.now();
-				img.src = 'http://192.168.0.30/mapping/last_mapping.jpg?v='+ Date.now();
+				img.src = '/mapping/last_mapping.jpg?v='+ Date.now();
+				//img.src = 'http://192.168.0.30/mapping/last_mapping.jpg?v='+ Date.now();
 				mappingLastOrigin = {'x':parseFloat(data.D.X), 'y':parseFloat(data.D.Y) };
 			}
 		}
