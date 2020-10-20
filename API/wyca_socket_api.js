@@ -118,6 +118,9 @@ function WycaAPI(options){
 		GET_USER			: 0x613C,
 		SET_USER			: 0x613D,
 		DELETE_USER			: 0x613E,
+		CHANGE_PASSWORD			: 0x6145,
+		CHANGE_PASSWORD_WYCA			: 0x6146,
+		DELETE_USER_WYCA			: 0x6147,
 		GET_USERS_LIST			: 0x613F,
 		GET_SITE			: 0x612E,
 		SET_SITE			: 0x612F,
@@ -2737,6 +2740,32 @@ function WycaAPI(options){
 		var action = {
 			"O": _this.CommandCode.IMPORT_SITE,
 			"P": data
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	this.ChangePassword = function(password, callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.CHANGE_PASSWORD] = callback;
+		var action = {
+			"O": _this.CommandCode.CHANGE_PASSWORD,
+			"P": password
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	this.ChangePasswordWyca = function(password, callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.CHANGE_PASSWORD_WYCA] = callback;
+		var action = {
+			"O": _this.CommandCode.CHANGE_PASSWORD_WYCA,
+			"P": password
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	this.DelteUserWyca = function(callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.DELETE_USER_WYCA] = callback;
+		var action = {
+			"O": _this.CommandCode.DELETE_USER_WYCA
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}

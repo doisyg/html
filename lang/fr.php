@@ -176,5 +176,7 @@ $_LANG['e0aa021e21dddbd6d8cecec71e9cf564'] = 'OK';
 $_LANG['45fe2cb9d87014584bc5b71277833fd7'] = 'Mapping Init';
 $_LANG['ad8783089f828b927473fb61d51940ec'] = 'Use';
 $_LANG['a983b7f9a472c1b8cb98a106cc2ed932'] = 'Less than 1';
+$_LANG['887f7db126221fe60d18c895d41dc8f6'] = 'Confirm Password';
+$_LANG['0b39c5aca15b84b1ad53a94d6b3feb78'] = 'Change password';
 
 ?>

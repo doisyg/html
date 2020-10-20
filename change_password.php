@@ -119,6 +119,8 @@ if(isset($_GET['ns'])){
 		
         <script src="<?php echo $_CONFIG['URL'];?>assets/vendor/jquery/jquery.js"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/bootstrap/js/bootstrap.js"></script>
+        
+        <script src="<?php echo $_CONFIG['URL_API'];?>wyca_socket_api.js?v=<?php echo date('Y-m-d');?>"></script>
 	</body>
 </html>
 
@@ -132,46 +134,23 @@ function DisplayError(text)
 
 var ws;
 var use_ssl = <?php echo $server_request_scheme == 'http'?'false':'true';?>;
+var user_api_key = '<?php echo $_SESSION["api_key"];?>';
+
+var robot_host = '<?php echo (file_exists('C:\\'))?((file_exists('C:\\Users\\F'))?'10.0.0.39:'.($server_request_scheme == 'http'?'9094':'9095'):'192.168.0.30:'.($server_request_scheme == 'http'?'9094':'9095')):'wyca.run:'.($server_request_scheme == 'http'?'9094':'9095');?>';
+
 
 $(document).ready(function(e) {
 
-	<?php if ($server_request_scheme == 'http')
-	{
-		// We test if we can do https on webservice
-		?>
-		$.ajax({
-			type: "GET",
-			url: 'https://wyca.run:9095',
-			success: function(data) {
-				// HTTPS OK
-				location.href = 'https://wyca.run/login.php';
-			},
-			error: function(e) {
-				// No HTTPS available, pb chrome to validate certificate
-			}
-		});
-		<?php
-	}
-	else
-	{
-		// We are in https but maybe with security exception
-		?>
-		$.ajax({
-			type: "GET",
-			url: 'https://wyca.run:9095',
-			success: function(data) {
-				// HTTPS OK
-				
-			},
-			error: function(e) {
-				location.href = 'http://wyca.run/login.php';
-				// No HTTPS available, pb chrome to validate certificate
-			}
-		});
-		<?php
-	}
-	?>
-	
+
+	wycaApi = new WycaAPI({
+		host:robot_host, //192.168.1.32:9090', // host:'192.168.100.245:9090',
+		use_ssl: use_ssl,
+		api_key:user_api_key,
+		nick:'robot'
+	});
+	wycaApi.init();	
+
+
 	$('.popup_error .panel-heading .fa-times').click(function(e) {
         e.preventDefault();
 		$(this).closest('.popup_error').hide();
@@ -183,66 +162,24 @@ $(document).ready(function(e) {
 		if ($('#password').val() == '' || $('#confirm_password').val() == '')
 		{
 			DisplayError('Login and password required.');
-		}else if($('#password').val() == '' || $('#confirm_password').val() == ''){
+		}else if($('#password').val() != $('#confirm_password').val()){
 			
 			DisplayError('Passwords not matching.');
 		}
 		else
 		{
-			var robot_host = '<?php echo (file_exists('C:\\'))?((file_exists('C:\\Users\\F'))?'10.0.0.39:'.($server_request_scheme == 'http'?'9094':'9095'):'192.168.0.30:'.($server_request_scheme == 'http'?'9094':'9095')):'wyca.run:'.($server_request_scheme == 'http'?'9094':'9095');?>';
-			//var robot_host = '<?php echo (file_exists('C:\\'))?'10.0.0.44:'.($server_request_scheme == 'http'?'9094':'9095'):'wyca.run:'.($server_request_scheme == 'http'?'9094':'9095');?>';
+			wycaApi.ChangePassword($('#password').val(), function(data){
 			
-			if ("WebSocket" in window) {
-				ws = new WebSocket((use_ssl?'wss':'ws') + '://'+ robot_host);
-			} else if ("MozWebSocket" in window) {
-				ws = new MozWebSocket((use_ssl?'wss':'ws') + '://'+ robot_host);
-			} else {
-				throw new Error('This Browser does not support WebSockets')
-			}
-			ws.onopen = function(e) {
-				var auth = {
-				"O": 0x6108, // CHECK_USER_CONNEXION
-				"P": {
-					"L":$('#password').val(),
-					"P":$('#confirm_password').val()
-				}
-			  };		
-			
-			  ws.send(JSON.stringify(auth));
-			};
-			ws.onerror = function(e) { DisplayError('Communication with the robot impossible'); };
-			ws.onclose = function(e) { };
-			ws.onmessage = function(e) { 
-			
-				if (e.data == 'ack') return;
-				msg = JSON.parse(e.data);
-				
-				ws.close()
-				
-				if (msg.A > 0)
+				if (data.A == wycaApi.AnswerCode.NO_ERROR)
 				{
-					DisplayError(msg.M);
+					location.href='index.php';
 				}
 				else
 				{
-					// Connexion OK, on save l'api_key
-					$.ajax({
-						type: "POST",
-						url: 'ajax/connection.php',
-						data: {
-							id: msg.D.ID,
-							k: msg.D.KEY,
-							g: msg.D.GROUP
-						},
-						success: function(data) {
-							location.href = 'index.php'; //SI CHANGE PASSWORD OK !
-						},
-						error: function(e) {
-							alert(e.responseText);
-						}
-					});
+					DisplayError(wycaApi.AnswerCodeToString(data.A));
 				}
-			};
+			
+			});
 		}
 			
     });

@@ -117,13 +117,6 @@ include_once('./config/initSite.php');
 	</body>
 </html>
 <script>
-	$(document).ready(function(e) {
-		if(screen.height < 600){
-			DisplayError('The screen\'s height of your telephone is too small for the app. Some features can be impacted');
-		}
-	})
-</script>
-<script>
 
 function DisplayError(text)
 {
@@ -133,8 +126,14 @@ function DisplayError(text)
 
 var ws;
 var use_ssl = <?php echo $server_request_scheme == 'http'?'false':'true';?>;
+var save_msg;
 
 $(document).ready(function(e) {
+
+	if(screen.height < 600)
+	{
+		DisplayError('The screen\'s height of your telephone is too small for the app. Some features can be impacted');
+	}
 
 	<?php if ($server_request_scheme == 'http')
 	{
@@ -215,7 +214,7 @@ $(document).ready(function(e) {
 				if (e.data == 'ack') return;
 				msg = JSON.parse(e.data);
 				
-				ws.close()
+				ws.close();
 				
 				if (msg.A > 0)
 				{
@@ -224,6 +223,7 @@ $(document).ready(function(e) {
 				else
 				{
 					// Connexion OK, on save l'api_key
+					save_msg = msg;
 					$.ajax({
 						type: "POST",
 						url: 'ajax/connection.php',
@@ -233,13 +233,11 @@ $(document).ready(function(e) {
 							g: msg.D.GROUP
 						},
 						success: function(data) {
-							location.href = 'index.php';//ADD TEST IF CHANGE PASSWORD 
-							/*
-=							if(something)
-								location.href = 'index.php';
-							else
+							
+							if (save_msg.D.NCP)
 								location.href = 'change_password.php';
-							*/
+							else
+								location.href = 'index.php';
 						},
 						error: function(e) {
 							alert(e.responseText);
