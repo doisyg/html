@@ -1745,8 +1745,9 @@ $(document).ready(function() {
 			'	<a href="#" class="bByStepUndockProcedureEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
 			'</li>'
 			);
-		
+		$('#install_by_step_edit_map_container_all .modalDockOptions #install_by_step_edit_map_bDockCancelConfig').addClass('disabled');
 		$('#install_by_step_edit_map_container_all .modalDockOptions').modal('show');
+		
     });
 	
 	$('#install_by_step_edit_map_bDockSaveConfig').click(function(e) {
@@ -1798,6 +1799,7 @@ $(document).ready(function() {
 			ByStepTraceDock(currentDockIndex);
 			
 			$('#install_by_step_edit_map_container_all .modalDockOptions').modal('hide');
+			$('#install_by_step_edit_map_container_all .modalDockOptions #install_by_step_edit_map_bDockCancelConfig').removeClass('disabled');
 		}
 	});
 	
@@ -2113,7 +2115,7 @@ $(document).ready(function() {
 				'</li>'
 				);
 			
-			$('#install_by_step_edit_map_bAugmentedPoseCancelConfig').hide();
+			$('#install_by_step_edit_map_bAugmentedPoseCancelConfig').addClass('disabled');
 			$('#install_by_step_edit_map_container_all .modalAugmentedPoseOptions').modal('show');
 		}
     });
@@ -2139,7 +2141,7 @@ $(document).ready(function() {
 		
 		augmented_poses[currentAugmentedPoseIndex] = augmented_pose;
 		
-		$('#install_by_step_edit_map_bAugmentedPoseCancelConfig').show();
+		$('#install_by_step_edit_map_bAugmentedPoseCancelConfig').removeClass('disabled');
 				
 		if (bystepCurrentAction == 'editAugmentedPose')
 			ByStepAddHistorique({'action':'edit_augmented_pose', 'data':{'index':currentAugmentedPoseIndex, 'old':saveCurrentAugmentedPose, 'new':JSON.stringify(augmented_poses[currentAugmentedPoseIndex])}});

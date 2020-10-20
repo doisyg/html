@@ -190,7 +190,11 @@ $(document).ready(function(e) {
 				}
 			}
 			$('#bHeaderInfo').attr('onTouchStart',"");
-			if (next == 'install_by_step_edit_map'){$('#bHeaderInfo').attr('onTouchStart',"$('.popupHelp').toggle('fast')");}
+			if (next == 'install_by_step_edit_map'){
+				$('#bHeaderInfo').attr('onTouchStart',"$('.popupHelp').toggle('fast')");
+				GetInfosCurrentMapByStep();
+			}
+			
 			if (next == 'install_normal_setup_sites') GetSitesNormal();
 			if (next == 'install_normal_setup_export') GetSitesForExportNormal();
 			if (next == 'install_normal_setup_import') InitSiteImport();

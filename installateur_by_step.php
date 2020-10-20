@@ -951,7 +951,7 @@
                                         </div>
                                         
                                         <div style="clear:both;"></div>
-                                        <a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Cancel');?></a>
+                                        <a href="#" id="install_by_step_edit_map_bDockCancelConfig" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Cancel');?></a>
                                         <a href="#" id="install_by_step_edit_map_bDockSaveConfig" class="btn btn-primary btn_footer_right btn_50"><?php echo __('Save');?></a>
                                        
                                     </div>
