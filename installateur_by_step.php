@@ -25,8 +25,7 @@
                 </ul>
             </div>
         </section>
-    
-    	
+		
     	<!--
     	<section id="install_by_step_date" class="page <?php echo $INSTALL_STEP == 2?'active':'';?>">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_wifi"></a>
@@ -193,34 +192,12 @@
             </div>
 			<footer>
 				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50 btn_back" data-goto="install_by_step_top"><?= __('Back')?></a>
-				<a href="#" class="button_goto install_by_step_check_next btn btn-primary btn_footer_right btn_50" data-goto="install_by_step_site"><i class="fa fa fa-spinner fa-pulse"></i> <?= __('Testing')?></a>
-            </footer>
-        </section>
-        <section id="install_by_step_site" class="page <?php echo $INSTALL_STEP == 5?'active':'';?> with_footer">
-        	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_check"></a>
-            <header>
-                <div class="pull-left"><img src="assets/images/logo.png" /></div>
-                <h2><?php echo __('Site');?></h2>
-            </header>
-            <div class="content">
-                
-                <h3><?php echo __('Indicate the site name');?></h3>
-                
-                <form id="form_site" class="form_site" action="" method="post" style="margin-bottom:20px;">
-	                <input type="text" class="form-control i_site_name" value="" />
-	                
-                </form>
-                
-                <a href="#" class="install_by_step_site_next button_goto" data-goto="install_by_step_wifi" style="display:none;"></a>   
-            </div>
-			<footer>
-				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50 btn_back" data-goto="install_by_step_check"><?= __('Back')?></a>
-				<a href="#" onClick="$('#form_site').submit();" class="install_by_step_site_save btn btn-primary btn_footer_right btn_50"><?= __('Next')?></a>
+				<a href="#" class="button_goto install_by_step_check_next btn btn-primary btn_footer_right btn_50" data-goto="install_by_step_wifi"><i class="fa fa fa-spinner fa-pulse"></i> <?= __('Testing')?></a>
             </footer>
         </section>
 		
-		<section id="install_by_step_wifi" class="page <?php echo $INSTALL_STEP == 6?'active':'';?> with_footer">
-        	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_lang"></a>
+		<section id="install_by_step_wifi" class="page <?php echo $INSTALL_STEP == 5?'active':'';?> with_footer">
+        	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_check"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
                 <h2><?php echo __('Wifi');?></h2>
@@ -237,12 +214,13 @@
                 <a href="#" class="refresh_wifi btn btn-default pull-left"><i class="fa fa-refresh"></i></a>
             </div>
 			<footer>
-				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50 btn_back" data-goto="install_by_step_site" ><?= __('Back')?></a>
-				<a href="#" class="skip_wifi button_goto btn btn-primary btn_footer_right btn_50" data-goto="install_by_step_mapping"><?= __('Skip')?></a>
+				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50 btn_back" data-goto="install_by_step_check" ><?= __('Back')?></a>
+				<a href="#" class="skip_wifi button_goto btn btn-primary btn_footer_right btn_50" data-goto="install_by_step_site"><?= __('Skip')?></a>
                 <a href="#" class="set_passwd_wifi button_goto" data-goto="install_by_step_wifi_password" style="display:none;"></a>
             </footer>
         </section>
-        <section id="install_by_step_wifi_password" class="page with_footer">
+        
+		<section id="install_by_step_wifi_password" class="page with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_wifi"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
@@ -268,8 +246,31 @@
 				<a href="#" onClick="$('#form_connect_wifi').submit();" class="install_by_step_wifi_password_save btn btn-primary btn_footer_right btn_50"><?= __('Connect')?></a>
 			</footer>
         </section>
-				
-        <section id="install_by_step_mapping" class="page <?php echo $INSTALL_STEP == 7?'active':'';?> hide_photo_back with_footer">
+			
+        
+		<section id="install_by_step_site" class="page <?php echo $INSTALL_STEP == 10?'active':'';?> with_footer">
+        	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_wifi"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Site');?></h2>
+            </header>
+            <div class="content">
+                
+                <h3><?php echo __('Indicate the site name');?></h3>
+                
+                <form id="form_site" class="form_site" action="" method="post" style="margin-bottom:20px;">
+	                <input type="text" class="form-control i_site_name" value="" />
+                </form>
+                
+                <a href="#" class="install_by_step_site_next button_goto" data-goto="install_by_step_mapping" style="display:none;"></a>   
+            </div>
+			<footer>
+				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50 btn_back" data-goto="install_by_step_wifi"><?= __('Back')?></a>
+				<a href="#" onClick="$('#form_site').submit();" class="install_by_step_site_save btn btn-primary btn_footer_right btn_50"><?= __('Next')?></a>
+            </footer>
+        </section>
+		
+        <section id="install_by_step_mapping" class="page <?php echo $INSTALL_STEP == 11?'active':'';?> hide_photo_back with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_site"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
@@ -316,7 +317,8 @@
             	<a href="#" class="ifMapping bMappingStop button_goto btn btn-primary btn_footer_right btn_100" data-goto="install_by_step_mapping_fin" style="display:none"><?php echo __('Done');?></a>
             </footer>
         </section>
-        <section id="install_by_step_mapping_fin" class="page <?php echo $INSTALL_STEP == 8?'active':'';?> hide_photo_back with_footer">
+        
+		<section id="install_by_step_mapping_fin" class="page <?php echo $INSTALL_STEP == 12?'active':'';?> hide_photo_back with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_mapping"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
@@ -381,7 +383,8 @@
                 <a href="#" class="install_by_step_mapping_fin_next button_goto" data-goto="install_by_step_edit_map" style="display:none;"></a>   
             </footer>
         </section>
-        <section id="install_by_step_mapping_use" class="page hide_photo_back with_footer">
+       
+		<section id="install_by_step_mapping_use" class="page hide_photo_back with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_mapping"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
@@ -408,7 +411,8 @@
             </footer>
         </section>
         
-        <section id="install_by_step_edit_map" class="page <?php echo $INSTALL_STEP == 9?'active':'';?> hide_photo_back with_footer">
+        
+		<section id="install_by_step_edit_map" class="page <?php echo $INSTALL_STEP == 20?'active':'';?> hide_photo_back with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_mapping"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
@@ -1286,7 +1290,8 @@
 				<a href="#" class="btn btn-primary button_goto bSaveEditMap btn_footer_right btn_50" data-goto="install_by_step_config" ><?php echo __('Next');?></a>
             </footer>
         </section>
-        <!--
+      
+		<!--
         <section id="install_by_step_test_map" class="page with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_edit_map"></a>
             <header>
@@ -1311,7 +1316,8 @@
         </section>
         -->
         
-        <section id="install_by_step_config" class="page <?php echo $INSTALL_STEP == 10?'active':'';?> with_footer">
+        
+		<section id="install_by_step_config" class="page <?php echo $INSTALL_STEP == 30?'active':'';?> with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_edit_map"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
@@ -1434,7 +1440,7 @@
             </footer>
         </section>
         
-        <section id="install_by_step_manager" class="page <?php echo $INSTALL_STEP == 11?'active':'';?> with_footer">
+        <section id="install_by_step_manager" class="page <?php echo $INSTALL_STEP == 32?'active':'';?> with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_config"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
@@ -1514,9 +1520,8 @@
             	<a href="#" class="btn btn-primary button_goto bValidManager btn_footer_right btn_50" data-goto="install_by_step_service_book" style="z-index:2001;"><?php echo __('Next');?></a>
             </footer>
         </section>
-                
-        
-        <section id="install_by_step_service_book" class="page <?php echo $INSTALL_STEP == 12?'active':'';?> with_footer">
+		
+        <section id="install_by_step_service_book" class="page <?php echo $INSTALL_STEP == 33?'active':'';?> with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_manager"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
@@ -1593,6 +1598,7 @@
             	<a href="#" class="btn btn-primary bCloseInstallation btn_footer_left btn_100" style="z-index:2001"><?php echo __('Close installation');?></a>
             </footer>
         </section>
+		
 		<div class="modal fade" id="modalBack" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
 			<div class="modal-dialog" role="dialog">
 				<div class="modal-content">

@@ -118,25 +118,25 @@
 			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 4) {?>
 			InitCheckByStep();
 			<?php }?>
-			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 6) {?>
+			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 5) {?>
 			InitInstallWifiPageByStep();
 			<?php }?>
-            <?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 7) {?>
+            <?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 11) {?>
 			InitMappingByStep();
 			<?php }?>
-			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 8) {?>
+			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 12) {?>
 			GetLastMappingByStep();
 			<?php }?>
-			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 9) {?>
+			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 20) {?>
 			GetInfosCurrentMapByStep();
 			<?php }?>
-			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 10) {?>
+			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 30) {?>
 			GetConfigurationsByStep();
 			<?php }?>
-			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 11) {?>
+			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 32) {?>
 			GetManagersByStep();
 			<?php }?>
-			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 12) {?>
+			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 33) {?>
 			GetServiceBooksByStep();
 			<?php }?>
 			
