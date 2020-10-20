@@ -890,9 +890,8 @@ function InitMappingByStep()
 				$('.ifMapping').hide();
 				$('.ifMappingInit').hide();
 				$('.ifNMapping').show();
-			}
-			else
 				mappingStarted = false;
+			}
 		});
 	}
 	else
