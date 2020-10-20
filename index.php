@@ -11,5 +11,6 @@ if ($_SESSION['id_groupe_user'] <= 2) include ('installateur.php');
 if ($_SESSION['id_groupe_user'] <= 3) include ('manager.php');
 if ($_SESSION['id_groupe_user'] <= 4) include ('user.php');
 
+
 include ('template/footer.php');
 ?>
