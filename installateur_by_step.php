@@ -469,8 +469,8 @@
                     <a href="#" id="install_by_step_edit_map_bSaveCurrentElem" class="btn btn-circle btn-primary btn-lg"><i class="fa fa-check"></i></a>
                     <a href="#" id="install_by_step_edit_map_bCancelCurrentElem" class="btn btn-circle btn-warning btn-lg"><i class="fa fa-times"></i></a>
                     
-                    <a href="#" id="install_by_step_edit_map_bByStepUndo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:40px; left:10px;"><i class="fa fa-mail-reply"></i></a>
-                    <a href="#" id="install_by_step_edit_map_bByStepRedo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:40px; left:45px;"><i class="fa fa-mail-forward"></i></a>
+                    <a href="#" id="install_by_step_edit_map_bByStepUndo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:40px; left:10px;"><i class="fa fa-reply"></i></a>
+                    <a href="#" id="install_by_step_edit_map_bByStepRedo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:40px; left:45px;"><i class="fa fa-share"></i></a>
                     
                     <div id="install_by_step_edit_map_menu" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
@@ -533,9 +533,10 @@
                     </div>
                     <div id="install_by_step_edit_map_menu_augmented_pose" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
+							<li><a href="#" class="btn btn-circle btn-default btn-menu" data-toggle="modal" data-target="#install_by_step_edit_map_modalDoSaveBeforeTestAugmentedPose"><img class="fi-route" src="assets/images/route_green.svg"/></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-menu bConfigAugmentedPose"><i class="fa fa-gears iconMenuBlue"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-menu bDeleteAugmentedPose"><i class="fa fa-trash iconMenuRed"></i></a></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-menu" data-toggle="modal" data-target="#install_by_step_edit_map_modalDoSaveBeforeTestAugmentedPose"><i class="fa fa-check"></i></a></li>
+                        	
                         </ul>
                     </div>
                     
@@ -616,20 +617,20 @@
                                         <div class="h100vh_160" style="overflow:auto; text-align:center">
                                             
                                             <div class="row" style="margin-top:30px;">
-                                                <div class="col-xs-8">
+                                                <div class="col-xs-7">
                                                     <span style="font-size:16px; color:#F90; padding-bottom:20px;"><?php echo __('Remember to save the map before launching a test');?></span>
                                                 </div>
-                                                <div class="col-xs-4">
+                                                <div class="col-xs-5">
                                                     <a href="#" class="btn btn-primary bSaveMapTestDock" style="margin-top:7px;"><?php echo __('Save map');?> <i class="fa"></i></a>
                                                 </div>
                                             </div>
                                             
                                             
                                             <div class="row" style="margin-top:30px;">
-                                                <div class="col-xs-8">
+                                                <div class="col-xs-7">
                                                     <span style="font-size:16px; padding-bottom:20px;"><?php echo __('You can change the position of the robot before the test');?></span>
                                                 </div>
-                                                <div class="col-xs-4">
+                                                <div class="col-xs-5">
                                                     <a href="#" class="btn btn-primary bMoveRobotTest" style="margin-top:7px;"><?php echo __('Move robot');?></a>
                                                 </div>
                                             </div>
@@ -668,20 +669,20 @@
                                         <div class="h100vh_160" style="overflow:auto; text-align:center">
                                             
                                             <div class="row" style="margin-top:30px;">
-                                                <div class="col-xs-8">
+                                                <div class="col-xs-7">
                                                     <span style="font-size:16px; color:#F90; padding-bottom:20px;"><?php echo __('Remember to save the map before launching a test');?></span>
                                                 </div>
-                                                <div class="col-xs-4">
+                                                <div class="col-xs-8">
                                                     <a href="#" class="btn btn-primary bSaveMapTestPoi" style="margin-top:7px;"><?php echo __('Save map');?> <i class="fa"></i></a>
                                                 </div>
                                             </div>
                                             
                                             
                                             <div class="row" style="margin-top:30px;">
-                                                <div class="col-xs-8">
+                                                <div class="col-xs-7">
                                                     <span style="font-size:16px; padding-bottom:20px;"><?php echo __('You can change the position of the robot before the test');?></span>
                                                 </div>
-                                                <div class="col-xs-4">
+                                                <div class="col-xs-5">
                                                     <a href="#" class="btn btn-primary bMoveRobotTest" style="margin-top:7px;"><?php echo __('Move robot');?></a>
                                                 </div>
                                             </div>
@@ -720,20 +721,20 @@
                                         <div class="h100vh_160" style="overflow:auto; text-align:center">
                                             
                                             <div class="row" style="margin-top:30px;">
-                                                <div class="col-xs-8">
+                                                <div class="col-xs-7">
                                                     <span style="font-size:16px; color:#F90; padding-bottom:20px;"><?php echo __('Remember to save the map before launching a test');?></span>
                                                 </div>
-                                                <div class="col-xs-4">
+                                                <div class="col-xs-5">
                                                     <a href="#" class="btn btn-primary bSaveMapTestAugmentedPose" style="margin-top:7px;"><?php echo __('Save map');?> <i class="fa"></i></a>
                                                 </div>
                                             </div>
                                             
                                             
                                             <div class="row" style="margin-top:30px;">
-                                                <div class="col-xs-8">
+                                                <div class="col-xs-7">
                                                     <span style="font-size:16px; padding-bottom:20px;"><?php echo __('You can change the position of the robot before the test');?></span>
                                                 </div>
-                                                <div class="col-xs-4">
+                                                <div class="col-xs-5">
                                                     <a href="#" class="btn btn-primary bMoveRobotTest" style="margin-top:7px;"><?php echo __('Move robot');?></a>
                                                 </div>
                                             </div>
@@ -1018,7 +1019,7 @@
                                         
                                         <div style="clear:both;"></div>
                                         <a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal"><?php echo __('Cancel');?></a>
-                                        <a href="#" class="btn btn-primary bDockElemSave btn_footer_left btn_50" data-dismiss="modal"><?php echo __('Save');?></a>
+                                        <a href="#" class="btn btn-primary bDockElemSave btn_footer_right btn_50" data-dismiss="modal"><?php echo __('Save');?></a>
                                        
                                     </div>
                                 </div>
@@ -1267,10 +1268,15 @@
                         	<li><i class="fa fa-eraser"></i><span class="description"><?= _('Erase pixel')?></span></li>
                         	<li><i class="fa fa-crosshairs iconMenuBlue"></i><span class="description"><?= _('Move the robot to this point')?></span></li>
                         	<li><i class="fa fa-gamepad iconMenuPurple"></i><span class="description"><?= _('Teleop the robot')?></span></li>
-                        	<li><img class="route" src="assets/images/route_green.svg"/><span class="description"><?= _('Test go to POI, dock or augmented pose')?></span></li>
-                        	<li><span style="display:inline-block; margin-right:25px; width:15px; height:15px; border-radius:100%; background-color:#009900;"></span><span class="description"><?= _('Robot position')?></span></li>
+                        	<li style="position:relative;font-size:16px"><img class="route" src="assets/images/route_green.svg"/><span class="description" style="margin-left: 40px;position: relative;top: 3px;"><?= _('Test go to POI, dock or augmented pose')?></span></li>
+                        	<li style="position:relative;">
+							<svg class="svg_popupHelp_robot" xmlns="http://www.w3.org/2000/svg">
+								<circle cx="20" cy="20" r="12" class="robot_elem robot_elem_fond"></circle>
+								<polyline points="16 16 24 20 16 24" stroke="#FFFFFF" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round" class="robot_elem" transform="rotate(-90,20,20)"></polyline>
+							</svg>
+							<span class="description" style="margin-left: 40px;"><?= _('Robot position')?></span></li>
                         </ul>
-                        <p><?= _('Click to hide')?></p>
+                        <p class="legende"><?= _('Click to hide')?></p>
                     </div>
                     
                     

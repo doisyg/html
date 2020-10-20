@@ -31,7 +31,7 @@ section.page header img { height:50px; padding:10px; }
 section.page header:after{clear:both;display:block;content:''}
 
 section > .content { max-height:calc(100vh  - 52px);  max-height: calc(var(--vh, 1vh) * 100 - 52px); overflow:auto; padding:20px; }
-section.with_footer > .content { max-height:calc(100vh  - 108px); max-height: calc(var(--vh, 1vh) * 100 - 108px); overflow:auto; }
+section.with_footer > .content { max-height:calc(100vh  - 110px); max-height: calc(var(--vh, 1vh) * 100 - 110px); overflow:auto; }
 section footer a.btn { width:100%; border-radius:0; position:absolute; bottom:0; left:0;  }
 
 section.hmi_tuile > .content ul { margin:-20px; }
@@ -135,7 +135,7 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 
 .loading_big { text-align:center; font-size:40px; display:none; }
 
-#install_by_step_edit_map_container_all { position:relative; margin:-20px; height:calc(100vh - 104px); height: calc(var(--vh, 1vh) * 100 - 104px); }
+#install_by_step_edit_map_container_all { position:relative; margin:-20px; height:calc(100vh - 110px); height: calc(var(--vh, 1vh) * 100 - 110px); }
 #install_by_step_edit_map_all { height:100%; }
 #install_by_step_edit_map_map_navigation { height:100%; }
 
@@ -144,7 +144,7 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 #install_by_step_edit_map_zoom_carte { position:relative; width:100px; border:1px solid #000; }
 
 
-#install_normal_edit_map_container_all { position:relative; margin:-20px; height:calc(100vh - 104px); height: calc(var(--vh, 1vh) * 100 - 104px); }
+#install_normal_edit_map_container_all { position:relative; margin:-20px; height:calc(100vh - 110px); height: calc(var(--vh, 1vh) * 100 - 110px); }
 #install_normal_edit_map_all { height:100%; }
 #install_normal_edit_map_map_navigation { height:100%; }
 
@@ -153,7 +153,7 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 #install_normal_edit_map_zoom_carte { position:relative; width:100px; border:1px solid #000; }
 
 
-#manager_edit_map_container_all { position:relative; margin:-20px; height:calc(100vh - 104px); height: calc(var(--vh, 1vh) * 100 - 104px); }
+#manager_edit_map_container_all { position:relative; margin:-20px; height:calc(100vh - 110px); height: calc(var(--vh, 1vh) * 100 - 110px); }
 #manager_edit_map_all { height:100%; }
 #manager_edit_map_map_navigation { height:100%; }
 
@@ -162,7 +162,7 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 #manager_edit_map_zoom_carte { position:relative; width:100px; border:1px solid #000; }
 
 
-#user_edit_map_container_all { position:relative; margin:-20px; height:calc(100vh - 104px); height: calc(var(--vh, 1vh) * 100 - 104px); }
+#user_edit_map_container_all { position:relative; margin:-20px; height:calc(100vh - 110px); height: calc(var(--vh, 1vh) * 100 - 110px); }
 #user_edit_map_all { height:100%; }
 #user_edit_map_map_navigation { height:100%; }
 
@@ -189,14 +189,17 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 #manager_edit_map_zoom_carte { overflow:hidden; }
 #user_edit_map_zoom_carte { overflow:hidden; }
 
-.popupHelp { position:absolute; z-index:20000; background-color:rgba(255,255,255,0.8); top:0; left:0; right:0; bottom:0; display:none; padding:20px; }
-.popupHelp ul { list-style:none; margin:0; padding:0px 20px; }
-.popupHelp ul li { font-size:18px; padding:10px 0; border-bottom:1px solid #CCC; }
+.popupHelp { position:absolute; z-index:20000; background-color:rgba(255,255,255,0.95); top:0; left:0; right:0; bottom:0; display:none; padding:10px; }
+.popupHelp h2{ margin-top: 5px; margin-bottom: 15px;}
+.popupHelp .svg_popupHelp_robot{height: 40px;width: 40px; position: absolute; left:-5px;top:0; }
+.popupHelp p.legende{  float:right;font-style: italic; }
+.popupHelp ul { list-style:none; margin:0; padding:0px 0px; }
+.popupHelp ul li { font-size:18px; padding:10px 0; border-bottom:1px solid #CCC;height:46px;}
 .popupHelp ul li;first-child { border-top:1px solid #EEEEEE; }
 .popupHelp ul li > i { font-size:24px; min-width:40px; }
-.popupHelp ul li > div {    left: -4px;}
+.popupHelp ul li > div {   left: -3px;}
 .popupHelp ul li > div + span { margin-left:40px; }
-.popupHelp ul li .route {  width:40px; padding:7px!important;  position: relative; top: -4px; left: -10px;}
+.popupHelp ul li .route {  width:40px; padding:7px!important;  position: absolute; top: 0px; left: -11px;}
 
 #install_by_step_edit_map_bEndGomme, #install_by_step_edit_map_bSaveCurrentElem, #install_by_step_edit_map_bStop { position:absolute; top:10px; left:10px; padding:0; display:none; z-index:4}
 #install_by_step_edit_map_bCancelCurrentElem { position:absolute; top:10px; left:80px; padding:0; display:none; z-index:4}
@@ -804,8 +807,7 @@ img.fi-robot{
 	top:10px;
 	left:10px;
 	z-index:3;
-	background:#DCDCDC;
-	border:1px solid #707070;
+	background:#589fb2;
 }
 .burger_menu_open{
 	
@@ -824,7 +826,7 @@ img.fi-robot{
 	width: 30px;
     height: 5px;
     margin: 2px 0;
-    background: #707070;
+    background: #fff;
     transition: 0.5s all;
     border-radius: 15px;
 }
@@ -942,4 +944,19 @@ div.icon_menu .iconForbiddenArea .fa-minus-circle{
     z-index: 3;
     line-height: 16px!important;
     position: absolute;
+}
+
+/* CSS FIXES */
+.fa-pencil:before{
+	content:"\f304";
+}
+#install_by_step_edit_map_zone_zoom{
+	border-color:rgb(88 159 178)!important;
+}
+.modal .modal-content .actions .row{
+	margin-right:0px;
+	margin-left:0px;
+}
+.btn-default.disabled{
+	background:#DCDCDC;
 }
