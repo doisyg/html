@@ -2761,7 +2761,7 @@ function WycaAPI(options){
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
-	this.DelteUserWyca = function(callback){
+	this.DeleteUserWyca = function(callback){
 		if (callback != undefined)
 			this.callbacks[_this.CommandCode.DELETE_USER_WYCA] = callback;
 		var action = {
