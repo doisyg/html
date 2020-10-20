@@ -178,5 +178,12 @@ $_LANG['ad8783089f828b927473fb61d51940ec'] = 'Use';
 $_LANG['a983b7f9a472c1b8cb98a106cc2ed932'] = 'Less than 1';
 $_LANG['887f7db126221fe60d18c895d41dc8f6'] = 'Confirm Password';
 $_LANG['0b39c5aca15b84b1ad53a94d6b3feb78'] = 'Change password';
+$_LANG['10d0de28911c5f66463b9c8783f8148a'] = 'Maintenance';
+$_LANG['d893e52fd8d320a9b182e75f6a18e383'] = 'A maintenance account for Wyca is suitable, however it can be deleted.';
+$_LANG['5bbd7ce63a683bed1ac27bf8c7deae2b'] = 'Keep Wyca maintenance account ?';
+$_LANG['8056fd2e8c8f5cf874eee18935fb0e97'] = 'A maintenance account for Wyca is by default enabled, however it can be deleted to suit as your needs.';
+$_LANG['02bce93bff905887ad2233110bf9c49e'] = 'Keep';
+$_LANG['f2a6c498fb90ee345d997f888fce3b18'] = 'Delete';
+$_LANG['1cc82b59fbf8fd45db8cc816108961bc'] = 'A maintenance account for Wyca is by default enabled, however it can be removed to suit as your needs.';
 
 ?>

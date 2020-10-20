@@ -1354,7 +1354,7 @@
 						<p><?= _('For more precise values, try to test battery in real conditions') ?></p>
 						<a href="#" class="real_test btn btn-lg btn-success" style="margin-left:50%; transform:translateX(-50%)"><i class="fas fa-route"></i> <?=('Real Test')?></a>
 						
-						<a href="#" class="install_by_step_config_next button_goto" data-goto="install_by_step_manager" style="display:none;"></a>   
+						<a href="#" class="install_by_step_config_next button_goto" data-goto="install_by_step_maintenance" style="display:none;"></a>   
 					</div>
                 </form>
 				<div class="modal fade modalRealTest" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
@@ -1453,11 +1453,60 @@
                 <h2><?php echo __('Maintenance');?></h2>
             </header>
             <div class="content">
-                
+				<p><?= __('A maintenance account for Wyca is by default enabled, however it can be removed to suit as your needs.') ?></p>
+				<h4 style="text-align:center;margin:30px 0"><?= __('Keep Wyca maintenance account ?') ?></h4>
+				<ul class="tuiles row">
+                    <li class="col-xs-6">
+                    	<div class="is_checkbox tuile_img no_update" id="bKeepMaintenanceAccount" style="bottom:0;border-radius:10px">
+                    		<i class="fas fa-user-cog iconMenuGreen" style="padding-top:5px"></i>
+							<h4 class="iconMenuGreen" style="margin-top: 0px;font-weight:700"><?php echo __('Keep');?></h4>
+                        </div>
+                    </li>
+                    <li class="col-xs-6">
+                    	<div class="is_checkbox tuile_img no_update" id="bDeleteMaintenanceAccount" style="bottom:0;border-radius:10px">
+                    		<i class="fas fa-user-times iconMenuRed" style="padding-top:5px"></i>
+							<h4 class="iconMenuRed" style="margin-top: 0px;font-weight:700"><?php echo __('Delete');?></h4>
+                        </div>
+                    </li>
+				</ul>
+				<a href="#" class="install_by_step_maintenance_next button_goto" data-goto="install_by_step_manager" style="display:none;"></a>
+				
+				<div class="modal fade modalMaintenance" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+					<div class="modal-dialog" role="dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<div class="actions mh100vh_55">
+									<div class="h100vh_160" style="overflow:auto">
+										<form>
+											<h4 style="text-align:center"><?= _('Maintenance account password') ?></h4>
+											<p style="margin:20px 0"><?= _('Note precisely the password, you may have to send the robot back to wyca in case of loss.') ?></p>
+											<div class="form-group">
+												<label class="col-xs-12 col-md-3 control-label" for="password"><?php echo __('Password');?></label>
+												<div class="col-xs-12 col-md-6">
+													<input id="install_by_step_maintenance_i_maintenance_password" name="password" type="password" required="required" class="form-control" pattern="(?=^.{6,}$)(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$">
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-xs-12 col-md-3 control-label" for="cpassword"><?php echo __('Confirm password');?></label>
+												<div class="col-xs-12 col-md-6">
+													<input id="install_by_step_maintenance_i_maintenance_cpassword" name="cpassword" type="password" required="required" class="form-control" pattern="(?=^.{6,}$)(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$">
+												</div>
+											</div>
+										</form>
+									</div>
+									
+									<div style="clear:both;"></div>
+									<a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Cancel');?></a>
+									<a href="#" id="install_by_step_maintenance_bMaintenanceSave" class="btn btn-primary btn_footer_right btn_50"><?php echo __('Save');?></a>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
             </div>
             <footer>
-				<a href="#" class="btn btn-default button_goto btn_footer_left btn_50 btn_back" data-goto="install_by_step_config"><?php echo __('Back');?></a>
-            	<a href="#" class="bConfigurationSave btn btn-primary btn_footer_right btn_50" data-goto="install_by_step_manager"><?php echo __('Save');?></a>
+				<a href="#" class="btn btn-default button_goto btn_footer_left btn_100 btn_back" data-goto="install_by_step_config"><?php echo __('Back');?></a>
             </footer>
         </section>
         
@@ -1512,13 +1561,13 @@
                                                 <div class="form-group">
                                                     <label class="col-xs-12 col-md-3 control-label" for="password"><?php echo __('Password');?></label>
                                                     <div class="col-xs-12 col-md-6">
-                                                        <input id="install_by_step_manager_i_manager_password" name="password" type="password" required="required" class="form-control"> <!-- pattern="(?=^.{8,}$)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" -->
+                                                        <input id="install_by_step_manager_i_manager_password" name="password" type="password" required="required" class="form-control" pattern="(?=^.{8,}$)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"> 
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-xs-12 col-md-3 control-label" for="cpassword"><?php echo __('Confirm password');?></label>
                                                     <div class="col-xs-12 col-md-6">
-                                                        <input id="install_by_step_manager_i_manager_cpassword" name="cpassword" type="password" required="required" class="form-control"> <!-- pattern="(?=^.{8,}$)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" -->
+                                                        <input id="install_by_step_manager_i_manager_cpassword" name="cpassword" type="password" required="required" class="form-control" pattern="(?=^.{8,}$)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" >
                                                     </div>
                                                 </div>
                                             </form>

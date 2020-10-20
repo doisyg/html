@@ -1662,6 +1662,86 @@ $(document).ready(function(e) {
 		});
     });
 	
+	/* MAINTENANCE ACCOUNT */
+	$('#install_by_step_maintenance #bDeleteMaintenanceAccount').click(function(e){
+		wycaApi.DeleteUserWyca(function(data){
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$.ajax({
+					type: "POST",
+					url: 'ajax/install_by_step_maintenance.php',
+					data: {
+					},
+					dataType: 'json',
+					success: function(data) {
+					},
+					error: function(e) {
+						alert_wyca('Error step finish ; ' + e.responseText);
+					}
+				});
+				$('#install_by_step_maintenance .install_by_step_maintenance_next').click();
+			}
+			else
+			{
+				console.log(JSON.stringify(data)); 
+				alert_wyca(wycaApi.AnswerCodeToString(data.A));
+			}
+		});
+	});
+	
+	
+	$('#install_by_step_maintenance #bKeepMaintenanceAccount').click(function(e){
+		$('#install_by_step_maintenance_i_maintenance_password').val('')
+		$('#install_by_step_maintenance_i_maintenance_cpassword').val('')
+		$('#install_by_step_maintenance .modalMaintenance').modal('show');
+		
+		
+		
+	});
+	
+	
+	$('#install_by_step_maintenance #install_by_step_maintenance_bMaintenanceSave').click(function(e){
+		let pass = $('#install_by_step_maintenance_i_maintenance_password');
+		let cpass = $('#install_by_step_maintenance_i_maintenance_password');
+		
+		if(pass.val() != cpass.val() || pass.val()=='' || !pass[0].checkValidity() || !cpass[0].checkValidity())
+		{
+			alert_wyca('Invalid password or confirm');
+		}
+		else{
+			wycaApi.ChangePasswordWyca(pass.val(),function(data){
+				if (data.A == wycaApi.AnswerCode.NO_ERROR)
+				{
+					$.ajax({
+						type: "POST",
+						url: 'ajax/install_by_step_maintenance.php',
+						data: {
+						},
+						dataType: 'json',
+						success: function(data) {
+						},
+						error: function(e) {
+							alert_wyca('Error step finish ; ' + e.responseText);
+						}
+					});
+					$('#install_by_step_maintenance .install_by_step_maintenance_next').click();
+				}
+				else
+				{
+					console.log(JSON.stringify(data)); 
+					alert_wyca(wycaApi.AnswerCodeToString(data.A));
+				}
+			})
+		}
+	});
+	
+	
+	
+	
+	
+	
+	
+	
 	$('#install_by_step_manager .bAddManager').click(function(e) {
 	
 		$('#install_by_step_manager .modalManager #install_by_step_manager_i_id_manager').val(-1);
