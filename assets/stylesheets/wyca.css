@@ -139,7 +139,7 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 #install_by_step_edit_map_all { height:100%; }
 #install_by_step_edit_map_map_navigation { height:100%; }
 
-#install_by_step_edit_map_zoom_carte_container { z-index:1000; background-color:#FFF; position:absolute; top:0px; right:20px; }
+#install_by_step_edit_map_zoom_carte_container { z-index:1000; background-color:#FFF; position:absolute; top:10px; right:10px; }
 #main_row.hide_element #install_by_step_edit_map_zoom_carte_container { right:50px; }
 #install_by_step_edit_map_zoom_carte { position:relative; width:100px; border:1px solid #000; }
 
