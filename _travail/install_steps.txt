@@ -1,0 +1,14 @@
+
+ 1 SELECT LANGUAGE 			#install_by_step_lang						-
+ 2 SELECT AVAILABLE TOPS	#install_by_step_tops						-
+ 3 SELECT ACTIVE TOP 		#install_by_step_top						-
+ 4 AUTO DIAG 				#install_by_step_check						-
+ 5 WIFI 					#install_by_step_wifi						-
+10 SITE 					#install_by_step_site						-
+11 MAPPING 					#install_by_step_mapping					-
+12 MAPPING CONFIG 			#install_by_step_mapping_fin				-
+20 EDIT MAP 				#install_by_step_edit_map					-
+30 CONFIGURATION 			#install_by_step_config						-
+31 MAINTENANCE 				#install_by_step_maintenance				-
+32 MANAGERS 				#install_by_step_manager					-
+33 SERVICE BOOK				#install_by_step_service_book				-

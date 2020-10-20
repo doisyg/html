@@ -45,7 +45,7 @@
         </section>-->
         
         <section id="install_by_step_tops" class="page with_footer hmi_tuile <?php echo $INSTALL_STEP == 2?'active':'';?>">
-        	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_wifi"></a>
+        	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_lang"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
                 <h2><?php echo __('Select available Tops');?></h2>
@@ -93,7 +93,7 @@
                 
             </div>
             <footer>
-				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50 btn_back" data-goto="install_by_step_wifi"><?= __('Back')?></a>
+				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50 btn_back" data-goto="install_by_step_lang"><?= __('Back')?></a>
 				<a href="#" class="save_tops btn btn-primary btn_footer_right btn_50"><?= __('Next')?></a>
             </footer>
         </section>
@@ -1442,12 +1442,27 @@
             </div>
             <footer>
 				<a href="#" class="btn btn-default button_goto btn_footer_left btn_50 btn_back" data-goto="install_by_step_edit_map"><?php echo __('Back');?></a>
+            	<a href="#" class="bConfigurationSave btn btn-primary btn_footer_right btn_50" data-goto="install_by_step_maintenance"><?php echo __('Save');?></a>
+            </footer>
+        </section>
+		
+        <section id="install_by_step_maintenance" class="page <?php echo $INSTALL_STEP == 31?'active':'';?> with_footer">
+        	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_config"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Maintenance');?></h2>
+            </header>
+            <div class="content">
+                
+            </div>
+            <footer>
+				<a href="#" class="btn btn-default button_goto btn_footer_left btn_50 btn_back" data-goto="install_by_step_config"><?php echo __('Back');?></a>
             	<a href="#" class="bConfigurationSave btn btn-primary btn_footer_right btn_50" data-goto="install_by_step_manager"><?php echo __('Save');?></a>
             </footer>
         </section>
         
         <section id="install_by_step_manager" class="page <?php echo $INSTALL_STEP == 32?'active':'';?> with_footer">
-        	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_config"></a>
+        	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_maintenance"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
                 <h2><?php echo __('Managers');?></h2>
