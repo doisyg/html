@@ -124,7 +124,7 @@
                 <h2><?php echo __('Auto Diag');?></h2>
             </header>
             <div class="content">
-                <ul class="tuiles row" style="position:relative;margin: auto -20px;">
+                <ul class="tuiles row" style="position:relative;max-width:375px;">
                     <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
                     	<div class="is_checkbox test anim_tuiles tuile_img tuile1 no_update">
                             <i class="fa fa-check"></i>
