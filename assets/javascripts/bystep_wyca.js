@@ -1292,8 +1292,8 @@ $(document).ready(function(e) {
 				});
 				//ADD A POSES
 				$.each(data.D.augmented_poses,function(i, item){
-					$('select#real_test_start').append('<option value="augmented_pose_'+item.id_docking_station+'" data-type="augmented_pose" data-id="'+item.id_augmented_pose+'" >&#xf02a; &#xf3c5;   - A. pose - '+item.name+'</option>' );
-					$('select#real_test_end').append('<option value="augmented_pose_'+item.id_docking_station+'" data-type="augmented_pose" data-id="'+item.id_augmented_pose+'" >&#xf02a; &#xf3c5; - A. pose - '+item.name+'</option>' );
+					$('select#real_test_start').append('<option value="augmented_pose_'+item.id_docking_station+'" data-type="augmented_pose" data-id="'+item.id_augmented_pose+'" >&#xf02a; - A. pose - '+item.name+'</option>' );
+					$('select#real_test_end').append('<option value="augmented_pose_'+item.id_docking_station+'" data-type="augmented_pose" data-id="'+item.id_augmented_pose+'" >&#xf02a; - A. pose - '+item.name+'</option>' );
 				});
 				
 			}
@@ -1381,6 +1381,7 @@ $(document).ready(function(e) {
 						
 						
 					}else{
+						$('#pages_install_by_step .modalRealTestResult').modal('hide');
 						if (data.M != '')
 							alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
 						else
@@ -1417,6 +1418,7 @@ $(document).ready(function(e) {
 						// GO TO END
 						RealTestGotoEnd(end);
 					}else{
+						$('#pages_install_by_step .modalRealTestResult').modal('hide');
 						if (data.M != '')
 							alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
 						else
@@ -1454,7 +1456,7 @@ $(document).ready(function(e) {
 						// GO TO END
 						RealTestGotoEnd(end);
 					}else{
-						
+						$('#pages_install_by_step .modalRealTestResult').modal('hide');
 						if (data.M != '')
 							alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
 						else
@@ -1507,6 +1509,7 @@ $(document).ready(function(e) {
 						$('#battery_used').html(textDisplay);
 						$(".modalRealTestResult_content #result_RealTest").show();
 					}else{
+						$('#pages_install_by_step .modalRealTestResult').modal('hide');
 						if (data.M != '')
 							alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
 						else
@@ -1522,6 +1525,7 @@ $(document).ready(function(e) {
 					if (data.A == wycaApi.AnswerCode.NO_ERROR){
 						$(".modalRealTestResult_content #end_point").show()
 					}else{
+						$('#pages_install_by_step .modalRealTestResult').modal('hide');
 						if (data.M != '')
 							alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
 						else
@@ -1539,6 +1543,7 @@ $(document).ready(function(e) {
 						$('#battery_used').html(textDisplay);
 						$(".modalRealTestResult_content #result_RealTest").show();
 					}else{
+						$('#pages_install_by_step .modalRealTestResult').modal('hide');
 						if (data.M != '')
 							alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
 						else
@@ -1554,6 +1559,7 @@ $(document).ready(function(e) {
 					if (data.A == wycaApi.AnswerCode.NO_ERROR){
 						$(".modalRealTestResult_content #end_point").show()
 					}else{
+						$('#pages_install_by_step .modalRealTestResult').modal('hide');
 						if (data.M != '')
 							alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
 						else
@@ -1572,6 +1578,7 @@ $(document).ready(function(e) {
 						$('#battery_used').html(textDisplay);
 						$(".modalRealTestResult_content #result_RealTest").show();
 					}else{
+						$('#pages_install_by_step .modalRealTestResult').modal('hide');
 						if (data.M != '')
 							alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
 						else
@@ -1587,6 +1594,7 @@ $(document).ready(function(e) {
 					if (data.A == wycaApi.AnswerCode.NO_ERROR){
 						$(".modalRealTestResult_content #end_point").show()
 					}else{
+						$('#pages_install_by_step .modalRealTestResult').modal('hide');
 						if (data.M != '')
 							alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
 						else
@@ -1599,6 +1607,24 @@ $(document).ready(function(e) {
 		// LAUNCH PROGRESS BAR ANIM
 	}
 	
+	
+		
+	$('.modalRealTestResult  a#bUseRealTest').click(function(e) {
+		e.preventDefault();
+		let temp = battery_lvl_needed == 0?1:parseInt(battery_lvl_needed);
+		let ebl = temp+5;
+		let mbl = 2*temp;
+		mbl < ebl ? mbl = ebl + 5:'';
+		$('#install_by_step_config_i_level_min_gotocharge').val(ebl)
+		$('#install_by_step_config_i_level_min_dotask').val(mbl)
+		$('.modalRealTestResult').modal('hide')
+    });
+	
+	$('section#install_by_step_config  a.bResetValueEblMbl').click(function(e) {
+		
+		$('#install_by_step_config_i_level_min_gotocharge').val(15)
+		$('#install_by_step_config_i_level_min_dotask').val(20)
+    });
 	
 		
 	$('#install_by_step_config .bConfigurationSave').click(function(e) {

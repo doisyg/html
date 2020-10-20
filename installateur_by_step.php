@@ -1321,7 +1321,7 @@
             <div class="content">
                 <form class="form_site" action="" method="post">
 					<div class="install_by_step_config_loading loading_big" style="padding-top:20px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
-					<div class="loaded col-md-12" style="padding-top:50px;">
+					<div class="loaded col-md-12" style="padding-top:25px;">
 						<div class="form-group">
 							<label for="i_level_min_gotocharge" class="col-xs-12 col-md-6 control-label"><?php echo __('Emergency battery level (execute a go to charge if the battery drops below this level)');?></label>
 							<div class="col-md-6 input-group mb-md">
@@ -1337,10 +1337,10 @@
 								<span class="input-group-addon">%</span>
 							</div>
 						</div>
+						<a href="#" class="btn btn-sm btn-primary bResetValueEblMbl" style="margin-left:50%; transform:translateX(-50%);margin-bottom:10px;"><?php echo __('Reset values');?></a>
 						
 						<p><?= _('For more precise values, try to test battery in real conditions') ?></p>
 						<a href="#" class="real_test btn btn-lg btn-success" style="margin-left:50%; transform:translateX(-50%)"><i class="fas fa-route"></i> <?=('Real Test')?></a>
-						
 						
 						<a href="#" class="install_by_step_config_next button_goto" data-goto="install_by_step_manager" style="display:none;"></a>   
 					</div>
@@ -1359,7 +1359,7 @@
 													<option value=""><?= _('Start position')?></option>
 												</select>
 											</div>
-											<p><?= _('Please choose an arrival point')?></p>
+											<p><?= _('Please choose a destination')?></p>
 											<div class="form-group">
 												<select class="form-control form-fa" id="real_test_end">
 													<option value=""><?= _('Arrival position')?></option>		
@@ -1397,7 +1397,7 @@
 												</div>														
 											</div>
 											<div id="end_point">
-												<h4><?= _('Go to arrival position')?></h4>
+												<h4><?= _('Go to destination')?></h4>
 												<span id="end_point_text"></span>
 												<div class="row">
 													<div class="col-xs-3"></div>
@@ -1417,7 +1417,7 @@
 										</div>
 									</div>
 									<div style="clear:both;"></div>
-									<a href="#" class="btn btn-default btn_footer_left btn_100" data-dismiss="modal"><!-- onClick="wycaApi.StopMove()"--> > <?php echo __('Cancel');?></a>
+									<a href="#" class="btn btn-default btn_footer_left btn_100" data-dismiss="modal"><!-- onClick="wycaApi.StopMove()"--><?php echo __('Cancel');?></a>
 								</div>
 							</div>
 						</div>
