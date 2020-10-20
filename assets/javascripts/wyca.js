@@ -866,6 +866,8 @@ function InitMappingByStep()
 		wycaApi.MappingIsStarted(function(data) {
 			if (data.D)
 			{
+				mappingStarted = true;
+				
 				$('#install_by_step_mapping .bMappingStart').hide();
 				$('#install_by_step_mapping .progressStartMapping').hide();
 				$('#install_by_step_mapping .switchLiveMapping').show();
@@ -889,6 +891,8 @@ function InitMappingByStep()
 				$('.ifMappingInit').hide();
 				$('.ifNMapping').show();
 			}
+			else
+				mappingStarted = false;
 		});
 	}
 	else

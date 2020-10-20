@@ -41,6 +41,12 @@ $(document).ready(function(e) {
 	img.onload = function () {
 		imgMappingLoaded = true;	
 		InitPosCarteMapping();
+		
+		if (mappingStarted && timerGetMappingInConstruction == null)
+		{
+			// Le timer a déjà sauté, on relance l'appel
+			GetMappingInConstruction();
+		}
 	};
 	
 	wycaApi = new WycaAPI({
@@ -134,8 +140,22 @@ $(document).ready(function(e) {
 				$('body > header .stop_move').show();
 			else
 				$('body > header .stop_move').hide();
+		},
+		onReceviedSegmented: function(data){
+			if (data.I == data.NB)
+			{
+				$('#modalLoading').modal('hide');
+			}
+			else if (data.NB > 2)
+			{
+				$('#modalLoading').modal('show');
+				
+				valeur = parseInt(data.I / data.NB * 100);
+				$('#modalLoading .loadingProgress .progress-bar').css('width', valeur+'%').attr('aria-valuenow', valeur); 
+			}
 		}
 	});
+	
 	
 	
 	wycaApi.init();	
@@ -153,7 +173,7 @@ var liveMapping = true;
 function TimeoutGetMappingInConstruction()
 {
 	timerGetMappingInConstruction = null;
-	if (haveReplyFromGetMappingInConstruction)
+	if (mappingStarted && haveReplyFromGetMappingInConstruction)
 	{
 		// Le timer a sauté, on a déjà eu une réponse de GetMappingInConstruction, on relance l'appel
 		GetMappingInConstruction();
@@ -162,7 +182,7 @@ function TimeoutGetMappingInConstruction()
 
 function GetMappingInConstruction()
 {
-	if (liveMapping)
+	if (mappingStarted && liveMapping)
 	{
 		haveReplyFromGetMappingInConstruction = false;
 		timerGetMappingInConstruction = setTimeout(TimeoutGetMappingInConstruction, 1000);
@@ -170,11 +190,6 @@ function GetMappingInConstruction()
 		wycaApi.GetMappingInConstruction(function(data) {
 			
 			haveReplyFromGetMappingInConstruction = true;
-			if (timerGetMappingInConstruction == null)
-			{
-				// Le timer a déjà sauté, on relance l'appel
-				GetMappingInConstruction();
-			}
 			
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
@@ -183,7 +198,7 @@ function GetMappingInConstruction()
 					imgMappingLoaded = false;
 					var img = document.getElementById("install_by_step_mapping_img_map_saved");
 					//img.src = 'data:image/png;base64,' + data.D.M;
-					img.src = '/mapping/last_mapping.jpg?v='+ Date.now();
+					img.src = robot_http + '/mapping/last_mapping.jpg?v='+ Date.now();
 					//img.src = 'http://192.168.0.30/mapping/last_mapping.jpg?v='+ Date.now();
 					mappingLastOrigin = {'x':parseFloat(data.D.X), 'y':parseFloat(data.D.Y) };
 				}

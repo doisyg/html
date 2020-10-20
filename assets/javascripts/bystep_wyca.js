@@ -644,7 +644,7 @@ $(document).ready(function(e) {
 		if ($(this).is(':checked') )
 		{
 			liveMapping = true;
-			if (timerGetMappingInConstruction == null)
+			if (mappingStarted && timerGetMappingInConstruction == null)
 			{
 				GetMappingInConstruction();
 			}
