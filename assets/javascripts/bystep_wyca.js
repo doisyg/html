@@ -1360,6 +1360,7 @@ $(document).ready(function(e) {
 			$(".modalRealTestResult_content #end_point").hide();
 			$(".modalRealTestResult_content #result_RealTest").hide();
 			
+			$(".modalRealTestResult .btn[data-dismiss='modal']").removeClass('disabled');			
 			$(".modalRealTestResult_content #start_point_text").html(start.html());
 			$(".modalRealTestResult_content #end_point_text").html(end.html());
 			
@@ -1397,6 +1398,8 @@ $(document).ready(function(e) {
 					if (data.A == wycaApi.AnswerCode.NO_ERROR){
 						$(".modalRealTestResult_content #start_point").show();
 						
+						$(".modalRealTestResult .btn[data-dismiss='modal']").addClass('disabled');
+						
 						statusRealTestStart = 1;
 						timerRealTestStart = 0;
 						TimerRealTest('start');
@@ -1433,11 +1436,10 @@ $(document).ready(function(e) {
 				wycaApi.GoToCharge(id,function(data){
 					if (data.A == wycaApi.AnswerCode.NO_ERROR){
 						$(".modalRealTestResult_content #start_point").show();
-					
+						$(".modalRealTestResult .btn[data-dismiss='modal']").addClass('disabled');
 						statusRealTestStart = 1;
 						timerRealTestStart = 0;
 						TimerRealTest('start');
-						
 					}else{
 						$('#pages_install_by_step .modalRealTestResult').modal('hide');
 						if (data.M != '')
@@ -1471,7 +1473,7 @@ $(document).ready(function(e) {
 				wycaApi.GoToAugmentedPose(id,function(data){
 					if (data.A == wycaApi.AnswerCode.NO_ERROR){
 						$(".modalRealTestResult_content #start_point").show();
-					
+						$(".modalRealTestResult .btn[data-dismiss='modal']").addClass('disabled');
 						statusRealTestStart = 1;
 						timerRealTestStart = 0;
 						TimerRealTest('start');
@@ -1515,6 +1517,8 @@ $(document).ready(function(e) {
 						else
 							alert_wyca(wycaApi.AnswerCodeToString(data.A));
 					}
+					$(".modalRealTestResult .btn[data-dismiss='modal']").removeClass('disabled');
+						
 					// On rebranche l'ancienne fonction
 					wycaApi.on('onGoToPoiResult', onGoToPoiResult);
 				});
@@ -1549,6 +1553,8 @@ $(document).ready(function(e) {
 						else
 							alert_wyca(wycaApi.AnswerCodeToString(data.A));
 					}
+					$(".modalRealTestResult .btn[data-dismiss='modal']").removeClass('disabled');
+					
 					// On rebranche l'ancienne fonction
 					wycaApi.on('onGoToChargeResult', onGoToChargeResult);
 				});
@@ -1584,6 +1590,8 @@ $(document).ready(function(e) {
 						else
 							alert_wyca(wycaApi.AnswerCodeToString(data.A));
 					}
+					$(".modalRealTestResult .btn[data-dismiss='modal']").removeClass('disabled');
+					
 					// On rebranche l'ancienne fonction
 					wycaApi.on('onGoToAugmentedPoseResult', onGoToAugmentedPoseResult);
 				});

@@ -137,9 +137,11 @@ $(document).ready(function(e) {
 		onGoToPoseResult: onGoToPoseResult,
 		onMoveInProgress: function(data){
 			if (data)
-				$('body > header .stop_move').show();
+				//$('body > header .stop_move').show(); 
+				$('.stop_move').show(); //AJOUT btn.stop_move autre part que dans le header
 			else
-				$('body > header .stop_move').hide();
+				//$('body > header .stop_move').hide();
+				$('.stop_move').hide(); //AJOUT btn.stop_move autre part que dans le header
 		},
 		onReceviedSegmented: function(data){
 			if (data.I == data.NB)
@@ -159,8 +161,14 @@ $(document).ready(function(e) {
 	
 	
 	wycaApi.init();	
-	
+	/*
+	//AJOUT btn.stop_move autre part que dans le header
 	$('body > header .stop_move').click(function(e) {
+        e.preventDefault();
+		wycaApi.StopMove();
+    });
+	*/
+	$('.stop_move').click(function(e) {
         e.preventDefault();
 		wycaApi.StopMove();
     });

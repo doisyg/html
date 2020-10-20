@@ -1386,8 +1386,10 @@
 											<div id="start_point">
 												<h4><?= _('Go to start position')?></h4>
 												<span id="start_point_text"></span>
-												<div class="row">
-													<div class="col-xs-3"></div>
+												<div class="row" style="margin: 0;">
+													<div class="col-xs-3">
+														<a href="#" class="stop_move btn btn-danger btn-circle" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Stop move" style="display: none;"><i class="fa fa-stop battery-ko"></i></a>
+													</div>
 													<div class="col-xs-6 startRealTestprogress progress progress-striped light active m-md" style="margin: 6px 0;padding:0">
 														<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;"></div>
 													</div>
@@ -1399,8 +1401,10 @@
 											<div id="end_point">
 												<h4><?= _('Go to destination')?></h4>
 												<span id="end_point_text"></span>
-												<div class="row">
-													<div class="col-xs-3"></div>
+												<div class="row" style="margin: 0;">
+													<div class="col-xs-3">
+														<a href="#" class="stop_move btn btn-danger btn-circle" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Stop move" style="display: none;"><i class="fa fa-stop battery-ko"></i></a>
+													</div>
 													<div class="col-xs-6 endRealTestprogress progress progress-striped light active m-md" style="margin: 6px 0;padding:0">
 														<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;"></div>
 													</div>
