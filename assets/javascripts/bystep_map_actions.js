@@ -694,6 +694,7 @@ $(document).ready(function() {
 		
 		$('#install_by_step_edit_map_container_all .modalPoiOptions .list_undock_procedure_poi li').remove();
 		
+		/* POI PAS UNDOCK PATH
 		if (poi.undock_path.length > 0)
 		{
 			$.each(poi.undock_path, function( indexConfig, undock_step ) {
@@ -730,7 +731,7 @@ $(document).ready(function() {
 				
 			});
 		}
-		
+		*/
 		$('#install_by_step_edit_map_container_all .modalPoiOptions').modal('show');
 		
     });
@@ -1751,56 +1752,65 @@ $(document).ready(function() {
     });
 	
 	$('#install_by_step_edit_map_bDockSaveConfig').click(function(e) {
-		firstAction = $('#install_by_step_edit_map_container_all .modalDockOptions .list_undock_procedure li').first();
-		if (firstAction.data('action') == 'rotate')
-		{
-			e.preventDefault();
-			alert_wyca('You cannot start with a rotation');
-		}
-		else if (firstAction.data('action') != 'rotate' && firstAction.data('distance') > 0)
-		{
-			e.preventDefault();
-			alert_wyca('You cannot start with moving forward');
-		}
-		else
-		{
-			dock = docks[currentDockIndex];
-			saveCurrentDock = JSON.stringify(dock);
-					
-			dock.name = $('#install_by_step_edit_map_dock_name').val();
-			dock.num = parseInt($('#install_by_step_edit_map_dock_number').val());
-			dock.comment = $('#install_by_step_edit_map_dock_comment').val();
-			if ($('#install_by_step_edit_map_dock_is_master').prop('checked'))
+		let arr =[];
+		$.each(docks,function(idx,item){
+			if(idx != currentDockIndex)
+				arr.push(item.name);
+		})
+		if(!arr.includes($('#install_by_step_edit_map_dock_name').val())){
+			firstAction = $('#install_by_step_edit_map_container_all .modalDockOptions .list_undock_procedure li').first();
+			if (firstAction.data('action') == 'rotate')
 			{
-				// Désactive les autres
-				$.each(docks, function( index, dock ) {
-					dock.is_master = false;
-				});
+				e.preventDefault();
+				alert_wyca('You cannot start with a rotation');
 			}
-			dock.is_master = $('#install_by_step_edit_map_dock_is_master').prop('checked');
-				
-			dock.undock_path = Array();
-			
-			$('#install_by_step_edit_map_container_all .modalDockOptions .list_undock_procedure li').each(function(index, element) {
-				if ($(this).data('action') == 'rotate')
+			else if (firstAction.data('action') != 'rotate' && firstAction.data('distance') > 0)
+			{
+				e.preventDefault();
+				alert_wyca('You cannot start with moving forward');
+			}
+			else
+			{
+				dock = docks[currentDockIndex];
+				saveCurrentDock = JSON.stringify(dock);
+						
+				dock.name = $('#install_by_step_edit_map_dock_name').val();
+				dock.num = parseInt($('#install_by_step_edit_map_dock_number').val());
+				dock.comment = $('#install_by_step_edit_map_dock_comment').val();
+				if ($('#install_by_step_edit_map_dock_is_master').prop('checked'))
 				{
-					angle_rad = parseFloat($(this).data('angle')) * Math.PI/180;
-					dock.undock_path.push({'linear_distance':0, 'angular_distance':angle_rad});
+					// Désactive les autres
+					$.each(docks, function( index, dock ) {
+						dock.is_master = false;
+					});
 				}
-				else
-					dock.undock_path.push({'linear_distance':$(this).data('distance'), 'angular_distance':0});
-			});
-			
-			docks[currentDockIndex] = dock;
+				dock.is_master = $('#install_by_step_edit_map_dock_is_master').prop('checked');
 					
-			if (bystepCurrentAction == 'editDock')
-				ByStepAddHistorique({'action':'edit_dock', 'data':{'index':currentDockIndex, 'old':saveCurrentDock, 'new':JSON.stringify(docks[currentDockIndex])}});
-			
-			ByStepTraceDock(currentDockIndex);
-			
-			$('#install_by_step_edit_map_container_all .modalDockOptions').modal('hide');
-			$('#install_by_step_edit_map_container_all .modalDockOptions #install_by_step_edit_map_bDockCancelConfig').removeClass('disabled');
-		}
+				dock.undock_path = Array();
+				
+				$('#install_by_step_edit_map_container_all .modalDockOptions .list_undock_procedure li').each(function(index, element) {
+					if ($(this).data('action') == 'rotate')
+					{
+						angle_rad = parseFloat($(this).data('angle')) * Math.PI/180;
+						dock.undock_path.push({'linear_distance':0, 'angular_distance':angle_rad});
+					}
+					else
+						dock.undock_path.push({'linear_distance':$(this).data('distance'), 'angular_distance':0});
+				});
+				
+				docks[currentDockIndex] = dock;
+						
+				if (bystepCurrentAction == 'editDock')
+					ByStepAddHistorique({'action':'edit_dock', 'data':{'index':currentDockIndex, 'old':saveCurrentDock, 'new':JSON.stringify(docks[currentDockIndex])}});
+				
+				ByStepTraceDock(currentDockIndex);
+				
+				$('#install_by_step_edit_map_container_all .modalDockOptions').modal('hide');
+				$('#install_by_step_edit_map_container_all .modalDockOptions #install_by_step_edit_map_bDockCancelConfig').removeClass('disabled');
+			}
+		}else{
+			alert_wyca(textNameUsed);
+		};
 	});
 	
 	$('#install_by_step_edit_map_container_all .modalDockOptions .bByStepUndockProcedureAddElem').click(function(e) {
@@ -1969,20 +1979,31 @@ $(document).ready(function() {
     });
 	
 	$('#install_by_step_edit_map_bPoiSaveConfig').click(function(e) {
-		poi = pois[currentPoiIndex];
-		saveCurrentPoi = JSON.stringify(poi);
-				
-		poi.name = $('#install_by_step_edit_map_poi_name').val();
-		poi.comment = $('#install_by_step_edit_map_poi_comment').val();
+		console.log(currentPoiIndex)
+		console.log(pois[currentPoiIndex])
+		let arr =[];
+		$.each(pois,function(idx,item){
+			if(idx != currentPoiIndex)
+				arr.push(item.name);
+		})
+		if(!arr.includes($('#install_by_step_edit_map_poi_name').val())){
+			poi = pois[currentPoiIndex];
+			saveCurrentPoi = JSON.stringify(poi);
 			
-		pois[currentPoiIndex] = poi;
+			poi.name = $('#install_by_step_edit_map_poi_name').val();
+			poi.comment = $('#install_by_step_edit_map_poi_comment').val();
+			pois[currentPoiIndex] = poi;
+			
+			$('#install_by_step_edit_map_bPoiCancelConfig').show();
+					
+			if (bystepCurrentAction == 'editPoi')
+				ByStepAddHistorique({'action':'edit_poi', 'data':{'index':currentPoiIndex, 'old':saveCurrentPoi, 'new':JSON.stringify(pois[currentPoiIndex])}});
+				ByStepTracePoi(currentPoiIndex);
+			
+		}else{
+			alert_wyca(textNameUsed);
+		};
 		
-		$('#install_by_step_edit_map_bPoiCancelConfig').show();
-				
-		if (bystepCurrentAction == 'editPoi')
-			ByStepAddHistorique({'action':'edit_poi', 'data':{'index':currentPoiIndex, 'old':saveCurrentPoi, 'new':JSON.stringify(pois[currentPoiIndex])}});
-		
-		ByStepTracePoi(currentPoiIndex);
 	});
 	
 	$('#install_by_step_edit_map_menu .bAddAugmentedPose').click(function(e) {
@@ -2121,32 +2142,41 @@ $(document).ready(function() {
     });
 	
 	$('#install_by_step_edit_map_bAugmentedPoseSaveConfig').click(function(e) {
-		augmented_pose = augmented_poses[currentAugmentedPoseIndex];
-		saveCurrentAugmentedPose = JSON.stringify(augmented_pose);
+		let arr =[];
+		$.each(augmented_poses,function(idx,item){
+			if(idx != currentAugmentedPoseIndex)
+				arr.push(item.name);
+		})
+		if(!arr.includes($('#install_by_step_edit_map_augmented_pose_name').val())){
+			augmented_pose = augmented_poses[currentAugmentedPoseIndex];
+			saveCurrentAugmentedPose = JSON.stringify(augmented_pose);
+					
+			augmented_pose.name = $('#install_by_step_edit_map_augmented_pose_name').val();
+			augmented_pose.comment = $('#install_by_step_edit_map_augmented_pose_comment').val();
 				
-		augmented_pose.name = $('#install_by_step_edit_map_augmented_pose_name').val();
-		augmented_pose.comment = $('#install_by_step_edit_map_augmented_pose_comment').val();
+			augmented_pose.undock_path = Array();
 			
-		augmented_pose.undock_path = Array();
-		
-		$('#install_by_step_edit_map_container_all .modalAugmentedPoseOptions .list_undock_procedure_augmented_pose li').each(function(index, element) {
-			if ($(this).data('action') == 'rotate')
-			{
-				angle_rad = parseFloat($(this).data('angle')) * Math.PI/180;
-				augmented_pose.undock_path.push({'linear_distance':0, 'angular_distance':angle_rad});
-			}
-			else
-				augmented_pose.undock_path.push({'linear_distance':$(this).data('distance'), 'angular_distance':0});
-        });
-		
-		augmented_poses[currentAugmentedPoseIndex] = augmented_pose;
-		
-		$('#install_by_step_edit_map_bAugmentedPoseCancelConfig').removeClass('disabled');
-				
-		if (bystepCurrentAction == 'editAugmentedPose')
-			ByStepAddHistorique({'action':'edit_augmented_pose', 'data':{'index':currentAugmentedPoseIndex, 'old':saveCurrentAugmentedPose, 'new':JSON.stringify(augmented_poses[currentAugmentedPoseIndex])}});
-		
-		ByStepTraceAugmentedPose(currentAugmentedPoseIndex);
+			$('#install_by_step_edit_map_container_all .modalAugmentedPoseOptions .list_undock_procedure_augmented_pose li').each(function(index, element) {
+				if ($(this).data('action') == 'rotate')
+				{
+					angle_rad = parseFloat($(this).data('angle')) * Math.PI/180;
+					augmented_pose.undock_path.push({'linear_distance':0, 'angular_distance':angle_rad});
+				}
+				else
+					augmented_pose.undock_path.push({'linear_distance':$(this).data('distance'), 'angular_distance':0});
+			});
+			
+			augmented_poses[currentAugmentedPoseIndex] = augmented_pose;
+			
+			$('#install_by_step_edit_map_bAugmentedPoseCancelConfig').removeClass('disabled');
+					
+			if (bystepCurrentAction == 'editAugmentedPose')
+				ByStepAddHistorique({'action':'edit_augmented_pose', 'data':{'index':currentAugmentedPoseIndex, 'old':saveCurrentAugmentedPose, 'new':JSON.stringify(augmented_poses[currentAugmentedPoseIndex])}});
+			
+			ByStepTraceAugmentedPose(currentAugmentedPoseIndex);
+		}else{
+			alert_wyca(textNameUsed);
+		};
 	});
 	
 	$('#install_by_step_edit_map_container_all .modalAugmentedPoseOptions .bByStepUndockProcedureAugmentedPoseAddElem').click(function(e) {
