@@ -457,6 +457,69 @@ function InitSiteImport(){
 	$('#pages_install_normal .file_import_site_wrapper').css('background-color','#589fb26e');
 	$('#pages_install_normal .file_import_site').val('');
 }
+function InitBystepSiteImport(){
+	$('#pages_install_by_step .filename_import_site').html('');
+	$('#pages_install_by_step .filename_import_site').hide();
+	$('#pages_install_by_step .file_import_site_wrapper').css('background-color','#589fb26e');
+	$('#pages_install_by_step .file_import_site').val('');
+}
+
+function InitBystepSiteMasterDock(){
+	$('#pages_install_by_step #MasterDockList').html('');
+	$('#pages_install_by_step .MasterDock_loading').show();
+	
+	if(docks != 'undefined' && docks.length > 1){
+		$.each(docks,function(idx,item){
+			let li_html="";
+			li_html+='<li class="col-xs-6">';
+			li_html+='	<div class="is_checkbox tuile_img no_update MasterDockItem" id="'+item.id_docking_station+'">';
+			li_html+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
+			li_html+='		<i class="fas fa-charging-station" style="padding-top:5px"></i>';
+			li_html+='		<p class="dockname">'+item.name+'</p>';
+			li_html+='   </div>';
+			li_html+='</li>';
+			$('#pages_install_by_step #MasterDockList').append(li_html);
+		});
+		$('#pages_install_by_step .MasterDock_loading').hide();
+	}else{
+		if (wycaApi.websocketAuthed){
+			wycaApi.GetCurrentMapComplete(function(data){
+				if (data.A == wycaApi.AnswerCode.NO_ERROR){
+					if(data.D.docks.length <= 1){
+						$('.install_by_step_site_master_dock_next').click();
+					}else{
+						forbiddens = data.D.forbiddens;
+						areas = data.D.areas;
+						docks = data.D.docks;
+						pois = data.D.pois;
+						augmented_poses = data.D.augmented_poses;
+						
+						$.each(docks,function(idx,item){
+							let li_html="";
+							li_html+='<li class="col-xs-6">';
+							li_html+='	<div class="is_checkbox tuile_img no_update MasterDockItem" id="'+item.id_docking_station+'">';
+							li_html+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
+							li_html+='		<i class="fas fa-charging-station" style="padding-top:5px"></i>';
+							li_html+='		<p class="dockname">'+item.name+'</p>';
+							li_html+='   </div>';
+							li_html+='</li>';
+							$('#pages_install_by_step #MasterDockList').append(li_html);
+						});
+						$('#pages_install_by_step .MasterDock_loading').hide();
+					}
+				}else{
+					console.log(JSON.stringify(data)); 
+					text = wycaApi.AnswerCodeToString(data.A);
+					if (data.M != '') text += '<br />'+data.M;
+					alert_wyca(text);
+				}
+			})
+		}else{
+			setTimeout(InitBystepSiteMasterDock, 500);
+		}
+	}
+	
+}
 function InitTopImport(){
 	$('#pages_install_by_step .filename_import_top').html('');
 	$('#pages_install_by_step .filename_import_top').hide();

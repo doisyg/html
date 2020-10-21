@@ -191,5 +191,14 @@ $_LANG['afc77a046e20afd5fbbbaebceceb7af1'] = 'Tets';
 $_LANG['f303fc2fc9a1f9e9905bc72295ab6c1b'] = 'Passwords needs to be 6 character long with at least 1 character and 1 digit';
 $_LANG['14fb0e15268d28857b0a8b42f1d84beb'] = 'Passwords required.';
 $_LANG['e94ec8654acb715863aad3b957b233f0'] = 'Passwords not matching.';
+$_LANG['70633fec2067b2567b7d5969584c12b3'] = 'Login needs to be a valid mail adress.';
+$_LANG['6160485888726711077435f4eec3b988'] = 'Import site or create a new one ?';
+$_LANG['463e258f2c7159365bea1be5eef6ca77'] = 'Create Site';
+$_LANG['30eee3a55e8f103c15987b82c9ad91dd'] = 'Site import';
+$_LANG['6ba907bee8c75391c727ce123cc66263'] = 'New site';
+$_LANG['28a8bf3cf698c2b306b9074dec46f2bc'] = 'Master Dock';
+$_LANG['d87152f30fb111ff99e0cf3dc1217939'] = 'Pick the default master docking station?';
+$_LANG['fa6ec1ff08c2ec1882f99f1ae3dd2f3c'] = 'Default Dock';
+$_LANG['7851fab7ac4cf7dfc8c48ea5dcc437c4'] = 'Pick the default docking station';
 
 ?>

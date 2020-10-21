@@ -945,6 +945,11 @@ div.icon_menu .iconForbiddenArea .fa-minus-circle{
     line-height: 16px!important;
     position: absolute;
 }
+/* */
+ul#MasterDockList li .tuile_img.is_checkbox{border-radius:10px;bottom:0;}
+ul#MasterDockList li .tuile_img.is_checkbox p{border-radius:10px;bottom:0;}
+ul#MasterDockList li .tuile_img.is_checkbox i.fa-asterisk {position:absolute; top: 10px;left: 15px;color: darkorange;font-size:16px; padding:0;  }
+ul#MasterDockList li .tuile_img.is_checkbox p.dockname {margin-top: 0px;font-weight: 700;margin-bottom: 0;font-size: 14px;}
 
 .password_format{margin: 0;text-align: right;font-size: 12px;font-style: italic;margin-bottom: 10px;}
 .password_format ~ div.form-group{margin-bottom:0;}

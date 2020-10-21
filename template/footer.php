@@ -125,10 +125,13 @@
 			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 5) {?>
 			InitInstallWifiPageByStep();
 			<?php }?>
-            <?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 11) {?>
-			InitMappingByStep();
+            <?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 61) {?>
+			InitBystepSiteMasterDock();
 			<?php }?>
 			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 12) {?>
+			InitMappingByStep();
+			<?php }?>
+			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 13) {?>
 			GetLastMappingByStep();
 			<?php }?>
 			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 20) {?>

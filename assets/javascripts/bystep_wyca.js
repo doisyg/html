@@ -484,6 +484,165 @@ $(document).ready(function(e) {
 		});
     });
 	
+	$('#pages_install_by_step .file_import_site').change(function(){
+		//console.log('here');
+		$('#pages_install_by_step .filename_import_site').html($(this)[0].files[0].name);
+		$('#pages_install_by_step .filename_import_site').show();
+		$('#pages_install_by_step .file_import_site_wrapper').css('background-color','#47a4476e');
+		
+	})
+	$('#pages_install_by_step a.bImportSiteDo').click(function(e) {
+        e.preventDefault();
+		file = $('#pages_install_by_step .file_import_site')[0].files[0];
+		if(file != undefined){
+			
+			$('#pages_install_by_step .install_by_step_setup_import_loading').show();
+			$('#pages_install_by_step .install_by_step_setup_import_content').hide();
+			
+			var reader = new FileReader();
+			reader.onload = function(event) { 
+				wycaApi.ImportSite(btoa(reader.result), function(data) { 
+					if (data.A == wycaApi.AnswerCode.NO_ERROR)
+					{
+						$('#pages_install_by_step .install_by_step_setup_import_loading').hide();
+						$('#pages_install_by_step .install_by_step_setup_import_content').show();
+						
+						//success_wyca('Imported');
+						console.log(data);
+						if(data.D > -1){
+							wycaApi.SetSiteAsCurrent(data.D,function(data){
+								if (data.A == wycaApi.AnswerCode.NO_ERROR)
+								{
+									wycaApi.GetCurrentMapComplete(function(data){
+										if (data.A == wycaApi.AnswerCode.NO_ERROR)
+										{
+											if(data.D.docks.length <= 1){
+												$.ajax({
+													type: "POST",
+													url: 'ajax/install_by_step_import_site_master_dock.php',
+													data: { 
+													},
+													dataType: 'json',
+													success: function(data) {
+														success_wyca('Imported');
+														$('.install_by_step_site_master_dock_next').click();
+													},
+													error: function(e) {
+														alert_wyca('Error step check ; ' + e.responseText);
+													}
+												});
+											}else{
+												forbiddens = data.D.forbiddens;
+												areas = data.D.areas;
+												docks = data.D.docks;
+												pois = data.D.pois;
+												augmented_poses = data.D.augmented_poses; 
+												
+												$.ajax({
+													type: "POST",
+													url: 'ajax/install_by_step_import_site_finish.php',
+													data: { 
+													},
+													dataType: 'json',
+													success: function(data) {
+														
+														InitBystepSiteMasterDock();
+														$('.install_by_step_import_site_next').click();
+													},
+													error: function(e) {
+														alert_wyca('Error step check ; ' + e.responseText);
+													}
+												});
+												
+											}
+										}else{
+											console.log(JSON.stringify(data)); 
+											text = wycaApi.AnswerCodeToString(data.A);
+											if (data.M != '') text += '<br />'+data.M;
+											alert_wyca(text);
+											InitBystepSiteImport();
+										}
+									})
+									window.site_id=data.D;
+								}else{
+									console.log(JSON.stringify(data)); 
+									text = wycaApi.AnswerCodeToString(data.A);
+									if (data.M != '') text += '<br />'+data.M;
+									alert_wyca(text);
+									InitBystepSiteImport();
+								}
+							})
+							
+						}else{
+							alert_wyca('Error in ID site');
+							InitBystepSiteImport();
+						}
+						
+					}
+					else
+					{
+						
+						console.log(JSON.stringify(data)); 
+						text = wycaApi.AnswerCodeToString(data.A);
+						if (data.M != '') text += '<br />'+data.M;
+						alert_wyca(text);
+						InitBystepSiteImport();
+						$('#pages_install_by_step .install_by_step_setup_import_loading').hide();
+						$('#pages_install_by_step .install_by_step_setup_import_content').show();
+					}
+				});
+			};
+			reader.readAsText(file);
+		}else{
+			let icon = $('#pages_install_by_step .file_import_site_wrapper > p > i');
+			icon.toggleClass('shake');
+			setTimeout(function(){icon.toggleClass('shake')},2000);
+		}
+    });
+	
+	
+	$( "#pages_install_by_step #MasterDockList" ).on( 'click', '.MasterDockItem', function(e) {
+		//DECLARATION BOUTON CREE DYNAMIQUEMENT
+		let id_master = $(this).attr('id');
+		$.each(docks,function(idx,item){
+			docks[idx].is_master=false;
+			if(item.id_docking_station == id_master){
+				docks[idx].is_master=true;
+			}
+		})
+		data = GetDataMapToSave();
+		wycaApi.SetCurrentMapData(data, function(data){
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$.ajax({
+					type: "POST",
+					url: 'ajax/install_by_step_import_site_master_dock.php',
+					data: { 
+					},
+					dataType: 'json',
+					success: function(data) {
+						
+						GetInfosCurrentMapByStep(); //MAJ EDIT MAP
+						$('.install_by_step_site_master_dock_next').click();
+						
+					},
+					error: function(e) {
+						alert_wyca('Error step check ; ' + e.responseText);
+					}
+				});
+			}else{
+				console.log(JSON.stringify(data)); 
+				text = wycaApi.AnswerCodeToString(data.A);
+				if (data.M != '') text += '<br />'+data.M;
+				alert_wyca(text);
+				InitBystepSiteImport();
+				$('#pages_install_by_step .install_by_step_setup_import_loading').hide();
+				$('#pages_install_by_step .install_by_step_setup_import_content').show();
+				$('#pages_install_by_step section#install_by_step_site_master_dock .bBackButton').click();
+			}
+		})		
+	})
+	
 	$('#pages_install_by_step form.form_site').submit(function(e) {
         e.preventDefault();
 		window.site_name = $('#pages_install_by_step .i_site_name').val();

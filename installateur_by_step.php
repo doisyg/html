@@ -255,6 +255,79 @@
                 <h2><?php echo __('Site');?></h2>
             </header>
             <div class="content">
+				<h4 style="text-align:center;margin:30px 0"><?= __('Import site or create a new one ?') ?></h4>
+				<ul class="tuiles row">
+                    <li class="col-xs-6">
+                    	<div class="is_checkbox tuile_img no_update button_goto" id="bImportSite" data-goto="install_by_step_import_site" style="bottom:0;border-radius:10px" onTouchStart="InitBystepSiteImport()">
+                    		<i class="fas fa-file-import" style="padding-top:5px"></i>
+							<h4 class="" style="margin-top: 0px;font-weight:700"><?php echo __('Import Site');?></h4>
+                        </div>
+                    </li>
+                    <li class="col-xs-6">
+                    	<div class="is_checkbox tuile_img no_update button_goto" id="bCreateSite" data-goto="install_by_step_new_site" style="bottom:0;border-radius:10px">
+                    		<i class="fas fa-hotel" style="padding-top:5px"></i>
+							<h4 class="" style="margin-top: 0px;font-weight:700"><?php echo __('Create Site');?></h4>
+                        </div>
+                    </li>
+				</ul>
+				
+				<!-- <a href="#" class="install_by_step_maintenance_next button_goto" data-goto="install_by_step_manager" style="display:none;"></a> -->
+            </div>
+			<footer>
+				<a href="#" class="button_goto btn btn-default btn_footer_left btn_100 btn_back" data-goto="install_by_step_wifi"><?= __('Back')?></a>
+            </footer>
+        </section>
+		
+		<section id="install_by_step_import_site" class="page <?php echo $INSTALL_STEP == 60?'active':'';?> with_footer">
+	        <a href="#" class="bBackButton button_goto" data-goto="install_by_step_site"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Site import');?></h2>
+            </header>
+            <div class="content">
+                <div class="install_by_step_setup_import_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
+                <div class="install_by_step_setup_import_content">
+					<div class="file_import_site_wrapper">
+						<input class="file_import_site" type="file" class="form-control" accept=".wyca"/>
+						<p><i class="fas fa-2x fa-file-import"></i><br><?= __('Import your site')?></p>
+						<span class="filename_import_site" style="display:none">Test</span>
+					</div>
+    			</div>
+				<a href="#" class="install_by_step_import_site_next button_goto" data-goto="install_by_step_site_master_dock" style="display:none;"></a>
+            </div>
+            <footer>
+                <a href="#" class="button_goto btn btn-default btn_footer_left btn_50 btn_back" data-goto="install_by_step_site"><?= __('Back')?></a>
+                <a href="#" class="btn btn-primary bImportSiteDo btn_footer_right btn_50"><?php echo __('Import');?></a>
+            </footer>
+        </section>
+		
+		<section id="install_by_step_site_master_dock" class="page <?php echo $INSTALL_STEP == 61?'active':'';?> with_footer">
+	        <a href="#" class="bBackButton button_goto" data-goto="install_by_step_import_site"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Default Dock');?></h2>
+            </header>
+            <div class="content">
+				<h4 style="text-align:center;margin:30px 0"><?= __('Pick the default docking station') ?></h4>
+				<div class="MasterDock_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
+				<ul class="tuiles row" id="MasterDockList">
+                    
+				</ul>
+					
+				<a href="#" class="install_by_step_site_master_dock_next button_goto" data-goto="install_by_step_edit_map" style="display:none;"></a>
+            </div>
+            <footer>
+				<a href="#" class="button_goto btn btn-default btn_footer_left btn_100 btn_back" data-goto=	"install_by_step_import_site"><?= __('Back')?></a>
+            </footer>
+        </section>
+		
+		<section id="install_by_step_new_site" class="page <?php echo $INSTALL_STEP == 11?'active':'';?> with_footer">
+        	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_wifi"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('New site');?></h2>
+            </header>
+            <div class="content">
                 
                 <h3><?php echo __('Indicate the site name');?></h3>
                 
@@ -265,12 +338,12 @@
                 <a href="#" class="install_by_step_site_next button_goto" data-goto="install_by_step_mapping" style="display:none;"></a>   
             </div>
 			<footer>
-				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50 btn_back" data-goto="install_by_step_wifi"><?= __('Back')?></a>
+				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50 btn_back" data-goto="install_by_step_site"><?= __('Back')?></a>
 				<a href="#" onClick="$('#form_site').submit();" class="install_by_step_site_save btn btn-primary btn_footer_right btn_50"><?= __('Next')?></a>
             </footer>
         </section>
 		
-        <section id="install_by_step_mapping" class="page <?php echo $INSTALL_STEP == 11?'active':'';?> hide_photo_back with_footer">
+        <section id="install_by_step_mapping" class="page <?php echo $INSTALL_STEP == 12?'active':'';?> hide_photo_back with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_site"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
@@ -312,13 +385,13 @@
                 </div>         
             </div>
             <footer>
-            	<a href="#" class="ifNMapping bMappingBack btn btn-default button_goto btn_footer_left btn_33 btn_back" data-goto="install_by_step_wifi" ><?php echo __('Back');?></a>
+            	<a href="#" class="ifNMapping bMappingBack btn btn-default button_goto btn_footer_left btn_33 btn_back" data-goto="install_by_step_new_site" ><?php echo __('Back');?></a>
             	<a href="#" class="ifNMapping bMappingStart btn btn-primary btn_footer_right btn_66" ><?php echo __('Start Mapping');?></a>
             	<a href="#" class="ifMapping bMappingStop button_goto btn btn-primary btn_footer_right btn_100" data-goto="install_by_step_mapping_fin" style="display:none"><?php echo __('Done');?></a>
             </footer>
         </section>
         
-		<section id="install_by_step_mapping_fin" class="page <?php echo $INSTALL_STEP == 12?'active':'';?> hide_photo_back with_footer">
+		<section id="install_by_step_mapping_fin" class="page <?php echo $INSTALL_STEP == 13?'active':'';?> hide_photo_back with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_mapping"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
