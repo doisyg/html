@@ -56,6 +56,10 @@
 		var textBtnCheckTest = "<?php echo addslashes(stripslashes(__('Testing')));?>";
 		var textBtnCheckNext = "<?php echo addslashes(stripslashes(__('Next')));?>";
 		var textLessThanOne = "<?php echo addslashes(stripslashes(__('Less than 1')));?>";
+		var textPasswordRequired = "<?php echo addslashes(stripslashes(__('Passwords required.')));?>";
+		var textPasswordMatching = "<?php echo addslashes(stripslashes(__('Passwords not matching.')));?>";
+		var textPasswordPattern = "<?php echo addslashes(stripslashes(__('Passwords needs to be 6 character long with at least 1 character and 1 digit')));?>";
+		var textLoginPattern = "<?php echo addslashes(stripslashes(__('Login needs to be a valid mail adress.')));?>";
 		</script>
 
 		<!-- Vendor -->

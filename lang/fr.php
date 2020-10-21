@@ -185,5 +185,11 @@ $_LANG['8056fd2e8c8f5cf874eee18935fb0e97'] = 'A maintenance account for Wyca is 
 $_LANG['02bce93bff905887ad2233110bf9c49e'] = 'Keep';
 $_LANG['f2a6c498fb90ee345d997f888fce3b18'] = 'Delete';
 $_LANG['1cc82b59fbf8fd45db8cc816108961bc'] = 'A maintenance account for Wyca is by default enabled, however it can be removed to suit as your needs.';
+$_LANG['8f1e77e0d2be21da93cd4d9a939148f7'] = 'Change Password';
+$_LANG['d41d8cd98f00b204e9800998ecf8427e'] = '';
+$_LANG['afc77a046e20afd5fbbbaebceceb7af1'] = 'Tets';
+$_LANG['f303fc2fc9a1f9e9905bc72295ab6c1b'] = 'Passwords needs to be 6 character long with at least 1 character and 1 digit';
+$_LANG['14fb0e15268d28857b0a8b42f1d84beb'] = 'Passwords required.';
+$_LANG['e94ec8654acb715863aad3b957b233f0'] = 'Passwords not matching.';
 
 ?>

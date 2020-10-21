@@ -1695,8 +1695,6 @@ $(document).ready(function(e) {
 		$('#install_by_step_maintenance_i_maintenance_cpassword').val('')
 		$('#install_by_step_maintenance .modalMaintenance').modal('show');
 		
-		
-		
 	});
 	
 	
@@ -1704,11 +1702,13 @@ $(document).ready(function(e) {
 		let pass = $('#install_by_step_maintenance_i_maintenance_password');
 		let cpass = $('#install_by_step_maintenance_i_maintenance_password');
 		
-		if(pass.val() != cpass.val() || pass.val()=='' || !pass[0].checkValidity() || !cpass[0].checkValidity())
-		{
-			alert_wyca('Invalid password or confirm');
-		}
-		else{
+		if (pass.val() == '' || cpass.val() == ''){
+			alert_wyca(textPasswordRequired);
+		}else if(pass.val() != cpass.val()){
+			alert_wyca(textPasswordMatching);
+		}else if(!pass[0].checkValidity() || !cpass[0].checkValidity()){
+			alert_wyca(textPasswordPattern);
+		}else{
 			wycaApi.ChangePasswordWyca(pass.val(),function(data){
 				if (data.A == wycaApi.AnswerCode.NO_ERROR)
 				{
@@ -1758,13 +1758,17 @@ $(document).ready(function(e) {
 	$('#install_by_step_manager .modalManager #install_by_step_manager_bManagerSave').click(function(e) {
         e.preventDefault();
 		
-		if ($('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_password').val() != $('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_cpassword').val() || $('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_cpassword').val() == '' || !$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_cpassword')[0].checkValidity())
-		{
-			alert_wyca('Invalid password or confirm');
-		}
-		else if (!$('#install_by_step_manager_i_manager_email')[0].checkValidity())
-		{
-			alert_wyca('Error in login');
+		let pass = $('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_password');
+		let cpass = $('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_cpassword');
+		
+		if (pass.val() == '' || cpass.val() == ''){
+			alert_wyca(textPasswordRequired);
+		}else if(pass.val() != cpass.val()){
+			alert_wyca(textPasswordMatching);
+		}else if(!pass[0].checkValidity() || !cpass[0].checkValidity()){
+			alert_wyca(textPasswordPattern);
+		}else if (!$('#install_by_step_manager_i_manager_email')[0].checkValidity()){
+			alert_wyca(textLoginPattern);
 		}
 		/*
 		else if ($('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_societe').val() == "" )

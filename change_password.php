@@ -53,7 +53,7 @@ if(isset($_GET['ns'])){
 
 				<div id="divLogin" class="panel panel-sign">
 					<div class="panel-title-sign mt-xl text-right">
-						<h2 class="title text-uppercase text-bold m-none"><i class="fa fa-user mr-xs"></i> <?php echo __('Sign In');?></h2>
+						<h2 class="title text-uppercase text-bold m-none"><i class="fa fa-lock mr-xs"></i> <?php echo __('Change Password');?></h2>
 					</div>
 					<div class="panel-body">
 						<?php if (isset($message))
@@ -65,25 +65,26 @@ if(isset($_GET['ns'])){
                             <?php
                         }?>
 						<form method="post" id="formChangePassword">
-							<div class="form-group mb-lg">
+							<div class="form-group">
 								<label><?php echo __('Password');?></label>
 								<div class="input-group input-group-icon">
-									<input id="password" name="password" type="password" class="form-control input-lg" />
+									<input id="password" name="password" type="password" class="form-control input-lg" pattern="(?=^.{6,}$)(?=.*[A-z])(?=.*[0-9]).*$"/>
 									<span class="input-group-addon">
 										<span class="icon icon-lg">
 											<i class="fa fa-lock"></i>
 										</span>
 									</span>
+									
 								</div>
 							</div>
-
-							<div class="form-group mb-lg">
+							<p class="password_format"><?= _('At least 6 characters, 1 letter, 1 digit')?> </p>
+							<div class="form-group">
 								<div class="clearfix">
 									<label class="pull-left"><?php echo __('Confirm Password');?></label>
 									<!--<a href="#" id="bLostPassword" class="pull-right"><?php echo __('Lost Password?');?></a>-->
 								</div>
 								<div class="input-group input-group-icon">
-									<input id="confirm_password" name="confirm_password" type="password" class="form-control input-lg" />
+									<input id="confirm_password" name="confirm_password" type="password" class="form-control input-lg" pattern="(?=^.{6,}$)(?=.*[A-z])(?=.*[0-9]).*$"/>
 									<span class="input-group-addon">
 										<span class="icon icon-lg">
 											<i class="fa fa-lock"></i>
@@ -91,7 +92,7 @@ if(isset($_GET['ns'])){
 									</span>
 								</div>
 							</div>
-
+							<p class="password_format"><?= _('At least 6 characters, 1 letter, 1 digit')?> </p>
 							<div class="row">
 								<div class="col-sm-12 text-right">
 									<button type="submit" class="btn btn-primary hidden-xs"><?php echo __('Change password');?></button>
@@ -165,6 +166,9 @@ $(document).ready(function(e) {
 		}else if($('#password').val() != $('#confirm_password').val()){
 			
 			DisplayError('Passwords not matching.');
+		}else if(!$('#password')[0].checkValidity() || !$('#confirm_password')[0].checkValidity()){
+			
+			DisplayError('Passwords needs to be 6 character long with at least one character and one digit.');
 		}
 		else
 		{
