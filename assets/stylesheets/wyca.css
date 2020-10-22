@@ -945,6 +945,22 @@ div.icon_menu .iconForbiddenArea .fa-minus-circle{
     line-height: 16px!important;
     position: absolute;
 }
+.fas.times_icon_menu{
+	position: absolute;
+    top: 18px;
+    left: 40px;
+    z-index: 50;
+    font-size: 14px;
+    border-radius: 10px;
+    height: 15px;
+    width: 15px;
+	padding: 0.25px 2px;
+    background: white;
+	display:none;
+}
+.times_icon_menu.dnone{
+	display:none!important;
+}
 /* */
 ul#MasterDockList li .tuile_img.is_checkbox{border-radius:10px;bottom:0;}
 ul#MasterDockList li .tuile_img.is_checkbox p{border-radius:10px;bottom:0;}

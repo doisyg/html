@@ -247,7 +247,6 @@
 			</footer>
         </section>
 			
-        
 		<section id="install_by_step_site" class="page <?php echo $INSTALL_STEP == 10?'active':'';?> with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_wifi"></a>
             <header>
@@ -483,8 +482,7 @@
                 <a href="#" class="install_by_step_mapping_use_next button_goto" data-goto="install_by_step_edit_map" style="display:none;"></a>                   
             </footer>
         </section>
-        
-        
+         
 		<section id="install_by_step_edit_map" class="page <?php echo $INSTALL_STEP == 20?'active':'';?> hide_photo_back with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_mapping"></a>
             <header>
@@ -501,6 +499,7 @@
 						<div class="burger_menu_trait"></div>
 					</div>
 					
+					<i class="fas fa-times times_icon_menu iconMenuRed"></i>
 					<div class="btn-circle btn-lg icon_menu" data-menu="install_by_step_edit_map_menu_point">
 						<i class="fas fa-draw-polygon icon_menu_point iconMenuGreen" style="transform: scale(2.5);left: 17px;top: -23px;"></i>
 					</div>
@@ -1394,7 +1393,6 @@
             </footer>
         </section>
         -->
-        
         
 		<section id="install_by_step_config" class="page <?php echo $INSTALL_STEP == 30?'active':'';?> with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_edit_map"></a>
