@@ -40,6 +40,12 @@ $(document).ready(function(e) {
 	img.onload = function () {
 		imgMappingLoaded = true;	
 		InitPosCarteMapping();
+		
+		if (mappingStarted && timerGetMappingInConstruction == null)
+		{
+			// Le timer a déjà sauté, on relance l'appel
+			GetMappingInConstruction();
+		}
 	};
 	
 	wycaApi = new WycaAPI({
@@ -97,6 +103,7 @@ $(document).ready(function(e) {
             mappingLastPose = {'x':parseFloat(data.X), 'y':parseFloat(data.Y), 'theta':parseFloat(data.T) };
             InitPosCarteMapping();
 		},
+		/*
         onMappingMapInConstruction: function(data){
 			if (data.M != undefined)
 			{
@@ -109,6 +116,7 @@ $(document).ready(function(e) {
 				}
 			}
         },
+		*/
 		onMappingStartResult: function(data){
             InitMappingByStep();
 		},
@@ -131,8 +139,22 @@ $(document).ready(function(e) {
 				$('body > header .stop_move').show();
 			else
 				$('body > header .stop_move').hide();
+		},
+		onReceviedSegmented: function(data){
+			if (data.I == data.NB)
+			{
+				$('#modalLoading').modal('hide');
+			}
+			else if (data.NB > 2)
+			{
+				$('#modalLoading').modal('show');
+				
+				valeur = parseInt(data.I / data.NB * 100);
+				$('#modalLoading .loadingProgress .progress-bar').css('width', valeur+'%').attr('aria-valuenow', valeur); 
+			}
 		}
 	});
+	
 	
 	
 	wycaApi.init();	
@@ -142,6 +164,47 @@ $(document).ready(function(e) {
 		wycaApi.StopMove();
     });
 });
+
+var timerGetMappingInConstruction = null;
+var haveReplyFromGetMappingInConstruction = false;
+var liveMapping = true;
+
+function TimeoutGetMappingInConstruction()
+{
+	timerGetMappingInConstruction = null;
+	if (mappingStarted && haveReplyFromGetMappingInConstruction)
+	{
+		// Le timer a sauté, on a déjà eu une réponse de GetMappingInConstruction, on relance l'appel
+		GetMappingInConstruction();
+	}
+}
+
+function GetMappingInConstruction()
+{
+	if (mappingStarted && liveMapping)
+	{
+		haveReplyFromGetMappingInConstruction = false;
+		timerGetMappingInConstruction = setTimeout(TimeoutGetMappingInConstruction, 1000);
+		
+		wycaApi.GetMappingInConstruction(function(data) {
+			
+			haveReplyFromGetMappingInConstruction = true;
+			
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				if (imgMappingLoaded)
+				{
+					imgMappingLoaded = false;
+					var img = document.getElementById("install_by_step_mapping_img_map_saved");
+					//img.src = 'data:image/png;base64,' + data.D.M;
+					img.src = robot_http + '/mapping/last_mapping.jpg?v='+ Date.now();
+					//img.src = 'http://192.168.0.30/mapping/last_mapping.jpg?v='+ Date.now();
+					mappingLastOrigin = {'x':parseFloat(data.D.X), 'y':parseFloat(data.D.Y) };
+				}
+			}
+		});
+	}
+}
 
 function onGoToPoseResult(data)
 {
@@ -274,8 +337,8 @@ function InitPosCarteMapping()
 		img_map_save_contener_id = '#install_by_step_mapping';
 	}
 	
-    originWidth = $(img_map_save_id).prop('naturalWidth');
-    originHeight = $(img_map_save_id).prop('naturalHeight');
+    originWidth = $(img_map_save_id).prop('naturalWidth') * 2;
+    originHeight = $(img_map_save_id).prop('naturalHeight') * 2;
     if (originWidth > 0 && originHeight > 0) //mappingLastInfo != null)
     {
         hauteurCm = originHeight * 5;

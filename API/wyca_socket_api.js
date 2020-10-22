@@ -64,6 +64,7 @@ function WycaAPI(options){
 		UNSUBSCRIBE			: 0x110C,
 		UNSUBSCRIBE_ALL			: 0x110D,
 		INSTALL_NEW_TOP_WITHOUT_KEY			: 0x1106,
+		SET_USE_SEGMENTED_MESSAGE			: 0x110F,
 	 
 		CANCEL_CURRENT_ACTION			: 0x1103,
 	 
@@ -75,6 +76,7 @@ function WycaAPI(options){
 		MAPPING_START_CANCEL			: 0x4103,
 		MAPPING_STOP			: 0x4104,
 		GET_LAST_MAPPING			: 0x4105,
+		GET_MAPPING_IN_CONSTRUCTION			: 0x4106,
 		NAVIGATION_GET_IS_STARTED			: 0x0110,
 		NAVIGATION_START_FROM_MAPPING			: 0x0112,
 		NAVIGATION_START_FROM_POSE			: 0x0113,
@@ -382,6 +384,7 @@ function WycaAPI(options){
 	this.connectedWebRTC = false;
 	
 	this.subscribeOnWebrtc = Array();
+	this.segementedMessages = Array();
 	
 	var _this = this;
 	
@@ -1044,6 +1047,44 @@ function WycaAPI(options){
 			console.log("ERROR", msg);
 			console.log(_this.AnswerCodeToString(msg.A));
 		}
+		
+		if (msg.SEGMENTED != undefined && msg.SEGMENTED)
+		{
+			// On renvoi un ack
+			_this.wycaSend("ack_segmented");
+			
+			if (msg.O != undefined)
+				name = "O"+msg.O;
+			else
+				name = "E"+msg.E;
+			console.log('Received ' + msg.D.I + '/' + msg.D.NB);
+			
+			if (_this.options.onReceviedSegmented != undefined && msg.O != undefined) { _this.options.onReceviedSegmented({"O":msg.O, "I":msg.D.I, "NB":msg.D.NB}); }
+			
+			if (msg.D.I == 1)
+			{
+				_this.segementedMessages[name] = msg;
+				_this.segementedMessages[name].D = msg.D.M;
+				return;
+			}
+			
+			_this.segementedMessages[name].D += msg.D.M;
+			
+			if (msg.D.I == msg.D.NB)
+			{
+				// dernier message
+				msg = _this.segementedMessages[name];
+				_this.segementedMessages[name] = null;
+				msg.D = JSON.parse(msg.D);
+			}
+			else
+			{
+				return;
+			}
+			
+		}
+		
+		
 		if (msg.O != undefined)
 		{
 			if (_this.options.id_robot != 'not_robot' && _this.connectedWebRTC)
@@ -1058,6 +1099,7 @@ function WycaAPI(options){
 					if (msg.A == _this.AnswerCode.NO_ERROR)
 					{
 						_this.websocketAuthed = true;
+						_this.wycaSend('{"O":'+_this.CommandCode.SET_USE_SEGMENTED_MESSAGE+', "P": true}');
 						_this.Subscribe();
 					}
 					else
@@ -1662,6 +1704,14 @@ function WycaAPI(options){
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
+	this.GetMappingInConstruction = function(callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.GET_MAPPING_IN_CONSTRUCTION] = callback;
+		var action = {
+			"O": _this.CommandCode.GET_MAPPING_IN_CONSTRUCTION,
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
 	this.NavigationIsStarted = function(callback){
 		if (callback != undefined)
 			this.callbacks[_this.CommandCode.NAVIGATION_GET_IS_STARTED] = callback;
@@ -1800,7 +1850,7 @@ function WycaAPI(options){
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
-	this.GetPath = function(x1, y1, theta1, x2, y2, theta2, callback){
+	this.GetPath = function(x1, y1, theta1, x2, y2, theta2, pdt, callback){
 		if (callback != undefined)
 			this.callbacks[_this.CommandCode.GET_PATH] = callback;
 		var action = {
@@ -1811,12 +1861,13 @@ function WycaAPI(options){
 				"T1": theta1,
 				"X2": x2,
 				"Y2": y2,
-				"T2": theta2
+				"T2": theta2,
+				"PDT": pdt
 			}
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
-	this.GetPathFromCurrentPose = function(x, y, theta, callback){
+	this.GetPathFromCurrentPose = function(x, y, theta, pdt, callback){
 		if (callback != undefined)
 			this.callbacks[_this.CommandCode.GET_PATH_FROM_CURRENT_POSE] = callback;
 		var action = {
@@ -1824,7 +1875,8 @@ function WycaAPI(options){
 			"P": {
 				"X": x,
 				"Y": y,
-				"T": theta
+				"T": theta,
+				"PDT": pdt
 			}
 		};
 		_this.wycaSend(JSON.stringify(action));
@@ -1914,7 +1966,7 @@ function WycaAPI(options){
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
-	this.GoToPose = function(x, y, theta, callback){
+	this.GoToPose = function(x, y, theta, pdt, callback){
 		if (callback != undefined)
 			this.callbacks[_this.CommandCode.GO_TO_POSE] = callback;
 		var action = {
@@ -1922,7 +1974,8 @@ function WycaAPI(options){
 			"P": {
 				"X":x,
 				"Y":y,
-				"T":theta
+				"T":theta,
+				"PDT":pdt
 			}
 		};
 		_this.wycaSend(JSON.stringify(action));
@@ -1935,7 +1988,7 @@ function WycaAPI(options){
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
-	this.GoToPoseAccurate = function(x, y, theta, callback){
+	this.GoToPoseAccurate = function(x, y, theta, pdt, callback){
 		if (callback != undefined)
 			this.callbacks[_this.CommandCode.GO_TO_POSE_ACCURATE] = callback;
 		var action = {
@@ -1943,7 +1996,8 @@ function WycaAPI(options){
 			"P": {
 				"X":x,
 				"Y":y,
-				"T":theta
+				"T":theta,
+				"PDT":pdt
 			}
 		};
 		_this.wycaSend(JSON.stringify(action));
@@ -1956,7 +2010,7 @@ function WycaAPI(options){
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
-	this.GoToPoseFlexible = function(x, y, theta, distance_tolerance, angle_tolerance, callback){
+	this.GoToPoseFlexible = function(x, y, theta, distance_tolerance, angle_tolerance, pdt, callback){
 		if (callback != undefined)
 			this.callbacks[_this.CommandCode.GO_TO_POSE_FLEXIBLE] = callback;
 		var action = {
@@ -1966,7 +2020,8 @@ function WycaAPI(options){
 				"Y":y,
 				"T":theta,
 				"DT":distance_tolerance,
-				"AT":angle_tolerance
+				"AT":angle_tolerance,
+				"PDT":pdt
 			}
 		};
 		_this.wycaSend(JSON.stringify(action));

@@ -254,6 +254,10 @@
                 
                 <div style="text-align:center; font-size:26px;">
                 
+                	<div class="switchLiveMapping switch switch-sm switch-primary" style="position:absolute; top:20px; right:20px; display:none; z-index:1001; ">
+                        <input type="checkbox" name="switch" data-plugin-ios-switch checked="checked" />
+                    </div>
+                	
                 	
                     <a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
                     <a href="#" class="bMappingStart btn btn-primary btn_big_popup ifUndocked"><i class="fa fa-play"></i> <?php echo __('Start mapping');?></a>

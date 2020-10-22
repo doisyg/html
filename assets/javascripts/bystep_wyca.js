@@ -582,6 +582,7 @@ $(document).ready(function(e) {
 			else
 			{
 				$('#install_by_step_mapping .progressStartMapping').hide();
+				$('#install_by_step_mapping .switchLiveMapping').show();
 				$('#install_by_step_mapping .bMappingStop').show();
 				$('#install_by_step_mapping .mapping_view').show();
 					
@@ -593,9 +594,34 @@ $(document).ready(function(e) {
 					clearInterval(intervalMap);
 					intervalMap = null;
 				}
+				
+				GetMappingInConstruction();
 			}
 		}
 	});
+	
+	$('#install_by_step_mapping .switchLiveMapping input').change(function(e) {
+		
+		if ($(this).is(':checked') )
+		{
+			liveMapping = true;
+			if (mappingStarted && timerGetMappingInConstruction == null)
+			{
+				GetMappingInConstruction();
+			}
+		}
+		else
+		{
+			liveMapping = false;
+			if (timerGetMappingInConstruction != null)
+			{
+				clearTimeout(timerGetMappingInConstruction);
+				timerGetMappingInConstruction = null;
+			}
+		}
+		
+	});
+	
 	$('#install_by_step_mapping .bMappingStop').click(function(e) {
 		e.preventDefault();
 		
@@ -639,6 +665,7 @@ $(document).ready(function(e) {
 			}, 100);
 		});
 		mappingStarted = false;
+		$('#install_by_step_mapping .switchLiveMapping').hide();
 		$('#install_by_step_mapping .bMappingStop').hide();
 		$('#install_by_step_mapping .mapping_view').hide();
 		$('#install_by_step_mapping .bMappingStart').show();
@@ -651,6 +678,13 @@ $(document).ready(function(e) {
 			clearInterval(intervalMap);
 			intervalMap = null;
 		}
+		
+		if (timerGetMappingInConstruction != null)
+		{
+			clearInterval(timerGetMappingInConstruction);
+			timerGetMappingInConstruction = null;
+		}
+		
 	});
 	
 	$('#install_by_step_mapping_fin .bMappingSaveMap').click(function(e) {
@@ -1404,6 +1438,7 @@ function NextTimerCreateMap()
 	{
 		setTimeout(function() {
 			$('#install_by_step_mapping .progressStartMapping').hide();
+			$('#install_by_step_mapping .switchLiveMapping').show();
 			$('#install_by_step_mapping .bMappingStop').show();
 			$('#install_by_step_mapping .mapping_view').show();
 				
@@ -1416,6 +1451,8 @@ function NextTimerCreateMap()
 				intervalMap = null;
 			}
 			//intervalMap = setInterval(GetMap, 1000);
+			
+			GetMappingInConstruction();
 		}, 500);
 	}
 	else	

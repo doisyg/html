@@ -772,7 +772,7 @@ $(document).ready(function() {
 		
 		console.log('GoToPose', xRos, yRos);
 		
-		wycaApi.GoToPose(xRos, yRos, 0, function (data){
+		wycaApi.GoToPose(xRos, yRos, 0, 0, function (data){
 			
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
