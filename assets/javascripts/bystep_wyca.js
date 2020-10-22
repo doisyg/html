@@ -662,11 +662,7 @@ $(document).ready(function(e) {
 					if (data.A != wycaApi.AnswerCode.NO_ERROR){
 						alert_wyca('Error in scanning site\'s names ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M)
 					}else{
-						data.D.forEach(function(item){
-							site_names.push(item.name);
-						});
-						
-						if(!site_names.includes(window.site_name)){
+						if(!CheckName(data.D,window.site_name)){
 							if (create_new_site) // BOOLEAN INSTALLATEUR_WYCA.JS GESTION DES SITES
 							{
 									newSite = { "id_site":-1, "comment":"", name:window.site_name };
@@ -909,13 +905,7 @@ $(document).ready(function(e) {
 							if (data.A != wycaApi.AnswerCode.NO_ERROR){
 								alert_wyca('Error in scanning map names ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M)
 							}else{
-								data.D.forEach(function(item){
-									map_names.push(item.name);
-								});
-								console.log('Site ',data.D.id_site);
-								console.log('Maps ',map_names);
-								console.log('Map ',window.map_name);
-								if(map_names.includes(window.map_name)){
+								if(CheckName(data.D,window.map_name)){
 									alert_wyca(textNameUsed);
 									setTimeout(function(){form_sended = false},1000);
 									$('.bMappingSaveMap').removeClass('disabled');

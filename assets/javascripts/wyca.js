@@ -1183,6 +1183,19 @@ function DisplayError(text)
 	 $('.popup_error').show();
 }
 
+function CheckName(tab, nom, index_ignore=-1)
+{
+	let res = false;
+	nom = nom.toLowerCase();
+	$.each(tab,function(idx,item){
+		if(idx != index_ignore && item.name.toLowerCase() == nom)
+		{
+			res = true;
+		}
+	});
+	return res;
+}
+	
 function GetDataMapToSave()
 {
 	data = {};

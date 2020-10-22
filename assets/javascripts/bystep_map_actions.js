@@ -1752,12 +1752,7 @@ $(document).ready(function() {
     });
 	
 	$('#install_by_step_edit_map_bDockSaveConfig').click(function(e) {
-		let arr =[];
-		$.each(docks,function(idx,item){
-			if(idx != currentDockIndex)
-				arr.push(item.name);
-		})
-		if(!arr.includes($('#install_by_step_edit_map_dock_name').val())){
+		if(CheckName(docks, $('#install_by_step_edit_map_dock_name').val(), currentDockIndex)){
 			firstAction = $('#install_by_step_edit_map_container_all .modalDockOptions .list_undock_procedure li').first();
 			if (firstAction.data('action') == 'rotate')
 			{
@@ -1979,14 +1974,8 @@ $(document).ready(function() {
     });
 	
 	$('#install_by_step_edit_map_bPoiSaveConfig').click(function(e) {
-		console.log(currentPoiIndex)
-		console.log(pois[currentPoiIndex])
-		let arr =[];
-		$.each(pois,function(idx,item){
-			if(idx != currentPoiIndex)
-				arr.push(item.name);
-		})
-		if(!arr.includes($('#install_by_step_edit_map_poi_name').val())){
+		
+		if(CheckName(pois, $('#install_by_step_edit_map_poi_name').val(), currentPoiIndex)){
 			poi = pois[currentPoiIndex];
 			saveCurrentPoi = JSON.stringify(poi);
 			
@@ -1998,7 +1987,8 @@ $(document).ready(function() {
 					
 			if (bystepCurrentAction == 'editPoi')
 				ByStepAddHistorique({'action':'edit_poi', 'data':{'index':currentPoiIndex, 'old':saveCurrentPoi, 'new':JSON.stringify(pois[currentPoiIndex])}});
-				ByStepTracePoi(currentPoiIndex);
+			ByStepTracePoi(currentPoiIndex);
+			$('modal.modalPoiOptions')..modal('hide');
 			
 		}else{
 			alert_wyca(textNameUsed);
@@ -2142,12 +2132,7 @@ $(document).ready(function() {
     });
 	
 	$('#install_by_step_edit_map_bAugmentedPoseSaveConfig').click(function(e) {
-		let arr =[];
-		$.each(augmented_poses,function(idx,item){
-			if(idx != currentAugmentedPoseIndex)
-				arr.push(item.name);
-		})
-		if(!arr.includes($('#install_by_step_edit_map_augmented_pose_name').val())){
+		if(CheckName(augmented_poses, $('#install_by_step_edit_map_augmented_pose_name').val(), currentAugmentedPoseIndex)){
 			augmented_pose = augmented_poses[currentAugmentedPoseIndex];
 			saveCurrentAugmentedPose = JSON.stringify(augmented_pose);
 					
@@ -2174,6 +2159,7 @@ $(document).ready(function() {
 				ByStepAddHistorique({'action':'edit_augmented_pose', 'data':{'index':currentAugmentedPoseIndex, 'old':saveCurrentAugmentedPose, 'new':JSON.stringify(augmented_poses[currentAugmentedPoseIndex])}});
 			
 			ByStepTraceAugmentedPose(currentAugmentedPoseIndex);
+			$('modal.modalAugmentedPoseOptions').modal('hide');
 		}else{
 			alert_wyca(textNameUsed);
 		};
