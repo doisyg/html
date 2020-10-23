@@ -131,11 +131,13 @@ function WycaAPI(options){
 		SET_SITE_AS_CURRENT			: 0x6131,
 		GET_MAP			: 0x611E,
 		GET_MAP_COMPLETE			: 0x6122,
+		GET_MAP_DATA			: 0x6148,
 		SET_MAP			: 0x611F,
 		DELETE_MAP			: 0x6120,
 		SET_MAP_DATA			: 0x6123,
 		GET_CURRENT_MAP			: 0x610A,
 		GET_CURRENT_MAP_COMPLETE			: 0x610B,
+		GET_CURRENT_MAP_DATA			: 0x6149,
 		SET_MAP_AS_CURRENT			: 0x6121,
 		GET_MAPS_LIST			: 0x6124,
 		GET_AREA			: 0x6102,
@@ -2262,6 +2264,15 @@ function WycaAPI(options){
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}	
+	this.GetMapData = function(id_map, callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.GET_MAP_DATA] = callback;
+		var action = {
+			"O": _this.CommandCode.GET_MAP_DATA,
+			"P": id_map
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}	
 	this.SetMap = function(json_map, callback){
 		if (callback != undefined)
 			this.callbacks[_this.CommandCode.SET_MAP] = callback;
@@ -2311,6 +2322,14 @@ function WycaAPI(options){
 			this.callbacks[_this.CommandCode.GET_CURRENT_MAP_COMPLETE] = callback;
 		var action = {
 			"O": _this.CommandCode.GET_CURRENT_MAP_COMPLETE,
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	this.GetCurrentMapData = function(callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.GET_CURRENT_MAP_DATA] = callback;
+		var action = {
+			"O": _this.CommandCode.GET_CURRENT_MAP_DATA,
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
