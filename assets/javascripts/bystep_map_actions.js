@@ -80,6 +80,10 @@ var boolHelpArea=true;
 var boolHelpForbidden=true;
 var boolHelpGotoPose=true;
 
+var boolGotopoi=true;
+var boolGotodock=true;
+var boolGotoaugmentedpose=true;
+
 var poi_temp_add = {};
 var augmented_pose_temp_add = {};
 
@@ -642,12 +646,95 @@ $(document).ready(function() {
 		$('#install_by_step_edit_map_container_all .modalDockOptions').modal('show');
     });
 	
+	$('#install_by_step_edit_map .bCancelTestDock').click(function(e) {boolGotodock=false});
+	
 	$('#install_by_step_edit_map .bTestDock').click(function(e) {
         e.preventDefault();
 		
-		if (currentDockByStepLongTouch.data('id_docking_station') >= 300000)
-		{
-			alert_wyca('You must save the map before testing a new docking station');
+		if (currentDockByStepLongTouch.data('id_docking_station') >= 300000){
+			boolGotodock = true;
+			statusSavingMapBeforeTestDock=1;
+			timerSavingMapBeforeTestDock=0;
+			$('#install_by_step_edit_map_modalDoSaveBeforeTestDock').modal('show');
+			TimerSavingMapBeforeTest('dock'); // LAUNCH ANIM PROGRESS BAR
+			
+			id_dock_test = currentDockByStepLongTouch.data('id_docking_station');
+			i = GetDockIndexFromID(currentDockByStepLongTouch.data('id_docking_station'));
+			name = docks[i].name;
+			
+			data = GetDataMapToSave();
+			gotoTest = false;
+			
+			wycaApi.SetCurrentMapData(data, function(data){
+				if (data.A == wycaApi.AnswerCode.NO_ERROR){	
+					wycaApi.GetCurrentMapComplete(function(data) {
+						if (data.A == wycaApi.AnswerCode.NO_ERROR){
+							console.log('Map Saved');
+							statusSavingMapBeforeTestDock=2; //STOP ANIM PROGRESS BAR
+							
+							id_map = data.D.id_map;
+							id_map_last = data.D.id_map;
+							
+							forbiddens = data.D.forbiddens;
+							areas = data.D.areas;
+							gommes = Array();
+							docks = data.D.docks;
+							pois = data.D.pois;
+							augmented_poses = data.D.augmented_poses;
+							
+							$('#install_by_step_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
+							
+							largeurSlam = data.D.ros_width;
+							hauteurSlam = data.D.ros_height;
+							largeurRos = data.D.ros_width;
+							hauteurRos = data.D.ros_height;
+							
+							ros_largeur = data.D.ros_width;
+							ros_hauteur = data.D.ros_height;
+							ros_resolution = data.D.ros_resolution;
+							
+							$('#install_by_step_edit_map_svg').attr('width', data.D.ros_width);
+							$('#install_by_step_edit_map_svg').attr('height', data.D.ros_height);
+							
+							$('#install_by_step_edit_map_image').attr('width', data.D.ros_width);
+							$('#install_by_step_edit_map_image').attr('height', data.D.ros_height);
+							$('#install_by_step_edit_map_image').attr('xlink:href', 'data:image/png;base64,'+data.D.image_tri);
+						  
+							bystepHistoriques = Array();
+							bystepHistoriqueIndex = -1;
+							ByStepRefreshHistorique();
+							
+							ByStepInitMap();
+							ByStepResizeSVG();
+							
+							// On recherche le nouveau dock créé avec le bon id
+							if (id_dock_test >= 300000)
+							{
+								$.each(docks, function( index, dock ) {
+									
+									if (dock.name == name)
+									{
+										currentDockByStepLongTouch = $('#install_by_step_edit_map_dock_'+dock.id_docking_station);
+										setTimeout(function(){$('#install_by_step_edit_map_modalDoSaveBeforeTestDock').modal('hide')},1500);
+										if(boolGotodock){
+											$('#install_by_step_edit_map .bTestDock').click();
+										}
+									}
+								});
+							}
+						}
+						else
+						{
+							$('#install_by_step_edit_map_modalDoSaveBeforeTestDock').modal('hide')
+							alert_wyca('Init map error : ' + wycaApi.AnswerCodeToString(data.A));
+						}
+					});
+				}else{
+					$('#install_by_step_edit_map_modalDoSaveBeforeTestDock').modal('hide');
+					alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' + data.M);
+				}
+			});
+
 		}
 		else
 		{
@@ -763,12 +850,96 @@ $(document).ready(function() {
 		
     });
 	
+	$('#install_by_step_edit_map .bCancelTestPoi').click(function(e) {boolGotopoi=false});
+	
 	$('#install_by_step_edit_map .bTestPoi').click(function(e) {
         e.preventDefault();
 		
-		if (currentPoiByStepLongTouch.data('id_poi') >= 300000)
-		{
-			alert_wyca('You must save the map before testing a new POI');
+		if (currentPoiByStepLongTouch.data('id_poi') >= 300000){
+			boolGotopoi = true;
+			statusSavingMapBeforeTestPoi=1;
+			timerSavingMapBeforeTestPoi=0;
+			$('#install_by_step_edit_map_modalDoSaveBeforeTestPoi').modal('show');
+			TimerSavingMapBeforeTest('poi'); // LAUNCH ANIM PROGRESS BAR
+			
+			id_poi_test = currentPoiByStepLongTouch.data('id_poi');
+			i = GetPoiIndexFromID(currentPoiByStepLongTouch.data('id_poi'));
+			name = pois[i].name;
+			
+			data = GetDataMapToSave();
+			gotoTest = false;
+			
+			wycaApi.SetCurrentMapData(data, function(data){
+				if (data.A == wycaApi.AnswerCode.NO_ERROR){	
+					wycaApi.GetCurrentMapComplete(function(data) {
+						if (data.A == wycaApi.AnswerCode.NO_ERROR){
+							console.log('Map Saved');
+							statusSavingMapBeforeTestPoi=2; //STOP ANIM PROGRESS BAR
+							
+							id_map = data.D.id_map;
+							id_map_last = data.D.id_map;
+							
+							forbiddens = data.D.forbiddens;
+							areas = data.D.areas;
+							gommes = Array();
+							docks = data.D.docks;
+							pois = data.D.pois;
+							augmented_poses = data.D.augmented_poses;
+							
+							$('#install_by_step_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
+							
+							largeurSlam = data.D.ros_width;
+							hauteurSlam = data.D.ros_height;
+							largeurRos = data.D.ros_width;
+							hauteurRos = data.D.ros_height;
+							
+							ros_largeur = data.D.ros_width;
+							ros_hauteur = data.D.ros_height;
+							ros_resolution = data.D.ros_resolution;
+							
+							$('#install_by_step_edit_map_svg').attr('width', data.D.ros_width);
+							$('#install_by_step_edit_map_svg').attr('height', data.D.ros_height);
+							
+							$('#install_by_step_edit_map_image').attr('width', data.D.ros_width);
+							$('#install_by_step_edit_map_image').attr('height', data.D.ros_height);
+							$('#install_by_step_edit_map_image').attr('xlink:href', 'data:image/png;base64,'+data.D.image_tri);
+						  
+							bystepHistoriques = Array();
+							bystepHistoriqueIndex = -1;
+							ByStepRefreshHistorique();
+							
+							ByStepInitMap();
+							ByStepResizeSVG();
+							
+							// On recherche le nouveau poi créé avec le bon id
+							if (id_poi_test >= 300000)
+							{
+								$.each(pois, function( index, poi ) {
+									
+									if (poi.name == name)
+									{
+										currentPoiByStepLongTouch = $('#install_by_step_edit_map_poi_robot_'+poi.id_poi);
+										setTimeout(function(){$('#install_by_step_edit_map_modalDoSaveBeforeTestPoi').modal('hide')},1500);
+										if(boolGotopoi){
+											$('#install_by_step_edit_map .bTestPoi').click();
+										}
+									}
+								});
+							}
+							
+						}
+						else
+						{
+							$('#install_by_step_edit_map_modalDoSaveBeforeTestPoi').modal('hide')
+							alert_wyca('Init map error : ' + wycaApi.AnswerCodeToString(data.A));
+						}
+					});
+				}else{
+					$('#install_by_step_edit_map_modalDoSaveBeforeTestPoi').modal('hide');
+					alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' + data.M);
+				}
+			});
+
 		}
 		else
 		{
@@ -884,12 +1055,94 @@ $(document).ready(function() {
 		
     });
 	
+	$('#install_by_step_edit_map .bCancelTestAugmentedPose').click(function(e){boolGotoaugmentedpose=false });
+	
 	$('#install_by_step_edit_map .bTestAugmentedPose').click(function(e) {
         e.preventDefault();
 		
-		if (currentAugmentedPoseByStepLongTouch.data('id_augmented_pose') >= 300000)
-		{
-			alert_wyca('You must save the map before testing a new augmented pose');
+		if (currentAugmentedPoseByStepLongTouch.data('id_augmented_pose') >= 300000){
+			boolGotoaugmentedpose = true;
+			statusSavingMapBeforeTestAugmentedPose=1;
+			timerSavingMapBeforeTestAugmentedPose=0;
+			$('#install_by_step_edit_map_modalDoSaveBeforeTestAugmentedPose').modal('show');
+			TimerSavingMapBeforeTest('augmented_pose');  // LAUNCH ANIM PROGRESS BAR
+			
+			id_augmented_pose_test = currentAugmentedPoseByStepLongTouch.data('id_augmented_pose');
+			i = GetAugmentedPoseIndexFromID(currentAugmentedPoseByStepLongTouch.data('id_augmented_pose'));
+			name = augmented_poses[i].name;
+			
+			data = GetDataMapToSave();
+			gotoTest = false;
+			
+			wycaApi.SetCurrentMapData(data, function(data){
+				if (data.A == wycaApi.AnswerCode.NO_ERROR){	
+					wycaApi.GetCurrentMapComplete(function(data) {
+						if (data.A == wycaApi.AnswerCode.NO_ERROR){
+							console.log('Map Saved');
+							statusSavingMapBeforeTestAugmentedPose=2; //STOP ANIM PROGRESS BAR
+							
+							id_map = data.D.id_map;
+							id_map_last = data.D.id_map;
+							
+							forbiddens = data.D.forbiddens;
+							areas = data.D.areas;
+							gommes = Array();
+							docks = data.D.docks;
+							pois = data.D.pois;
+							augmented_poses = data.D.augmented_poses;
+							
+							$('#install_by_step_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
+							
+							largeurSlam = data.D.ros_width;
+							hauteurSlam = data.D.ros_height;
+							largeurRos = data.D.ros_width;
+							hauteurRos = data.D.ros_height;
+							
+							ros_largeur = data.D.ros_width;
+							ros_hauteur = data.D.ros_height;
+							ros_resolution = data.D.ros_resolution;
+							
+							$('#install_by_step_edit_map_svg').attr('width', data.D.ros_width);
+							$('#install_by_step_edit_map_svg').attr('height', data.D.ros_height);
+							
+							$('#install_by_step_edit_map_image').attr('width', data.D.ros_width);
+							$('#install_by_step_edit_map_image').attr('height', data.D.ros_height);
+							$('#install_by_step_edit_map_image').attr('xlink:href', 'data:image/png;base64,'+data.D.image_tri);
+						  
+							bystepHistoriques = Array();
+							bystepHistoriqueIndex = -1;
+							ByStepRefreshHistorique();
+							
+							ByStepInitMap();
+							ByStepResizeSVG();
+							
+							// On recherche le nouveau augmented_pose créé avec le bon id
+							if (id_augmented_pose_test >= 300000)
+							{
+								$.each(augmented_poses, function( index, augmented_pose ) {
+									
+									if (augmented_pose.name == name)
+									{
+										currentAugmentedPoseByStepLongTouch = $('#install_by_step_edit_map_augmented_pose_robot_'+augmented_pose.id_augmented_pose);
+										setTimeout(function(){$('#install_by_step_edit_map_modalDoSaveBeforeTestAugmentedPose').modal('hide')},1500);
+										if(boolGotoaugmentedpose){
+											$('#install_by_step_edit_map .bTestAugmentedPose').click();
+										}
+									}
+								});
+							}
+						}
+						else
+						{
+							$('#install_by_step_edit_map_modalDoSaveBeforeTestAugmentedPose').modal('hide')
+							alert_wyca('Init map error : ' + wycaApi.AnswerCodeToString(data.A));
+						}
+					});
+				}else{
+					$('#install_by_step_edit_map_modalDoSaveBeforeTestAugmentedPose').modal('hide');
+					alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' + data.M);
+				}
+			});
 		}
 		else
 		{
@@ -3868,6 +4121,56 @@ $(document).ready(function() {
 
 var touchStarted = false;
 
+var statusSavingMapBeforeTestPoi = 0 ;
+var timerSavingMapBeforeTestPoi = 0 ;
+
+var statusSavingMapBeforeTestDock = 0 ;
+var timerSavingMapBeforeTestDock = 0 ;
+
+var statusSavingMapBeforeTestAugmentedPose = 0 ;
+var timerSavingMapBeforeTestAugmentedPose = 0 ;
+function TimerSavingMapBeforeTest(element){
+	switch(element){
+		case 'dock' : 
+			if(statusSavingMapBeforeTestAugmentedPose == 2 && timerSavingMapBeforeTestAugmentedPose==100){
+				statusSavingMapBeforeTestAugmentedPose=0;
+				timerSavingMapBeforeTestAugmentedPose=0;
+			}else{
+				delay = statusSavingMapBeforeTestAugmentedPose == 2 ? 1 : 200;
+				timerSavingMapBeforeTestAugmentedPose++;
+				if(timerSavingMapBeforeTestAugmentedPose == 101)timerSavingMapBeforeTestAugmentedPose=0;
+				$('.SaveBeforeTestDockProgress .progress-bar').css('width', timerSavingMapBeforeTestAugmentedPose+'%').attr('aria-valuenow', timerSavingMapBeforeTestAugmentedPose); 
+				setTimeout(TimerSavingMapBeforeTest,delay,element);
+			}
+		
+		break;
+		case 'poi' : 
+			if(statusSavingMapBeforeTestPoi == 2 && timerSavingMapBeforeTestPoi==100){
+				statusSavingMapBeforeTestPoi=0;
+				timerSavingMapBeforeTestPoi=0;
+			}else{
+				delay = statusSavingMapBeforeTestPoi == 2 ? 1 : 200;
+				timerSavingMapBeforeTestPoi++;
+				if(timerSavingMapBeforeTestPoi == 101)timerSavingMapBeforeTestPoi=0;
+				$('.SaveBeforeTestPoiProgress .progress-bar').css('width', timerSavingMapBeforeTestPoi+'%').attr('aria-valuenow', timerSavingMapBeforeTestPoi); 
+				setTimeout(TimerSavingMapBeforeTest,delay,element);
+			}
+		break;
+		case 'augmented_pose' : 
+			if(statusSavingMapBeforeTestDock == 2 && timerSavingMapBeforeTestDock==100){
+				statusSavingMapBeforeTestDock=0;
+				timerSavingMapBeforeTestDock=0;
+			}else{
+				delay = statusSavingMapBeforeTestDock == 2 ? 1 : 200;
+				timerSavingMapBeforeTestDock++;
+				if(timerSavingMapBeforeTestDock == 101)timerSavingMapBeforeTestDock=0;
+				$('.SaveBeforeTestAugmentedPoseProgress .progress-bar').css('width', timerSavingMapBeforeTestDock+'%').attr('aria-valuenow', timerSavingMapBeforeTestDock); 
+				setTimeout(TimerSavingMapBeforeTest,delay,element);
+			}
+		break;
+		
+	}
+}
 function PoiSave()
 {
 	if (bystepCurrentAction == 'addPoi')
