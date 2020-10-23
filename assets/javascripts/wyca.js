@@ -53,9 +53,7 @@ $(document).ready(function(e) {
 		let div = $(this);
 		let color_init = $(this).data('color_init');
 		var colorPicker = new iro.ColorPicker(this, {
-			// Set the size of the color picker
 			wheelLightness:false,
-			// Set the initial color to pure red
 			color: color_init,
 		});
 		preview.on('click',function(){
@@ -74,7 +72,7 @@ $(document).ready(function(e) {
 		})
 		colorPicker.on(['color:init', 'color:change'], function(color) {
 			preview.css('color',color.rgbString);
-			input.val(color.rgbString);
+			input.val(color.hexString);
 		});
 		
 	})

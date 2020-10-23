@@ -1113,7 +1113,7 @@ $(document).ready(function(e) {
 		});
     });
 	
-	$('#install_by_step_edit_map .bSaveEditMap').click(function(e) {
+	$('#install_by_step_edit_map .bNextEditMap').click(function(e) {
 		$.ajax({
 			type: "POST",
 			url: 'ajax/install_by_step_edit_map_finish.php',
