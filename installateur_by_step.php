@@ -122,7 +122,7 @@
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
                 <h2><?php echo __('Auto Diag');?></h2>
             </header>
-            <div class="content">
+            <div class="content" style="padding: 0;">
             
             	<div style="position:relative;max-width:375px; margin:auto;">
 					<svg class="svg_legende" xmlns="http://www.w3.org/2000/svg" style="z-index:10;">
