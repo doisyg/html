@@ -1081,3 +1081,15 @@ ul#MasterDockList li .tuile_img.is_checkbox p.dockname {margin-top: 0px;font-wei
 .btn-default.disabled{
 	background:#DCDCDC;
 }
+
+/* COLOR PICKER IRO */
+.iro-colorpicker{
+	width: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    transform: scale(0.75);
+}
+.IroSlider{
+	display:none!important;
+}

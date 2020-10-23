@@ -71,6 +71,8 @@
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/ios7-switch/ios7-switch.js"></script>
 		<!-- Specific Page Vendor -->
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js"></script>
+		
+		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/iro/iro.js"></script>
         
         
         <script src="<?php echo $_CONFIG['URL'];?>assets/vendor/svg-pan-zoom/svg-pan-zoom.js"></script>

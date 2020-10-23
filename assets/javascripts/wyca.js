@@ -47,6 +47,37 @@ $(window).on("popstate", function(e) {
 
 
 $(document).ready(function(e) {
+	$('.iro-colorpicker').each(function(){
+		let preview = $(this).parent().find('.preview_color');
+		let input = $(this).parent().find('input[type="text"]');
+		let div = $(this);
+		let color_init = $(this).data('color_init');
+		var colorPicker = new iro.ColorPicker(this, {
+			// Set the size of the color picker
+			wheelLightness:false,
+			// Set the initial color to pure red
+			color: color_init,
+		});
+		preview.on('click',function(){
+			$('.iro-colorpicker').not(div).hide();
+			if(div.css('display') == 'none')
+				div.css('display','flex');
+			else
+				div.css('display','none');
+		})
+		input.on('click',function(){
+			$('.iro-colorpicker').not(div).hide();
+			if(div.css('display') == 'none')
+				div.css('display','flex');
+			else
+				div.css('display','none');
+		})
+		colorPicker.on(['color:init', 'color:change'], function(color) {
+			preview.css('color',color.rgbString);
+			input.val(color.rgbString);
+		});
+		
+	})
 	$('.title_section').html($('div.global_page.active > div.global_sub_page.active > section.page.active  > header > h2').text()); // TITLE INIT
 	
 	$('.popupHelp').click(function(e) {
