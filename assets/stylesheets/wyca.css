@@ -201,7 +201,7 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 .popupHelp ul li > div + span { margin-left:40px; }
 .popupHelp ul li .route {  width:40px; padding:7px!important;  position: absolute; top: 0px; left: -11px;}
 
-#install_by_step_edit_map_bEndGomme, #install_by_step_edit_map_bSaveCurrentElem, #install_by_step_edit_map_bStop { position:absolute; top:15px; left:70px;display:none; z-index:4;border-color:transparent;}
+#install_by_step_edit_map_bEndGomme, #install_by_step_edit_map_bSaveCurrentElem, #install_by_step_edit_map_bStop { position:absolute; bottom:15px; right:15px;display:none; z-index:4;border-color:transparent;}
 #install_by_step_edit_map_bCancelCurrentElem { position:absolute; top:15px; left:115px; display:none; z-index:4;border-color:transparent;}
 
 #install_normal_edit_map_bEndGomme, #install_normal_edit_map_bSaveCurrentElem, #install_normal_edit_map_bStop { position:absolute; top:10px; left:10px; padding:0; display:none; z-index:4}
@@ -906,6 +906,7 @@ img.fi-route {
 	line-height:30px!important;
 	position: relative;
     left: -4px;
+	z-index:2;
 }
 
 
@@ -954,12 +955,101 @@ div.icon_menu .iconForbiddenArea .fa-minus-circle{
     border-radius: 10px;
     height: 15px;
     width: 15px;
-	padding: 0.25px 2px;
+	padding: 1.25px 2px;
     background: white;
 	display:none;
 }
 .times_icon_menu.dnone{
 	display:none!important;
+}
+.iconHelpPopup{
+	font-size:36px;
+}
+.checkbox_wrapper{
+	position: absolute;
+    bottom: 70px;
+    left: 0;
+    right: 0;
+}
+.iconHelpPopupForbidden{
+	position: relative;
+    min-height: 60px;
+}
+.iconHelpPopupForbidden .fa-vector-square{
+	left: calc(50% + 1.5px);
+    font-size: 50px;
+    line-height: 50px;
+    z-index: 2;
+    top: 1px;
+    position: absolute;
+    transform: translateX(-50%);
+}
+.iconHelpPopupForbidden .fa-minus-circle{
+	font-size: 28px;
+    top: 13px;
+    left: calc(50% + -12px);
+    background: white;
+    border-radius: 15px;
+    z-index: 3;
+    position: absolute;
+}
+.btn-popup{
+    border: 1px solid transparent;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    border: 1px solid #707070;
+    overflow: hidden;
+}
+.btn-popup .iconForbiddenArea .fa-vector-square {
+	left: -5.5px;
+    /* font-size: 25px; */
+    line-height: 25px;
+    z-index: 2;
+    top: 2px;
+    position: absolute;
+    color: #343434;
+}
+.btn-popup .iconForbiddenArea .fa-minus-circle{
+	font-size: 16px;
+    top: 5.5px;
+    left: 1.5px;
+    background: white;
+    border-radius: 15px;
+    z-index: 3;
+    line-height: 16px!important;
+    position: absolute;
+}
+.btn-popup .times_icon{
+	position: absolute;
+    top: 5px;
+    left: 29px;
+    z-index: 5;
+    font-size: 14px!important;
+    border-radius: 10px;
+    height: 15px;
+    width: 15px;
+    padding: 1.25px 2px;
+    background: white;
+    line-height: 14px!important;
+}
+.btn-popup .fa-stop{
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    border-color: transparent;
+    font-size: 28px!important;
+    line-height: 28px!important;
+}
+.btn-popup .fa-crosshairs{
+	font-size: 28px!important;
+    line-height: 28px!important;
+    position: absolute;
+    top: 11px;
+    left: 11px;
+}
 }
 /* */
 ul#MasterDockList li .tuile_img.is_checkbox{border-radius:10px;bottom:0;}

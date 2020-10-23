@@ -399,9 +399,6 @@ $(document).ready(function(e) {
 		}
 		//ByStepDisplayBlockZoom();
 	});
-	
-	
-	
 	$(document).on('touchend', '#install_by_step_edit_map_svg .forbidden_root', function(e) {
 		$('#install_by_step_edit_map_zoom_popup').hide();
 		if (timerByStepLongPress != null)
@@ -509,8 +506,6 @@ $(document).ready(function(e) {
 		}
 		//ByStepDisplayBlockZoom();
 	});
-	
-	
 	$(document).on('touchend', '#install_by_step_edit_map_svg .dock_elem', function(e) {
 		$('#install_by_step_edit_map_zoom_popup').hide();
 		if (timerByStepLongPress != null)
@@ -672,21 +667,26 @@ $(document).ready(function(e) {
 		}
 		//ByStepDisplayBlockZoom();
 	});
-	
 	$('.burger_menu').on('click', function(e) {
 		if($(this).hasClass('burger_menu_open')){
 			ByStepHideMenus()
 		}else{
-			$(this).addClass('burger_menu_open');
-			ByStepDisplayMenu( $(this).data('open'))
+			ByStepDisplayMenu($(this).data('open'))
 		}
 	});
 	$('.icon_menu').on('click', function(e) {
 		
+		switch(bystepCurrentAction){
+			case 'prepareArea': 
+			case 'prepareForbiddenArea': 
+			case 'prepareGotoPose': 
+				bystepCurrentAction='';
+				bystepCanChangeMenu = true;
+			break;
+		}
 		if (bystepCanChangeMenu)
 		{
 			ByStepHideMenus();
-			
 			
 			if($(this).data('menu') == 'install_by_step_edit_map_menu_point')
 			{
@@ -701,16 +701,21 @@ $(document).ready(function(e) {
 			}
 			else
 			{
+				
 				RemoveClass('#install_by_step_edit_map_svg .active', 'active');
 				RemoveClass('#install_by_step_edit_map_svg .activ_select', 'activ_select'); 
 				
 				currentSelectedItem = Array();
-				
+				bystepCurrentAction='';
 				$('body').removeClass('no_current select');
 				$('.select').css("strokeWidth", minStokeWidth);
 			}
 		}
 	});
+	
+	$('.times_icon_menu').click(function(){
+		$('.icon_menu').click();
+	})
 });
 
 function ByStepHideMenus()
@@ -747,10 +752,11 @@ function ByStepDisplayMenu(id_menu)
 		if(icon_menu.lentgh != 0)
 			icon_menu.show('fast');
 		
-		
 		if(id_menu != 'install_by_step_edit_map_menu'){
 			$('.burger_menu').hide('fast');
 			setTimeout(function(){$('.times_icon_menu').show('fast')},50);
+		}else{
+			$('.burger_menu').addClass('burger_menu_open');
 		}
 		
 		$('#'+id_menu+' li').hide();

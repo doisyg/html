@@ -200,5 +200,6 @@ $_LANG['28a8bf3cf698c2b306b9074dec46f2bc'] = 'Master Dock';
 $_LANG['d87152f30fb111ff99e0cf3dc1217939'] = 'Pick the default master docking station?';
 $_LANG['fa6ec1ff08c2ec1882f99f1ae3dd2f3c'] = 'Default Dock';
 $_LANG['7851fab7ac4cf7dfc8c48ea5dcc437c4'] = 'Pick the default docking station';
+$_LANG['a60852f204ed8028c1c58808b746d115'] = 'Ok';
 
 ?>

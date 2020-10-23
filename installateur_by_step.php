@@ -509,6 +509,9 @@
 					<div class="btn-circle btn-lg icon_menu" data-menu="install_by_step_edit_map_menu_area">
 						<i class="fas fa-draw-polygon iconMenuGreen"></i>
 					</div>
+					<div class="btn-circle btn-lg icon_menu" data-menu="install_by_step_edit_map_menu_gotopose">
+						<i class="fa fa-crosshairs iconMenuBlue" style="font-size:24px"></i>
+					</div>
 					<div class="btn-circle btn-lg icon_menu" data-menu="install_by_step_edit_map_menu_dock">
 						<i class="fas fa-charging-station iconMenuGreen" style="position: relative;top: -1px;left:-5px;"></i>
 					</div>
@@ -1323,6 +1326,121 @@
                                         
                                         <a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Cancel');?></a>
 										<a href="#" class="btn btn-primary bAugmentedPoseElemSave btn_footer_right btn_50" data-dismiss="modal"><?php echo __('Save');?></a>
+									</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					
+                    <div class="modal fade modalHelpClickArea" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+										<div class="h100vh_160" style="overflow:auto; text-align:center;">
+											<h2><?= _('Add area') ?></h2>
+											<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the map to choose the position of the top-left corner point of your area.') ?></h4>
+											<svg id="" width="100" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events" preserveAspectRatio="xMinYMax meet" >
+												<polygon points="30,30 70,30 70,70 30,70" style="fill: rgba(87, 159, 177, 0.5);"></polygon>
+												<line x1="30" y1="30" x2="30" y2="70" stroke-width="5" style="stroke: #589FB2;"></line>
+												<line x1="70" y1="30" x2="30" y2="30" stroke-width="5" style="stroke: #589FB2;"></line>
+												<line x1="70" y1="70" x2="70" y2="30" stroke-width="5" style="stroke: #589FB2;"></line>
+												<line x1="30" y1="70" x2="70" y2="70" stroke-width="5" style="stroke: #589FB2;"></line>
+												<rect x="25" y="25" height="10" width="10" stroke-width="1"></rect>
+												<rect x="65" y="25" height="10" width="10" stroke-width="1"></rect>
+												<rect x="65" y="65" height="10" width="10" stroke-width="1"></rect>
+												<rect x="25" y="65" height="10" width="10" stroke-width="1" ></rect>
+												<path fill="currentColor" transform="scale(0.05) translate(550,550)" d="M302.189 329.126H196.105l55.831 135.993c3.889 9.428-.555 19.999-9.444 23.999l-49.165 21.427c-9.165 4-19.443-.571-23.332-9.714l-53.053-129.136-86.664 89.138C18.729 472.71 0 463.554 0 447.977V18.299C0 1.899 19.921-6.096 30.277 5.443l284.412 292.542c11.472 11.179 3.007 31.141-12.5 31.141z"></path>
+											</svg>
+											<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the menu icon to cancel.') ?></h4>
+											
+											<div class="checkbox checkbox_wrapper">
+												<label>
+													<input type="checkbox" value="" id="checkboxHelpArea">
+													<?= _('Don\'t show this message again')?>
+												</label>
+											</div>
+											<div class="btn-circle btn-lg btn-popup" style="display: block;">
+												<i class="fas fa-draw-polygon iconMenuGreen" style="font-size: 28px;line-height: 28px;position: relative;left: -2px;"></i>
+												<i class="fas fa-times times_icon iconMenuRed" style="display: inline-block;"></i>
+											</div>
+											<div style="clear:both;"></div>
+											<a href="#" class="btn btn-primary btn_footer_left btn_100 bHelpClickAreaOk" data-dismiss="modal" ><?php echo __('Ok');?></a>
+										</div>
+									</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal fade modalHelpClickForbidden" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+										<div class="h100vh_160" style="overflow:auto; text-align:center;">
+											<h2><?= _('Add forbidden area') ?></h2>
+											<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the map to choose the position of the top-left corner point of your forbidden area.') ?></h4>
+											<svg id="" width="100" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events" preserveAspectRatio="xMinYMax meet" >
+												<polygon points="30,30 70,30 70,70 30,70" style="fill: rgba(255, 0, 0, 0.3);"></polygon>
+												<line x1="30" y1="30" x2="30" y2="70" stroke-width="5" style="stroke: #da3939;"></line>
+												<line x1="70" y1="30" x2="30" y2="30" stroke-width="5" style="stroke: #da3939;"></line>
+												<line x1="70" y1="70" x2="70" y2="30" stroke-width="5" style="stroke: #da3939;"></line>
+												<line x1="30" y1="70" x2="70" y2="70" stroke-width="5" style="stroke: #da3939;"></line>
+												<rect x="25" y="25" height="10" width="10" stroke-width="1"></rect>
+												<rect x="65" y="25" height="10" width="10" stroke-width="1"></rect>
+												<rect x="65" y="65" height="10" width="10" stroke-width="1"></rect>
+												<rect x="25" y="65" height="10" width="10" stroke-width="1" ></rect>
+												<path fill="currentColor" transform="scale(0.05) translate(550,550)" d="M302.189 329.126H196.105l55.831 135.993c3.889 9.428-.555 19.999-9.444 23.999l-49.165 21.427c-9.165 4-19.443-.571-23.332-9.714l-53.053-129.136-86.664 89.138C18.729 472.71 0 463.554 0 447.977V18.299C0 1.899 19.921-6.096 30.277 5.443l284.412 292.542c11.472 11.179 3.007 31.141-12.5 31.141z"></path>
+											</svg>
+											<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the menu icon to cancel.') ?></h4>
+											
+											<div class="checkbox checkbox_wrapper">
+												<label>
+													<input type="checkbox" value="" id="checkboxHelpForbidden">
+													<?= _('Don\'t show this message again')?>
+												</label>
+											</div>
+											<div class="btn-circle btn-lg btn-popup" style="display: block;">
+												<div class="iconForbiddenArea"><i class="fas fa-vector-square"></i><i class="fa fa-minus-circle iconMenuRed"></i></div>
+												<i class="fas fa-times times_icon iconMenuRed" style="display: inline-block;"></i>
+											</div>
+											<div style="clear:both;"></div>
+											<a href="#" class="btn btn-primary btn_footer_left btn_100 bHelpClickForbiddenOk" data-dismiss="modal" ><?php echo __('Ok');?></a>
+										</div>
+									</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     
+                    <div class="modal fade modalHelpClickGotoPose" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+										<div class="h100vh_160" style="overflow:auto; text-align:center;">
+											<h2><?= _('Go to position') ?></h2>
+											<h4 style="text-align:left;margin:30px 0;"><?= _('Click on the map to choose the position you\'re aiming for.') ?></h4>
+											<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the menu icon to cancel.') ?></h4>
+											<div class="btn-circle btn-lg btn-popup" style="display: block;">
+												<i class="fas fa-crosshairs iconMenuBlue"></i>
+												<i class="fas fa-times times_icon iconMenuRed" style="display: inline-block;"></i>
+											</div>
+											<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the stop icon to cancel action while the vehicle is moving.') ?></h4>
+											
+											<div class="btn-circle btn-lg btn-popup btn-danger" style="display: block;">
+												<i class="fa fa-stop"></i>
+											</div>
+											<div style="clear:both;"></div>
+											<div class="checkbox checkbox_wrapper">
+												<label>
+													<input type="checkbox" value="" id="checkboxHelpGotopose">
+													<?= _('Don\'t show this message again')?>
+												</label>
+											</div>
+											<a href="#" class="btn btn-primary btn_footer_left btn_100 bHelpClickGotoPoseOk" data-dismiss="modal" ><?php echo __('Ok');?></a>
+										</div>
 									</div>
                                 </div>
                             </div>
