@@ -16,6 +16,18 @@
     </section>
 </div>
 
+<div id="warning_wyca">
+	<section class="panel panel-warning">
+        <header class="panel-heading">
+            <h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fa fa-exclamation-triangle"></i></h2>
+        </header>
+        <div class="panel-body content" style="text-align:center; font-size:24px; line-height:36px;">
+            <p class="content"></p>
+    		<a id="bCloseWarningWyca" href="#" class="btn btn-default">OK</a>
+        </div>
+    </section>
+</div>
+
 <div id="success_wyca">
 	<section class="panel panel-success">
         <header class="panel-heading">

@@ -123,72 +123,88 @@
                 <h2><?php echo __('Auto Diag');?></h2>
             </header>
             <div class="content">
-                <ul class="tuiles row" style="position:relative;max-width:375px;">
-                    <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
-                    	<div class="is_checkbox test anim_tuiles tuile_img tuile1 no_update">
-                            <i class="fa fa-check"></i>
-                    		<i class="fa fa fa-spinner fa-pulse"></i>
-                    		<img class="i" src="assets/images/radar_icon.png">
-							<?php echo __('Lidar');?>
-                        </div>
-                    </li>
-                    <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
-                    	<div class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
-                            <i class="fa fa-check"></i>
-                    		<i class="fa fa fa-spinner fa-pulse"></i>
-                    		<img class="i" src="assets/images/ultrasound.svg">
-							<?php echo __('Sonar');?>
-                        </div>
-						<span class="trait_legende" style="width:calc(var(--vh, 1vh) * 20);transform:rotate(50deg)translateX(0px)translateY(0px);"></span>
-                    </li>
-                    <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
-                    	<div class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
-                            <i class="fa fa-check"></i>
-                    		<i class="fa fa fa-spinner fa-pulse"></i>
-                    		<img class="i" src="assets/images/motor.png">
-							<?php echo __('Motor');?>
-                        </div>
-						<span class="trait_legende" style="width:calc(var(--vh, 1vh) * 20);transform:rotate(50deg)translateX(0px)translateY(0px);"></span>
-                    </li>
-                    <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
-                    	<img class="img-responsive" id="elodie_import_top" src="assets/images/elodie_form.png">
-                    </li>
-                    <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
-                    	<div class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
-                            <i class="fa fa-check"></i>
-                    		<i class="fa fa fa-spinner fa-pulse"></i>
-                    		<i class="fa fa-battery-4"></i>
-							<?php echo __('Com. Battery');?>
-                        </div>
-                    </li>
-                    <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
-                    	<div class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
-                            <i class="fa fa-check"></i>
-                    		<i class="fa fa fa-spinner fa-pulse"></i>
-                    		<img class="i" src="assets/images/3d_sensor.png">
-							<?php echo __('3D Sensor');?>
-                        </div>
-                    </li>
-                    <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
-                    	<div class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
-                            <i class="fa fa-check"></i>
-                    		<i class="fa fa fa-spinner fa-pulse"></i>
-                    		<img class="i" src="assets/images/strip_led2.png">
-							<?php echo __('Com. Leds');?>
-                        </div>
-                    </li>
-					
-					<svg class="svg_legende" xmlns="http://www.w3.org/2000/svg">
-						<line x1="65" y1="142" x2="109" y2="226" stroke-width="1" stroke="#343434" class="line_lidar"/>
-						<line x1="187" y1="122" x2="168" y2="197" stroke-width="1" stroke="#343434" class="line_us"/>
-						<line x1="187" y1="122" x2="134" y2="197" stroke-width="1" stroke="#343434" class="line_us"/>
-						<line x1="308" y1="142" x2="226" y2="281" stroke-width="1" stroke="#343434" class="line_motor"/>
-						<line x1="65" y1="351" x2="109" y2="286" stroke-width="1" stroke="#343434" class="line_battery"/>
-						<line x1="187" y1="371" x2="155" y2="265" stroke-width="1" stroke="#343434" class="line_sensor"/>
-						<line x1="308" y1="351" x2="174" y2="286" stroke-width="1" stroke="#343434" class="line_leds"/>
-					</svg>
-					
-                </ul>  
+            
+            	<div style="position:relative;max-width:375px; margin:auto;">
+					<svg class="svg_legende" xmlns="http://www.w3.org/2000/svg" style="z-index:10;">
+                        <line x1="65" y1="142" x2="109" y2="226" stroke-width="1" stroke="#343434" class="line_lidar"/>
+                        <line x1="187" y1="122" x2="168" y2="197" stroke-width="1" stroke="#343434" class="line_us"/>
+                        <line x1="187" y1="122" x2="134" y2="197" stroke-width="1" stroke="#343434" class="line_us"/>
+                        <line x1="308" y1="142" x2="226" y2="281" stroke-width="1" stroke="#343434" class="line_motor"/>
+                        <line x1="65" y1="351" x2="109" y2="286" stroke-width="1" stroke="#343434" class="line_battery"/>
+                        <line x1="187" y1="371" x2="155" y2="265" stroke-width="1" stroke="#343434" class="line_sensor"/>
+                        <line x1="308" y1="351" x2="174" y2="286" stroke-width="1" stroke="#343434" class="line_leds"/>
+                    </svg>
+                    
+                    <ul class="tuiles row" style="position:relative;max-width:375px; margin:0;">
+                        
+                        <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
+                            <div id="install_by_step_check_lidar" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
+                                <i class="fa fa-check component_state component_ok"></i>
+                                <i class="fa fa-exclamation-triangle component_state component_warning"></i>
+                                <i class="fa fa-exclamation-circle component_state component_error"></i>
+                                <i class="fa fa fa-spinner fa-pulse"></i>
+                                <img class="i" src="assets/images/radar_icon.png">
+                                <?php echo __('Lidar');?>
+                            </div>
+                        </li>
+                        <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
+                            <div id="install_by_step_check_us" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
+                                <i class="fa fa-check component_state component_ok"></i>
+                                <i class="fa fa-exclamation-triangle component_state component_warning"></i>
+                                <i class="fa fa-exclamation-circle component_state component_error"></i>
+                                <i class="fa fa fa-spinner fa-pulse"></i>
+                                <img class="i" src="assets/images/ultrasound.svg">
+                                <?php echo __('Sonar');?>
+                            </div>
+                            <span class="trait_legende" style="width:calc(var(--vh, 1vh) * 20);transform:rotate(50deg)translateX(0px)translateY(0px);"></span>
+                        </li>
+                        <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
+                            <div id="install_by_step_check_motor" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
+                                <i class="fa fa-check component_state component_ok"></i>
+                                <i class="fa fa-exclamation-triangle component_state component_warning"></i>
+                                <i class="fa fa-exclamation-circle component_state component_error"></i>
+                                <i class="fa fa fa-spinner fa-pulse"></i>
+                                <img class="i" src="assets/images/motor.png">
+                                <?php echo __('Motor');?>
+                            </div>
+                            <span class="trait_legende" style="width:calc(var(--vh, 1vh) * 20);transform:rotate(50deg)translateX(0px)translateY(0px);"></span>
+                        </li>
+                        <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
+                            <img class="img-responsive" id="elodie_import_top" src="assets/images/elodie_form.png" style="z-index:5">
+                        </li>
+                        <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
+                            <div id="install_by_step_check_battery" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
+                                <i class="fa fa-check component_state component_ok"></i>
+                                <i class="fa fa-exclamation-triangle component_state component_warning"></i>
+                                <i class="fa fa-exclamation-circle component_state component_error"></i>
+                                <i class="fa fa fa-spinner fa-pulse"></i>
+                                <i class="fa fa-battery-4"></i>
+                                <?php echo __('Com. Battery');?>
+                            </div>
+                        </li>
+                        <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
+                            <div id="install_by_step_check_cam3d" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
+                                <i class="fa fa-check component_state component_ok"></i>
+                                <i class="fa fa-exclamation-triangle component_state component_warning"></i>
+                                <i class="fa fa-exclamation-circle component_state component_error"></i>
+                                <i class="fa fa fa-spinner fa-pulse"></i>
+                                <img class="i" src="assets/images/3d_sensor.png">
+                                <?php echo __('3D Sensor');?>
+                            </div>
+                        </li>
+                        <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
+                            <div id="install_by_step_check_leds" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
+                                <i class="fa fa-check component_state component_ok"></i>
+                                <i class="fa fa-exclamation-triangle component_state component_warning"></i>
+                                <i class="fa fa-exclamation-circle component_state component_error"></i>
+                                <i class="fa fa fa-spinner fa-pulse"></i>
+                                <img class="i" src="assets/images/strip_led2.png">
+                                <?php echo __('Com. Leds');?>
+                            </div>
+                        </li>
+                        
+                    </ul>  
+                </div>
             </div>
 			<footer>
 				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50 btn_back" data-goto="install_by_step_top"><?= __('Back')?></a>

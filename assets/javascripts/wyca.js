@@ -113,6 +113,12 @@ $(document).ready(function(e) {
 		$('#alert_wyca').hide();
     });
 	
+	$('#bCloseWarningWyca').click(function(e) {
+        e.preventDefault();
+		$('#warning_wyca p').html('');
+		$('#warning_wyca').hide();
+    });
+	
 	$('#bCloseSuccessWyca').click(function(e) {
         e.preventDefault();
 		$('#success_wyca p').html('');
@@ -998,6 +1004,7 @@ function InitMappingByStep()
 	}
 }
 
+var save_check_components_result = undefined;
 function InitCheckByStep()
 {
 	//console.log('InitCheckByStep');
@@ -1008,7 +1015,58 @@ function InitCheckByStep()
 	$('.install_by_step_check_next').removeClass('disabled');
 	$('.install_by_step_check_next').addClass('disabled');
 	$('.install_by_step_check_next').html('<i class="fa fa fa-spinner fa-pulse"></i> '+textBtnCheckTest);
-	setTimeout(StartAnimCheckComposantInstall, 2000);
+	
+	$('#install_by_step_check .is_checkbox').removeClass('component_ok component_warning component_error');
+	
+	
+	
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.CheckComponents(function (data){
+			
+			save_check_components_result = data.D;
+			
+			/*
+			0: OK
+			1: Frequency warning
+			2: Frequency error
+			3: Software error;
+			4: Device error
+			5: Not applicable (for cam top)
+			*/
+			
+			if (data.D.LI == 0) $('#install_by_step_check_lidar').addClass('component_ok'); 
+			else if (data.D.LI == 1) $('#install_by_step_check_lidar').addClass('component_warning');
+			else $('#install_by_step_check_lidar').addClass('component_error'); 
+			
+			if (data.D.US == 0) $('#install_by_step_check_us').addClass('component_ok'); 
+			else if (data.D.US == 1) $('#install_by_step_check_us').addClass('component_warning');
+			else $('#install_by_step_check_us').addClass('component_error'); 
+			
+			if (data.D.M == 0) $('#install_by_step_check_motor').addClass('component_ok'); 
+			else if (data.D.M == 1) $('#install_by_step_check_motor').addClass('component_warning');
+			else $('#install_by_step_check_motor').addClass('component_error'); 
+			
+			if (data.D.B == 0) $('#install_by_step_check_battery').addClass('component_ok'); 
+			else if (data.D.B == 1) $('#install_by_step_check_battery').addClass('component_warning');
+			else $('#install_by_step_check_battery').addClass('component_error'); 
+			
+			if (data.D.CL == 0 && data.D.CR == 0) $('#install_by_step_check_cam3d').addClass('component_ok'); 
+			else if (data.D.CL <= 1 && data.D.CR <= 1) $('#install_by_step_check_cam3d').addClass('component_warning');
+			else $('#install_by_step_check_cam3d').addClass('component_error'); 
+			
+			if (data.D.LE == 0) $('#install_by_step_check_leds').addClass('component_ok'); 
+			else if (data.D.LE == 1) $('#install_by_step_check_leds').addClass('component_warning');
+			else $('#install_by_step_check_leds').addClass('component_error'); 
+			
+			setTimeout(StartAnimCheckComposantInstall, 2000);
+			
+		});
+	}
+	else
+	{
+		setTimeout(InitCheckByStep, 500);
+	}
 }
 
 function GetLastMappingByStep()
@@ -1200,6 +1258,11 @@ function alert_wyca(text)
 	$('#alert_wyca').show();
 }
 
+function warning_wyca(text)
+{
+	$('#warning_wyca p').html(text);
+	$('#warning_wyca').show();
+}
 
 function success_wyca(text)
 {

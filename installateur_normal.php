@@ -1148,6 +1148,7 @@
                 <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>
             </footer>
         </section>
+        
         <section id="install_normal_setup_tops" class="page hmi_tuile with_footer">
 	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
             <header>

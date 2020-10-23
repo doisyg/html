@@ -84,6 +84,7 @@ function WycaAPI(options){
 		NAVIGATION_STOP			: 0x0114,
 		REFRESH_FREEWHEEL_STATE			: 0x3101,
 		REFRESH_SAFETY_STOP			: 0x3102,
+		CHECK_COMPONENTS			: 0x3103,
 	 
 		GET_DOCKING_STATE			: 0x0105,
 		SET_DOCKING_STATE			: 0x0106,
@@ -221,6 +222,7 @@ function WycaAPI(options){
 		BATTERY_STATE			: 0x3001,
 		BMS_TIME_REMAINING_TO_EMPTY			: 0x3002,
 		BMS_TIME_REMAINING_TO_FULL			: 0x3003,
+		DIAGNOSTIC_ALERT			: 0x3008,
 		LED_CURRENT_LED_ANIMATION_MODE			: 0x5001,
 		LED_CURRENT_LED_ROBOT_STATE			: 0x5002,
 		LED_IS_LIGHT_MODE			: 0x5003,
@@ -1124,6 +1126,9 @@ function WycaAPI(options){
 						case this.EventCode.BMS_TIME_REMAINING_TO_FULL:
 							if (_this.options.onTimeRemainingToFullMin != undefined) { _this.options.onTimeRemainingToFullMin(msg.D.D); }
 							break;
+						case this.EventCode.DIAGNOSTIC_ALERT:
+							if (_this.options.onDiagnosticAlert != undefined) { _this.options.onDiagnosticAlert(msg.D.D); }
+							break;
 						case this.EventCode.LED_CURRENT_LED_ANIMATION_MODE:
 							if (_this.options.onLedCurrentAnimationMode != undefined) { _this.options.onLedCurrentAnimationMode(msg.D.D); }
 							break;
@@ -1290,6 +1295,9 @@ function WycaAPI(options){
 				case this.EventCode.BMS_TIME_REMAINING_TO_FULL:
 					if (_this.options.onTimeRemainingToFullMin != undefined) { _this.options.onTimeRemainingToFullMin(msg.D); }
 					break;
+				case this.EventCode.DIAGNOSTIC_ALERT:
+					if (_this.options.onDiagnosticAlert != undefined) { _this.options.onDiagnosticAlert(msg.D); }
+					break;
 				case this.EventCode.LED_CURRENT_LED_ANIMATION_MODE:
 					if (_this.options.onLedCurrentAnimationMode != undefined) { _this.options.onLedCurrentAnimationMode(msg.D); }
 					break;
@@ -1448,6 +1456,7 @@ function WycaAPI(options){
 		if (_this.options.onBatteryState != undefined) { var n=_this.EventCode.BATTERY_STATE; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_EVENT, "P": { "E":n, "F":1000}}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onTimeRemainingToEmptyMin != undefined) { var n=_this.EventCode.BMS_TIME_REMAINING_TO_EMPTY; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onTimeRemainingToFullMin != undefined) { var n=_this.EventCode.BMS_TIME_REMAINING_TO_FULL; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
+		if (_this.options.onDiagnosticAlert != undefined) { var n=_this.EventCode.DIAGNOSTIC_ALERT; var subscribe = { "O": _this.CommandCode.DIAGNOSTIC_ALERT, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onLedCurrentAnimationMode != undefined) { var n=_this.EventCode.LED_CURRENT_LED_ANIMATION_MODE; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onLedCurrentRobotStateMode != undefined) { var n=_this.EventCode.LED_CURRENT_LED_ROBOT_STATE; var subscribe = {	"O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onLedIsLightMode != undefined) { var n=_this.EventCode.LED_IS_LIGHT_MODE; var subscribe = {	"O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
@@ -1484,6 +1493,7 @@ function WycaAPI(options){
 			case 'onBatteryState': ev_code = _this.EventCode.BATTERY_STATE; break;
 			case 'onTimeRemainingToEmptyMin': ev_code = _this.EventCode.BMS_TIME_REMAINING_TO_EMPTY; break;
 			case 'onTimeRemainingToFullMin': ev_code = _this.EventCode.BMS_TIME_REMAINING_TO_FULL; break;
+			case 'onDiagnosticAlert': ev_code = _this.EventCode.DIAGNOSTIC_ALERT; break;
 			case 'onLedCurrentAnimationMode': ev_code = _this.EventCode.LED_CURRENT_LED_ANIMATION_MODE; break;
 			case 'onLedCurrentRobotStateMode': ev_code = _this.EventCode.LED_CURRENT_LED_ROBOT_STATE; break;
 			case 'onLedIsLightMode': ev_code = _this.EventCode.LED_IS_LIGHT_MODE; break;
@@ -1558,6 +1568,7 @@ function WycaAPI(options){
 			case 'onBatteryState': ev_code = _this.CommandCode.BATTERY_STATE; break;
 			case 'onTimeRemainingToEmptyMin': ev_code = _this.CommandCode.BMS_TIME_REMAINING_TO_EMPTY; break;
 			case 'onTimeRemainingToFullMin': ev_code = _this.CommandCode.BMS_TIME_REMAINING_TO_FULL; break;
+			case 'onDiagnosticAlert': ev_code = _this.CommandCode.DIAGNOSTIC_ALERT; break;
 			case 'onLedCurrentAnimationMode': ev_code = _this.CommandCode.LED_CURRENT_LED_ANIMATION_MODE; break;
 			case 'onLedCurrentRobotStateMode': ev_code = _this.CommandCode.LED_CURRENT_LED_ROBOT_STATE; break;
 			case 'onLedIsLightMode': ev_code = _this.CommandCode.LED_IS_LIGHT_MODE; break;
@@ -1728,6 +1739,14 @@ function WycaAPI(options){
 			this.callbacks[_this.CommandCode.NAVIGATION_STOP] = callback;
 		var action = {
 			"O": _this.CommandCode.NAVIGATION_STOP,
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	this.CheckComponents = function(callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.CHECK_COMPONENTS] = callback;
+		var action = {
+			"O": _this.CommandCode.CHECK_COMPONENTS,
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
