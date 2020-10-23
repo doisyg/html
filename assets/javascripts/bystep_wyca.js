@@ -881,8 +881,9 @@ $(document).ready(function(e) {
 		$('#install_by_step_wifi_password .install_by_step_wifi_password_save').hide();
 		$('#install_by_step_wifi_password .wifi_connexion_progress').show();
 		$('#install_by_step_wifi_password .wifi_connexion_error').html('');
-		
+		console.log(selectedWifi,$('#install_by_step_wifi_password .i_wifi_passwd_name').val());
 		wycaApi.WifiConnection(selectedWifi, $('#install_by_step_wifi_password .i_wifi_passwd_name').val(), function(data){
+			
 			if (data.A != wycaApi.AnswerCode.NO_ERROR)
 			{
 				$('#install_by_step_wifi_password .wifi_connexion_error').html(data.M);
@@ -892,6 +893,7 @@ $(document).ready(function(e) {
 				$('#install_by_step_wifi_password .skip_wifi').click();
 				$('#install_by_step_wifi_password .wifi_connexion_error').html('');
 			}
+
 			$('#install_by_step_wifi_password .install_by_step_wifi_password_save').show();
 			$('#install_by_step_wifi_password .wifi_connexion_progress').hide();
 		});
@@ -1769,11 +1771,19 @@ $(document).ready(function(e) {
 			wycaApi.SetServiceBook(json_service_book, function(data) {
 				if (data.A == wycaApi.AnswerCode.NO_ERROR)
 				{
+					let d = new Date(Date.now());
+					let d_txt="";
+					switch(lang){
+						case 'fr': d_txt = d.getDate() + '/' + (d.getMonth()+1) + '/' +  d.getFullYear() ; break;
+						case 'en': d_txt = (d.getMonth()+1) + '/' + d.getDate() + '/' +  d.getFullYear() ; break;
+						default: break;
+					}
 					// On ajoute le li
 					$('#install_by_step_service_book .list_service_books').append('' +
 						'<li>'+
 						'	<div class="title">'+json_service_book.title+'</div>'+
 						'	<div class="comment">'+json_service_book.comment+'</div>'+
+						'	<div class="date">'+d_txt+'</div>'+
 						'</li>'
 						);
 
@@ -1804,6 +1814,9 @@ $(document).ready(function(e) {
 		
 		$('#pages_install_by_step').removeClass('active');
 		$('#pages_install_normal').addClass('active');
+		
+		//AFFICHER QQ CHOSE
+		$('section#install_normal_dashboard').show('slow');
 		
 		if ($('#install_normal_setup_sites').is(':visible'))
 		{

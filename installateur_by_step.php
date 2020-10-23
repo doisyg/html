@@ -246,7 +246,7 @@
 			
 				<h3><?php echo __('Set password');?></h3>
 				
-				<form id="form_connect_wifi"class="form_site" action="" method="post" style="margin-bottom:20px;">
+				<form id="form_connect_wifi" class="form_site" action="" method="post" style="margin-bottom:20px;">
 					<input type="password" class="form-control i_wifi_passwd_name" value="" />
 				</form>  
 				
@@ -259,7 +259,7 @@
 			</div>
 			<footer>
 				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50 btn_back" data-goto="install_by_step_wifi"><?= __('Back')?></a>
-				<a href="#" onClick="$('#form_connect_wifi').submit();" class="install_by_step_wifi_password_save btn btn-primary btn_footer_right btn_50"><?= __('Connect')?></a>
+				<a href="#" class="install_by_step_wifi_password_save btn btn-primary btn_footer_right btn_50"><?= __('Connect')?></a>
 			</footer>
         </section>
 			

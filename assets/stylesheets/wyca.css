@@ -63,10 +63,12 @@ ul.tuiles li a.todo, ul.tuiles li div.todo { background-color:#999; }
 
 ul.tuiles li .tuile_img.is_checkbox { background-color:#EEEEEE; border-color:#666666; }
 ul.tuiles li .tuile_img.is_checkbox i.component_state { display:none; position:absolute; top:5px; left:5px; font-size:16px; padding:0;  }
+ul.tuiles li .tuile_img.is_checkbox i.fa-check { display:none; position:absolute; top:5px; left:5px; font-size:16px; padding:0; color:#187f18 }
 ul.tuiles li .tuile_img.is_checkbox i.fa-spinner.fa-pulse { display:none; position:absolute; top:5px; left:5px; font-size:16px; padding:0;  }
 ul.tuiles li .tuile_img.is_checkbox.checked { background-color:#FFFFFF; }
 ul.tuiles li .tuile_img.is_checkbox.test i.fa-spinner.fa-pulse { display:block; }
 ul.tuiles li .tuile_img.is_checkbox.checked i.fa-spinner.fa-pulse { display:none; }
+ul.tuiles li .tuile_img.is_checkbox.checked i.fa-check { display:block; }
 i.component_ok { color:#060; }
 i.component_warning { color:#FF9900; }
 i.component_error { color:#CC0000; }
@@ -146,7 +148,7 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 .table_wifi tr.active {color: #343434; font-weight: bold;}
 .wifi_connexion_progress { text-align:center; font-size:40px; display:none; }
 
-.loading_big { text-align:center; font-size:40px; display:none; }
+.loading_big { text-align:center; font-size:40px; display:none; margin: 10px 0;}
 
 #install_by_step_edit_map_container_all { position:relative; margin:-20px; height:calc(100vh - 110px); height: calc(var(--vh, 1vh) * 100 - 110px); }
 #install_by_step_edit_map_all { height:100%; }
@@ -466,7 +468,7 @@ ul.list_test li.done { color:#006600; border-color:#006600; }
 {
 	.modal-advice{font-size:12px;}
 }
-.list_service_books li { background-color:#EFEFEF; }
+.list_service_books li {     background-color: #EFEFEF!important;margin-bottom: 25px!important;}
 .list_service_books li .title { font-weight:bold; }
 .list_service_books li .comment { white-space: pre; }
 .list_service_books li .date { float:right;font-style: italic; }
@@ -1095,6 +1097,8 @@ ul#MasterDockList li .tuile_img.is_checkbox p.dockname {margin-top: 0px;font-wei
 .btn-default.disabled{
 	background:#DCDCDC;
 }
+
+
 
 /* COLOR PICKER IRO */
 .iro-colorpicker{
