@@ -1,6 +1,6 @@
 <?php if (!isset($_SESSION['id_groupe_user']) || $_SESSION['id_groupe_user'] > 4) die('ERROR');?>
 <div id="pages_user" class="global_page <?php echo $_SESSION['id_groupe_user'] == 4?'active':'';?>">
-    <section id="user_dashbord" class="page hmi_tuile active">
+    <section id="user_dashboard" class="page hmi_tuile active">
         <header>
             <div class="pull-left"><img src="assets/images/logo.png" /></div>
             <h2><?php echo __('Dashboard');?></h2>
@@ -202,7 +202,7 @@
                 </div>
             </div>
         <footer>
-            <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="user_dashbord"><?php echo __('Back');?></a>
+            <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="user_dashboard"><?php echo __('Back');?></a>
         </footer>
     </section>
         
@@ -225,7 +225,7 @@
                 </div>
             </div>
         <footer>
-            <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="user_dashbord"><?php echo __('Back');?></a>
+            <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="user_dashboard"><?php echo __('Back');?></a>
         </footer>
     </section>
         
@@ -254,7 +254,7 @@
                 </div>
             </div>
         <footer>
-            <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="user_dashbord"><?php echo __('Back');?></a>
+            <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="user_dashboard"><?php echo __('Back');?></a>
         </footer>
     </section>
         
@@ -267,7 +267,7 @@
             <?php echo __('Comming soon');?>
         </div>
         <footer>
-            <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="user_dashbord"><?php echo __('Back');?></a>
+            <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="user_dashboard"><?php echo __('Back');?></a>
         </footer>
     </section>
 </div>

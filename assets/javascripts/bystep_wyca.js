@@ -69,8 +69,8 @@ $(document).ready(function(e) {
 						$('#install_by_step_mapping_use .modalUseThisMapNowTitle2').hide();
 						$('#install_by_step_mapping_use .modalUseThisMapNowContent').hide();
 						
-						bysteplHistoriques = Array();
-						bysteplHistoriqueIndex = -1;
+						bystepHistoriques = Array();
+						bystepHistoriqueIndex = -1;
 						ByStepRefreshHistorique();
 						
 						ByStepInitMap();
@@ -166,8 +166,8 @@ $(document).ready(function(e) {
 						$('#install_by_step_mapping_use .modalUseThisMapNowTitle2').hide();
 						$('#install_by_step_mapping_use .modalUseThisMapNowContent').hide();
 						
-						bysteplHistoriques = Array();
-						bysteplHistoriqueIndex = -1;
+						bystepHistoriques = Array();
+						bystepHistoriqueIndex = -1;
 						ByStepRefreshHistorique();
 						
 						ByStepInitMap();
@@ -260,8 +260,8 @@ $(document).ready(function(e) {
 						$('#install_by_step_mapping_use .modalUseThisMapNowTitle2').hide();
 						$('#install_by_step_mapping_use .modalUseThisMapNowContent').hide();
 						
-						bysteplHistoriques = Array();
-						bysteplHistoriqueIndex = -1;
+						bystepHistoriques = Array();
+						bystepHistoriqueIndex = -1;
 						ByStepRefreshHistorique();
 						
 						ByStepInitMap();

@@ -1,6 +1,6 @@
 <?php if (!isset($_SESSION['id_groupe_user']) || $_SESSION['id_groupe_user'] > 3) die('ERROR');?>
 <div id="pages_manager" class="global_page <?php echo $_SESSION['id_groupe_user'] == 3?'active':'';?>">
-    <section id="manager_dashbord" class="page hmi_tuile  active">
+    <section id="manager_dashboard" class="page hmi_tuile  active">
         <header>
             <div class="pull-left"><img src="assets/images/logo.png" /></div>
             <h2><?php echo __('Dashboard');?></h2>
@@ -382,7 +382,7 @@
                 </div>
             </div>
         <footer>
-            <a href="#" class="btn btn-default button_goto btn_footer_left btn_50" data-goto="manager_dashbord"><?php echo __('Back');?></a>
+            <a href="#" class="btn btn-default button_goto btn_footer_left btn_50" data-goto="manager_dashboard"><?php echo __('Back');?></a>
             <a href="#" class="btn btn-success bSaveEditMap btn_footer_right btn_50" ><?php echo __('Save map');?></a>
         </footer>
     </section>
@@ -406,7 +406,7 @@
                 </div>
             </div>
         <footer>
-            <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="manager_dashbord"><?php echo __('Back');?></a>
+            <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="manager_dashboard"><?php echo __('Back');?></a>
         </footer>
     </section>
         
@@ -448,7 +448,7 @@
                 
             </div>
         <footer>
-            <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="manager_dashbord"><?php echo __('Back');?></a>
+            <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="manager_dashboard"><?php echo __('Back');?></a>
         </footer>
     </section>
         
@@ -477,7 +477,7 @@
                 </div>
             </div>
         <footer>
-            <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="manager_dashbord"><?php echo __('Back');?></a>
+            <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="manager_dashboard"><?php echo __('Back');?></a>
         </footer>
     </section>
         
@@ -556,7 +556,7 @@
                 </div>
             </div>
         <footer>
-            <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="manager_dashbord"><?php echo __('Back');?></a>
+            <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="manager_dashboard"><?php echo __('Back');?></a>
         </footer>
     </section>
         
@@ -569,7 +569,7 @@
             <?php echo __('Comming soon');?>
         </div>
         <footer>
-            <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="manager_dashbord"><?php echo __('Back');?></a>
+            <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="manager_dashboard"><?php echo __('Back');?></a>
         </footer>
     </section>
 </div>

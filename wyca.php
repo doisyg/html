@@ -1,6 +1,6 @@
 <?php if (!isset($_SESSION['id_groupe_user']) || $_SESSION['id_groupe_user'] > 1) die('ERROR');?>
 <div id="pages_wyca" class="global_page <?php echo $_SESSION['id_groupe_user'] == 1?'active':'';?>">
-    <section id="wyca_dashbord" class="page hmi_tuile  active">
+    <section id="wyca_dashboard" class="page hmi_tuile  active">
         <header>
             <div class="pull-left"><img src="assets/images/logo.png" /></div>
             <h2><?php echo __('Dashboard');?></h2>
@@ -15,7 +15,7 @@
     </section>
     
     <section id="wyca_demo_mode_start_stop" class="page hmi_tuile ">
-    	<a href="#" class="bBackButton button_goto" data-goto="wyca_dashbord"></a>
+    	<a href="#" class="bBackButton button_goto" data-goto="wyca_dashboard"></a>
         <header>
             <div class="pull-left"><img src="assets/images/logo.png" /></div>
             <h2><?php echo __('Demo mode Start / Stop');?></h2>
@@ -36,7 +36,7 @@
     
     
     <section id="wyca_demo_mode_config" class="page with_footer">
-        <a href="#" class="bBackButton button_goto" data-goto="wyca_dashbord"></a>
+        <a href="#" class="bBackButton button_goto" data-goto="wyca_dashboard"></a>
         <header>
             <div class="pull-left"><img src="assets/images/logo.png" /></div>
             <h2><?php echo __('Demo mode configuration');?></h2>
@@ -114,7 +114,7 @@
         <footer>
         
             
-            <a href="#" class="btn btn-primary button_goto" data-goto="wyca_dashbord" style="position:absolute; width:50%; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+            <a href="#" class="btn btn-primary button_goto" data-goto="wyca_dashboard" style="position:absolute; width:50%; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
         
             <a href="#" class="btn btn-warning button_goto bSaveDemoMode" data-goto="wyca_demo_mode_config" style="position:absolute; width:50%; right:0; left:auto; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
         </footer>

@@ -128,15 +128,15 @@ function ByStepHideCurrentMenuNotSelect()
 	ByStepHideMenus();
 }
 
-var bysteplHistoriques = Array();
-var bysteplHistoriqueIndex = -1;
+var bystepHistoriques = Array();
+var bystepHistoriqueIndex = -1;
 
 
 function ByStepUndo()
 {
 	bystepSavedCanClose = false;
 	
-	elem = bysteplHistoriques[bysteplHistoriqueIndex];
+	elem = bystepHistoriques[bystepHistoriqueIndex];
 	switch(elem.action)
 	{
 		case 'gomme':
@@ -209,7 +209,7 @@ function ByStepUndo()
 			ByStepTraceAugmentedPose(elem.data);
 			break;
 	}
-	bysteplHistoriqueIndex--;
+	bystepHistoriqueIndex--;
 	
 	ByStepRefreshHistorique();
 }
@@ -218,9 +218,9 @@ function ByStepRedo()
 {
 	bystepSavedCanClose = false;
 	
-	bysteplHistoriqueIndex++;
+	bystepHistoriqueIndex++;
 	
-	elem = bysteplHistoriques[bysteplHistoriqueIndex];
+	elem = bystepHistoriques[bystepHistoriqueIndex];
 	switch(elem.action)
 	{
 		case 'gomme':
@@ -296,21 +296,21 @@ function ByStepAddHistorique(elem)
 {
 	bystepSavedCanClose = false;
 	
-	while (bysteplHistoriqueIndex < bysteplHistoriques.length-1)
-		bysteplHistoriques.pop();
+	while (bystepHistoriqueIndex < bystepHistoriques.length-1)
+		bystepHistoriques.pop();
 	
-	bysteplHistoriques.push(elem);
-	bysteplHistoriqueIndex++;
+	bystepHistoriques.push(elem);
+	bystepHistoriqueIndex++;
 	
 	ByStepRefreshHistorique();
 }
 function ByStepRefreshHistorique()
 {
-	if (bysteplHistoriqueIndex == -1)
+	if (bystepHistoriqueIndex == -1)
 		$('#install_by_step_edit_map_bByStepUndo').addClass('disabled');
 	else
 		$('#install_by_step_edit_map_bByStepUndo').removeClass('disabled');
-	if (bysteplHistoriqueIndex == bysteplHistoriques.length-1)
+	if (bystepHistoriqueIndex == bystepHistoriques.length-1)
 		$('#install_by_step_edit_map_bByStepRedo').addClass('disabled');
 	else
 		$('#install_by_step_edit_map_bByStepRedo').removeClass('disabled');
@@ -4161,8 +4161,8 @@ function AreaCancel()
 	if (bystepCurrentAction == 'addArea')
 	{
 		DeleteArea(currentAreaIndex);
-		bysteplHistoriques.pop();
-		bysteplHistoriqueIndex--;
+		bystepHistoriques.pop();
+		bystepHistoriqueIndex--;
 	}
 	else if (bystepCurrentAction == 'editArea')
 	{
@@ -4246,8 +4246,8 @@ function ForbiddenCancel()
 	if (bystepCurrentAction == 'addForbiddenArea')
 	{
 		DeleteForbidden(currentForbiddenIndex);
-		bysteplHistoriques.pop();
-		bysteplHistoriqueIndex--;
+		bystepHistoriques.pop();
+		bystepHistoriqueIndex--;
 	}
 	else if (bystepCurrentAction == 'editForbiddenArea')
 	{

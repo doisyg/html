@@ -1,6 +1,6 @@
 
 	<div id="pages_install_normal" class="global_sub_page <?php echo $INSTALL_STEP >= 100?'active':'';?>">
-        <section id="install_normal_dashbord" class="page hmi_tuile active">
+        <section id="install_normal_dashboard" class="page hmi_tuile active">
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
                 <h2><?php echo __('Dashboard');?></h2>
@@ -19,7 +19,7 @@
         </section>
         
         <section id="install_normal_edit_map" class="page with_footer">
-	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_dashbord"></a>
+	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_dashboard"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
                 <h2><?php echo __('Map');?></h2>
@@ -849,13 +849,13 @@
                 </div>
             </div>
             <footer>
-            	<a href="#" class="btn btn-default btn_footer_left btn_50 button_goto" data-goto="install_normal_dashbord"><?php echo __('Back');?></a>
+            	<a href="#" class="btn btn-default btn_footer_left btn_50 button_goto" data-goto="install_normal_dashboard"><?php echo __('Back');?></a>
                 <a href="#" class="btn btn-success bSaveEditMap btn_footer_right btn_50"><?php echo __('Save map');?></a>
             </footer>
         </section>
         
         <section id="install_normal_setup" class="page hmi_tuile with_footer">
-	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_dashbord"></a>
+	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_dashboard"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
                 <h2><?php echo __('Setup');?></h2>
@@ -874,7 +874,7 @@
                 </ul>
             </div>
             <footer>
-                <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="install_normal_dashbord"><?php echo __('Back');?></a>
+                <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="install_normal_dashboard"><?php echo __('Back');?></a>
             </footer>
         </section>
         
@@ -1240,7 +1240,7 @@
         </section>
         
         <section id="install_normal_move" class="page with_footer">
-	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_dashbord"></a>
+	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_dashboard"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
                 <h2><?php echo __('Control robot');?></h2>
@@ -1259,13 +1259,13 @@
                 </div>
             </div>
             <footer>
-                <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="install_normal_dashbord"><?php echo __('Back');?></a>
+                <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="install_normal_dashboard"><?php echo __('Back');?></a>
             </footer>
         </section>
         
         
         <section id="install_normal_recovery" class="page with_footer">
-	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_dashbord"></a>
+	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_dashboard"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
                 <h2><?php echo __('Recovery');?></h2>
@@ -1290,12 +1290,12 @@
                 </div>
             </div>
             <footer>
-                <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_dashbord"><?php echo __('Back');?></a>
+                <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_dashboard"><?php echo __('Back');?></a>
             </footer>
         </section>
         
         <section id="install_normal_manager" class="page with_footer">
-	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_dashbord"></a>
+	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_dashboard"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
                 <h2><?php echo __('Managers');?></h2>
@@ -1369,12 +1369,12 @@
                 </div>
             </div>
             <footer>
-                <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_dashbord"><?php echo __('Back');?></a>
+                <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_dashboard"><?php echo __('Back');?></a>
             </footer>
         </section>
         
         <section id="install_normal_service_book" class="page with_footer">
-	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_dashbord"></a>
+	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_dashboard"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
                 <h2><?php echo __('Service book');?></h2>
@@ -1423,12 +1423,12 @@
 				</div>
             </div>
             <footer>
-                <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_dashbord"><?php echo __('Back');?></a>
+                <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_dashboard"><?php echo __('Back');?></a>
             </footer>
         </section>
         
         <section id="install_normal_help" class="page with_footer">
-	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_dashbord"></a>
+	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_dashboard"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
                 <h2><?php echo __('Help');?></h2>
@@ -1437,7 +1437,7 @@
                 <?php echo __('Comming soon');?>
             </div>
             <footer>
-                <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_dashbord"><?php echo __('Back');?></a>
+                <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_dashboard"><?php echo __('Back');?></a>
             </footer>
         </section>
     </div>
