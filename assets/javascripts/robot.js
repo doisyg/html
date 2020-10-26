@@ -230,18 +230,27 @@ function onGoToChargeResult(data)
 
 function InitDockingState()
 {
-	if (dockingStateLast == "docked")
+	if (dockingStateLast == "docked"){
 		$('.ifDocked').show();
-	else
+		$('.ifDocked_disabled').addClass('disabled');
+		$('.ifUndocked_disabled').removeClass('disabled');
+	}else{
 		$('.ifDocked').hide();
-	
-	if (dockingStateLast == 'undocked')
+		$('.ifDocked_disabled').removeClass('disabled');
+		$('.ifUndocked_disabled').addClass('disabled');
+	}
+	if (dockingStateLast == 'undocked'){
 		$('.ifUndocked').show();
-	else
+		$('.ifDocked_disabled').removeClass('disabled');
+		$('.ifUndocked_disabled').addClass('disabled');
+	}else{
 		$('.ifUndocked').hide();
+		$('.ifDocked_disabled').addClass('disabled');
+		$('.ifUndocked_disabled').removeClass('disabled');
+	}
 		
 	
-	// Le jpystick s'affiche quand le robot passe de docker à dédocker, donc on recheck l'initialisation du joystick
+	// Le joystick s'affiche quand le robot passe de docker à dédocker, donc on recheck l'initialisation du joystick
 	InitJoystick();
 }
 
