@@ -518,7 +518,7 @@ function InitBystepSiteMasterDock(){
 		$('#pages_install_by_step .MasterDock_loading').hide();
 	}else{
 		if (wycaApi.websocketAuthed){
-			wycaApi.GetCurrentMapComplete(function(data){
+			wycaApi.GetCurrentMapData(function(data){
 				if (data.A == wycaApi.AnswerCode.NO_ERROR){
 					if(data.D.docks.length <= 1){
 						$('.install_by_step_site_master_dock_next').click();

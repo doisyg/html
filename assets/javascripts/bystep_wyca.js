@@ -224,7 +224,7 @@ $(document).ready(function(e) {
 							wycaApi.SetSiteAsCurrent(data.D,function(data){
 								if (data.A == wycaApi.AnswerCode.NO_ERROR)
 								{
-									wycaApi.GetCurrentMapComplete(function(data){
+									wycaApi.GetCurrentMapData(function(data){
 										if (data.A == wycaApi.AnswerCode.NO_ERROR)
 										{
 											if(data.D.docks.length <= 1){
@@ -1135,7 +1135,7 @@ $(document).ready(function(e) {
 		$('#pages_install_by_step .modalRealTest_loading').show();
 		$('#pages_install_by_step .modalRealTest_content').hide();
 		$('#pages_install_by_step .modalRealTest').modal('show');
-		wycaApi.GetCurrentMapComplete(function(data){
+		wycaApi.GetCurrentMapData(function(data){
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
 				$('#pages_install_by_step .modalRealTest_loading').hide();
