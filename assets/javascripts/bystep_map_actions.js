@@ -937,7 +937,7 @@ $(document).ready(function() {
 			
 			wycaApi.SetCurrentMapData(data, function(data){
 				if (data.A == wycaApi.AnswerCode.NO_ERROR){	
-					if (gommes.length > 0){	
+					if (gommes.length == 0){	
 						wycaApi.GetCurrentMapData(function(data) {
 							if (data.A == wycaApi.AnswerCode.NO_ERROR){
 								console.log('Map Data Saved');
