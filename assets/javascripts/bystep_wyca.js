@@ -212,12 +212,11 @@ $(document).ready(function(e) {
 			
 			var reader = new FileReader();
 			reader.onload = function(event) { 
-				wycaApi.ImportSite(btoa(reader.result), function(data) { 
+				wycaApi.ImportSite(btoa(reader.result), function(data) {
 					if (data.A == wycaApi.AnswerCode.NO_ERROR)
 					{
 						$('#pages_install_by_step .install_by_step_setup_import_loading').hide();
 						$('#pages_install_by_step .install_by_step_setup_import_content').show();
-						
 						//success_wyca('Imported');
 						console.log(data);
 						if(data.D > -1){

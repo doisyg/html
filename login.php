@@ -235,8 +235,8 @@ $(document).ready(function(e) {
 						success: function(data) {
 							
 							if (save_msg.D.NCP)
-								location.href = 'index.php';
-								//location.href = 'change_password.php';
+								//location.href = 'index.php';
+								location.href = 'change_password.php';
 							else
 								location.href = 'index.php';
 						},
