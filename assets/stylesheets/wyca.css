@@ -68,7 +68,7 @@ ul.tuiles li .tuile_img.is_checkbox i.fa-spinner.fa-pulse { display:none; positi
 ul.tuiles li .tuile_img.is_checkbox.checked { background-color:#FFFFFF; }
 ul.tuiles li .tuile_img.is_checkbox.test i.fa-spinner.fa-pulse { display:block; }
 ul.tuiles li .tuile_img.is_checkbox.checked i.fa-spinner.fa-pulse { display:none; }
-ul.tuiles li .tuile_img.is_checkbox.checked i.fa-check { display:block; }
+/*ul.tuiles li .tuile_img.is_checkbox.checked i.fa-check { display:block; }*/
 i.component_ok { color:#060; }
 i.component_warning { color:#FF9900; }
 i.component_error { color:#CC0000; }
