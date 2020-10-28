@@ -109,6 +109,7 @@ function WycaAPI(options){
 	 
 		GET_PATH			: 0x0115,
 		GET_PATH_FROM_CURRENT_POSE			: 0x0116,
+		GET_PATH_CANCEL			: 0x0129,
 		GET_MOVE_IN_PROGRESS			: 0x011F,
 	 
 	// Services DB
@@ -1878,6 +1879,14 @@ function WycaAPI(options){
 				"T": theta,
 				"PDT": pdt
 			}
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	this.GetPathCancel = function(callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.GET_PATH_CANCEL] = callback;
+		var action = {
+			"O": _this.CommandCode.GET_PATH_CANCEL
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
