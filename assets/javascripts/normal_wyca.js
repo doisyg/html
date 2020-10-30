@@ -466,7 +466,7 @@ $(document).ready(function(e) {
 					},
 					dataType: 'json',
 					success: function(data) {
-						window.location.href = ((use_ssl?'https':'http') + '://wyca.run';
+						window.location.href = (use_ssl?'https':'http') + '://wyca.run/login.php';
 					},
 					error: function(e) {
 					}
