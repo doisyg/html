@@ -42,7 +42,14 @@ if(isset($_GET['ns'])){
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/theme.css" />
 
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/login.css" />
-
+		<style>
+			.panel-body{
+				border-top-color:#ed9c28!important;
+			}
+			h2.title{
+				background-color:#ed9c28!important;
+			}
+		</style>
 	</head>
 	<body>
 		<section class="body-sign">
@@ -95,8 +102,8 @@ if(isset($_GET['ns'])){
 							<p class="password_format"><?= _('At least 6 characters, 1 letter, 1 digit')?> </p>
 							<div class="row">
 								<div class="col-sm-12 text-right">
-									<button type="submit" class="btn btn-primary hidden-xs"><?php echo __('Change password');?></button>
-									<button type="submit" class="btn btn-primary btn-block btn-lg visible-xs mt-lg"><?php echo __('Change password');?></button>
+									<button type="submit" class="btn btn-warning hidden-xs"><?php echo __('Change password');?></button>
+									<button type="submit" class="btn btn-warning btn-block btn-lg visible-xs mt-lg"><?php echo __('Change password');?></button>
 								</div>
 							</div>
 
