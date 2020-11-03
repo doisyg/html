@@ -678,7 +678,7 @@
                                                     <h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fa fa-thumbs-up"></i></h2>
                                                 </header>
                                                 <div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
-                                                    <strong>Congratulations !</strong><br />
+                                                    <strong><?= _('Congratulations !') ?></strong><br />
                                                     No error during action.
                                                 </div>
                                             </section>
@@ -687,7 +687,16 @@
                                                     <h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fa fa-remove"></i></h2>
                                                 </header>
                                                 <div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
-                                                    <strong>Error !</strong><br />
+                                                    <strong><?= _('Error !') ?></strong><br />
+                                                    <span class="error_details"></span>
+                                                </div>
+                                            </section>
+                                            <section class="panel panel-warning">
+                                                <header class="panel-heading">
+                                                    <h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fas fa-exclamation-triangle"></i></h2>
+                                                </header>
+                                                <div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
+                                                    <strong><?= _('Warning !') ?></strong><br />
                                                     <span class="error_details"></span>
                                                 </div>
                                             </section>

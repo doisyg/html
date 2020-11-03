@@ -201,5 +201,9 @@ $_LANG['d87152f30fb111ff99e0cf3dc1217939'] = 'Pick the default master docking st
 $_LANG['fa6ec1ff08c2ec1882f99f1ae3dd2f3c'] = 'Default Dock';
 $_LANG['7851fab7ac4cf7dfc8c48ea5dcc437c4'] = 'Pick the default docking station';
 $_LANG['a60852f204ed8028c1c58808b746d115'] = 'Ok';
+$_LANG['b56edd782b2ae1a60a2bd56cee514413'] = 'Import existing site with map';
+$_LANG['9cd05e4b51b853ed513a8007c36a9a2c'] = 'Create new site and proceed to mapping';
+$_LANG['328f7c2698b419e20f2b9e5324719699'] = 'Create new site proceed to mapping';
+$_LANG['3d344f7199226413c28fc1561086b242'] = 'Create new site through mapping';
 
 ?>

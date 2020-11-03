@@ -148,7 +148,7 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 .table_wifi tr.active {color: #343434; font-weight: bold;}
 .wifi_connexion_progress { text-align:center; font-size:40px; display:none; }
 
-.loading_big { text-align:center; font-size:40px; display:none; margin: 10px 0;}
+.loading_big { text-align:center; font-size:40px; display:none; margin: 10px 0;line-height: 60px;}
 
 #install_by_step_edit_map_container_all { position:relative; margin:-20px; height:calc(100vh - 110px); height: calc(var(--vh, 1vh) * 100 - 110px); }
 #install_by_step_edit_map_all { height:100%; }
@@ -1083,7 +1083,17 @@ ul#MasterDockList li .tuile_img.is_checkbox p.dockname {margin-top: 0px;font-wei
 	padding-left:15px;
 	padding-right:15px;
 }
-
+span.error_details{
+	margin-top: 5px;
+    display: block;
+}
+span.error_details span{
+	font-size: 14px;
+    line-height: 26px;
+    display: block;
+    margin-top: 10px;
+    font-style: italic;
+}
 .fa-pencil:before{
 	content:"\f304";
 }
