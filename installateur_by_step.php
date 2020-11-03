@@ -52,6 +52,8 @@
             </header>
             <div class="content">
             	<div class="install_by_step_tops_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
+				<h5 class="text-center" style="margin-bottom:5px;"><?= _('Please select available tops for the vehicle.') ?></h5>
+				<p class="text-center" style="margin-bottom:30px;"><i class="fas fa-exclamation-triangle"></i> <?= _('This is not the active top selection.') ?></p>
                 <ul class="tuiles row">
                 </ul>
                 
@@ -106,6 +108,7 @@
             </header>
             <div class="content">
             	<div class="install_by_step_top_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
+				<h5 class="text-center" style="margin-bottom:30px;"><?= _('Please select the active top for the vehicle.') ?></h5>
                 <ul class="tuiles row">
                 </ul>
                 
