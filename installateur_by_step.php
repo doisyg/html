@@ -276,15 +276,15 @@
 				<h4 style="text-align:center;margin:30px 0"><?= __('Import site or create a new one ?') ?></h4>
 				<ul class="tuiles row">
                     <li class="col-xs-6">
-                    	<div class="is_checkbox tuile_img no_update button_goto" id="bImportSite" data-goto="install_by_step_import_site" style="bottom:0;border-radius:10px" onTouchStart="InitBystepSiteImport()">
+                    	<div class="is_checkbox tuile_img no_update button_goto" id="bImportSite" data-goto="install_by_step_import_site" style="height:max-content;bottom:0;border-radius:10px" onTouchStart="InitBystepSiteImport()">
                     		<i class="fas fa-file-import" style="padding-top:5px"></i>
-							<h4 class="" style="margin-top: 0px;font-weight:700"><?php echo __('Import Site');?></h4>
+							<h5 class="" style="margin-top: 0px;font-weight:700;font-size: 15px;"><?php echo __('Import existing site with map');?></h5>
                         </div>
                     </li>
                     <li class="col-xs-6">
-                    	<div class="is_checkbox tuile_img no_update button_goto" id="bCreateSite" data-goto="install_by_step_new_site" style="bottom:0;border-radius:10px">
+                    	<div class="is_checkbox tuile_img no_update button_goto" id="bCreateSite" data-goto="install_by_step_new_site" style="height:max-content;bottom:0;border-radius:10px">
                     		<i class="fas fa-hotel" style="padding-top:5px"></i>
-							<h4 class="" style="margin-top: 0px;font-weight:700"><?php echo __('Create Site');?></h4>
+							<h5 class="" style="margin-top: 0px;font-weight:700;font-size: 15px;"><?php echo __('Create new site through mapping');?></h5>
                         </div>
                     </li>
 				</ul>
