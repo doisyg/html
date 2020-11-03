@@ -1930,10 +1930,11 @@ function StartAnimCheckComposantInstall()
 	{
 		$('#install_by_step_check .test').addClass('checked');
 		$('#install_by_step_check .test').removeClass('test');
-		
-		if ($('#install_by_step_check div.is_checkbox:not(".checked")').length > 0)
+		let lg = $('#install_by_step_check div.is_checkbox:not(".checked")').length;
+		if ( lg > 0)
 		{
-			$('#install_by_step_check div.is_checkbox:not(".checked")').first().addClass('test');
+			let rd = Math.floor(Math.random() * Math.floor(lg));
+			$('#install_by_step_check div.is_checkbox:not(".checked")').eq(rd).addClass('test');
 			timer_anim_check = setTimeout(StartAnimCheckComposantInstall, Math.floor(Math.random() * 1500 + 500));
 		}
 		else
