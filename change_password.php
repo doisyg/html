@@ -75,7 +75,7 @@ if(isset($_GET['ns'])){
 							<div class="form-group">
 								<label><?php echo __('Password');?></label>
 								<div class="input-group input-group-icon">
-									<input id="password" name="password" type="password" class="form-control input-lg" pattern="(?=^.{6,}$)(?=.*[A-z])(?=.*[0-9]).*$"/>
+									<input id="password" name="password" type="password" class="form-control input-lg" pattern="(?=^.{8,}$)(?=.+[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|])(?=.+[a-z])(?=.+[A-Z])(?=.+[0-9]).*$"/>
 									<span class="input-group-addon">
 										<span class="icon icon-lg">
 											<i class="fa fa-lock"></i>
@@ -91,7 +91,7 @@ if(isset($_GET['ns'])){
 									<!--<a href="#" id="bLostPassword" class="pull-right"><?php echo __('Lost Password?');?></a>-->
 								</div>
 								<div class="input-group input-group-icon">
-									<input id="confirm_password" name="confirm_password" type="password" class="form-control input-lg" pattern="(?=^.{6,}$)(?=.*[A-z])(?=.*[0-9]).*$"/>
+									<input id="confirm_password" name="confirm_password" type="password" class="form-control input-lg" pattern="(?=^.{8,}$)(?=.+[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|])(?=.+[a-z])(?=.+[A-Z])(?=.+[0-9]).*$"/>
 									<span class="input-group-addon">
 										<span class="icon icon-lg">
 											<i class="fa fa-lock"></i>
