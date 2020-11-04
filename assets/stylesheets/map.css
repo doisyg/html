@@ -44,7 +44,7 @@ svg#manager_edit_map_svg_clone .movable.active { display:none !important; }
 svg#user_edit_map_svg_clone .movable.active { display:none !important; }
 
 .dock_elem_circle{
-	fill: #aaaaaa69;
+	fill: transparent;
     stroke: #ff8c00;
     stroke-width:0.5;
 }
@@ -52,7 +52,7 @@ svg#user_edit_map_svg_clone .movable.active { display:none !important; }
     stroke: #CC0000;
 }
 .poi_elem_circle{
-	fill: #aaaaaa69;
+	fill: transparent;
     stroke: #589FB1;
     stroke-width:0.5;
 }
@@ -60,7 +60,7 @@ svg#user_edit_map_svg_clone .movable.active { display:none !important; }
     stroke: #CC0000;
 }
 .augmented_pose_elem_circle{
-	fill: #aaaaaa69;
+	fill:transparent;
     stroke: #5d24cb;
     stroke-width:0.5;
 }
