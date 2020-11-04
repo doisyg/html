@@ -575,12 +575,16 @@ function GetServiceBooksNormal()
 			
 			if (data.D != undefined)
 			$.each(data.D,function(index, value){
-				
-				var date = new Date(value.date * 1000);
-				
+				let d = new Date(value.date * 1000);
+				let d_txt="";
+				switch(lang){
+					case 'fr': d_txt = d.getDate() + '/' + (d.getMonth()+1) + '/' +  d.getFullYear() ; break;
+					case 'en': d_txt = (d.getMonth()+1) + '/' + d.getDate() + '/' +  d.getFullYear() ; break;
+					default: break;
+				}
 				$('#install_normal_service_book .list_service_books').prepend('' +
 						'<li>'+
-						'	<div class="date">'+date.toLocaleDateString("en-US") +'</div>'+
+						'	<div class="date">'+d_txt+'</div>'+
 						'	<div class="title">'+value.title+'</div>'+
 						'	<div class="comment">'+value.comment+'</div>'+
 						'</li>'
@@ -619,9 +623,9 @@ function GetServiceBooksByStep()
 				}
 				$('#install_by_step_service_book .list_service_books').append('' +
 						'<li>'+
+						'	<div class="date">'+d_txt+'</div>'+
 						'	<div class="title">'+value.title+'</div>'+
 						'	<div class="comment">'+value.comment+'</div>'+
-						'	<div class="date">'+d_txt+'</div>'+
 						'</li>'
 						);
 			});
@@ -1287,7 +1291,38 @@ function CheckName(tab, nom, index_ignore=-1)
 	});
 	return res;
 }
-	
+
+function ParseAPIAnswerError(data,pre_txt = '' ,post_txt = ''){
+	console.log(JSON.stringify(data));
+	let txt = '';
+	if( data.A == wycaApi.AnswerCode.CANCELED ){
+		if (data.M != ''){
+			if(data.M.length > 50)
+				txt = wycaApi.AnswerCodeToString(data.A)+'<br><span>'+data.M+'</span>';
+			else
+				txt = wycaApi.AnswerCodeToString(data.A)+'<br>'+data.M;
+		}else{
+			txt = wycaApi.AnswerCodeToString(data.A);
+		}
+		pre_txt = pre_txt == '' ? '' : pre_txt+'<br>';
+		post_txt = post_txt == '' ? '' : '<br>'+post_txt;
+		txt = pre_txt+txt+post_txt;
+		warning_wyca(txt);
+	}else{
+		if (data.M != ''){
+			if(data.M.length > 50)
+				txt = wycaApi.AnswerCodeToString(data.A)+'<br><span>'+data.M+'</span>';
+			else
+				txt = wycaApi.AnswerCodeToString(data.A)+'<br>'+data.M;
+		}else{
+			txt = wycaApi.AnswerCodeToString(data.A);
+		}
+		txt = pre_txt == '' ? txt : pre_txt.txt;
+		txt = post_txt == '' ? txt : txt.post_txt;
+		alert_wyca(txt);
+	}
+}
+
 function GetDataMapToSave()
 {
 	data = {};

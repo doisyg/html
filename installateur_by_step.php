@@ -1779,7 +1779,8 @@
                 
                 <div class="install_by_step_service_book_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
                 
-                <div class="loaded col-md-12" style="padding-top:30px;">
+                <div class="loaded col-md-12" style="padding-top:0px;">
+					<h5><?= _('Service books describe the vehicle\'s maintenance and deployement operations') ?></h5>
                     <a href="#" class="bAddServiceBook btn btn-primary">Add a service book</a>
                     <ul class="list_service_books list_elem">
                     </ul>

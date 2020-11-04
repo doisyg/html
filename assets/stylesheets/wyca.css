@@ -1108,7 +1108,12 @@ span.error_details span{
 	background:#DCDCDC;
 }
 
-
+.bAddServiceBook{
+	position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 10px 0;
+}
 
 /* COLOR PICKER IRO */
 .iro-colorpicker{
