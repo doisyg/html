@@ -538,7 +538,7 @@
 						<i class="fa fa-map-marker-alt iconMenuBlue"></i>
 					</div>
 					<div class="btn-circle btn-lg icon_menu" data-menu="install_by_step_edit_map_menu_augmented_pose">
-						<div class="iconAugmentedPose"><i class="fas fa-map-marker-alt iconMenuBlue"></i><i class="fas fa-barcode"></i></div>
+						<div class="iconAugmentedPose"><i class="fas fa-map-marker-alt iconMenuPurple"></i><i class="fas fa-barcode"></i></div>
 					</div>
 					
                     <div id="install_by_step_edit_map_zoom_carte_container">
@@ -563,8 +563,9 @@
                     <a href="#" id="install_by_step_edit_map_bSaveCurrentElem" class="btn btn-circle btn-primary btn-menu"><i class="fa fa-check"></i></a>
                     <a href="#" id="install_by_step_edit_map_bCancelCurrentElem" class="btn btn-circle btn-warning btn-menu"><i class="fa fa-times"></i></a>
                     
-                    <a href="#" id="install_by_step_edit_map_bByStepUndo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:20px; left:10px;"><i class="fa fa-reply"></i></a>
-                    <a href="#" id="install_by_step_edit_map_bByStepRedo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:20px; left:45px;"><i class="fa fa-share"></i></a>
+                    <a href="#" id="install_by_step_edit_map_bByStepUndo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:20px; left:10px;">
+					<i class="fas fa-undo-alt"></i></a>
+                    <a href="#" id="install_by_step_edit_map_bByStepRedo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:20px; left:45px;"><i class="fas fa-redo-alt"></i></a>
                     
                     <div id="install_by_step_edit_map_menu" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
@@ -578,7 +579,7 @@
 								<i class="fa fa-map-marker-alt iconMenuBlue"></i>
 							</a></li>
                         	<li><a href="#" class="btn btn-circle btn-default bAddAugmentedPose btn-menu" data-orientation="V">
-								<div class="iconAugmentedPose"><i class="fas fa-map-marker-alt iconMenuBlue"></i><i class="fas fa-barcode"></i></div>
+								<div class="iconAugmentedPose"><i class="fas fa-map-marker-alt iconMenuPurple"></i><i class="fas fa-barcode"></i></div>
 							</a></li>
                         	<li><a href="#" class="btn btn-circle btn-default bAddDock btn-menu" data-orientation="V">
 								<i class="fas fa-charging-station iconMenuGreen" style="position: relative;top: -1px;left: 2px;"></i>
@@ -1417,7 +1418,7 @@
                         	<li><div class="iconForbiddenArea"><i class="fas fa-vector-square"></i><i class="fa fa-minus-circle iconMenuRed"></i></div><span class="description"><?= _('Add forbidden area')?></span></li>
                         	<li><i class="fa fa-draw-polygon iconMenuGreen" style="font-size: 26px;"></i><span class="description"><?= _('Add custom area')?></span></li>
                         	<li><i class="fa fa-map-marker-alt iconMenuBlue"></i><span class="description"><?= _('Add POI')?></span></li>
-                        	<li><div class="iconAugmentedPose"><i class="fas fa-map-marker-alt iconMenuBlue"></i><i class="fas fa-barcode"></i></div><span class="description"><?= _('Add Augmented pose')?></span></li>
+                        	<li><div class="iconAugmentedPose"><i class="fas fa-map-marker-alt iconMenuPurple"></i><i class="fas fa-barcode"></i></div><span class="description"><?= _('Add Augmented pose')?></span></li>
                         	<li><i class="fa fa-charging-station iconMenuGreen"></i><span class="description"><?= _('Add docking station')?></span></li>
                         	<li><i class="fa fa-eraser"></i><span class="description"><?= _('Erase pixel')?></span></li>
                         	<li><i class="fa fa-crosshairs iconMenuBlue"></i><span class="description"><?= _('Move the robot to this point')?></span></li>

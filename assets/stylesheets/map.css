@@ -19,8 +19,8 @@ body .robot, .robot.active { fill:#009900; display:block; }
 .poi_elem_secure { fill:#AAAAAA; }
 .poi_elem_fond { fill:#589FB1; }
 .augmented_pose_elem_secure { fill:#AAAAAA; }
-.augmented_pose_elem_fond { fill:#589FB1; }
-.dock_elem_robot { fill:#3CF; }
+.augmented_pose_elem_fond { fill:#5d24cb; }
+.dock_elem_robot { fill:#ff8c00; }
 .poi_elem_fond.active { fill:#CC0000; }
 .augmented_pose_elem_fond.active { fill:#CC0000; }
 .dock_elem_fond.active { fill:#CC0000; }
@@ -42,3 +42,28 @@ svg#install_by_step_edit_map_svg_clone .movable.active { display:none !important
 svg#install_normal_edit_map_svg_clone .movable.active { display:none !important; }
 svg#manager_edit_map_svg_clone .movable.active { display:none !important; }
 svg#user_edit_map_svg_clone .movable.active { display:none !important; }
+
+.dock_elem_circle{
+	fill: #aaaaaa69;
+    stroke: #ff8c00;
+    stroke-width:0.5;
+}
+.dock_elem_circle.active{
+    stroke: #CC0000;
+}
+.poi_elem_circle{
+	fill: #aaaaaa69;
+    stroke: #589FB1;
+    stroke-width:0.5;
+}
+.poi_elem_circle.active{
+    stroke: #CC0000;
+}
+.augmented_pose_elem_circle{
+	fill: #aaaaaa69;
+    stroke: #5d24cb;
+    stroke-width:0.5;
+}
+.augmented_pose_elem_circle.active{
+    stroke: #CC0000;
+}

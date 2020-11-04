@@ -521,10 +521,20 @@ function ByStepTraceDock(indexDock)
 	
 	rayonRobot = (26 / ros_resolution);
 	rayonRobotSecure = ((26+15) / ros_resolution);
-	
+		
 	path = makeSVGElement('circle', { cx: x,
 									cy: y,
 								   r: rayonRobot,
+								   'class': 'dock_elem dock_elem_circle dock_elem_'+dock.id_docking_station,
+								   'id': 'install_by_step_edit_map_dock_robot_'+dock.id_docking_station,
+								   'data-id_docking_station': dock.id_docking_station,
+								   'data-element_type': 'dock',
+								   'data-element': 'dock'
+								   });
+	svgByStep.appendChild(path);
+	path = makeSVGElement('circle', { cx: x,
+									cy: y,
+								   r: rayonRobot * 0.60,
 								   'class': 'dock_elem dock_elem_robot dock_elem_fond dock_elem_'+dock.id_docking_station,
 								   'id': 'install_by_step_edit_map_dock_robot_'+dock.id_docking_station,
 								   'data-id_docking_station': dock.id_docking_station,
@@ -533,7 +543,20 @@ function ByStepTraceDock(indexDock)
 								   });
 	svgByStep.appendChild(path);
 	
-	path = makeSVGElement('polyline', { 'points': (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2),
+	path = makeSVGElement('path', { cx: x,
+									cy: y,
+								   r: rayonRobot * 0.60,
+								   'class': 'dock_elem dock_elem_robot dock_elem_fond dock_elem_'+dock.id_docking_station,
+								   'id': 'install_by_step_edit_map_dock_robot_'+dock.id_docking_station,
+								   'data-id_docking_station': dock.id_docking_station,
+								   'data-element_type': 'dock',
+								   'data-element': 'dock'
+								   });
+	svgByStep.appendChild(path);
+	
+	
+	
+	path = makeSVGElement('polyline', { 'points': (x-1.5)+' '+(y-1.5)+' '+(x+1.5)+' '+(y)+' '+(x-1.5)+' '+(y+1.5),
 									'stroke':'#FFFFFF',
 									'stroke-width':1,
 									'fill':'none',
@@ -618,7 +641,7 @@ function ByStepTracePoi(indexPoi)
 	
 	rayonRobot = (26 / ros_resolution);
 	rayonRobotSecure = ((26+15) / ros_resolution);
-	
+	/*
 	path = makeSVGElement('circle', { cx: x,
 									cy: y,
 								   r: rayonRobotSecure,
@@ -629,10 +652,22 @@ function ByStepTracePoi(indexPoi)
 								   'data-element': 'poi'
 								   });
 	svgByStep.appendChild(path);
+	*/
 	
 	path = makeSVGElement('circle', { cx: x,
 									cy: y,
 								   r: rayonRobot,
+								   'class': 'poi_elem poi_elem_circle poi_elem_'+poi.id_poi,
+								   'id': 'install_by_step_edit_map_poi_robot_'+poi.id_poi,
+								   'data-id_poi': poi.id_poi,
+								   'data-element_type': 'poi',
+								   'data-element': 'poi'
+								   });
+	svgByStep.appendChild(path);
+	
+	path = makeSVGElement('circle', { cx: x,
+									cy: y,
+								   r: rayonRobot * 0.6,
 								   'class': 'poi_elem poi_elem_fond poi_elem_'+poi.id_poi,
 								   'id': 'install_by_step_edit_map_poi_robot_'+poi.id_poi,
 								   'data-id_poi': poi.id_poi,
@@ -641,7 +676,7 @@ function ByStepTracePoi(indexPoi)
 								   });
 	svgByStep.appendChild(path);
 	
-	path = makeSVGElement('polyline', { 'points': (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2),
+	path = makeSVGElement('polyline', { 'points': (x-1.5)+' '+(y-1.5)+' '+(x+1.5)+' '+(y)+' '+(x-1.5)+' '+(y+1.5),
 									'stroke':'#FFFFFF',
 									'stroke-width':1,
 									'fill':'none',
@@ -727,10 +762,20 @@ function ByStepTraceAugmentedPose(indexAugmentedPose)
 	rayonRobot = (26 / ros_resolution);
 	rayonRobotSecure = ((26+15) / ros_resolution);
 	
-	path = makeSVGElement('circle', { cx: x,
+	/*path = makeSVGElement('circle', { cx: x,
 									cy: y,
 								   r: rayonRobotSecure,
 								   'class': 'augmented_pose_elem augmented_pose_elem_secure augmented_pose_elem_'+augmented_pose.id_augmented_pose,
+								   'id': 'install_by_step_edit_map_augmented_pose_secure_'+augmented_pose.id_augmented_pose,
+								   'data-id_augmented_pose': augmented_pose.id_augmented_pose,
+								   'data-element_type': 'augmented_pose',
+								   'data-element': 'augmented_pose'
+								   });
+	svgByStep.appendChild(path);*/
+	path = makeSVGElement('circle', { cx: x,
+									cy: y,
+								   r: rayonRobot,
+								   'class': 'augmented_pose_elem augmented_pose_elem_circle augmented_pose_elem_'+augmented_pose.id_augmented_pose,
 								   'id': 'install_by_step_edit_map_augmented_pose_secure_'+augmented_pose.id_augmented_pose,
 								   'data-id_augmented_pose': augmented_pose.id_augmented_pose,
 								   'data-element_type': 'augmented_pose',
@@ -740,7 +785,7 @@ function ByStepTraceAugmentedPose(indexAugmentedPose)
 	
 	path = makeSVGElement('circle', { cx: x,
 									cy: y,
-								   r: rayonRobot,
+								   r: rayonRobot * 0.6,
 								   'class': 'augmented_pose_elem augmented_pose_elem_fond augmented_pose_elem_'+augmented_pose.id_augmented_pose,
 								   'id': 'install_by_step_edit_map_augmented_pose_robot_'+augmented_pose.id_augmented_pose,
 								   'data-id_augmented_pose': augmented_pose.id_augmented_pose,
@@ -749,7 +794,7 @@ function ByStepTraceAugmentedPose(indexAugmentedPose)
 								   });
 	svgByStep.appendChild(path);
 	
-	path = makeSVGElement('polyline', { 'points': (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2),
+	path = makeSVGElement('polyline', { 'points': (x-1.5)+' '+(y-1.5)+' '+(x+1.5)+' '+(y)+' '+(x-1.5)+' '+(y+1.5),
 									'stroke':'#FFFFFF',
 									'stroke-width':1,
 									'fill':'none',
