@@ -1292,6 +1292,19 @@ function CheckName(tab, nom, index_ignore=-1)
 	return res;
 }
 
+function FindElemByName(tab, nom)
+{
+	let res = false;
+	nom = nom.toLowerCase();
+	$.each(tab,function(idx,item){
+		if(item.name.toLowerCase() == nom)
+		{
+			res = item;
+		}
+	});
+	return res;
+}
+
 function ParseAPIAnswerError(data,pre_txt = '' ,post_txt = ''){
 	console.log(JSON.stringify(data));
 	let txt = '';

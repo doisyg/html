@@ -36,6 +36,7 @@ var timerRealTestEnd = 0;
 var statusRealTestStart = 0;
 var statusRealTestEnd = false;
 
+var bufferMapSaveElemName = '';
 $(document).ready(function(e) {
 	
 	/*
@@ -1087,6 +1088,35 @@ $(document).ready(function(e) {
 		}
 		else
 		{
+			
+			let actions_searched = ['editPoi','editDock','editAugmentedPose','editForbiddenArea','editArea'];
+			if(actions_searched.includes(bystepCurrentAction)){
+				console.log('menu open need buffer');
+				switch(bystepCurrentAction){
+					case 'editPoi' :
+						i = GetPoiIndexFromID(currentPoiByStepLongTouch.data('id_poi'));
+						bufferMapSaveElemName = pois[i].name;
+					break;
+					case 'editDock' :
+						i = GetDockIndexFromID(currentDockByStepLongTouch.data('id_docking_station'));
+						bufferMapSaveElemName = docks[i].name;
+					break;
+					case 'editAugmentedPose' :
+						i = GetAugmentedPoseIndexFromID(currentAugmentedPoseByStepLongTouch.data('id_augmented_pose'));
+						bufferMapSaveElemName = augmented_poses[i].name;
+					break;
+					case 'editForbiddenArea' :
+						i = GetForbiddenIndexFromID(currentForbiddenByStepLongTouch.data('id_area'));
+						bufferMapSaveElemName = forbiddens[i].name;
+					break;
+					case 'editArea' :
+						i = GetAreaIndexFromID(currentAreaByStepLongTouch.data('id_area'));
+						bufferMapSaveElemName = areas[i].name;
+					break;
+					default: bufferMapSaveElemName = ''; break;
+				}
+			}
+
 			data = GetDataMapToSave();
 			
 			if ($(this).hasClass('button_goto'))

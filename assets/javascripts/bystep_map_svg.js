@@ -526,7 +526,7 @@ function ByStepTraceDock(indexDock)
 									cy: y,
 								   r: rayonRobot,
 								   'class': 'dock_elem dock_elem_circle dock_elem_'+dock.id_docking_station,
-								   'id': 'install_by_step_edit_map_dock_robot_'+dock.id_docking_station,
+								   'id': 'install_by_step_edit_map_dock_secure_'+dock.id_docking_station,
 								   'data-id_docking_station': dock.id_docking_station,
 								   'data-element_type': 'dock',
 								   'data-element': 'dock'
@@ -542,19 +542,6 @@ function ByStepTraceDock(indexDock)
 								   'data-element': 'dock'
 								   });
 	svgByStep.appendChild(path);
-	
-	path = makeSVGElement('path', { cx: x,
-									cy: y,
-								   r: rayonRobot * 0.60,
-								   'class': 'dock_elem dock_elem_robot dock_elem_fond dock_elem_'+dock.id_docking_station,
-								   'id': 'install_by_step_edit_map_dock_robot_'+dock.id_docking_station,
-								   'data-id_docking_station': dock.id_docking_station,
-								   'data-element_type': 'dock',
-								   'data-element': 'dock'
-								   });
-	svgByStep.appendChild(path);
-	
-	
 	
 	path = makeSVGElement('polyline', { 'points': (x-1.5)+' '+(y-1.5)+' '+(x+1.5)+' '+(y)+' '+(x-1.5)+' '+(y+1.5),
 									'stroke':'#FFFFFF',
@@ -658,7 +645,7 @@ function ByStepTracePoi(indexPoi)
 									cy: y,
 								   r: rayonRobot,
 								   'class': 'poi_elem poi_elem_circle poi_elem_'+poi.id_poi,
-								   'id': 'install_by_step_edit_map_poi_robot_'+poi.id_poi,
+								   'id': 'install_by_step_edit_map_poi_secure_'+poi.id_poi,
 								   'data-id_poi': poi.id_poi,
 								   'data-element_type': 'poi',
 								   'data-element': 'poi'

@@ -113,9 +113,65 @@ function GetInfosCurrentMapDoByStep()
 			bystepHistoriqueIndex = -1;
 			ByStepRefreshHistorique();
 			
+			ByStepResizeSVG();
+			
 			setTimeout(function(){
 				ByStepInitMap();
 				ByStepResizeSVG();
+				
+				//currentAugmentedPoseByStepLongTouch = $('#...' + temp.id_augmented_pose
+				
+				/* REFRESH IDS IF MENU OPEN */
+				let actions_searched = ['editPoi','editDock','editAugmentedPose','editForbiddenArea','editArea'];
+				let temp = false;
+				if(actions_searched.includes(bystepCurrentAction)){
+					switch(bystepCurrentAction){
+						case 'editPoi' :
+							temp = FindElemByName(pois,bufferMapSaveElemName);
+							if(temp){
+								currentPoiByStepLongTouch = $('#install_by_step_edit_map_poi_secure_'+temp.id_poi);
+								currentPoiByStepLongTouch.data('id_poi',temp.id_poi);
+								bufferMapSaveElemName = '';
+							}
+						break;
+						case 'editDock' :
+							temp = FindElemByName(docks,bufferMapSaveElemName);
+							if(temp){
+								currentDockByStepLongTouch = $('#install_by_step_edit_map_dock_secure_'+temp.id_docking_station);
+								currentDockByStepLongTouch.data('id_docking_station',temp.id_docking_station);
+								bufferMapSaveElemName = '';
+							}
+						break;
+						case 'editAugmentedPose' :
+							temp = FindElemByName(augmented_poses,bufferMapSaveElemName);
+							if(temp){
+								currentAugmentedPoseByStepLongTouch = $('#install_by_step_edit_map_augmented_pose_secure_'+temp.id_augmented_pose);
+								currentAugmentedPoseByStepLongTouch.data('id_augmented_pose',temp.id_augmented_pose);
+								bufferMapSaveElemName = '';
+							}
+						break;
+						case 'editForbiddenArea' :
+							temp = FindElemByName(forbiddens,bufferMapSaveElemName);
+							if(temp){
+								currentForbiddenByStepLongTouch = $('#install_by_step_edit_map_forbidden_'+temp.id_area);
+								currentForbiddenByStepLongTouch.data('id_area',temp.id_area);
+								bufferMapSaveElemName = '';
+							}
+						break;
+						case 'editArea' :
+							temp = FindElemByName(areas,bufferMapSaveElemName);
+							if(temp){
+								currentAreaByStepLongTouch = $('#install_by_step_edit_map_area_'+temp.id_area);
+								currentAreaByStepLongTouch.data('id_area',temp.id_area);
+								bufferMapSaveElemName = '';
+							}
+						break;
+						default: bufferMapSaveElemName = ''; break;
+					}
+				}
+				console.log(temp);
+				
+				
 			},500); 
 			
 			if (gotoTest) InitTest();
