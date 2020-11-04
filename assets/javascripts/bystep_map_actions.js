@@ -812,16 +812,30 @@ $(document).ready(function() {
 				{
 					$('#install_by_step_edit_map .modalFinTest section.panel-success').show();
 					$('#install_by_step_edit_map .modalFinTest section.panel-danger').hide();
+					$('#install_by_step_edit_map .modalFinTest section.panel-warning').hide();
 				}
 				else
-				{
-					$('#install_by_step_edit_map .modalFinTest section.panel-success').hide();
-					$('#install_by_step_edit_map .modalFinTest section.panel-danger').show();
-					
-					if (data.M != '')
-						$('#install_by_step_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
-					else
-						$('#install_by_step_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
+				{	
+					if(data.A == wycaApi.AnswerCode.CANCELED){
+						$('#install_by_step_edit_map .modalFinTest section.panel-success').hide();
+						$('#install_by_step_edit_map .modalFinTest section.panel-danger').hide();
+						$('#install_by_step_edit_map .modalFinTest section.panel-warning').show();
+						
+						$('#install_by_step_edit_map .modalFinTest section.panel-warning .error_details').html(wycaApi.AnswerCodeToString(data.A));
+					}else{
+						
+						$('#install_by_step_edit_map .modalFinTest section.panel-success').hide();
+						$('#install_by_step_edit_map .modalFinTest section.panel-danger').show();
+						$('#install_by_step_edit_map .modalFinTest section.panel-warning').hide();
+						
+						if (data.M != '')
+							if(data.M.length > 50)
+								$('#install_by_step_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br><span>' +data.M+ '</span>');
+							else
+								$('#install_by_step_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+						else
+							$('#install_by_step_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
+					}
 				}
 				
 				// On rebranche l'ancienne fonction
@@ -837,7 +851,9 @@ $(document).ready(function() {
 				}
 				else
 				{
+					
 					$('#install_by_step_edit_map .modalFinTest section.panel-success').hide();
+					$('#install_by_step_edit_map .modalFinTest section.panel-warning').hide();
 					$('#install_by_step_edit_map .modalFinTest section.panel-danger').show();
 					
 					if (data.M != '')
@@ -1084,16 +1100,30 @@ $(document).ready(function() {
 				{
 					$('#install_by_step_edit_map .modalFinTest section.panel-success').show();
 					$('#install_by_step_edit_map .modalFinTest section.panel-danger').hide();
+					$('#install_by_step_edit_map .modalFinTest section.panel-warning').hide();
 				}
 				else
-				{
-					$('#install_by_step_edit_map .modalFinTest section.panel-success').hide();
-					$('#install_by_step_edit_map .modalFinTest section.panel-danger').show();
-					
-					if (data.M != '')
-						$('#install_by_step_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
-					else
-						$('#install_by_step_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
+				{	
+					if(data.A == wycaApi.AnswerCode.CANCELED){
+						$('#install_by_step_edit_map .modalFinTest section.panel-success').hide();
+						$('#install_by_step_edit_map .modalFinTest section.panel-danger').hide();
+						$('#install_by_step_edit_map .modalFinTest section.panel-warning').show();
+						
+						$('#install_by_step_edit_map .modalFinTest section.panel-warning .error_details').html(wycaApi.AnswerCodeToString(data.A));
+					}else{
+						
+						$('#install_by_step_edit_map .modalFinTest section.panel-success').hide();
+						$('#install_by_step_edit_map .modalFinTest section.panel-danger').show();
+						$('#install_by_step_edit_map .modalFinTest section.panel-warning').hide();
+						
+						if (data.M != '')
+							if(data.M.length > 50)
+								$('#install_by_step_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br><span>' +data.M+ '</span>');
+							else
+								$('#install_by_step_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+						else
+							$('#install_by_step_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
+					}
 				}
 				
 				// On rebranche l'ancienne fonction
@@ -1112,6 +1142,7 @@ $(document).ready(function() {
 				{
 					$('#install_by_step_edit_map .modalFinTest section.panel-success').hide();
 					$('#install_by_step_edit_map .modalFinTest section.panel-danger').show();
+					$('#install_by_step_edit_map .modalFinTest section.panel-warning').hide();
 					
 					if (data.M != '')
 						$('#install_by_step_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
@@ -1354,16 +1385,30 @@ $(document).ready(function() {
 				{
 					$('#install_by_step_edit_map .modalFinTest section.panel-success').show();
 					$('#install_by_step_edit_map .modalFinTest section.panel-danger').hide();
+					$('#install_by_step_edit_map .modalFinTest section.panel-warning').hide();
 				}
 				else
-				{
-					$('#install_by_step_edit_map .modalFinTest section.panel-success').hide();
-					$('#install_by_step_edit_map .modalFinTest section.panel-danger').show();
-					
-					if (data.M != '')
-						$('#install_by_step_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
-					else
-						$('#install_by_step_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
+				{	
+					if(data.A == wycaApi.AnswerCode.CANCELED){
+						$('#install_by_step_edit_map .modalFinTest section.panel-success').hide();
+						$('#install_by_step_edit_map .modalFinTest section.panel-danger').hide();
+						$('#install_by_step_edit_map .modalFinTest section.panel-warning').show();
+						
+						$('#install_by_step_edit_map .modalFinTest section.panel-warning .error_details').html(wycaApi.AnswerCodeToString(data.A));
+					}else{
+						
+						$('#install_by_step_edit_map .modalFinTest section.panel-success').hide();
+						$('#install_by_step_edit_map .modalFinTest section.panel-danger').show();
+						$('#install_by_step_edit_map .modalFinTest section.panel-warning').hide();
+						
+						if (data.M != '')
+							if(data.M.length > 50)
+								$('#install_by_step_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br><span>' +data.M+ '</span>');
+							else
+								$('#install_by_step_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+						else
+							$('#install_by_step_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
+					}
 				}
 				
 				// On rebranche l'ancienne fonction
@@ -1381,6 +1426,7 @@ $(document).ready(function() {
 				else
 				{
 					$('#install_by_step_edit_map .modalFinTest section.panel-success').hide();
+					$('#install_by_step_edit_map .modalFinTest section.panel-warning').hide();
 					$('#install_by_step_edit_map .modalFinTest section.panel-danger').show();
 					
 					if (data.M != '')
@@ -2094,16 +2140,31 @@ $(document).ready(function() {
 						{
 							$('#install_by_step_edit_map .modalFinTest section.panel-success').show();
 							$('#install_by_step_edit_map .modalFinTest section.panel-danger').hide();
+							$('#install_by_step_edit_map .modalFinTest section.panel-warning').hide();
 						}
 						else
-						{
-							$('#install_by_step_edit_map .modalFinTest section.panel-success').hide();
-							$('#install_by_step_edit_map .modalFinTest section.panel-danger').show();
-							
-							if (data.M != '')
-								$('#install_by_step_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
-							else
-								$('#install_by_step_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
+						{	
+							if(data.A == wycaApi.AnswerCode.CANCELED){
+								$('#install_by_step_edit_map .modalFinTest section.panel-success').hide();
+								$('#install_by_step_edit_map .modalFinTest section.panel-danger').hide();
+								$('#install_by_step_edit_map .modalFinTest section.panel-warning').show();
+								
+								$('#install_by_step_edit_map .modalFinTest section.panel-warning .error_details').html(wycaApi.AnswerCodeToString(data.A));
+							}else{
+								
+								$('#install_by_step_edit_map .modalFinTest section.panel-success').hide();
+								$('#install_by_step_edit_map .modalFinTest section.panel-danger').show();
+								$('#install_by_step_edit_map .modalFinTest section.panel-warning').hide();
+								
+								if (data.M != '')
+									if(data.M.length > 50)
+										$('#install_by_step_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br><span>' +data.M+ '</span>');
+									else
+										$('#install_by_step_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+									
+								else
+									$('#install_by_step_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
+							}
 						}
 						$('.icon_menu').click(); // POUR SORTIR DU MENU GOTOPOSE
 						// On rebranche l'ancienne fonction
@@ -2123,6 +2184,7 @@ $(document).ready(function() {
 						else
 						{
 							$('#install_by_step_edit_map .modalFinTest section.panel-success').hide();
+							$('#install_by_step_edit_map .modalFinTest section.panel-warning').hide();
 							$('#install_by_step_edit_map .modalFinTest section.panel-danger').show();
 							
 							if (data.M != '')
