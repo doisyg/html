@@ -88,6 +88,7 @@ var poi_temp_add = {};
 var augmented_pose_temp_add = {};
 
 var timerCantChange = null;
+
 function ByStepAvertCantChange()
 {
 	$('#install_by_step_edit_map_bModalCancelEdit').click();
@@ -98,7 +99,6 @@ function ByStepCloseSelect()
 	bystepCurrentAction = '';
 	currentStep = '';
 }
-
 
 function ByStepHideCurrentMenu()
 {
@@ -117,7 +117,6 @@ function ByStepHideCurrentMenu()
 	ByStepHideMenus();
 }
 
-
 function ByStepHideCurrentMenuNotSelect()
 {
 	if (bystepCurrentAction == 'select') return;
@@ -134,7 +133,6 @@ function ByStepHideCurrentMenuNotSelect()
 
 var bystepHistoriques = Array();
 var bystepHistoriqueIndex = -1;
-
 
 function ByStepUndo()
 {
@@ -308,6 +306,7 @@ function ByStepAddHistorique(elem)
 	
 	ByStepRefreshHistorique();
 }
+
 function ByStepRefreshHistorique()
 {
 	if (bystepHistoriqueIndex == -1)
@@ -364,9 +363,8 @@ $(document).ready(function() {
 		minStokeWidth = 3;
 		maxStokeWidth = 7;
 	}
-		
-	$('body').addClass('no_current');
 	
+	$('body').addClass('no_current');
 	
 	svgByStep = document.querySelector('#install_by_step_edit_map_svg');
 	InitSVG();
@@ -427,6 +425,7 @@ $(document).ready(function() {
 		if (!$('#install_by_step_edit_map_bByStepUndo').hasClass('disabled'))
 			ByStepUndo();
 	});
+	
 	$('#install_by_step_edit_map_bByStepUndo').on('touchstart', function(e) { 
 		e.preventDefault();
 		if (!$('#install_by_step_edit_map_bByStepUndo').hasClass('disabled'))
@@ -438,6 +437,7 @@ $(document).ready(function() {
 		if (!$('#install_by_step_edit_map_bByStepRedo').hasClass('disabled'))
 			ByStepRedo();
     });
+	
 	$('#install_by_step_edit_map_bByStepRedo').on('touchstart', function(e) { 
 		e.preventDefault();
 		if (!$('#install_by_step_edit_map_bByStepRedo').hasClass('disabled'))
@@ -1479,6 +1479,7 @@ $(document).ready(function() {
        e.preventDefault();
 	   downOnZoomClick = true;
     });
+	
 	$('#install_by_step_edit_map_zone_zoom_click').mousemove(function(e) {
        e.preventDefault();
 	   if (downOnZoomClick)
@@ -1556,10 +1557,12 @@ $(document).ready(function() {
 		window.panZoom.pan({'x':x, 'y':y});
 	   
     });
+	
 	$('#install_by_step_edit_map_zone_zoom_click').on('touchend', function(e) {
        e.preventDefault();
 	   downOnZoomClick = false;
     });
+	
 	$('#install_by_step_edit_map_zone_zoom_click').on('touchmove', function(e) {
        e.preventDefault();
 	   if (downOnZoomClick)
@@ -2991,7 +2994,6 @@ $(document).ready(function() {
 		
 	});
 	
-	
 	$('#install_by_step_edit_map_bDockCreateFromMap').click(function(e) {
         if (bystepCanChangeMenu)
 		{
@@ -3016,12 +3018,14 @@ $(document).ready(function() {
 		else
 			ByStepAvertCantChange();
     });
+	
 	$('#install_by_step_edit_map_bDockDelete').click(function(e) {
         if (confirm('Are you sure you want to delete this docking station?'))
 		{
 			DeleteDock(currentDockIndex);
 		}
     });
+	
 	$('#install_by_step_edit_map_bDockDirection').click(function(e) {
         e.preventDefault();
 		
@@ -3090,6 +3094,7 @@ $(document).ready(function() {
 		$('#install_by_step_edit_map_bPoiEditName').click();
         
     });
+	
 	$('#install_by_step_edit_map_bPoiCreateFromMap').click(function(e) {
         if (bystepCanChangeMenu)
 		{
@@ -3115,7 +3120,6 @@ $(document).ready(function() {
 		else
 			ByStepAvertCantChange();
     });
-	
 	
 	$('#install_by_step_edit_map_bPoiEditSaveConfig').click(function(e) {
 		if (bystepCurrentAction == 'addPoi')
@@ -3164,10 +3168,12 @@ $(document).ready(function() {
 			DeletePoi(currentPoiIndex);
 		}
     });
+	
 	$('#install_by_step_edit_map_bPoiEditName').click(function(e) {
    		poi = pois[currentPoiIndex];
 		$('#install_by_step_edit_map_poi_name').val(poi.name);
 	});
+	
 	$('#install_by_step_edit_map_bPoiDirection').click(function(e) {
         e.preventDefault();
 		
@@ -3235,6 +3241,7 @@ $(document).ready(function() {
 		$('#install_by_step_edit_map_bAugmentedPoseEditName').click();
         
     });
+	
 	$('#install_by_step_edit_map_bAugmentedPoseCreateFromMap').click(function(e) {
         if (bystepCanChangeMenu)
 		{
@@ -3260,7 +3267,6 @@ $(document).ready(function() {
 		else
 			ByStepAvertCantChange();
     });
-	
 	
 	$('#install_by_step_edit_map_bAugmentedPoseEditSaveConfig').click(function(e) {
 		if (bystepCurrentAction == 'addAugmentedPose')
@@ -3309,10 +3315,12 @@ $(document).ready(function() {
 			DeleteAugmentedPose(currentAugmentedPoseIndex);
 		}
     });
+	
 	$('#install_by_step_edit_map_bAugmentedPoseEditName').click(function(e) {
    		augmented_pose = augmented_poses[currentAugmentedPoseIndex];
 		$('#install_by_step_edit_map_augmented_pose_name').val(augmented_pose.name);
 	});
+	
 	$('#install_by_step_edit_map_bAugmentedPoseDirection').click(function(e) {
         e.preventDefault();
 		
@@ -3395,6 +3403,7 @@ $(document).ready(function() {
 			}
 		}, 100);
     });
+	
 	$(document).on('touchend', '#install_by_step_edit_map_bRotateRight', function(e) {
 		if (timerRotate != null)
 		{
@@ -3402,6 +3411,7 @@ $(document).ready(function() {
 			timerRotate = null;
 		}
     });
+	
 	$('#install_by_step_edit_map_bRotateRight').click(function(e) {
 		ByStepSaveElementNeeded(true);
 		if (bystepCurrentAction == 'addPoi')
@@ -3441,6 +3451,7 @@ $(document).ready(function() {
 			ByStepTraceDock(currentDockIndex);
 		}
     });
+	
 	$(document).on('touchstart', '#install_by_step_edit_map_bRotateLeft', function(e) {
 		ByStepSaveElementNeeded(true);
 		if (timerRotate != null)
@@ -3487,6 +3498,7 @@ $(document).ready(function() {
 			}
 		}, 100);
     });
+	
 	$(document).on('touchend', '#install_by_step_edit_map_bRotateLeft', function(e) {
 		if (timerRotate != null)
 		{
@@ -3494,6 +3506,7 @@ $(document).ready(function() {
 			timerRotate = null;
 		}
     });
+	
 	$('#install_by_step_edit_map_bRotateLeft').click(function(e) {
 		ByStepSaveElementNeeded(true);
         if (bystepCurrentAction == 'addPoi')
@@ -4391,6 +4404,7 @@ var timerSavingMapBeforeTestDock = 0 ;
 
 var statusSavingMapBeforeTestAugmentedPose = 0 ;
 var timerSavingMapBeforeTestAugmentedPose = 0 ;
+
 function TimerSavingMapBeforeTest(element){
 	switch(element){
 		case 'dock' : 
@@ -4433,6 +4447,7 @@ function TimerSavingMapBeforeTest(element){
 		
 	}
 }
+
 function PoiSave()
 {
 	if (bystepCurrentAction == 'addPoi')
@@ -4466,6 +4481,7 @@ function PoiSave()
 		ByStepSetModeSelect();
 	}
 }
+
 function PoiCancel()
 {
 	ByStepSaveElementNeeded(false);
@@ -4499,6 +4515,7 @@ function PoiCancel()
 	
 	ByStepSetModeSelect();
 }
+
 function AugmentedPoseSave()
 {
 	if (bystepCurrentAction == 'addAugmentedPose')
@@ -4532,6 +4549,7 @@ function AugmentedPoseSave()
 		ByStepSetModeSelect();
 	}
 }
+
 function AugmentedPoseCancel()
 {
 	ByStepSaveElementNeeded(false);
@@ -4565,6 +4583,7 @@ function AugmentedPoseCancel()
 	
 	ByStepSetModeSelect();
 }
+
 function DockSave()
 {
 	$('#install_by_step_edit_map_svg .dock_elem_current').remove();
@@ -4627,6 +4646,7 @@ function DockSave()
 		ByStepSetModeSelect();
 	}
 }
+
 function DockCancel()
 {
 	ByStepSaveElementNeeded(false);
@@ -4661,6 +4681,7 @@ function DockCancel()
 	
 	ByStepSetModeSelect();
 }
+
 function AreaSave()
 {
 	$('#install_by_step_edit_map_svg .area_elem_current').remove();
@@ -4714,6 +4735,7 @@ function AreaSave()
 		*/
 	}
 }
+
 function AreaCancel()
 {
 	ByStepSaveElementNeeded(false);
@@ -4743,6 +4765,7 @@ function AreaCancel()
 	
 	ByStepSetModeSelect();
 }
+
 function ForbiddenSave()
 {
 	$('#install_by_step_edit_map_container_all .forbidden_elem_current').remove();
@@ -4799,6 +4822,7 @@ function ForbiddenSave()
 		*/
 	}
 }
+
 function ForbiddenCancel()
 {
 	ByStepSaveElementNeeded(false);
@@ -4885,6 +4909,7 @@ function RemoveClass(query_element, class_to_delete)
 	        $(this).attr('class',  $(this).attr('class').replace(class_to_delete, ''));
     });
 }
+
 function AddClass(query_element, class_to_add)
 {
 	$(query_element).each(function(index, element) {
@@ -4912,7 +4937,6 @@ function sortUL(selector) {
     }).appendTo(selector);
 }
 
-
 function DeleteForbidden(indexInArray)
 {
 	if ($('.cancel:visible').length > 0) $('.cancel:visible').click();
@@ -4939,6 +4963,7 @@ function DeleteForbidden(indexInArray)
 	
 	ByStepSetModeSelect();
 }
+
 function GetForbiddenFromID(id)
 {
 	ret = null;
@@ -4951,6 +4976,7 @@ function GetForbiddenFromID(id)
 	});
 	return ret;
 }
+
 function GetForbiddenIndexFromID(id)
 {
 	ret = null;
@@ -4990,6 +5016,7 @@ function DeleteArea(indexInArray)
 	
 	ByStepSetModeSelect();
 }
+
 function GetAreaFromID(id)
 {
 	ret = null;
@@ -5002,6 +5029,7 @@ function GetAreaFromID(id)
 	});
 	return ret;
 }
+
 function GetAreaIndexFromID(id)
 {
 	ret = null;
@@ -5040,6 +5068,7 @@ function DeleteDock(indexInArray)
 	
 	ByStepSetModeSelect();
 }
+
 function GetDockFromID(id)
 {
 	ret = null;
@@ -5052,6 +5081,7 @@ function GetDockFromID(id)
 	});
 	return ret;
 }
+
 function GetDockIndexFromID(id)
 {
 	ret = null;
@@ -5064,6 +5094,7 @@ function GetDockIndexFromID(id)
 	});
 	return ret;
 }
+
 function GetMaxNumDock()
 {
 	ret = 0;
@@ -5099,6 +5130,7 @@ function DeletePoi(indexInArray)
 	
 	ByStepSetModeSelect();
 }
+
 function GetPoiFromID(id)
 {
 	ret = null;
@@ -5111,6 +5143,7 @@ function GetPoiFromID(id)
 	});
 	return ret;
 }
+
 function GetPoiIndexFromID(id)
 {
 	ret = null;
@@ -5123,7 +5156,6 @@ function GetPoiIndexFromID(id)
 	});
 	return ret;
 }
-
 
 function DeleteAugmentedPose(indexInArray)
 {
@@ -5150,6 +5182,7 @@ function DeleteAugmentedPose(indexInArray)
 	
 	ByStepSetModeSelect();
 }
+
 function GetAugmentedPoseFromID(id)
 {
 	ret = null;
@@ -5162,6 +5195,7 @@ function GetAugmentedPoseFromID(id)
 	});
 	return ret;
 }
+
 function GetAugmentedPoseIndexFromID(id)
 {
 	ret = null;
@@ -5180,6 +5214,7 @@ function GetAngleRadian(x1, y1, x2, y2) {
 	var dy = y2 - y1;
 	return Math.atan2(dy, dx);
 }
+
 function GetAngleDegre(x1, y1, x2, y2) {
 	return GetAngleRadian(x1, y1, x2, y2) * (180 / Math.PI);
 }
