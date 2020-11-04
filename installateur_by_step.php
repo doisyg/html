@@ -676,11 +676,11 @@
                                             
                                             <section class="panel panel-success">
                                                 <header class="panel-heading">
-                                                    <h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fa fa-thumbs-up"></i></h2>
+                                                    <h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fas fa-info"></i></h2>
                                                 </header>
                                                 <div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
-                                                    <strong><?= _('Congratulations !') ?></strong><br />
-                                                    No error during action.
+                                                    <strong><?= _('Action finished !') ?></strong><br />
+													<?= _('No error during action.') ?>
                                                 </div>
                                             </section>
                                             <section class="panel panel-danger">
