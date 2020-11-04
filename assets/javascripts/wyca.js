@@ -1284,7 +1284,7 @@ function CheckName(tab, nom, index_ignore=-1)
 	let res = false;
 	nom = nom.toLowerCase();
 	$.each(tab,function(idx,item){
-		if(idx != index_ignore && item.name.toLowerCase() == nom)
+		if(idx != index_ignore && item.name.toLowerCase() == nom && item.deleted != true)
 		{
 			res = true;
 		}
