@@ -88,6 +88,7 @@ var poi_temp_add = {};
 var augmented_pose_temp_add = {};
 
 var timerCantChange = null;
+var sizeGomme = 1;
 
 function ByStepAvertCantChange()
 {
@@ -1868,6 +1869,7 @@ $(document).ready(function() {
 	$('#install_by_step_edit_map_menu .bGomme').click(function(e) {
         e.preventDefault();
 		ByStepHideMenus();
+		/*
 		if ($('#install_by_step_edit_map_bGomme').hasClass('btn-primary'))
 		{
 			blockZoom = false;
@@ -1888,26 +1890,28 @@ $(document).ready(function() {
 		}
 		else
 		{
+			*/
 			blockZoom = true;
 			
 			if (bystepCanChangeMenu)
 			{
 				ByStepHideCurrentMenu();
-				
-				$('#install_by_step_edit_map_bGomme').addClass('btn-primary');
-			
+				ByStepDisplayMenu('install_by_step_edit_map_menu_erase');
+				sizeGomme = 1;
 				bystepCurrentAction = 'gomme';	
 				currentStep = '';
 				
 				$('body').removeClass('no_current');
 				$('body').addClass('gomme');
 				
-				//currentGommePoints = Array();
-				
 			}
 			else
 				ByStepAvertCantChange();
-		}
+		//}
+    });
+	$('#install_by_step_edit_map_menu_erase .bConfigErase').click(function(e) {
+        e.preventDefault();
+		sizeGomme = $(this).data('size');
     });
 	
 	$('#install_by_step_edit_map_menu .bAddForbiddenArea').click(function(e) {
@@ -3566,7 +3570,7 @@ $(document).ready(function() {
 			currentStep='trace';
 			if (gommes.length == 0 || gommes[gommes.length-1].length > 0)
 			{
-				gommes[gommes.length] = Array();
+				gommes[gommes.length] = { 'size': sizeGomme, 'points':[] };
 				//gommes[gommes.length-1].push({x:0, y:0}); // Point du curseur
 				
 				p = $('#install_by_step_edit_map_svg image').position();
@@ -3578,8 +3582,8 @@ $(document).ready(function() {
 				xRos = x * ros_resolution / 100;
 				yRos = y * ros_resolution / 100;
 								
-				gommes[gommes.length-1].push({x:xRos, y:yRos});
-				gommes[gommes.length-1].push({x:xRos+0.01, y:yRos+0.01}); // Point du curseur
+				gommes[gommes.length-1].points.push({x:xRos, y:yRos});
+				gommes[gommes.length-1].points.push({x:xRos+0.01, y:yRos+0.01}); // Point du curseur
 				ByStepTraceCurrentGomme(gommes[gommes.length-1], gommes.length-1);
 				
 				bystepCanChangeMenu = false;
@@ -4038,9 +4042,9 @@ $(document).ready(function() {
 				xRos = x * ros_resolution / 100;
 				yRos = y * ros_resolution / 100;
 								
-				gommes[gommes.length-1].pop(); // Point du curseur
-				gommes[gommes.length-1].push({x:xRos, y:yRos});
-				gommes[gommes.length-1].push({x:xRos, y:yRos}); // Point du curseur
+				gommes[gommes.length-1].points.pop(); // Point du curseur
+				gommes[gommes.length-1].points.push({x:xRos, y:yRos});
+				gommes[gommes.length-1].points.push({x:xRos, y:yRos}); // Point du curseur
 				ByStepTraceCurrentGomme(gommes[gommes.length-1], gommes.length-1);
 			}
 			else if (bystepCurrentAction == 'addDock' && currentStep=='setPose')

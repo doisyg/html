@@ -54,8 +54,9 @@ function ByStepTraceSection(x1, y1, x2, y2)
 	svgByStep.appendChild(path);
 }
 
-function ByStepTraceCurrentGomme(points, index)
+function ByStepTraceCurrentGomme(gomme, index)
 {
+	points = gomme.points;
 	$('#install_by_step_edit_map_svg .gomme_elem_current_'+index).remove();
 	
 	if (points.length > 1)
@@ -70,18 +71,19 @@ function ByStepTraceCurrentGomme(points, index)
 		});
 		
 		path = makeSVGElement('polyline', { points: gomme_point,
-								   'stroke-width': 2,
+								  'stroke-width': gomme.size,
 								   'stroke': '#FFF',
 								   'fill': 'none',
 								   'class':'gomme_elem gomme_elem_current_'+index,
-								   'data-index': 'current'
+								   'data-index': 'current',
+								   'shape-rendering': 'crispEdges' // anti aliasing
 								  });
 								  
 		svgByStep.appendChild(path);
 		$('#install_by_step_edit_map_svg .gomme_elem_current_'+index).insertAfter($('#install_by_step_edit_map_svg image'));
 		
 		path = makeSVGElement('polyline', { points: gomme_point,
-								   'stroke-width': 2,
+								   'stroke-width': gomme.size,
 								   'stroke': '#FFF',
 								   'fill': 'none',
 								   'class':'gomme_elem gomme_elem_current_'+index,

@@ -784,6 +784,7 @@ function ByStepHideMenus()
 	$('#install_by_step_edit_map_menu_dock li').hide();
 	$('#install_by_step_edit_map_menu_poi li').hide();
 	$('#install_by_step_edit_map_menu_augmented_pose li').hide();
+	$('#install_by_step_edit_map_menu_erase li').hide();
 	$('.popupHelp').hide();
 	
 	$('.burger_menu_open').removeClass('burger_menu_open');

@@ -540,6 +540,9 @@
 					<div class="btn-circle btn-lg icon_menu" data-menu="install_by_step_edit_map_menu_augmented_pose">
 						<div class="iconAugmentedPose"><i class="fas fa-map-marker-alt iconMenuPurple"></i><i class="fas fa-barcode"></i></div>
 					</div>
+					<div class="btn-circle btn-lg icon_menu" data-menu="install_by_step_edit_map_menu_erase">
+						<i class="fa fa-eraser" style="left: -9px;color: #333333;"></i>
+					</div>
 					
                     <div id="install_by_step_edit_map_zoom_carte_container">
                         <div id="install_by_step_edit_map_zoom_carte">
@@ -631,6 +634,14 @@
 							<li><a href="#" class="btn btn-circle btn-default btn-menu bTestAugmentedPose"><img class="fi-route" src="assets/images/route_green.svg"/></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-menu bConfigAugmentedPose"><i class="fa fa-gears iconMenuBlue"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-menu bDeleteAugmentedPose"><i class="fa fa-trash iconMenuRed"></i></a></li>
+                        	
+                        </ul>
+                    </div>
+                    <div id="install_by_step_edit_map_menu_erase" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
+                    	<ul>
+							<li><a href="#" class="btn btn-circle btn-default btn-menu bConfigErase" data-size="1" ><i class="fas fa-circle" style="font-size: 10px;position: relative;top: -5px;"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-menu bConfigErase" data-size="5" ><i class="fas fa-circle" style="font-size: 16px;position: relative;top: -2px;"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-menu bConfigErase" data-size="10"><i class="fas fa-circle" style="font-size: 22px;position: relative;top: -0px;"></i></a></li>
                         	
                         </ul>
                     </div>
