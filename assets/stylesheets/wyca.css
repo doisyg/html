@@ -859,7 +859,13 @@ img.fi-robot{
     font-size: 22px;
     line-height: 1.33;
 	border-color: #555151;
+	
 }
+
+.btn-circle.btn-menu:hover{background-color: white;box-shadow: unset;}
+.btn-circle.btn-menu:focus{background-color: white;box-shadow: unset;}
+.btn-circle.btn-menu:active{background-color: white;box-shadow: unset;}
+
 .iconAugmentedPose{
 	position:relative;
 }
@@ -929,7 +935,9 @@ img.fi-route {
     left: -4px;
 	z-index:2;
 }
-
+.bGommeSize{
+	transition:0.5s all;
+}
 .bGommeSize.selected{
 	color: #589fb2;
 }

@@ -529,7 +529,7 @@
 						<i class="fas fa-draw-polygon iconMenuGreen"></i>
 					</div>
 					<div class="btn-circle btn-lg icon_menu" data-menu="install_by_step_edit_map_menu_gotopose">
-						<i class="fa fa-crosshairs iconMenuBlue" style="font-size:24px"></i>
+						<i class="fa fa-crosshairs iconMenuBlue" style="left: -7px;"></i>
 					</div>
 					<div class="btn-circle btn-lg icon_menu" data-menu="install_by_step_edit_map_menu_dock">
 						<i class="fas fa-charging-station iconMenuGreen" style="position: relative;top: -1px;left:-5px;"></i>

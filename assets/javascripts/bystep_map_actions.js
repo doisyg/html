@@ -379,6 +379,7 @@ $(document).ready(function() {
 		currentStep = '';
 		$('body').addClass('no_current');
 		blockZoom = false;
+		ByStepHideMenus();
 		ByStepSetModeSelect();
 		
     });
@@ -1909,6 +1910,7 @@ $(document).ready(function() {
 				ByStepAvertCantChange();
 		//}
     });
+	
 	$('#install_by_step_edit_map_menu_erase .bGommeSize').click(function(e) {
         e.preventDefault();
 		$('#install_by_step_edit_map_menu_erase .bGommeSize').removeClass('selected');
@@ -3569,6 +3571,7 @@ $(document).ready(function() {
 		
 		if (bystepCurrentAction == 'gomme' && currentStep=='')
 		{
+			$('.times_icon_menu').hide();
 			currentStep='trace';
 			if (gommes.length == 0 || Object.keys(gommes[gommes.length-1]).length > 0)
 			{
