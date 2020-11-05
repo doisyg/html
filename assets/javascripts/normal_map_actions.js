@@ -2818,7 +2818,7 @@ $(document).ready(function() {
 			currentStep='trace';
 			if (gommes.length == 0 || gommes[gommes.length-1].length > 0)
 			{
-				gommes[gommes.length] = Array();
+				gommes[gommes.length] = { 'size': 10, 'points':[] };
 				//gommes[gommes.length-1].push({x:0, y:0}); // Point du curseur
 				
 				p = $('#install_normal_edit_map_svg image').position();
@@ -2830,8 +2830,8 @@ $(document).ready(function() {
 				xRos = x * ros_resolution / 100;
 				yRos = y * ros_resolution / 100;
 								
-				gommes[gommes.length-1].push({x:xRos, y:yRos});
-				gommes[gommes.length-1].push({x:xRos+0.01, y:yRos+0.01}); // Point du curseur
+				gommes[gommes.length-1].points.push({x:xRos, y:yRos});
+				gommes[gommes.length-1].points.push({x:xRos+0.01, y:yRos+0.01}); // Point du curseur
 				NormalTraceCurrentGomme(gommes[gommes.length-1], gommes.length-1);
 				
 				normalCanChangeMenu = false;
@@ -3289,9 +3289,9 @@ $(document).ready(function() {
 				xRos = x * ros_resolution / 100;
 				yRos = y * ros_resolution / 100;
 								
-				gommes[gommes.length-1].pop(); // Point du curseur
-				gommes[gommes.length-1].push({x:xRos, y:yRos});
-				gommes[gommes.length-1].push({x:xRos, y:yRos}); // Point du curseur
+				gommes[gommes.length-1].points.pop(); // Point du curseur
+				gommes[gommes.length-1].points.push({x:xRos, y:yRos});
+				gommes[gommes.length-1].points.push({x:xRos, y:yRos}); // Point du curseur
 				NormalTraceCurrentGomme(gommes[gommes.length-1], gommes.length-1);
 			}
 			else if (normalCurrentAction == 'addDock' && currentStep=='setPose')
