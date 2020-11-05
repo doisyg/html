@@ -25,6 +25,8 @@ var gotoPoiInProgress = false;
 
 var actionListInProgress = false;
 
+var codeSaisie = "";
+
 $(document).ready(function(e) {
 	
 	wycaApi = new WycaAPI({
@@ -116,6 +118,84 @@ $(document).ready(function(e) {
 		queueState = 'done';
 		$('#waitClick').hide();
 		NextAction();
+    });
+	
+	$('#bHideBouton').click(function(e) {
+        e.preventDefault();
+		$('#modalAskCode').modal('show');
+    });
+	
+	$('#clavier_code .touche').click(function(e) {
+		if ($(this).hasClass('backspace'))
+		{
+			if (codeSaisie.length > 0)
+			{
+				codeSaisie = codeSaisie.substr(0, codeSaisie.length-1);
+				$('#code_aff').html($('#code_aff').html().substr(0, $('#code_aff').html().length-1));
+				
+				if (codeSaisie.length == 0)
+					$('#connexionCode').prop( "disabled", true );
+			}
+			else
+			{
+				$('#connexionCode').prop( "disabled", true );
+			}
+		}
+		else
+		{
+			codeSaisie += $(this).html();
+			$('#code_aff').html($('#code_aff').html() + "*");
+			
+			$('#connexionCode').prop( "disabled", false );
+		}
+	});
+	
+	$('#cancelCode').click(function(e) {
+		e.preventDefault();
+		$('#ConfigCodeError').hide();
+		HideCode();
+	});
+		
+	$('#connexionCode').click(function(e) {
+		e.preventDefault();
+		$('#ConfigCodeError').hide();
+				
+		jQuery.ajax({
+			url: 'com_to_server/check_code.php',
+			type: "post",
+			data: { 
+					'code': codeSaisie
+				},
+			error: function(jqXHR, textStatus, errorThrown) {
+					$('#connexionConfig').show();
+				},
+			success: function(data, textStatus, jqXHR) {
+					if (data=='ok')
+					{
+						$('#modalAskCode').modal('hide');
+						$('#modalAdmin').modal('show');
+					}
+					else
+					{
+						$('#ConfigCodeError').show();
+					}
+					
+					codeSaisie = '';
+					$('#code_aff').html('&nbsp;');
+					
+					$('#connexionCode').prop( "disabled", true );
+				}
+		});
+	});
+	
+	$('#bRestartWindows').click(function(e) {
+        e.preventDefault();
+		wycaApi.DoBrowserRestart(false);
+    });
+	
+	$('#bRestartKiosk').click(function(e) {
+        e.preventDefault();
+		wycaApi.DoBrowserRestart(true);
     });
 	
 });

@@ -33,7 +33,7 @@ $_CONFIG['URL_API'] = 'https://wyca.run/API/';
     <script>
 	var nbDockAttemptMax = 3;
 	var delayBeforeRetryDock = 30000;
-	var robot_host = '<?php echo (file_exists('C:\\'))?'10.0.0.44:9095':'wyca.run:9095';?>';
+	var robot_host = '<?php echo (file_exists('C:\\'))?'192.168.0.33:9095':'wyca.run:9095';?>';
 	</script>
     
     <script src="<?php echo $_CONFIG['URL'];?>js/robot.js<?php /*?v=<?php echo date('YmdHis');*/?>"></script>
@@ -53,6 +53,68 @@ $_CONFIG['URL_API'] = 'https://wyca.run/API/';
     	<a id="bNextWaitClick" href="#" class="btn btn-primary" style="font-size:100px; text-align:center; margin-top:32vh; border-radius:50px; padding:100px;"><i style="" class="fa fa-forward"></i> Next step</a>
     </div>
     <div id="waitTime" style="font-size:68px; display:none; ">Wait <em></em> seconde<span class="pluriel">s</span></div>
+    
+    <a href="#" id="bHideBouton" style="position:absolute; bottom:0px; right:0px; width:150px; height:150px;"></a>
 	
+    <div id="modalAskCode" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                
+                	<div class="flex">
+                        <div style="max-width:500px; margin:auto; margin-top:50px">
+                            <span id="ConfigCodeError" class="text-muted text-center" style="color:#F00; display:none;font-size:50px;">
+                                <?php echo __('Invalid code');?>
+                            </span>
+                            
+                            <p id="code_aff" class="text-muted text-center" style="font-size:50px;">&nbsp;</p>
+                            
+                            <div id="clavier_code">
+                                
+                                <div class="touche btn btn-lg btn-primary btn-block">1</div>
+                                <div class="touche btn btn-lg btn-primary btn-block">2</div>
+                                <div class="touche btn btn-lg btn-primary btn-block">3</div>
+                                <div class="touche btn btn-lg btn-primary btn-block">4</div>
+                                <div class="touche btn btn-lg btn-primary btn-block">5</div>
+                                <div class="touche btn btn-lg btn-primary btn-block">6</div>
+                                <div class="touche btn btn-lg btn-primary btn-block">7</div>
+                                <div class="touche btn btn-lg btn-primary btn-block">8</div>
+                                <div class="touche btn btn-lg btn-primary btn-block">9</div>
+                                <div class="touche"></div>
+                                <div class="touche btn btn-lg btn-primary btn-block">0</div>
+                                <div class="touche btn btn-lg btn-primary btn-block backspace"><i class="fa fa-step-backward"></i></div>
+                                <div style="clear:both;"></div>        
+                            </div>
+                        
+                            <button class="btn btn-lg btn-primary btn-block" id="connexionCode" disabled="disabled"><?php echo __('Unlock');?></button>
+                            <button class="btn btn-lg btn-primary btn-block" id="cancelCode" data-dismiss="modal"><?php echo __('Cancel');?></button>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="modalAdmin" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                
+                	<div class="flex">
+                        <div style="max-width:500px; margin:auto; margin-top:50px">
+                            
+                            <div class="col-md-6"><a href="#" class="btn btn-lg btn-primary" id="bRestartWindows" style="margin:10px; font-size:24px;">Restart in<br />windows mode</a></div>
+                            <div class="col-md-6"><a href="#" class="btn btn-lg btn-primary" id="bRestartKiosk" style="margin:10px; font-size:24px;">Restart in<br />kiosk mode</a></div>
+                            
+                            <a href="#" class="btn btn-lg btn-default" style="margin:10px; font-size:50px; margin-top:50px;" data-dismiss="modal"><?php echo __('Close');?></a>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 </body>
 </html>
