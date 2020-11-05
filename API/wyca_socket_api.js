@@ -65,6 +65,7 @@ function WycaAPI(options){
 		UNSUBSCRIBE_ALL			: 0x110D,
 		INSTALL_NEW_TOP_WITHOUT_KEY			: 0x1106,
 		SET_USE_SEGMENTED_MESSAGE			: 0x110F,
+		DO_BROWSER_RESTART			: 0x1110,
 	 
 		CANCEL_CURRENT_ACTION			: 0x1103,
 	 
@@ -84,6 +85,7 @@ function WycaAPI(options){
 		NAVIGATION_STOP			: 0x0114,
 		REFRESH_FREEWHEEL_STATE			: 0x3101,
 		REFRESH_SAFETY_STOP			: 0x3102,
+		CHECK_COMPONENTS			: 0x3103,
 	 
 		GET_DOCKING_STATE			: 0x0105,
 		SET_DOCKING_STATE			: 0x0106,
@@ -109,7 +111,6 @@ function WycaAPI(options){
 	 
 		GET_PATH			: 0x0115,
 		GET_PATH_FROM_CURRENT_POSE			: 0x0116,
-		GET_PATH_CANCEL			: 0x0129,
 		GET_MOVE_IN_PROGRESS			: 0x011F,
 	 
 	// Services DB
@@ -119,6 +120,9 @@ function WycaAPI(options){
 		GET_USER			: 0x613C,
 		SET_USER			: 0x613D,
 		DELETE_USER			: 0x613E,
+		CHANGE_PASSWORD			: 0x6145,
+		CHANGE_PASSWORD_WYCA			: 0x6146,
+		DELETE_USER_WYCA			: 0x6147,
 		GET_USERS_LIST			: 0x613F,
 		GET_SITE			: 0x612E,
 		SET_SITE			: 0x612F,
@@ -128,11 +132,13 @@ function WycaAPI(options){
 		SET_SITE_AS_CURRENT			: 0x6131,
 		GET_MAP			: 0x611E,
 		GET_MAP_COMPLETE			: 0x6122,
+		GET_MAP_DATA			: 0x6148,
 		SET_MAP			: 0x611F,
 		DELETE_MAP			: 0x6120,
 		SET_MAP_DATA			: 0x6123,
 		GET_CURRENT_MAP			: 0x610A,
 		GET_CURRENT_MAP_COMPLETE			: 0x610B,
+		GET_CURRENT_MAP_DATA			: 0x6149,
 		SET_MAP_AS_CURRENT			: 0x6121,
 		GET_MAPS_LIST			: 0x6124,
 		GET_AREA			: 0x6102,
@@ -219,6 +225,7 @@ function WycaAPI(options){
 		BATTERY_STATE			: 0x3001,
 		BMS_TIME_REMAINING_TO_EMPTY			: 0x3002,
 		BMS_TIME_REMAINING_TO_FULL			: 0x3003,
+		DIAGNOSTIC_ALERT			: 0x3008,
 		LED_CURRENT_LED_ANIMATION_MODE			: 0x5001,
 		LED_CURRENT_LED_ROBOT_STATE			: 0x5002,
 		LED_IS_LIGHT_MODE			: 0x5003,
@@ -1122,6 +1129,9 @@ function WycaAPI(options){
 						case this.EventCode.BMS_TIME_REMAINING_TO_FULL:
 							if (_this.options.onTimeRemainingToFullMin != undefined) { _this.options.onTimeRemainingToFullMin(msg.D.D); }
 							break;
+						case this.EventCode.DIAGNOSTIC_ALERT:
+							if (_this.options.onDiagnosticAlert != undefined) { _this.options.onDiagnosticAlert(msg.D.D); }
+							break;
 						case this.EventCode.LED_CURRENT_LED_ANIMATION_MODE:
 							if (_this.options.onLedCurrentAnimationMode != undefined) { _this.options.onLedCurrentAnimationMode(msg.D.D); }
 							break;
@@ -1288,6 +1298,9 @@ function WycaAPI(options){
 				case this.EventCode.BMS_TIME_REMAINING_TO_FULL:
 					if (_this.options.onTimeRemainingToFullMin != undefined) { _this.options.onTimeRemainingToFullMin(msg.D); }
 					break;
+				case this.EventCode.DIAGNOSTIC_ALERT:
+					if (_this.options.onDiagnosticAlert != undefined) { _this.options.onDiagnosticAlert(msg.D); }
+					break;
 				case this.EventCode.LED_CURRENT_LED_ANIMATION_MODE:
 					if (_this.options.onLedCurrentAnimationMode != undefined) { _this.options.onLedCurrentAnimationMode(msg.D); }
 					break;
@@ -1446,6 +1459,7 @@ function WycaAPI(options){
 		if (_this.options.onBatteryState != undefined) { var n=_this.EventCode.BATTERY_STATE; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_EVENT, "P": { "E":n, "F":1000}}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onTimeRemainingToEmptyMin != undefined) { var n=_this.EventCode.BMS_TIME_REMAINING_TO_EMPTY; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onTimeRemainingToFullMin != undefined) { var n=_this.EventCode.BMS_TIME_REMAINING_TO_FULL; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
+		if (_this.options.onDiagnosticAlert != undefined) { var n=_this.EventCode.DIAGNOSTIC_ALERT; var subscribe = { "O": _this.CommandCode.DIAGNOSTIC_ALERT, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onLedCurrentAnimationMode != undefined) { var n=_this.EventCode.LED_CURRENT_LED_ANIMATION_MODE; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onLedCurrentRobotStateMode != undefined) { var n=_this.EventCode.LED_CURRENT_LED_ROBOT_STATE; var subscribe = {	"O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onLedIsLightMode != undefined) { var n=_this.EventCode.LED_IS_LIGHT_MODE; var subscribe = {	"O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
@@ -1482,6 +1496,7 @@ function WycaAPI(options){
 			case 'onBatteryState': ev_code = _this.EventCode.BATTERY_STATE; break;
 			case 'onTimeRemainingToEmptyMin': ev_code = _this.EventCode.BMS_TIME_REMAINING_TO_EMPTY; break;
 			case 'onTimeRemainingToFullMin': ev_code = _this.EventCode.BMS_TIME_REMAINING_TO_FULL; break;
+			case 'onDiagnosticAlert': ev_code = _this.EventCode.DIAGNOSTIC_ALERT; break;
 			case 'onLedCurrentAnimationMode': ev_code = _this.EventCode.LED_CURRENT_LED_ANIMATION_MODE; break;
 			case 'onLedCurrentRobotStateMode': ev_code = _this.EventCode.LED_CURRENT_LED_ROBOT_STATE; break;
 			case 'onLedIsLightMode': ev_code = _this.EventCode.LED_IS_LIGHT_MODE; break;
@@ -1556,6 +1571,7 @@ function WycaAPI(options){
 			case 'onBatteryState': ev_code = _this.CommandCode.BATTERY_STATE; break;
 			case 'onTimeRemainingToEmptyMin': ev_code = _this.CommandCode.BMS_TIME_REMAINING_TO_EMPTY; break;
 			case 'onTimeRemainingToFullMin': ev_code = _this.CommandCode.BMS_TIME_REMAINING_TO_FULL; break;
+			case 'onDiagnosticAlert': ev_code = _this.CommandCode.DIAGNOSTIC_ALERT; break;
 			case 'onLedCurrentAnimationMode': ev_code = _this.CommandCode.LED_CURRENT_LED_ANIMATION_MODE; break;
 			case 'onLedCurrentRobotStateMode': ev_code = _this.CommandCode.LED_CURRENT_LED_ROBOT_STATE; break;
 			case 'onLedIsLightMode': ev_code = _this.CommandCode.LED_IS_LIGHT_MODE; break;
@@ -1681,6 +1697,15 @@ function WycaAPI(options){
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
+	this.DoBrowserRestart  = function(in_kiosk_mode, callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.DO_BROWSER_RESTART] = callback;
+		var action = {
+			"O": _this.CommandCode.DO_BROWSER_RESTART,
+			"P": in_kiosk_mode
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
 	this.MappingIsStarted = function(callback){
 		if (callback != undefined)
 			this.callbacks[_this.CommandCode.MAPPING_GET_IS_STARTED] = callback;
@@ -1726,6 +1751,14 @@ function WycaAPI(options){
 			this.callbacks[_this.CommandCode.NAVIGATION_STOP] = callback;
 		var action = {
 			"O": _this.CommandCode.NAVIGATION_STOP,
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	this.CheckComponents = function(callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.CHECK_COMPONENTS] = callback;
+		var action = {
+			"O": _this.CommandCode.CHECK_COMPONENTS,
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
@@ -1879,14 +1912,6 @@ function WycaAPI(options){
 				"T": theta,
 				"PDT": pdt
 			}
-		};
-		_this.wycaSend(JSON.stringify(action));
-	}
-	this.GetPathCancel = function(callback){
-		if (callback != undefined)
-			this.callbacks[_this.CommandCode.GET_PATH_CANCEL] = callback;
-		var action = {
-			"O": _this.CommandCode.GET_PATH_CANCEL
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
@@ -2248,6 +2273,15 @@ function WycaAPI(options){
 			"P": id_map
 		};
 		_this.wycaSend(JSON.stringify(action));
+	}
+	this.GetMapData = function(id_map, callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.GET_MAP_DATA] = callback;
+		var action = {
+			"O": _this.CommandCode.GET_MAP_DATA,
+			"P": id_map
+		};
+		_this.wycaSend(JSON.stringify(action));
 	}	
 	this.SetMap = function(json_map, callback){
 		if (callback != undefined)
@@ -2298,6 +2332,14 @@ function WycaAPI(options){
 			this.callbacks[_this.CommandCode.GET_CURRENT_MAP_COMPLETE] = callback;
 		var action = {
 			"O": _this.CommandCode.GET_CURRENT_MAP_COMPLETE,
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	this.GetCurrentMapData = function(callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.GET_CURRENT_MAP_DATA] = callback;
+		var action = {
+			"O": _this.CommandCode.GET_CURRENT_MAP_DATA,
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
@@ -2746,6 +2788,32 @@ function WycaAPI(options){
 		var action = {
 			"O": _this.CommandCode.IMPORT_SITE,
 			"P": data
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	this.ChangePassword = function(password, callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.CHANGE_PASSWORD] = callback;
+		var action = {
+			"O": _this.CommandCode.CHANGE_PASSWORD,
+			"P": password
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	this.ChangePasswordWyca = function(password, callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.CHANGE_PASSWORD_WYCA] = callback;
+		var action = {
+			"O": _this.CommandCode.CHANGE_PASSWORD_WYCA,
+			"P": password
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	this.DeleteUserWyca = function(callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.DELETE_USER_WYCA] = callback;
+		var action = {
+			"O": _this.CommandCode.DELETE_USER_WYCA
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
