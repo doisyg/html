@@ -1897,7 +1897,7 @@ $(document).ready(function() {
 			{
 				ByStepHideCurrentMenu();
 				ByStepDisplayMenu('install_by_step_edit_map_menu_erase');
-				sizeGomme = 1;
+				sizeGomme = $('#install_by_step_edit_map_menu_erase .bGommeSize.selected').data('size');
 				bystepCurrentAction = 'gomme';	
 				currentStep = '';
 				
@@ -1909,9 +1909,12 @@ $(document).ready(function() {
 				ByStepAvertCantChange();
 		//}
     });
-	$('#install_by_step_edit_map_menu_erase .bConfigErase').click(function(e) {
+	$('#install_by_step_edit_map_menu_erase .bGommeSize').click(function(e) {
         e.preventDefault();
+		$('#install_by_step_edit_map_menu_erase .bGommeSize').removeClass('selected');
 		sizeGomme = $(this).data('size');
+		$(this).addClass('selected');
+		
     });
 	
 	$('#install_by_step_edit_map_menu .bAddForbiddenArea').click(function(e) {
@@ -3561,14 +3564,13 @@ $(document).ready(function() {
 	
 	$('#install_by_step_edit_map_svg').on('touchstart', function(e) {
 		touchStarted = true;
-		
 		//zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();
 		zoom = ByStepGetZoom();
 		
 		if (bystepCurrentAction == 'gomme' && currentStep=='')
 		{
 			currentStep='trace';
-			if (gommes.length == 0 || gommes[gommes.length-1].length > 0)
+			if (gommes.length == 0 || Object.keys(gommes[gommes.length-1]).length > 0)
 			{
 				gommes[gommes.length] = { 'size': sizeGomme, 'points':[] };
 				//gommes[gommes.length-1].push({x:0, y:0}); // Point du curseur
