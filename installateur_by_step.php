@@ -640,8 +640,8 @@
                     <div id="install_by_step_edit_map_menu_erase" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
 							<li><a href="#" class="btn btn-circle btn-default btn-menu bGommeSize" data-size="10"><i class="fas fa-circle" style="font-size: 22px;position: relative;top: -0px;"></i></a></li>
-							<li><a href="#" class="btn btn-circle btn-default btn-menu bGommeSize selected" data-size="5" ><i class="fas fa-circle" style="font-size: 16px;position: relative;top: -2px;"></i></a></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-menu bGommeSize" data-size="1" ><i class="fas fa-circle" style="font-size: 10px;position: relative;top: -5px;"></i></a></li>
+							<li><a href="#" class="btn btn-circle btn-default btn-menu bGommeSize" data-size="5" ><i class="fas fa-circle" style="font-size: 16px;position: relative;top: -2px;"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-menu bGommeSize selected" data-size="1" ><i class="fas fa-circle" style="font-size: 10px;position: relative;top: -5px;"></i></a></li>
                         	
                         </ul>
                     </div>
