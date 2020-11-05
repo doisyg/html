@@ -152,6 +152,15 @@ $(document).ready(function(e) {
 			{
 				$('#modalLoading').modal('show');
 				
+				if (data.O == wycaApi.CommandCode.GET_CURRENT_MAP_COMPLETE || data.O == wycaApi.CommandCode.GET_CURRENT_MAP_DATA)
+				{
+					$('#modalLoading h3').html('Updating map');
+				}
+				else
+				{
+					$('#modalLoading h3').html('Loading');
+				}
+				
 				valeur = parseInt(data.I / data.NB * 100);
 				$('#modalLoading .loadingProgress .progress-bar').css('width', valeur+'%').attr('aria-valuenow', valeur); 
 			}
