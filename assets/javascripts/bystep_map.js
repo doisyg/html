@@ -364,6 +364,10 @@ $(document).ready(function(e) {
 			timerByStepVeryLongPress = null;
 		}
 	});
+	
+	$('#install_by_step_edit_map_svg').on('touchstart', function(e) {
+		ByStepDisplayBlockZoom();
+	});
 	/*
 	$('#install_by_step_edit_map_svg').on('touchstart', function(e) {
 		
@@ -402,7 +406,7 @@ $(document).ready(function(e) {
 			clearTimeout(timerByStepVeryLongPress);
 			timerByStepVeryLongPress = null;
 		}
-		//ByStepDisplayBlockZoom();
+		ByStepDisplayBlockZoom();
 	});
 	
 	$(document).on('touchend', '#install_by_step_edit_map_svg .point_deletable', function(e) {
