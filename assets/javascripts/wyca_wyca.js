@@ -347,7 +347,7 @@ $(document).ready(function(e) {
 	
 	$('#wyca_bRestartBrowerTrue').click(function(e) {
         e.preventDefault();
-		wycaApi.DoRestartBrowser(true,function(data){
+		wycaApi.DoBrowserRestart(true,function(data){
 			if (data.A == wycaApi.AnswerCode.NO_ERROR){
 				success_wyca('Browser Restarted Fullscreen');			
 			}else{
@@ -357,7 +357,7 @@ $(document).ready(function(e) {
     });
 	$('#wyca_bRestartBrowerFalse').click(function(e) {
         e.preventDefault();
-		wycaApi.DoRestartBrowser(false,function(data){
+		wycaApi.DoBrowserRestart(false,function(data){
 			if (data.A == wycaApi.AnswerCode.NO_ERROR){
 				success_wyca('Browser Restarted Windowed');			
 			}else{
