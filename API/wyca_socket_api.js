@@ -65,6 +65,7 @@ function WycaAPI(options){
 		UNSUBSCRIBE_ALL			: 0x110D,
 		INSTALL_NEW_TOP_WITHOUT_KEY			: 0x1106,
 		SET_USE_SEGMENTED_MESSAGE			: 0x110F,
+		DO_BROWSER_RESTART			: 0x1110,
 	 
 		CANCEL_CURRENT_ACTION			: 0x1103,
 	 
@@ -1696,6 +1697,15 @@ function WycaAPI(options){
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
+	this.DoBrowserRestart  = function(in_kiosk_mode, callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.DO_BROWSER_RESTART] = callback;
+		var action = {
+			"O": _this.CommandCode.DO_BROWSER_RESTART,
+			"P": in_kiosk_mode
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
 	this.MappingIsStarted = function(callback){
 		if (callback != undefined)
 			this.callbacks[_this.CommandCode.MAPPING_GET_IS_STARTED] = callback;
@@ -2260,6 +2270,15 @@ function WycaAPI(options){
 			this.callbacks[_this.CommandCode.GET_MAP_COMPLETE] = callback;
 		var action = {
 			"O": _this.CommandCode.GET_MAP_COMPLETE,
+			"P": id_map
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	this.GetMapData = function(id_map, callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.GET_MAP_DATA] = callback;
+		var action = {
+			"O": _this.CommandCode.GET_MAP_DATA,
 			"P": id_map
 		};
 		_this.wycaSend(JSON.stringify(action));

@@ -68,7 +68,7 @@ ul.tuiles li .tuile_img.is_checkbox i.fa-spinner.fa-pulse { display:none; positi
 ul.tuiles li .tuile_img.is_checkbox.checked { background-color:#FFFFFF; }
 ul.tuiles li .tuile_img.is_checkbox.test i.fa-spinner.fa-pulse { display:block; }
 ul.tuiles li .tuile_img.is_checkbox.checked i.fa-spinner.fa-pulse { display:none; }
-/*ul.tuiles li .tuile_img.is_checkbox.checked i.fa-check { display:block; }*/
+ul.tuiles li .tuile_img.is_checkbox.checked i.fa-check { display:block; }
 i.component_ok { color:#060; }
 i.component_warning { color:#FF9900; }
 i.component_error { color:#CC0000; }
@@ -76,6 +76,10 @@ ul.tuiles li .tuile_img.is_checkbox { z-index:20; }
 ul.tuiles li .tuile_img.is_checkbox.checked.component_ok i.component_ok { display:block; }
 ul.tuiles li .tuile_img.is_checkbox.checked.component_warning i.component_warning { display:block; }
 ul.tuiles li .tuile_img.is_checkbox.checked.component_error i.component_error { display:block; }
+
+ul.tuiles li .tuile_img.is_checkbox.checked.component_ok i.fa-check { display:none; }
+ul.tuiles li .tuile_img.is_checkbox.checked.component_warning i.fa-check { display:none; }
+ul.tuiles li .tuile_img.is_checkbox.checked.component_error i.fa-check { display:none; }
 
 ul.tuiles li .tuile_img.is_checkbox.checked.component_warning { border-color:#FF9900; }
 ul.tuiles li .tuile_img.is_checkbox.checked.component_warning i { border-color:#FF9900; }
