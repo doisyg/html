@@ -205,5 +205,8 @@ $_LANG['b56edd782b2ae1a60a2bd56cee514413'] = 'Import existing site with map';
 $_LANG['9cd05e4b51b853ed513a8007c36a9a2c'] = 'Create new site and proceed to mapping';
 $_LANG['328f7c2698b419e20f2b9e5324719699'] = 'Create new site proceed to mapping';
 $_LANG['3d344f7199226413c28fc1561086b242'] = 'Create new site through mapping';
+$_LANG['bf1e178e5fceb8d1609a23263eb236b2'] = 'Restart Browser';
+$_LANG['0829ea6734059d66e6bf87096b215dc1'] = 'Fullscreen';
+$_LANG['b13311ab51c4c34757f67f26580018dd'] = 'Windowed';
 
 ?>

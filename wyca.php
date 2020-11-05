@@ -9,6 +9,7 @@
             <ul class="tuiles row">
                 <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile1" data-goto="wyca_demo_mode_start_stop" href="#"><i class="fa fa-recycle"></i><?php echo __('Demo mode');?><br /><?php echo __('Start / Stop');?></a></li>
                 <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile1" data-goto="wyca_demo_mode_config" href="#"><i class="fa fa-gears"></i><?php echo __('Demo mode');?><br /><?php echo __('Config');?></a></li>
+                <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile1" data-goto="wyca_browser_restart" href="#"><i class="fab fa-chrome"></i><?php echo __('Restart Browser');?></a></li>
                 <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4 todo" data-goto="wyca_help" href="#"><i class="fa fa-question"></i><?php echo __('Help');?></a></li>
             </ul>
         </div>
@@ -119,4 +120,27 @@
             <a href="#" class="btn btn-warning button_goto bSaveDemoMode" data-goto="wyca_demo_mode_config" style="position:absolute; width:50%; right:0; left:auto; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
         </footer>
     </section>
+	
+	
+	<section id="wyca_browser_restart" class="page hmi_tuile with_footer">
+    	<a href="#" class="bBackButton button_goto" data-goto="wyca_dashboard"></a>
+        <header>
+            <div class="pull-left"><img src="assets/images/logo.png" /></div>
+            <h2><?php echo __('Restart Browser');?></h2>
+        </header>
+        <div class="content">
+        	<div class="loaded">
+                <ul class="tuiles row">
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a id="wyca_bRestartBrowerTrue" class="anim_tuiles tuile1" href="#"><i class="fas fa-expand-arrows-alt fakeScreen"></i><?php echo __('Fullscreen');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a id="wyca_bRestartBrowerFalse" class="anim_tuiles tuile1" href="#"><i class="fas fa-compress-arrows-alt fakeScreen"></i><?php echo __('Windowed');?></a></li>
+                </ul>
+            </div>
+        </div>
+		<footer>
+            <a href="#" class="btn btn-default button_goto" data-goto="wyca_dashboard" style="position:absolute; width:100%; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+        </footer>
+    </section>
+    
+    
+	
 </div>

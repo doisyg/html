@@ -1126,3 +1126,12 @@ span.error_details span{
 .IroSlider{
 	display:none!important;
 }
+
+
+
+/* WYCA PAGES */
+.fakeScreen:before{
+	border: 1px solid white;
+    padding: 6px 8px;
+    border-radius: 8px;
+}
