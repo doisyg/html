@@ -115,6 +115,7 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 #alert_wyca { position:fixed; width:100%; height:100vh; height: calc(var(--vh, 1vh) * 100); top:0; left:0; z-index:50001; background-color:rgba(255,255,255,0.9); color:#333333; text-align:center; padding:40px 20px; display:none; }
 #warning_wyca { position:fixed; width:100%; height:100vh; height: calc(var(--vh, 1vh) * 100); top:0; left:0; z-index:50001; background-color:rgba(255,255,255,0.9); color:#333333; text-align:center; padding:40px 20px; display:none; }
 #success_wyca { position:fixed; width:100%; height:100vh; height: calc(var(--vh, 1vh) * 100); top:0; left:0; z-index:50001; background-color:rgba(255,255,255,0.9); color:#009900; text-align:center; padding:40px 20px; display:none; }
+#success_info_wyca { position:fixed; width:100%; height:100vh; height: calc(var(--vh, 1vh) * 100); top:0; left:0; z-index:50001; background-color:rgba(255,255,255,0.9); color:#009900; text-align:center; padding:40px 20px; display:none; }
 
 #connexion_robot { position:fixed; width:100%; height:100vh; height: calc(var(--vh, 1vh) * 100); top:0; left:0; z-index:50000; background-color:rgba(255,255,255,0.9); color:#333333; text-align:center; padding:40px 20px; }
 #connexion_robot i { font-size:60px; display:block; margin-top:40px; }

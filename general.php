@@ -41,5 +41,18 @@
 </div>
 
 
+<div id="success_info_wyca">
+	<section class="panel panel-success">
+        <header class="panel-heading">
+            <h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fa fa-info"></i></h2>
+        </header>
+        <div class="panel-body content" style="text-align:center; font-size:24px; line-height:36px;">
+            <p class="content"></p>
+    		<a id="bCloseSuccessInfoWyca" href="#" class="btn btn-default">OK</a>
+        </div>
+    </section>
+</div>
+
+
 
 

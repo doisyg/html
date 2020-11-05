@@ -1091,7 +1091,6 @@ $(document).ready(function(e) {
 			
 			let actions_searched = ['editPoi','editDock','editAugmentedPose','editForbiddenArea','editArea'];
 			if(actions_searched.includes(bystepCurrentAction)){
-				console.log('menu open need buffer');
 				switch(bystepCurrentAction){
 					case 'editPoi' :
 						i = GetPoiIndexFromID(currentPoiByStepLongTouch.data('id_poi'));
@@ -1132,8 +1131,8 @@ $(document).ready(function(e) {
 			wycaApi.SetCurrentMapData(data, function(data){
 				if (data.A == wycaApi.AnswerCode.NO_ERROR)
 				{
-					success_wyca("Map saved !");
-					
+					success_info_wyca('Map saved');
+
 					// On reload la carte pour mettre à jours les ids
 					GetInfosCurrentMapByStep();
 					/*

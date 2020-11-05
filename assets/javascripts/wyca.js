@@ -123,6 +123,12 @@ $(document).ready(function(e) {
 		$('#success_wyca').hide();
     });
 	
+	$('#bCloseSuccessInfoWyca').click(function(e) {
+        e.preventDefault();
+		$('#success_info_wyca p').html('');
+		$('#success_info_wyca').hide();
+    });
+	
 	$('.bUndock').click(function(e) {
         e.preventDefault();
 		wycaApi.Undock(function(data){
@@ -1270,6 +1276,13 @@ function success_wyca(text)
 {
 	$('#success_wyca p').html(text);
 	$('#success_wyca').show();
+}
+
+
+function success_info_wyca(text)
+{
+	$('#success_info_wyca p').html(text);
+	$('#success_info_wyca').show();
 }
 
 
