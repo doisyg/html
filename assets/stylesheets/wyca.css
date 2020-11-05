@@ -930,7 +930,9 @@ img.fi-route {
 	z-index:2;
 }
 
-
+.bGommeSize.selected{
+	color: #589fb2;
+}
 div.icon_menu .iconAugmentedPose .fa-map-marker-alt{
 	left: -1px;
     font-size: 26px;
