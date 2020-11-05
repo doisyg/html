@@ -1411,7 +1411,7 @@
                             </div>
                         </div>
                     </div>
-                    
+					
                     <div class="popupHelp">
                     	<h2>Help</h2>
                     	<ul style="color:#000;">
@@ -1637,7 +1637,7 @@
 											<div class="form-group nopymy">
 												<label class="col-xs-12 col-md-3 control-label" for="password"><?php echo __('Password');?></label>
 												<div class="col-xs-12 col-md-6 input-group input-group-icon">
-													<input id="install_by_step_maintenance_i_maintenance_password" name="password" type="password" required="required" class="form-control" pattern="(?=^.{8,}$)(?=.+[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|])(?=.+[a-z])(?=.+[A-Z])(?=.+[0-9]).*$">
+													<input id="install_by_step_maintenance_i_maintenance_password" name="password" type="password" required="required" class="form-control" pattern="(?=^.{8,}$)(?=.+[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|0-9])(?=.+[a-z])(?=.+[A-Z]).*$">
 													<span class="input-group-addon">
 														<span class="icon icon-lg">
 															<i class="fa fa-lock"></i>
@@ -1645,11 +1645,11 @@
 													</span>
 												</div>
 											</div>
-											<p class="password_format"><?= _('At least 6 characters, 1 letter, 1 digit')?> </p>
+											<p class="password_format"><?= _('8 characters, lower and uppercase, digit or special char.')?> </p>
 											<div class="form-group">
 												<label class="col-xs-12 col-md-3 control-label" for="cpassword"><?php echo __('Confirm password');?></label>
 												<div class="col-xs-12 col-md-6 input-group input-group-icon">
-													<input id="install_by_step_maintenance_i_maintenance_cpassword" name="cpassword" type="password" required="required" class="form-control" pattern="(?=^.{8,}$)(?=.+[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|])(?=.+[a-z])(?=.+[A-Z])(?=.+[0-9]).*$">
+													<input id="install_by_step_maintenance_i_maintenance_cpassword" name="cpassword" type="password" required="required" class="form-control" pattern="(?=^.{8,}$)(?=.+[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|0-9])(?=.+[a-z])(?=.+[A-Z]).*$">
 													<span class="input-group-addon">
 														<span class="icon icon-lg">
 															<i class="fa fa-lock"></i>
@@ -1657,7 +1657,7 @@
 													</span>
 												</div>
 											</div>
-											<p class="password_format"><?= _('At least 6 characters, 1 letter, 1 digit')?> </p>
+											<p class="password_format"><?= _('8 characters, lower and uppercase, digit or special char.')?> </p>
 										</form>
 									</div>
 									
@@ -1727,7 +1727,7 @@
                                                 <div class="form-group nopymy">
                                                     <label class="col-xs-12 col-md-3 control-label" for="password"><?php echo __('Password');?></label>
                                                     <div class="col-xs-12 col-md-6 input-group input-group-icon">
-                                                        <input id="install_by_step_manager_i_manager_password" name="password" type="password" required="required" class="form-control" pattern="(?=^.{8,}$)(?=.+[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|])(?=.+[a-z])(?=.+[A-Z])(?=.+[0-9]).*$"> 
+                                                        <input id="install_by_step_manager_i_manager_password" name="password" type="password" required="required" class="form-control" pattern="(?=^.{8,}$)(?=.+[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|0-9])(?=.+[a-z])(?=.+[A-Z]).*$"> 
 														<span class="input-group-addon">
 															<span class="icon icon-lg">
 																<i class="fa fa-lock"></i>
@@ -1735,11 +1735,11 @@
 														</span>
                                                     </div>
                                                 </div>
-												<p class="password_format"><?= _('At least 6 characters, 1 letter, 1 digit')?> </p>
+												<p class="password_format"><?= _('8 characters, lower and uppercase, digit or special char.')?> </p>
                                                 <div class="form-group">
                                                     <label class="col-xs-12 col-md-3 control-label" for="cpassword"><?php echo __('Confirm password');?></label>
                                                     <div class="col-xs-12 col-md-6 input-group input-group-icon">
-                                                        <input id="install_by_step_manager_i_manager_cpassword" name="cpassword" type="password" required="required" class="form-control" pattern="(?=^.{8,}$)(?=.+[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|])(?=.+[a-z])(?=.+[A-Z])(?=.+[0-9]).*$">
+                                                        <input id="install_by_step_manager_i_manager_cpassword" name="cpassword" type="password" required="required" class="form-control" pattern="(?=^.{8,}$)(?=.+[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|0-9])(?=.+[a-z])(?=.+[A-Z]).*$">
 														<span class="input-group-addon">
 															<span class="icon icon-lg">
 																<i class="fa fa-lock"></i>
@@ -1747,7 +1747,7 @@
 														</span>
                                                     </div>
                                                 </div>
-												<p class="password_format"><?= _('At least 6 characters, 1 letter, 1 digit')?> </p>
+												<p class="password_format"><?= _('8 characters, lower and uppercase, digit or special char.')?> </p>
                                             </form>
                                         </div>
                                         
