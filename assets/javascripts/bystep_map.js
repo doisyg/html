@@ -168,10 +168,7 @@ function GetInfosCurrentMapDoByStep()
 						break;
 						default: bufferMapSaveElemName = ''; break;
 					}
-				}
-				console.log(temp);
-				
-				
+				}				
 			},500); 
 			
 			if (gotoTest) InitTest();
@@ -869,21 +866,25 @@ function ByStepLongPressForbidden()
 	timerByStepLongPress = null;
 	//ByStepDisplayMenu('install_by_step_edit_map_menu_forbidden');
 }
+
 function ByStepLongPressArea()
 {
 	timerByStepLongPress = null;
 	ByStepDisplayMenu('install_by_step_edit_map_menu_area');
 }
+
 function ByStepLongPressDock()
 {
 	timerByStepLongPress = null;
 	ByStepDisplayMenu('install_by_step_edit_map_menu_dock');
 }
+
 function ByStepLongPressPoi()
 {
 	timerByStepLongPress = null;
 	ByStepDisplayMenu('install_by_step_edit_map_menu_poi');
 }
+
 function ByStepLongPressAugmentedPose()
 {
 	timerByStepLongPress = null;
@@ -984,4 +985,25 @@ function ByStepInitMap()
 	//window.panZoom = {};
 	//window.panZoom.getZoom = function () { return 1; }
 	RefreshZoomView();
+}
+
+function ShakeActiveElement(){
+	if(!bystepCanChangeMenu){
+		let ca = bystepCurrentAction;
+		let target = '';
+		if(ca == 'addForbiddenArea' || ca == 'editForbiddenArea' || ca == 'editArea' || ca == 'addArea'){
+			//SHAKE BTN BLEU ORANGE
+			target = $('.btnSaveElem');
+		}else if(ca == 'prepareArea' || ca == 'prepareGotoPose' || ca == 'prepareForbiddenArea'){
+			target = $('.btn-circle.icon_menu:visible');
+			setTimeout(function(){$('.times_icon_menu').toggleClass('shake')},1000);
+			setTimeout(function(){$('.times_icon_menu').toggleClass('shake')},3000);
+		}else if(ca == 'gomme'){
+			target = $('#install_by_step_edit_map_bEndGomme');
+		}
+		if(target != ''){
+			setTimeout(function(){target.toggleClass('shake')},1000);
+			setTimeout(function(){target.toggleClass('shake')},3000);
+		}
+	}	
 }

@@ -1085,6 +1085,8 @@ $(document).ready(function(e) {
 		if (!bystepCanChangeMenu)
 		{
 			alert_wyca('You must confirm the active element');
+			console.log(bystepCurrentAction);
+			$('#bCloseAlertWyca').click(ShakeActiveElement());
 		}
 		else
 		{

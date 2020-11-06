@@ -337,6 +337,13 @@ function ByStepSaveElementNeeded(need)
 		$('.times_icon_menu').hide()
 		$('#install_by_step_edit_map_bSaveCurrentElem').show();
 		$('#install_by_step_edit_map_bCancelCurrentElem').show();
+		if(bystepCurrentAction == "addForbiddenArea"){
+			$('.bDeleteForbidden').addClass('disabled');
+		}
+		if(bystepCurrentAction == "addArea"){
+			$('.bConfigArea').addClass('disabled');
+			$('.bDeleteArea').addClass('disabled');
+		}
 	}
 	else
 	{
@@ -346,6 +353,13 @@ function ByStepSaveElementNeeded(need)
 		}
 		$('#install_by_step_edit_map_bSaveCurrentElem').hide();
 		$('#install_by_step_edit_map_bCancelCurrentElem').hide();
+		if(bystepCurrentAction == "addForbiddenArea"){
+			$('.bDeleteForbidden').removeClass('disabled');
+		}
+		if(bystepCurrentAction == "addArea"){
+			$('.bConfigArea').removeClass('disabled');
+			$('.bDeleteArea').removeClass('disabled');
+		}
 	}
 }
 
@@ -3726,7 +3740,6 @@ $(document).ready(function() {
 	});
 	
 	$('#install_by_step_edit_map_svg').on('touchmove', function(e) {
-		
 		if ($('#install_by_step_edit_map_boutonsRotate').is(':visible'))
 		{
 			//zoom = ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom();
