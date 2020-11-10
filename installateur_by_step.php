@@ -284,7 +284,7 @@
                     <li class="col-xs-6">
                     	<div class="is_checkbox tuile_img no_update button_goto" id="bCreateSite" data-goto="install_by_step_new_site" style="height:max-content;bottom:0;border-radius:10px">
                     		<i class="fas fa-hotel" style="padding-top:5px"></i>
-							<h5 class="" style="margin-top: 0px;font-weight:700;font-size: 15px;"><?php echo __('Create new site through mapping');?></h5>
+							<h5 class="" style="margin-top: 0px;font-weight:700;font-size: 15px;"><?php echo __('Create new site with mapping');?></h5>
                         </div>
                     </li>
 				</ul>
