@@ -36,6 +36,8 @@ var timerRealTestEnd = 0;
 var statusRealTestStart = 0;
 var statusRealTestEnd = false;
 
+var boolHelpManager=true;
+
 var bufferMapSaveElemName = '';
 $(document).ready(function(e) {
 	
@@ -1500,15 +1502,17 @@ $(document).ready(function(e) {
 	
 	//------------------- STEP MANAGERS ------------------------	
 	
+	$('#install_by_step_manager .bHelpManagerOk').click(function(){boolHelpManager = !$('#checkboxHelpManager').prop('checked')});//ADD SAVING BDD / COOKIES ?
+	
 	$('#install_by_step_manager .bAddManager').click(function(e) {
 	
 		$('#install_by_step_manager .modalManager #install_by_step_manager_i_id_manager').val(-1);
-		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_email').val('');
+		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_email').val('').removeClass('success').removeClass('error');
 		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_societe').val('');
 		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_prenom').val('');
 		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_nom').val('');
-		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_password').val('');
-		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_cpassword').val('');
+		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_password').val('').removeClass('success').removeClass('error');
+		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_cpassword').val('').removeClass('success').removeClass('error');
 		
 		$('#install_by_step_manager .modalManager').modal('show');
 	});
@@ -1577,7 +1581,7 @@ $(document).ready(function(e) {
 							'</li>'
 							);
 					}
-					
+					RefreshDisplayManager();
 					$('#install_by_step_manager .modalManager').modal('hide');
 				}
 				else
@@ -1597,6 +1601,7 @@ $(document).ready(function(e) {
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
 				$('#install_by_step_manager_list_manager_elem_'+id_user_to_delete).remove();
+				RefreshDisplayManager();
 			}
 			else
 			{
@@ -1617,8 +1622,39 @@ $(document).ready(function(e) {
 		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_password').val('');
 		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_cpassword').val('');
 		
+		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_email').removeClass('success').removeClass('error');
+		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_password').removeClass('success').removeClass('error');
+		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_cpassword').removeClass('success').removeClass('error');
+		
 		$('#install_by_step_manager .modalManager').modal('show');
 	});
+	
+	$('#install_by_step_manager input#install_by_step_manager_i_manager_email').change(function(e){
+		if($(this)[0].checkValidity())
+			$(this).removeClass('error').addClass('success');
+		else
+			$(this).removeClass('success').addClass('error');
+	})
+	
+	$('#install_by_step_manager input#install_by_step_manager_i_manager_password').change(function(e){
+		if($(this)[0].checkValidity())
+			$(this).removeClass('error').addClass('success');
+		else
+			$(this).removeClass('success').addClass('error');
+	})
+	
+	$('#install_by_step_manager input#install_by_step_manager_i_manager_cpassword').change(function(e){
+		if($(this)[0].checkValidity())
+			$(this).removeClass('error').addClass('success');
+		else
+			$(this).removeClass('success').addClass('error');
+		if($('#install_by_step_manager input#install_by_step_manager_i_manager_password').val() =! ''){
+			if($(this).val() == $('#install_by_step_manager input#install_by_step_manager_i_manager_password').val())
+				$(this).removeClass('error').addClass('success');
+			else
+				$(this).removeClass('success').addClass('error');
+		}
+	})
 	
 	//AJAX CALL
 	$('#install_by_step_manager .bValidManager').click(function(e) {
@@ -1757,7 +1793,7 @@ function StartAnimCheckComposantInstall()
 
 //------------------- STEP CONFIGURATION EBL/MBL ------------------------
 	
-	/* FONCTION PROGRESS BAR REAL TEST */	/* REAL TEST */
+/* FONCTION PROGRESS BAR REAL TEST */	/* REAL TEST */
 	
 function TimerRealTest(step){
 	if(step=='start'){			
@@ -1996,6 +2032,28 @@ function RealTestGotoEnd(end){
 	}
 	// LAUNCH PROGRESS BAR ANIM
 }		
+
+//------------------- STEP MANAGERS ------------------------	
+
+function RefreshDisplayManager(){
+	if($('ul.list_managers li').length > 0){
+		//HIDE TUILE et AFF NEXT
+		$('a.bAddManager').show();
+		$('#bValidManager_Next').show();
+		
+		$('#bValidManager_Skip').hide();
+		$('#bAddManagerTuile').hide();
+	}else{
+		//AFF TUILE ET SKIP
+		$('a.bAddManager').hide();
+		$('#bValidManager_Next').hide();
+		
+		$('#bValidManager_Skip').show();
+		$('#bAddManagerTuile').show();
+	}
+	
+}
+
 
 //------------------- STEP MAPPING CONFIG ------------------------	
 

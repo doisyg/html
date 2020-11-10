@@ -1618,7 +1618,7 @@
                 <h2><?php echo __('Maintenance');?></h2>
             </header>
             <div class="content">
-				<p><?= __('A maintenance account for Wyca is by default enabled, however it can be removed to suit as your needs.') ?></p>
+				<p><?= __('A maintenance account for Wyca is by default enabled, however it can be removed to suit your security requirement.') ?></p>
 				<h4 style="text-align:center;margin:30px 0"><?= __('Keep Wyca maintenance account ?') ?></h4>
 				<ul class="tuiles row">
                     <li class="col-xs-6">
@@ -1643,8 +1643,8 @@
 								<div class="actions mh100vh_55">
 									<div class="h100vh_160" style="overflow:auto">
 										<form>
-											<h4 style="text-align:center"><?= _('Maintenance account password') ?></h4>
-											<p style="margin:20px 0"><?= _('Note precisely the password, you may have to send the robot back to wyca in case of loss.') ?></p>
+											<h4 style="text-align:center"><i class="fas fa-exclamation-triangle" style="color:#ed9c28;font-size:20px"></i> <?= _('Maintenance account password') ?></h4>
+											<p style="margin:20px 0"> <?= _('Please save this password, it will be required by WYCA for maintenance operation.') ?><br><?= _('If you loose this password, the robot could become unusable with no recovery options.') ?></p>
 											<div class="form-group nopymy">
 												<label class="col-xs-12 col-md-3 control-label" for="password"><?php echo __('Password');?></label>
 												<div class="col-xs-12 col-md-6 input-group input-group-icon">
@@ -1698,11 +1698,53 @@
                 <div class="install_by_step_manager_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
                 
                 <div class="loaded col-md-12" style="padding-top:30px;">
-                	<a href="#" class="bAddManager btn btn-primary">Add an account</a>
-                
+                	
+					<ul class="tuiles row" id="bAddManagerTuile" style="margin-bottom:30px;">
+						<li class="col-xs-6" style="margin-left: 25%;">
+							<div class="is_checkbox tuile_img no_update bAddManager" style="height:max-content;bottom:0;border-radius:10px">
+								<i class="fas fa-user-plus" style="padding-top:5px"></i>
+								<h4 class="" style="margin-top: 0px;font-weight:700;font-size: 15px;"><?php echo __('Create manager');?></h4>
+							</div>
+						</li>
+					</ul>
+					
+					<a href="#" class="bAddManager btn btn-primary"><?= ('Add an account') ?></a>
                     <ul class="list_managers list_elem">
                     </ul>
-                    
+					
+                    <div class="modal fade modalHelpManager" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+										<div class="h100vh_160" style="overflow:auto; text-align:center;">
+											<h2><?= _('Managers') ?></h2>
+											<h4 style="text-align:left;margin:30px 0;"><?= _('Managers are the end-users of the vehicle, able to create POIs and take control of the robot.') ?></h4>
+											<div style="display:flex;justify-content:space-around;">
+												<div class="btn-circle btn-lg btn-popup" style="display:inline-block;position:unset;transform:unset;">
+													<i class="fas fa-map-marker-alt iconMenuBlue" style="position: relative;left: -2px;line-height:1;"></i>
+												</div>
+												<div class="btn-circle btn-lg btn-popup" style="display:inline-block;position:unset;transform:unset;">
+													<i class="fas fa-gamepad iconMenuPurple" style="position: relative;left: -11px;line-height:1;"></i>
+												</div>
+											</div>
+											<h4 style="text-align:justify;margin:30px 0;"><?= _('The manager can also switch the active top among the available tops listed earlier in the installation process.') ?></h4>
+											
+											<div style="clear:both;"></div>
+											<div class="checkbox checkbox_wrapper">
+												<label>
+													<input type="checkbox" value="" id="checkboxHelpManager">
+													<?= _('Don\'t show this message again')?>
+												</label>
+											</div>
+											<a href="#" class="btn btn-primary btn_footer_left btn_100 bHelpManagerOk" data-dismiss="modal" ><?php echo __('Ok');?></a>
+										</div>
+									</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					
                     <div class="modal fade modalManager" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
                         <div class="modal-dialog" role="dialog">
                             <div class="modal-content">
@@ -1729,12 +1771,19 @@
                                                         <input id="install_by_step_manager_i_manager_nom" value="lname" name="nom" type="text" class="form-control">
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group nopymy">
                                                     <label class="col-xs-12 col-md-3 control-label" for="email"><?php echo __('Login');?></label>
-                                                    <div class="col-xs-12 col-md-6">
+                                                    <div class="col-xs-12 col-md-6 input-group input-group-icon">
                                                         <input id="install_by_step_manager_i_manager_email" name="email" type="email" required="required" pattern="[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,}" class="form-control">
-                                                    </div>
+														<span class="input-group-addon">
+															<span class="icon icon-lg">
+																<i class="fas fa-at"></i>
+															</span>
+														</span>
+													</div>
+													
                                                 </div>
+												<p class="password_format" style="margin-bottom:0"><?= _('A valid mail adress.')?> </p>
                                                 <div class="form-group nopymy">
                                                     <label class="col-xs-12 col-md-3 control-label" for="password"><?php echo __('Password');?></label>
                                                     <div class="col-xs-12 col-md-6 input-group input-group-icon">
@@ -1776,7 +1825,8 @@
             </div>
             <footer>
 				<a href="#" class="btn btn-default button_goto btn_footer_left btn_50 btn_back" data-goto="install_by_step_maintenance"><?php echo __('Back');?></a>
-            	<a href="#" class="btn btn-primary button_goto bValidManager btn_footer_right btn_50" data-goto="install_by_step_service_book" style="z-index:2001;"><?php echo __('Next');?></a>
+            	<a href="#" id="bValidManager_Next" class="btn btn-primary button_goto bValidManager btn_footer_right btn_50" data-goto="install_by_step_service_book" style="display:none;"><?php echo __('Next');?></a>
+            	<a href="#" id="bValidManager_Skip" class="btn btn-warning button_goto bValidManager btn_footer_right btn_50" data-goto="install_by_step_service_book"><?php echo __('Skip');?></a>
             </footer>
         </section>
 		

@@ -789,6 +789,8 @@ function GetManagersNormal()
 
 function GetManagersByStep()
 {
+	if(boolHelpManager)
+		$('#install_by_step_manager .modalHelpManager').modal('show');
 	$('.install_by_step_manager_loading').show();
 	$('#install_by_step_manager .loaded').hide();
 	if (wycaApi.websocketAuthed)
@@ -813,7 +815,9 @@ function GetManagersByStep()
 			
 			$('.install_by_step_manager_loading').hide();
 			$('#install_by_step_manager .loaded').show();
+			RefreshDisplayManager();
 		});
+		
 	}
 	else
 	{
@@ -1265,7 +1269,6 @@ function InitInstallWifiPageByStep()
 		setTimeout(InitInstallWifiPageByStep, 500);
 	}
 }
-
 
 function alert_wyca(text)
 {

@@ -208,5 +208,8 @@ $_LANG['3d344f7199226413c28fc1561086b242'] = 'Create new site through mapping';
 $_LANG['bf1e178e5fceb8d1609a23263eb236b2'] = 'Restart Browser';
 $_LANG['0829ea6734059d66e6bf87096b215dc1'] = 'Fullscreen';
 $_LANG['b13311ab51c4c34757f67f26580018dd'] = 'Windowed';
+$_LANG['6f46d2300367103e00cbac50164f7b2f'] = 'A maintenance account for Wyca is by default enabled, however it can be removed to suit your security requirement.';
+$_LANG['32f424728f91688b4bc7e59037f2d0ed'] = 'Create new site with mapping';
+$_LANG['1f1f029f4f19e1254aea91225b370c21'] = 'Create manager';
 
 ?>

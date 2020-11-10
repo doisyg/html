@@ -250,7 +250,15 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 .modalAddPoi .poi { position:absolute; top:130px; margin-left:-12.5px; z-index:300; display:none; }
 .modalAddAugmentedPose .augmented_pose { position:absolute; top:130px; margin-left:-12.5px; z-index:300; display:none; }
 
+.form-control.success{
+	border-color: #187f18a8;
+    box-shadow: inset 0 0 8px 0px #187f186b;
+}
 
+.form-control.error{
+	border-color: #da3939;
+    box-shadow: inset 0 0 8px 0px #da39396b;
+}
 
 html .panel-primary .panel-heading {
 	background: #cccccc;
