@@ -183,7 +183,7 @@ $(document).ready(function(e) {
 			$('#bModalBackOk').data('goto',target);
 			
 			$('#modalBack').modal('show');
-			console.log('back',target)
+			//console.log('back',target)
 			if(target == 'install_by_step_mapping'){ //UPDATE INSTALL STEP ON BACK FROM MAPPING
 				$.ajax({
 					type: "POST",
@@ -207,7 +207,7 @@ $(document).ready(function(e) {
 			$('section.active').removeClass('active');
 			$('section.page').hide();
 			
-			console.log('next ',next);
+			//console.log('next ',next);
 			
 			if (next == 'install_by_step_tops') InitTopsByStep();
 			if (next == 'install_by_step_top') InitTopsActiveByStep();
@@ -972,6 +972,13 @@ function InitTopsByStep()
 function InitMappingByStep()
 {
 	imgMappingLoaded = true;
+	//EMPECHER RETOUR NAVIGATEUR
+	history.pushState(null, null, document.URL);
+	window.addEventListener('popstate', function () {
+		history.pushState(null, null, document.URL);
+	});
+	
+	
 	if (wycaApi.websocketAuthed)
 	{
 		wycaApi.MappingIsStarted(function(data) {
