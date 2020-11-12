@@ -73,9 +73,9 @@ i.component_ok { color:#060; }
 i.component_warning { color:#FF9900; }
 i.component_error { color:#CC0000; }
 ul.tuiles li .tuile_img.is_checkbox { z-index:20; }
-ul.tuiles li .tuile_img.is_checkbox.checked.component_ok i.component_ok { display:block; }
-ul.tuiles li .tuile_img.is_checkbox.checked.component_warning i.component_warning { display:block; }
-ul.tuiles li .tuile_img.is_checkbox.checked.component_error i.component_error { display:block; }
+ul.tuiles li .tuile_img.is_checkbox.checked.component_ok i.component_ok { display:block!important;}
+ul.tuiles li .tuile_img.is_checkbox.checked.component_warning i.component_warning { display:block!important;}
+ul.tuiles li .tuile_img.is_checkbox.checked.component_error i.component_error { display:block!important;}
 
 ul.tuiles li .tuile_img.is_checkbox.checked.component_ok i.fa-check { display:none; }
 ul.tuiles li .tuile_img.is_checkbox.checked.component_warning i.fa-check { display:none; }

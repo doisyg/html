@@ -1,4 +1,3 @@
-
 function AppliquerZoom()
 {
 	//$('#all').width(saveWidth * zoom_carte);
@@ -160,6 +159,7 @@ function GetCenterForbidden(indexForbidden)
 	
 	return { "x":x, "y":y};
 }
+
 function ByStepTraceForbidden(indexForbidden)
 {
 	forbidden = forbiddens[indexForbidden];
@@ -335,6 +335,7 @@ function GetCenterArea(indexArea)
 	
 	return { "x":x, "y":y};
 }
+
 function ByStepTraceArea(indexArea)
 {
 	area = areas[indexArea];
@@ -465,6 +466,7 @@ function ByStepTraceCurrentDock(pose)
 				  });
 	svgByStep.appendChild(path);
 }
+
 function ByStepTraceDock(indexDock)
 {
 	dock = docks[indexDock];
@@ -602,6 +604,7 @@ function ByStepTraceCurrentPoi(pose)
 								   });
 	svgByStep.appendChild(path);
 }
+
 function ByStepTracePoi(indexPoi)
 {
 	poi = pois[indexPoi];
@@ -722,6 +725,7 @@ function ByStepTraceCurrentAugmentedPose(pose)
 								   });
 	svgByStep.appendChild(path);
 }
+
 function ByStepTraceAugmentedPose(indexAugmentedPose)
 {
 	augmented_pose = augmented_poses[indexAugmentedPose];
@@ -803,6 +807,7 @@ function ByStepTraceAugmentedPose(indexAugmentedPose)
 }
 
 var robot_traced = false;
+
 function ByStepTraceRobot(robot_x, robot_y, robot_theta)
 {
 	x = robot_x * 100 / ros_resolution;
@@ -889,7 +894,8 @@ function makeSVGElement(tag, attrs, texte='')
     return el;
 }
 
-function ExportSVG() {
+function ExportSVG()
+{
 
 	var rawSVG = $("#install_by_step_edit_map_svg").outerHTML;;
 	
