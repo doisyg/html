@@ -131,6 +131,7 @@ function GetInfosCurrentMapDoByStep()
 							if(temp){
 								currentPoiByStepLongTouch = $('#install_by_step_edit_map_poi_secure_'+temp.id_poi);
 								currentPoiByStepLongTouch.data('id_poi',temp.id_poi);
+								currentPoiByStepLongTouch.click();
 								bufferMapSaveElemName = '';
 							}
 						break;
@@ -138,6 +139,7 @@ function GetInfosCurrentMapDoByStep()
 							temp = FindElemByName(docks,bufferMapSaveElemName);
 							if(temp){
 								currentDockByStepLongTouch = $('#install_by_step_edit_map_dock_secure_'+temp.id_docking_station);
+								currentDockByStepLongTouch.click();
 								currentDockByStepLongTouch.data('id_docking_station',temp.id_docking_station);
 								bufferMapSaveElemName = '';
 							}
@@ -146,6 +148,7 @@ function GetInfosCurrentMapDoByStep()
 							temp = FindElemByName(augmented_poses,bufferMapSaveElemName);
 							if(temp){
 								currentAugmentedPoseByStepLongTouch = $('#install_by_step_edit_map_augmented_pose_secure_'+temp.id_augmented_pose);
+								currentAugmentedPoseByStepLongTouch.click();
 								currentAugmentedPoseByStepLongTouch.data('id_augmented_pose',temp.id_augmented_pose);
 								bufferMapSaveElemName = '';
 							}
@@ -154,6 +157,7 @@ function GetInfosCurrentMapDoByStep()
 							temp = FindElemByName(forbiddens,bufferMapSaveElemName);
 							if(temp){
 								currentForbiddenByStepLongTouch = $('#install_by_step_edit_map_forbidden_'+temp.id_area);
+								currentForbiddenByStepLongTouch.click();
 								currentForbiddenByStepLongTouch.data('id_area',temp.id_area);
 								bufferMapSaveElemName = '';
 							}
@@ -162,6 +166,7 @@ function GetInfosCurrentMapDoByStep()
 							temp = FindElemByName(areas,bufferMapSaveElemName);
 							if(temp){
 								currentAreaByStepLongTouch = $('#install_by_step_edit_map_area_'+temp.id_area);
+								currentAreaByStepLongTouch.click();
 								currentAreaByStepLongTouch.data('id_area',temp.id_area);
 								bufferMapSaveElemName = '';
 							}
