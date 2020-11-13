@@ -7,7 +7,7 @@ $(document).ready(function(e) {
 		e.preventDefault();
 		
 		create_new_site = true;
-		
+		setCookie('create_new_site',create_new_site); // SET COOKIES
 		$('#pages_install_normal').removeClass('active');
 		$('#pages_install_by_step section.page').hide();
 		

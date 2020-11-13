@@ -1,4 +1,4 @@
-
+//Javascript document
 var form_sended = false; //Boolean pour disable a form "en traitement"
 var selectedWifi = '';
 
@@ -39,6 +39,7 @@ var statusRealTestEnd = false;
 var boolHelpManager=true;
 
 var bufferMapSaveElemName = '';
+
 $(document).ready(function(e) {
 	
 	/*
@@ -1383,7 +1384,6 @@ $(document).ready(function(e) {
 		}
 	});
 	
-		
 	$('.modalRealTestResult  a#bUseRealTest').click(function(e) {
 		e.preventDefault();
 		let temp = battery_lvl_needed == 0?1:parseInt(battery_lvl_needed);
@@ -1732,6 +1732,10 @@ $(document).ready(function(e) {
 	
     //AJAX CALL
 	$('#install_by_step_end .bCloseInstallation').click(function(e) {
+		if(create_new_site){
+			create_new_site = false;
+			setCookie('create_new_site',create_new_site);
+		}
         $.ajax({
 			type: "POST",
 			url: 'ajax/install_by_step_finish.php',
@@ -2053,7 +2057,6 @@ function RefreshDisplayManager(){
 	}
 	
 }
-
 
 //------------------- STEP MAPPING CONFIG ------------------------	
 
