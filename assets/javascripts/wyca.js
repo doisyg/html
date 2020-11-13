@@ -2,12 +2,14 @@ function HideTuile(element)
 {
 	element.css({ transform: 'rotatey(90deg)', "z-index": "0" });
 }
+
 function ShowTuile(element)
 {
 	element.css({ transform: 'rotatey(0deg)', "z-index": "0" });
 }
 
-function change(state) {
+function change(state)
+{
 	if(state === null) { // initial page
 	}
 	else
@@ -22,7 +24,6 @@ function change(state) {
 		}
 	}
 }
-
 
 var vh = window.innerHeight * 0.01;
 document.documentElement.style.setProperty('--vh', vh+'px');
@@ -44,7 +45,6 @@ $(window).on("popstate", function(e) {
         return original.apply(this, arguments);
     };
 })(history.pushState);
-
 
 $(document).ready(function(e) {
 	$('.iro-colorpicker').each(function(){
@@ -76,6 +76,7 @@ $(document).ready(function(e) {
 		});
 		
 	})
+	
 	$('.title_section').html($('div.global_page.active > div.global_sub_page.active > section.page.active  > header > h2').text()); // TITLE INIT
 	
 	$('.popupHelp').click(function(e) {
@@ -90,11 +91,11 @@ $(document).ready(function(e) {
 		$(this).closest('.popup_error').hide();
     });
 	
-	
 	var elementCss = {
 		'perspective': 'outerWidth',
 		"transition": "all .2s ease-out"
 	  };
+	
 	$('ul.tuiles a').css(elementCss);
 	
 	$('section:not(".active") .anim_tuiles').css({ transform: 'rotatey(90deg)', "z-index": "0" });
@@ -142,7 +143,6 @@ $(document).ready(function(e) {
 		});
     });
 	
-	
 	$('.btn_change_group').click(function(e) {
         e.preventDefault();
 		
@@ -176,14 +176,18 @@ $(document).ready(function(e) {
     });
 	
 	$( 'body' ).on( 'click', '.button_goto', function(e) {
+		let anim_show = true; // TRIGGER ANIM ? 
 		if($(this).hasClass('btn_back')){
+			
 			$('#bModalBackOk').attr('data-goto','');
 			let target=$(this).data('goto');
+			
 			$('#bModalBackOk').attr('data-goto',target);
 			$('#bModalBackOk').data('goto',target);
 			
 			$('#modalBack').modal('show');
 			//console.log('back',target)
+			
 			if(target == 'install_by_step_mapping'){ //UPDATE INSTALL STEP ON BACK FROM MAPPING
 				$.ajax({
 					type: "POST",
@@ -198,26 +202,31 @@ $(document).ready(function(e) {
 					}
 				});
 			}
+			
 		}else{
 			e.preventDefault();
 			history.pushState({ current_groupe:$('.menu_groupe .active').attr('id'), current_page:$(this).data('goto')}, $(this).data('goto'), "/#"+$(this).data('goto'));
 			next = $(this).data('goto');
 			
 			$('#modalBack').modal('hide');
+			let section_active = $('section.active');
 			$('section.active').removeClass('active');
 			$('section.page').hide();
+			$('#bHeaderInfo').attr('onTouchStart',""); // REINIT (i) icone
 			
-			//console.log('next ',next);
+			console.log('next ',next);
 			
 			if (next == 'install_by_step_tops') InitTopsByStep();
 			if (next == 'install_by_step_top') InitTopsActiveByStep();
 			if (next == 'install_by_step_check') InitCheckByStep();		
 			if (next == 'install_by_step_wifi') InitInstallWifiPageByStep();
 			if (next == 'install_by_step_config') GetConfigurationsByStep();
-			if (next == 'install_by_step_manager') GetManagersByStep();
-			if (next == 'install_by_step_service_book') GetServiceBooksByStep();
 			if (next == 'install_by_step_mapping') InitMappingByStep();
 			
+			if (next == 'install_by_step_edit_map'){
+				$('#bHeaderInfo').attr('onTouchStart',"$('.popupHelp').toggle('fast')");
+				GetInfosCurrentMapByStep();
+			}
 			if (next == 'install_by_step_mapping_fin'){
 				if(typeof(window.site_name) != 'undefined' && window.site_name != ""){
 					$('#install_by_step_mapping_from_name').val(window.site_name)
@@ -230,11 +239,19 @@ $(document).ready(function(e) {
 					})
 				}
 			}
-			$('#bHeaderInfo').attr('onTouchStart',"");
-			if (next == 'install_by_step_edit_map'){
-				$('#bHeaderInfo').attr('onTouchStart',"$('.popupHelp').toggle('fast')");
-				GetInfosCurrentMapByStep();
+			if (next == 'install_by_step_maintenance'){
+				InitMaintenanceByStep();
+				if(create_new_site){
+					anim_show = false;
+					if($(this).attr('id') == 'bModalBackOk')
+						$('#install_by_step_maintenance .bBackButton').click();
+					else
+						$('#install_by_step_maintenance .install_by_step_maintenance_next').click();
+				}
 			}
+			
+			if (next == 'install_by_step_manager') GetManagersByStep();
+			if (next == 'install_by_step_service_book') GetServiceBooksByStep();
 			
 			if (next == 'install_normal_setup_sites') GetSitesNormal();
 			if (next == 'install_normal_setup_export') GetSitesForExportNormal();
@@ -256,57 +273,57 @@ $(document).ready(function(e) {
 			if (next == 'wyca_demo_mode_config') InitWycaDemo();
 			if (next == 'wyca_demo_mode_start_stop') InitWycaDemoState();
 			
-			
-			
-			// Anim HIDE
-			var startShowAfter = 0;
-			if ($(this).closest('section').hasClass('hmi_tuile'))
-			{
-				nbTuiles = $(this).closest('section').find('.anim_tuiles').length;
-				delay = 70;
-				for (i=1; i <= nbTuiles; i++)
+			if(anim_show){
+				// Anim HIDE
+				var startShowAfter = 0;
+				if ($(this).closest('section').hasClass('hmi_tuile'))
 				{
-					setTimeout(HideTuile, delay * (i - 1), $(this).closest('section').find('.tuile' + (nbTuiles - i + 1)));
+					nbTuiles = $(this).closest('section').find('.anim_tuiles').length;
+					delay = 70;
+					for (i=1; i <= nbTuiles; i++)
+					{
+						setTimeout(HideTuile, delay * (i - 1), $(this).closest('section').find('.tuile' + (nbTuiles - i + 1)));
+					}
+					
+					startShowAfter = nbTuiles * 70;
+					$(this).closest('section').delay(startShowAfter+250).fadeOut(500, function() {
+					   $(this).removeClass('active');
+					});
+				}
+				else
+				{
+					$(this).closest('section').fadeOut(500);
 				}
 				
-				startShowAfter = nbTuiles * 70;
-				$(this).closest('section').delay(startShowAfter+250).fadeOut(500, function() {
-				   $(this).removeClass('active');
-				});
-			}
-			else
-			{
-				$(this).closest('section').fadeOut(500);
-			}
-			
-			// Anim SHOW
-			next = $(this).data('goto');
-			if ($('#'+next).hasClass('hmi_tuile'))
-			{
-				nbTuiles = $('#'+next).find('.anim_tuiles').length;
-				delay = 70;
-				for (i=1; i <= nbTuiles; i++)
+				// Anim SHOW
+				next = $(this).data('goto');
+				if ($('#'+next).hasClass('hmi_tuile'))
 				{
-					setTimeout(ShowTuile, 700 + delay * (i - 1), $('#'+next).find('.tuile' + i));
+					nbTuiles = $('#'+next).find('.anim_tuiles').length;
+					delay = 70;
+					for (i=1; i <= nbTuiles; i++)
+					{
+						setTimeout(ShowTuile, 700 + delay * (i - 1), $('#'+next).find('.tuile' + i));
+					}
+					
+					$('#'+next).delay(startShowAfter+250).fadeIn(500, function() {
+						$(this).addClass('active');
+					});
+				}
+				else
+				{
+					$('#'+next).delay(startShowAfter).fadeIn(500, function() {
+						$(this).addClass('active');
+					});
 				}
 				
-				$('#'+next).delay(startShowAfter+250).fadeIn(500, function() {
-				   $(this).addClass('active');
-				});
-			}
-			else
-			{
-				$('#'+next).delay(startShowAfter).fadeIn(500, function() {
-				   $(this).addClass('active');
-				});
-			}
-			
-			// ADD TITLE CHANGE 
-				
-			$('.title_section').html($('#'+next+' > header > h2').text());
-			//
-			InitJoystick();
+				// ADD TITLE CHANGE 
+					
+				$('.title_section').html($('#'+next+' > header > h2').text());
+				//
+				InitJoystick();
 
+				}
 			}
     });
 	
@@ -370,8 +387,6 @@ $(document).ready(function(e) {
 		touchHandled = false;
 	});
 			
-		
-		
 	//GESTION BUTTON +/- ON SLIDERS
 	
 	//CLICK
@@ -457,7 +472,8 @@ $(document).ready(function(e) {
 
 var touchHandled = false;
 
-function simulateMouseEvent (event, simulatedType) {
+function simulateMouseEvent (event, simulatedType)
+{
 
     // Ignore multi-touch events
     if (event.originalEvent.touches.length > 1) {
@@ -492,20 +508,24 @@ function simulateMouseEvent (event, simulatedType) {
     event.target.dispatchEvent(simulatedEvent);
   }
 
-function InitSiteImport(){
+function InitSiteImport()
+{
 	$('#pages_install_normal .filename_import_site').html('');
 	$('#pages_install_normal .filename_import_site').hide();
 	$('#pages_install_normal .file_import_site_wrapper').css('background-color','#589fb26e');
 	$('#pages_install_normal .file_import_site').val('');
 }
-function InitBystepSiteImport(){
+
+function InitBystepSiteImport()
+{
 	$('#pages_install_by_step .filename_import_site').html('');
 	$('#pages_install_by_step .filename_import_site').hide();
 	$('#pages_install_by_step .file_import_site_wrapper').css('background-color','#589fb26e');
 	$('#pages_install_by_step .file_import_site').val('');
 }
 
-function InitBystepSiteMasterDock(){
+function InitBystepSiteMasterDock()
+{
 	$('#pages_install_by_step #MasterDockList').html('');
 	$('#pages_install_by_step .MasterDock_loading').show();
 	
@@ -561,7 +581,9 @@ function InitBystepSiteMasterDock(){
 	}
 	
 }
-function InitTopImport(){
+
+function InitTopImport()
+{
 	$('#pages_install_by_step .filename_import_top').html('');
 	$('#pages_install_by_step .filename_import_top').hide();
 	$('#pages_install_by_step .file_import_top_wrapper').css('background-color','#589fb26e');
@@ -682,6 +704,7 @@ function GetUsers()
 }
 
 var current_site = {};
+
 function GetSitesNormal()
 {
 	$('.install_normal_setup_sites_loading').show();
@@ -823,6 +846,7 @@ function GetManagersByStep()
 	{
 		setTimeout(GetManagersByStep, 500);
 	}
+
 }
 
 function GetConfigurationsNormal()
@@ -887,7 +911,6 @@ function InitTopsNormal()
 		setTimeout(InitTopsNormal, 500);
 	}
 }
-
 
 function InitTopsActiveManager()
 {
@@ -972,7 +995,6 @@ function InitTopsByStep()
 	}
 }
 
-
 function InitMappingByStep()
 {
 	imgMappingLoaded = true;
@@ -1022,7 +1044,14 @@ function InitMappingByStep()
 	}
 }
 
+function InitMaintenanceByStep(){
+	console.log('InitMaintenanceByStep');
+	if(getCookie('create_new_site') != '')
+		create_new_site = getCookie('create_new_site');
+}
+
 var save_check_components_result = undefined;
+
 function InitCheckByStep()
 {
 	
@@ -1190,7 +1219,6 @@ function InitTopsActiveByStep()
 	}
 }
 
-
 function InitInstallWifiPageNormal()
 {
 	if (wycaApi.websocketAuthed)
@@ -1288,13 +1316,11 @@ function success_wyca(text)
 	$('#success_wyca').show();
 }
 
-
 function success_info_wyca(text)
 {
 	$('#success_info_wyca p').html(text);
 	$('#success_info_wyca').show();
 }
-
 
 function DisplayError(text)
 {
@@ -1328,7 +1354,8 @@ function FindElemByName(tab, nom)
 	return res;
 }
 
-function ParseAPIAnswerError(data,pre_txt = '' ,post_txt = ''){
+function ParseAPIAnswerError(data,pre_txt = '' ,post_txt = '')
+{
 	console.log(JSON.stringify(data));
 	let txt = '';
 	if( data.A == wycaApi.AnswerCode.CANCELED ){
@@ -1401,4 +1428,27 @@ function GetDataMapToSave()
 	});
 	
 	return data;
+}
+
+/* GESTION COOKIES */
+function setCookie(cname, cvalue, exdays = 90) {
+	var d = new Date();
+	d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+	var expires = "expires="+d.toUTCString();
+	document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+	var name = cname + "=";
+	var ca = document.cookie.split(';');
+	for(var i = 0; i < ca.length; i++) {
+		var c = ca[i];
+		while (c.charAt(0) == ' ') {
+			c = c.substring(1);
+		}
+		if (c.indexOf(name) == 0) {
+			return c.substring(name.length, c.length);
+		}
+	}
+	return "";
 }

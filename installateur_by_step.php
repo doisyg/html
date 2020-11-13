@@ -327,11 +327,12 @@
             </header>
             <div class="content">
 				<h4 style="text-align:center;margin:30px 0"><?= __('Pick the default docking station') ?></h4>
+				
 				<div class="MasterDock_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
 				<ul class="tuiles row" id="MasterDockList">
                     
 				</ul>
-					
+				<p style="padding-left:5px;margin-top:10px"><i class="fas fa-asterisk" style="color: darkorange;"></i> <?= _('Actual default dock') ?></p>
 				<a href="#" class="install_by_step_site_master_dock_next button_goto" data-goto="install_by_step_edit_map" style="display:none;"></a>
             </div>
             <footer>

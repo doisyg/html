@@ -612,8 +612,6 @@ function CalculateMapTrinaryDoNormal()
 
 
 /* INSTALLATEUR WYCA.JS */
-var create_new_site = false;
-var id_site_to_delete = -1;
 
 $(document).ready(function(e) {
 	
@@ -621,7 +619,7 @@ $(document).ready(function(e) {
 		e.preventDefault();
 		
 		create_new_site = true;
-		
+		setCookie('create_new_site',create_new_site); // SET COOKIES
 		$('#pages_install_normal').removeClass('active');
 		$('#pages_install_by_step section.page').hide();
 		
@@ -984,6 +982,7 @@ $(document).ready(function(e) {
 		}
     });
 	
+	
 	$('#pages_install_normal a.import_top').click(function(e) {
         e.preventDefault();
 		
@@ -1088,6 +1087,8 @@ $(document).ready(function(e) {
 			}	
 		});		
 	});
+	
+	
 });
 
 var timerSetActiveTop = 10;

@@ -1,4 +1,4 @@
-
+//Javascript document
 var form_sended = false; //Boolean pour disable a form "en traitement"
 var selectedWifi = '';
 
@@ -39,6 +39,7 @@ var statusRealTestEnd = false;
 var boolHelpManager=true;
 
 var bufferMapSaveElemName = '';
+
 $(document).ready(function(e) {
 	
 	/*
@@ -1383,7 +1384,6 @@ $(document).ready(function(e) {
 		}
 	});
 	
-		
 	$('.modalRealTestResult  a#bUseRealTest').click(function(e) {
 		e.preventDefault();
 		let temp = battery_lvl_needed == 0?1:parseInt(battery_lvl_needed);
@@ -1732,6 +1732,10 @@ $(document).ready(function(e) {
 	
     //AJAX CALL
 	$('#install_by_step_end .bCloseInstallation').click(function(e) {
+		if(create_new_site){
+			create_new_site = false;
+			setCookie('create_new_site',create_new_site);
+		}
         $.ajax({
 			type: "POST",
 			url: 'ajax/install_by_step_finish.php',
@@ -1814,6 +1818,7 @@ function TimerRealTest(step){
 	}else if(step=='end'){			
 		if(statusRealTestEnd > 0){
 			if(statusRealTestEnd == 2 && timerRealTestEnd==100){
+				$('#install_by_step_config .modalRealTestResult .stop_move').css('opacity',1);
 				statusRealTestEnd=0;
 				timerRealTestEnd=0;
 				$('.checkEnd').show();
@@ -1830,8 +1835,10 @@ function TimerRealTest(step){
 }
 
 function RealTestGotoStart(start,end){
+	
 	//console.log('Go to start');
 	//console.log(start.data('type'),' id ',start.data('id'));
+	$('#install_by_step_config .modalRealTestResult .stop_move').css('opacity',1);
 	switch(start.data('type')){
 		case 'poi':
 			//AJOUTER ECOUTER RESULT + REBIND OLS FUNCTION FIN ECOUTEUR
@@ -1933,6 +1940,7 @@ function RealTestGotoStart(start,end){
 function RealTestGotoEnd(end){
 	//console.log('Go to end');
 	//console.log(end.data('type'),' id ',end.data('id'));
+	setTimeout(function(){$('#install_by_step_config .modalRealTestResult #start_point .stop_move').css('opacity',0)},300);
 	statusRealTestStart = 2;
 	statusRealTestEnd = 1;
 	timerRealTestEnd = 0;
@@ -2053,7 +2061,6 @@ function RefreshDisplayManager(){
 	}
 	
 }
-
 
 //------------------- STEP MAPPING CONFIG ------------------------	
 
