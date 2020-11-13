@@ -178,36 +178,29 @@ $(document).ready(function(e) {
 	$( 'body' ).on( 'click', '.button_goto', function(e) {
 		let anim_show = true; // TRIGGER ANIM ? 
 		if($(this).hasClass('btn_back')){
+			
+			$('#bModalBackOk').attr('data-goto','');
 			let target=$(this).data('goto');
-			if(target == 'install_by_step_maintenance'){ //UPDATE INSTALL STEP ON BACK FROM MAPPING
-				InitMaintenanceByStep();
-				if(create_new_site){
-					anim_show = false;
-					$('#install_by_step_maintenance .bBackButton').click();
-				}
-			}else{
-				$('#bModalBackOk').attr('data-goto','');
-				
-				$('#bModalBackOk').attr('data-goto',target);
-				$('#bModalBackOk').data('goto',target);
-				
-				$('#modalBack').modal('show');
-				//console.log('back',target)
-				
-				if(target == 'install_by_step_mapping'){ //UPDATE INSTALL STEP ON BACK FROM MAPPING
-					$.ajax({
-						type: "POST",
-						url: 'ajax/install_by_step_site.php',
-						data: {
-						},
-						dataType: 'json',
-						success: function(data) {
-						},
-						error: function(e) {
-							alert_wyca('Error step site ; ' + e.responseText);
-						}
-					});
-				}
+			
+			$('#bModalBackOk').attr('data-goto',target);
+			$('#bModalBackOk').data('goto',target);
+			
+			$('#modalBack').modal('show');
+			//console.log('back',target)
+			
+			if(target == 'install_by_step_mapping'){ //UPDATE INSTALL STEP ON BACK FROM MAPPING
+				$.ajax({
+					type: "POST",
+					url: 'ajax/install_by_step_site.php',
+					data: {
+					},
+					dataType: 'json',
+					success: function(data) {
+					},
+					error: function(e) {
+						alert_wyca('Error step site ; ' + e.responseText);
+					}
+				});
 			}
 			
 		}else{
@@ -250,7 +243,10 @@ $(document).ready(function(e) {
 				InitMaintenanceByStep();
 				if(create_new_site){
 					anim_show = false;
-					$('#install_by_step_maintenance .install_by_step_maintenance_next').click();
+					if($(this).attr('id') == 'bModalBackOk')
+						$('#install_by_step_maintenance .bBackButton').click();
+					else
+						$('#install_by_step_maintenance .install_by_step_maintenance_next').click();
 				}
 			}
 			
