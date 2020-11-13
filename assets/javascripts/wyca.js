@@ -178,34 +178,38 @@ $(document).ready(function(e) {
 	$( 'body' ).on( 'click', '.button_goto', function(e) {
 		let anim_show = true; // TRIGGER ANIM ? 
 		if($(this).hasClass('btn_back')){
-			$('#bModalBackOk').attr('data-goto','');
 			let target=$(this).data('goto');
-			$('#bModalBackOk').attr('data-goto',target);
-			$('#bModalBackOk').data('goto',target);
-			
-			$('#modalBack').modal('show');
-			//console.log('back',target)
 			if(target == 'install_by_step_maintenance'){ //UPDATE INSTALL STEP ON BACK FROM MAPPING
 				InitMaintenanceByStep();
 				if(create_new_site){
 					anim_show = false;
 					$('#install_by_step_maintenance .bBackButton').click();
 				}
+			}else{
+				$('#bModalBackOk').attr('data-goto','');
+				
+				$('#bModalBackOk').attr('data-goto',target);
+				$('#bModalBackOk').data('goto',target);
+				
+				$('#modalBack').modal('show');
+				//console.log('back',target)
+				
+				if(target == 'install_by_step_mapping'){ //UPDATE INSTALL STEP ON BACK FROM MAPPING
+					$.ajax({
+						type: "POST",
+						url: 'ajax/install_by_step_site.php',
+						data: {
+						},
+						dataType: 'json',
+						success: function(data) {
+						},
+						error: function(e) {
+							alert_wyca('Error step site ; ' + e.responseText);
+						}
+					});
+				}
 			}
-			if(target == 'install_by_step_mapping'){ //UPDATE INSTALL STEP ON BACK FROM MAPPING
-				$.ajax({
-					type: "POST",
-					url: 'ajax/install_by_step_site.php',
-					data: {
-					},
-					dataType: 'json',
-					success: function(data) {
-					},
-					error: function(e) {
-						alert_wyca('Error step site ; ' + e.responseText);
-					}
-				});
-			}
+			
 		}else{
 			e.preventDefault();
 			history.pushState({ current_groupe:$('.menu_groupe .active').attr('id'), current_page:$(this).data('goto')}, $(this).data('goto'), "/#"+$(this).data('goto'));
