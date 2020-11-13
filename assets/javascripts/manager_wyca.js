@@ -1,4 +1,3 @@
-
 $(document).ready(function(e) {
 	$('#manager_recovery .bRecovery').click(function(e) {
         e.preventDefault();
@@ -35,7 +34,6 @@ $(document).ready(function(e) {
 			}
 		});
     });
-	
 	
 	$('#manager_edit_map .bSaveMapTestPoi').click(function(e) {
 		e.preventDefault();
@@ -316,7 +314,6 @@ $(document).ready(function(e) {
 			}	
 		});		
 	});
-	
 	
 	$('#manager_users .bAddUser').click(function(e) {
 	

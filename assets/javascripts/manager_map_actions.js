@@ -71,6 +71,7 @@ var indexPoiElem = 0;
 var poi_temp_add = {};
 
 var timerCantChange = null;
+
 function ManagerAvertCantChange()
 {
 	$('#manager_edit_map_bModalCancelEdit').click();
@@ -97,7 +98,6 @@ function ManagerHideCurrentMenu()
 	managerCurrentAction = '';
 	currentStep = '';
 }
-
 
 function ManagerHideCurrentMenuNotSelect()
 {
@@ -178,6 +178,7 @@ function ManagerAddHistorique(elem)
 	
 	ManagerRefreshHistorique();
 }
+
 function ManagerRefreshHistorique()
 {
 	if (managerHistoriqueIndex == -1)
@@ -230,7 +231,6 @@ $(document).ready(function() {
 		
 	$('body').addClass('no_current');
 	
-	
 	svgManager = document.querySelector('#manager_edit_map_svg');
 	ManagerInitSVG();
 	
@@ -271,6 +271,7 @@ $(document).ready(function() {
 		if (!$('#manager_edit_map_bManagerUndo').hasClass('disabled'))
 			ManagerUndo();
 	});
+	
 	$('#manager_edit_map_bManagerUndo').on('touchstart', function(e) { 
 		e.preventDefault();
 		if (!$('#manager_edit_map_bManagerUndo').hasClass('disabled'))
@@ -282,6 +283,7 @@ $(document).ready(function() {
 		if (!$('#manager_edit_map_bManagerRedo').hasClass('disabled'))
 			ManagerRedo();
     });
+	
 	$('#manager_edit_map_bManagerRedo').on('touchstart', function(e) { 
 		e.preventDefault();
 		if (!$('#manager_edit_map_bManagerRedo').hasClass('disabled'))
@@ -490,6 +492,7 @@ $(document).ready(function() {
        e.preventDefault();
 	   downOnZoomClick = true;
     });
+	
 	$('#manager_edit_map_zone_zoom_click').mousemove(function(e) {
        e.preventDefault();
 	   if (downOnZoomClick)
@@ -567,10 +570,12 @@ $(document).ready(function() {
 		window.panZoomManager.pan({'x':x, 'y':y});
 	   
     });
+	
 	$('#manager_edit_map_zone_zoom_click').on('touchend', function(e) {
        e.preventDefault();
 	   downOnZoomClick = false;
     });
+	
 	$('#manager_edit_map_zone_zoom_click').on('touchmove', function(e) {
        e.preventDefault();
 	   if (downOnZoomClick)
@@ -826,7 +831,6 @@ $(document).ready(function() {
 		$('#manager_edit_map_container_all .modalPoiOptions').modal('show');
 	});
 	
-	
 	$('#manager_edit_map_bPoiSaveConfig').click(function(e) {
 		poi = pois[currentPoiIndex];
 		saveCurrentPoi = JSON.stringify(poi);
@@ -887,6 +891,7 @@ $(document).ready(function() {
 			NormaDeletePoi(currentPoiIndex);
 		}
     });
+	
 	$('#manager_edit_map_bPoiEditName').click(function(e) {
    		poi = pois[currentPoiIndex];
 		$('#manager_edit_map_poi_name').val(poi.name);
@@ -936,6 +941,7 @@ function ManagerPoiSave()
 		ManagerSetModeSelect();
 	}
 }
+
 function ManagerPoiCancel()
 {
 	ManagerSaveElementNeeded(false);
