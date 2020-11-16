@@ -623,6 +623,96 @@ $(document).ready(function(e) {
 	});
 });
 
+
+function NormalHideMenus()
+{
+	$('.times_icon_menu').hide()
+	$('#install_normal_edit_map_menu li').hide();
+	$('#install_normal_edit_map_menu_point li').hide();
+	$('#install_normal_edit_map_menu_forbidden li').hide();
+	$('#install_normal_edit_map_menu_area li').hide();
+	$('#install_normal_edit_map_menu_dock li').hide();
+	$('#install_normal_edit_map_menu_poi li').hide();
+	$('#install_normal_edit_map_menu_augmented_pose li').hide();
+	$('#install_normal_edit_map_menu_erase li').hide();
+	$('.popupHelp').hide();
+	
+	$('.burger_menu_open').removeClass('burger_menu_open');
+	
+	$('.burger_menu').css('display','flex');
+	
+	$('.icon_menu').hide('fast');
+}
+
+function NormalDisplayMenu(id_menu)
+{
+	NormalHideMenus();
+	
+	let idxH = 1;
+	let idxV = 1;
+	let idxD = 1;
+	console.log(id_menu);
+	
+	//ICONE CORRESPONDANTE INSTEAD BURGER MENU
+	let icon_menu = $('.icon_menu[data-menu="'+id_menu+'"]');
+	if(icon_menu.lentgh != 0){
+		if(id_menu == 'install_normal_edit_map_menu_forbidden' || id_menu == 'install_normal_edit_map_menu_area'){
+			icon_menu.show('fast');
+		}else{		
+			icon_menu.show('fast');
+		}
+	}
+	if(id_menu != 'install_normal_edit_map_menu'){
+		$('.burger_menu').hide('fast');
+		setTimeout(function(){$('.times_icon_menu').show('fast')},50);
+	}else{
+		$('.burger_menu').addClass('burger_menu_open');
+	}
+	
+	$('#'+id_menu+' li').hide();
+	$('#'+id_menu).show();
+
+	topMenu = 7.5; //px
+	leftMenu = 7.5; //px
+	
+	decallageY = 45;
+	decallageX = 45;
+	
+	
+	$('#'+id_menu).css({top: topMenu, left: leftMenu});
+	
+	$('#'+id_menu+' li').each(function(index, element) {
+		let orientation = $(element).find('a.btn-menu').data('orientation');
+		switch(orientation){
+			case 'V' : 
+				l = leftMenu;
+				t = topMenu + (idxH * decallageY+10)
+				idxH++; 
+			break;
+			case 'H' :  
+				l = leftMenu + (idxV * decallageX+10)
+				t = topMenu ;
+				idxV++;
+			break;
+			case 'D' : 
+				l = leftMenu + (idxD * decallageX+10)
+				t = topMenu + (idxD * decallageY+10) ;
+				idxD++;
+			break;
+			default:
+				l = leftMenu;
+				t = topMenu + (idxH * decallageY+10)
+				idxH++; 
+			break;
+		}
+		l = l+'px';
+		t = t+'px';
+		$(this).css({left: l, top: t});
+		delay = 15 * index + 25;
+		$(this).delay(delay).fadeIn();
+	});
+}
+/*
 function NormalHideMenus()
 {
 	$('#install_normal_edit_map_menu li').hide();
@@ -691,27 +781,31 @@ function NormalDisplayMenu(id_menu)
     	});
 	}
 }
-
+*/
 function NormalLongPressForbidden()
 {
 	timerNormalLongPress = null;
 	NormalDisplayMenu('install_normal_edit_map_menu_forbidden');
 }
+
 function NormalLongPressArea()
 {
 	timerNormalLongPress = null;
 	NormalDisplayMenu('install_normal_edit_map_menu_area');
 }
+
 function NormalLongPressDock()
 {
 	timerNormalLongPress = null;
 	NormalDisplayMenu('install_normal_edit_map_menu_dock');
 }
+
 function NormalLongPressPoi()
 {
 	timerNormalLongPress = null;
 	NormalDisplayMenu('install_normal_edit_map_menu_poi');
 }
+
 function NormalLongPressAugmentedPose()
 {
 	timerNormalLongPress = null;
@@ -805,12 +899,12 @@ function NormalInitMap()
 	, fit: 1
 	, center: 1
 	, customEventsHandler: eventsHandlerNormal
-	, RefreshMap: function() { setTimeout(NormalRefreshZoomView, 10); }
+	, RefreshMap: function() { setTimeout(RefreshZoomView, 10); }
 	});
 	
 	svgNormal = document.querySelector('#install_normal_edit_map_svg .svg-pan-zoom_viewport');
 	
 	//window.panZoomNormal = {};
 	//window.panZoomNormal.getZoom = function () { return 1; }
-	NormalRefreshZoomView();
+	RefreshZoomView();
 }

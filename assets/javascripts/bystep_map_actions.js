@@ -333,32 +333,32 @@ function ByStepSaveElementNeeded(need)
 	bystepCanChangeMenu = !need;
 	if (need)
 	{
-		$('.times_icon_menu').addClass('dnone')
-		$('.times_icon_menu').hide()
+		$('#install_by_step_edit_map .times_icon_menu').addClass('dnone')
+		$('#install_by_step_edit_map .times_icon_menu').hide()
 		$('#install_by_step_edit_map_bSaveCurrentElem').show();
 		$('#install_by_step_edit_map_bCancelCurrentElem').show();
 		if(bystepCurrentAction == "addForbiddenArea"){
-			$('.bDeleteForbidden').addClass('disabled');
+			$('#install_by_step_edit_map .bDeleteForbidden').addClass('disabled');
 		}
 		if(bystepCurrentAction == "addArea"){
-			$('.bConfigArea').addClass('disabled');
-			$('.bDeleteArea').addClass('disabled');
+			$('#install_by_step_edit_map .bConfigArea').addClass('disabled');
+			$('#install_by_step_edit_map .bDeleteArea').addClass('disabled');
 		}
 	}
 	else
 	{
-		if($('.icon_menu:visible').length > 0){
-			$('.times_icon_menu').removeClass('dnone')
-			$('.times_icon_menu').show('fast')
+		if($('#install_by_step_edit_map .icon_menu:visible').length > 0){
+			$('#install_by_step_edit_map .times_icon_menu').removeClass('dnone')
+			$('#install_by_step_edit_map .times_icon_menu').show('fast')
 		}
 		$('#install_by_step_edit_map_bSaveCurrentElem').hide();
 		$('#install_by_step_edit_map_bCancelCurrentElem').hide();
 		if(bystepCurrentAction == "addForbiddenArea"){
-			$('.bDeleteForbidden').removeClass('disabled');
+			$('#install_by_step_edit_map .bDeleteForbidden').removeClass('disabled');
 		}
 		if(bystepCurrentAction == "addArea"){
-			$('.bConfigArea').removeClass('disabled');
-			$('.bDeleteArea').removeClass('disabled');
+			$('#install_by_step_edit_map .bConfigArea').removeClass('disabled');
+			$('#install_by_step_edit_map .bDeleteArea').removeClass('disabled');
 		}
 	}
 }
@@ -528,6 +528,7 @@ $(document).ready(function() {
     });
 	
 	/* MENU POINT */
+	
 	$('#install_by_step_edit_map_menu_point .bDeletePoint').click(function(e) {
         e.preventDefault();
 		ByStepHideMenus();
@@ -546,9 +547,9 @@ $(document).ready(function() {
     });
 	
 	/* MENU FORBIDDEN */
+	
 	$('#install_by_step_edit_map_menu_forbidden .bDeleteForbidden').click(function(e) {
         e.preventDefault();
-		
 		ByStepSaveElementNeeded(false);
 		ByStepHideMenus();
 		if (bystepCurrentAction == "select" || bystepCurrentAction == 'editForbiddenArea')
@@ -559,6 +560,7 @@ $(document).ready(function() {
     });
 	
 	/* MENU AREA */
+	
 	$('#install_by_step_edit_map_menu_area .bDeleteArea').click(function(e) {
         e.preventDefault();
 		ByStepHideMenus();
@@ -607,6 +609,7 @@ $(document).ready(function() {
     });
 	
 	/* MENU DOCK */
+	
 	$('#install_by_step_edit_map_menu_dock .bDeleteDock').click(function(e) {
         e.preventDefault();
 		ByStepHideMenus();
@@ -893,6 +896,7 @@ $(document).ready(function() {
     });
 	
 	/* MENU POI */
+	
 	$('#install_by_step_edit_map_menu_poi .bDeletePoi').click(function(e) {
         e.preventDefault();
 		ByStepHideMenus();
@@ -1182,6 +1186,7 @@ $(document).ready(function() {
     });
 	
 	/* MENU AUGMENTED POSE */
+	
 	$('#install_by_step_edit_map_menu_augmented_pose .bDeleteAugmentedPose').click(function(e) {
         e.preventDefault();
 		ByStepHideMenus();
@@ -1635,7 +1640,6 @@ $(document).ready(function() {
 			RemoveClass('#install_by_step_edit_map_svg .active', 'active');
 			RemoveClass('#install_by_step_edit_map_svg .activ_select', 'activ_select'); 
 			
-			
 			currentSelectedItem = Array();
 			currentSelectedItem.push({'type':'forbidden', 'id':$(this).data('id_area')});	
 			
@@ -1874,6 +1878,7 @@ $(document).ready(function() {
 	/**************************/
 	
 	/* BTN GOTOPOSE */
+	
 	$('#install_by_step_edit_map_menu .bMoveTo').click(function(e) {
         e.preventDefault();
 		ByStepHideMenus();
@@ -1899,6 +1904,7 @@ $(document).ready(function() {
 	$('#install_by_step_edit_map .bHelpClickGotoPoseOk').click(function(){boolHelpGotoPose = !$('#checkboxHelpGotopose').prop('checked')});//ADD SAVING BDD / COOKIES ?
 		
 	/* BTNS GOMME */
+	
 	$('#install_by_step_edit_map_menu .bGomme').click(function(e) {
         e.preventDefault();
 		ByStepHideMenus();
@@ -1952,6 +1958,7 @@ $(document).ready(function() {
     });
 	
 	/* BTN MENU FORBIDDEN */
+	
 	$('#install_by_step_edit_map_menu .bAddForbiddenArea').click(function(e) {
         e.preventDefault();
 		ByStepHideMenus();
@@ -2255,6 +2262,7 @@ $(document).ready(function() {
 	})
 	
 	/* BTN MENU AREA */
+	
 	$('#install_by_step_edit_map_menu .bAddArea').click(function(e) {
         e.preventDefault();
 		ByStepHideMenus();
@@ -2337,6 +2345,7 @@ $(document).ready(function() {
 	});
 	
 	/* BTN MENU DOCK */
+	
 	$('#install_by_step_edit_map_menu .bAddDock').click(function(e) {
         e.preventDefault();
 		ByStepHideMenus();
@@ -2739,6 +2748,7 @@ $(document).ready(function() {
 	});
 	
 	/* BTN MENU POI */
+	
 	$('#install_by_step_edit_map_menu .bAddPOI').click(function(e) {
         e.preventDefault();
 		ByStepHideMenus();
@@ -2941,6 +2951,7 @@ $(document).ready(function() {
 	});
 	
 	/* BTN MENU AUGMENTED POSE */
+	
 	$('#install_by_step_edit_map_menu .bAddAugmentedPose').click(function(e) {
         e.preventDefault();
 		ByStepHideMenus();
@@ -3242,7 +3253,6 @@ $(document).ready(function() {
 		$('#install_by_step_edit_map_container_all .modalAugmentedPoseElemOptions').modal('show');
 		
 	});
-	
 	
 	$('#install_by_step_edit_map_bAugmentedPoseCreateFromPose').click(function(e) {
 		nextIdAugmentedPose++;
@@ -4904,7 +4914,7 @@ function InitTaille()
 function RefreshAllPath()
 {
 }
-
+console.log('I\'m here');
 function RefreshZoomView()
 {
 	pSVG = $('#install_by_step_edit_map_svg').position();

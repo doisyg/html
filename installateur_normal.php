@@ -1,4 +1,3 @@
-
 	<div id="pages_install_normal" class="global_sub_page <?php echo $INSTALL_STEP >= 100?'active':'';?>">
         <section id="install_normal_dashboard" class="page hmi_tuile active">
             <header>
@@ -27,6 +26,38 @@
             <div class="content">
                 
                 <div id="install_normal_edit_map_container_all">
+					<div class="btn-circle btn-lg burger_menu" data-open="install_by_step_edit_map_menu">
+						<div class="burger_menu_trait"></div>
+						<div class="burger_menu_trait"></div>
+						<div class="burger_menu_trait"></div>
+					</div>
+					
+					<i class="fas fa-times times_icon_menu iconMenuRed"></i>
+					<div class="btn-circle btn-lg icon_menu" data-menu="install_by_step_edit_map_menu_point">
+						<i class="fas fa-draw-polygon icon_menu_point iconMenuGreen" style="transform: scale(2.5);left: 17px;top: -23px;"></i>
+					</div>
+					<div class="btn-circle btn-lg icon_menu" data-menu="install_by_step_edit_map_menu_forbidden">
+						<div class="iconForbiddenArea"><i class="fas fa-vector-square"></i><i class="fa fa-minus-circle iconMenuRed"></i></div>
+					</div>
+					<div class="btn-circle btn-lg icon_menu" data-menu="install_by_step_edit_map_menu_area">
+						<i class="fas fa-draw-polygon iconMenuGreen"></i>
+					</div>
+					<div class="btn-circle btn-lg icon_menu" data-menu="install_by_step_edit_map_menu_gotopose">
+						<i class="fa fa-crosshairs iconMenuBlue" style="left: -7px;"></i>
+					</div>
+					<div class="btn-circle btn-lg icon_menu" data-menu="install_by_step_edit_map_menu_dock">
+						<i class="fas fa-charging-station iconMenuGreen" style="position: relative;top: -1px;left:-5px;"></i>
+					</div>
+					<div class="btn-circle btn-lg icon_menu" data-menu="install_by_step_edit_map_menu_poi">
+						<i class="fa fa-map-marker-alt iconMenuBlue"></i>
+					</div>
+					<div class="btn-circle btn-lg icon_menu" data-menu="install_by_step_edit_map_menu_augmented_pose">
+						<div class="iconAugmentedPose"><i class="fas fa-map-marker-alt iconMenuPurple"></i><i class="fas fa-barcode"></i></div>
+					</div>
+					<div class="btn-circle btn-lg icon_menu" data-menu="install_by_step_edit_map_menu_erase">
+						<i class="fa fa-eraser" style="left: -9px;color: #333333;"></i>
+					</div>
+					
                     <div id="install_normal_edit_map_zoom_carte_container">
                         <div id="install_normal_edit_map_zoom_carte">
                             <img src=""  class="img-responsive" style="max-width:100%; max-height:100%;" />
@@ -44,13 +75,13 @@
                         <div style="clear:both;"></div>
                     </div>
                     
-                    <a href="#" id="install_normal_edit_map_bStop" class="btn btn-circle btn-danger btn-lg"><i class="fa fa-stop"></i></a>
-                    <a href="#" id="install_normal_edit_map_bEndGomme" class="btn btn-circle btn-primary btn-lg"><i class="fa fa-check"></i></a>
-                    <a href="#" id="install_normal_edit_map_bSaveCurrentElem" class="btn btn-circle btn-primary btn-lg"><i class="fa fa-check"></i></a>
-                    <a href="#" id="install_normal_edit_map_bCancelCurrentElem" class="btn btn-circle btn-warning btn-lg"><i class="fa fa-times"></i></a>
+					<a href="#" id="install_normal_edit_map_bStop" class="btn btn-circle btn-danger btn-menu"><i class="fa fa-stop"></i></a>
+                    <a href="#" id="install_normal_edit_map_bEndGomme" class="btn btn-circle btn-primary btn-menu"><i class="fa fa-check"></i></a>
+                    <a href="#" id="install_normal_edit_map_bSaveCurrentElem" class="btn btn-circle btn-primary btn-menu btnSaveElem"><i class="fa fa-check"></i></a>
+                    <a href="#" id="install_normal_edit_map_bCancelCurrentElem" class="btn btn-circle btn-warning btn-menu btnSaveElem"><i class="fa fa-times"></i></a>
                     
-                    <a href="#" id="install_normal_edit_map_bNormalUndo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:40px; left:10px;"><i class="fa fa-mail-reply"></i></a>
-                    <a href="#" id="install_normal_edit_map_bNormalRedo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:40px; left:45px;"><i class="fa fa-mail-forward"></i></a>
+                    <a href="#" id="install_normal_edit_map_bNormalUndo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:20px; left:10px;"><i class="fa fa-mail-reply"></i></a>
+                    <a href="#" id="install_normal_edit_map_bNormalRedo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:20px; left:45px;"><i class="fa fa-mail-forward"></i></a>
                     
                     <div id="install_normal_edit_map_menu" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
@@ -326,7 +357,6 @@
                         </div>
                     </div>
                     
-                    
                     <div class="modal fade modalAreaOptions" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
                         <div class="modal-dialog" role="dialog">
                             <div class="modal-content">
@@ -523,7 +553,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="modal fade modalDockElemOptions" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                    
+					<div class="modal fade modalDockElemOptions" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
                         <div class="modal-dialog" role="dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -591,8 +622,7 @@
                         </div>
                     </div>
                     
-                    
-                    <div class="modal fade modalAddPoi" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+					<div class="modal fade modalAddPoi" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
                         <div class="modal-dialog" role="dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -839,8 +869,6 @@
                         
                         <p>Click to hide</p>
                     </div>
-                    
-                    
                 </div>
                 
                 <div id="install_normal_edit_map_zoom_popup" style="position:absolute; top:20px; left:20px; width:101px; height:101px; border:1px solid #000; overflow:hidden; display:none; z-index:8000;">
@@ -877,9 +905,7 @@
                 <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="install_normal_dashboard"><?php echo __('Back');?></a>
             </footer>
         </section>
-        
-        
-        
+       
         <section id="install_normal_setup_reset" class="page hide_photo_back with_footer">
 	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
             <header>
@@ -937,8 +963,7 @@
                 <a href="#" class="btn btn-wyca button_goto" data-goto="install_normal_setup"><i class="fa fa-chevron-left"></i> <?php echo __('Back');?></a>
             </footer>
         </section>
-        
-        
+             
         <section id="install_normal_setup_import" class="page with_footer">
 	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
             <header>
@@ -1037,7 +1062,8 @@
                 <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>
             </footer>
         </section>
-        <section id="install_normal_setup_language" class="page hmi_tuile with_footer">
+        
+		<section id="install_normal_setup_language" class="page hmi_tuile with_footer">
 	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
@@ -1063,7 +1089,8 @@
                 <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>
             </footer>
         </section>
-        <section id="install_normal_setup_wifi" class="page with_footer">
+        
+		<section id="install_normal_setup_wifi" class="page with_footer">
 	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
@@ -1087,7 +1114,8 @@
                 <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>
             </footer>
         </section>
-        <section id="install_normal_setup_wifi_password" class="page">
+       
+		<section id="install_normal_setup_wifi_password" class="page">
         	<a href="#" class="bBackButton button_goto" data-goto="install_normal_setup_wifi"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
@@ -1108,7 +1136,8 @@
                 
             </div>
         </section>
-        <section id="install_normal_setup_vehicule" class="page with_footer">
+        
+		<section id="install_normal_setup_vehicule" class="page with_footer">
 	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
@@ -1196,7 +1225,8 @@
                 <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>
             </footer>
         </section>
-        <section id="install_normal_setup_top" class="page hmi_tuile with_footer">
+        
+		<section id="install_normal_setup_top" class="page hmi_tuile with_footer">
 	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup_tops"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
@@ -1262,7 +1292,6 @@
                 <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="install_normal_dashboard"><?php echo __('Back');?></a>
             </footer>
         </section>
-        
         
         <section id="install_normal_recovery" class="page with_footer">
 	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_dashboard"></a>

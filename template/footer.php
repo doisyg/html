@@ -84,7 +84,10 @@
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/joystick.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/robot.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/wyca.js?v=<?php echo $lastUpdate;?>"></script>
-		
+		<!-- A MODIFIER POUR N INCLURE QUE LES FICHIERS NECESSAIRE -->
+		<!-- A MODIFIER POUR N INCLURE QUE LES FICHIERS NECESSAIRE -->
+		<!-- A MODIFIER POUR N INCLURE QUE LES FICHIERS NECESSAIRE -->
+		<!-- A MODIFIER POUR N INCLURE QUE LES FICHIERS NECESSAIRE -->
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/bystep_wyca.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/bystep_map.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/bystep_map_actions.js?v=<?php echo $lastUpdate;?>"></script>
