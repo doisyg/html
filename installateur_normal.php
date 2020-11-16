@@ -24,37 +24,36 @@
                 <h2><?php echo __('Map');?></h2>
             </header>
             <div class="content">
-                
                 <div id="install_normal_edit_map_container_all">
-					<div class="btn-circle btn-lg burger_menu" data-open="install_by_step_edit_map_menu">
+					<div class="btn-circle btn-lg burger_menu" data-open="install_normal_edit_map_menu">
 						<div class="burger_menu_trait"></div>
 						<div class="burger_menu_trait"></div>
 						<div class="burger_menu_trait"></div>
 					</div>
 					
 					<i class="fas fa-times times_icon_menu iconMenuRed"></i>
-					<div class="btn-circle btn-lg icon_menu" data-menu="install_by_step_edit_map_menu_point">
+					<div class="btn-circle btn-lg icon_menu" data-menu="install_normal_edit_map_menu_point">
 						<i class="fas fa-draw-polygon icon_menu_point iconMenuGreen" style="transform: scale(2.5);left: 17px;top: -23px;"></i>
 					</div>
-					<div class="btn-circle btn-lg icon_menu" data-menu="install_by_step_edit_map_menu_forbidden">
+					<div class="btn-circle btn-lg icon_menu" data-menu="install_normal_edit_map_menu_forbidden">
 						<div class="iconForbiddenArea"><i class="fas fa-vector-square"></i><i class="fa fa-minus-circle iconMenuRed"></i></div>
 					</div>
-					<div class="btn-circle btn-lg icon_menu" data-menu="install_by_step_edit_map_menu_area">
+					<div class="btn-circle btn-lg icon_menu" data-menu="install_normal_edit_map_menu_area">
 						<i class="fas fa-draw-polygon iconMenuGreen"></i>
 					</div>
-					<div class="btn-circle btn-lg icon_menu" data-menu="install_by_step_edit_map_menu_gotopose">
+					<div class="btn-circle btn-lg icon_menu" data-menu="install_normal_edit_map_menu_gotopose">
 						<i class="fa fa-crosshairs iconMenuBlue" style="left: -7px;"></i>
 					</div>
-					<div class="btn-circle btn-lg icon_menu" data-menu="install_by_step_edit_map_menu_dock">
+					<div class="btn-circle btn-lg icon_menu" data-menu="install_normal_edit_map_menu_dock">
 						<i class="fas fa-charging-station iconMenuGreen" style="position: relative;top: -1px;left:-5px;"></i>
 					</div>
-					<div class="btn-circle btn-lg icon_menu" data-menu="install_by_step_edit_map_menu_poi">
+					<div class="btn-circle btn-lg icon_menu" data-menu="install_normal_edit_map_menu_poi">
 						<i class="fa fa-map-marker-alt iconMenuBlue"></i>
 					</div>
-					<div class="btn-circle btn-lg icon_menu" data-menu="install_by_step_edit_map_menu_augmented_pose">
+					<div class="btn-circle btn-lg icon_menu" data-menu="install_normal_edit_map_menu_augmented_pose">
 						<div class="iconAugmentedPose"><i class="fas fa-map-marker-alt iconMenuPurple"></i><i class="fas fa-barcode"></i></div>
 					</div>
-					<div class="btn-circle btn-lg icon_menu" data-menu="install_by_step_edit_map_menu_erase">
+					<div class="btn-circle btn-lg icon_menu" data-menu="install_normal_edit_map_menu_erase">
 						<i class="fa fa-eraser" style="left: -9px;color: #333333;"></i>
 					</div>
 					
@@ -85,52 +84,75 @@
                     
                     <div id="install_normal_edit_map_menu" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddForbiddenArea"><i class="fa fa-ban"></i></a></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddArea"><i class="fa fa-square"></i></a></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddPOI"><i class="fa fa-map-marker"></i></a></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddAugmentedPose"><i class="fa fa-map-marker" style="color:#F00;"></i></a></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddDock"><i class="fa fa-flash"></i></a></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bGomme"><i class="fa fa-eraser"></i></a></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bMoveTo"><i class="fa fa-crosshairs"></i></a></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bMove" data-toggle="modal" data-target="#install_normal_edit_map_modalTeleop"><i class="fa fa-gamepad"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default bAddForbiddenArea btn-menu" data-orientation="V">
+								<div class="iconForbiddenArea"><i class="fas fa-vector-square"></i><i class="fa fa-minus-circle iconMenuRed"></i></div>
+							</a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default bAddArea btn-menu" data-orientation="V">
+								<i class="fas fa-draw-polygon iconMenuGreen" style="font-size:24px"></i>
+							</a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default bAddPOI btn-menu" data-orientation="V">
+								<i class="fa fa-map-marker-alt iconMenuBlue"></i>
+							</a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default bAddAugmentedPose btn-menu" data-orientation="V">
+								<div class="iconAugmentedPose"><i class="fas fa-map-marker-alt iconMenuPurple"></i><i class="fas fa-barcode"></i></div>
+							</a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default bAddDock btn-menu" data-orientation="V">
+								<i class="fas fa-charging-station iconMenuGreen" style="position: relative;top: -1px;left: 2px;"></i>
+							</a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default bGomme btn-menu" data-orientation="V">
+								<i class="fa fa-eraser "></i>
+							</a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default bMoveTo btn-menu" data-orientation="H">
+								<i class="fa fa-crosshairs iconMenuBlue" style="font-size:24px"></i>
+							</a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default bMove btn-menu" data-orientation="H" data-toggle="modal" data-target="#install_normal_edit_map_modalTeleop">
+								<i class="fa fa-gamepad iconMenuPurple"></i>
+							</a></li>
                         </ul>
                     </div>
                     
                     <div id="install_normal_edit_map_menu_point" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bDeletePoint"><i class="fa fa-trash"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-menu bDeletePoint"><i class="fa fa-trash iconMenuRed"></i></a></li>
                         </ul>
                     </div>
                     <div id="install_normal_edit_map_menu_forbidden" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bDeleteForbidden"><i class="fa fa-trash"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-menu bDeleteForbidden"><i class="fa fa-trash iconMenuRed"></i></a></li>
                         </ul>
                     </div>
                     <div id="install_normal_edit_map_menu_area" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bConfigArea"><i class="fa fa-gears"></i></a></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bDeleteArea"><i class="fa fa-trash"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-menu bConfigArea"><i class="fa fa-gears iconMenuBlue"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-menu bDeleteArea"><i class="fa fa-trash iconMenuRed"></i></a></li>
                         </ul>
                     </div>
                     <div id="install_normal_edit_map_menu_dock" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bConfigDock"><i class="fa fa-gears"></i></a></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bDeleteDock"><i class="fa fa-trash"></i></a></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg" data-toggle="modal" data-target="#install_normal_edit_map_modalDoSaveBeforeTestDock"><i class="fa fa-check"></i></a></li>
+							<li><a href="#" class="btn btn-circle btn-default btn-menu bTestDock" ><img class="fi-route" src="assets/images/route_green.svg"/></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-menu bConfigDock"><i class="fa fa-gears iconMenuBlue"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-menu bDeleteDock"><i class="fa fa-trash iconMenuRed"></i></a></li>
                         </ul>
                     </div>
                     <div id="install_normal_edit_map_menu_poi" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bConfigPoi"><i class="fa fa-gears"></i></a></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bDeletePoi"><i class="fa fa-trash"></i></a></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg" data-toggle="modal" data-target="#install_normal_edit_map_modalDoSaveBeforeTestPoi"><i class="fa fa-check"></i></a></li>
+							<li><a href="#" class="btn btn-circle btn-default btn-menu bTestPoi"><img class="fi-route" src="assets/images/route_green.svg"/></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-menu bConfigPoi"><i class="fa fa-gears iconMenuBlue"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-menu bDeletePoi"><i class="fa fa-trash iconMenuRed"></i></a></li>
                         </ul>
                     </div>
                     <div id="install_normal_edit_map_menu_augmented_pose" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bConfigAugmentedPose"><i class="fa fa-gears"></i></a></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bDeleteAugmentedPose"><i class="fa fa-trash"></i></a></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg" data-toggle="modal" data-target="#install_normal_edit_map_modalDoSaveBeforeTestAugmentedPose"><i class="fa fa-check"></i></a></li>
+							<li><a href="#" class="btn btn-circle btn-default btn-menu bTestAugmentedPose"><img class="fi-route" src="assets/images/route_green.svg"/></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-menu bConfigAugmentedPose"><i class="fa fa-gears iconMenuBlue"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-menu bDeleteAugmentedPose"><i class="fa fa-trash iconMenuRed"></i></a></li>
+                        </ul>
+                    </div>
+                    <div id="install_normal_edit_map_menu_erase" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
+                    	<ul>
+							<li><a href="#" class="btn btn-circle btn-default btn-menu bGommeSize" data-size="10"><i class="fas fa-circle" style="font-size: 22px;position: relative;top: -0px;"></i></a></li>
+							<li><a href="#" class="btn btn-circle btn-default btn-menu bGommeSize" data-size="5" ><i class="fas fa-circle" style="font-size: 16px;position: relative;top: -2px;"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-menu bGommeSize selected" data-size="1" ><i class="fas fa-circle" style="font-size: 10px;position: relative;top: -5px;"></i></a></li>
                         </ul>
                     </div>
                     
@@ -172,14 +194,13 @@
                                 <div class="modal-header">
                                     <div class="actions mh100vh_55">
                                         <div class="h100vh_160" style="overflow:auto">
-                                            
-                                            <section class="panel panel-success">
+											<section class="panel panel-success">
                                                 <header class="panel-heading">
-                                                    <h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fa fa-thumbs-up"></i></h2>
+                                                    <h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fas fa-info"></i></h2>
                                                 </header>
                                                 <div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
-                                                    <strong>Congratulations !</strong><br />
-                                                    No error during action.
+                                                    <strong><?= _('Action finished !') ?></strong><br />
+													<?= _('No error during action.') ?>
                                                 </div>
                                             </section>
                                             <section class="panel panel-danger">
@@ -187,11 +208,19 @@
                                                     <h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fa fa-remove"></i></h2>
                                                 </header>
                                                 <div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
-                                                    <strong>Error !</strong><br />
+                                                    <strong><?= _('Error !') ?></strong><br />
                                                     <span class="error_details"></span>
                                                 </div>
                                             </section>
-                                            
+                                            <section class="panel panel-warning">
+                                                <header class="panel-heading">
+                                                    <h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fas fa-exclamation-triangle"></i></h2>
+                                                </header>
+                                                <div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
+                                                    <strong><?= _('Warning !') ?></strong><br />
+                                                    <span class="error_details"></span>
+                                                </div>
+                                            </section>
                                         </div>
                                         
                                         <div style="clear:both;"></div>
@@ -852,23 +881,143 @@
                         </div>
                     </div>
                     
+                    <div class="modal fade modalHelpClickArea" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+										<div class="h100vh_160" style="overflow:auto; text-align:center;">
+											<h2><?= _('Add area') ?></h2>
+											<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the map to choose the position of the top-left corner point of your area.') ?></h4>
+											<svg id="" width="100" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events" preserveAspectRatio="xMinYMax meet" >
+												<polygon points="30,30 70,30 70,70 30,70" style="fill: rgba(87, 159, 177, 0.5);"></polygon>
+												<line x1="30" y1="30" x2="30" y2="70" stroke-width="5" style="stroke: #589FB2;"></line>
+												<line x1="70" y1="30" x2="30" y2="30" stroke-width="5" style="stroke: #589FB2;"></line>
+												<line x1="70" y1="70" x2="70" y2="30" stroke-width="5" style="stroke: #589FB2;"></line>
+												<line x1="30" y1="70" x2="70" y2="70" stroke-width="5" style="stroke: #589FB2;"></line>
+												<rect x="25" y="25" height="10" width="10" stroke-width="1"></rect>
+												<rect x="65" y="25" height="10" width="10" stroke-width="1"></rect>
+												<rect x="65" y="65" height="10" width="10" stroke-width="1"></rect>
+												<rect x="25" y="65" height="10" width="10" stroke-width="1" ></rect>
+												<path fill="currentColor" transform="scale(0.05) translate(550,550)" d="M302.189 329.126H196.105l55.831 135.993c3.889 9.428-.555 19.999-9.444 23.999l-49.165 21.427c-9.165 4-19.443-.571-23.332-9.714l-53.053-129.136-86.664 89.138C18.729 472.71 0 463.554 0 447.977V18.299C0 1.899 19.921-6.096 30.277 5.443l284.412 292.542c11.472 11.179 3.007 31.141-12.5 31.141z"></path>
+											</svg>
+											<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the menu icon to cancel.') ?></h4>
+											
+											<div class="checkbox checkbox_wrapper">
+												<label>
+													<input type="checkbox" value="" class="checkboxHelpArea">
+													<?= _('Don\'t show this message again')?>
+												</label>
+											</div>
+											<div class="btn-circle btn-lg btn-popup" style="display: block;">
+												<i class="fas fa-draw-polygon iconMenuGreen" style="font-size: 28px;line-height: 28px;position: relative;left: -2px;"></i>
+												<i class="fas fa-times times_icon iconMenuRed" style="display: inline-block;"></i>
+											</div>
+											<div style="clear:both;"></div>
+											<a href="#" class="btn btn-primary btn_footer_left btn_100 bHelpClickAreaOk" data-dismiss="modal" ><?php echo __('Ok');?></a>
+										</div>
+									</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal fade modalHelpClickForbidden" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+										<div class="h100vh_160" style="overflow:auto; text-align:center;">
+											<h2><?= _('Add forbidden area') ?></h2>
+											<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the map to choose the position of the top-left corner point of your forbidden area.') ?></h4>
+											<svg id="" width="100" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events" preserveAspectRatio="xMinYMax meet" >
+												<polygon points="30,30 70,30 70,70 30,70" style="fill: rgba(255, 0, 0, 0.3);"></polygon>
+												<line x1="30" y1="30" x2="30" y2="70" stroke-width="5" style="stroke: #da3939;"></line>
+												<line x1="70" y1="30" x2="30" y2="30" stroke-width="5" style="stroke: #da3939;"></line>
+												<line x1="70" y1="70" x2="70" y2="30" stroke-width="5" style="stroke: #da3939;"></line>
+												<line x1="30" y1="70" x2="70" y2="70" stroke-width="5" style="stroke: #da3939;"></line>
+												<rect x="25" y="25" height="10" width="10" stroke-width="1"></rect>
+												<rect x="65" y="25" height="10" width="10" stroke-width="1"></rect>
+												<rect x="65" y="65" height="10" width="10" stroke-width="1"></rect>
+												<rect x="25" y="65" height="10" width="10" stroke-width="1" ></rect>
+												<path fill="currentColor" transform="scale(0.05) translate(550,550)" d="M302.189 329.126H196.105l55.831 135.993c3.889 9.428-.555 19.999-9.444 23.999l-49.165 21.427c-9.165 4-19.443-.571-23.332-9.714l-53.053-129.136-86.664 89.138C18.729 472.71 0 463.554 0 447.977V18.299C0 1.899 19.921-6.096 30.277 5.443l284.412 292.542c11.472 11.179 3.007 31.141-12.5 31.141z"></path>
+											</svg>
+											<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the menu icon to cancel.') ?></h4>
+											
+											<div class="checkbox checkbox_wrapper">
+												<label>
+													<input type="checkbox" value="" class="checkboxHelpForbidden">
+													<?= _('Don\'t show this message again')?>
+												</label>
+											</div>
+											<div class="btn-circle btn-lg btn-popup" style="display: block;">
+												<div class="iconForbiddenArea"><i class="fas fa-vector-square"></i><i class="fa fa-minus-circle iconMenuRed"></i></div>
+												<i class="fas fa-times times_icon iconMenuRed" style="display: inline-block;"></i>
+											</div>
+											<div style="clear:both;"></div>
+											<a href="#" class="btn btn-primary btn_footer_left btn_100 bHelpClickForbiddenOk" data-dismiss="modal" ><?php echo __('Ok');?></a>
+										</div>
+									</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     
+                    <div class="modal fade modalHelpClickGotoPose" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+										<div class="h100vh_160" style="overflow:auto; text-align:center;">
+											<h2><?= _('Go to position') ?></h2>
+											<h4 style="text-align:left;margin:30px 0;"><?= _('Click on the map to choose the position you\'re aiming for.') ?></h4>
+											<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the menu icon to cancel.') ?></h4>
+											<div class="btn-circle btn-lg btn-popup" style="display: block;">
+												<i class="fas fa-crosshairs iconMenuBlue"></i>
+												<i class="fas fa-times times_icon iconMenuRed" style="display: inline-block;"></i>
+											</div>
+											<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the stop icon to cancel action while the vehicle is moving.') ?></h4>
+											
+											<div class="btn-circle btn-lg btn-popup btn-danger" style="display: block;">
+												<i class="fa fa-stop"></i>
+											</div>
+											<div style="clear:both;"></div>
+											<div class="checkbox checkbox_wrapper">
+												<label>
+													<input type="checkbox" value="" class="checkboxHelpGotopose">
+													<?= _('Don\'t show this message again')?>
+												</label>
+											</div>
+											<a href="#" class="btn btn-primary btn_footer_left btn_100 bHelpClickGotoPoseOk" data-dismiss="modal" ><?php echo __('Ok');?></a>
+										</div>
+									</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					
                     <div class="popupHelp">
                     	<h2>Help</h2>
                     	<ul style="color:#000;">
-                        	<li><i class="fa fa-ban"></i><span class="description">Add forbidden area</span></li>
-                        	<li><i class="fa fa-square"></i><span class="description">Add custom area</span></li>
-                        	<li><i class="fa fa-map-marker"></i><span class="description">Add POI</span></li>
-                        	<li><i class="fa fa-map-marker" style="color:#FF0000;"></i><span class="description">Add Augmented pose</span></li>
-                        	<li><i class="fa fa-flash"></i><span class="description">Add docking station</span></li>
-                        	<li><i class="fa fa-eraser"></i><span class="description">Erase pixel</span></li>
-                        	<li><i class="fa fa-crosshairs"></i><span class="description">Move the robot to this point</span></li>
-                        	<li><i class="fa fa-gamepad"></i><span class="description">Teleop the robot</span></li>
-                        	<li><i class="fa fa-check"></i><span class="description">Test go to POI, dock or augmented pose</span></li>
-                        	<li><span style="display:inline-block; margin-right:25px; width:15px; height:15px; border-radius:100%; background-color:#009900;"></span><span class="description">Robot position</span></li>
+                        	<li><div class="iconForbiddenArea"><i class="fas fa-vector-square"></i><i class="fa fa-minus-circle iconMenuRed"></i></div><span class="description"><?= _('Add forbidden area')?></span></li>
+                        	<li><i class="fa fa-draw-polygon iconMenuGreen" style="font-size: 26px;"></i><span class="description"><?= _('Add custom area')?></span></li>
+                        	<li><i class="fa fa-map-marker-alt iconMenuBlue"></i><span class="description"><?= _('Add POI')?></span></li>
+                        	<li><div class="iconAugmentedPose"><i class="fas fa-map-marker-alt iconMenuPurple"></i><i class="fas fa-barcode"></i></div><span class="description"><?= _('Add Augmented pose')?></span></li>
+                        	<li><i class="fa fa-charging-station iconMenuGreen"></i><span class="description"><?= _('Add docking station')?></span></li>
+                        	<li><i class="fa fa-eraser"></i><span class="description"><?= _('Erase pixel')?></span></li>
+                        	<li><i class="fa fa-crosshairs iconMenuBlue"></i><span class="description"><?= _('Move the robot to this point')?></span></li>
+                        	<li><i class="fa fa-gamepad iconMenuPurple"></i><span class="description"><?= _('Teleop the robot')?></span></li>
+                        	<li style="position:relative;font-size:16px"><img class="route" src="assets/images/route_green.svg"/><span class="description" style="margin-left: 40px;position: relative;top: 3px;"><?= _('Test go to POI, dock or augmented pose')?></span></li>
+                        	<li style="position:relative;">
+							<svg class="svg_popupHelp_robot" xmlns="http://www.w3.org/2000/svg">
+								<circle cx="20" cy="20" r="12" class="robot_elem robot_elem_fond"></circle>
+								<polyline points="16 16 24 20 16 24" stroke="#FFFFFF" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round" class="robot_elem" transform="rotate(-90,20,20)"></polyline>
+							</svg>
+							<span class="description" style="margin-left: 40px;"><?= _('Robot position')?></span></li>
                         </ul>
-                        
-                        <p>Click to hide</p>
+                        <p class="legende"><?= _('Click to hide')?></p>
                     </div>
+                    
                 </div>
                 
                 <div id="install_normal_edit_map_zoom_popup" style="position:absolute; top:20px; left:20px; width:101px; height:101px; border:1px solid #000; overflow:hidden; display:none; z-index:8000;">

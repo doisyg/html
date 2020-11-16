@@ -225,8 +225,9 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 #install_by_step_edit_map_bStop { position:absolute; bottom:15px; right:15px;display:none; z-index:4;border-color:transparent;}
 #install_by_step_edit_map_bCancelCurrentElem { position:absolute; top:15px; left:115px; display:none; z-index:4;border-color:transparent;}
 
-#install_normal_edit_map_bEndGomme, #install_normal_edit_map_bSaveCurrentElem, #install_normal_edit_map_bStop { position:absolute; top:10px; left:10px; padding:0; display:none; z-index:4}
-#install_normal_edit_map_bCancelCurrentElem { position:absolute; top:10px; left:80px; padding:0; display:none; z-index:4}
+#install_normal_edit_map_bEndGomme, #install_normal_edit_map_bSaveCurrentElem{ position:absolute; top:15px; left:70px;display:none; z-index:4;border-color:transparent;}
+#install_normal_edit_map_bStop { position:absolute; bottom:15px; right:15px;display:none; z-index:4;border-color:transparent;}
+#install_normal_edit_map_bCancelCurrentElem { position:absolute; top:15px; left:115px; display:none; z-index:4;border-color:transparent;}
 
 #manager_edit_map_bEndGomme, #manager_edit_map_bSaveCurrentElem, #manager_edit_map_bStop { position:absolute; top:10px; left:10px; padding:0; display:none; z-index:4}
 #manager_edit_map_bCancelCurrentElem { position:absolute; top:10px; left:80px; padding:0; display:none;z-index:4}
@@ -1122,6 +1123,9 @@ span.error_details span{
 }
 #install_by_step_edit_map_zone_zoom{
 	border-color:rgb(88 159 178)!important;
+}
+#install_normal_edit_map_zone_zoom {
+    border-color: rgb(88 159 178)!important;
 }
 .modal .modal-content .actions .row{
 	margin-right:0px;

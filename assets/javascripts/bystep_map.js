@@ -13,7 +13,8 @@ function distance(x1, y1, x2, y2)
     return Math.sqrt( (x2-x1)*(x2-x1) + (y2-y1)*(y2-y1));
 }
 
-function diff(x, y) {
+function diff(x, y) 
+{
 	var centerItem = $('#install_by_step_edit_map_robotDestination'),Fin
 		centerLoc = centerItem.offset();
 	var dx = x - (centerLoc.left + (centerItem.width() / 2));
@@ -794,7 +795,7 @@ $(document).ready(function(e) {
 	});
 	
 	$('#install_by_step_edit_map .times_icon_menu').click(function(){
-		$('.icon_menu').click();
+		$('#install_by_step_edit_map .icon_menu').click();
 	})
 });
 
@@ -1023,7 +1024,7 @@ function ShakeActiveElement()
 			//SHAKE BTN BLEU ORANGE
 			target = $('.btnSaveElem');
 		}else if(ca == 'prepareArea' || ca == 'prepareGotoPose' || ca == 'prepareForbiddenArea'){
-			target = $('.btn-circle.icon_menu:visible');
+			target = $('#install_by_step_edit_map .btn-circle.icon_menu:visible');
 			setTimeout(function(){$('.times_icon_menu').toggleClass('shake')},1000);
 			setTimeout(function(){$('.times_icon_menu').toggleClass('shake')},3000);
 		}else if(ca == 'gomme'){

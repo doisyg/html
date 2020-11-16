@@ -1502,7 +1502,7 @@ $(document).ready(function(e) {
 	
 	//------------------- STEP MANAGERS ------------------------	
 	
-	$('#install_by_step_manager .bHelpManagerOk').click(function(){boolHelpManager = !$('#checkboxHelpManager').prop('checked')});//ADD SAVING BDD / COOKIES ?
+	$('#install_by_step_manager .bHelpManagerOk').click(function(){boolHelpManager = !$('#install_by_step_manager .checkboxHelpManager').prop('checked')});//ADD SAVING BDD / COOKIES ?
 	
 	$('#install_by_step_manager .bAddManager').click(function(e) {
 	

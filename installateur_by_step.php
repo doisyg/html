@@ -510,9 +510,7 @@
                 <h2><?php echo __('Edit map');?></h2>
             </header>
             <div class="content">
-                
                 <div id="install_by_step_edit_map_container_all">
-					
 					<div class="btn-circle btn-lg burger_menu" data-open="install_by_step_edit_map_menu">
 						<div class="burger_menu_trait"></div>
 						<div class="burger_menu_trait"></div>
@@ -567,8 +565,7 @@
                     <a href="#" id="install_by_step_edit_map_bSaveCurrentElem" class="btn btn-circle btn-primary btn-menu btnSaveElem"><i class="fa fa-check"></i></a>
                     <a href="#" id="install_by_step_edit_map_bCancelCurrentElem" class="btn btn-circle btn-warning btn-menu btnSaveElem"><i class="fa fa-times"></i></a>
                     
-                    <a href="#" id="install_by_step_edit_map_bByStepUndo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:20px; left:10px;">
-					<i class="fas fa-undo-alt"></i></a>
+                    <a href="#" id="install_by_step_edit_map_bByStepUndo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:20px; left:10px;"><i class="fas fa-undo-alt"></i></a>
                     <a href="#" id="install_by_step_edit_map_bByStepRedo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:20px; left:45px;"><i class="fas fa-redo-alt"></i></a>
                     
                     <div id="install_by_step_edit_map_menu" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
@@ -635,7 +632,6 @@
 							<li><a href="#" class="btn btn-circle btn-default btn-menu bTestAugmentedPose"><img class="fi-route" src="assets/images/route_green.svg"/></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-menu bConfigAugmentedPose"><i class="fa fa-gears iconMenuBlue"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-menu bDeleteAugmentedPose"><i class="fa fa-trash iconMenuRed"></i></a></li>
-                        	
                         </ul>
                     </div>
                     <div id="install_by_step_edit_map_menu_erase" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
@@ -643,7 +639,6 @@
 							<li><a href="#" class="btn btn-circle btn-default btn-menu bGommeSize" data-size="10"><i class="fas fa-circle" style="font-size: 22px;position: relative;top: -0px;"></i></a></li>
 							<li><a href="#" class="btn btn-circle btn-default btn-menu bGommeSize" data-size="5" ><i class="fas fa-circle" style="font-size: 16px;position: relative;top: -2px;"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-menu bGommeSize selected" data-size="1" ><i class="fas fa-circle" style="font-size: 10px;position: relative;top: -5px;"></i></a></li>
-                        	
                         </ul>
                     </div>
                     
@@ -685,7 +680,6 @@
                                 <div class="modal-header">
                                     <div class="actions mh100vh_55">
                                         <div class="h100vh_160" style="overflow:auto">
-                                            
                                             <section class="panel panel-success">
                                                 <header class="panel-heading">
                                                     <h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fas fa-info"></i></h2>
@@ -1333,7 +1327,7 @@
 											
 											<div class="checkbox checkbox_wrapper">
 												<label>
-													<input type="checkbox" value="" id="checkboxHelpArea">
+													<input type="checkbox" value="" class="checkboxHelpArea">
 													<?= _('Don\'t show this message again')?>
 												</label>
 											</div>
@@ -1374,7 +1368,7 @@
 											
 											<div class="checkbox checkbox_wrapper">
 												<label>
-													<input type="checkbox" value="" id="checkboxHelpForbidden">
+													<input type="checkbox" value="" class="checkboxHelpForbidden">
 													<?= _('Don\'t show this message again')?>
 												</label>
 											</div>
@@ -1412,7 +1406,7 @@
 											<div style="clear:both;"></div>
 											<div class="checkbox checkbox_wrapper">
 												<label>
-													<input type="checkbox" value="" id="checkboxHelpGotopose">
+													<input type="checkbox" value="" class="checkboxHelpGotopose">
 													<?= _('Don\'t show this message again')?>
 												</label>
 											</div>
@@ -1445,7 +1439,6 @@
                         </ul>
                         <p class="legende"><?= _('Click to hide')?></p>
                     </div>
-                    
                     
                 </div>
                 
@@ -1734,7 +1727,7 @@
 											<div style="clear:both;"></div>
 											<div class="checkbox checkbox_wrapper">
 												<label>
-													<input type="checkbox" value="" id="checkboxHelpManager">
+													<input type="checkbox" value="" class="checkboxHelpManager">
 													<?= _('Don\'t show this message again')?>
 												</label>
 											</div>
