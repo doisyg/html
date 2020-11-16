@@ -1,3 +1,4 @@
+
 function AppliquerZoom()
 {
 	//$('#all').width(saveWidth * zoom_carte);
@@ -81,6 +82,7 @@ function ByStepTraceCurrentGomme(gomme, index)
 		svgByStep.appendChild(path);
 		$('#install_by_step_edit_map_svg .gomme_elem_current_'+index).insertAfter($('#install_by_step_edit_map_svg image'));
 		
+		/*
 		path = makeSVGElement('polyline', { points: gomme_point,
 								   'stroke-width': gomme.size,
 								   'stroke': '#FFF',
@@ -91,6 +93,7 @@ function ByStepTraceCurrentGomme(gomme, index)
 								  
 		svgByStep.appendChild(path);
 		$('#install_by_step_edit_map_svg .gomme_elem_current_'+index).insertAfter($('#install_by_step_edit_map_svg image'));
+		*/
 	}
 }
 
@@ -203,7 +206,7 @@ function ByStepTraceForbidden(indexForbidden)
 							   'id':'install_by_step_edit_map_forbidden_'+forbidden.id_area,
 							   'data-id_area': forbidden.id_area
 							  });
-		path.style.fill = 'rgba(255,0,0,0.3)'
+		path.style.fill = 'rgba(255,0,0,0.3)';
 		svgByStep.appendChild(path);
 		
 		lastPointIndex = points.length-1;
@@ -440,6 +443,7 @@ function ByStepTraceArea(indexArea)
 	}
 }
 
+/*
 function ByStepTraceCurrentDock(pose)
 {
 	$('#install_by_step_edit_map_svg .dock_elem_current').remove();
@@ -466,6 +470,7 @@ function ByStepTraceCurrentDock(pose)
 				  });
 	svgByStep.appendChild(path);
 }
+*/
 
 function ByStepTraceDock(indexDock)
 {
@@ -566,6 +571,7 @@ function ByStepTraceDock(indexDock)
 		AddClass('#install_by_step_edit_map_svg .dock_elem_'+dock.id_docking_station, 'active');
 }
 
+/*
 function ByStepTraceCurrentPoi(pose)
 {
 	$('#install_by_step_edit_map_svg .poi_elem_current').remove();
@@ -604,6 +610,7 @@ function ByStepTraceCurrentPoi(pose)
 								   });
 	svgByStep.appendChild(path);
 }
+*/
 
 function ByStepTracePoi(indexPoi)
 {
@@ -687,8 +694,10 @@ function ByStepTracePoi(indexPoi)
 		AddClass('#install_by_step_edit_map_svg .poi_elem_'+poi.id_poi, 'active');
 }
 
+/*
 function ByStepTraceCurrentAugmentedPose(pose)
 {
+	
 	$('#install_by_step_edit_map_svg .augmented_pose_elem_current').remove();
 	
 	x = pose.final_pose_x * 100 / ros_resolution;
@@ -725,6 +734,7 @@ function ByStepTraceCurrentAugmentedPose(pose)
 								   });
 	svgByStep.appendChild(path);
 }
+*/
 
 function ByStepTraceAugmentedPose(indexAugmentedPose)
 {
@@ -877,6 +887,9 @@ function ByStepResizeSVG()
 		ByStepTraceAugmentedPose(index);
 	});
 }
+
+// ----------------------------------------------------------------------------
+// FUNCS NOT BY STEP
 
 function makeSVGElement(tag, attrs, texte='')
 {
