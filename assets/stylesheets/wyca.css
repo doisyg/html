@@ -1089,15 +1089,6 @@ div.icon_menu .iconForbiddenArea .fa-minus-circle{
     top: 11px;
     left: 11px;
 }
-/* POPUP EDIT MAP */
-.popupEditMap{
-	height: 100%;
-    width: 100vw;
-    z-index: 2;
-    position: absolute;
-    background: rgba(0,0,0,0.5);
-    top: 0;
-	display:none;
 }
 /* */
 ul#MasterDockList li .tuile_img.is_checkbox{border-radius:10px;bottom:0;}

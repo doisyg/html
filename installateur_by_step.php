@@ -128,7 +128,7 @@
             <div class="content" style="padding: 0;">
             
             	<div style="position:relative;max-width:375px; margin:auto;">
-					<svg class="svg_legende" xmlns="http://www.w3.org/2000/svg" style="z-index:10;" viewBox="0 0 30 20">
+					<svg class="svg_legende" xmlns="http://www.w3.org/2000/svg" style="z-index:10;">
 						<line x1="65" y1="142" x2="109" y2="226" stroke-width="1" stroke="#343434" class="line_lidar"/>
 						<line x1="187" y1="122" x2="168" y2="197" stroke-width="1" stroke="#343434" class="line_us"/>
 						<line x1="187" y1="122" x2="134" y2="197" stroke-width="1" stroke="#343434" class="line_us"/>
@@ -181,7 +181,7 @@
                                 <i class="fa fa-exclamation-triangle component_state component_warning"></i>
                                 <i class="fa fa-exclamation-circle component_state component_error"></i>
                                 <i class="fa fa fa-spinner fa-pulse"></i>
-                                <i class="fa fa-battery-4" style="font-size: 40px!important;"></i>
+                                <i class="fa fa-battery-4"></i>
                                 <?php echo __('Com. Battery');?>
                             </div>
                         </li>
@@ -559,7 +559,6 @@
                                 <image id="install_by_step_edit_map_image" xlink:href="" x="0" y="0" height="0" width="0" />
                             </svg>
                         </div>
-						<div class="popupEditMap"></div>
                         <div style="clear:both;"></div>
                     </div>
                     
