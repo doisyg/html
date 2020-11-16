@@ -69,6 +69,18 @@ function NormalTraceCurrentGomme(gomme, index)
 		svgNormal.appendChild(path);
 		$('#install_normal_edit_map_svg .gomme_elem_current_'+index).insertAfter($('#install_normal_edit_map_svg image'));
 		
+		/*
+		path = makeSVGElement('polyline', { points: gomme_point,
+								   'stroke-width': gomme.size,
+								   'stroke': '#FFF',
+								   'fill': 'none',
+								   'class':'gomme_elem gomme_elem_current_'+index,
+								   'data-index': 'current'
+								  });
+								  
+		svgNormal.appendChild(path);
+		$('#install_normal_edit_map_svg .gomme_elem_current_'+index).insertAfter($('#install_normal_edit_map_svg image'));
+		*/
 	}
 }
 
@@ -115,7 +127,7 @@ function NormalTraceForbidden(indexForbidden)
 							   'id':'install_normal_edit_map_forbidden_'+forbidden.id_area,
 							   'data-id_area': forbidden.id_area
 							  });
-		path.style.fill = 'rgba(255,0,0,0.3)';
+		path.style.fill = 'rgba(0,0,0,0.5)'
 		svgNormal.appendChild(path);
 		
 		lastPointIndex = points.length-1;
@@ -180,6 +192,7 @@ function NormalTraceForbidden(indexForbidden)
 			AddClass('#install_normal_edit_map_svg .forbidden_elem_'+forbidden.id_area, 'active');
 	}
 }
+
 
 function NormalTraceArea(indexArea)
 {
@@ -311,7 +324,6 @@ function NormalTraceCurrentDock(pose)
 				  });
 	svgNormal.appendChild(path);
 }
-
 function NormalTraceDock(indexDock)
 {
 	dock = docks[indexDock];
@@ -374,16 +386,6 @@ function NormalTraceDock(indexDock)
 	path = makeSVGElement('circle', { cx: x,
 									cy: y,
 								   r: rayonRobot,
-								   'class': 'dock_elem dock_elem_circle dock_elem_'+dock.id_docking_station,
-								   'id': 'install_normal_edit_map_dock_secure_'+dock.id_docking_station,
-								   'data-id_docking_station': dock.id_docking_station,
-								   'data-element_type': 'dock',
-								   'data-element': 'dock'
-								   });
-	svgNormal.appendChild(path);
-	path = makeSVGElement('circle', { cx: x,
-									cy: y,
-								   r: rayonRobot * 0.60,
 								   'class': 'dock_elem dock_elem_robot dock_elem_fond dock_elem_'+dock.id_docking_station,
 								   'id': 'install_normal_edit_map_dock_robot_'+dock.id_docking_station,
 								   'data-id_docking_station': dock.id_docking_station,
@@ -392,7 +394,7 @@ function NormalTraceDock(indexDock)
 								   });
 	svgNormal.appendChild(path);
 	
-	path = makeSVGElement('polyline', { 'points': (x-1.5)+' '+(y-1.5)+' '+(x+1.5)+' '+(y)+' '+(x-1.5)+' '+(y+1.5),
+	path = makeSVGElement('polyline', { 'points': (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2),
 									'stroke':'#FFFFFF',
 									'stroke-width':1,
 									'fill':'none',
@@ -411,7 +413,6 @@ function NormalTraceDock(indexDock)
 		AddClass('#install_normal_edit_map_svg .dock_elem_'+dock.id_docking_station, 'active');
 }
 
-/*
 function NormalTraceCurrentPoi(pose)
 {
 	$('#install_normal_edit_map_svg .poi_elem_current').remove();
@@ -450,8 +451,6 @@ function NormalTraceCurrentPoi(pose)
 								   });
 	svgNormal.appendChild(path);
 }
-*/
-
 function NormalTracePoi(indexPoi)
 {
 	poi = pois[indexPoi];
@@ -483,8 +482,8 @@ function NormalTracePoi(indexPoi)
 	
 	path = makeSVGElement('circle', { cx: x,
 									cy: y,
-								   r: rayonRobot,
-								   'class': 'poi_elem poi_elem_circle poi_elem_'+poi.id_poi,
+								   r: rayonRobotSecure,
+								   'class': 'poi_elem poi_elem_secure poi_elem_'+poi.id_poi,
 								   'id': 'install_normal_edit_map_poi_secure_'+poi.id_poi,
 								   'data-id_poi': poi.id_poi,
 								   'data-element_type': 'poi',
@@ -494,7 +493,7 @@ function NormalTracePoi(indexPoi)
 	
 	path = makeSVGElement('circle', { cx: x,
 									cy: y,
-								   r: rayonRobot * 0.6,
+								   r: rayonRobot,
 								   'class': 'poi_elem poi_elem_fond poi_elem_'+poi.id_poi,
 								   'id': 'install_normal_edit_map_poi_robot_'+poi.id_poi,
 								   'data-id_poi': poi.id_poi,
@@ -503,7 +502,7 @@ function NormalTracePoi(indexPoi)
 								   });
 	svgNormal.appendChild(path);
 	
-	path = makeSVGElement('polyline', { 'points': (x-1.5)+' '+(y-1.5)+' '+(x+1.5)+' '+(y)+' '+(x-1.5)+' '+(y+1.5),
+	path = makeSVGElement('polyline', { 'points': (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2),
 									'stroke':'#FFFFFF',
 									'stroke-width':1,
 									'fill':'none',
@@ -522,7 +521,6 @@ function NormalTracePoi(indexPoi)
 		AddClass('#install_normal_edit_map_svg .poi_elem_'+poi.id_poi, 'active');
 }
 
-/*
 function NormalTraceCurrentAugmentedPose(pose)
 {
 	$('#install_normal_edit_map_svg .augmented_pose_elem_current').remove();
@@ -561,8 +559,6 @@ function NormalTraceCurrentAugmentedPose(pose)
 								   });
 	svgNormal.appendChild(path);
 }
-*/
-
 function NormalTraceAugmentedPose(indexAugmentedPose)
 {
 	augmented_pose = augmented_poses[indexAugmentedPose];
@@ -594,8 +590,8 @@ function NormalTraceAugmentedPose(indexAugmentedPose)
 	
 	path = makeSVGElement('circle', { cx: x,
 									cy: y,
-								   r: rayonRobot,
-								   'class': 'augmented_pose_elem augmented_pose_elem_circle augmented_pose_elem_'+augmented_pose.id_augmented_pose,
+								   r: rayonRobotSecure,
+								   'class': 'augmented_pose_elem augmented_pose_elem_secure augmented_pose_elem_'+augmented_pose.id_augmented_pose,
 								   'id': 'install_normal_edit_map_augmented_pose_secure_'+augmented_pose.id_augmented_pose,
 								   'data-id_augmented_pose': augmented_pose.id_augmented_pose,
 								   'data-element_type': 'augmented_pose',
@@ -605,7 +601,7 @@ function NormalTraceAugmentedPose(indexAugmentedPose)
 	
 	path = makeSVGElement('circle', { cx: x,
 									cy: y,
-								   r: rayonRobot * 0.6,
+								   r: rayonRobot,
 								   'class': 'augmented_pose_elem augmented_pose_elem_fond augmented_pose_elem_'+augmented_pose.id_augmented_pose,
 								   'id': 'install_normal_edit_map_augmented_pose_robot_'+augmented_pose.id_augmented_pose,
 								   'data-id_augmented_pose': augmented_pose.id_augmented_pose,
@@ -614,7 +610,7 @@ function NormalTraceAugmentedPose(indexAugmentedPose)
 								   });
 	svgNormal.appendChild(path);
 	
-	path = makeSVGElement('polyline', { 'points': (x-1.5)+' '+(y-1.5)+' '+(x+1.5)+' '+(y)+' '+(x-1.5)+' '+(y+1.5),
+	path = makeSVGElement('polyline', { 'points': (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2),
 									'stroke':'#FFFFFF',
 									'stroke-width':1,
 									'fill':'none',
@@ -634,7 +630,6 @@ function NormalTraceAugmentedPose(indexAugmentedPose)
 }
 
 var robot_traced_normal = false;
-
 function NormalTraceRobot(robot_x, robot_y, robot_theta)
 {
 	x = robot_x * 100 / ros_resolution;
