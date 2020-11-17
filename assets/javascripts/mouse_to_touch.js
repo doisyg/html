@@ -13,7 +13,7 @@ function mouseHandler(event)
 		default:           return;
 	}
 	
-	console.log(event.type);
+	//console.log(event.type);
 	
 	
 	

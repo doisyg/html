@@ -800,6 +800,7 @@ $(document).ready(function(e) {
 
 function ByStepHideMenus()
 {
+	
 	$('.times_icon_menu').hide()
 	$('#install_by_step_edit_map_menu li').hide();
 	$('#install_by_step_edit_map_menu_point li').hide();
@@ -837,11 +838,11 @@ function ByStepDisplayMenu(id_menu)
 				icon_menu.show('fast');
 			}
 		}
+		if(id_menu != 'install_by_step_edit_map_menu_point')
+			RemoveClass('#install_by_step_edit_map_svg .point_deletable', 'point_active');
+		if(id_menu != 'install_by_step_edit_map_menu_area' && id_menu != 'install_by_step_edit_map_menu_forbidden')
+			RemoveClass('#install_by_step_edit_map_svg .point_deletable', 'active');
 		
-		if(id_menu == 'install_by_step_edit_map_menu_point')
-			drawActivePoint = true ;
-		else
-			drawActivePoint = false ;
 		
 		if(id_menu != 'install_by_step_edit_map_menu'){
 			$('.burger_menu').hide('fast');

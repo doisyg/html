@@ -4010,34 +4010,38 @@ $(document).ready(function() {
 			   }
 			   else if (movableDown.data('element_type') == 'forbidden')
 			   {
-				   e.preventDefault();
+					e.preventDefault();
 				    
-				   forbidden = GetForbiddenFromID(movableDown.data('id_area'));
+					forbidden = GetForbiddenFromID(movableDown.data('id_area'));
 				   
-				   pageX = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX);
-				   pageY = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY);
+					pageX = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX);
+					pageY = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY);
 				  
 					delta = (bystepDownOnSVG_x - pageX) * zoom * ros_resolution / 100;
 					forbidden.points[movableDown.data('index_point')].x = parseFloat(forbidden.points[movableDown.data('index_point')].x) - delta;
 					delta = (bystepDownOnSVG_y - pageY) * zoom * ros_resolution / 100;
 					forbidden.points[movableDown.data('index_point')].y = parseFloat(forbidden.points[movableDown.data('index_point')].y) + delta;
-					
+
 					movableDown.attr('x', forbidden.points[movableDown.data('index_point')].x * 100 / ros_resolution - 5);
 					movableDown.attr('y', ros_hauteur - (forbidden.points[movableDown.data('index_point')].y * 100 / ros_resolution) - 5); 
-				
+					
+					tempClass = movableDown.attr("class");
+					if(!tempClass.includes('point_active'))
+						movableDown.attr("class",tempClass+' point_active');
+					
 					ByStepTraceForbidden(GetForbiddenIndexFromID(movableDown.data('id_area')));
-				    
+
 					bystepDownOnSVG_x = pageX;
 					bystepDownOnSVG_y = pageY;
 			   }
 			   else if (movableDown.data('element_type') == 'area')
 			   {
-				   e.preventDefault();
+					e.preventDefault();
 				    
-				   area = GetAreaFromID(movableDown.data('id_area'));
+					area = GetAreaFromID(movableDown.data('id_area'));
 				   
-				   pageX = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX);
-				   pageY = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY);
+					pageX = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX);
+					pageY = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY);
 				  
 					delta = (bystepDownOnSVG_x - pageX) * zoom * ros_resolution / 100;
 					area.points[movableDown.data('index_point')].x = parseFloat(area.points[movableDown.data('index_point')].x) - delta;
@@ -4046,7 +4050,11 @@ $(document).ready(function() {
 					
 					movableDown.attr('x', area.points[movableDown.data('index_point')].x * 100 / ros_resolution - 5);
 					movableDown.attr('y', ros_hauteur - (area.points[movableDown.data('index_point')].y * 100 / ros_resolution) - 5); 
-				
+					
+					tempClass = movableDown.attr("class");
+					if(!tempClass.includes('point_active'))
+						movableDown.attr("class",tempClass+' point_active');
+						
 					ByStepTraceArea(GetAreaIndexFromID(movableDown.data('id_area')));
 				    
 					bystepDownOnSVG_x = pageX;
