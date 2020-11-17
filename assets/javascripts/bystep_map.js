@@ -927,7 +927,9 @@ function ByStepLongPressAugmentedPose()
 function ByStepLongPressPointDeletable()
 {
 	timerByStepLongPress = null;
-	ByStepDisplayMenu('install_by_step_edit_map_menu_point');
+	//if point menu not opened
+	if($('#install_by_step_edit_map .icon_menu[data-menu="install_by_step_edit_map_menu_point"]:visible').length == 0 && (bystepCurrentAction == 'addForbiddenArea' || bystepCurrentAction == 'addArea' || bystepCurrentAction == 'editForbiddenArea' || bystepCurrentAction == 'editArea') )
+		ByStepDisplayMenu('install_by_step_edit_map_menu_point');
 }
 
 function ByStepLongVeryPressSVG()
