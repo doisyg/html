@@ -182,11 +182,11 @@ $(document).ready(function(e) {
 			$('#bModalBackOk').attr('data-goto','');
 			let target=$(this).data('goto');
 			
-			$('#bModalBackOk').attr('data-goto',target);
-			$('#bModalBackOk').data('goto',target);
+			$('#bModalBackOk').attr('data-goto',target+'_fromBackBtn');
+			$('#bModalBackOk').data('goto',target+'_fromBackBtn');
 			
 			$('#modalBack').modal('show');
-			//console.log('back',target)
+			console.log('back',target)
 			
 			if(target == 'install_by_step_mapping'){ //UPDATE INSTALL STEP ON BACK FROM MAPPING
 				$.ajax({
@@ -204,6 +204,12 @@ $(document).ready(function(e) {
 			}
 			
 		}else{
+			let fromBackBtn = false;
+			if($(this).data('goto').includes('fromBackBtn')){
+				let goTo =  $(this).data('goto').split('_fromBackBtn')[0];
+				$(this).data('goto',goTo);
+				fromBackBtn = true;
+			}
 			e.preventDefault();
 			history.pushState({ current_groupe:$('.menu_groupe .active').attr('id'), current_page:$(this).data('goto')}, $(this).data('goto'), "/#"+$(this).data('goto'));
 			next = $(this).data('goto');
@@ -250,6 +256,8 @@ $(document).ready(function(e) {
 				}
 			}
 			
+			if (next == 'install_by_step_site_master_dock' && fromBackBtn) InitBystepSiteMasterDock('back');
+			if (next == 'install_by_step_site_master_dock' && !fromBackBtn) InitBystepSiteMasterDock();
 			if (next == 'install_by_step_manager') GetManagersByStep();
 			if (next == 'install_by_step_service_book') GetServiceBooksByStep();
 			
@@ -524,7 +532,7 @@ function InitBystepSiteImport()
 	$('#pages_install_by_step .file_import_site').val('');
 }
 
-function InitBystepSiteMasterDock()
+function InitBystepSiteMasterDock(back = false)
 {
 	$('#pages_install_by_step #MasterDockList').html('');
 	$('#pages_install_by_step .MasterDock_loading').show();
@@ -547,7 +555,10 @@ function InitBystepSiteMasterDock()
 			wycaApi.GetCurrentMapData(function(data){
 				if (data.A == wycaApi.AnswerCode.NO_ERROR){
 					if(data.D.docks.length <= 1){
-						$('.install_by_step_site_master_dock_next').click();
+						if(!back)
+							$('.install_by_step_site_master_dock_next').click();
+						else
+							$('#install_by_step_site_master_dock .bBackButton').click();
 					}else{
 						forbiddens = data.D.forbiddens;
 						areas = data.D.areas;

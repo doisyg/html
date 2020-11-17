@@ -211,5 +211,8 @@ $_LANG['b13311ab51c4c34757f67f26580018dd'] = 'Windowed';
 $_LANG['6f46d2300367103e00cbac50164f7b2f'] = 'A maintenance account for Wyca is by default enabled, however it can be removed to suit your security requirement.';
 $_LANG['32f424728f91688b4bc7e59037f2d0ed'] = 'Create new site with mapping';
 $_LANG['1f1f029f4f19e1254aea91225b370c21'] = 'Create manager';
+$_LANG['63ac6e1c5ae0bc417f8aa49d68e0904e'] = 'The robot needs to relocate itself in the new map.';
+$_LANG['8f7589ce40934ea04a59bd1e3ddbf894'] = 'Move the robot near a reflector (dock or augmented pose) then click on the recovery button';
+$_LANG['1ba9079e4cad4c5653a85702da6f4579'] = 'The robot needs to relocate itself.';
 
 ?>
