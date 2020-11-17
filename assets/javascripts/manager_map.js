@@ -519,8 +519,6 @@ function ManagerLongPressSVG()
 	ManagerDisplayMenu('manager_edit_map_menu');
 }
 
-
-
 var resetPan = false;
 $(document).ready(function(e) {
     $('#manager_edit_map_svg').on('touchend', function(e) {

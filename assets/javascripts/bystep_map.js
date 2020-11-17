@@ -935,7 +935,6 @@ function ByStepLongPressSVG()
 	timerByStepLongPress = null;
 	ByStepDisplayMenu('install_by_step_edit_map_menu');
 }
-
 var resetPan = false;
 $(document).ready(function(e) {
     $('#install_by_step_edit_map_svg').on('touchend', function(e) {
@@ -953,7 +952,7 @@ function ByStepInitMap()
 
 	eventsHandler = {
 	  haltEventListeners: ['touchstart', 'touchend', 'touchmove', 'touchleave', 'touchcancel', 'mousemove', 'mouseup', 'mousedown']
-	, init: function(options) {
+	  , init: function(options) {
 		var instance = options.instance
 		  , initialScale = 1
 		  , pannedX = 0
