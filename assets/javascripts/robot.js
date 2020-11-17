@@ -169,13 +169,29 @@ var timerGetMappingInConstruction = null;
 var haveReplyFromGetMappingInConstruction = false;
 var liveMapping = true;
 
+var nbAttempGetMappingInConstruction = 0;
 function TimeoutGetMappingInConstruction()
 {
 	timerGetMappingInConstruction = null;
-	if (mappingStarted && haveReplyFromGetMappingInConstruction)
+	if (mappingStarted)
 	{
-		// Le timer a sauté, on a déjà eu une réponse de GetMappingInConstruction, on relance l'appel
-		GetMappingInConstruction();
+		if (haveReplyFromGetMappingInConstruction)
+		{
+			nbAttempGetMappingInConstruction = 0
+			// Le timer a sauté, on a déjà eu une réponse de GetMappingInConstruction, on relance l'appel
+			GetMappingInConstruction();
+		}
+		else
+		{
+			nbAttempGetMappingInConstruction++;
+			if (nbAttempGetMappingInConstruction >= 3)
+			{
+				nbAttempGetMappingInConstruction = 0;
+				GetMappingInConstruction();
+			}
+			else
+				timerGetMappingInConstruction = setTimeout(TimeoutGetMappingInConstruction, 1000);
+		}
 	}
 }
 
