@@ -1,5 +1,5 @@
 var currentNameSiteExport = '';
-
+var NormalBufferMapSaveElemName = '';
 $(document).ready(function(e) {
 	
 	$(document).on('click', '#install_normal_setup_export .bSiteExportElem', function(e) {
@@ -377,9 +377,37 @@ $(document).ready(function(e) {
 		if (!normalCanChangeMenu)
 		{
 			alert_wyca('You must confirm the active element');
+			console.log(bystepCurrentAction);
+			$('#bCloseAlertWyca').click(NormalShakeActiveElement());
 		}
 		else
 		{
+			let actions_searched = ['editPoi','editDock','editAugmentedPose','editForbiddenArea','editArea'];
+			if(actions_searched.includes(normalCurrentAction)){
+				switch(normalCurrentAction){
+					case 'editPoi' :
+						i = GetPoiIndexFromID(currentPoiNormalLongTouch.data('id_poi'));
+						NormalBufferMapSaveElemName = pois[i].name;
+					break;
+					case 'editDock' :
+						i = GetDockIndexFromID(currentDockNormalLongTouch.data('id_docking_station'));
+						NormalBufferMapSaveElemName = docks[i].name;
+					break;
+					case 'editAugmentedPose' :
+						i = GetAugmentedPoseIndexFromID(currentAugmentedPoseNormalLongTouch.data('id_augmented_pose'));
+						NormalBufferMapSaveElemName = augmented_poses[i].name;
+					break;
+					case 'editForbiddenArea' :
+						i = GetForbiddenIndexFromID(currentForbiddenNormalLongTouch.data('id_area'));
+						NormalBufferMapSaveElemName = forbiddens[i].name;
+					break;
+					case 'editArea' :
+						i = GetAreaIndexFromID(currentAreaNormalLongTouch.data('id_area'));
+						NormalBufferMapSaveElemName = areas[i].name;
+					break;
+					default: NormalBufferMapSaveElemName = ''; break;
+				}
+			}
 			data = GetDataMapToSave();
 			
 			if ($(this).hasClass('button_goto'))

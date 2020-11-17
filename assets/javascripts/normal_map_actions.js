@@ -351,10 +351,10 @@ function NormalSaveElementNeeded(need)
 		}
 		$('#install_normal_edit_map_bSaveCurrentElem').hide();
 		$('#install_normal_edit_map_bCancelCurrentElem').hide();
-		if(bystepCurrentAction == "addForbiddenArea"){
+		if(normalCurrentAction == "addForbiddenArea"){
 			$('#install_normal_edit_map .bDeleteForbidden').removeClass('disabled');
 		}
-		if(bystepCurrentAction == "addArea"){
+		if(normalCurrentAction == "addArea"){
 			$('#install_normal_edit_map .bConfigArea').removeClass('disabled');
 			$('#install_normal_edit_map .bDeleteArea').removeClass('disabled');
 		}
@@ -833,16 +833,30 @@ $(document).ready(function() {
 				{
 					$('#install_normal_edit_map .modalFinTest section.panel-success').show();
 					$('#install_normal_edit_map .modalFinTest section.panel-danger').hide();
+					$('#install_normal_edit_map .modalFinTest section.panel-warning').hide();
 				}
 				else
-				{
-					$('#install_normal_edit_map .modalFinTest section.panel-success').hide();
-					$('#install_normal_edit_map .modalFinTest section.panel-danger').show();
-					
-					if (data.M != '')
-						$('#install_normal_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
-					else
-						$('#install_normal_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
+				{	
+					if(data.A == wycaApi.AnswerCode.CANCELED){
+						$('#install_normal_edit_map .modalFinTest section.panel-success').hide();
+						$('#install_normal_edit_map .modalFinTest section.panel-danger').hide();
+						$('#install_normal_edit_map .modalFinTest section.panel-warning').show();
+						
+						$('#install_normal_edit_map .modalFinTest section.panel-warning .error_details').html(wycaApi.AnswerCodeToString(data.A));
+					}else{
+						
+						$('#install_normal_edit_map .modalFinTest section.panel-success').hide();
+						$('#install_normal_edit_map .modalFinTest section.panel-danger').show();
+						$('#install_normal_edit_map .modalFinTest section.panel-warning').hide();
+						
+						if (data.M != '')
+							if(data.M.length > 50)
+								$('#install_normal_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br><span>' +data.M+ '</span>');
+							else
+								$('#install_normal_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+						else
+							$('#install_normal_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
+					}
 				}
 				
 				// On rebranche l'ancienne fonction
@@ -860,6 +874,7 @@ $(document).ready(function() {
 				{
 					$('#install_normal_edit_map .modalFinTest section.panel-success').hide();
 					$('#install_normal_edit_map .modalFinTest section.panel-danger').show();
+					$('#install_normal_edit_map .modalFinTest section.panel-warning').hide();
 					
 					if (data.M != '')
 						$('#install_normal_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);

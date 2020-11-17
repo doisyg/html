@@ -38,7 +38,7 @@ var statusRealTestEnd = false;
 
 var boolHelpManager=true;
 
-var bufferMapSaveElemName = '';
+var ByStepBufferMapSaveElemName = '';
 
 $(document).ready(function(e) {
 	
@@ -1089,7 +1089,7 @@ $(document).ready(function(e) {
 		{
 			alert_wyca('You must confirm the active element');
 			console.log(bystepCurrentAction);
-			$('#bCloseAlertWyca').click(ShakeActiveElement());
+			$('#bCloseAlertWyca').click(ByStepShakeActiveElement());
 		}
 		else
 		{
@@ -1099,25 +1099,25 @@ $(document).ready(function(e) {
 				switch(bystepCurrentAction){
 					case 'editPoi' :
 						i = GetPoiIndexFromID(currentPoiByStepLongTouch.data('id_poi'));
-						bufferMapSaveElemName = pois[i].name;
+						ByStepBufferMapSaveElemName = pois[i].name;
 					break;
 					case 'editDock' :
 						i = GetDockIndexFromID(currentDockByStepLongTouch.data('id_docking_station'));
-						bufferMapSaveElemName = docks[i].name;
+						ByStepBufferMapSaveElemName = docks[i].name;
 					break;
 					case 'editAugmentedPose' :
 						i = GetAugmentedPoseIndexFromID(currentAugmentedPoseByStepLongTouch.data('id_augmented_pose'));
-						bufferMapSaveElemName = augmented_poses[i].name;
+						ByStepBufferMapSaveElemName = augmented_poses[i].name;
 					break;
 					case 'editForbiddenArea' :
 						i = GetForbiddenIndexFromID(currentForbiddenByStepLongTouch.data('id_area'));
-						bufferMapSaveElemName = forbiddens[i].name;
+						ByStepBufferMapSaveElemName = forbiddens[i].name;
 					break;
 					case 'editArea' :
 						i = GetAreaIndexFromID(currentAreaByStepLongTouch.data('id_area'));
-						bufferMapSaveElemName = areas[i].name;
+						ByStepBufferMapSaveElemName = areas[i].name;
 					break;
-					default: bufferMapSaveElemName = ''; break;
+					default: ByStepBufferMapSaveElemName = ''; break;
 				}
 			}
 

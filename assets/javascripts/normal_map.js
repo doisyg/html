@@ -117,6 +117,60 @@ function GetInfosCurrentMapDoNormal()
 			setTimeout(function(){
 				NormalInitMap();
 				NormalResizeSVG();
+				
+				/* REFRESH IDS IF MENU OPEN */
+				let actions_searched = ['editPoi','editDock','editAugmentedPose','editForbiddenArea','editArea'];
+				let temp = false;
+				if(actions_searched.includes(normalCurrentAction)){
+					switch(normalCurrentAction){
+						case 'editPoi' :
+							temp = FindElemByName(pois,NormalBufferMapSaveElemName);
+							if(temp){
+								currentPoiNormalLongTouch = $('#install_normal_edit_map_poi_secure_'+temp.id_poi);
+								currentPoiNormalLongTouch.data('id_poi',temp.id_poi);
+								currentPoiNormalLongTouch.click();
+								NormalBufferMapSaveElemName = '';
+							}
+						break;
+						case 'editDock' :
+							temp = FindElemByName(docks,NormalBufferMapSaveElemName);
+							if(temp){
+								currentDockNormalLongTouch = $('#install_normal_edit_map_dock_secure_'+temp.id_docking_station);
+								currentDockNormalLongTouch.click();
+								currentDockNormalLongTouch.data('id_docking_station',temp.id_docking_station);
+								NormalBufferMapSaveElemName = '';
+							}
+						break;
+						case 'editAugmentedPose' :
+							temp = FindElemByName(augmented_poses,NormalBufferMapSaveElemName);
+							if(temp){
+								currentAugmentedPoseNormalLongTouch = $('#install_normal_edit_map_augmented_pose_secure_'+temp.id_augmented_pose);
+								currentAugmentedPoseNormalLongTouch.click();
+								currentAugmentedPoseNormalLongTouch.data('id_augmented_pose',temp.id_augmented_pose);
+								NormalBufferMapSaveElemName = '';
+							}
+						break;
+						case 'editForbiddenArea' :
+							temp = FindElemByName(forbiddens,NormalBufferMapSaveElemName);
+							if(temp){
+								currentForbiddenNormalLongTouch = $('#install_normal_edit_map_forbidden_'+temp.id_area);
+								currentForbiddenNormalLongTouch.click();
+								currentForbiddenNormalLongTouch.data('id_area',temp.id_area);
+								NormalBufferMapSaveElemName = '';
+							}
+						break;
+						case 'editArea' :
+							temp = FindElemByName(areas,NormalBufferMapSaveElemName);
+							if(temp){
+								currentAreaNormalLongTouch = $('#install_normal_edit_map_area_'+temp.id_area);
+								currentAreaNormalLongTouch.click();
+								currentAreaNormalLongTouch.data('id_area',temp.id_area);
+								NormalBufferMapSaveElemName = '';
+							}
+						break;
+						default: NormalBufferMapSaveElemName = ''; break;
+					}
+				}
 			},500);
 		}
 		else
@@ -245,7 +299,6 @@ var currentAugmentedPoseNormalLongTouch = null;
 
 $(document).ready(function(e) {
 	
-	
 	$('#install_normal_edit_map_svg').on('touchend', function(e) { 
 		$('#install_normal_edit_map_zoom_popup').hide();
 		if (timerNormalLongPress != null)
@@ -260,6 +313,11 @@ $(document).ready(function(e) {
 		}
 	});
 	
+	$('#install_normal_edit_map_svg').on('touchstart', function(e) {
+		NormalDisplayBlockZoom();
+	});
+    
+	/*
 	$('#install_normal_edit_map_svg').on('touchstart', function(e) {
 		
 		if (timerNormalLongPress != null)
@@ -284,9 +342,11 @@ $(document).ready(function(e) {
 		NormalHideMenus();
 		
 	});
-    
+	*/
+	
+	
 	$('#install_normal_edit_map_svg').on('touchmove', function(e) {
-		NormalHideMenus();
+		//NormalHideMenus();
 		if (timerNormalLongPress != null)
 		{
 			clearTimeout(timerNormalLongPress);
@@ -328,19 +388,20 @@ $(document).ready(function(e) {
 		
 		if (normalCanChangeMenu || normalCurrentAction == 'addForbiddenArea' || normalCurrentAction == 'addArea' || normalCurrentAction == 'editForbiddenArea' || normalCurrentAction == 'editArea')
 		{
-			timerNormalLongPress = setTimeout(NormalLongPressPointDeletable, 500);
+			//timerNormalLongPress = setTimeout(NormalLongPressPointDeletable, 500);
+			timerNormalLongPress = NormalLongPressPointDeletable();
 			//timerNormalVeryLongPress = setTimeout(NormalLongVeryPressSVG, 1500);
 			eventTouchStart = e;
 			currentPointNormalLongTouch = $(this);
 		}
 		NormalDisplayBlockZoom();
 		
-		NormalHideMenus();
+		//NormalHideMenus();
 		
 	});
 	
 	$(document).on('touchmove', '#install_normal_edit_map_svg .point_deletable', function(e) {
-    	NormalHideMenus();
+    	//NormalHideMenus();
 		if (timerNormalLongPress != null)
 		{
 			clearTimeout(timerNormalLongPress);
@@ -351,7 +412,7 @@ $(document).ready(function(e) {
 			clearTimeout(timerNormalVeryLongPress);
 			timerNormalVeryLongPress = null;
 		}
-		NormalDisplayBlockZoom();
+		//NormalDisplayBlockZoom();
 	});
 	
 	$(document).on('touchend', '#install_normal_edit_map_svg .forbidden_root', function(e) {
@@ -368,6 +429,7 @@ $(document).ready(function(e) {
 		}
 	});
 	
+	/* USEFULL ?
 	$(document).on('touchstart', '#install_normal_edit_map_svg .forbidden_root', function(e) {
 		if (timerNormalLongPress != null)
 		{
@@ -392,8 +454,10 @@ $(document).ready(function(e) {
 		NormalHideMenus();
 		
 	});
+	*/
+	
 	$(document).on('touchmove', '#install_normal_edit_map_svg .forbidden_root', function(e) {
-    	NormalHideMenus();
+    	//NormalHideMenus();
 		if (timerNormalLongPress != null)
 		{
 			clearTimeout(timerNormalLongPress);
@@ -404,9 +468,8 @@ $(document).ready(function(e) {
 			clearTimeout(timerNormalVeryLongPress);
 			timerNormalVeryLongPress = null;
 		}
-		NormalDisplayBlockZoom();
+		//NormalDisplayBlockZoom();
 	});
-	
 	
 	$(document).on('touchend', '#install_normal_edit_map_svg .area_root', function(e) {
 		$('#install_normal_edit_map_zoom_popup').hide();
@@ -422,6 +485,7 @@ $(document).ready(function(e) {
 		}
 	});
 	
+	/*
 	$(document).on('touchstart', '#install_normal_edit_map_svg .area_root', function(e) {
 		if (timerNormalLongPress != null)
 		{
@@ -446,9 +510,10 @@ $(document).ready(function(e) {
 		NormalHideMenus();
 		
 	});
+	*/
 	
 	$(document).on('touchmove', '#install_normal_edit_map_svg .area_root', function(e) {
-    	NormalHideMenus();
+    	//NormalHideMenus();
 		if (timerNormalLongPress != null)
 		{
 			clearTimeout(timerNormalLongPress);
@@ -459,7 +524,7 @@ $(document).ready(function(e) {
 			clearTimeout(timerNormalVeryLongPress);
 			timerNormalVeryLongPress = null;
 		}
-		NormalDisplayBlockZoom();
+		//NormalDisplayBlockZoom();
 	});
 	
 	$(document).on('touchend', '#install_normal_edit_map_svg .dock_elem', function(e) {
@@ -476,6 +541,7 @@ $(document).ready(function(e) {
 		}
 	});
 	
+	/*
 	$(document).on('touchstart', '#install_normal_edit_map_svg .dock_elem', function(e) {
 		if (timerNormalLongPress != null)
 		{
@@ -500,9 +566,10 @@ $(document).ready(function(e) {
 		NormalHideMenus();
 		
 	});
+	*/
 	
 	$(document).on('touchmove', '#install_normal_edit_map_svg .dock_elem', function(e) {
-    	NormalHideMenus();
+    	//NormalHideMenus();
 		if (timerNormalLongPress != null)
 		{
 			clearTimeout(timerNormalLongPress);
@@ -513,7 +580,7 @@ $(document).ready(function(e) {
 			clearTimeout(timerNormalVeryLongPress);
 			timerNormalVeryLongPress = null;
 		}
-		NormalDisplayBlockZoom();
+		//NormalDisplayBlockZoom();
 	});
 	
 	$(document).on('touchend', '#install_normal_edit_map_svg .poi_elem', function(e) {
@@ -530,6 +597,7 @@ $(document).ready(function(e) {
 		}
 	});
 	
+	/*
 	$(document).on('touchstart', '#install_normal_edit_map_svg .poi_elem', function(e) {
 		if (timerNormalLongPress != null)
 		{
@@ -554,9 +622,10 @@ $(document).ready(function(e) {
 		NormalHideMenus();
 		
 	});
+	*/
 	
 	$(document).on('touchmove', '#install_normal_edit_map_svg .poi_elem', function(e) {
-    	NormalHideMenus();
+    	//NormalHideMenus();
 		if (timerNormalLongPress != null)
 		{
 			clearTimeout(timerNormalLongPress);
@@ -567,7 +636,7 @@ $(document).ready(function(e) {
 			clearTimeout(timerNormalVeryLongPress);
 			timerNormalVeryLongPress = null;
 		}
-		NormalDisplayBlockZoom();
+		//NormalDisplayBlockZoom();
 	});
 	
 	$(document).on('touchend', '#install_normal_edit_map_svg .augmented_pose_elem', function(e) {
@@ -584,6 +653,7 @@ $(document).ready(function(e) {
 		}
 	});
 	
+	/*
 	$(document).on('touchstart', '#install_normal_edit_map_svg .augmented_pose_elem', function(e) {
 		if (timerNormalLongPress != null)
 		{
@@ -608,6 +678,7 @@ $(document).ready(function(e) {
 		NormalHideMenus();
 		
 	});
+	*/
 	
 	$(document).on('touchmove', '#install_normal_edit_map_svg .augmented_pose_elem', function(e) {
     	NormalHideMenus();
@@ -718,7 +789,7 @@ function NormalDisplayMenu(id_menu)
 	
 	if(id_menu != 'install_normal_edit_map_menu'){
 		$('#install_normal_edit_map .burger_menu').hide('fast');
-		setTimeout(function(){$('.times_icon_menu').show('fast')},50);
+		setTimeout(function(){$('#install_normal_edit_map .times_icon_menu').show('fast')},50);
 	}else{
 		$('#install_normal_edit_map .burger_menu').addClass('burger_menu_open');
 	}
@@ -963,4 +1034,26 @@ function NormalInitMap()
 	//window.panZoomNormal = {};
 	//window.panZoomNormal.getZoom = function () { return 1; }
 	NormalRefreshZoomView();
+}
+
+function NormalShakeActiveElement()
+{
+	if(!normalCanChangeMenu){
+		let ca = normalCurrentAction;
+		let target = '';
+		if(ca == 'addForbiddenArea' || ca == 'editForbiddenArea' || ca == 'editArea' || ca == 'addArea'){
+			//SHAKE BTN BLEU ORANGE
+			target = $('#install_normal_edit_map .btnSaveElem');
+		}else if(ca == 'prepareArea' || ca == 'prepareGotoPose' || ca == 'prepareForbiddenArea'){
+			target = $('#install_normal_edit_map .btn-circle.icon_menu:visible');
+			setTimeout(function(){$('#install_normal_edit_map.times_icon_menu').toggleClass('shake')},1000);
+			setTimeout(function(){$('#install_normal_edit_map.times_icon_menu').toggleClass('shake')},3000);
+		}else if(ca == 'gomme'){
+			target = $('#install_normal_edit_map_bEndGomme');
+		}
+		if(target != ''){
+			setTimeout(function(){target.toggleClass('shake')},1000);
+			setTimeout(function(){target.toggleClass('shake')},3000);
+		}
+	}	
 }
