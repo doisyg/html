@@ -395,12 +395,13 @@
                                             <form>
                                                 <div class="form-group">
                                                     <label class="col-xs-4 control-label">Area color</label>
-                                                    <div class="col-xs-7">
-                                                        <div id="install_normal_edit_map_area_color_elem" class="input-group color" data-color="rgb(87, 159, 177)" data-color-format="rgb" data-plugin-colorpicker>
-                                                            <span class="input-group-addon"><i></i></span>
-                                                            <input id="install_normal_edit_map_area_color" name="area_color" type="text" class="form-control" style="width:0; padding:0;">
+                                                    <div class="col-xs-8">
+                                                        <div id="install_normal_edit_map_area_color_elem" class="input-group color input-group-sm">
+                                                            <span class="input-group-addon"><i class="fas fa-stop preview_color"></i></span>
+                                                            <input id="install_normal_edit_map_area_color" name="area_color" type="text" class="form-control"  value="#579fb1">
                                                         </div>
                                                     </div>
+													<div class="iro-colorpicker" data-color_init="#579fb1"></div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-xs-4 control-label" for="inputSuccess"><?php echo __('LED Color');?></label>
@@ -413,12 +414,13 @@
                                                 </div>
                                                 <div id="install_normal_edit_map_led_color_group" class="form-group">
                                                     <label class="col-xs-4 control-label">LED color</label>
-                                                    <div class="col-xs-7">
-                                                        <div id="install_normal_edit_map_led_color_elem" class="input-group color" data-color="rgb(255, 146, 180)" data-color-format="rgb" data-plugin-colorpicker>
-                                                            <span class="input-group-addon"><i></i></span>
-                                                            <input id="install_normal_edit_map_led_color" name="led_color" type="text" class="form-control" style="width:0; padding:0;">
+                                                    <div class="col-xs-8">
+                                                        <div id="install_normal_edit_map_led_color_elem" class="input-group color input-group-sm">
+															<span class="input-group-addon"><i class="fas fa-stop preview_color"></i></span>
+                                                            <input id="install_normal_edit_map_led_color" name="led_color" type="text" class="form-control" value="#ff92b4">
                                                         </div>
                                                     </div>
+													<div class="iro-colorpicker" data-color_init="#ff92b4"></div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-xs-4 control-label" for="inputSuccess"><?php echo __('LED Animation');?></label>
