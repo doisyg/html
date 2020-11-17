@@ -1090,10 +1090,10 @@ $(document).ready(function(e) {
 			alert_wyca('You must confirm the active element');
 			console.log(bystepCurrentAction);
 			$('#bCloseAlertWyca').click(ShakeActiveElement());
+			return false;
 		}
 		else
 		{
-			
 			let actions_searched = ['editPoi','editDock','editAugmentedPose','editForbiddenArea','editArea'];
 			if(actions_searched.includes(bystepCurrentAction)){
 				switch(bystepCurrentAction){
