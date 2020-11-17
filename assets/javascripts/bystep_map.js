@@ -936,12 +936,23 @@ function ByStepLongPressSVG()
 	ByStepDisplayMenu('install_by_step_edit_map_menu');
 }
 
+var resetPan = false;
+$(document).ready(function(e) {
+    $('#install_by_step_edit_map_svg').on('touchend', function(e) {
+		resetPan = true;
+	});
+	$('#install_by_step_edit_map_svg').on('touchstart', function(e) {
+		resetPan = true;
+	});
+});
 function ByStepInitMap()
 {
+	
+	
 	var eventsHandler;
 
-	eventsHandler = {
-	  haltEventListeners: ['touchstart', 'touchend', 'touchmove', 'touchleave', 'touchcancel']
+	eventsHandler
+	  haltEventListeners: ['touchstart', 'touchend', 'touchmove', 'touchleave', 'touchcancel', 'mousemove', 'mouseup', 'mousedown'] = {
 	, init: function(options) {
 		var instance = options.instance
 		  , initialScale = 1
@@ -964,18 +975,20 @@ function ByStepInitMap()
 
 		// Handle pan
 		this.hammer.on('panstart panmove', function(ev){
+			
 		  // On pan start reset panned variables
-		  if (ev.type === 'panstart') {
-			pannedX = 0
-			pannedY = 0
+		  if (ev.type === 'panstart' || resetPan) {
+			pannedX = 0;
+			pannedY = 0;
+			resetPan = false;
 		  }
-
+			
 		  // Pan only the difference
 		  instance.panBy({x: ev.deltaX - pannedX, y: ev.deltaY - pannedY})
 		  pannedX = ev.deltaX
 		  pannedY = ev.deltaY
 		})
-
+		
 		// Handle pinch
 		this.hammer.on('pinchstart pinchmove', function(ev){
 		  // On pinch start remember initial zoom
@@ -994,6 +1007,7 @@ function ByStepInitMap()
 		this.hammer.destroy()
 	  }
 	}
+	
 
 	// Expose to window namespace for testing purposes
 	
