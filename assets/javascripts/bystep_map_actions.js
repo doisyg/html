@@ -2330,11 +2330,19 @@ $(document).ready(function() {
 		area.configs.push({'name':'max_speed_mode' , 'value':$('#install_by_step_edit_map_max_speed_mode').val()});
 		area.configs.push({'name':'max_speed' , 'value':$('#install_by_step_edit_map_max_speed').val()});
 		
-		var c = $('#install_by_step_edit_map_area_color').val().split("(")[1].split(")")[0];
-		c = c.split(",");
-		area.color_r = parseInt(c[0]);
-		area.color_g = parseInt(c[1]);
-		area.color_b = parseInt(c[2]);
+		var c = '';
+		if( $('#install_by_step_edit_map_area_color').val().includes('rgb') ){
+			c = $('#install_by_step_edit_map_area_color').val().split("(")[1].split(")")[0];
+			c = c.split(",");
+			area.color_r = parseInt(c[0]);
+			area.color_g = parseInt(c[1]);
+			area.color_b = parseInt(c[2]);
+		}else{
+			c = hexToRgb($('#install_by_step_edit_map_area_color').val());
+			area.color_r = c.r;
+			area.color_g = c.g;
+			area.color_b = c.b;
+		}
 		
 		areas[currentAreaIndex] = area;
 		
