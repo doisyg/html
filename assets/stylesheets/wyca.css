@@ -1101,6 +1101,9 @@ div.icon_menu .iconForbiddenArea .fa-minus-circle{
     top: 11px;
     left: 11px;
 }
+.point_deletable.point_active{
+	fill: #6d6d6d;
+    stroke: black;
 }
 /* */
 ul#MasterDockList li .tuile_img.is_checkbox{border-radius:10px;bottom:0;}
