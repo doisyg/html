@@ -951,8 +951,8 @@ function ByStepInitMap()
 	
 	var eventsHandler;
 
-	eventsHandler
-	  haltEventListeners: ['touchstart', 'touchend', 'touchmove', 'touchleave', 'touchcancel', 'mousemove', 'mouseup', 'mousedown'] = {
+	eventsHandler = {
+	  haltEventListeners: ['touchstart', 'touchend', 'touchmove', 'touchleave', 'touchcancel', 'mousemove', 'mouseup', 'mousedown']
 	, init: function(options) {
 		var instance = options.instance
 		  , initialScale = 1
