@@ -333,10 +333,39 @@
                     
 				</ul>
 				<p style="padding-left:5px;margin-top:10px"><i class="fas fa-asterisk" style="color: darkorange;"></i> <?= _('Actual default dock') ?></p>
-				<a href="#" class="install_by_step_site_master_dock_next button_goto" data-goto="install_by_step_edit_map" style="display:none;"></a>
+				<a href="#" class="install_by_step_site_master_dock_next button_goto" data-goto="install_by_step_site_recovery" style="display:none;"></a>
             </div>
             <footer>
 				<a href="#" class="button_goto btn btn-default btn_footer_left btn_100 btn_back" data-goto=	"install_by_step_import_site"><?= __('Back')?></a>
+            </footer>
+        </section>
+		
+		<section id="install_by_step_site_recovery" class="page <?php echo $INSTALL_STEP == 62?'active':'';?> with_footer">
+	        <a href="#" class="bBackButton button_goto" data-goto="install_by_step_site_master_dock"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Recovery');?></h2>
+            </header>
+			<div class="content">
+				
+            	<h4 style="text-align:center;margin:15px 0"><?= __('The robot needs to relocate itself.') ?><br><br><?= __('Move the robot near a reflector (dock or augmented pose) then click on the recovery button') ?></h4>
+                <div style="text-align:center; margin-top:20px;"><a href="#" class="bRecovery btn btn-warning btn_big_popup" >Recovery</a></div>
+                
+            
+                <div style="text-align:center"><a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a></div>
+                                        
+                <div class="ifUndocked">
+                    <div style="text-align:center; width:100%; z-index:2000; margin-top:20px;">
+                        <div class="joystickDiv" draggable="false" style="margin:auto;">
+                            <div class="fond"></div>
+                            <div class="curseur"></div>
+                        </div>
+                    </div>
+                </div>
+				<a href="#" class="install_by_step_site_recovery_next button_goto" data-goto="install_by_step_edit_map" style="display:none;"></a>
+            </div>
+            <footer>
+				<a href="#" class="button_goto btn btn-default btn_footer_left btn_100 btn_back" data-goto=	"install_by_step_site_master_dock"><?= __('Back')?></a>
             </footer>
         </section>
 		

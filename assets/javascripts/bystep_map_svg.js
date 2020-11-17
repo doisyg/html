@@ -226,7 +226,7 @@ function ByStepTraceForbidden(indexForbidden)
 				
 				x2 = lastPoint.x * 100 / ros_resolution;
 				y2 = ros_hauteur - (lastPoint.y * 100 / ros_resolution);
-				
+								
 				path = makeSVGElement('line', { x1: x, y1:y, x2:x2, y2:y2,
 							   'stroke-width': downOnMovable?1:5,
 							   'class':'secable poly_elem forbidden_elem forbidden_elem_'+forbidden.id_area,
@@ -256,9 +256,15 @@ function ByStepTraceForbidden(indexForbidden)
 				x = point.x * 100 / ros_resolution;
 				y = ros_hauteur - (point.y * 100 / ros_resolution);
 				
+				let	pointActiveClass = '';
+				if(typeof(currentPointByStepLongTouch) != 'undefined' && currentPointByStepLongTouch != null){
+					pointActiveClass = indexPoint == currentPointByStepLongTouch.data('index_point') ? ' point_active' : '' ;
+				}
+				
+
 				path = makeSVGElement('rect', { x: x-5, y:y-5, height:10, width:10,
 							   'stroke-width': minStokeWidth,
-							   'class':'movable point_deletable poly_elem forbidden_elem forbidden_elem_'+forbidden.id_area,
+							   'class':'movable point_deletable poly_elem forbidden_elem forbidden_elem_'+forbidden.id_area+pointActiveClass,
 							   'id': 'install_by_step_edit_map_forbidden_'+forbidden.id_area+'_'+indexPoint,
 							   'data-id_area': forbidden.id_area,
 							   'data-index_point': indexPoint,
@@ -402,7 +408,7 @@ function ByStepTraceArea(indexArea)
 				
 				x2 = lastPoint.x * 100 / ros_resolution;
 				y2 = ros_hauteur - (lastPoint.y * 100 / ros_resolution);
-				
+								
 				path = makeSVGElement('line', { x1: x, y1:y, x2:x2, y2:y2,
 							   'stroke-width': downOnMovable?1:5,
 							   'class':'secable poly_elem area_elem area_elem_'+area.id_area,
@@ -429,9 +435,15 @@ function ByStepTraceArea(indexArea)
 				x = point.x * 100 / ros_resolution;
 				y = ros_hauteur - (point.y * 100 / ros_resolution);
 				
+				
+				let	pointActiveClass = '';
+				if(typeof(currentPointByStepLongTouch) != 'undefined' && currentPointByStepLongTouch != null){
+					pointActiveClass = indexPoint == currentPointByStepLongTouch.data('index_point') ? ' point_active' : '' ;
+				}
+				
 				path = makeSVGElement('rect', { x: x-5, y:y-5, height:10, width:10,
 							   'stroke-width': minStokeWidth,
-							   'class':'movable point_deletable poly_elem area_elem area_elem_'+area.id_area,
+							   'class':'movable point_deletable poly_elem area_elem area_elem_'+area.id_area+pointActiveClass,
 							   'id': 'install_by_step_edit_map_area_'+area.id_area+'_'+indexPoint,
 							   'data-id_area': area.id_area,
 							   'data-index_point': indexPoint,

@@ -61,7 +61,7 @@ $(document).ready(function(e) {
 	
 	//------------------- STEP SELECT LANGUAGE ------------------------
 	
-	//AJAX CALL
+	//AJAX INSTALL STEP CALL
 	$('#pages_install_by_step a.select_langue').click(function(e) {
         e.preventDefault();
 		$.ajax({
@@ -136,7 +136,7 @@ $(document).ready(function(e) {
 		InitTopImport();
 	});
 	
-	//AJAX CALL
+	//AJAX INSTALL STEP CALL
 	$('#pages_install_by_step a.save_tops').click(function(e) {
         e.preventDefault();
 		
@@ -183,7 +183,7 @@ $(document).ready(function(e) {
 	
 	//------------------- STEP SELECT ACTIVE TOP ------------------------
 	
-	//AJAX CALL
+	//AJAX INSTALL STEP CALL
 	$( '#pages_install_by_step' ).on( 'click', 'a.set_top', function(e) {
         e.preventDefault();		
 		wycaApi.SetActiveTop($(this).data('id_top'), function(data){});		
@@ -204,7 +204,7 @@ $(document).ready(function(e) {
 		
     });
 	
-	//AJAX CALL
+	//AJAX INSTALL STEP CALL
 	$('#pages_install_by_step a.install_by_step_check_next').click(function(e) {
         e.preventDefault();
 		$.ajax({
@@ -356,7 +356,7 @@ $(document).ready(function(e) {
 		});
     });
 	
-	//AJAX CALL
+	//AJAX INSTALL STEP CALL
 	$('#pages_install_by_step a.skip_wifi').click(function(e) {
         e.preventDefault();
 		$.ajax({
@@ -376,7 +376,7 @@ $(document).ready(function(e) {
 
 	//------------------- STEP NEW SITE ------------------------
 	
-	//AJAX CALL
+	//AJAX INSTALL STEP CALL
 	$('#pages_install_by_step form.form_site').submit(function(e) {
         e.preventDefault();
 		window.site_name = $('#pages_install_by_step .i_site_name').val();
@@ -657,7 +657,7 @@ $(document).ready(function(e) {
 		
 	});
 	
-	//AJAX CALL
+	//AJAX INSTALL STEP CALL
 	$('#install_by_step_mapping_fin .bMappingSaveMap').click(function(e) {
 		window.map_name = $('#install_by_step_mapping_from_name').val();
 		if (window.map_name == '')
@@ -861,7 +861,7 @@ $(document).ready(function(e) {
 		
 	})
 	
-	//AJAX CALL
+	//AJAX INSTALL STEP CALL
 	$('#pages_install_by_step a.bImportSiteDo').click(function(e) {
         e.preventDefault();
 		file = $('#pages_install_by_step .file_import_site')[0].files[0];
@@ -962,7 +962,7 @@ $(document).ready(function(e) {
 	
 	//------------------- STEP MASTER DOCK ------------------------
 	
-	//AJAX CALL
+	//AJAX INSTALL STEP CALL
 	//DECLARATION EVENTLISTENER BOUTON CREE DYNAMIQUEMENT .on('event',function(){})
 	$( "#pages_install_by_step #MasterDockList" ).on( 'click', '.MasterDockItem', function(e) {
 		let id_master = $(this).attr('id');
@@ -1001,6 +1001,56 @@ $(document).ready(function(e) {
 			}
 		})		
 	})
+	
+	//------------------- STEP RECOVERY ------------------------
+	
+	$('#pages_install_by_step #install_by_step_site_recovery .bRecovery').click(function(e) {
+        e.preventDefault();
+		
+		$('#pages_install_by_step #install_by_step_site_recovery .bRecovery').addClass('disabled');
+		
+		wycaApi.on('onRecoveryFromFiducialResult', function(data) {
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$('#pages_install_by_step #install_by_step_site_recovery .bRecovery').removeClass('disabled');
+				success_wyca('Recovery done !');
+				$('#pages_install_by_step #install_by_step_site_recovery .install_by_step_site_recovery_next').click();
+
+				//AJAX INSTALL STEP CALL
+				$.ajax({
+					type: "POST",
+					url: 'ajax/install_by_step_import_site_recovery.php',
+					data: {
+					},
+					dataType: 'json',
+					success: function(data) {
+					},
+					error: function(e) {
+						alert_wyca('Error step site ; ' + e.responseText);
+					}
+				});
+			}
+			else
+			{
+				$('#pages_install_by_step #install_by_step_site_recovery .bRecovery').removeClass('disabled');
+				console.log(JSON.stringify(data)); 
+				ParseAPIAnswerError(data);
+			}
+		});
+		
+		wycaApi.RecoveryFromFiducial(function(data) {
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+			}
+			else
+			{
+				$('#pages_install_by_step #install_by_step_site_recovery .bRecovery').removeClass('disabled');
+				ParseAPIAnswerError(data);
+			}
+		});
+    });
+	
+	
 	
 	/*
 	$('#install_by_step_mapping_use .bUseThisMapNowYes').click(function(e) {
@@ -1089,11 +1139,11 @@ $(document).ready(function(e) {
 		{
 			alert_wyca('You must confirm the active element');
 			console.log(bystepCurrentAction);
-			$('#bCloseAlertWyca').click(ByStepShakeActiveElement());
+			$('#bCloseAlertWyca').click(ShakeActiveElement());
+			return false;
 		}
 		else
 		{
-			
 			let actions_searched = ['editPoi','editDock','editAugmentedPose','editForbiddenArea','editArea'];
 			if(actions_searched.includes(bystepCurrentAction)){
 				switch(bystepCurrentAction){
@@ -1289,7 +1339,7 @@ $(document).ready(function(e) {
 		}
     });
 	
-	//AJAX CALL
+	//AJAX INSTALL STEP CALL
 	$('#install_by_step_test_map .bTestFinish').click(function(e) {
 		$.ajax({
 			type: "POST",
@@ -1305,7 +1355,7 @@ $(document).ready(function(e) {
 		});
     });
 	
-	//AJAX CALL
+	//AJAX INSTALL STEP CALL
 	$('#install_by_step_edit_map .bNextEditMap').click(function(e) {
 		$.ajax({
 			type: "POST",
@@ -1401,7 +1451,7 @@ $(document).ready(function(e) {
 		$('#install_by_step_config_i_level_min_dotask').val(20)
     });
 	
-	//AJAX CALL
+	//AJAX INSTALL STEP CALL
 	$('#install_by_step_config .bConfigurationSave').click(function(e) {
 		wycaApi.SetEnergyConfiguration(parseInt($('#install_by_step_config #install_by_step_config_i_level_min_gotocharge').val()), parseInt($('#install_by_step_config #install_by_step_config_i_level_min_dotask').val()), function(data) {
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
@@ -1430,7 +1480,7 @@ $(document).ready(function(e) {
 	
 	//------------------- STEP MAINTENANCE ACCOUNT ------------------------
 	
-	//AJAX CALL
+	//AJAX INSTALL STEP CALL
 	$('#install_by_step_maintenance #bDeleteMaintenanceAccount').click(function(e){
 		wycaApi.DeleteUserWyca(function(data){
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
@@ -1463,7 +1513,7 @@ $(document).ready(function(e) {
 		
 	});
 	
-	//AJAX CALL
+	//AJAX INSTALL STEP CALL
 	$('#install_by_step_maintenance #install_by_step_maintenance_bMaintenanceSave').click(function(e){
 		let pass = $('#install_by_step_maintenance_i_maintenance_password');
 		let cpass = $('#install_by_step_maintenance_i_maintenance_password');
@@ -1656,7 +1706,7 @@ $(document).ready(function(e) {
 		}
 	})
 	
-	//AJAX CALL
+	//AJAX INSTALL STEP CALL
 	$('#install_by_step_manager .bValidManager').click(function(e) {
         $.ajax({
 			type: "POST",
@@ -1730,7 +1780,7 @@ $(document).ready(function(e) {
 		}
     });
 	
-    //AJAX CALL
+    //AJAX INSTALL STEP CALL
 	$('#install_by_step_end .bCloseInstallation').click(function(e) {
 		if(create_new_site){
 			create_new_site = false;

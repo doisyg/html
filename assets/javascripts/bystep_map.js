@@ -839,6 +839,12 @@ function ByStepDisplayMenu(id_menu)
 				icon_menu.show('fast');
 			}
 		}
+		if(id_menu != 'install_by_step_edit_map_menu_point')
+			RemoveClass('#install_by_step_edit_map_svg .point_deletable', 'point_active');
+		if(id_menu != 'install_by_step_edit_map_menu_area' && id_menu != 'install_by_step_edit_map_menu_forbidden')
+			RemoveClass('#install_by_step_edit_map_svg .point_deletable', 'active');
+		
+		
 		if(id_menu != 'install_by_step_edit_map_menu'){
 			$('#install_by_step_edit_map .burger_menu').hide('fast');
 			setTimeout(function(){$('#install_by_step_edit_map.times_icon_menu').show('fast')},50);
@@ -923,7 +929,9 @@ function ByStepLongPressAugmentedPose()
 function ByStepLongPressPointDeletable()
 {
 	timerByStepLongPress = null;
-	ByStepDisplayMenu('install_by_step_edit_map_menu_point');
+	//if point menu not opened
+	if($('#install_by_step_edit_map .icon_menu[data-menu="install_by_step_edit_map_menu_point"]:visible').length == 0 && (bystepCurrentAction == 'addForbiddenArea' || bystepCurrentAction == 'addArea' || bystepCurrentAction == 'editForbiddenArea' || bystepCurrentAction == 'editArea') )
+		ByStepDisplayMenu('install_by_step_edit_map_menu_point');
 }
 
 function ByStepLongVeryPressSVG()
@@ -937,14 +945,24 @@ function ByStepLongPressSVG()
 	timerByStepLongPress = null;
 	ByStepDisplayMenu('install_by_step_edit_map_menu');
 }
-
+var resetPan = false;
+$(document).ready(function(e) {
+    $('#install_by_step_edit_map_svg').on('touchend', function(e) {
+		resetPan = true;
+	});
+	$('#install_by_step_edit_map_svg').on('touchstart', function(e) {
+		resetPan = true;
+	});
+});
 function ByStepInitMap()
 {
+	
+	
 	var eventsHandler;
 
 	eventsHandler = {
-	  haltEventListeners: ['touchstart', 'touchend', 'touchmove', 'touchleave', 'touchcancel']
-	, init: function(options) {
+	  haltEventListeners: ['touchstart', 'touchend', 'touchmove', 'touchleave', 'touchcancel', 'mousemove', 'mouseup', 'mousedown']
+	  , init: function(options) {
 		var instance = options.instance
 		  , initialScale = 1
 		  , pannedX = 0
@@ -966,18 +984,20 @@ function ByStepInitMap()
 
 		// Handle pan
 		this.hammer.on('panstart panmove', function(ev){
+			
 		  // On pan start reset panned variables
-		  if (ev.type === 'panstart') {
-			pannedX = 0
-			pannedY = 0
+		  if (ev.type === 'panstart' || resetPan) {
+			pannedX = 0;
+			pannedY = 0;
+			resetPan = false;
 		  }
-
+			
 		  // Pan only the difference
 		  instance.panBy({x: ev.deltaX - pannedX, y: ev.deltaY - pannedY})
 		  pannedX = ev.deltaX
 		  pannedY = ev.deltaY
 		})
-
+		
 		// Handle pinch
 		this.hammer.on('pinchstart pinchmove', function(ev){
 		  // On pinch start remember initial zoom
@@ -996,6 +1016,7 @@ function ByStepInitMap()
 		this.hammer.destroy()
 	  }
 	}
+	
 
 	// Expose to window namespace for testing purposes
 	

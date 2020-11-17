@@ -958,12 +958,21 @@ function NormalLongPressSVG()
 	NormalDisplayMenu('install_normal_edit_map_menu');
 }
 
+var resetPan = false;
+$(document).ready(function(e) {
+    $('#install_normal_edit_map_svg').on('touchend', function(e) {
+		resetPan = true;
+	});
+	$('#install_normal_edit_map_svg').on('touchstart', function(e) {
+		resetPan = true;
+	});
+});
 function NormalInitMap()
 {
 	var eventsHandlerNormal;
 
 	eventsHandlerNormal = {
-	  haltEventListeners: ['touchstart', 'touchend', 'touchmove', 'touchleave', 'touchcancel']
+	  haltEventListeners: ['touchstart', 'touchend', 'touchmove', 'touchleave', 'touchcancel', 'mousemove', 'mouseup', 'mousedown']
 	, init: function(options) {
 		var instance = options.instance
 		  , initialScale = 1
@@ -986,10 +995,12 @@ function NormalInitMap()
 
 		// Handle pan
 		this.hammer.on('panstart panmove', function(ev){
+			
 		  // On pan start reset panned variables
-		  if (ev.type === 'panstart') {
-			pannedX = 0
-			pannedY = 0
+		  if (ev.type === 'panstart' || resetPan) {
+			pannedX = 0;
+			pannedY = 0;
+			resetPan = false;
 		  }
 
 		  // Pan only the difference

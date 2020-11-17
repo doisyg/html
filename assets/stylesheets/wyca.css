@@ -875,6 +875,18 @@ img.fi-robot{
 .btn-circle.btn-menu:focus{background-color: white;box-shadow: unset;}
 .btn-circle.btn-menu:active{background-color: white;box-shadow: unset;}
 
+.btn-primary.btn-circle.btn-menu:hover{background-color: #0099e6;}
+.btn-primary.btn-circle.btn-menu:focus{background-color: #0099e6;}
+.btn-primary.btn-circle.btn-menu:active{background-color: #0099e6;}
+
+.btn-warning.btn-circle.btn-menu:hover{background-color: #efa740;}
+.btn-warning.btn-circle.btn-menu:focus{background-color: #efa740;}
+.btn-warning.btn-circle.btn-menu:active{background-color: #efa740;}
+
+.btn-default.btn-circle.btn-menu:hover{background-color: #e6e6e6;}
+.btn-default.btn-circle.btn-menu:focus{background-color: #e6e6e6;}
+.btn-default.btn-circle.btn-menu:active{background-color: #e6e6e6;}
+
 .iconAugmentedPose{
 	position:relative;
 }
@@ -1090,6 +1102,10 @@ div.icon_menu .iconForbiddenArea .fa-minus-circle{
     top: 11px;
     left: 11px;
 }
+.point_deletable.point_active{
+	fill: darkorange;
+    stroke-width: 2px;
+    stroke: black;
 }
 /* */
 ul#MasterDockList li .tuile_img.is_checkbox{border-radius:10px;bottom:0;}
