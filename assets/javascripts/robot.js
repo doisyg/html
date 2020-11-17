@@ -47,6 +47,14 @@ $(document).ready(function(e) {
 			GetMappingInConstruction();
 		}
 	};
+	img.onerror  = function () {
+		imgMappingLoaded = true;
+		if (mappingStarted && timerGetMappingInConstruction == null)
+		{
+			// Le timer a déjà sauté, on relance l'appel
+			GetMappingInConstruction();
+		}
+	};
 	
 	wycaApi = new WycaAPI({
 		host:robot_host, //192.168.1.32:9090', // host:'192.168.100.245:9090',
@@ -170,6 +178,7 @@ var haveReplyFromGetMappingInConstruction = false;
 var liveMapping = true;
 
 var nbAttempGetMappingInConstruction = 0;
+var nbAttempLoadImg = 0;
 function TimeoutGetMappingInConstruction()
 {
 	timerGetMappingInConstruction = null;
@@ -210,12 +219,22 @@ function GetMappingInConstruction()
 			{
 				if (imgMappingLoaded)
 				{
+					nbAttempLoadImg = 0;
 					imgMappingLoaded = false;
 					var img = document.getElementById("install_by_step_mapping_img_map_saved");
 					//img.src = 'data:image/png;base64,' + data.D.M;
 					img.src = robot_http + '/mapping/last_mapping.jpg?v='+ Date.now();
 					//img.src = 'http://192.168.0.30/mapping/last_mapping.jpg?v='+ Date.now();
 					mappingLastOrigin = {'x':parseFloat(data.D.X), 'y':parseFloat(data.D.Y) };
+				}
+				else
+				{
+					nbAttempLoadImg++;
+					if (nbAttempLoadImg > 5)
+					{
+						nbAttempLoadImg = 0;
+						imgMappingLoaded = true;
+					}
 				}
 			}
 		});
