@@ -39,8 +39,8 @@
         <script>
 		var lang = '<?php echo $currentLang->iso;?>';
 
-		var robot_host = '<?php echo (file_exists('C:\\'))?((file_exists('C:\\Users\\F'))?'10.0.0.39:'.($server_request_scheme == 'http'?'9094':'9095'):'192.168.0.30:'.($server_request_scheme == 'http'?'9094':'9095')):'wyca.run:'.($server_request_scheme == 'http'?'9094':'9095');?>';
-		var robot_http = '<?php echo (file_exists('C:\\'))?((file_exists('C:\\Users\\F'))?$server_request_scheme.'://10.0.0.39':$server_request_scheme.'://192.168.0.30'):'';?>';
+		var robot_host = '<?php echo (file_exists('C:\\'))?((file_exists('C:\\Users\\F'))?'10.0.0.39:'.($server_request_scheme == 'http'?'9094':'9095'):'192.168.0.33:'.($server_request_scheme == 'http'?'9094':'9095')):'wyca.run:'.($server_request_scheme == 'http'?'9094':'9095');?>';
+		var robot_http = '<?php echo (file_exists('C:\\'))?((file_exists('C:\\Users\\F'))?$server_request_scheme.'://10.0.0.39':$server_request_scheme.'://192.168.0.33'):'';?>';
 		//var robot_host = '<?php echo (file_exists('C:\\'))?'10.0.0.44:'.($server_request_scheme == 'http'?'9094':'9095'):'wyca.run:'.($server_request_scheme == 'http'?'9094':'9095');?>';
 		var use_ssl = <?php echo $server_request_scheme == 'http'?'false':'true';?>;
 
@@ -75,6 +75,7 @@
         
         <script src="<?php echo $_CONFIG['URL_API'];?>wyca_socket_api.js?v=<?php echo $lastUpdate;?>"></script>
 
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/mouse_to_touch.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/plugins.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/joystick.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/robot.js?v=<?php echo $lastUpdate;?>"></script>
