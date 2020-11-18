@@ -133,7 +133,7 @@ $(document).ready(function(e) {
 		$('#pages_install_by_step .modalImportTop_content').show();
 		
 		$('#pages_install_by_step .modalImportTop').modal('show');
-		InitTopImport();
+		InitByStepTopImport();
 	});
 	
 	//AJAX INSTALL STEP CALL
@@ -141,7 +141,7 @@ $(document).ready(function(e) {
         e.preventDefault();
 		
 		var listAvailableTops = Array();
-		$('#pages_install_by_step .install_by_step_top li').hide();
+		//$('#pages_install_by_step .install_by_step_top li').hide();
 		$(this).parent().parent().find('.is_checkbox.checked').each(function(index, element) {
             listAvailableTops.push($(this).data('id_top'));
 			$('#pages_install_by_step .install_by_step_top .bTop'+$(this).data('id_top')).show();
