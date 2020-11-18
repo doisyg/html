@@ -595,18 +595,18 @@ function InitByStepSiteMasterDock(back = false)
 
 function InitByStepTopImport()
 {
-	$('#pages_install_by_step .filename_import_top').html('');
-	$('#pages_install_by_step .filename_import_top').hide();
-	$('#pages_install_by_step .file_import_top_wrapper').css('background-color','#589fb26e');
-	$('#pages_install_by_step .file_import_top').val('');
+	$('#pages_install_by_step .modalImportTop .filename_import_top').html('');
+	$('#pages_install_by_step .modalImportTop .filename_import_top').hide();
+	$('#pages_install_by_step .modalImportTop .file_import_top_wrapper').css('background-color','#589fb26e');
+	$('#pages_install_by_step .modalImportTop .file_import_top').val('');
 }
 
 function InitNormalTopImport()
 {
-	$('#pages_install_by_step .filename_import_top').html('');
-	$('#pages_install_by_step .filename_import_top').hide();
-	$('#pages_install_by_step .file_import_top_wrapper').css('background-color','#589fb26e');
-	$('#pages_install_by_step .file_import_top').val('');
+	$('#pages_install_normal .modalImportTop .filename_import_top').html('');
+	$('#pages_install_normal .modalImportTop .filename_import_top').hide();
+	$('#pages_install_normal .modalImportTop .file_import_top_wrapper').css('background-color','#589fb26e');
+	$('#pages_install_normal .modalImportTop .file_import_top').val('');
 }
 
 function GetServiceBooksNormal()
