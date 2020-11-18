@@ -811,18 +811,21 @@ img.fi-robot{
 	font-weight:501;
 }
 /* REAL TEST */
-#start_point_text{
+.start_point_text{
 	font-family: "Font Awesome 5 Free", Open Sans;
 	font-weight:501;
 }
-#end_point_text{
+.end_point_text{
 	font-family: "Font Awesome 5 Free", Open Sans;
 	font-weight:501;
 }
-#result_RealTest{
+.result_RealTest{
     border-top: 1px solid #DCDCDC;
     margin-top: 10px;
     padding-top: 20px;
+}
+.modalRealTestResult .stop_move{
+	transition:0.5s all
 }
 /* BURGER MENU MAP */
 

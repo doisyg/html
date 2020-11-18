@@ -222,5 +222,8 @@ $_LANG['b0519851f2414e277fa2dfe378b9f391'] = 'Site successfully imported';
 $_LANG['2b1332774a26889f402d28a305dcbd9f'] = 'Export your sites by clicking on the icon';
 $_LANG['9b945efebb006547a94415eadaa12921'] = 'Accounts';
 $_LANG['55ea14fa53cbbbba5cea4312faa32053'] = 'Export sites by clicking on the icon';
+$_LANG['a2c9e7f48646664118ff543b27bcbfb4'] = 'Battery Configuration';
+$_LANG['6852ff686fa7216ba1c9b958d5f80f23'] = 'Battery settings';
+$_LANG['7ad51d59926d9281d04b502e8983892a'] = 'Import site';
 
 ?>

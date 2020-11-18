@@ -1555,13 +1555,13 @@
 										<div class="modalRealTest_content">
 											<p><?= _('Please choose a start position')?></p>
 											<div class="form-group">
-												<select class="form-control form-fa" id="real_test_start">
+												<select class="form-control form-fa real_test_start">
 													<option value=""><?= _('Start position')?></option>
 												</select>
 											</div>
 											<p><?= _('Please choose a destination')?></p>
 											<div class="form-group">
-												<select class="form-control form-fa" id="real_test_end">
+												<select class="form-control form-fa real_test_end">
 													<option value=""><?= _('Arrival position')?></option>		
 												</select>
 											</div>
@@ -1583,9 +1583,9 @@
 									<div class="h100vh_160" style="overflow:auto; text-align:center">
 										<div class="modalRealTestResult_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
 										<div class="modalRealTestResult_content text-center">
-											<div id="start_point">
+											<div class="start_point">
 												<h4><?= _('Go to start position')?></h4>
-												<span id="start_point_text"></span>
+												<span class="start_point_text"></span>
 												<div class="row" style="margin: 0;">
 													<div class="col-xs-3">
 														<a href="#" class="stop_move btn btn-danger btn-circle" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Stop move" style="display: none;"><i class="fa fa-stop battery-ko"></i></a>
@@ -1598,9 +1598,9 @@
 													</div>														
 												</div>														
 											</div>
-											<div id="end_point">
+											<div class="end_point">
 												<h4><?= _('Go to destination')?></h4>
-												<span id="end_point_text"></span>
+												<span class="end_point_text"></span>
 												<div class="row" style="margin: 0;">
 													<div class="col-xs-3">
 														<a href="#" class="stop_move btn btn-danger btn-circle" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Stop move" style="display: none;"><i class="fa fa-stop battery-ko"></i></a>
@@ -1613,10 +1613,10 @@
 													</div>														
 												</div>
 											</div>
-											<div id="result_RealTest" style="border-top:1px solid #DCDCDC">
-												<h4><?= _('Battery used :') ?> <span id="battery_used">0</span> %</h4>
+											<div class="result_RealTest" style="border-top:1px solid #DCDCDC">
+												<h4><?= _('Battery used :') ?> <span class="battery_used">0</span> %</h4>
 												<p><?= _('Use this result as reference for battery configuration') ?></p>
-												<a href="#" id="bUseRealTest" class="btn btn-success"><?php echo __('Use');?></a>
+												<a href="#" class="btn btn-success bUseRealTest"><?php echo __('Use');?></a>
 											</div>
 										</div>
 									</div>
