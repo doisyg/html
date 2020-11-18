@@ -916,7 +916,7 @@ $(document).ready(function(e) {
 													dataType: 'json',
 													success: function(data) {
 														
-														InitBystepSiteMasterDock();
+														InitByStepSiteMasterDock();
 														$('.install_by_step_import_site_next').click();
 													},
 													error: function(e) {
@@ -927,26 +927,26 @@ $(document).ready(function(e) {
 											}
 										}else{
 											ParseAPIAnswerError(data);
-											InitBystepSiteImport();
+											InitByStepSiteImport();
 										}
 									})
 									window.site_id=data.D;
 								}else{
 									ParseAPIAnswerError(data);
-									InitBystepSiteImport();
+									InitByStepSiteImport();
 								}
 							})
 							
 						}else{
 							alert_wyca('Error in ID site');
-							InitBystepSiteImport();
+							InitByStepSiteImport();
 						}
 						
 					}
 					else
 					{
 						ParseAPIAnswerError(data);
-						InitBystepSiteImport();
+						InitByStepSiteImport();
 						$('#pages_install_by_step .install_by_step_setup_import_loading').hide();
 						$('#pages_install_by_step .install_by_step_setup_import_content').show();
 					}
@@ -994,7 +994,7 @@ $(document).ready(function(e) {
 				});
 			}else{
 				ParseAPIAnswerError(data);
-				InitBystepSiteImport();
+				InitByStepSiteImport();
 				$('#pages_install_by_step .install_by_step_setup_import_loading').hide();
 				$('#pages_install_by_step .install_by_step_setup_import_content').show();
 				$('#pages_install_by_step section#install_by_step_site_master_dock .bBackButton').click();

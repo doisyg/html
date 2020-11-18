@@ -214,5 +214,7 @@ $_LANG['1f1f029f4f19e1254aea91225b370c21'] = 'Create manager';
 $_LANG['63ac6e1c5ae0bc417f8aa49d68e0904e'] = 'The robot needs to relocate itself in the new map.';
 $_LANG['8f7589ce40934ea04a59bd1e3ddbf894'] = 'Move the robot near a reflector (dock or augmented pose) then click on the recovery button';
 $_LANG['1ba9079e4cad4c5653a85702da6f4579'] = 'The robot needs to relocate itself.';
+$_LANG['17e88a8aca7c2d27584ab7823e1cfee7'] = 'Move the robot using the joystick.';
+$_LANG['0323de4f66a1700e2173e9bcdce02715'] = 'Logout';
 
 ?>

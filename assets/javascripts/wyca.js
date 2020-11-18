@@ -256,8 +256,8 @@ $(document).ready(function(e) {
 				}
 			}
 			
-			if (next == 'install_by_step_site_master_dock' && fromBackBtn) InitBystepSiteMasterDock('back');
-			if (next == 'install_by_step_site_master_dock' && !fromBackBtn) InitBystepSiteMasterDock();
+			if (next == 'install_by_step_site_master_dock' && fromBackBtn) InitByStepSiteMasterDock('back');
+			if (next == 'install_by_step_site_master_dock' && !fromBackBtn) InitByStepSiteMasterDock();
 			if (next == 'install_by_step_manager') GetManagersByStep();
 			if (next == 'install_by_step_service_book') GetServiceBooksByStep();
 			
@@ -524,7 +524,7 @@ function InitSiteImport()
 	$('#pages_install_normal .file_import_site').val('');
 }
 
-function InitBystepSiteImport()
+function InitByStepSiteImport()
 {
 	$('#pages_install_by_step .filename_import_site').html('');
 	$('#pages_install_by_step .filename_import_site').hide();
@@ -532,7 +532,7 @@ function InitBystepSiteImport()
 	$('#pages_install_by_step .file_import_site').val('');
 }
 
-function InitBystepSiteMasterDock(back = false)
+function InitByStepSiteMasterDock(back = false)
 {
 	$('#pages_install_by_step #MasterDockList').html('');
 	$('#pages_install_by_step .MasterDock_loading').show();
@@ -587,13 +587,21 @@ function InitBystepSiteMasterDock(back = false)
 				}
 			})
 		}else{
-			setTimeout(InitBystepSiteMasterDock, 500);
+			setTimeout(InitByStepSiteMasterDock, 500);
 		}
 	}
 	
 }
 
-function InitTopImport()
+function InitByStepTopImport()
+{
+	$('#pages_install_by_step .filename_import_top').html('');
+	$('#pages_install_by_step .filename_import_top').hide();
+	$('#pages_install_by_step .file_import_top_wrapper').css('background-color','#589fb26e');
+	$('#pages_install_by_step .file_import_top').val('');
+}
+
+function InitNormalTopImport()
 {
 	$('#pages_install_by_step .filename_import_top').html('');
 	$('#pages_install_by_step .filename_import_top').hide();
@@ -1234,7 +1242,9 @@ function InitInstallWifiPageNormal()
 {
 	if (wycaApi.websocketAuthed)
 	{
+		
 		wycaApi.GetWifiList(function(data) {
+			$('.install_normal_setup_wifi_loading').hide();
 			$('#install_normal_setup_wifi tr').hide();
 			if (data.D.length > 0)
 			{
@@ -1252,13 +1262,16 @@ function InitInstallWifiPageNormal()
 					}
 					else
 					{
-						$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td>'+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
+						if (value.state == 'active')
+							$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td><i class="fas fa-check"></i> '+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
+						else
+							$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td>'+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
 					}
 				});
 			}
 		});
 		
-		if ($('#install_normal_wifi').is(':visible'))
+		if ($('#install_normal_setup_wifi').is(':visible'))
 			setTimeout(InitInstallWifiPageNormal, 3000);
 	}
 	else

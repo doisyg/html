@@ -58,9 +58,9 @@
                 </ul>
                 
                 <div style="clear:both; height:40px;"></div>
-                <a href="#" class="import_top btn btn-lg btn-success" style="margin-left:50%; transform:translateX(-50%)">Import new top</a>   
+                <a href="#" class="import_top btn btn-lg btn-success" style="margin-left:50%; transform:translateX(-50%)"><?= _('Import new top')?></a>   
                 
-                <a href="#" class="save_tops_next_select button_goto" data-goto="install_by_step_top" style="display:none;" data-goto="install_by_step_top"></a>   
+                <a href="#" class="save_tops_next_select button_goto" data-goto="install_by_step_top" style="display:none;" data-goto="install_by_step_top"></a>
                 <a href="#" class="save_tops_next_check button_goto" data-goto="install_by_step_check" style="display:none;" data-goto="install_by_step_top"></a>   
                 
             
