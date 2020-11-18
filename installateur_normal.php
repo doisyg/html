@@ -1161,22 +1161,32 @@
                     <div class="fin_mapping_view" style="height:65vh; width:100%; margin:10px 0; border:1px solid #EFEFEF; position:relative; background-color:#F0F0F0;">
                         <img id="install_normal_setup_trinary_img_map_saved_fin" src="" style="z-index:200; display:none; max-width:100%;" />
                         <div id="install_normal_setup_trinary_divOptionTrinary">
-                            <div id="install_normal_setup_trinary_threshold_free_slider_elem" class="mt-lg mb-lg slider-primary" data-plugin-slider data-plugin-options='{ "value": 25, "range": "min", "max": 100 }' data-plugin-slider-output="#install_normal_setup_trinary_threshold_free_slider">
-                                <input id="install_normal_setup_trinary_threshold_free_slider" type="hidden" value="25" />
+                            <div class="threshold_wrapper">
+								<div class="slider_wrapper">
+									<span class="btn btn_slider_minus"><i class="fas fa-minus-square"></i></span>
+									<div id="install_normal_setup_trinary_threshold_free_slider_elem" class="mt-lg mb-lg slider-primary" data-plugin-slider data-plugin-options='{ "value": 25, "range": "min", "max": 100 }' data-plugin-slider-output="#install_normal_setup_trinary_threshold_free_slider">
+										<input id="install_normal_setup_trinary_threshold_free_slider" type="hidden" value="25" />
+									</div>
+									<span class="btn btn_slider_plus"><i class="fas fa-plus-square"></i></span>
+								</div>
+								<p id="install_normal_setup_trinary_threshold_free_output"><?php echo __('Empty area threshold');?> : <b>25</b></p>
                             </div>
-                            <p id="install_normal_setup_trinary_threshold_free_output">Threshold free: <b>25</b></p>
-                                                
-                            <div id="install_normal_setup_trinary_threshold_occupied_slider_elem" class="mt-lg mb-lg slider-primary" data-plugin-slider data-plugin-options='{ "value": 65, "range": "min", "max": 100 }' data-plugin-slider-output="#install_normal_setup_trinary_threshold_occupied_slider">
-                                <input id="install_normal_setup_trinary_threshold_occupied_slider" type="hidden" value="65" />
+							
+                            <div class="threshold_wrapper">
+								<div class="slider_wrapper">
+									<span class="btn btn_slider_minus"><i class="fas fa-minus-square"></i></span>
+									 <div id="install_normal_setup_trinary_threshold_occupied_slider_elem" class="mt-lg mb-lg slider-primary" data-plugin-slider data-plugin-options='{ "value": 65, "range": "min", "max": 100 }' data-plugin-slider-output="#install_normal_setup_trinary_threshold_occupied_slider">
+										<input id="install_normal_setup_trinary_threshold_occupied_slider" type="hidden" value="65" />
+									</div>
+									<span class="btn btn_slider_plus"><i class="fas fa-plus-square"></i></span>
+								</div>
+								<p id="install_normal_setup_trinary_threshold_occupied_output"><?php echo __('Object detection threshold');?> : <b>65</b></p>
                             </div>
-                            <p id="install_normal_setup_trinary_threshold_occupied_output">Threshold occupied: <b>65</b></p>
-                            
-                            <a href="#" class="btn btn-xs btn-primary bResetValueThreshold"><?php echo __('Reset values');?></a>
-                            
+                            <a href="#" class="btn btn-sm btn-primary bResetValueThreshold"><?php echo __('Reset values');?></a>
                         </div>
                         <div id="install_normal_setup_trinary_divResultTrinary">
                             <div style="height:80vh; overflow:auto;">
-                                <i style="font-size:60px; position:absolute; top:50px;" class="fa fa-spinner fa-pulse loading_fin_create_map"></i>
+                                <i style="font-size:60px;" class="fa fa-spinner fa-pulse loading_fin_create_map"></i>
                                 <canvas id="install_normal_setup_trinary_canvas_result_trinary" width="" height="" style="max-width:100%; max-height:65vh;"></canvas>
                             </div>
                         </div>

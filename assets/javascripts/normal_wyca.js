@@ -32,6 +32,43 @@ $(document).ready(function(e) {
 		
     });
 	
+	// ----------------------- MAPPING CONFIG THRESHOLDS ------------------------
+	
+	$('#install_normal_setup_trinary .bResetValueThreshold').click(function(e) {
+        e.preventDefault();
+		
+		$("#install_normal_setup_trinary_threshold_free_slider").val(25);
+		$("#install_normal_setup_trinary_threshold_free_slider_elem").slider('value',25);
+		$('#install_normal_setup_trinary_threshold_free_output b').text( 25 );
+		threshold_free_normal = 25;
+		
+		$("#install_normal_setup_trinary_threshold_occupied_slider").val(65);
+		$("#install_normal_setup_trinary_threshold_occupied_slider_elem").slider('value',65);
+		$('#install_normal_setup_trinary_threshold_occupied_output b').text( 65 );
+		threshold_occupied_normal = 65;
+		
+		CalculateMapTrinaryNormal();
+    });
+	
+	$('#install_normal_setup_trinary_threshold_free_slider').change(function() {
+		$('#install_normal_setup_trinary_threshold_free_output b').text( this.value );
+		threshold_free_normal = this.value;
+		
+		CalculateMapTrinaryNormal();
+	});
+	
+	$('#install_normal_setup_trinary_threshold_occupied_slider').change(function() {
+		$('#install_normal_setup_trinary_threshold_occupied_output b').text( this.value );
+		threshold_occupied_normal = this.value;
+		
+		CalculateMapTrinaryNormal();
+	});
+	
+	$("#install_normal_setup_trinary_threshold_occupied_slider_elem").slider({ "value": 65, "range": "min", "max": 100 });
+	$("#install_normal_setup_trinary_threshold_occupied_slider_elem").on("slide", function(slideEvt) { $("#install_normal_setup_trinary_threshold_occupied_output b").text(slideEvt.value); $("#install_normal_setup_trinary_threshold_occupied_slider").val(slideEvt.value); });
+	$("#install_normal_setup_trinary_threshold_free_slider_elem").slider({ "value": 25, "range": "min", "max": 100 });
+	$("#install_normal_setup_trinary_threshold_free_slider_elem").on("slide", function(slideEvt) { $("#install_normal_setup_trinary_threshold_free_output b").text(slideEvt.value); $("#install_normal_setup_trinary_threshold_free_slider").val(slideEvt.value); });
+	
 	$('#install_normal_setup_trinary .bSaveTrinaryMap').click(function(e) {
 		
 		var canvasDessin = document.getElementById('install_normal_setup_trinary_canvas_result_trinary');
@@ -442,41 +479,7 @@ $(document).ready(function(e) {
 		}
     });
 	
-	$('#install_normal_setup_trinary .bResetValueThreshold').click(function(e) {
-        e.preventDefault();
-		
-		$("#install_normal_setup_trinary_threshold_free_slider").val(25);
-		$("#install_normal_setup_trinary_threshold_free_slider_elem").slider('value',25);
-		$('#install_normal_setup_trinary_threshold_free_output b').text( 25 );
-		threshold_free_normal = 25;
-		
-		$("#install_normal_setup_trinary_threshold_occupied_slider").val(65);
-		$("#install_normal_setup_trinary_threshold_occupied_slider_elem").slider('value',65);
-		$('#install_normal_setup_trinary_threshold_occupied_output b').text( 65 );
-		threshold_occupied_normal = 65;
-		
-		CalculateMapTrinaryNormal();
-    });
-	
-	$('#install_normal_setup_trinary_threshold_free_slider').change(function() {
-		$('#install_normal_setup_trinary_threshold_free_output b').text( this.value );
-		threshold_free_normal = this.value;
-		
-		CalculateMapTrinaryNormal();
-	});
-	
-	$('#install_normal_setup_trinary_threshold_occupied_slider').change(function() {
-		$('#install_normal_setup_trinary_threshold_occupied_output b').text( this.value );
-		threshold_occupied_normal = this.value;
-		
-		CalculateMapTrinaryNormal();
-	});
-	
-	$("#install_normal_setup_trinary_threshold_occupied_slider_elem").slider({ "value": 65, "range": "min", "max": 100 });
-	$("#install_normal_setup_trinary_threshold_occupied_slider_elem").on("slide", function(slideEvt) { $("#install_normal_setup_trinary_threshold_occupied_output b").text(slideEvt.value); $("#install_normal_setup_trinary_threshold_occupied_slider").val(slideEvt.value); });
-	$("#install_normal_setup_trinary_threshold_free_slider_elem").slider({ "value": 25, "range": "min", "max": 100 });
-	$("#install_normal_setup_trinary_threshold_free_slider_elem").on("slide", function(slideEvt) { $("#install_normal_setup_trinary_threshold_free_output b").text(slideEvt.value); $("#install_normal_setup_trinary_threshold_free_slider").val(slideEvt.value); });
-		
+	// --------------------------- FACTORY RESET ----------------------------------	
 	$('#install_normal_setup_reset .bReset').click(function(e) {
         e.preventDefault();
 		
@@ -506,7 +509,20 @@ $(document).ready(function(e) {
 		
     });
 	
+	
+	
 });
+
+
+// ----------------------- MAPPING CONFIG ------------------------
+	
+
+var threshold_free_normal = 25;
+var threshold_occupied_normal = 65;
+
+var color_free_normal = 255;
+var color_occupied_normal = 0;
+var color_unknow_normal = 205;
 
 function NormalInitTrinary()
 {
@@ -566,21 +582,6 @@ function NormalInitTrinaryDo()
 	});
 }
 
-var threshold_free_normal = 25;
-var threshold_occupied_normal = 65;
-
-var color_free_normal = 255;
-var color_occupied_normal = 0;
-var color_unknow_normal = 205;
-
-var timeoutCalcul_normal = null;
-
-var img_normal;
-var canvas_normal;
-
-var width_normal = 0;
-var height_normal = 0;
-
 function CalculateMapTrinaryNormal()
 {
 	if (timeoutCalcul_normal != null)
@@ -638,11 +639,65 @@ function CalculateMapTrinaryDoNormal()
 	$('#install_normal_setup_trinary .loading_fin_create_map').hide();
 }
 
+var timeoutCalcul_normal = null;
+
+var img_normal;
+var canvas_normal;
+
+var width_normal = 0;
+var height_normal = 0;
 
 /* INSTALLATEUR WYCA.JS */
 
 $(document).ready(function(e) {
+	//----------------------- IMPORT SITE ----------------------------
 	
+	$('#pages_install_normal .file_import_site').change(function(){
+		//console.log('here');
+		$('#pages_install_normal .filename_import_site').html($(this)[0].files[0].name);
+		$('#pages_install_normal .filename_import_site').show();
+		$('#pages_install_normal .file_import_site_wrapper').css('background-color','#47a4476e');
+		
+	})
+	
+	$('#pages_install_normal a.bImportSiteDo').click(function(e) {
+        e.preventDefault();
+		file = $('#pages_install_normal .file_import_site')[0].files[0];
+		if(file != undefined){
+			
+			$('#pages_install_normal .install_normal_setup_import_loading').show();
+			$('#pages_install_normal .install_normal_setup_import_content').hide();
+			
+			var reader = new FileReader();
+			reader.onload = function(event) { 
+				wycaApi.ImportSite(btoa(reader.result), function(data) { 
+					if (data.A == wycaApi.AnswerCode.NO_ERROR)
+					{
+						$('#pages_install_normal .install_normal_setup_import_loading').hide();
+						$('#pages_install_normal .install_normal_setup_import_content').show();
+						
+						success_wyca('Imported');
+						
+						$('.bImportSiteBack').click();
+					}
+					else
+					{
+						console.log(JSON.stringify(data)); 
+						text = wycaApi.AnswerCodeToString(data.A);
+						if (data.M != '') text += '<br />'+data.M;
+						alert_wyca(text);
+					}
+				});
+			};
+			reader.readAsText(file);
+		}else{
+			let icon = $('#pages_install_normal .file_import_site_wrapper > p > i');
+			icon.toggleClass('shake');
+			setTimeout(function(){icon.toggleClass('shake')},2000);
+		}
+    });
+	
+	// --------------------- ADD SITE --------------------
 	$('#install_normal_setup_sites .bAddSite').click(function(e) {
 		e.preventDefault();
 		
