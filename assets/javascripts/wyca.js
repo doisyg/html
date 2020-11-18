@@ -263,7 +263,7 @@ $(document).ready(function(e) {
 			
 			if (next == 'install_normal_setup_sites') GetSitesNormal();
 			if (next == 'install_normal_setup_export') GetSitesForExportNormal();
-			if (next == 'install_normal_setup_import') InitSiteImport();
+			if (next == 'install_normal_setup_import') InitSiteImportNormal();
 			if (next == 'install_normal_setup_tops') InitTopsNormal();
 			if (next == 'install_normal_setup_top') InitTopsActiveNormal();
 			if (next == 'install_normal_setup_vehicule') GetConfigurationsNormal();
@@ -516,7 +516,7 @@ function simulateMouseEvent (event, simulatedType)
     event.target.dispatchEvent(simulatedEvent);
   }
 
-function InitSiteImport()
+function InitSiteImportNormal()
 {
 	$('#pages_install_normal .filename_import_site').html('');
 	$('#pages_install_normal .filename_import_site').hide();
@@ -524,7 +524,7 @@ function InitSiteImport()
 	$('#pages_install_normal .file_import_site').val('');
 }
 
-function InitByStepSiteImport()
+function InitSiteImportByStep()
 {
 	$('#pages_install_by_step .filename_import_site').html('');
 	$('#pages_install_by_step .filename_import_site').hide();
@@ -580,10 +580,7 @@ function InitByStepSiteMasterDock(back = false)
 						$('#pages_install_by_step .MasterDock_loading').hide();
 					}
 				}else{
-					console.log(JSON.stringify(data)); 
-					text = wycaApi.AnswerCodeToString(data.A);
-					if (data.M != '') text += '<br />'+data.M;
-					alert_wyca(text);
+					ParseAPIAnswerError(data);
 				}
 			})
 		}else{
@@ -593,7 +590,65 @@ function InitByStepSiteMasterDock(back = false)
 	
 }
 
-function InitByStepTopImport()
+function InitNormalSiteMasterDock(back = false)
+{
+	$('#pages_install_normal #MasterDockList').html('');
+	$('#pages_install_normal .MasterDock_loading').show();
+	
+	if(docks != 'undefined' && docks.length > 1){
+		$.each(docks,function(idx,item){
+			let li_html="";
+			li_html+='<li class="col-xs-6">';
+			li_html+='	<div class="is_checkbox tuile_img no_update MasterDockItem" id="'+item.id_docking_station+'">';
+			li_html+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
+			li_html+='		<i class="fas fa-charging-station" style="padding-top:5px"></i>';
+			li_html+='		<p class="dockname">'+item.name+'</p>';
+			li_html+='   </div>';
+			li_html+='</li>';
+			$('#pages_install_normal #MasterDockList').append(li_html);
+		});
+		$('#pages_install_normal .MasterDock_loading').hide();
+	}else{
+		if (wycaApi.websocketAuthed){
+			wycaApi.GetCurrentMapData(function(data){
+				if (data.A == wycaApi.AnswerCode.NO_ERROR){
+					if(data.D.docks.length <= 1){
+						if(!back)
+							$('.install_normal_site_master_dock_next').click();
+						else
+							$('#install_normal_site_master_dock .bBackButton').click();
+					}else{
+						forbiddens = data.D.forbiddens;
+						areas = data.D.areas;
+						docks = data.D.docks;
+						pois = data.D.pois;
+						augmented_poses = data.D.augmented_poses;
+						
+						$.each(docks,function(idx,item){
+							let li_html="";
+							li_html+='<li class="col-xs-6">';
+							li_html+='	<div class="is_checkbox tuile_img no_update MasterDockItem" id="'+item.id_docking_station+'">';
+							li_html+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
+							li_html+='		<i class="fas fa-charging-station" style="padding-top:5px"></i>';
+							li_html+='		<p class="dockname">'+item.name+'</p>';
+							li_html+='   </div>';
+							li_html+='</li>';
+							$('#pages_install_normal #MasterDockList').append(li_html);
+						});
+						$('#pages_install_normal .MasterDock_loading').hide();
+					}
+				}else{
+					ParseAPIAnswerError(data);
+				}
+			})
+		}else{
+			setTimeout(InitNormalSiteMasterDock, 500);
+		}
+	}
+	
+}
+
+function InitTopImportByStep()
 {
 	$('#pages_install_by_step .modalImportTop .filename_import_top').html('');
 	$('#pages_install_by_step .modalImportTop .filename_import_top').hide();
@@ -601,7 +656,7 @@ function InitByStepTopImport()
 	$('#pages_install_by_step .modalImportTop .file_import_top').val('');
 }
 
-function InitNormalTopImport()
+function InitTopImportNormal()
 {
 	$('#pages_install_normal .modalImportTop .filename_import_top').html('');
 	$('#pages_install_normal .modalImportTop .filename_import_top').hide();

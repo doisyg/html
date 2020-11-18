@@ -682,10 +682,7 @@ $(document).ready(function(e) {
 					}
 					else
 					{
-						console.log(JSON.stringify(data)); 
-						text = wycaApi.AnswerCodeToString(data.A);
-						if (data.M != '') text += '<br />'+data.M;
-						alert_wyca(text);
+						ParseAPIAnswerError(data);
 					}
 				});
 			};
@@ -1074,7 +1071,7 @@ $(document).ready(function(e) {
 		$('#pages_install_normal .modalImportTop_content').show();
 		
 		$('#pages_install_normal .modalImportTop').modal('show');
-		InitNormalTopImport();
+		InitTopImportNormal();
 	});
 	
 	$('#pages_install_normal a.save_tops').click(function(e) {

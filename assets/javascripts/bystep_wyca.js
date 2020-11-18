@@ -133,7 +133,7 @@ $(document).ready(function(e) {
 		$('#pages_install_by_step .modalImportTop_content').show();
 		
 		$('#pages_install_by_step .modalImportTop').modal('show');
-		InitByStepTopImport();
+		InitTopImportByStep();
 	});
 	
 	//AJAX INSTALL STEP CALL
@@ -927,26 +927,26 @@ $(document).ready(function(e) {
 											}
 										}else{
 											ParseAPIAnswerError(data);
-											InitByStepSiteImport();
+											InitSiteImportByStep();
 										}
 									})
 									window.site_id=data.D;
 								}else{
 									ParseAPIAnswerError(data);
-									InitByStepSiteImport();
+									InitSiteImportByStep();
 								}
 							})
 							
 						}else{
 							alert_wyca('Error in ID site');
-							InitByStepSiteImport();
+							InitSiteImportByStep();
 						}
 						
 					}
 					else
 					{
 						ParseAPIAnswerError(data);
-						InitByStepSiteImport();
+						InitSiteImportByStep();
 						$('#pages_install_by_step .install_by_step_setup_import_loading').hide();
 						$('#pages_install_by_step .install_by_step_setup_import_content').show();
 					}
@@ -994,7 +994,7 @@ $(document).ready(function(e) {
 				});
 			}else{
 				ParseAPIAnswerError(data);
-				InitByStepSiteImport();
+				InitSiteImportByStep();
 				$('#pages_install_by_step .install_by_step_setup_import_loading').hide();
 				$('#pages_install_by_step .install_by_step_setup_import_content').show();
 				$('#pages_install_by_step section#install_by_step_site_master_dock .bBackButton').click();
