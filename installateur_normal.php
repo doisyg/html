@@ -1454,8 +1454,8 @@
                 <h2><?php echo __('Control robot');?></h2>
             </header>
             <div class="content" style="text-align:center;">
+				<h4 style="text-align:center;margin-bottom:30px"><?= __('Move the robot using the joystick.') ?></h4>      
                 <a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
-                                        
                 <div class="ifUndocked">
                     
                     <div style="text-align:center; width:100%; z-index:2000; margin-top:50px;">
@@ -1479,8 +1479,7 @@
             </header>
             <div class="content">
             
-            	<h3>Move the robot near a reflector then click on the recovery button</h3>
-                
+            	<h4 style="text-align:center"><?= __('Move the robot near a reflector (dock or augmented pose) then click on the recovery button') ?></h4>
                 <div style="text-align:center; margin-top:20px;"><a href="#" class="bRecovery btn btn-warning btn_big_popup ">Recovery</a></div>
                 
             
