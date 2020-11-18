@@ -1,7 +1,12 @@
+//Javascript document
+var form_sended = false; //Boolean pour disable a form "en traitement"
+var selectedWifi = '';
+
 var currentNameSiteExport = '';
 var NormalBufferMapSaveElemName = '';
 $(document).ready(function(e) {
-	
+	// ----------------------- SITE EXPORT ------------------------
+		
 	$(document).on('click', '#install_normal_setup_export .bSiteExportElem', function(e) {
         $('#install_normal_setup_export .bSiteExportElem').addClass('disabled');
 		
@@ -118,6 +123,8 @@ $(document).ready(function(e) {
 			});
 		
 	});
+	
+	// ----------------------- MAP ------------------------
 	
 	$('#install_normal_edit_map .bSaveMapTestPoi').click(function(e) {
 		e.preventDefault();
@@ -801,6 +808,8 @@ $(document).ready(function(e) {
 		});
 	});
 	
+	//------------------- SERVICE BOOK ------------------------
+	
 	$('#install_normal_service_book .bAddServiceBook').click(function(e) {
 	
 		$('#install_normal_service_book .modalServiceBook #install_normal_service_book_i_service_book_title').val('');
@@ -851,6 +860,8 @@ $(document).ready(function(e) {
 			});
 		}
     });
+	
+	//------------------- ACCOUNTS ------------------------
 	
 	$('#install_normal_manager .bAddManager').click(function(e) {
 	
@@ -1006,6 +1017,8 @@ $(document).ready(function(e) {
 		});
     });
 	
+	//----------------------- EBL/MBL CONFIGURATION ----------------------------
+	
 	$('#install_normal_setup_vehicule .bConfigurationSave').click(function(e) {
 		wycaApi.SetEnergyConfiguration(parseInt($('#install_normal_setup_vehicule #install_normal_setup_vehicule_i_level_min_gotocharge').val()), parseInt($('#install_normal_setup_vehicule #install_normal_setup_vehicule_i_level_min_dotask').val()), function(data) {
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
@@ -1021,6 +1034,8 @@ $(document).ready(function(e) {
 			}
 		});
     });
+	
+	//----------------------- RECOVERY ----------------------------
 	
 	$('#install_normal_recovery .bRecovery').click(function(e) {
         e.preventDefault();
@@ -1057,6 +1072,8 @@ $(document).ready(function(e) {
 			}
 		});
     });
+	
+	//----------------------- LANGUE ----------------------------
 	
 	$('#pages_install_normal a.select_langue').click(function(e) {
         e.preventDefault();

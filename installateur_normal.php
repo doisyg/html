@@ -1105,14 +1105,15 @@
             <div class="content">
                 
                 <div class="install_normal_setup_export_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
-                
+                <h4 style="text-align:center;margin:30px 0"><?= __('Export sites by clicking on the icon') ?></h4>
+										
                 <div class="loaded col-md-12" style="padding-top:30px;">
                 	<ul class="list_sites list_elem">
                     </ul>
                 </div>
             </div>
             <footer>
-                <a href="#" class="btn btn-wyca button_goto" data-goto="install_normal_setup"><i class="fa fa-chevron-left"></i> <?php echo __('Back');?></a>
+                <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="install_normal_setup"><?php echo __('Back');?></a>
             </footer>
         </section>
              
