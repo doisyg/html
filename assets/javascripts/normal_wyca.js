@@ -487,6 +487,7 @@ $(document).ready(function(e) {
     });
 	
 	// --------------------------- FACTORY RESET ----------------------------------	
+	
 	$('#install_normal_setup_reset .bReset').click(function(e) {
         e.preventDefault();
 		
@@ -514,15 +515,10 @@ $(document).ready(function(e) {
 			alert_wyca('You must confirm by checking the checkbox');
 		}
 		
-    });
-	
-	
-	
+    });	
 });
 
-
 // ----------------------- MAPPING CONFIG ------------------------
-	
 
 var threshold_free_normal = 25;
 var threshold_occupied_normal = 65;
@@ -747,11 +743,11 @@ $(document).ready(function(e) {
 		wycaApi.SetCurrentMapData(data, function(data){
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
-				$('.modalMasterDock .bCloseMasterDock').click();
+				$('#pages_install_normal .modalMasterDock .bCloseMasterDock').click();
 				success_wyca(textSiteImported);
 				$('#pages_install_normal #install_normal_setup_import .bImportSiteBack').click();
 			}else{
-				$('.modalMasterDock .bCloseMasterDock').click();
+				$('#pages_install_normal .modalMasterDock .bCloseMasterDock').click();
 				ParseAPIAnswerError(data);
 				InitSiteImportNormal();
 				
@@ -760,6 +756,7 @@ $(document).ready(function(e) {
 	})
 	
 	// --------------------- ADD SITE --------------------
+	
 	$('#install_normal_setup_sites .bAddSite').click(function(e) {
 		e.preventDefault();
 		
@@ -1019,18 +1016,100 @@ $(document).ready(function(e) {
 	
 	//----------------------- EBL/MBL CONFIGURATION ----------------------------
 	
-	$('#install_normal_setup_vehicule .bConfigurationSave').click(function(e) {
-		wycaApi.SetEnergyConfiguration(parseInt($('#install_normal_setup_vehicule #install_normal_setup_vehicule_i_level_min_gotocharge').val()), parseInt($('#install_normal_setup_vehicule #install_normal_setup_vehicule_i_level_min_dotask').val()), function(data) {
+	$('#pages_install_normal a.real_test').click(function(e) {
+        e.preventDefault();
+		$('#pages_install_normal .modalRealTest_loading').show();
+		$('#pages_install_normal .modalRealTest_content').hide();
+		$('#pages_install_normal .modalRealTest').modal('show');
+		$('#pages_install_normal a.bRealTestDo').addClass('disabled');
+		wycaApi.GetCurrentMapData(function(data){
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
-				success_wyca('Saved');
+				$('#pages_install_normal .modalRealTest_loading').hide();
+				$('#pages_install_normal .modalRealTest_content').show();
+				$('#pages_install_normal select.real_test_start > option').hide();
+				$('#pages_install_normal select.real_test_end > option').hide();
+				//ADD POIS
+				$.each(data.D.pois,function(i, item){
+					$('#pages_install_normal select.real_test_start').append('<option value="poi_'+item.id_poi+'" data-type="poi" data-id="'+item.id_poi+'" >&#xf3c5 - POI - '+item.name+'</option>' );
+					$('#pages_install_normal select.real_test_end').append('<option value="poi_'+item.id_poi+'" data-type="poi" data-id="'+item.id_poi+'">&#xf3c5 - POI - '+item.name+'</option>' );
+				});
+				//ADD DOCKS
+				$.each(data.D.docks,function(i, item){
+					$('#pages_install_normal select.real_test_start').append('<option value="dock_'+item.id_docking_station+'" data-type="dock" data-id="'+item.id_docking_station+'" >&#xf5e7 - Dock - '+item.name+'</option>' );
+					$('#pages_install_normal select.real_test_end').append('<option value="dock_'+item.id_docking_station+'" data-type="dock" data-id="'+item.id_docking_station+'" >&#xf5e7 - Dock - '+item.name+'</option>' );
+				});
+				//ADD A POSES
+				$.each(data.D.augmented_poses,function(i, item){
+					$('#pages_install_normal select.real_test_start').append('<option value="augmented_pose_'+item.id_docking_station+'" data-type="augmented_pose" data-id="'+item.id_augmented_pose+'" >&#xf02a; - A. pose - '+item.name+'</option>' );
+					$('#pages_install_normal select.real_test_end').append('<option value="augmented_pose_'+item.id_docking_station+'" data-type="augmented_pose" data-id="'+item.id_augmented_pose+'" >&#xf02a; - A. pose - '+item.name+'</option>' );
+				});
+				
 			}
 			else
 			{
-				console.log(JSON.stringify(data)); 
-				text = wycaApi.AnswerCodeToString(data.A);
-				if (data.M != '') text += '<br />'+data.M;
-				alert_wyca(text);
+				$('#pages_install_normal .modalRealTest').modal('hide');
+			}
+			$('#pages_install_normal a.bRealTestDo').removeClass('disabled');
+		})		
+		
+	});
+	
+	/* REAL TEST */
+	
+	$('#pages_install_normal a.bRealTestDo').click(function(e) {
+        e.preventDefault();
+		let start = $('#pages_install_normal select.real_test_start option:selected');
+		let end = $('#pages_install_normal select.real_test_end option:selected');
+		if(start.val()!='' && end.val()!='' && end.val()!=start.val()){
+			$('#pages_install_normal .modalRealTest').modal('hide');
+			$('#pages_install_normal .modalRealTestResult').modal('show');
+			
+			$("#pages_install_normal .modalRealTestResult .start_point").hide();
+			$("#pages_install_normal .modalRealTestResult .end_point").hide();
+			$("#pages_install_normal .modalRealTestResult .result_RealTest").hide();
+			
+			$("#pages_install_normal .modalRealTestResult .btn[data-dismiss='modal']").removeClass('disabled');			
+			$("#pages_install_normal .modalRealTestResult .start_point_text").html(start.html());
+			$("#pages_install_normal .modalRealTestResult .end_point_text").html(end.html());
+			
+			RealTestGotoStartNormal(start,end);
+		}
+	});
+	
+	$('#pages_install_normal .modalRealTestResult a.bUseRealTest').click(function(e) {
+		e.preventDefault();
+		let temp = battery_lvl_needed == 0?1:parseInt(battery_lvl_needed);
+		let ebl = temp+5;
+		let mbl = 2*temp;
+		mbl < ebl ? mbl = ebl + 5:'';
+		$('#install_normal_setup_config_i_level_min_gotocharge').val(ebl)
+		$('#install_normal_setup_config_i_level_min_dotask').val(mbl)
+		$('#pages_install_normal .modalRealTestResult').modal('hide')
+    });
+	
+	$('section#install_normal_setup_config a.bResetValueEblMbl').click(function(e) {
+		
+		$('#install_normal_setup_config_i_level_min_gotocharge').val(15)
+		$('#install_normal_setup_config_i_level_min_dotask').val(20)
+    });
+		
+	$('#pages_install_normal .bConfigurationSave').click(function(e) {
+		let EBL = parseInt($('#install_normal_setup_config_i_level_min_gotocharge').val());
+		let MBL = parseInt($('#install_normal_setup_config_i_level_min_dotask').val());
+		EBL = EBL > 100 ? 15 : EBL;
+		EBL = EBL < 0 ? 15 : EBL;
+		MBL = MBL > 100 ? 20 : MBL;
+		MBL = MBL < 0 ? 20 : MBL;
+		wycaApi.SetEnergyConfiguration(EBL,MBL, function(data) {
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				success_wyca('Saved');
+				GetConfigurationsNormal();
+			}
+			else
+			{
+				ParseAPIAnswerError(data);
 			}
 		});
     });
@@ -1242,9 +1321,254 @@ $(document).ready(function(e) {
 			}	
 		});		
 	});
-	
-	
 });
+
+//------------------- CONFIGURATION EBL/MBL ------------------------
+	
+/* FONCTION PROGRESS BAR REAL TEST */	/* REAL TEST */
+	
+function TimerRealTestNormal(step){
+	if(step=='start'){			
+		if(statusRealTestStart > 0){
+			if(statusRealTestStart == 2 && timerRealTestStart==100){
+				statusRealTestStart=0;
+				timerRealTestStart=0;
+				$('#install_normal_setup_config .modalRealTestResult .checkStart').show('fast');
+			}else{
+				$('#install_normal_setup_config .modalRealTestResult .checkStart').hide();
+				delay = statusRealTestStart == 2 ? 1 : 200;
+				timerRealTestStart++;
+				if(timerRealTestStart == 101)timerRealTestStart=0;
+				$('#install_normal_setup_config .startRealTestprogress .progress-bar').css('width', timerRealTestStart+'%').attr('aria-valuenow', timerRealTestStart); 
+				setTimeout(TimerRealTestNormal,delay,step);
+			}
+		}
+	}else if(step=='end'){			
+		if(statusRealTestEnd > 0){
+			if(statusRealTestEnd == 2 && timerRealTestEnd==100){
+				$('#install_normal_setup_config .modalRealTestResult .stop_move').css('opacity',1);
+				statusRealTestEnd=0;
+				timerRealTestEnd=0;
+				$('#install_normal_setup_config .modalRealTestResult .checkEnd').show('fast');
+			}else{
+				$('#install_normal_setup_config .modalRealTestResult .checkEnd').hide();
+				delay = statusRealTestEnd == 2 ? 1 : 200;
+				timerRealTestEnd++;
+				if(timerRealTestEnd == 101)timerRealTestEnd=0;
+				$('#install_normal_setup_config .endRealTestprogress .progress-bar').css('width', timerRealTestEnd+'%').attr('aria-valuenow', timerRealTestEnd); 
+				setTimeout(TimerRealTestNormal,delay,step);
+			}
+		}
+	}
+}
+
+function RealTestGotoStartNormal(start,end){
+	
+	//console.log('Go to start');
+	//console.log(start.data('type'),' id ',start.data('id'));
+	
+	switch(start.data('type')){
+		case 'poi':
+			//AJOUTER ECOUTER RESULT + REBIND OLS FUNCTION FIN ECOUTEUR
+			wycaApi.on('onGoToPoiResult', function (data){
+				if (data.A == wycaApi.AnswerCode.NO_ERROR){
+					battery_lvl_start = battery_lvl_current; // STOCKAGE BATTERY LVL
+					// GO TO END
+					RealTestGotoEndNormal(end);
+				}else{
+					$('#pages_install_normal .modalRealTestResult').modal('hide');
+					ParseAPIAnswerError(data);
+				}
+				if(end.data('type')!='poi') // On rebranche l'ancienne fonction
+					wycaApi.on('onGoToPoiResult', onGoToPoiResult);
+			});
+			
+			id = start.data('id');
+			wycaApi.GoToPoi(id,function(data){
+				if (data.A == wycaApi.AnswerCode.NO_ERROR){
+					$("#pages_install_normal .modalRealTestResult .start_point").show();
+					
+					$("#pages_install_normal .modalRealTestResult .btn[data-dismiss='modal']").addClass('disabled');
+					
+					statusRealTestStart = 1;
+					timerRealTestStart = 0;
+					TimerRealTestNormal('start');
+					$('#install_normal_setup_config .modalRealTestResult .start_point .stop_move').css('opacity',1);
+				}else{
+					$('#pages_install_normal .modalRealTestResult').modal('hide');
+					ParseAPIAnswerError(data);
+				}
+			})
+		break;
+		case 'dock':
+			//AJOUTER ECOUTER RESULT + REBIND OLD FUNCTION FIN ECOUTEUR
+			wycaApi.on('onGoToChargeResult', function (data){
+				if (data.A == wycaApi.AnswerCode.NO_ERROR){
+					battery_lvl_start = battery_lvl_current; // STOCKAGE BATTERY LVL
+					// GO TO END
+					RealTestGotoEndNormal(end);
+				}else{
+					$('#pages_install_normal .modalRealTestResult').modal('hide');
+					ParseAPIAnswerError(data);
+				}
+				if(end.data('type')!='dock') // On rebranche l'ancienne fonction
+					wycaApi.on('onGoToChargeResult', onGoToChargeResult);
+			});
+			
+			id = start.data('id');
+			
+			wycaApi.GoToCharge(id,function(data){
+				if (data.A == wycaApi.AnswerCode.NO_ERROR){
+					$("#pages_install_normal .modalRealTestResult .start_point").show();
+					$("#pages_install_normal .modalRealTestResult .btn[data-dismiss='modal']").addClass('disabled');
+					statusRealTestStart = 1;
+					timerRealTestStart = 0;
+					TimerRealTestNormal('start');
+					$('#install_normal_setup_config .modalRealTestResult .start_point .stop_move').css('opacity',1);
+				}else{
+					$('#pages_install_normal .modalRealTestResult').modal('hide');
+					ParseAPIAnswerError(data);
+				}
+			})
+		break;
+		case 'augmented_pose':
+			//AJOUTER ECOUTER RESULT + REBIND OLS FUNCTION FIN ECOUTEUR
+			wycaApi.on('onGoToAugmentedPoseResult', function (data){
+				if (data.A == wycaApi.AnswerCode.NO_ERROR){
+					battery_lvl_start = battery_lvl_current; // STOCKAGE BATTERY LVL
+					// GO TO END
+					RealTestGotoEndNormal(end);
+				}else{
+					$('#pages_install_normal .modalRealTestResult').modal('hide');
+					ParseAPIAnswerError(data);
+				}
+				if(end.data('type')!='augmented_pose') // On rebranche l'ancienne fonction
+					wycaApi.on('onGoToAugmentedPoseResult', onGoToAugmentedPoseResult);
+			});
+			
+			id = start.data('id');
+			
+			wycaApi.GoToAugmentedPose(id,function(data){
+				if (data.A == wycaApi.AnswerCode.NO_ERROR){
+					$("#pages_install_normal .modalRealTestResult .start_point").show();
+					$("#pages_install_normal .modalRealTestResult .btn[data-dismiss='modal']").addClass('disabled');
+					statusRealTestStart = 1;
+					timerRealTestStart = 0;
+					TimerRealTestNormal('start');
+					$('#install_normal_setup_config .modalRealTestResult .start_point .stop_move').css('opacity',1);
+				}else{
+					$('#pages_install_normal .modalRealTestResult').modal('hide');
+					ParseAPIAnswerError(data);
+				}						
+			})
+		break;
+	}
+	
+}
+
+function RealTestGotoEndNormal(end){
+	//console.log('Go to end');
+	//console.log(end.data('type'),' id ',end.data('id'));
+	$('#install_normal_setup_config .modalRealTestResult .start_point .stop_move').css('opacity',0);
+	statusRealTestStart = 2;
+	statusRealTestEnd = 1;
+	timerRealTestEnd = 0;
+	TimerRealTestNormal('end');						
+	switch(end.data('type')){
+		case 'poi':
+			//AJOUTER ECOUTER RESULT + REBIND OLS FUNCTION FIN ECOUTEUR
+			wycaApi.on('onGoToPoiResult', function (data){
+				if (data.A == wycaApi.AnswerCode.NO_ERROR){
+					statusRealTestEnd = 2;
+					battery_lvl_needed = battery_lvl_start - battery_lvl_current; // STOCKAGE BATTERY LVL NEEDED
+					textDisplay = battery_lvl_needed == 0 ? textLessThanOne : battery_lvl_needed;
+					$('#pages_install_normal .modalRealTestResult .battery_used').html(textDisplay);
+					$("#pages_install_normal .modalRealTestResult .result_RealTest").show();
+				}else{
+					$('#pages_install_normal .modalRealTestResult').modal('hide');
+					ParseAPIAnswerError(data);
+				}
+				$("#pages_install_normal .modalRealTestResult .btn[data-dismiss='modal']").removeClass('disabled');
+					
+				// On rebranche l'ancienne fonction
+				wycaApi.on('onGoToPoiResult', onGoToPoiResult);
+			});
+			
+			id = end.data('id');
+			
+			wycaApi.GoToPoi(id,function(data){
+				if (data.A == wycaApi.AnswerCode.NO_ERROR){
+					$("#pages_install_normal .modalRealTestResult .end_point").show()
+				}else{
+					$('#pages_install_normal .modalRealTestResult').modal('hide');
+					ParseAPIAnswerError(data);
+				}
+			})
+		break;
+		case 'dock':
+			//AJOUTER ECOUTER RESULT + REBIND OLS FUNCTION FIN ECOUTEUR
+			wycaApi.on('onGoToChargeResult', function (data){
+				if (data.A == wycaApi.AnswerCode.NO_ERROR){
+					statusRealTestEnd = 2;
+					battery_lvl_needed = battery_lvl_start - battery_lvl_current; // STOCKAGE BATTERY LVL NEEDED
+					textDisplay = battery_lvl_needed == 0 ? textLessThanOne : battery_lvl_needed;
+					$('#pages_install_normal .modalRealTestResult .battery_used').html(textDisplay);
+					$("#pages_install_normal .modalRealTestResult .result_RealTest").show();
+				}else{
+					$('#pages_install_normal .modalRealTestResult').modal('hide');
+					ParseAPIAnswerError(data);
+				}
+				$("#pages_install_normal .modalRealTestResult .btn[data-dismiss='modal']").removeClass('disabled');
+				
+				// On rebranche l'ancienne fonction
+				wycaApi.on('onGoToChargeResult', onGoToChargeResult);
+			});
+			
+			id = end.data('id');
+			
+			wycaApi.GoToCharge(id,function(data){
+				if (data.A == wycaApi.AnswerCode.NO_ERROR){
+					$("#pages_install_normal .modalRealTestResult .end_point").show()
+				}else{
+					$('#pages_install_normal .modalRealTestResult').modal('hide');
+					ParseAPIAnswerError(data);
+				}
+			})
+			
+		break;
+		case 'augmented_pose':
+			//AJOUTER ECOUTER RESULT + REBIND OLS FUNCTION FIN ECOUTEUR
+			wycaApi.on('onGoToAugmentedPoseResult', function (data){
+				if (data.A == wycaApi.AnswerCode.NO_ERROR){
+					statusRealTestEnd = 2;
+					battery_lvl_needed = battery_lvl_start - battery_lvl_current; // STOCKAGE BATTERY LVL NEEDED
+					textDisplay = battery_lvl_needed == 0 ? textLessThanOne : battery_lvl_needed;
+					$('#pages_install_normal .modalRealTestResult .battery_used').html(textDisplay);
+					$("#pages_install_normal .modalRealTestResult .result_RealTest").show();
+				}else{
+					$('#pages_install_normal .modalRealTestResult').modal('hide');
+					ParseAPIAnswerError(data);
+				}
+				$("#pages_install_normal .modalRealTestResult .btn[data-dismiss='modal']").removeClass('disabled');
+				
+				// On rebranche l'ancienne fonction
+				wycaApi.on('onGoToAugmentedPoseResult', onGoToAugmentedPoseResult);
+			});
+			
+			id = end.data('id');
+			
+			wycaApi.GoToAugmentedPose(id,function(data){
+				if (data.A == wycaApi.AnswerCode.NO_ERROR){
+					$("#pages_install_normal .modalRealTestResult .end_point").show()
+				}else{
+					$('#pages_install_normal .modalRealTestResult').modal('hide');
+					ParseAPIAnswerError(data);
+				}						
+			})
+		break;
+	}
+	// LAUNCH PROGRESS BAR ANIM
+}		
 
 //------------------- ACTIVE TOP ------------------------
 

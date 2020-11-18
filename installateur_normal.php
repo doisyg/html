@@ -1046,10 +1046,10 @@
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="install_normal_setup_trinary" href="#"><i class="far fa-map"></i><?php echo __('Map trinary');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="install_normal_setup_language" href="#"><i class="fa fa-language"></i><?php echo __('Language');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="install_normal_setup_wifi" href="#"><i class="fas fa-wifi"></i><?php echo __('Wifi');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="install_normal_setup_vehicule" href="#"><img class="fi-robot" src="assets/images/robot_white.svg"/><?php echo __('Vehicule');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="install_normal_setup_config" href="#"><i class="fas fa-battery-three-quarters"></i><?php echo __('Battery settings');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5" data-goto="install_normal_setup_tops" href="#"><i class="fa fa-cube"></i><?php echo __('Tops');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" data-goto="install_normal_setup_export" href="#"><i class="fa fa-upload"></i><?php echo __('Export site');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7" data-goto="install_normal_setup_import" href="#"><i class="fa fa-download"></i><?php echo __('Import Site');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7" data-goto="install_normal_setup_import" href="#"><i class="fa fa-download"></i><?php echo __('Import site');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8" data-goto="install_normal_setup_reset" href="#"><i class="fa fa-eraser"></i><?php echo __('Factory data reset');?></a></li>
                 </ul>
             </div>
@@ -1332,44 +1332,125 @@
 			</footer>
         </section>
         
-		<section id="install_normal_setup_vehicule" class="page with_footer">
+		<section id="install_normal_setup_config" class="page with_footer">
 	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
-                <h2><?php echo __('Vehicule');?></h2>
+                <h2><?php echo __('Battery settings');?></h2>
             </header>
-            <form class="form_site" action="" method="post" style="margin-bottom:20px;">
             <div class="content">
-                
-                <div class="install_normal_setup_vehicule_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
-                
-                <div class="loaded col-md-12" style="padding-top:50px;">
-                    
-                    
-                    
-                    <div class="form-group">
-                        <label for="i_level_min_gotocharge" class="col-xs-12 col-md-6 control-label"><?php echo __('Emergency battery level (execute a go to charge if the battery drops below this level)');?></label>
-                        <div class="col-md-6 input-group mb-md">
-                            <input type="text" value="0" class="form-control" name="i_level_min_gotocharge" id="install_normal_setup_vehicule_i_level_min_gotocharge" />
-                            <span class="input-group-addon">%</span>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="i_level_min_dotask" class="col-xs-12 col-md-6 control-label"><?php echo __('Minimum battery level before move:');?></label>
-                        <div class="col-md-6 input-group mb-md">
-                            <input type="text" value="0" class="form-control" name="i_level_min_dotask" id="install_normal_setup_vehicule_i_level_min_dotask" />
-                            <span class="input-group-addon">%</span>
-                        </div>
-                    </div>
-                    
-                    <a href="#" class="bConfigurationSave btn btn-primary"><?php echo __('Save');?></a>
-                </div>
-                
+                <form class="form_site" action="" method="post">
+					<div class="install_normal_setup_config_loading loading_big" style="padding-top:20px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
+					<div class="loaded col-md-12" style="padding-top:25px;">
+						<div class="form-group">
+							<label for="i_level_min_gotocharge" class="col-xs-12 col-md-6 control-label"><?php echo __('Emergency battery level (execute a go to charge if the battery drops below this level)');?></label>
+							<div class="col-md-6 input-group mb-md">
+								<input type="text" value="15" class="form-control" name="i_level_min_gotocharge" id="install_normal_setup_config_i_level_min_gotocharge" />
+								<span class="input-group-addon">%</span>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="i_level_min_dotask" class="col-xs-12 col-md-6 control-label"><?php echo __('Minimum battery level before move:');?></label>
+							<div class="col-md-6 input-group mb-md">
+								<input type="text" value="20" class="form-control" name="i_level_min_dotask" id="install_normal_setup_config_i_level_min_dotask" />
+								<span class="input-group-addon">%</span>
+							</div>
+						</div>
+						<a href="#" class="btn btn-sm btn-primary bResetValueEblMbl" style="margin-left:50%; transform:translateX(-50%);margin-bottom:10px;"><?php echo __('Reset values');?></a>
+						
+						<p><?= _('For more precise values, try to test battery in real conditions') ?></p>
+						<a href="#" class="real_test btn btn-lg btn-success" style="margin-left:50%; transform:translateX(-50%)"><i class="fas fa-route"></i> <?=('Real Test')?></a>
+						
+						<a href="#" class="install_normal_setup_config_next button_goto" data-goto="install_normal_maintenance" style="display:none;"></a>   
+					</div>
+                </form>
+				<div class="modal fade modalRealTest" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+					<div class="modal-dialog" role="dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<div class="actions mh100vh_55">
+									<div class="h100vh_160" style="overflow:auto; text-align:center">
+										<div class="modalRealTest_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i><br><?= _('Loading map\'s data') ?></div>
+										<div class="modalRealTest_content">
+											<p><?= _('Please choose a start position')?></p>
+											<div class="form-group">
+												<select class="form-control form-fa real_test_start">
+													<option value=""><?= _('Start position')?></option>
+												</select>
+											</div>
+											<p><?= _('Please choose a destination')?></p>
+											<div class="form-group">
+												<select class="form-control form-fa real_test_end">
+													<option value=""><?= _('Arrival position')?></option>		
+												</select>
+											</div>
+										</div>
+									</div>
+									<div style="clear:both;"></div>                                   
+									<a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal"><?php echo __('Cancel');?></a>
+									<a href="#" class="btn btn-primary bRealTestDo btn_footer_right btn_50" ><?php echo __('Go');?></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal fade modalRealTestResult" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+					<div class="modal-dialog" role="dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<div class="actions mh100vh_55">
+									<div class="h100vh_160" style="overflow:auto; text-align:center">
+										<div class="modalRealTestResult_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
+										<div class="modalRealTestResult_content text-center">
+											<div class="start_point">
+												<h4><?= _('Go to start position')?></h4>
+												<span class="start_point_text"></span>
+												<div class="row" style="margin: 0;">
+													<div class="col-xs-3">
+														<a href="#" class="stop_move btn btn-danger btn-circle" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Stop move" style="display: none;"><i class="fa fa-stop battery-ko"></i></a>
+													</div>
+													<div class="col-xs-6 startRealTestprogress progress progress-striped light active m-md" style="margin: 6px 0;padding:0">
+														<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;"></div>
+													</div>
+													<div class="col-xs-3">
+														<i class="fas fa-check checkStart fa-2x iconMenuGreen"></i>
+													</div>														
+												</div>														
+											</div>
+											<div class="end_point">
+												<h4><?= _('Go to destination')?></h4>
+												<span class="end_point_text"></span>
+												<div class="row" style="margin: 0;">
+													<div class="col-xs-3">
+														<a href="#" class="stop_move btn btn-danger btn-circle" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Stop move" style="display: none;"><i class="fa fa-stop battery-ko"></i></a>
+													</div>
+													<div class="col-xs-6 endRealTestprogress progress progress-striped light active m-md" style="margin: 6px 0;padding:0">
+														<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;"></div>
+													</div>
+													<div class="col-xs-3">
+														<i class="fas fa-check checkEnd fa-2x iconMenuGreen"></i>
+													</div>														
+												</div>
+											</div>
+											<div class="result_RealTest" style="border-top:1px solid #DCDCDC">
+												<h4><?= _('Battery used :') ?> <span class="battery_used">0</span> %</h4>
+												<p><?= _('Use this result as reference for battery configuration') ?></p>
+												<a href="#" class="btn btn-success bUseRealTest"><?php echo __('Use');?></a>
+											</div>
+										</div>
+									</div>
+									<div style="clear:both;"></div>
+									<a href="#" class="btn btn-default btn_footer_left btn_100" data-dismiss="modal"><!-- onClick="wycaApi.StopMove()"--><?php echo __('Cancel');?></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
             </div>
-            </form>
             <footer>
-                <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>
+                <a href="#" class="btn btn-default btn_footer_left btn_50 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>
+                <a href="#" class="btn btn-primary btn_footer_right btn_50 bConfigurationSave"><?php echo __('Save');?></a>
             </footer>
         </section>
         

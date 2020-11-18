@@ -266,7 +266,7 @@ $(document).ready(function(e) {
 			if (next == 'install_normal_setup_import') InitSiteImportNormal();
 			if (next == 'install_normal_setup_tops') InitTopsNormal();
 			if (next == 'install_normal_setup_top') InitTopsActiveNormal();
-			if (next == 'install_normal_setup_vehicule') GetConfigurationsNormal();
+			if (next == 'install_normal_setup_config') GetConfigurationsNormal();
 			if (next == 'install_normal_setup_wifi') InitInstallWifiPageNormal();
 			if (next == 'install_normal_manager') GetManagersNormal();
 			if (next == 'install_normal_service_book') GetServiceBooksNormal();
@@ -928,15 +928,15 @@ function GetManagersByStep()
 
 function GetConfigurationsNormal()
 {
-	$('.install_normal_setup_vehicule_loading').show();
-	$('#install_normal_setup_vehicule .loaded').hide();
+	$('.install_normal_setup_config_loading').show();
+	$('#install_normal_setup_config .loaded').hide();
 	if (wycaApi.websocketAuthed)
 	{
 		wycaApi.GetEnergyConfiguration(function(data) {
-			$('#install_normal_setup_vehicule #install_normal_setup_vehicule_i_level_min_gotocharge').val(data.D.EBL);
-			$('#install_normal_setup_vehicule #install_normal_setup_vehicule_i_level_min_dotask').val(data.D.MBL);
-			$('.install_normal_setup_vehicule_loading').hide();
-			$('#install_normal_setup_vehicule .loaded').show();
+			$('#install_normal_setup_config #install_normal_setup_config_i_level_min_gotocharge').val(data.D.EBL);
+			$('#install_normal_setup_config #install_normal_setup_config_i_level_min_dotask').val(data.D.MBL);
+			$('.install_normal_setup_config_loading').hide();
+			$('#install_normal_setup_config .loaded').show();
 		});
 	}
 	else
