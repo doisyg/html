@@ -1044,7 +1044,7 @@
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile1" data-goto="install_normal_setup_sites" href="#"><i class="fa fa-building"></i><?php echo __('Sites');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="install_normal_setup_trinary" href="#"><i class="far fa-map"></i><?php echo __('Map trinary');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="install_normal_setup_language" href="#"><i class="fa fa-language"></i><?php echo __('Language');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="install_normal_setup_wifi" href="#"><i class="fa fa-gear"></i><?php echo __('Wifi');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="install_normal_setup_wifi" href="#"><i class="fas fa-wifi"></i><?php echo __('Wifi');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="install_normal_setup_vehicule" href="#"><img class="fi-robot" src="assets/images/robot_white.svg"/><?php echo __('Vehicule');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5" data-goto="install_normal_setup_tops" href="#"><i class="fa fa-cube"></i><?php echo __('Tops');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" data-goto="install_normal_setup_export" href="#"><i class="fa fa-upload"></i><?php echo __('Export site');?></a></li>
@@ -1250,23 +1250,20 @@
             <div class="content">
             
             	<h3><?php echo __('Configure Wifi');?></h3>
-                
+                <div class="install_normal_setup_wifi_loading loading_big" style="display:block"><i class="fa fa fa-spinner fa-pulse"></i></div>
                 <table class="table table_wifi">
                 	<tbody class="tbody_wifi">
                     </tbody>
                 </table>
-                
                 <a href="#" class="refresh_wifi btn btn-default pull-left"><i class="fa fa-refresh"></i></a>
-                
-                <a href="#" class="set_passwd_wifi button_goto" data-goto="install_normal_setup_wifi_password" style="display:none;"></a>
-                
             </div>
             <footer>
                 <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>
+				<a href="#" class="set_passwd_wifi button_goto" data-goto="install_normal_setup_wifi_password" style="display:none;"></a>
             </footer>
         </section>
        
-		<section id="install_normal_setup_wifi_password" class="page">
+		<section id="install_normal_setup_wifi_password" class="page with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_normal_setup_wifi"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
@@ -1278,7 +1275,6 @@
                 
                 <form class="form_site" action="" method="post" style="margin-bottom:20px;">
 	                <input type="password" class="form-control i_wifi_passwd_name" value="" />
-	                <button type="submit" class="install_normal_setup_wifi_password_save btn btn-default pull-right" style="margin-top:20px;">Connect</button>
                 </form>
                 
                 <div class="wifi_connexion_error"></div>
@@ -1286,6 +1282,10 @@
                 <div class="wifi_connexion_progress"><i class="fa fa fa-spinner fa-pulse"></i></div>
                 
             </div>
+			<footer>
+				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50" data-goto="install_normal_setup_wifi"><?= __('Back')?></a>
+				<a href="#" class="install_normal_setup_wifi_password_save btn btn-primary btn_footer_right btn_50"><?= __('Connect')?></a>
+			</footer>
         </section>
         
 		<section id="install_normal_setup_vehicule" class="page with_footer">

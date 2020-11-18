@@ -857,6 +857,8 @@ $(document).ready(function(e) {
 		$('#install_normal_manager .modalManager').modal('show');
 	});
 	
+	//----------------------- WIFI ----------------------------
+	
 	$('#install_normal_setup_wifi .refresh_wifi').click(function(e) {
 		e.preventDefault();		
 	});
