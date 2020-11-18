@@ -3,6 +3,10 @@ var mouseDownActive = false;
 
 function mouseHandler(event)
 {
+	if (event.target.tagName == 'SELECT') return;
+	if (event.target.tagName == 'INPUT') return;
+	if (event.target.tagName == 'TEXTAREA') return;
+		
 	var touches = event.changedTouches,
 		eventType = "";
 	switch(event.type)
