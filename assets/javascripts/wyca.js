@@ -596,10 +596,11 @@ function InitMasterDockByStep(back = false)
 	
 }
 
-function InitMasterDockNormal(back = false)
+function InitMasterDockNormal()
 {
-	$('#pages_install_normal #MasterDockList').html('');
-	$('#pages_install_normal .MasterDock_loading').show();
+	$('#pages_install_normal .modalMasterDock #MasterDockList').html('');
+	$('#pages_install_normal .modalMasterDock .MasterDock_loading').show();
+	$('#pages_install_normal .modalMasterDock').modal('show');
 	
 	if(docks != 'undefined' && docks.length > 1){
 		$.each(docks,function(idx,item){
@@ -619,10 +620,7 @@ function InitMasterDockNormal(back = false)
 			wycaApi.GetCurrentMapData(function(data){
 				if (data.A == wycaApi.AnswerCode.NO_ERROR){
 					if(data.D.docks.length <= 1){
-						if(!back)
-							$('.install_normal_site_master_dock_next').click();
-						else
-							$('#install_normal_site_master_dock .bBackButton').click();
+						$('#pages_install_normal #install_normal_setup_import .bImportSiteBack').click();
 					}else{
 						forbiddens = data.D.forbiddens;
 						areas = data.D.areas;
@@ -651,7 +649,6 @@ function InitMasterDockNormal(back = false)
 			setTimeout(InitMasterDockNormal, 500);
 		}
 	}
-	
 }
 
 function InitTopImportByStep()

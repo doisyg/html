@@ -673,16 +673,47 @@ $(document).ready(function(e) {
 				wycaApi.ImportSite(btoa(reader.result), function(data) { 
 					if (data.A == wycaApi.AnswerCode.NO_ERROR)
 					{
-						$('#pages_install_normal .install_normal_setup_import_loading').hide();
-						$('#pages_install_normal .install_normal_setup_import_content').show();
+						id_site = data.D;
+						wycaApi.SetSiteAsCurrent(id_site,function(data){
+							if (data.A == wycaApi.AnswerCode.NO_ERROR)
+							{
+								wycaApi.GetCurrentMapData(function(data){
+									if (data.A == wycaApi.AnswerCode.NO_ERROR)
+									{
+										if(data.D.docks.length <= 1){
+											$('#pages_install_normal .install_normal_setup_import_loading').hide();
+											$('#pages_install_normal .install_normal_setup_import_content').show();
+											success_wyca(textSiteImported);
+											$('#pages_install_normal .bImportSiteBack').click();
+										}else{
+											forbiddens = data.D.forbiddens;
+											areas = data.D.areas;
+											docks = data.D.docks;
+											pois = data.D.pois;
+											augmented_poses = data.D.augmented_poses; 
+											
+											InitMasterDockNormal();
+										}
+									}else{
+										ParseAPIAnswerError(data);
+										InitSiteImportNormal();
+									}
+								})
+							}
+							else
+							{
+								ParseAPIAnswerError(data);
+								InitSiteImportNormal();
+							}
+						})
 						
-						success_wyca('Imported');
 						
-						$('.bImportSiteBack').click();
+						
 					}
 					else
 					{
 						ParseAPIAnswerError(data);
+						InitSiteImportNormal();
 					}
 				});
 			};
@@ -693,6 +724,33 @@ $(document).ready(function(e) {
 			setTimeout(function(){icon.toggleClass('shake')},2000);
 		}
     });
+	
+	//----------------------- MASTER DOCK ----------------------------
+	
+	//DECLARATION EVENTLISTENER BOUTON CREE DYNAMIQUEMENT .on('event',function(){})
+	$( "#pages_install_normal #MasterDockList" ).on( 'click', '.MasterDockItem', function(e) {
+		let id_master = $(this).attr('id');
+		$.each(docks,function(idx,item){
+			docks[idx].is_master=false;
+			if(item.id_docking_station == id_master){
+				docks[idx].is_master=true;
+			}
+		})
+		data = GetDataMapToSave();
+		wycaApi.SetCurrentMapData(data, function(data){
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$('.modalMasterDock .bCloseMasterDock').click();
+				success_wyca(textSiteImported);
+				$('#pages_install_normal #install_normal_setup_import .bImportSiteBack').click();
+			}else{
+				$('.modalMasterDock .bCloseMasterDock').click();
+				ParseAPIAnswerError(data);
+				InitSiteImportNormal();
+				
+			}
+		})		
+	})
 	
 	// --------------------- ADD SITE --------------------
 	$('#install_normal_setup_sites .bAddSite').click(function(e) {

@@ -1132,6 +1132,32 @@
 						<span class="filename_import_site" style="display:none">Test</span>
 					</div>
     			</div>
+				<div class="modal fade modalMasterDock" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                    <div class="modal-dialog" role="dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="actions mh100vh_55">
+									<div class="h100vh_160" style="overflow:auto; text-align:center">
+										<h4 style="text-align:center;margin:30px 0"><?= __('Pick the default docking station') ?></h4>
+										
+										<div class="MasterDock_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
+										<ul class="tuiles row" id="MasterDockList">
+											
+										</ul>
+										<p style="padding-left:5px;margin-top:10px"><i class="fas fa-asterisk" style="color: darkorange;"></i> <?= _('Actual default dock') ?></p>
+										
+                                    </div>
+                                    
+                                    <div style="clear:both;"></div>
+									
+                                    
+                                    <a href="#" class="btn btn-default btn_50 bCloseMasterDock" style="display:none;" data-dismiss="modal"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
             <footer>
                 <a href="#" class="btn btn-default button_goto bImportSiteBack" data-goto="install_normal_setup" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><i class="fa fa-chevron-left"></i> <?php echo __('Back');?></a>

@@ -218,5 +218,9 @@ $_LANG['17e88a8aca7c2d27584ab7823e1cfee7'] = 'Move the robot using the joystick.
 $_LANG['0323de4f66a1700e2173e9bcdce02715'] = 'Logout';
 $_LANG['884441f623b400768b491296549803cb'] = 'Setting new active top';
 $_LANG['11c92c2829c7a77791b73d52b8c04752'] = 'Available tops saved';
+$_LANG['b0519851f2414e277fa2dfe378b9f391'] = 'Site successfully imported';
+$_LANG['2b1332774a26889f402d28a305dcbd9f'] = 'Export your sites by clicking on the icon';
+$_LANG['9b945efebb006547a94415eadaa12921'] = 'Accounts';
+$_LANG['55ea14fa53cbbbba5cea4312faa32053'] = 'Export sites by clicking on the icon';
 
 ?>
