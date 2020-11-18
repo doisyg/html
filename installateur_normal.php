@@ -1233,15 +1233,21 @@
             <div class="content">
             
             	<ul class="tuiles heightauto row">
-                	<li class="col-xs-4 col-md-3 col-lg-2">
+                	<li class="col-xs-6 col-md-6 col-lg-6">
                         <a href="#" class="select_langue anim_tuiles tuile_img tuile1" data-id_lang="1">
                             <img src="assets/images/lang/fr_big.jpg" />
                         </a>
                     </li>
-                	<li class="col-xs-4 col-md-3 col-lg-2">
+					<li class="col-xs-6 col-md-6 col-lg-6">
+                        <h2 style="margin-top:35px"><?= _('Français') ?></h2>
+                    </li>
+                	<li class="col-xs-6 col-md-6 col-lg-6" style="clear:both; margin-top:20px">
                         <a href="#" class="select_langue anim_tuiles tuile_img tuile2" data-id_lang="2">
                             <img src="assets/images/lang/en_big.jpg" />
                         </a>
+                    </li>
+					<li class="col-xs-6 col-md-6 col-lg-6" style="margin-top:20px">
+                        <h2 style="margin-top:35px"><?= _('English') ?></h2>
                     </li>
                 </ul>
                 
