@@ -216,5 +216,7 @@ $_LANG['8f7589ce40934ea04a59bd1e3ddbf894'] = 'Move the robot near a reflector (d
 $_LANG['1ba9079e4cad4c5653a85702da6f4579'] = 'The robot needs to relocate itself.';
 $_LANG['17e88a8aca7c2d27584ab7823e1cfee7'] = 'Move the robot using the joystick.';
 $_LANG['0323de4f66a1700e2173e9bcdce02715'] = 'Logout';
+$_LANG['884441f623b400768b491296549803cb'] = 'Setting new active top';
+$_LANG['11c92c2829c7a77791b73d52b8c04752'] = 'Available tops saved';
 
 ?>

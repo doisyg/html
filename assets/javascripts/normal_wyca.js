@@ -1022,51 +1022,50 @@ $(document).ready(function(e) {
 		});
     });
 	
-	$('#pages_install_normal .file_import_site').change(function(){
+	//------------------- AVAILABLES TOPS ------------------------
+	
+	$('#pages_install_normal .file_import_top').change(function(){
 		//console.log('here');
-		$('#pages_install_normal .filename_import_site').html($(this)[0].files[0].name);
-		$('#pages_install_normal .filename_import_site').show();
-		$('#pages_install_normal .file_import_site_wrapper').css('background-color','#47a4476e');
+		$('#pages_install_normal .filename_import_top').html($(this)[0].files[0].name);
+		$('#pages_install_normal .filename_import_top').show();
+		$('#pages_install_normal .file_import_top_wrapper').css('background-color','#47a4476e');
 		
 	})
 	
-	$('#pages_install_normal a.bImportSiteDo').click(function(e) {
+	$('#pages_install_normal a.bImportTopDo').click(function(e) {
         e.preventDefault();
-		file = $('#pages_install_normal .file_import_site')[0].files[0];
+		file = $('#pages_install_normal .file_import_top')[0].files[0];
 		if(file != undefined){
-			
-			$('#pages_install_normal .install_normal_setup_import_loading').show();
-			$('#pages_install_normal .install_normal_setup_import_content').hide();
-			
+			$('#pages_install_normal .modalImportTop_loading').show();
+			$('#pages_install_normal .modalImportTop_content').hide();
 			var reader = new FileReader();
 			reader.onload = function(event) { 
-				wycaApi.ImportSite(btoa(reader.result), function(data) { 
+				wycaApi.InstallNewTopWithoutKey(btoa(reader.result), function(data) { 
 					if (data.A == wycaApi.AnswerCode.NO_ERROR)
 					{
-						$('#pages_install_normal .install_normal_setup_import_loading').hide();
-						$('#pages_install_normal .install_normal_setup_import_content').show();
 						
-						success_wyca('Imported');
+						$('#pages_install_normal .modalImportTop_loading').hide();
+						$('#pages_install_normal .modalImportTop_content').show();
 						
-						$('.bImportSiteBack').click();
+						$('#pages_install_normal .modalImportTop').modal('hide');
+						InitTopsNormal();
 					}
 					else
 					{
-						console.log(JSON.stringify(data)); 
-						text = wycaApi.AnswerCodeToString(data.A);
-						if (data.M != '') text += '<br />'+data.M;
-						alert_wyca(text);
+						ParseAPIAnswerError(data);
 					}
+					
+					
 				});
 			};
 			reader.readAsText(file);
 		}else{
-			let icon = $('#pages_install_normal .file_import_site_wrapper > p > i');
+			//NO FILE UPLOADED AND CLICK ON BTN => SHAKE ICON
+			let icon = $('#pages_install_normal .file_import_top_wrapper > p > i');
 			icon.toggleClass('shake');
 			setTimeout(function(){icon.toggleClass('shake')},2000);
 		}
     });
-	
 	
 	$('#pages_install_normal a.import_top').click(function(e) {
         e.preventDefault();
@@ -1075,16 +1074,19 @@ $(document).ready(function(e) {
 		$('#pages_install_normal .modalImportTop_content').show();
 		
 		$('#pages_install_normal .modalImportTop').modal('show');
+		InitNormalTopImport();
 	});
 	
 	$('#pages_install_normal a.save_tops').click(function(e) {
         e.preventDefault();
 		
 		var listAvailableTops = Array();
-		$('#pages_install_normal .install_by_step_top li').hide();
-		$(this).parent().find('.is_checkbox.checked').each(function(index, element) {
+		console.log($(this))
+		console.log($(this).parent())
+		//$('#pages_install_normal #install_normal_setup_tops li').hide();
+		$('#install_normal_setup_tops ul.tuiles').find('.is_checkbox.checked').each(function(index, element) {
             listAvailableTops.push($(this).data('id_top'));
-			$('#pages_install_normal .install_by_step_top .bTop'+$(this).data('id_top')).show();
+			$('#pages_install_normal #install_normal_setup_tops .bTop'+$(this).data('id_top')).show();
         });
 		
 		if (listAvailableTops.length == 0)
@@ -1100,14 +1102,11 @@ $(document).ready(function(e) {
 					wycaApi.SetActiveTop(listAvailableTops[0], function(data){
 						if (data.A == wycaApi.AnswerCode.NO_ERROR)
 						{
-							success_wyca('Saved');
+							success_wyca(textAvailablesTopsSaved);
 						}
 						else
 						{
-							console.log(JSON.stringify(data)); 
-							text = wycaApi.AnswerCodeToString(data.A);
-							if (data.M != '') text += '<br />'+data.M;
-							alert_wyca(text);
+							ParseAPIAnswerError(data);
 						}
 					});
 				}
@@ -1115,19 +1114,18 @@ $(document).ready(function(e) {
 				{
 					if (data.A == wycaApi.AnswerCode.NO_ERROR)
 					{
-						success_wyca('Recovery done !');
+						success_wyca(textAvailablesTopsSaved);
 					}
 					else
 					{
-						console.log(JSON.stringify(data)); 
-						text = wycaApi.AnswerCodeToString(data.A);
-						if (data.M != '') text += '<br />'+data.M;
-						alert_wyca(text);
+						ParseAPIAnswerError(data);
 					}
 				}
 			});
 		}
     });
+	
+	//------------------- ACTIVE TOP ------------------------
 	
 	$( '#pages_install_normal' ).on( 'click', 'a.set_top', function(e) {
         e.preventDefault();
@@ -1175,6 +1173,8 @@ $(document).ready(function(e) {
 	
 	
 });
+
+//------------------- ACTIVE TOP ------------------------
 
 var timerSetActiveTop = 10;
 var timerSetActiveTopCurrent = 10;

@@ -1074,7 +1074,7 @@
                 </div>         
             </div>
             <footer>
-            	<a href="#" class="btn btn-default button_goto btn_footer_left btn_50" data-goto="install_normal_setup" ><?php echo __('Cancel');?></a>           
+            	<a href="#" class="btn btn-default button_goto btn_footer_left btn_50" data-goto="install_normal_setup" ><?php echo __('Cancel');?></a>
                 <a href="#" class="btn btn-danger bReset btn_footer_right btn_50"><?php echo __('Reset');?></a>
                 <a href="#" class="button_goto bGotoReset" data-goto="install_normal_setup_reset_do" style="display:none;"></a>
             </footer>
@@ -1346,26 +1346,34 @@
                 <h2><?php echo __('Tops');?></h2>
             </header>
             <div class="content">
-            	<div class="install_normal_setup_tops_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
+				<div class="install_normal_setup_tops_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
+				<h5 class="text-center" style="margin-bottom:5px;"><?= _('Please select available tops for the vehicle.') ?></h5>
+				<p class="text-center" style="margin-bottom:30px;"><i class="fas fa-exclamation-triangle"></i> <?= _('This is not the active top selection.') ?></p>
+            	
                 <ul class="tuiles row">
                 </ul>
                 
-                <a href="#" class="save_tops btn btn-default pull-right">Save</a> 
+                
                 <div style="clear:both; height:20px;"></div>
-                <a href="#" class="import_top btn btn-default pull-left">Import new top</a>   
-                  
-                <a href="#" class="button_goto btn btn-default pull-right" data-goto="install_normal_setup_top" >Select active Top</a>
-            
+                <div style="display:flex;justify-content:space-around">
+					<a href="#" class="import_top btn btn-success"><?= _('Import new top')?></a>
+					<a href="#" class="button_goto btn btn-info" data-goto="install_normal_setup_top"><?= _('Select active Top')?></a>
+				</div>
                 <div class="modal fade modalImportTop" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
                     <div class="modal-dialog" role="dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <div class="actions mh100vh_55">
-                                    <div class="h100vh_160" style="overflow:auto; text-align:center">
+                                     <div class="h100vh_160" style="overflow:auto; text-align:center">
                                     
                                         <div class="modalImportTop_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
                                         <div class="modalImportTop_content">
-	                                        <input class="file_import_top" type="file" class="form-control" />
+	                                        <div class="file_import_top_wrapper">
+												<input class="file_import_top" type="file" class="form-control" accept=".wyca"/>
+												<p><i class="fas fa-2x fa-file-import"></i><br><?= __('Import')?><br><?= __('your')?><br><?= __('Top')?></p>
+												<span class="filename_import_top" style="display:none">Test</span>
+											</div>
+											<img class="img-responsive" id="elodie_import_top" src="assets/images/elodie_form.png">
                                         </div>
                                         
                                     </div>
@@ -1374,7 +1382,7 @@
                                    
                                     
                                     <a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal"><?php echo __('Cancel');?></a>
-									<a href="#" class="btn btn-success bImportTopDo btn_footer_right btn_50" ><?php echo __('Import');?></a>
+									<a href="#" class="btn btn-primary bImportTopDo btn_footer_right btn_50" ><?php echo __('Import');?></a>
                                 </div>
                             </div>
                         </div>
@@ -1383,7 +1391,9 @@
                 
             </div>
             <footer>
-                <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>
+				
+                <a href="#" class="btn btn-default btn_footer_left btn_50 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>
+				<a href="#" class="save_tops btn btn-primary btn_footer_right btn_50"><?= _('Save')?></a> 
             </footer>
         </section>
         
@@ -1395,6 +1405,7 @@
             </header>
             <div class="content">
             	<div class="install_by_step_top_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
+				<h5 class="text-center" style="margin-bottom:30px;"><?= _('Please select the active top for the vehicle.') ?></h5>
                 <ul class="tuiles row">
                 </ul>
                 
@@ -1408,7 +1419,7 @@
                                     
                                     <div class="h100vh_160" style="overflow:auto">
                                         <div class="progressSetActiveTop" style="display:none;">
-                                            <h3><?php echo __('Set active top');?></h3>
+                                            <h4 style="text-align:center;margin-bottom:20px"><?php echo __('Setting new active top');?></h4>
                                             <div class="setActiveTopProgress progress progress-striped light active m-md">
                                                 <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;">
                                                 </div>
