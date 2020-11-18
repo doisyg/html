@@ -49,6 +49,7 @@
 		var textSelectOnOrMoreTops = "<?php echo addslashes(stripslashes(__('You must select one or more tops')));?>";
 		var textAvailablesTopsSaved = "<?php echo addslashes(stripslashes(__('Available tops saved')));?>";
 		var textIndicateAName = "<?php echo addslashes(stripslashes(__('You must indicate a name')));?>";
+		var textSiteImported = "<?php echo addslashes(stripslashes(__('Site successfully imported')));?>";
 		var textNameUsed = "<?php echo addslashes(stripslashes(__('Name already used please change')));?>";
 		var textStartMapping = "<?php echo addslashes(stripslashes(__('Start mapping')));?>";
 		var textStopNavigation = "<?php echo addslashes(stripslashes(__('Stop navigation')));?>";

@@ -256,8 +256,8 @@ $(document).ready(function(e) {
 				}
 			}
 			
-			if (next == 'install_by_step_site_master_dock' && fromBackBtn) InitByStepSiteMasterDock('back');
-			if (next == 'install_by_step_site_master_dock' && !fromBackBtn) InitByStepSiteMasterDock();
+			if (next == 'install_by_step_site_master_dock' && fromBackBtn) InitMasterDockByStep('back');
+			if (next == 'install_by_step_site_master_dock' && !fromBackBtn) InitMasterDockByStep();
 			if (next == 'install_by_step_manager') GetManagersByStep();
 			if (next == 'install_by_step_service_book') GetServiceBooksByStep();
 			
@@ -522,6 +522,9 @@ function InitSiteImportNormal()
 	$('#pages_install_normal .filename_import_site').hide();
 	$('#pages_install_normal .file_import_site_wrapper').css('background-color','#589fb26e');
 	$('#pages_install_normal .file_import_site').val('');
+	
+	$('#pages_install_normal .install_normal_setup_import_loading').hide();
+	$('#pages_install_normal .install_normal_setup_import_content').show();
 }
 
 function InitSiteImportByStep()
@@ -530,9 +533,12 @@ function InitSiteImportByStep()
 	$('#pages_install_by_step .filename_import_site').hide();
 	$('#pages_install_by_step .file_import_site_wrapper').css('background-color','#589fb26e');
 	$('#pages_install_by_step .file_import_site').val('');
+	
+	$('#pages_install_by_step .install_by_step_setup_import_loading').hide();
+	$('#pages_install_by_step .install_by_step_setup_import_content').show();
 }
 
-function InitByStepSiteMasterDock(back = false)
+function InitMasterDockByStep(back = false)
 {
 	$('#pages_install_by_step #MasterDockList').html('');
 	$('#pages_install_by_step .MasterDock_loading').show();
@@ -584,13 +590,13 @@ function InitByStepSiteMasterDock(back = false)
 				}
 			})
 		}else{
-			setTimeout(InitByStepSiteMasterDock, 500);
+			setTimeout(InitMasterDockByStep, 500);
 		}
 	}
 	
 }
 
-function InitNormalSiteMasterDock(back = false)
+function InitMasterDockNormal(back = false)
 {
 	$('#pages_install_normal #MasterDockList').html('');
 	$('#pages_install_normal .MasterDock_loading').show();
@@ -642,7 +648,7 @@ function InitNormalSiteMasterDock(back = false)
 				}
 			})
 		}else{
-			setTimeout(InitNormalSiteMasterDock, 500);
+			setTimeout(InitMasterDockNormal, 500);
 		}
 	}
 	

@@ -877,7 +877,7 @@ $(document).ready(function(e) {
 					{
 						$('#pages_install_by_step .install_by_step_setup_import_loading').hide();
 						$('#pages_install_by_step .install_by_step_setup_import_content').show();
-						//success_wyca('Imported');
+						//success_wyca(textSiteImported);
 						console.log(data);
 						if(data.D > -1){
 							wycaApi.SetSiteAsCurrent(data.D,function(data){
@@ -894,7 +894,7 @@ $(document).ready(function(e) {
 													},
 													dataType: 'json',
 													success: function(data) {
-														success_wyca('Imported');
+														success_wyca(textSiteImported);
 														$('.install_by_step_site_master_dock_next').click();
 													},
 													error: function(e) {
@@ -916,7 +916,7 @@ $(document).ready(function(e) {
 													dataType: 'json',
 													success: function(data) {
 														
-														InitByStepSiteMasterDock();
+														InitMasterDockByStep();
 														$('.install_by_step_import_site_next').click();
 													},
 													error: function(e) {
