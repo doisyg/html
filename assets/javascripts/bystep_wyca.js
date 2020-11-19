@@ -1620,8 +1620,8 @@ $(document).ready(function(e) {
 					if ($('#install_by_step_manager_list_manager_elem_'+id_user).length > 0)
 					{
 						$('#install_by_step_manager_list_manager_elem_'+id_user+' span.email').html(json_user.email);
-						$('#install_by_step_manager_list_manager_elem_'+id_user+' span.societe').html(json_user.company);
 						/*
+						$('#install_by_step_manager_list_manager_elem_'+id_user+' span.societe').html(json_user.company);
 						$('#install_by_step_manager_list_manager_elem_'+id_user+' span.prenom').html(json_user.firstname);
 						$('#install_by_step_manager_list_manager_elem_'+id_user+' span.nom').html(json_user.lastname);
 						*/
@@ -1636,7 +1636,7 @@ $(document).ready(function(e) {
 							'</li>'
 							);
 					}
-					RefreshDisplayManager();
+					RefreshDisplayManagerByStep();
 					$('#install_by_step_manager .modalManager').modal('hide');
 				}
 				else
@@ -1656,7 +1656,7 @@ $(document).ready(function(e) {
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
 				$('#install_by_step_manager_list_manager_elem_'+id_user_to_delete).remove();
-				RefreshDisplayManager();
+				RefreshDisplayManagerByStep();
 			}
 			else
 			{
@@ -2099,24 +2099,25 @@ function RealTestGotoEndByStep(end){
 
 //------------------- STEP MANAGERS ------------------------	
 
-function RefreshDisplayManager(){
-	if($('ul.list_managers li').length > 0){
+function RefreshDisplayManagerByStep(){
+	if($('#install_by_step_manager ul.list_managers li').length > 0){
 		//HIDE TUILE et AFF NEXT
-		$('a.bAddManager').show();
-		$('#bValidManager_Next').show();
+		$('#install_by_step_manager a.bAddManager').show();
+		$('#install_by_step_manager .bValidManagerNext').show();
 		
-		$('#bValidManager_Skip').hide();
-		$('#bAddManagerTuile').hide();
+		$('#install_by_step_manager .bValidManager_Skip').hide();
+		$('#install_by_step_manager .bAddManagerTuile').hide();
 	}else{
 		//AFF TUILE ET SKIP
-		$('a.bAddManager').hide();
-		$('#bValidManager_Next').hide();
+		$('#install_by_step_manager a.bAddManager').hide();
+		$('#install_by_step_manager .bValidManagerNext').hide();
 		
-		$('#bValidManager_Skip').show();
-		$('#bAddManagerTuile').show();
+		$('#install_by_step_manager .bValidManager_Skip').show();
+		$('#install_by_step_manager .bAddManagerTuile').show();
 	}
 	
 }
+
 
 //------------------- STEP MAPPING CONFIG ------------------------	
 

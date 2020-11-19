@@ -1722,7 +1722,7 @@
                 
                 <div class="loaded col-md-12" style="padding-top:30px;">
                 	
-					<ul class="tuiles row" id="bAddManagerTuile" style="margin-bottom:30px;">
+					<ul class="tuiles row bAddManagerTuile" style="margin-bottom:30px;">
 						<li class="col-xs-6" style="margin-left: 25%;">
 							<div class="is_checkbox tuile_img no_update bAddManager" style="height:max-content;bottom:0;border-radius:10px">
 								<i class="fas fa-user-plus" style="padding-top:5px"></i>
@@ -1848,8 +1848,8 @@
             </div>
             <footer>
 				<a href="#" class="btn btn-default button_goto btn_footer_left btn_50 btn_back" data-goto="install_by_step_maintenance"><?php echo __('Back');?></a>
-            	<a href="#" id="bValidManager_Next" class="btn btn-primary button_goto bValidManager btn_footer_right btn_50" data-goto="install_by_step_service_book" style="display:none;"><?php echo __('Next');?></a>
-            	<a href="#" id="bValidManager_Skip" class="btn btn-warning button_goto bValidManager btn_footer_right btn_50" data-goto="install_by_step_service_book"><?php echo __('Skip');?></a>
+            	<a href="#" class="bValidManagerNext btn btn-primary button_goto bValidManager btn_footer_right btn_50" data-goto="install_by_step_service_book" style="display:none;"><?php echo __('Next');?></a>
+            	<a href="#" class="bValidManagerSkip btn btn-warning button_goto bValidManager btn_footer_right btn_50" data-goto="install_by_step_service_book"><?php echo __('Skip');?></a>
             </footer>
         </section>
 		

@@ -175,7 +175,9 @@ $(document).ready(function(e) {
 		$(this).parent().find('.bSaveMapTestDock i').removeClass('fa-check fa-spinner fa-pulse fa-remove');
     });
 	
+	/* ------------------------- GESTION BTN GOTO -----------------------*/
 	$( 'body' ).on( 'click', '.button_goto', function(e) {
+		
 		let anim_show = true; // TRIGGER ANIM ? 
 		if($(this).hasClass('btn_back')){
 			
@@ -334,7 +336,7 @@ $(document).ready(function(e) {
 				}
 			}
     });
-	
+	/* ------------------------- GESTION BTN GOTO -----------------------*/
 	$(document).on('touchstart', '.ui-slider-handle', function(event) {
 		var self = this;
 	
@@ -915,7 +917,7 @@ function GetManagersByStep()
 			
 			$('.install_by_step_manager_loading').hide();
 			$('#install_by_step_manager .loaded').show();
-			RefreshDisplayManager();
+			RefreshDisplayManagerByStep();
 		});
 		
 	}
@@ -1404,7 +1406,8 @@ function success_info_wyca(text)
 	$('#success_info_wyca').show();
 }
 
-function hexToRgb(hex) {
+function hexToRgb(hex)
+{
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result ? {
     r: parseInt(result[1], 16),
@@ -1522,14 +1525,16 @@ function GetDataMapToSave()
 }
 
 /* GESTION COOKIES */
-function setCookie(cname, cvalue, exdays = 90) {
+function setCookie(cname, cvalue, exdays = 90)
+{
 	var d = new Date();
 	d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
 	var expires = "expires="+d.toUTCString();
 	document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
-function getCookie(cname) {
+function getCookie(cname)
+{
 	var name = cname + "=";
 	var ca = document.cookie.split(';');
 	for(var i = 0; i < ca.length; i++) {
