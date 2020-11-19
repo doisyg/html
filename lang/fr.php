@@ -225,5 +225,7 @@ $_LANG['55ea14fa53cbbbba5cea4312faa32053'] = 'Export sites by clicking on the ic
 $_LANG['a2c9e7f48646664118ff543b27bcbfb4'] = 'Battery Configuration';
 $_LANG['6852ff686fa7216ba1c9b958d5f80f23'] = 'Battery settings';
 $_LANG['7ad51d59926d9281d04b502e8983892a'] = 'Import site';
+$_LANG['591bcfaf5a4bd8634bc0c00e73ce0ffa'] = 'Passwords needs to be 8 character long with at least 1 uppercase letter and 1 special character or digit';
+$_LANG['8a6d1cedd49bdb5f8dd41007ab57b294'] = 'Create user';
 
 ?>

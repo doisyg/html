@@ -859,6 +859,7 @@ $(document).ready(function(e) {
     });
 	
 	//------------------- ACCOUNTS ------------------------
+	//MANAGERS
 	$('#install_normal_manager .bHelpManagerOk').click(function(){boolHelpManager = !$('#install_normal_manager .checkboxHelpManager').prop('checked')});//ADD SAVING BDD / COOKIES ?
 	
 	$('#install_normal_manager .bAddManager').click(function(e) {
@@ -900,7 +901,7 @@ $(document).ready(function(e) {
 				"pass": $('#install_normal_manager .modalManager #install_normal_manager_i_manager_password').val(),
 				"id_group_user": 3,
 			};
-			console.log(json_user);
+			
 			wycaApi.SetUser(json_user, function(data) {
 				if (data.A == wycaApi.AnswerCode.NO_ERROR)
 				{
@@ -972,8 +973,7 @@ $(document).ready(function(e) {
 		$('#install_normal_manager .modalManager #install_normal_manager_i_manager_cpassword').removeClass('success').removeClass('error');
 		
 		$('#install_normal_manager .modalManager').modal('show');
-	});
-	
+	});	
 	
 	$('#install_normal_manager input#install_normal_manager_i_manager_email').change(function(e){
 		if($(this)[0].checkValidity())
@@ -996,6 +996,148 @@ $(document).ready(function(e) {
 			$(this).removeClass('success').addClass('error');
 		if($('#install_normal_manager input#install_normal_manager_i_manager_password').val() =! ''){
 			if($(this).val() == $('#install_normal_manager input#install_normal_manager_i_manager_password').val())
+				$(this).removeClass('error').addClass('success');
+			else
+				$(this).removeClass('success').addClass('error');
+		}
+	})
+	
+	//USERS
+	
+	$('#install_normal_user .bAddUser').click(function(e) {
+	
+		$('#install_normal_user .modalUser #install_normal_user_i_id_user').val(-1);
+		$('#install_normal_user .modalUser #install_normal_user_i_user_email').val('').removeClass('success').removeClass('error');
+		$('#install_normal_user .modalUser #install_normal_user_i_user_societe').val('');
+		$('#install_normal_user .modalUser #install_normal_user_i_user_prenom').val('');
+		$('#install_normal_user .modalUser #install_normal_user_i_user_nom').val('');
+		$('#install_normal_user .modalUser #install_normal_user_i_user_password').val('').removeClass('success').removeClass('error');
+		$('#install_normal_user .modalUser #install_normal_user_i_user_cpassword').val('').removeClass('success').removeClass('error');
+		
+		$('#install_normal_user .modalUser').modal('show');
+	});
+	
+	$('#install_normal_user .modalUser #install_normal_user_bUserSave').click(function(e) {
+        e.preventDefault();
+	
+		let pass = $('#install_normal_user .modalUser #install_normal_user_i_user_password');
+		let cpass = $('#install_normal_user .modalUser #install_normal_user_i_user_cpassword');
+		
+		if (pass.val() == '' || cpass.val() == ''){
+			alert_wyca(textPasswordRequired);
+		}else if(pass.val() != cpass.val()){
+			alert_wyca(textPasswordMatching);
+		}else if(!pass[0].checkValidity() || !cpass[0].checkValidity()){
+			alert_wyca(textPasswordPattern);
+		}else if (!$('#install_normal_user_i_user_email')[0].checkValidity()){
+			alert_wyca(textLoginPattern);
+		}
+		else
+		{
+			json_user = {
+				"id_user": parseInt($('#install_normal_user .modalUser #install_normal_user_i_id_user').val()),
+				"company": $('#install_normal_user .modalUser #install_normal_user_i_user_societe').val(),
+				"lastname": $('#install_normal_user .modalUser #install_normal_user_i_user_nom').val(),
+				"firstname": $('#install_normal_user .modalUser #install_normal_user_i_user_prenom').val(),
+				"email": $('#install_normal_user .modalUser #install_normal_user_i_user_email').val(),
+				"pass": $('#install_normal_user .modalUser #install_normal_user_i_user_password').val(),
+				"id_group_user": 6,
+			};
+			
+			wycaApi.SetUser(json_user, function(data) {
+				if (data.A == wycaApi.AnswerCode.NO_ERROR)
+				{
+					// On ajoute le li
+					id_user = data.D;
+					if ($('#install_normal_user_list_user_elem_'+id_user).length > 0)
+					{
+						$('#install_normal_user_list_user_elem_'+id_user+' span.email').html(json_user.email);
+						/*
+						$('#install_normal_user_list_user_elem_'+id_user+' span.societe').html(json_user.company);
+						$('#install_normal_user_list_user_elem_'+id_user+' span.prenom').html(json_user.firstname);
+						$('#install_normal_user_list_user_elem_'+id_user+' span.nom').html(json_user.lastname);
+						*/
+					}
+					else
+					{
+						$('#install_normal_user .list_users').append('' +
+							'<li id="install_normal_user_list_user_elem_'+id_user+'" data-id_user="'+id_user+'">'+
+							'	<span class="email">'+json_user.email+'</span>'+
+							'	<a href="#" class="bUserDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+							'	<a href="#" class="bUserEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
+							'</li>'
+							);
+						RefreshDisplayUserNormal();
+					}
+					
+					$('#install_normal_user .modalUser').modal('hide');
+				}
+				else
+				{
+					ParseAPIAnswerError(data);
+				}
+			});
+		}
+    });
+	
+	$(document).on('click', '#install_normal_user .bUserDeleteElem', function(e) {
+		e.preventDefault();
+		
+		id_user_to_delete = parseInt($(this).closest('li').data('id_user'));
+		
+		wycaApi.DeleteUser(id_user_to_delete, function(data) {
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$('#install_normal_user_list_user_elem_'+id_user_to_delete).remove();
+				RefreshDisplayUserNormal();
+			}
+			else
+			{
+				ParseAPIAnswerError(data);
+			}
+		});
+	});
+	
+	$(document).on('click', '#install_normal_user .bUserEditElem', function(e) {
+		e.preventDefault();
+		
+		id_user = $(this).closest('li').data('id_user');
+		$('#install_normal_user .modalUser #install_normal_user_i_id_user').val(id_user);
+		$('#install_normal_user .modalUser #install_normal_user_i_user_email').val($('#install_normal_user_list_user_elem_'+id_user+' span.email').html());
+		$('#install_normal_user .modalUser #install_normal_user_i_user_societe').val($('#install_normal_user_list_user_elem_'+id_user+' span.societe').html());
+		$('#install_normal_user .modalUser #install_normal_user_i_user_prenom').val($('#install_normal_user_list_user_elem_'+id_user+' span.prenom').html());
+		$('#install_normal_user .modalUser #install_normal_user_i_user_nom').val($('#install_normal_user_list_user_elem_'+id_user+' span.nom').html());
+		$('#install_normal_user .modalUser #install_normal_user_i_user_password').val('');
+		$('#install_normal_user .modalUser #install_normal_user_i_user_cpassword').val('');
+		
+		$('#install_normal_user .modalUser #install_normal_user_i_user_email').removeClass('success').removeClass('error');
+		$('#install_normal_user .modalUser #install_normal_user_i_user_password').removeClass('success').removeClass('error');
+		$('#install_normal_user .modalUser #install_normal_user_i_user_cpassword').removeClass('success').removeClass('error');
+		
+		$('#install_normal_user .modalUser').modal('show');
+	});
+	
+	$('#install_normal_user input#install_normal_user_i_user_email').change(function(e){
+		if($(this)[0].checkValidity())
+			$(this).removeClass('error').addClass('success');
+		else
+			$(this).removeClass('success').addClass('error');
+	})
+	
+	$('#install_normal_user input#install_normal_user_i_user_password').change(function(e){
+		if($(this)[0].checkValidity())
+			$(this).removeClass('error').addClass('success');
+		else
+			$(this).removeClass('success').addClass('error');
+	})
+	
+	$('#install_normal_user input#install_normal_user_i_user_cpassword').change(function(e){
+		if($(this)[0].checkValidity())
+			$(this).removeClass('error').addClass('success');
+		else
+			$(this).removeClass('success').addClass('error');
+		if($('#install_normal_user input#install_normal_user_i_user_password').val() =! ''){
+			if($(this).val() == $('#install_normal_user input#install_normal_user_i_user_password').val())
 				$(this).removeClass('error').addClass('success');
 			else
 				$(this).removeClass('success').addClass('error');
@@ -1643,6 +1785,21 @@ function RefreshDisplayManagerNormal(){
 		//AFF TUILE ET SKIP
 		$('#install_normal_manager a.bAddManager').hide();
 		$('#install_normal_manager .bAddManagerTuile').show();
+	}
+	
+}
+
+//------------------- USERS ------------------------	
+
+function RefreshDisplayUserNormal(){
+	if($('#install_normal_user ul.list_users li').length > 0){
+		//HIDE TUILE et AFF NEXT
+		$('#install_normal_user a.bAddUser').show();
+		$('#install_normal_user .bAddUserTuile').hide();
+	}else{
+		//AFF TUILE ET SKIP
+		$('#install_normal_user a.bAddUser').hide();
+		$('#install_normal_user .bAddUserTuile').show();
 	}
 	
 }

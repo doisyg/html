@@ -271,6 +271,7 @@ $(document).ready(function(e) {
 			if (next == 'install_normal_setup_config') GetConfigurationsNormal();
 			if (next == 'install_normal_setup_wifi') InitInstallWifiPageNormal();
 			if (next == 'install_normal_manager') GetManagersNormal();
+			if (next == 'install_normal_user') GetUsersNormal();
 			if (next == 'install_normal_service_book') GetServiceBooksNormal();
 			if (next == 'install_normal_edit_map') GetInfosCurrentMapNormal();
 			if (next == 'install_normal_setup_trinary') NormalInitTrinary();
@@ -855,6 +856,39 @@ function GetSitesForExportNormal()
 	}
 }
 
+function GetUsersNormal()
+{
+	$('.install_normal_user_loading').show();
+	$('#install_normal_user .loaded').hide();
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetUsersList(function(data) {
+			$('#install_normal_user .list_users').html('');
+			
+			if (data.D != undefined)
+			$.each(data.D,function(index, value){
+				if (value.id_group_user  == 6)
+				{
+					$('#install_normal_user .list_users').append('' +
+						'<li id="install_normal_user_list_user_elem_'+value.id_user+'" data-id_user="'+value.id_user+'">'+
+						'	<span class="email">'+value.email+'</span>'+
+						'	<a href="#" class="bUserDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="bUserEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pen"></i></a>'+
+						'</li>'
+						);
+				}
+			});
+			
+			$('.install_normal_user_loading').hide();
+			$('#install_normal_user .loaded').show();
+			RefreshDisplayUserNormal();
+		});
+	}
+	else
+	{
+		setTimeout(GetUsersNormal, 500);
+	}
+}
 function GetManagersNormal()
 {
 	if(boolHelpManager)

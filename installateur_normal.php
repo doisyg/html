@@ -1613,69 +1613,96 @@
 	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_accounts"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
-                <h2><?php echo __('Managers');?></h2>
+                <h2><?php echo __('Users');?></h2>
             </header>
             <div class="content">
                 
-                <div class="install_normal_manager_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
+                <div class="install_normal_user_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
                 
                 <div class="loaded col-md-12" style="padding-top:30px;">
-                	<a href="#" class="bAddManager btn btn-primary">Add an account</a>
-                
-                    <ul class="list_managers list_elem">
-                    </ul>
-                    
-                    <div class="modal fade modalManager" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+					<ul class="tuiles row bAddUserTuile" style="margin-bottom:30px;">
+						<li class="col-xs-6" style="margin-left: 25%;">
+							<div class="is_checkbox tuile_img no_update bAddUser" style="height:max-content;bottom:0;border-radius:10px">
+								<i class="fas fa-user-plus" style="padding-top:5px"></i>
+								<h4 class="" style="margin-top: 0px;font-weight:700;font-size: 15px;"><?php echo __('Create user');?></h4>
+							</div>
+						</li>
+					</ul>
+					
+					<a href="#" class="bAddUser btn btn-primary"><?= ('Add an account') ?></a>
+					<ul class="list_users list_elem">
+					</ul>
+					
+                    <div class="modal fade modalUser" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
                         <div class="modal-dialog" role="dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <div class="actions mh100vh_55">
                                         <div class="h100vh_160" style="overflow:auto">
                                             <form>
-                                            	<input type="hidden" name="i_id_manager" id="install_normal_manager_i_id_manager" value="-1" />
-                                                <div class="form-group">
+												<input type="hidden" name="i_id_user" id="install_normal_user_i_id_user" value="-1" />
+                                                <div class="form-group" style="display:none">
                                                     <label class="col-xs-12 col-md-3 control-label" for="societe"><?php echo __('Company');?></label>
                                                     <div class="col-xs-12 col-md-6">
-                                                        <input id="install_normal_manager_i_manager_societe" name="societe" type="text" class="form-control">
+                                                        <input id="install_normal_user_i_user_societe" value="company" name="societe" type="text" class="form-control">
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group" style="display:none">
                                                     <label class="col-xs-12 col-md-3 control-label" for="prenom"><?php echo __('Firstname');?></label>
                                                     <div class="col-xs-12 col-md-6">
-                                                        <input id="install_normal_manager_i_manager_prenom" name="prenom" type="text" class="form-control">
+                                                        <input id="install_normal_user_i_user_prenom" value="fname" name="prenom" type="text" class="form-control">
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group" style="display:none">
                                                     <label class="col-xs-12 col-md-3 control-label" for="nom"><?php echo __('Lastname');?></label>
                                                     <div class="col-xs-12 col-md-6">
-                                                        <input id="install_normal_manager_i_manager_nom" name="nom" type="text" class="form-control">
+                                                        <input id="install_normal_user_i_user_nom" value="lname" name="nom" type="text" class="form-control">
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label class="col-xs-12 col-md-3 control-label" for="email"><?php echo __('Email');?></label>
-                                                    <div class="col-xs-12 col-md-6">
-                                                        <input id="install_normal_manager_i_manager_email" name="email" type="text" class="form-control">
-                                                    </div>
+                                                <div class="form-group nopymy">
+                                                    <label class="col-xs-12 col-md-3 control-label" for="email"><?php echo __('Login');?></label>
+                                                    <div class="col-xs-12 col-md-6 input-group input-group-icon">
+                                                        <input id="install_normal_user_i_user_email" name="email" type="email" required="required" pattern="[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,}" class="form-control">
+														<span class="input-group-addon">
+															<span class="icon icon-lg">
+																<i class="fas fa-at"></i>
+															</span>
+														</span>
+													</div>
+													
                                                 </div>
-                                                <div class="form-group">
+												<p class="password_format" style="margin-bottom:0"><?= _('A valid mail adress.')?> </p>
+                                                <div class="form-group nopymy">
                                                     <label class="col-xs-12 col-md-3 control-label" for="password"><?php echo __('Password');?></label>
-                                                    <div class="col-xs-12 col-md-6">
-                                                        <input id="install_normal_manager_i_manager_password" name="password" type="password" class="form-control">
+                                                    <div class="col-xs-12 col-md-6 input-group input-group-icon">
+                                                        <input id="install_normal_user_i_user_password" name="password" type="password" required="required" class="form-control" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|0-9]).{8,}$"> 
+														<span class="input-group-addon">
+															<span class="icon icon-lg">
+																<i class="fa fa-lock"></i>
+															</span>
+														</span>
                                                     </div>
                                                 </div>
+												<p class="password_format"><?= _('8 characters, lower and uppercase, digit or special char.')?> </p>
                                                 <div class="form-group">
                                                     <label class="col-xs-12 col-md-3 control-label" for="cpassword"><?php echo __('Confirm password');?></label>
-                                                    <div class="col-xs-12 col-md-6">
-                                                        <input id="install_normal_manager_i_manager_cpassword" name="cpassword" type="password" class="form-control">
+                                                    <div class="col-xs-12 col-md-6 input-group input-group-icon">
+                                                        <input id="install_normal_user_i_user_cpassword" name="cpassword" type="password" required="required" class="form-control" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|0-9]).{8,}$">
+														<span class="input-group-addon">
+															<span class="icon icon-lg">
+																<i class="fa fa-lock"></i>
+															</span>
+														</span>
                                                     </div>
                                                 </div>
+												<p class="password_format"><?= _('8 characters, lower and uppercase, digit or special char.')?> </p>
                                             </form>
                                         </div>
                                         
                                         <div style="clear:both;"></div>
                                        
                                         <a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal"><?php echo __('Cancel');?></a>
-										<a href="#" id="install_normal_manager_bManagerSave" class="btn btn-primary btn_footer_right btn_50"><?php echo __('Save');?></a>
+										<a href="#" id="install_normal_user_bUserSave" class="btn btn-primary btn_footer_right btn_50"><?php echo __('Save');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -1762,7 +1789,7 @@
                                                 <div class="form-group" style="display:none">
                                                     <label class="col-xs-12 col-md-3 control-label" for="prenom"><?php echo __('Firstname');?></label>
                                                     <div class="col-xs-12 col-md-6">
-                                                        <input id="install_normal_manager_i_manager_firstname" value="fname" name="prenom" type="text" class="form-control">
+                                                        <input id="install_normal_manager_i_manager_prenom" value="fname" name="prenom" type="text" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="form-group" style="display:none">
