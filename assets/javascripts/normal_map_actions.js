@@ -521,6 +521,11 @@ $(document).ready(function() {
 			area = areas[currentAreaIndex];
 			if (area.configs != undefined)
 			{
+				$('#install_normal_edit_map_led_color_mode').val('Automatic');
+				$('#install_normal_edit_map_led_animation_mode').val('Automatic');
+				$('#install_normal_edit_map_min_distance_obstacle_mode').val('Automatic');
+				$('#install_normal_edit_map_max_speed_mode').val('Automatic');
+				
 				$.each(area.configs, function( indexConfig, config ) {
 					switch(config.name)
 					{
@@ -530,6 +535,8 @@ $(document).ready(function() {
 						case 'led_animation': $('#install_normal_edit_map_led_animation').val(config.value); break;
 						case 'max_speed_mode': $('#install_normal_edit_map_max_speed_mode').val(config.value); break;
 						case 'max_speed': $('#install_normal_edit_map_max_speed').val(config.value); break;
+						case 'min_distance_obstacle_mode': $('#install_normal_edit_map_min_distance_obstacle_mode').val(config.value); break;
+						case 'min_distance_obstacle': $('#install_normal_edit_map_min_distance_obstacle').val(config.value*100); break;
 					}
 				});
 			}
@@ -537,6 +544,7 @@ $(document).ready(function() {
 			{
 				$('#install_normal_edit_map_led_color_mode').val('Automatic');
 				$('#install_normal_edit_map_led_animation_mode').val('Automatic');
+				$('#install_normal_edit_map_min_distance_obstacle_mode').val('Automatic');
 				$('#install_normal_edit_map_max_speed_mode').val('Automatic');
 			}
 			
@@ -544,6 +552,10 @@ $(document).ready(function() {
 			
 			if ($('#install_normal_edit_map_led_color_mode').val() == 'Automatic') $('#install_normal_edit_map_led_color_group').hide(); else  $('#install_normal_edit_map_led_color_group').show();
 			if ($('#install_normal_edit_map_led_animation_mode').val() == 'Automatic') $('#install_normal_edit_map_led_animation_group').hide(); else  $('#install_normal_edit_map_led_animation_group').show();
+			if ($('#install_normal_edit_map_min_distance_obstacle_mode').val() == 'Automatic')
+				$('#install_normal_edit_map_min_distance_obstacle_group').hide(); 
+			else 
+				$('#install_normal_edit_map_min_distance_obstacle_group').show();
 			if ($('#install_normal_edit_map_max_speed_mode').val() == 'Automatic') $('#install_normal_edit_map_max_speed_group').hide(); else  $('#install_normal_edit_map_max_speed_group').show();
 			$('#install_normal_edit_map_container_all .modalAreaOptions').modal('show');
 		}
@@ -1513,6 +1525,11 @@ $(document).ready(function() {
 		
 		$('#install_normal_edit_map_area_color_mode').val(rgbToHex(area.color_r, area.color_g, area.color_b));
 		
+		$('#install_normal_edit_map_led_color_mode').val('Automatic');
+		$('#install_normal_edit_map_led_animation_mode').val('Automatic');
+		$('#install_normal_edit_map_max_speed_mode').val('Automatic');
+		$('#install_normal_edit_map_min_distance_obstacle_mode').val('Automatic');
+		
 		$.each(area.configs, function( indexConfig, config ) {
 			switch(config.name)
 			{
@@ -1522,12 +1539,18 @@ $(document).ready(function() {
 				case 'led_animation': $('#install_normal_edit_map_led_animation').val(config.value); break;
 				case 'max_speed_mode': $('#install_normal_edit_map_max_speed_mode').val(config.value); break;
 				case 'max_speed': $('#install_normal_edit_map_max_speed').val(config.value); break;
+				case 'min_distance_obstacle_mode': $('#install_normal_edit_map_min_distance_obstacle_mode').val(config.value); break;
+				case 'min_distance_obstacle': $('#install_normal_edit_map_min_distance_obstacle').val(config.value*100); break;
 			}
 		});
 		
 		if ($('#install_normal_edit_map_led_color_mode').val() == 'Automatic') $('#install_normal_edit_map_led_color_group').hide(); else  $('#install_normal_edit_map_led_color_group').show();
 		if ($('#install_normal_edit_map_led_animation_mode').val() == 'Automatic') $('#install_normal_edit_map_led_animation_group').hide(); else  $('#install_normal_edit_map_led_animation_group').show();
 		if ($('#install_normal_edit_map_max_speed_mode').val() == 'Automatic') $('#install_normal_edit_map_max_speed_group').hide(); else  $('#install_normal_edit_map_max_speed_group').show();
+		if ($('#install_normal_edit_map_min_distance_obstacle_mode').val() == 'Automatic') 
+			$('#install_normal_edit_map_min_distance_obstacle_group').hide(); 
+		else
+			$('#install_normal_edit_map_min_distance_obstacle_group').show();
     });
 	
 	$('#install_normal_edit_map_bAreaSaveConfig').click(function(e) {
@@ -1537,11 +1560,16 @@ $(document).ready(function() {
 		area.configs = Array();
 		area.configs.push({'name':'led_color_mode' , 'value':$('#install_normal_edit_map_led_color_mode').val()});
 		
+		if (parseInt($('#install_normal_edit_map_min_distance_obstacle').val()) > 68) $('#install_normal_edit_map_min_distance_obstacle').val(68);
+		if (parseInt($('#install_normal_edit_map_min_distance_obstacle').val()) < 5) $('#install_normal_edit_map_min_distance_obstacle').val(5);
+		
 		area.configs.push({'name':'led_color' , 'value':$('#install_normal_edit_map_led_color').val()});
 		area.configs.push({'name':'led_animation_mode' , 'value':$('#install_normal_edit_map_led_animation_mode').val()});
 		area.configs.push({'name':'led_animation' , 'value':$('#install_normal_edit_map_led_animation').val()});
 		area.configs.push({'name':'max_speed_mode' , 'value':$('#install_normal_edit_map_max_speed_mode').val()});
 		area.configs.push({'name':'max_speed' , 'value':$('#install_normal_edit_map_max_speed').val()});
+		area.configs.push({'name':'min_distance_obstacle_mode' , 'value':$('#install_normal_edit_map_min_distance_obstacle_mode').val()});
+		area.configs.push({'name':'min_distance_obstacle' , 'value':$('#install_normal_edit_map_min_distance_obstacle').val()/100});
 		
 		var c = $('#install_normal_edit_map_area_color').val().split("(")[1].split(")")[0];
 		c = c.split(",");
