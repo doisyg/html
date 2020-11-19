@@ -1703,7 +1703,7 @@ $(document).ready(function(e) {
 			$(this).removeClass('error').addClass('success');
 		else
 			$(this).removeClass('success').addClass('error');
-		if($('#install_by_step_manager input#install_by_step_manager_i_manager_password').val() =! ''){
+		if($('#install_by_step_manager input#install_by_step_manager_i_manager_password').val() != ''){
 			if($(this).val() == $('#install_by_step_manager input#install_by_step_manager_i_manager_password').val())
 				$(this).removeClass('error').addClass('success');
 			else

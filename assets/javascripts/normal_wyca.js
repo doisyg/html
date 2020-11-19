@@ -994,7 +994,7 @@ $(document).ready(function(e) {
 			$(this).removeClass('error').addClass('success');
 		else
 			$(this).removeClass('success').addClass('error');
-		if($('#install_normal_manager input#install_normal_manager_i_manager_password').val() =! ''){
+		if($('#install_normal_manager input#install_normal_manager_i_manager_password').val() != ''){
 			if($(this).val() == $('#install_normal_manager input#install_normal_manager_i_manager_password').val())
 				$(this).removeClass('error').addClass('success');
 			else
@@ -1136,7 +1136,7 @@ $(document).ready(function(e) {
 			$(this).removeClass('error').addClass('success');
 		else
 			$(this).removeClass('success').addClass('error');
-		if($('#install_normal_user input#install_normal_user_i_user_password').val() =! ''){
+		if($('#install_normal_user input#install_normal_user_i_user_password').val() != ''){
 			if($(this).val() == $('#install_normal_user input#install_normal_user_i_user_password').val())
 				$(this).removeClass('error').addClass('success');
 			else
