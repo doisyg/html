@@ -9,6 +9,9 @@ function WycaAPI(options){
 		UNKNOW_API_OPERATION        : 0x005,
 		NOT_IMPLEMENTED             : 0x006,
 		INVALID_ID                  : 0x007,
+		INVALID_FILE                : 0x008,
+		INVALID_KEY                 : 0x009,
+		EMAIL_ALREADY_USED          : 0x00A,
 	
 		DETAILS_IN_MESSAGE          : 0x064,
 		AUTH_KO                     : 0x065,
@@ -1418,6 +1421,9 @@ function WycaAPI(options){
 			case _this.AnswerCode.UNKNOW_API_OPERATION : return 'Unknow API operation'; break;
 			case _this.AnswerCode.NOT_IMPLEMENTED : return 'Not implemented'; break;
 			case _this.AnswerCode.INVALID_ID : return 'Invalid ID'; break;
+			case _this.AnswerCode.INVALID_FILE : return 'Invalid file'; break;
+			case _this.AnswerCode.INVALID_KEY : return 'Invalid key'; break;
+			case _this.AnswerCode.EMAIL_ALREADY_USED : return 'Email already used'; break;
 			case _this.AnswerCode.DETAILS_IN_MESSAGE : return 'Details in message'; break;
 			case _this.AnswerCode.AUTH_KO : return 'Auth KO'; break;
 			case _this.AnswerCode.AUTH_NEEDED : return 'Auth needed'; break;
