@@ -857,6 +857,8 @@ function GetSitesForExportNormal()
 
 function GetManagersNormal()
 {
+	if(boolHelpManager)
+		$('#install_normal_manager .modalHelpManager').modal('show');
 	$('.install_normal_manager_loading').show();
 	$('#install_normal_manager .loaded').hide();
 	if (wycaApi.websocketAuthed)
@@ -871,7 +873,7 @@ function GetManagersNormal()
 				{
 					$('#install_normal_manager .list_managers').append('' +
 						'<li id="install_normal_manager_list_manager_elem_'+value.id_user+'" data-id_user="'+value.id_user+'">'+
-						'	<span class="societe">'+value.company+'</span><br /><span class="prenom">'+value.firstname+'</span> <span class="nom">'+value.lastname+'</span><br /><span class="email">'+value.email+'</span>'+
+						'	<span class="email">'+value.email+'</span>'+
 						'	<a href="#" class="bManagerDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
 						'	<a href="#" class="bManagerEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pen"></i></a>'+
 						'</li>'
@@ -881,6 +883,7 @@ function GetManagersNormal()
 			
 			$('.install_normal_manager_loading').hide();
 			$('#install_normal_manager .loaded').show();
+			RefreshDisplayManagerNormal();
 		});
 	}
 	else

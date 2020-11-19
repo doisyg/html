@@ -859,38 +859,35 @@ $(document).ready(function(e) {
     });
 	
 	//------------------- ACCOUNTS ------------------------
+	$('#install_normal_manager .bHelpManagerOk').click(function(){boolHelpManager = !$('#install_normal_manager .checkboxHelpManager').prop('checked')});//ADD SAVING BDD / COOKIES ?
 	
 	$('#install_normal_manager .bAddManager').click(function(e) {
 	
 		$('#install_normal_manager .modalManager #install_normal_manager_i_id_manager').val(-1);
-		$('#install_normal_manager .modalManager #install_normal_manager_i_manager_email').val('');
+		$('#install_normal_manager .modalManager #install_normal_manager_i_manager_email').val('').removeClass('success').removeClass('error');
 		$('#install_normal_manager .modalManager #install_normal_manager_i_manager_societe').val('');
 		$('#install_normal_manager .modalManager #install_normal_manager_i_manager_prenom').val('');
 		$('#install_normal_manager .modalManager #install_normal_manager_i_manager_nom').val('');
-		$('#install_normal_manager .modalManager #install_normal_manager_i_manager_password').val('');
-		$('#install_normal_manager .modalManager #install_normal_manager_i_manager_cpassword').val('');
+		$('#install_normal_manager .modalManager #install_normal_manager_i_manager_password').val('').removeClass('success').removeClass('error');
+		$('#install_normal_manager .modalManager #install_normal_manager_i_manager_cpassword').val('').removeClass('success').removeClass('error');
 		
 		$('#install_normal_manager .modalManager').modal('show');
 	});
 	
 	$('#install_normal_manager .modalManager #install_normal_manager_bManagerSave').click(function(e) {
         e.preventDefault();
+	
+		let pass = $('#install_normal_manager .modalManager #install_normal_manager_i_manager_password');
+		let cpass = $('#install_normal_manager .modalManager #install_normal_manager_i_manager_cpassword');
 		
-		if ($('#install_normal_manager .modalManager #install_normal_manager_i_manager_password').val() != $('#install_normal_manager .modalManager #install_normal_manager_i_manager_cpassword').val())
-		{
-			alert_wyca('Invalid password or confirm');
-		}
-		else if ($('#install_normal_manager .modalManager #install_normal_manager_i_manager_societe').val() == "" )
-		{
-			alert_wyca('Company is required');
-		}
-		else if ($('#install_normal_manager .modalManager #install_normal_manager_i_manager_prenom').val() == "" )
-		{
-			alert_wyca('Firstname is required');
-		}
-		else if ($('#install_normal_manager .modalManager #install_normal_manager_i_manager_nom').val() == "" )
-		{
-			alert_wyca('Lastname is required');
+		if (pass.val() == '' || cpass.val() == ''){
+			alert_wyca(textPasswordRequired);
+		}else if(pass.val() != cpass.val()){
+			alert_wyca(textPasswordMatching);
+		}else if(!pass[0].checkValidity() || !cpass[0].checkValidity()){
+			alert_wyca(textPasswordPattern);
+		}else if (!$('#install_normal_manager_i_manager_email')[0].checkValidity()){
+			alert_wyca(textLoginPattern);
 		}
 		else
 		{
@@ -903,7 +900,7 @@ $(document).ready(function(e) {
 				"pass": $('#install_normal_manager .modalManager #install_normal_manager_i_manager_password').val(),
 				"id_group_user": 3,
 			};
-			
+			console.log(json_user);
 			wycaApi.SetUser(json_user, function(data) {
 				if (data.A == wycaApi.AnswerCode.NO_ERROR)
 				{
@@ -912,29 +909,29 @@ $(document).ready(function(e) {
 					if ($('#install_normal_manager_list_manager_elem_'+id_user).length > 0)
 					{
 						$('#install_normal_manager_list_manager_elem_'+id_user+' span.email').html(json_user.email);
+						/*
 						$('#install_normal_manager_list_manager_elem_'+id_user+' span.societe').html(json_user.company);
 						$('#install_normal_manager_list_manager_elem_'+id_user+' span.prenom').html(json_user.firstname);
 						$('#install_normal_manager_list_manager_elem_'+id_user+' span.nom').html(json_user.lastname);
+						*/
 					}
 					else
 					{
 						$('#install_normal_manager .list_managers').append('' +
 							'<li id="install_normal_manager_list_manager_elem_'+id_user+'" data-id_user="'+id_user+'">'+
-							'	<span class="societe">'+json_user.company+'</span><br /><span class="prenom">'+json_user.firstname+'</span> <span class="nom">'+json_user.lastname+'</span><br /><span class="email">'+json_user.email+'</span>'+
+							'	<span class="email">'+json_user.email+'</span>'+
 							'	<a href="#" class="bManagerDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
 							'	<a href="#" class="bManagerEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
 							'</li>'
 							);
+						RefreshDisplayManagerNormal();
 					}
 					
 					$('#install_normal_manager .modalManager').modal('hide');
 				}
 				else
 				{
-					console.log(JSON.stringify(data)); 
-					text = wycaApi.AnswerCodeToString(data.A);
-					if (data.M != '') text += '<br />'+data.M;
-					alert_wyca(text);
+					ParseAPIAnswerError(data);
 				}
 			});
 		}
@@ -949,13 +946,11 @@ $(document).ready(function(e) {
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
 				$('#install_normal_manager_list_manager_elem_'+id_user_to_delete).remove();
+				RefreshDisplayManagerNormal();
 			}
 			else
 			{
-				console.log(JSON.stringify(data)); 
-				text = wycaApi.AnswerCodeToString(data.A);
-				if (data.M != '') text += '<br />'+data.M;
-				alert_wyca(text);
+				ParseAPIAnswerError(data);
 			}
 		});
 	});
@@ -972,8 +967,40 @@ $(document).ready(function(e) {
 		$('#install_normal_manager .modalManager #install_normal_manager_i_manager_password').val('');
 		$('#install_normal_manager .modalManager #install_normal_manager_i_manager_cpassword').val('');
 		
+		$('#install_normal_manager .modalManager #install_normal_manager_i_manager_email').removeClass('success').removeClass('error');
+		$('#install_normal_manager .modalManager #install_normal_manager_i_manager_password').removeClass('success').removeClass('error');
+		$('#install_normal_manager .modalManager #install_normal_manager_i_manager_cpassword').removeClass('success').removeClass('error');
+		
 		$('#install_normal_manager .modalManager').modal('show');
 	});
+	
+	
+	$('#install_normal_manager input#install_normal_manager_i_manager_email').change(function(e){
+		if($(this)[0].checkValidity())
+			$(this).removeClass('error').addClass('success');
+		else
+			$(this).removeClass('success').addClass('error');
+	})
+	
+	$('#install_normal_manager input#install_normal_manager_i_manager_password').change(function(e){
+		if($(this)[0].checkValidity())
+			$(this).removeClass('error').addClass('success');
+		else
+			$(this).removeClass('success').addClass('error');
+	})
+	
+	$('#install_normal_manager input#install_normal_manager_i_manager_cpassword').change(function(e){
+		if($(this)[0].checkValidity())
+			$(this).removeClass('error').addClass('success');
+		else
+			$(this).removeClass('success').addClass('error');
+		if($('#install_normal_manager input#install_normal_manager_i_manager_password').val() =! ''){
+			if($(this).val() == $('#install_normal_manager input#install_normal_manager_i_manager_password').val())
+				$(this).removeClass('error').addClass('success');
+			else
+				$(this).removeClass('success').addClass('error');
+		}
+	})
 	
 	//----------------------- WIFI ----------------------------
 	
@@ -1602,4 +1629,20 @@ function NextTimerSetActiveTop()
 		
 		setTimeout(NextTimerSetActiveTop, 100);
 	}
+}
+
+
+//------------------- MANAGERS ------------------------	
+
+function RefreshDisplayManagerNormal(){
+	if($('#install_normal_manager ul.list_managers li').length > 0){
+		//HIDE TUILE et AFF NEXT
+		$('#install_normal_manager a.bAddManager').show();
+		$('#install_normal_manager .bAddManagerTuile').hide();
+	}else{
+		//AFF TUILE ET SKIP
+		$('#install_normal_manager a.bAddManager').hide();
+		$('#install_normal_manager .bAddManagerTuile').show();
+	}
+	
 }

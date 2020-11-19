@@ -10,7 +10,7 @@
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="install_normal_move" href="#"><i class="fa fa-gamepad"></i><?php echo __('Control robot');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="install_normal_recovery" href="#"><i class="fa fa-search"></i><?php echo __('Recovery');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="install_normal_setup" href="#"><i class="fa fa-gears"></i><?php echo __('Setup');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5" data-goto="install_normal_manager" href="#"><i class="fa fa-group"></i><?php echo __('Managers');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5" data-goto="install_normal_accounts" href="#"><i class="fas fa-users"></i><?php echo __('Accounts');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" data-goto="install_normal_service_book" href="#"><i class="fa fa-book"></i><?php echo __('Service book');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7" href="logout.php"><i class="fas fa-power-off"></i><?php echo __('Logout');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8 todo" data-goto="install_normal_help" href="#"><i class="fa fa-question"></i><?php echo __('Help');?></a></li>
@@ -1609,8 +1609,8 @@
             </footer>
         </section>
         
-        <section id="install_normal_manager" class="page with_footer">
-	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_dashboard"></a>
+        <section id="install_normal_user" class="page with_footer">
+	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_accounts"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
                 <h2><?php echo __('Managers');?></h2>
@@ -1682,6 +1682,162 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <footer>
+                <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_accounts"><?php echo __('Back');?></a>
+            </footer>
+        </section>
+        
+        <section id="install_normal_manager" class="page with_footer">
+	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_accounts"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Managers');?></h2>
+            </header>
+            <div class="content">
+                
+                <div class="install_normal_manager_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
+                
+                <div class="loaded col-md-12" style="padding-top:30px;">
+					<ul class="tuiles row bAddManagerTuile" style="margin-bottom:30px;">
+						<li class="col-xs-6" style="margin-left: 25%;">
+							<div class="is_checkbox tuile_img no_update bAddManager" style="height:max-content;bottom:0;border-radius:10px">
+								<i class="fas fa-user-plus" style="padding-top:5px"></i>
+								<h4 class="" style="margin-top: 0px;font-weight:700;font-size: 15px;"><?php echo __('Create manager');?></h4>
+							</div>
+						</li>
+					</ul>
+					
+					<a href="#" class="bAddManager btn btn-primary"><?= ('Add an account') ?></a>
+					<ul class="list_managers list_elem">
+					</ul>
+					
+                    <div class="modal fade modalHelpManager" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+										<div class="h100vh_160" style="overflow:auto; text-align:center;">
+											<h2><?= _('Managers') ?></h2>
+											<h4 style="text-align:left;margin:30px 0;"><?= _('Managers are the end-users of the vehicle, able to create POIs and take control of the robot.') ?></h4>
+											<div style="display:flex;justify-content:space-around;">
+												<div class="btn-circle btn-lg btn-popup" style="display:inline-block;position:unset;transform:unset;">
+													<i class="fas fa-map-marker-alt iconMenuBlue" style="position: relative;left: -2px;line-height:1;"></i>
+												</div>
+												<div class="btn-circle btn-lg btn-popup" style="display:inline-block;position:unset;transform:unset;">
+													<i class="fas fa-gamepad iconMenuPurple" style="position: relative;left: -11px;line-height:1;"></i>
+												</div>
+											</div>
+											<h4 style="text-align:justify;margin:30px 0;"><?= _('The manager can also switch the active top among the available tops listed earlier in the installation process.') ?></h4>
+											
+											<div style="clear:both;"></div>
+											<div class="checkbox checkbox_wrapper">
+												<label>
+													<input type="checkbox" value="" class="checkboxHelpManager">
+													<?= _('Don\'t show this message again')?>
+												</label>
+											</div>
+											<a href="#" class="btn btn-primary btn_footer_left btn_100 bHelpManagerOk" data-dismiss="modal" ><?php echo __('Ok');?></a>
+										</div>
+									</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					
+                    <div class="modal fade modalManager" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+                                        <div class="h100vh_160" style="overflow:auto">
+                                            <form>
+												<input type="hidden" name="i_id_manager" id="install_normal_manager_i_id_manager" value="-1" />
+                                                <div class="form-group" style="display:none">
+                                                    <label class="col-xs-12 col-md-3 control-label" for="societe"><?php echo __('Company');?></label>
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <input id="install_normal_manager_i_manager_societe" value="company" name="societe" type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style="display:none">
+                                                    <label class="col-xs-12 col-md-3 control-label" for="prenom"><?php echo __('Firstname');?></label>
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <input id="install_normal_manager_i_manager_firstname" value="fname" name="prenom" type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style="display:none">
+                                                    <label class="col-xs-12 col-md-3 control-label" for="nom"><?php echo __('Lastname');?></label>
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <input id="install_normal_manager_i_manager_nom" value="lname" name="nom" type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group nopymy">
+                                                    <label class="col-xs-12 col-md-3 control-label" for="email"><?php echo __('Login');?></label>
+                                                    <div class="col-xs-12 col-md-6 input-group input-group-icon">
+                                                        <input id="install_normal_manager_i_manager_email" name="email" type="email" required="required" pattern="[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,}" class="form-control">
+														<span class="input-group-addon">
+															<span class="icon icon-lg">
+																<i class="fas fa-at"></i>
+															</span>
+														</span>
+													</div>
+													
+                                                </div>
+												<p class="password_format" style="margin-bottom:0"><?= _('A valid mail adress.')?> </p>
+                                                <div class="form-group nopymy">
+                                                    <label class="col-xs-12 col-md-3 control-label" for="password"><?php echo __('Password');?></label>
+                                                    <div class="col-xs-12 col-md-6 input-group input-group-icon">
+                                                        <input id="install_normal_manager_i_manager_password" name="password" type="password" required="required" class="form-control" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|0-9]).{8,}$"> 
+														<span class="input-group-addon">
+															<span class="icon icon-lg">
+																<i class="fa fa-lock"></i>
+															</span>
+														</span>
+                                                    </div>
+                                                </div>
+												<p class="password_format"><?= _('8 characters, lower and uppercase, digit or special char.')?> </p>
+                                                <div class="form-group">
+                                                    <label class="col-xs-12 col-md-3 control-label" for="cpassword"><?php echo __('Confirm password');?></label>
+                                                    <div class="col-xs-12 col-md-6 input-group input-group-icon">
+                                                        <input id="install_normal_manager_i_manager_cpassword" name="cpassword" type="password" required="required" class="form-control" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|0-9]).{8,}$">
+														<span class="input-group-addon">
+															<span class="icon icon-lg">
+																<i class="fa fa-lock"></i>
+															</span>
+														</span>
+                                                    </div>
+                                                </div>
+												<p class="password_format"><?= _('8 characters, lower and uppercase, digit or special char.')?> </p>
+                                            </form>
+                                        </div>
+                                        
+                                        <div style="clear:both;"></div>
+                                       
+                                        <a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal"><?php echo __('Cancel');?></a>
+										<a href="#" id="install_normal_manager_bManagerSave" class="btn btn-primary btn_footer_right btn_50"><?php echo __('Save');?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer>
+                <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_accounts"><?php echo __('Back');?></a>
+            </footer>
+        </section>
+        
+        <section id="install_normal_accounts" class="page hmi_tuile with_footer">
+	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_dashboard"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Accounts');?></h2>
+            </header>
+            <div class="content">
+				<ul class="tuiles row">
+					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile1" data-goto="install_normal_manager" href="#"><i class="fas fa-users-cog" style="transform:scaleX(-1)"></i><?php echo __('Managers');?></a></li>
+					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="install_normal_user" href="#"><i class="fas fa-user-friends"></i><?php echo __('Users');?></a></li>
+				</ul>
             </div>
             <footer>
                 <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_dashboard"><?php echo __('Back');?></a>
