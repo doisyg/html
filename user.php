@@ -265,7 +265,7 @@
             <h2><?php echo __('Help');?></h2>
         </header>
         <div class="content">
-            <?php echo __('Comming soon');?>
+           <h4 style="text-align:center"><h4 style="text-align:center"><?php echo __('Comming soon');?></h4></h4>
         </div>
         <footer>
             <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="user_dashboard"><?php echo __('Back');?></a>
