@@ -1609,7 +1609,7 @@ $(document).ready(function(e) {
 				"firstname": $('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_prenom').val(),
 				"email": $('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_email').val(),
 				"pass": $('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_password').val(),
-				"id_group_user": 3,
+				"id_group_user": wycaApi.GroupUser.MANAGER,
 			};
 			
 			wycaApi.SetUser(json_user, function(data) {

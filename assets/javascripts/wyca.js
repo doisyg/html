@@ -760,7 +760,7 @@ function GetUsers()
 			
 			if (data.D != undefined)
 			$.each(data.D,function(index, value){
-				if (value.id_group_user  == 4)
+				if (value.id_group_user  == wycaApi.GroupUser.USER)
 				{
 					$('#manager_users .list_users').append('' +
 						'<li id="manager_users_list_user_elem_'+value.id_user+'" data-id_user="'+value.id_user+'">'+
@@ -867,7 +867,7 @@ function GetUsersNormal()
 			
 			if (data.D != undefined)
 			$.each(data.D,function(index, value){
-				if (value.id_group_user  == 6)
+				if (value.id_group_user  == wycaApi.GroupUser.USER)
 				{
 					$('#install_normal_user .list_users').append('' +
 						'<li id="install_normal_user_list_user_elem_'+value.id_user+'" data-id_user="'+value.id_user+'">'+
@@ -903,7 +903,7 @@ function GetManagersNormal()
 			
 			if (data.D != undefined)
 			$.each(data.D,function(index, value){
-				if (value.id_group_user  == 3)
+				if (value.id_group_user  == wycaApi.GroupUser.MANAGER)
 				{
 					$('#install_normal_manager .list_managers').append('' +
 						'<li id="install_normal_manager_list_manager_elem_'+value.id_user+'" data-id_user="'+value.id_user+'">'+

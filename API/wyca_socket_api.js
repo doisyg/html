@@ -1,5 +1,12 @@
 function WycaAPI(options){
-
+	
+	this.GroupUser = {
+		WYCA						: 1,
+		DISTRIBUTOR					: 2,
+		MANAGER						: 3,
+		USER						: 4
+	}
+	
 	this.AnswerCode = {
 		NO_ERROR                    : 0x000,
 		FORMAT_ERROR_MISSING_DATA   : 0x001,

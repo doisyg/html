@@ -356,7 +356,7 @@ $(document).ready(function(e) {
 				"firstname": $('#manager_users .modalUser #manager_users_i_user_prenom').val(),
 				"email": $('#manager_users .modalUser #manager_users_i_user_email').val(),
 				"pass": $('#manager_users .modalUser #manager_users_i_user_password').val(),
-				"id_group_user": 4,
+				"id_group_user": wycaApi.GroupUser.USER,
 			};
 			
 			wycaApi.SetUser(json_user, function(data) {
