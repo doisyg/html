@@ -940,7 +940,7 @@ function GetManagersByStep()
 			
 			if (data.D != undefined)
 			$.each(data.D,function(index, value){
-				if (value.id_group_user  == 3)
+				if (value.id_group_user  == wycaApi.GroupUser.MANAGER)
 				{
 					$('#install_by_step_manager .list_managers').append('' +
 						'<li id="install_by_step_manager_list_manager_elem_'+value.id_user+'" data-id_user="'+value.id_user+'">'+
