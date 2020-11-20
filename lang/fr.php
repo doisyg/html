@@ -227,5 +227,12 @@ $_LANG['6852ff686fa7216ba1c9b958d5f80f23'] = 'Battery settings';
 $_LANG['7ad51d59926d9281d04b502e8983892a'] = 'Import site';
 $_LANG['591bcfaf5a4bd8634bc0c00e73ce0ffa'] = 'Passwords needs to be 8 character long with at least 1 uppercase letter and 1 special character or digit';
 $_LANG['8a6d1cedd49bdb5f8dd41007ab57b294'] = 'Create user';
+$_LANG['7dd25522a9a5714ff3de1c817b61502b'] = 'Min distance obstacle';
+$_LANG['50fece4e95d5808227ac3cac7b1dc8de'] = 'Area Color';
+$_LANG['11277841472fe98392e4ef731cc8db69'] = 'Min Obstacle Distance';
+$_LANG['84ad838df107d85a4609cdbbbc18e5ab'] = 'Max Speed';
+$_LANG['133280ca5e0c40e6248a59a6789fdac0'] = 'Min Osbtacle Distance';
+$_LANG['0aa6f4210bf373c95eda00232e93cd98'] = 'Distance';
+$_LANG['b57ac47a1cb5706285d005337f87e47b'] = 'Obstacle Distance';
 
 ?>
