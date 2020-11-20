@@ -2738,7 +2738,7 @@ $(document).ready(function() {
 		$('#install_normal_edit_map_container_all .modalPoiOptions').modal('show');
     });
 	
-	$('#install_normal_edit_map_bNormalPoiSaveConfig').click(function(e) {
+	$('#install_normal_edit_map_bPoiSaveConfig').click(function(e) {
 		
 		if(!CheckName(pois, $('#install_normal_edit_map_poi_name').val(), currentPoiIndex)){
 			poi = pois[currentPoiIndex];

@@ -964,7 +964,8 @@ $(document).ready(function() {
 	$('#install_by_step_edit_map .bTestPoi').click(function(e) {
         e.preventDefault();
 		
-		if (currentPoiByStepLongTouch.data('id_poi') >= 300000){
+		if (currentPoiByStepLongTouch.data('id_poi') >= 300000)
+		{
 			boolGotopoi = true;
 			statusSavingMapBeforeTestPoi=1;
 			timerSavingMapBeforeTestPoi=0;

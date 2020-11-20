@@ -239,46 +239,24 @@
                                 <div class="modal-header">
                                     <div class="actions mh100vh_55">
                                         <div class="h100vh_160" style="overflow:auto; text-align:center">
-                                            
-                                            <div class="row" style="margin-top:30px;">
-                                                <div class="col-xs-8">
-                                                    <span style="font-size:16px; color:#F90; padding-bottom:20px;"><?php echo __('Remember to save the map before launching a test');?></span>
-                                                </div>
-                                                <div class="col-xs-4">
-                                                    <a href="#" class="btn btn-primary bSaveMapTestDock" style="margin-top:7px;"><?php echo __('Save map');?> <i class="fa"></i></a>
-                                                </div>
-                                            </div>
-                                            
-                                            
-                                            <div class="row" style="margin-top:30px;">
-                                                <div class="col-xs-8">
-                                                    <span style="font-size:16px; padding-bottom:20px;"><?php echo __('You can change the position of the robot before the test');?></span>
-                                                </div>
-                                                <div class="col-xs-4">
-                                                    <a href="#" class="btn btn-primary bMoveRobotTest" style="margin-top:7px;"><?php echo __('Move robot');?></a>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="teleop" style="display:none; margin-top:30px;">
-                                                <a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
-                                            
-                                                <div class="ifUndocked">
-                                                    
-                                                    <div style="text-align:center; width:100%; z-index:2000; margin-top:50px;">
-                                                        <div class="joystickDiv" draggable="false" style="margin:auto;">
-                                                            <div class="fond"></div>
-                                                            <div class="curseur"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <h4><?= _('Saving map before testing')?></h4>
+											<span id="start_point_text"></span>
+											<div class="row" style="margin: 0;">
+												<div class="col-xs-3">
+													
+												</div>
+												<div class="col-xs-6 SaveBeforeTestDockProgress progress progress-striped light active m-md" style="margin: 6px 0;padding:0">
+													<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;"></div>
+												</div>
+												<div class="col-xs-3">
+													
+												</div>														
+											</div>
                                             
                                         </div>
-                                        
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" class="btn btn-default bInitModalTest btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Cancel');?></a>
-                                        <a href="#" class="btn btn-primary bInitModalTest bTestDock btn_footer_right btn_50" data-dismiss="modal"><?php echo __('Go');?></a>
+                                        <a href="#" class="btn btn-default btn_footer_right btn_100 bCancelTestDock" data-dismiss="modal"><?php echo __('Cancel');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -291,45 +269,24 @@
                                 <div class="modal-header">
                                     <div class="actions mh100vh_55">
                                         <div class="h100vh_160" style="overflow:auto; text-align:center">
+                                            <h4><?= _('Saving map before testing')?></h4>
+											<span id="start_point_text"></span>
+											<div class="row" style="margin: 0;">
+												<div class="col-xs-3">
+													
+												</div>
+												<div class="col-xs-6 SaveBeforeTestPoiProgress progress progress-striped light active m-md" style="margin: 6px 0;padding:0">
+													<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;"></div>
+												</div>
+												<div class="col-xs-3">
+													
+												</div>														
+											</div>
                                             
-                                            <div class="row" style="margin-top:30px;">
-                                                <div class="col-xs-8">
-                                                    <span style="font-size:16px; color:#F90; padding-bottom:20px;"><?php echo __('Remember to save the map before launching a test');?></span>
-                                                </div>
-                                                <div class="col-xs-4">
-                                                    <a href="#" class="btn btn-primary bSaveMapTestPoi" style="margin-top:7px;"><?php echo __('Save map');?> <i class="fa"></i></a>
-                                                </div>
-                                            </div>
-                                            
-                                            
-                                            <div class="row" style="margin-top:30px;">
-                                                <div class="col-xs-8">
-                                                    <span style="font-size:16px; padding-bottom:20px;"><?php echo __('You can change the position of the robot before the test');?></span>
-                                                </div>
-                                                <div class="col-xs-4">
-                                                    <a href="#" class="btn btn-primary bMoveRobotTest" style="margin-top:7px;"><?php echo __('Move robot');?></a>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="teleop" style="display:none; margin-top:30px;">
-                                                <a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
-                                            
-                                                <div class="ifUndocked">
-                                                    
-                                                    <div style="text-align:center; width:100%; z-index:2000; margin-top:50px;">
-                                                        <div class="joystickDiv" draggable="false" style="margin:auto;">
-                                                            <div class="fond"></div>
-                                                            <div class="curseur"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
-                                        
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" class="btn btn-default bInitModalTest btn_footer_left btn_50" data-dismiss="modal"><?php echo __('Cancel');?></a>
-                                        <a href="#" class="btn btn-primary bInitModalTest bTestPoi btn_footer_right btn_50" data-dismiss="modal" ><?php echo __('Go');?></a>
+                                        <a href="#" class="btn btn-default btn_footer_right btn_100 bCancelTestPoi" data-dismiss="modal"><?php echo __('Cancel');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -342,45 +299,24 @@
                                 <div class="modal-header">
                                     <div class="actions mh100vh_55">
                                         <div class="h100vh_160" style="overflow:auto; text-align:center">
+                                            <h4><?= _('Saving map before testing')?></h4>
+											<span id="start_point_text"></span>
+											<div class="row" style="margin: 0;">
+												<div class="col-xs-3">
+													
+												</div>
+												<div class="col-xs-6 SaveBeforeTestAugmentedPoseProgress progress progress-striped light active m-md" style="margin: 6px 0;padding:0">
+													<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;"></div>
+												</div>
+												<div class="col-xs-3">
+													
+												</div>														
+											</div>
                                             
-                                            <div class="row" style="margin-top:30px;">
-                                                <div class="col-xs-8">
-                                                    <span style="font-size:16px; color:#F90; padding-bottom:20px;"><?php echo __('Remember to save the map before launching a test');?></span>
-                                                </div>
-                                                <div class="col-xs-4">
-                                                    <a href="#" class="btn btn-primary bSaveMapTestAugmentedPose" style="margin-top:7px;"><?php echo __('Save map');?> <i class="fa"></i></a>
-                                                </div>
-                                            </div>
-                                            
-                                            
-                                            <div class="row" style="margin-top:30px;">
-                                                <div class="col-xs-8">
-                                                    <span style="font-size:16px; padding-bottom:20px;"><?php echo __('You can change the position of the robot before the test');?></span>
-                                                </div>
-                                                <div class="col-xs-4">
-                                                    <a href="#" class="btn btn-primary bMoveRobotTest" style="margin-top:7px;"><?php echo __('Move robot');?></a>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="teleop" style="display:none; margin-top:30px;">
-                                                <a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
-                                            
-                                                <div class="ifUndocked">
-                                                    
-                                                    <div style="text-align:center; width:100%; z-index:2000; margin-top:50px;">
-                                                        <div class="joystickDiv" draggable="false" style="margin:auto;">
-                                                            <div class="fond"></div>
-                                                            <div class="curseur"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
-                                        
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" class="btn btn-default bInitModalTest btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Cancel');?></a>
-                                        <a href="#" class="btn btn-primary bInitModalTest bTestAugmentedPose btn_footer_right btn_50" data-dismiss="modal" ><?php echo __('Go');?></a>
+                                        <a href="#" class="btn btn-default btn_footer_right btn_100 bCancelTestAugmentedPose" data-dismiss="modal"><?php echo __('Cancel');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -715,7 +651,7 @@
                                         <div style="clear:both;"></div>
                                        
                                         <a href="#" id="install_normal_edit_map_bPoiCancelConfig" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal"><?php echo __('Cancel');?></a>
-                                        <a href="#" id="install_normal_edit_map_bPoiSaveConfig" class="btn btn-primary btn_footer_right btn_50" data-dismiss="modal"><?php echo __('Save');?></a>
+                                        <a href="#" id="install_normal_edit_map_bPoiSaveConfig" class="btn btn-primary btn_footer_right btn_50"><?php echo __('Save');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -808,7 +744,7 @@
                                         <div style="clear:both;"></div>
                                        
                                        <a href="#" id="install_normal_edit_map_bAugmentedPoseCancelConfig" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Cancel');?></a>
-									   <a href="#" id="install_normal_edit_map_bAugmentedPoseSaveConfig" class="btn btn-primary btn_footer_right btn_50" data-dismiss="modal"><?php echo __('Save');?></a>
+									   <a href="#" id="install_normal_edit_map_bAugmentedPoseSaveConfig" class="btn btn-primary btn_footer_right btn_50"><?php echo __('Save');?></a>
                                         
                                     </div>
                                 </div>
@@ -877,7 +813,7 @@
                                        
                                        
                                         <a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal"><?php echo __('Cancel');?></a>
-										<a href="#" class="btn btn-primary bAugmentedPoseElemSave btn_footer_right btn_50" data-dismiss="modal" ><?php echo __('Save');?></a>
+										<a href="#" class="btn btn-primary bAugmentedPoseElemSave btn_footer_right btn_50"><?php echo __('Save');?></a>
                                     </div>
                                 </div>
                             </div>

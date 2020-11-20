@@ -1057,8 +1057,8 @@ function NormalShakeActiveElement()
 			target = $('#install_normal_edit_map .btnSaveElem');
 		}else if(ca == 'prepareArea' || ca == 'prepareGotoPose' || ca == 'prepareForbiddenArea'){
 			target = $('#install_normal_edit_map .btn-circle.icon_menu:visible');
-			setTimeout(function(){$('#install_normal_edit_map.times_icon_menu').toggleClass('shake')},1000);
-			setTimeout(function(){$('#install_normal_edit_map.times_icon_menu').toggleClass('shake')},3000);
+			setTimeout(function(){$('#install_normal_edit_map .times_icon_menu').toggleClass('shake')},1000);
+			setTimeout(function(){$('#install_normal_edit_map .times_icon_menu').toggleClass('shake')},3000);
 		}else if(ca == 'gomme'){
 			target = $('#install_normal_edit_map_bEndGomme');
 		}

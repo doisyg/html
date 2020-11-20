@@ -847,7 +847,7 @@ function ByStepDisplayMenu(id_menu)
 		
 		if(id_menu != 'install_by_step_edit_map_menu'){
 			$('#install_by_step_edit_map .burger_menu').hide('fast');
-			setTimeout(function(){$('#install_by_step_edit_map.times_icon_menu').show('fast')},50);
+			setTimeout(function(){$('#install_by_step_edit_map .times_icon_menu').show('fast')},50);
 		}else{
 			$('#install_by_step_edit_map .burger_menu').addClass('burger_menu_open');
 		}
@@ -1047,8 +1047,8 @@ function ByStepShakeActiveElement()
 			target = $('#install_by_step_edit_map .btnSaveElem');
 		}else if(ca == 'prepareArea' || ca == 'prepareGotoPose' || ca == 'prepareForbiddenArea'){
 			target = $('#install_by_step_edit_map .btn-circle.icon_menu:visible');
-			setTimeout(function(){$('#install_by_step_edit_map.times_icon_menu').toggleClass('shake')},1000);
-			setTimeout(function(){$('#install_by_step_edit_map.times_icon_menu').toggleClass('shake')},3000);
+			setTimeout(function(){$('#install_by_step_edit_map .times_icon_menu').toggleClass('shake')},1000);
+			setTimeout(function(){$('#install_by_step_edit_map .times_icon_menu').toggleClass('shake')},3000);
 		}else if(ca == 'gomme'){
 			target = $('#install_by_step_edit_map_bEndGomme');
 		}
