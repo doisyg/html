@@ -22,6 +22,8 @@ function ManagerGetZoom()
 	 return 1 / parseFloat(matrix[0]);
 }
 
+/* TRACE FUNCS */
+
 function ManagerTraceSection(x1, y1, x2, y2)
 {
 	$('#manager_edit_map_svg .selection').remove();
@@ -84,7 +86,7 @@ function ManagerTraceForbidden(indexForbidden)
 							   'id':'manager_edit_map_forbidden_'+forbidden.id_area,
 							   'data-id_area': forbidden.id_area
 							  });
-		path.style.fill = 'rgba(0,0,0,0.5)'
+		path.style.fill = 'rgba(255,0,0,0.3)';
 		svgManager.appendChild(path);
 		
 		if (is_active)
@@ -228,9 +230,21 @@ function ManagerTraceDock(indexDock)
 	rayonRobot = (26 / ros_resolution);
 	rayonRobotSecure = ((26+15) / ros_resolution);
 	
+	
 	path = makeSVGElement('circle', { cx: x,
 									cy: y,
 								   r: rayonRobot,
+								   'class': 'dock_elem dock_elem_circle dock_elem_'+dock.id_docking_station,
+								   'id': 'manager_edit_map_dock_robot_'+dock.id_docking_station,
+								   'data-id_docking_station': dock.id_docking_station,
+								   'data-element_type': 'dock',
+								   'data-element': 'dock'
+								   });
+	svgManager.appendChild(path);
+	
+	path = makeSVGElement('circle', { cx: x,
+									cy: y,
+								   r: rayonRobot * 0.60,
 								   'class': 'dock_elem dock_elem_robot dock_elem_fond dock_elem_'+dock.id_docking_station,
 								   'id': 'manager_edit_map_dock_robot_'+dock.id_docking_station,
 								   'data-id_docking_station': dock.id_docking_station,
@@ -239,7 +253,7 @@ function ManagerTraceDock(indexDock)
 								   });
 	svgManager.appendChild(path);
 	
-	path = makeSVGElement('polyline', { 'points': (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2),
+	path = makeSVGElement('polyline', { 'points': (x-1.5)+' '+(y-1.5)+' '+(x+1.5)+' '+(y)+' '+(x-1.5)+' '+(y+1.5),
 									'stroke':'#FFFFFF',
 									'stroke-width':1,
 									'fill':'none',
@@ -327,8 +341,8 @@ function ManagerTracePoi(indexPoi)
 	
 	path = makeSVGElement('circle', { cx: x,
 									cy: y,
-								   r: rayonRobotSecure,
-								   'class': 'poi_elem poi_elem_secure poi_elem_'+poi.id_poi,
+								   r: rayonRobot,
+								   'class': 'poi_elem poi_elem_circle poi_elem_'+poi.id_poi,
 								   'id': 'manager_edit_map_poi_secure_'+poi.id_poi,
 								   'data-id_poi': poi.id_poi,
 								   'data-element_type': 'poi',
@@ -338,7 +352,7 @@ function ManagerTracePoi(indexPoi)
 	
 	path = makeSVGElement('circle', { cx: x,
 									cy: y,
-								   r: rayonRobot,
+								   r: rayonRobot * 0.6,
 								   'class': 'poi_elem poi_elem_fond poi_elem_'+poi.id_poi,
 								   'id': 'manager_edit_map_poi_robot_'+poi.id_poi,
 								   'data-id_poi': poi.id_poi,
@@ -347,7 +361,7 @@ function ManagerTracePoi(indexPoi)
 								   });
 	svgManager.appendChild(path);
 	
-	path = makeSVGElement('polyline', { 'points': (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2),
+	path = makeSVGElement('polyline', { 'points': (x-1.5)+' '+(y-1.5)+' '+(x+1.5)+' '+(y)+' '+(x-1.5)+' '+(y+1.5),
 									'stroke':'#FFFFFF',
 									'stroke-width':1,
 									'fill':'none',
@@ -433,10 +447,12 @@ function ManagerTraceAugmentedPose(indexAugmentedPose)
 	rayonRobot = (26 / ros_resolution);
 	rayonRobotSecure = ((26+15) / ros_resolution);
 	
+	
+	
 	path = makeSVGElement('circle', { cx: x,
 									cy: y,
-								   r: rayonRobotSecure,
-								   'class': 'augmented_pose_elem augmented_pose_elem_secure augmented_pose_elem_'+augmented_pose.id_augmented_pose,
+								   r: rayonRobot,
+								   'class': 'augmented_pose_elem augmented_pose_elem_circle augmented_pose_elem_'+augmented_pose.id_augmented_pose,
 								   'id': 'manager_edit_map_augmented_pose_secure_'+augmented_pose.id_augmented_pose,
 								   'data-id_augmented_pose': augmented_pose.id_augmented_pose,
 								   'data-element_type': 'augmented_pose',
@@ -446,7 +462,7 @@ function ManagerTraceAugmentedPose(indexAugmentedPose)
 	
 	path = makeSVGElement('circle', { cx: x,
 									cy: y,
-								   r: rayonRobot,
+								   r: rayonRobot * 0.6,
 								   'class': 'augmented_pose_elem augmented_pose_elem_fond augmented_pose_elem_'+augmented_pose.id_augmented_pose,
 								   'id': 'manager_edit_map_augmented_pose_robot_'+augmented_pose.id_augmented_pose,
 								   'data-id_augmented_pose': augmented_pose.id_augmented_pose,
@@ -455,7 +471,7 @@ function ManagerTraceAugmentedPose(indexAugmentedPose)
 								   });
 	svgManager.appendChild(path);
 	
-	path = makeSVGElement('polyline', { 'points': (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2),
+	path = makeSVGElement('polyline', { 'points': (x-1.5)+' '+(y-1.5)+' '+(x+1.5)+' '+(y)+' '+(x-1.5)+' '+(y+1.5),
 									'stroke':'#FFFFFF',
 									'stroke-width':1,
 									'fill':'none',
@@ -469,6 +485,7 @@ function ManagerTraceAugmentedPose(indexAugmentedPose)
 								   'data-element': 'augmented_pose'
 								   });
 	svgManager.appendChild(path);
+	
 	
 	if (is_active)
 		AddClass('#manager_edit_map_svg .augmented_pose_elem_'+augmented_pose.id_augmented_pose, 'active');
