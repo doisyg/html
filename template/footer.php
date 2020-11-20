@@ -43,6 +43,7 @@
 		var robot_http = '<?php echo (file_exists('C:\\'))?((file_exists('C:\\Users\\F'))?$server_request_scheme.'://10.0.0.39':$server_request_scheme.'://192.168.0.33'):'';?>';
 		//var robot_host = '<?php echo (file_exists('C:\\'))?'10.0.0.44:'.($server_request_scheme == 'http'?'9094':'9095'):'wyca.run:'.($server_request_scheme == 'http'?'9094':'9095');?>';
 		var use_ssl = <?php echo $server_request_scheme == 'http'?'false':'true';?>;
+		var app_url = '<?php echo $server_request_scheme;?>://wyca.run';
 
 		var user_api_key = '<?php echo $_SESSION["api_key"];?>';
 		// TODO var id_map_last = <?php // echo $currentIdMap;?>;
