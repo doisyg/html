@@ -899,7 +899,7 @@ $(document).ready(function(e) {
 				"firstname": $('#install_normal_manager .modalManager #install_normal_manager_i_manager_prenom').val(),
 				"email": $('#install_normal_manager .modalManager #install_normal_manager_i_manager_email').val(),
 				"pass": $('#install_normal_manager .modalManager #install_normal_manager_i_manager_password').val(),
-				"id_group_user": 3,
+				"id_group_user": wycaApi.GroupUser.MANAGER,
 			};
 			
 			wycaApi.SetUser(json_user, function(data) {
@@ -1041,7 +1041,7 @@ $(document).ready(function(e) {
 				"firstname": $('#install_normal_user .modalUser #install_normal_user_i_user_prenom').val(),
 				"email": $('#install_normal_user .modalUser #install_normal_user_i_user_email').val(),
 				"pass": $('#install_normal_user .modalUser #install_normal_user_i_user_password').val(),
-				"id_group_user": 6,
+				"id_group_user": wycaApi.GroupUser.USER,
 			};
 			
 			wycaApi.SetUser(json_user, function(data) {
