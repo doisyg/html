@@ -10,7 +10,9 @@
                 <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile1" data-goto="user_edit_map" href="#"><i class="far fa-map"></i><?php echo __('Map');?></a></li>
                 <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="user_move" href="#"><i class="fa fa-gamepad"></i><?php echo __('Control robot');?></a></li>
                 <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="user_recovery" href="#"><i class="fa fa-search"></i><?php echo __('Recovery');?></a></li>
-                <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4 todo" data-goto="user_help" href="#"><i class="fa fa-question"></i><?php echo __('Help');?></a></li>
+				<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" href="logout.php"><i class="fas fa-power-off"></i><?php echo __('Logout');?></a></li>
+                    
+                <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5 todo" data-goto="user_help" href="#"><i class="fa fa-question"></i><?php echo __('Help');?></a></li>
             </ul>
         </div>
     </section>
@@ -212,18 +214,19 @@
             <h2><?php echo __('Control robot');?></h2>
         </header>
         <div class="content" style="text-align:center;">
-                <a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
-                                        
-                <div class="ifUndocked">
-                    
-                    <div style="text-align:center; width:100%; z-index:2000; margin-top:50px;">
-                        <div class="joystickDiv" draggable="false" style="margin:auto;">
-                            <div class="fond"></div>
-                            <div class="curseur"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+			<h4 style="text-align:center;margin-bottom:30px"><?= __('Move the robot using the joystick.') ?></h4>
+			<a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
+									
+			<div class="ifUndocked">
+				
+				<div style="text-align:center; width:100%; z-index:2000; margin-top:50px;">
+					<div class="joystickDiv" draggable="false" style="margin:auto;">
+						<div class="fond"></div>
+						<div class="curseur"></div>
+					</div>
+				</div>
+			</div>
+		</div>
         <footer>
             <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="user_dashboard"><?php echo __('Back');?></a>
         </footer>
@@ -235,24 +238,22 @@
             <h2><?php echo __('Recovery');?></h2>
         </header>
         <div class="content">
-            
-            	<h3>Move the robot near a reflector then click on the recovery button</h3>
-                
-                <div style="text-align:center; margin-top:20px;"><a href="#" class="bRecovery btn btn-warning btn_big_popup ">Recovery</a></div>
-                
-            
-                <div style="text-align:center"><a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a></div>
-                                        
-                <div class="ifUndocked">
-                    
-                    <div style="text-align:center; width:100%; z-index:2000; margin-top:20px;">
-                        <div class="joystickDiv" draggable="false" style="margin:auto;">
-                            <div class="fond"></div>
-                            <div class="curseur"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+			<h4 style="text-align:center"><?= __('Move the robot near a reflector (dock or augmented pose) then click on the recovery button') ?></h4>
+			<div style="text-align:center; margin-top:20px;"><a href="#" class="bRecovery btn btn-warning btn_big_popup "><?= _('Recovery') ?></a></div>
+			
+		
+			<div style="text-align:center"><a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a></div>
+									
+			<div class="ifUndocked">
+				
+				<div style="text-align:center; width:100%; z-index:2000; margin-top:20px;">
+					<div class="joystickDiv" draggable="false" style="margin:auto;">
+						<div class="fond"></div>
+						<div class="curseur"></div>
+					</div>
+				</div>
+			</div>
+		</div>
         <footer>
             <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="user_dashboard"><?php echo __('Back');?></a>
         </footer>
