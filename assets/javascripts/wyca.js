@@ -278,7 +278,8 @@ $(document).ready(function(e) {
 					
 			if (next == 'manager_edit_map') GetInfosCurrentMapManager();
 			if (next == 'manager_top') InitTopsActiveManager();
-			if (next == 'manager_users') GetUsers();
+			if (next == 'manager_users') GetUsersManager();
+			
 			if (next == 'user_edit_map') GetInfosCurrentMapUser();
 			
 			if (next == 'wyca_demo_mode_config') InitWycaDemo();
@@ -748,7 +749,7 @@ function GetServiceBooksByStep()
 	}
 }
 
-function GetUsers()
+function GetUsersManager()
 {
 	$('.manager_users_loading').show();
 	$('#manager_users .loaded').hide();
@@ -764,14 +765,14 @@ function GetUsers()
 				{
 					$('#manager_users .list_users').append('' +
 						'<li id="manager_users_list_user_elem_'+value.id_user+'" data-id_user="'+value.id_user+'">'+
-						'	<span class="societe">'+value.company+'</span><br /><span class="prenom">'+value.firstname+'</span> <span class="nom">'+value.lastname+'</span><br /><span class="email">'+value.email+'</span>'+
+						'	<span class="email">'+value.email+'</span>'+
 						'	<a href="#" class="bUserDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
 						'	<a href="#" class="bUserEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pen"></i></a>'+
 						'</li>'
 						);
 				}
 			});
-			
+			RefreshDisplayUserManager();
 			$('.manager_users_loading').hide();
 			$('#manager_users .loaded').show();
 		});
@@ -889,6 +890,7 @@ function GetUsersNormal()
 		setTimeout(GetUsersNormal, 500);
 	}
 }
+
 function GetManagersNormal()
 {
 	if(boolHelpManager)

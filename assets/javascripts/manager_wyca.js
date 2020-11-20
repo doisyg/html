@@ -13,10 +13,7 @@ $(document).ready(function(e) {
 			else
 			{
 				$('#manager_recovery .bRecovery').removeClass('disabled');
-				console.log(JSON.stringify(data)); 
-				text = wycaApi.AnswerCodeToString(data.A);
-				if (data.M != '') text += '<br />'+data.M;
-				alert_wyca(text);
+				ParseAPIAnswerError(data);
 			}
 		});
 		
@@ -27,10 +24,7 @@ $(document).ready(function(e) {
 			else
 			{
 				$('#manager_recovery .bRecovery').removeClass('disabled');
-				console.log(JSON.stringify(data)); 
-				text = wycaApi.AnswerCodeToString(data.A);
-				if (data.M != '') text += '<br />'+data.M;
-				alert_wyca(text);
+				ParseAPIAnswerError(data);
 			}
 		});
     });
@@ -285,10 +279,7 @@ $(document).ready(function(e) {
 			}
 			else
 			{
-				console.log(JSON.stringify(data)); 
-				text = wycaApi.AnswerCodeToString(data.A);
-				if (data.M != '') text += '<br />'+data.M;
-				alert_wyca(text);
+				ParseAPIAnswerError(data);
 			}
 		});
 		
@@ -307,10 +298,7 @@ $(document).ready(function(e) {
 			else
 			{
 				InitTopsActiveManager();
-				console.log(JSON.stringify(data)); 
-				text = wycaApi.AnswerCodeToString(data.A);
-				if (data.M != '') text += '<br />'+data.M;
-				alert_wyca(text);
+				ParseAPIAnswerError(data);
 			}	
 		});		
 	});
@@ -318,12 +306,12 @@ $(document).ready(function(e) {
 	$('#manager_users .bAddUser').click(function(e) {
 	
 		$('#manager_users .modalUser #manager_users_i_id_user').val(-1);
-		$('#manager_users .modalUser #manager_users_i_user_email').val('');
+		$('#manager_users .modalUser #manager_users_i_user_email').val('').removeClass('success').removeClass('error');
 		$('#manager_users .modalUser #manager_users_i_user_societe').val('');
 		$('#manager_users .modalUser #manager_users_i_user_prenom').val('');
 		$('#manager_users .modalUser #manager_users_i_user_nom').val('');
-		$('#manager_users .modalUser #manager_users_i_user_password').val('');
-		$('#manager_users .modalUser #manager_users_i_user_cpassword').val('');
+		$('#manager_users .modalUser #manager_users_i_user_password').val('').removeClass('success').removeClass('error');
+		$('#manager_users .modalUser #manager_users_i_user_cpassword').val('').removeClass('success').removeClass('error');
 		
 		$('#manager_users .modalUser').modal('show');
 	});
@@ -331,21 +319,17 @@ $(document).ready(function(e) {
 	$('#manager_users .modalUser #manager_users_bUserSave').click(function(e) {
         e.preventDefault();
 		
-		if ($('#manager_users .modalUser #manager_users_i_user_password').val() != $('#manager_users .modalUser #manager_users_i_user_cpassword').val())
-		{
-			alert_wyca('Invalid password or confirm');
-		}
-		else if ($('#manager_users .modalUser #manager_users_i_user_societe').val() == "" )
-		{
-			alert_wyca('Company is required');
-		}
-		else if ($('#manager_users .modalUser #manager_users_i_user_prenom').val() == "" )
-		{
-			alert_wyca('Firstname is required');
-		}
-		else if ($('#manager_users .modalUser #manager_users_i_user_nom').val() == "" )
-		{
-			alert_wyca('Lastname is required');
+		let pass = $('#manager_users .modalUser #manager_users_i_user_password');
+		let cpass = $('#manager_users .modalUser #manager_users_i_user_cpassword');
+		
+		if (pass.val() == '' || cpass.val() == ''){
+			alert_wyca(textPasswordRequired);
+		}else if(pass.val() != cpass.val()){
+			alert_wyca(textPasswordMatching);
+		}else if(!pass[0].checkValidity() || !cpass[0].checkValidity()){
+			alert_wyca(textPasswordPattern);
+		}else if (!$('#manager_users .modalUser #manager_users_i_user_email')[0].checkValidity()){
+			alert_wyca(textLoginPattern);
 		}
 		else
 		{
@@ -375,21 +359,19 @@ $(document).ready(function(e) {
 					{
 						$('#manager_users .list_users').append('' +
 							'<li id="manager_users_list_user_elem_'+id_user+'" data-id_user="'+id_user+'">'+
-							'	<span class="societe">'+json_user.company+'</span><br /><span class="prenom">'+json_user.firstname+'</span> <span class="nom">'+json_user.lastname+'</span><br /><span class="email">'+json_user.email+'</span>'+
+							'	<span class="email">'+json_user.email+'</span>'+
 							'	<a href="#" class="bUserDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
 							'	<a href="#" class="bUserEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
 							'</li>'
 							);
+						RefreshDisplayUserManager();
 					}
 					
 					$('#manager_users .modalUser').modal('hide');
 				}
 				else
 				{
-					console.log(JSON.stringify(data)); 
-					text = wycaApi.AnswerCodeToString(data.A);
-					if (data.M != '') text += '<br />'+data.M;
-					alert_wyca(text);
+					ParseAPIAnswerError(data);
 				}
 			});
 		}
@@ -404,13 +386,11 @@ $(document).ready(function(e) {
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
 				$('#manager_users_list_user_elem_'+id_user_to_delete).remove();
+				RefreshDisplayUserManager();
 			}
 			else
 			{
-				console.log(JSON.stringify(data)); 
-				text = wycaApi.AnswerCodeToString(data.A);
-				if (data.M != '') text += '<br />'+data.M;
-				alert_wyca(text);
+				ParseAPIAnswerError(data);
 			}
 		});
 	});
@@ -427,6 +407,54 @@ $(document).ready(function(e) {
 		$('#manager_users .modalUser #manager_users_i_user_password').val('');
 		$('#manager_users .modalUser #manager_users_i_user_cpassword').val('');
 		
+		$('#manager_users .modalUser #manager_users_i_user_email').removeClass('success').removeClass('error');
+		$('#manager_users .modalUser #manager_users_i_user_password').removeClass('success').removeClass('error');
+		$('#manager_users .modalUser #manager_users_i_user_cpassword').removeClass('success').removeClass('error');
+		
 		$('#manager_users .modalUser').modal('show');
 	});
+	
+	$('#manager_users .modalUser #manager_users_i_user_email').change(function(e){
+		if($(this)[0].checkValidity())
+			$(this).removeClass('error').addClass('success');
+		else
+			$(this).removeClass('success').addClass('error');
+	})
+	
+	$('#manager_users .modalUser #manager_users_i_user_password').change(function(e){
+		if($(this)[0].checkValidity())
+			$(this).removeClass('error').addClass('success');
+		else
+			$(this).removeClass('success').addClass('error');
+	})
+	
+	$('#manager_users .modalUser #manager_users_i_user_cpassword').change(function(e){
+		if($(this)[0].checkValidity())
+			$(this).removeClass('error').addClass('success');
+		else
+			$(this).removeClass('success').addClass('error');
+		if($('#manager_users .modalUser #manager_users_i_user_password').val() != ''){
+			if($(this).val() == $('#manager_users .modalUser #manager_users_i_user_password').val())
+				$(this).removeClass('error').addClass('success');
+			else
+				$(this).removeClass('success').addClass('error');
+		}
+	})
 });
+
+
+
+//------------------- USERS ------------------------	
+
+function RefreshDisplayUserManager(){
+	if($('#manager_users ul.list_users li').length > 0){
+		//HIDE TUILE et AFF NEXT
+		$('#manager_users a.bAddUser').show();
+		$('#manager_users .bAddUserTuile').hide();
+	}else{
+		//AFF TUILE ET SKIP
+		$('#manager_users a.bAddUser').hide();
+		$('#manager_users .bAddUserTuile').show();
+	}
+	
+}

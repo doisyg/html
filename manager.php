@@ -12,7 +12,8 @@
                 <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="manager_recovery" href="#"><i class="fa fa-search"></i><?php echo __('Recovery');?></a></li>
                 <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="manager_top" href="#"><i class="fa fa-refresh"></i><?php echo __('Change top');?></a></li>
                 <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5" data-goto="manager_users" href="#"><i class="fa fa-group"></i><?php echo __('Users');?></a></li>
-                <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6 todo" data-goto="manager_help" href="#"><i class="fa fa-question"></i><?php echo __('Help');?></a></li>
+                <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" href="logout.php"><i class="fas fa-power-off"></i><?php echo __('Logout');?></a></li>
+				<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7 todo" data-goto="manager_help" href="#"><i class="fa fa-question"></i><?php echo __('Help');?></a></li>
             </ul>
         </div>
     </section>
@@ -393,18 +394,19 @@
             <h2><?php echo __('Control robot');?></h2>
         </header>
         <div class="content" style="text-align:center;">
-                <a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
-                                        
-                <div class="ifUndocked">
-                    
-                    <div style="text-align:center; width:100%; z-index:2000; margin-top:50px;">
-                        <div class="joystickDiv" draggable="false" style="margin:auto;">
-                            <div class="fond"></div>
-                            <div class="curseur"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+			<h4 style="text-align:center;margin-bottom:30px"><?= __('Move the robot using the joystick.') ?></h4>    
+			<a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
+									
+			<div class="ifUndocked">
+				
+				<div style="text-align:center; width:100%; z-index:2000; margin-top:50px;">
+					<div class="joystickDiv" draggable="false" style="margin:auto;">
+						<div class="fond"></div>
+						<div class="curseur"></div>
+					</div>
+				</div>
+			</div>
+		</div>
         <footer>
             <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="manager_dashboard"><?php echo __('Back');?></a>
         </footer>
@@ -417,6 +419,7 @@
         </header>
         <div class="content">
             	<div class="manager_top_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
+				<h5 class="text-center" style="margin-bottom:30px;"><?= _('Please select the active top for the vehicle.') ?></h5>
                 <ul class="tuiles row">
                 </ul>
                 
@@ -459,23 +462,22 @@
         </header>
         <div class="content">
             
-            	<h3>Move the robot near a reflector then click on the recovery button</h3>
-                
-                <div style="text-align:center; margin-top:20px;"><a href="#" class="bRecovery btn btn-warning btn_big_popup ">Recovery</a></div>
-                
-            
-                <div style="text-align:center"><a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a></div>
-                                        
-                <div class="ifUndocked">
-                    
-                    <div style="text-align:center; width:100%; z-index:2000; margin-top:20px;">
-                        <div class="joystickDiv" draggable="false" style="margin:auto;">
-                            <div class="fond"></div>
-                            <div class="curseur"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+			<h4 style="text-align:center"><?= __('Move the robot near a reflector (dock or augmented pose) then click on the recovery button') ?></h4>
+			<div style="text-align:center; margin-top:20px;"><a href="#" class="bRecovery btn btn-warning btn_big_popup "><?= _('Recovery') ?></a></div>
+			
+		
+			<div style="text-align:center"><a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a></div>
+									
+			<div class="ifUndocked">
+				
+				<div style="text-align:center; width:100%; z-index:2000; margin-top:20px;">
+					<div class="joystickDiv" draggable="false" style="margin:auto;">
+						<div class="fond"></div>
+						<div class="curseur"></div>
+					</div>
+				</div>
+			</div>
+		</div>
         <footer>
             <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="manager_dashboard"><?php echo __('Back');?></a>
         </footer>
@@ -488,73 +490,99 @@
         </header>
         <div class="content">
                 
-                <div class="manager_users_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
-                
-                <div class="loaded col-md-12" style="padding-top:30px;">
-                	<a href="#" class="bAddUser btn btn-primary">Add an account</a>
-                
-                    <ul class="list_users list_elem">
-                    </ul>
-                    
-                    <div class="modal fade modalUser" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
-                        <div class="modal-dialog" role="dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <div class="actions mh100vh_55">
-                                        <div class="h100vh_160" style="overflow:auto">
-                                            <form>
-                                            	<input type="hidden" name="i_id_user" id="manager_users_i_id_user" value="-1" />
-                                                <div class="form-group">
-                                                    <label class="col-xs-12 col-md-3 control-label" for="societe"><?php echo __('Company');?></label>
-                                                    <div class="col-xs-12 col-md-6">
-                                                        <input id="manager_users_i_user_societe" name="societe" type="text" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-xs-12 col-md-3 control-label" for="prenom"><?php echo __('Firstname');?></label>
-                                                    <div class="col-xs-12 col-md-6">
-                                                        <input id="manager_users_i_user_prenom" name="prenom" type="text" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-xs-12 col-md-3 control-label" for="nom"><?php echo __('Lastname');?></label>
-                                                    <div class="col-xs-12 col-md-6">
-                                                        <input id="manager_users_i_user_nom" name="nom" type="text" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-xs-12 col-md-3 control-label" for="email"><?php echo __('Email');?></label>
-                                                    <div class="col-xs-12 col-md-6">
-                                                        <input id="manager_users_i_user_email" name="email" type="text" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-xs-12 col-md-3 control-label" for="password"><?php echo __('Password');?></label>
-                                                    <div class="col-xs-12 col-md-6">
-                                                        <input id="manager_users_i_user_password" name="password" type="password" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-xs-12 col-md-3 control-label" for="cpassword"><?php echo __('Confirm password');?></label>
-                                                    <div class="col-xs-12 col-md-6">
-                                                        <input id="manager_users_i_user_cpassword" name="cpassword" type="password" class="form-control">
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        
-                                        <div style="clear:both;"></div>
-                                       
-                                       
-                                        <a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Cancel');?></a>
-										<a href="#" id="manager_users_bUserSave" class="btn btn-primary btn_footer_right btn_50"><?php echo __('Save');?></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+			<div class="manager_users_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
+			
+			<div class="loaded col-md-12" style="padding-top:30px;">
+				<ul class="tuiles row bAddUserTuile" style="margin-bottom:30px;">
+					<li class="col-xs-6" style="margin-left: 25%;">
+						<div class="is_checkbox tuile_img no_update bAddUser" style="height:max-content;bottom:0;border-radius:10px">
+							<i class="fas fa-user-plus" style="padding-top:5px"></i>
+							<h4 class="" style="margin-top: 0px;font-weight:700;font-size: 15px;"><?php echo __('Create user');?></h4>
+						</div>
+					</li>
+				</ul>
+				
+				<a href="#" class="bAddUser btn btn-primary"><?= ('Add an account') ?></a>
+				<ul class="list_users list_elem">
+				</ul>
+				
+				<div class="modal fade modalUser" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+					<div class="modal-dialog" role="dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<div class="actions mh100vh_55">
+									<div class="h100vh_160" style="overflow:auto">
+										<form>
+											<input type="hidden" name="i_id_user" id="manager_users_i_id_user" value="-1" />
+											<div class="form-group">
+												<label class="col-xs-12 col-md-3 control-label" for="societe"><?php echo __('Company');?></label>
+												<div class="col-xs-12 col-md-6">
+													<input id="manager_users_i_user_societe" name="societe" type="text" class="form-control">
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-xs-12 col-md-3 control-label" for="prenom"><?php echo __('Firstname');?></label>
+												<div class="col-xs-12 col-md-6">
+													<input id="manager_users_i_user_prenom" name="prenom" type="text" class="form-control">
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-xs-12 col-md-3 control-label" for="nom"><?php echo __('Lastname');?></label>
+												<div class="col-xs-12 col-md-6">
+													<input id="manager_users_i_user_nom" name="nom" type="text" class="form-control">
+												</div>
+											</div>
+											<div class="form-group nopymy">
+												<label class="col-xs-12 col-md-3 control-label" for="email"><?php echo __('Email');?></label>
+												<div class="col-xs-12 col-md-6 input-group input-group-icon">
+													<input id="manager_users_i_user_email" name="email"  pattern="[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,}" type="text" class="form-control">
+													<span class="input-group-addon">
+														<span class="icon icon-lg">
+															<i class="fas fa-at"></i>
+														</span>
+													</span>
+												</div>
+											</div>
+											<p class="password_format" style="margin-bottom:0"><?= _('A valid mail adress.')?> </p>
+											<div class="form-group nopymy">
+												<label class="col-xs-12 col-md-3 control-label" for="password"><?php echo __('Password');?></label>
+												<div class="col-xs-12 col-md-6 input-group input-group-icon">
+													<input id="manager_users_i_user_password" name="password" type="password" class="form-control" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|0-9]).{8,}$">
+													<span class="input-group-addon">
+														<span class="icon icon-lg">
+															<i class="fa fa-lock"></i>
+														</span>
+													</span>
+												</div>
+											</div>
+											<p class="password_format"><?= _('8 characters, lower and uppercase, digit or special char.')?> </p>
+											<div class="form-group">
+												<label class="col-xs-12 col-md-3 control-label" for="cpassword"><?php echo __('Confirm password');?></label>
+												<div class="col-xs-12 col-md-6 input-group input-group-icon">
+													<input id="manager_users_i_user_cpassword" name="cpassword" type="password" class="form-control" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|0-9]).{8,}$">
+													<span class="input-group-addon">
+														<span class="icon icon-lg">
+															<i class="fa fa-lock"></i>
+														</span>
+													</span>
+												</div>
+											</div>
+											<p class="password_format"><?= _('8 characters, lower and uppercase, digit or special char.')?> </p>
+										</form>
+									</div>
+									
+									<div style="clear:both;"></div>
+								   
+								   
+									<a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Cancel');?></a>
+									<a href="#" id="manager_users_bUserSave" class="btn btn-primary btn_footer_right btn_50"><?php echo __('Save');?></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
         <footer>
             <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="manager_dashboard"><?php echo __('Back');?></a>
         </footer>
