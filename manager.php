@@ -43,35 +43,42 @@
                         <div style="clear:both;"></div>
                     </div>
                     
-                    <a href="#" id="manager_edit_map_bStop" class="btn btn-circle btn-danger btn-lg"><i class="fa fa-stop"></i></a>
-                    <a href="#" id="manager_edit_map_bSaveCurrentElem" class="btn btn-circle btn-primary btn-lg"><i class="fa fa-check"></i></a>
-                    <a href="#" id="manager_edit_map_bCancelCurrentElem" class="btn btn-circle btn-warning btn-lg"><i class="fa fa-times"></i></a>
+                    <a href="#" id="manager_edit_map_bStop" class="btn btn-circle btn-danger btn-menu"><i class="fa fa-stop"></i></a>
+                    <a href="#" id="manager_edit_map_bSaveCurrentElem" class="btn btn-circle btn-primary btn-menu"><i class="fa fa-check"></i></a>
+                    <a href="#" id="manager_edit_map_bCancelCurrentElem" class="btn btn-circle btn-warning btn-menu"><i class="fa fa-times"></i></a>
                     
-                    <a href="#" id="manager_edit_map_bManagerUndo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:40px; left:10px;"><i class="fa fa-mail-reply"></i></a>
-                    <a href="#" id="manager_edit_map_bManagerRedo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:40px; left:45px;"><i class="fa fa-mail-forward"></i></a>
+                    <a href="#" id="manager_edit_map_bManagerUndo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:20px; left:10px;"><i class="fas fa-undo-alt"></i></a>
+                    <a href="#" id="manager_edit_map_bManagerRedo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:20px; left:45px;"><i class="fas fa-redo-alt"></i></a>
                     
                     <div id="manager_edit_map_menu" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
-                    	<ul>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bAddPOI"><i class="fa fa-map-marker"></i></a></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bMoveTo"><i class="fa fa-crosshairs"></i></a></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bMove" data-toggle="modal" data-target="#manager_edit_map_modalTeleop"><i class="fa fa-gamepad"></i></a></li>
+						<ul>
+                        	<li><a href="#" class="btn btn-circle btn-default bAddPOI btn-menu" data-orientation="V">
+								<i class="fa fa-map-marker-alt iconMenuBlue"></i>
+							</a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default bMoveTo btn-menu" data-orientation="H">
+								<i class="fa fa-crosshairs iconMenuBlue" style="font-size:24px"></i>
+							</a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default bMove btn-menu" data-orientation="H" data-toggle="modal" data-target="#manager_edit_map_modalTeleop">
+								<i class="fa fa-gamepad iconMenuPurple"></i>
+							</a></li>
                         </ul>
                     </div>
                     
                     <div id="manager_edit_map_menu_dock" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg" data-toggle="modal" data-target="#manager_edit_map_modalDoSaveBeforeTestDock"><i class="fa fa-check"></i></a></li>
+							<li><a href="#" class="btn btn-circle btn-default btn-menu bTestDock" ><img class="fi-route" src="assets/images/route_green.svg"/></a></li>
                         </ul>
                     </div>
                     <div id="manager_edit_map_menu_poi" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bDeletePoi"><i class="fa fa-trash"></i></a></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg" data-toggle="modal" data-target="#manager_edit_map_modalDoSaveBeforeTestPoi"><i class="fa fa-check"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-menu bTestPoi"><img class="fi-route" src="assets/images/route_green.svg"/></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-menu bConfigPoi"><i class="fa fa-gears iconMenuBlue"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-menu bDeletePoi"><i class="fa fa-trash iconMenuRed"></i></a></li>
                         </ul>
                     </div>
                     <div id="manager_edit_map_menu_augmented_pose" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg" data-toggle="modal" data-target="#manager_edit_map_modalDoSaveBeforeTestAugmentedPose"><i class="fa fa-check"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-menu bTestAugmentedPose"><img class="fi-route" src="assets/images/route_green.svg"/></a></li>
                         </ul>
                     </div>
                     
@@ -113,14 +120,13 @@
                                 <div class="modal-header">
                                     <div class="actions mh100vh_55">
                                         <div class="h100vh_160" style="overflow:auto">
-                                            
                                             <section class="panel panel-success">
                                                 <header class="panel-heading">
-                                                    <h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fa fa-thumbs-up"></i></h2>
+                                                    <h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fas fa-info"></i></h2>
                                                 </header>
                                                 <div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
-                                                    <strong>Congratulations !</strong><br />
-                                                    No error during action.
+                                                    <strong><?= _('Action finished !') ?></strong><br />
+													<?= _('No error during action.') ?>
                                                 </div>
                                             </section>
                                             <section class="panel panel-danger">
@@ -128,11 +134,19 @@
                                                     <h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fa fa-remove"></i></h2>
                                                 </header>
                                                 <div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
-                                                    <strong>Error !</strong><br />
+                                                    <strong><?= _('Error !') ?></strong><br />
                                                     <span class="error_details"></span>
                                                 </div>
                                             </section>
-                                            
+                                            <section class="panel panel-warning">
+                                                <header class="panel-heading">
+                                                    <h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fas fa-exclamation-triangle"></i></h2>
+                                                </header>
+                                                <div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
+                                                    <strong><?= _('Warning !') ?></strong><br />
+                                                    <span class="error_details"></span>
+                                                </div>
+                                            </section>
                                         </div>
                                         
                                         <div style="clear:both;"></div>
@@ -204,46 +218,23 @@
                                 <div class="modal-header">
                                     <div class="actions mh100vh_55">
                                         <div class="h100vh_160" style="overflow:auto; text-align:center">
-                                            
-                                            <div class="row" style="margin-top:30px;">
-                                                <div class="col-xs-8">
-                                                    <span style="font-size:16px; color:#F90; padding-bottom:20px;"><?php echo __('Remember to save the map before launching a test');?></span>
-                                                </div>
-                                                <div class="col-xs-4">
-                                                    <a href="#" class="btn btn-primary bSaveMapTestPoi" style="margin-top:7px;"><?php echo __('Save map');?> <i class="fa"></i></a>
-                                                </div>
-                                            </div>
-                                            
-                                            
-                                            <div class="row" style="margin-top:30px;">
-                                                <div class="col-xs-8">
-                                                    <span style="font-size:16px; padding-bottom:20px;"><?php echo __('You can change the position of the robot before the test');?></span>
-                                                </div>
-                                                <div class="col-xs-4">
-                                                    <a href="#" class="btn btn-primary bMoveRobotTest" style="margin-top:7px;"><?php echo __('Move robot');?></a>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="teleop" style="display:none; margin-top:30px;">
-                                                <a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
-                                            
-                                                <div class="ifUndocked">
-                                                    
-                                                    <div style="text-align:center; width:100%; z-index:2000; margin-top:50px;">
-                                                        <div class="joystickDiv" draggable="false" style="margin:auto;">
-                                                            <div class="fond"></div>
-                                                            <div class="curseur"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <h4><?= _('Saving map before testing')?></h4>
+											<span id="start_point_text"></span>
+											<div class="row" style="margin: 0;">
+												<div class="col-xs-3">
+													
+												</div>
+												<div class="col-xs-6 SaveBeforeTestPoiProgress progress progress-striped light active m-md" style="margin: 6px 0;padding:0">
+													<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;"></div>
+												</div>
+												<div class="col-xs-3">
+													
+												</div>														
+											</div>
                                             
                                         </div>
-                                        
                                         <div style="clear:both;"></div>
-                                       
-                                        <a href="#" class="btn btn-default btn_footer_left btn_50 bInitModalTest" data-dismiss="modal"><?php echo __('Cancel');?></a>
-                                        <a href="#" class="btn btn-primary bInitModalTest bTestPoi btn_footer_right btn_50" data-dismiss="modal"><?php echo __('Continue');?></a>
+                                        <a href="#" class="btn btn-default btn_footer_right btn_100 bCancelTestPoi" data-dismiss="modal"><?php echo __('Cancel');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -291,8 +282,8 @@
                             </div>
                         </div>
                     </div>
-                                        
-                    <div class="modal fade modalAddPoi" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+					
+					<div class="modal fade modalAddPoi" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
                         <div class="modal-dialog" role="dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -302,11 +293,10 @@
                                         	<a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
                                         
                                         	<div class="ifUndocked">
-                                                
-                                                <div style="color:#CC0000;">
+                                            
+                                            	<div class ="modal-advice">
                                                     <p><?php echo stripslashes(__('Move the robot at the final position desired and click on the "Add POI" button'));?></p>
                                                 </div>                                                
-                                                <p><a href="#" class="btn btn-primary bAddPoiAtCurrentPose">Add POI </a></p>
                                                 
                                                 <div style="position:absolute; bottom:50px; left:0; width:100%; z-index:2000;">
                                                     <div class="joystickDiv" draggable="false" style="margin:auto;">
@@ -319,13 +309,14 @@
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" class="btn btn-default btn_footer_left btn_100" data-dismiss="modal" style="width:100%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+                                        <a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal"><?php echo __('Cancel');?></a>
+                                        <a href="#" id="manager_edit_map_bModalAddPoiSave" class="btn btn-primary btn_footer_right btn_50 ifDocked_disabled" data-dismiss="modal"><?php echo __('Add POI');?></a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
+					
                     <div class="modal fade modalPoiOptions" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
                         <div class="modal-dialog" role="dialog">
                             <div class="modal-content">
@@ -351,10 +342,8 @@
                                         </div>
                                         
                                         <div style="clear:both;"></div>
-                                       
-                                        
-                                        <a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal"><?php echo __('Cancel');?></a>
-										<a href="#" id="manager_edit_map_bPoiSaveConfig" class="btn btn-primary btn_footer_right btn_50" data-dismiss="modal" ><?php echo __('Save');?></a>
+										<a href="#" id="manager_edit_map_bPoiCancelConfig" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal"><?php echo __('Cancel');?></a>
+                                        <a href="#" id="manager_edit_map_bPoiSaveConfig" class="btn btn-primary btn_footer_right btn_50"><?php echo __('Save');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -362,16 +351,20 @@
                     </div>
                     
                     <div class="popupHelp">
-                    	<h2>Help</h2>
+                    	<h2><?= _('Help')?></h2>
                     	<ul style="color:#000;">
-                        	<li><i class="fa fa-map-marker"></i><span class="description">Add POI</span></li>
-                        	<li><i class="fa fa-crosshairs"></i><span class="description">Move the robot to this point</span></li>
-                        	<li><i class="fa fa-gamepad"></i><span class="description">Teleop the robot</span></li>
-                        	<li><i class="fa fa-check"></i><span class="description">Test go to POI or dock</span></li>
-                        	<li><span style="display:inline-block; margin-right:25px; width:15px; height:15px; border-radius:100%; background-color:#009900;"></span><span class="description">Robot position</span></li>
+                        	<li><i class="fa fa-map-marker-alt iconMenuBlue"></i><span class="description"><?= _('Add POI')?></span></li>
+                        	<li><i class="fa fa-crosshairs iconMenuBlue"></i><span class="description"><?= _('Move the robot to this point')?></span></li>
+                        	<li><i class="fa fa-gamepad iconMenuPurple"></i><span class="description"><?= _('Teleop the robot')?></span></li>
+                        	<li style="position:relative;font-size:16px"><img class="route" src="assets/images/route_green.svg"/><span class="description" style="margin-left: 40px;position: relative;top: 3px;"><?= _('Test go to POI, dock or augmented pose')?></span></li>
+                        	<li style="position:relative;">
+							<svg class="svg_popupHelp_robot" xmlns="http://www.w3.org/2000/svg">
+								<circle cx="20" cy="20" r="12" class="robot_elem robot_elem_fond"></circle>
+								<polyline points="16 16 24 20 16 24" stroke="#FFFFFF" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round" class="robot_elem" transform="rotate(-90,20,20)"></polyline>
+							</svg>
+							<span class="description" style="margin-left: 40px;"><?= _('Robot position')?></span></li>
                         </ul>
-                        
-                        <p>Click to hide</p>
+                        <p class="legende"><?= _('Click to hide')?></p>
                     </div>
                     
                     

@@ -184,7 +184,7 @@
                     </div>
                     
                     <div class="popupHelp">
-                    	<h2>Help</h2>
+                    	<h2><?= _('Help')?></h2>
                     	<ul style="color:#000;">
                         	<li><i class="fa fa-crosshairs"></i><span class="description">Move the robot to this point</span></li>
                         	<li><i class="fa fa-gamepad"></i><span class="description">Teleop the robot</span></li>

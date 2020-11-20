@@ -93,7 +93,7 @@ include ('template/header_test.php');
 <section id="install_help" class="page with_footer">
 	<header>
     	<div class="pull-left"><img src="assets/images/logo.png" /></div>
-        <h2>Help</h2>
+        <h2><?= _('Help')?></h2>
     </header>
     <div class="content">
         HELP

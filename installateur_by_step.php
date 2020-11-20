@@ -1479,7 +1479,7 @@
                     </div>
 					
                     <div class="popupHelp">
-                    	<h2>Help</h2>
+                    	<h2><?= _('Help')?></h2>
                     	<ul style="color:#000;">
                         	<li><div class="iconForbiddenArea"><i class="fas fa-vector-square"></i><i class="fa fa-minus-circle iconMenuRed"></i></div><span class="description"><?= _('Add forbidden area')?></span></li>
                         	<li><i class="fa fa-draw-polygon iconMenuGreen" style="font-size: 26px;"></i><span class="description"><?= _('Add custom area')?></span></li>
