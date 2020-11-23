@@ -42,15 +42,33 @@
                         <div style="clear:both;"></div>
                     </div>
                     
-                    <a href="#" id="user_edit_map_bStop" class="btn btn-circle btn-danger btn-lg"><i class="fa fa-stop"></i></a>
-                    
+					<a href="#" id="user_edit_map_bStop" class="btn btn-circle btn-danger btn-menu"><i class="fa fa-stop"></i></a>
+					
                     <div id="user_edit_map_menu" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bMoveTo"><i class="fa fa-crosshairs"></i></a></li>
-                        	<li><a href="#" class="btn btn-circle btn-default btn-lg bMove" data-toggle="modal" data-target="#user_edit_map_modalTeleop"><i class="fa fa-gamepad"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default bMoveTo btn-menu" data-orientation="H"><i class="fa fa-crosshairs iconMenuBlue" style="font-size:24px"></i></a></li>
+							<li><a href="#" class="btn btn-circle btn-default bMove btn-menu" data-orientation="H" data-toggle="modal" data-target="#user_edit_map_modalTeleop">
                         </ul>
                     </div>
                     
+					<div id="user_edit_map_menu_dock" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
+						<ul>
+							<li><a href="#" class="btn btn-circle btn-default btn-menu bTestDock" ><img class="fi-route" src="assets/images/route_green.svg"/></a></li>
+						</ul>
+					</div>
+					
+					<div id="user_edit_map_menu_poi" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
+						<ul>
+							<li><a href="#" class="btn btn-circle btn-default btn-menu bTestPoi"><img class="fi-route" src="assets/images/route_green.svg"/></a></li>
+						</ul>
+					</div>
+					
+					<div id="user_edit_map_menu_augmented_pose" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
+						<ul>
+							<li><a href="#" class="btn btn-circle btn-default btn-menu bTestAugmentedPose"><img class="fi-route" src="assets/images/route_green.svg"/></a></li>
+						</ul>
+					</div>
+					
                     <div id="user_edit_map_modalTeleop" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
                         <div class="modal-dialog" role="dialog">
                             <div class="modal-content">
@@ -83,120 +101,210 @@
                         </div>
                     </div>
                     
-                    <div class="modal fade modalFinTest" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
-                        <div class="modal-dialog" role="dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <div class="actions mh100vh_55">
-                                        <div class="h100vh_160" style="overflow:auto">
-                                            
-                                            <section class="panel panel-success">
-                                                <header class="panel-heading">
-                                                    <h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fa fa-thumbs-up"></i></h2>
-                                                </header>
-                                                <div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
-                                                    <strong>Congratulations !</strong><br />
-                                                    No error during action.
-                                                </div>
-                                            </section>
-                                            <section class="panel panel-danger">
-                                                <header class="panel-heading">
-                                                    <h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fa fa-remove"></i></h2>
-                                                </header>
-                                                <div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
-                                                    <strong>Error !</strong><br />
-                                                    <span class="error_details"></span>
-                                                </div>
-                                            </section>
-                                            
-                                        </div>
-                                        
-                                        <div style="clear:both;"></div>
-                                       
-                                        <a href="#" class="btn btn-primary btn_footer_left btn_100" data-dismiss="modal" ><?php echo __('Close');?></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+					<div class="modal fade modalFinTest" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+						<div class="modal-dialog" role="dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<div class="actions mh100vh_55">
+										<div class="h100vh_160" style="overflow:auto">
+											<section class="panel panel-success">
+												<header class="panel-heading">
+													<h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fas fa-info"></i></h2>
+												</header>
+												<div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
+													<strong><?= _('Action finished !') ?></strong><br />
+													<?= _('No error during action.') ?>
+												</div>
+											</section>
+											<section class="panel panel-danger">
+												<header class="panel-heading">
+													<h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fa fa-remove"></i></h2>
+												</header>
+												<div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
+													<strong><?= _('Error !') ?></strong><br />
+													<span class="error_details"></span>
+												</div>
+											</section>
+											<section class="panel panel-warning">
+												<header class="panel-heading">
+													<h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fas fa-exclamation-triangle"></i></h2>
+												</header>
+												<div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
+													<strong><?= _('Warning !') ?></strong><br />
+													<span class="error_details"></span>
+												</div>
+											</section>
+										</div>
+										
+										<div style="clear:both;"></div>
+									   
+										<a href="#" class="btn btn-primary btn_footer_left btn_100" data-dismiss="modal" ><?php echo __('Close');?></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
                     
-                    <div id="user_edit_map_modalDoSaveBeforeTestDock" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
-                        <div class="modal-dialog" role="dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <div class="actions mh100vh_55">
-                                        <div class="h100vh_160" style="overflow:auto; text-align:center">
-                                            
-                                            <h3 style="color:#F90; padding-bottom:20px;">Send robot to this docking station</h3>
-                                            
-                                        </div>
-                                        
-                                        <div style="clear:both;"></div>
-                                       
-                                        <a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Cancel');?></a>
-                                        <a href="#" class="btn btn-primary btn_footer_right btn_50 bTestDock" data-dismiss="modal"><?php echo __('Continue');?></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div id="user_edit_map_modalDoSaveBeforeTestPoi" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
-                        <div class="modal-dialog" role="dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <div class="actions mh100vh_55">
-                                        <div class="h100vh_160" style="overflow:auto; text-align:center">
-                                            
-                                            <h3 style="color:#F90; padding-bottom:20px;">Send robot to this POI</h3>
-                                            
-                                        </div>
-                                        
-                                        <div style="clear:both;"></div>
-                                       
-                                        <a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal"><?php echo __('Cancel');?></a>
-                                        <a href="#" class="btn btn-primary btn_footer_right btn_50 bTestPoi" data-dismiss="modal"><?php echo __('Continue');?></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div id="user_edit_map_modalDoSaveBeforeTestAugmentedPose" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
-                        <div class="modal-dialog" role="dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <div class="actions mh100vh_55">
-                                        <div class="h100vh_160" style="overflow:auto; text-align:center">
-                                            
-                                            <h3 style="color:#F90; padding-bottom:20px;">Send robot to this Augmented pose</h3>
-                                            
-                                        </div>
-                                        
-                                        <div style="clear:both;"></div>
-                                       
-                                        <a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal"><?php echo __('Cancel');?></a>
-                                        <a href="#" class="btn btn-primary bTestAugmentedPose btn_footer_right btn_50" data-dismiss="modal"><?php echo __('Continue');?></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="popupHelp">
-                    	<h2><?= _('Help')?></h2>
-                    	<ul style="color:#000;">
-                        	<li><i class="fa fa-crosshairs"></i><span class="description">Move the robot to this point</span></li>
-                        	<li><i class="fa fa-gamepad"></i><span class="description">Teleop the robot</span></li>
-                        	<li><i class="fa fa-check"></i><span class="description">Test go to POI or dock</span></li>
-                        	<li><span style="display:inline-block; margin-right:25px; width:15px; height:15px; border-radius:100%; background-color:#009900;"></span><span class="description">Robot position</span></li>
-                        </ul>
-                        
-                        <p>Click to hide</p>
-                    </div>
-                    
-                    
-                </div>
+					
+				<div id="user_edit_map_modalGoToDock" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+					<div class="modal-dialog" role="dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<div class="actions mh100vh_55">
+									<div class="h100vh_160" style="overflow:auto; text-align:center;">
+										<h2><?= _('Go to Dock') ?></h2>
+										<h4 style="text-align:left;margin:30px 0;"><?= _('Do you want to send the vehicle to this docking station ?') ?></h4>
+										<div class="" style="display: flex;justify-content: space-around;align-items: center;">
+											<div class="btn-circle btn-lg btn-popup" style="display: block;position: unset;transform: none;">
+												<i class="fas fa-charging-station iconMenuGreen" style="position: relative;top: -10px;left: -5px;"></i>
+											</div>
+											<div class="btn-circle btn-lg btn-popup" style="display: block;position: unset;transform: none;padding: 10px;">
+												<img class="fi-route" src="assets/images/route_green.svg"/></a>
+											</div>
+										</div>
+										<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the stop icon to cancel action while the vehicle is moving.') ?></h4>
+										
+										<div class="btn-circle btn-lg btn-popup btn-danger" style="display: block;">
+											<i class="fa fa-stop"></i>
+										</div>
+										<div style="clear:both;"></div>
+										<div class="checkbox checkbox_wrapper">
+											<label>
+												<input type="checkbox" value="" class="checkboxGotodock">
+												<?= _('Don\'t show this message again')?>
+											</label>
+										</div>
+										<a href="#" class="btn btn-default btn_footer_left btn_50 bModalCancelGoToDock" data-dismiss="modal" ><?php echo __('Cancel');?></a>
+										<a href="#" class="btn btn-primary btn_footer_right btn_50 bModalGoToDock" data-dismiss="modal" ><?php echo __('Go');?></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div id="user_edit_map_modalGoToAugmentedPose" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+					<div class="modal-dialog" role="dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<div class="actions mh100vh_55">
+									<div class="h100vh_160" style="overflow:auto; text-align:center;">
+										<h2><?= _('Go to Augmented Pose') ?></h2>
+										<h4 style="text-align:left;margin:30px 0;"><?= _('Do you want to send the vehicle to this augmented pose ?') ?></h4>
+										<div class="" style="display: flex;justify-content: space-around;align-items: center;">
+											<div class="btn-circle btn-lg btn-popup" style="display: block;position: unset;transform: none;">
+												<div class="iconAugmentedPose" style="top: -15px;left: -10px;"><i class="fas fa-map-marker-alt iconMenuPurple"></i><i class="fas fa-barcode"></i></div>
+											</div>
+											<div class="btn-circle btn-lg btn-popup" style="display: block;position: unset;transform: none;padding: 10px;">
+												<img class="fi-route" src="assets/images/route_green.svg"/></a>
+											</div>
+										</div>
+										<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the stop icon to cancel action while the vehicle is moving.') ?></h4>
+										
+										<div class="btn-circle btn-lg btn-popup btn-danger" style="display: block;">
+											<i class="fa fa-stop"></i>
+										</div>
+										<div style="clear:both;"></div>
+										<div class="checkbox checkbox_wrapper">
+											<label>
+												<input type="checkbox" value="" class="checkboxGotoaugmentedpose">
+												<?= _('Don\'t show this message again')?>
+											</label>
+										</div>
+										<a href="#" class="btn btn-default btn_footer_left btn_50 bModalCancelGoToAugmentedPose" data-dismiss="modal" ><?php echo __('Cancel');?></a>
+										<a href="#" class="btn btn-primary btn_footer_right btn_50 bModalGoToAugmentedPose" data-dismiss="modal" ><?php echo __('Go');?></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div id="user_edit_map_modalGoToPoi" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+					<div class="modal-dialog" role="dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<div class="actions mh100vh_55">
+									<div class="h100vh_160" style="overflow:auto; text-align:center;">
+										<h2><?= _('Go to POI') ?></h2>
+										<h4 style="text-align:left;margin:30px 0;"><?= _('Do you want to send the vehicle to this POI ?') ?></h4>
+										<div class="" style="display: flex;justify-content: space-around;align-items: center;">
+											<div class="btn-circle btn-lg btn-popup" style="display: block;position: unset;transform: none;">
+												<i class="fa fa-map-marker-alt iconMenuBlue" style="position: relative;top: -12px;left: -3px;"></i>
+											</div>
+											<div class="btn-circle btn-lg btn-popup" style="display: block;position: unset;transform: none;padding: 10px;">
+												<img class="fi-route" src="assets/images/route_green.svg"/></a>
+											</div>
+										</div>
+										<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the stop icon to cancel action while the vehicle is moving.') ?></h4>
+										
+										<div class="btn-circle btn-lg btn-popup btn-danger" style="display: block;">
+											<i class="fa fa-stop"></i>
+										</div>
+										<div style="clear:both;"></div>
+										<div class="checkbox checkbox_wrapper">
+											<label>
+												<input type="checkbox" value="" class="checkboxGotopoi">
+												<?= _('Don\'t show this message again')?>
+											</label>
+										</div>
+										<a href="#" class="btn btn-default btn_footer_left btn_50 bModalCancelGoToPoi" data-dismiss="modal" ><?php echo __('Cancel');?></a>
+										<a href="#" class="btn btn-primary btn_footer_right btn_50 bModalGoToPoi" data-dismiss="modal" ><?php echo __('Go');?></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="modal fade modalHelpClickGotoPose" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+					<div class="modal-dialog" role="dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<div class="actions mh100vh_55">
+									<div class="h100vh_160" style="overflow:auto; text-align:center;">
+										<h2><?= _('Go to position') ?></h2>
+										<h4 style="text-align:left;margin:30px 0;"><?= _('Click on the map to choose the position you\'re aiming for.') ?></h4>
+										<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the menu icon to cancel.') ?></h4>
+										<div class="btn-circle btn-lg btn-popup" style="display: block;">
+											<i class="fas fa-crosshairs iconMenuBlue"></i>
+											<i class="fas fa-times times_icon iconMenuRed" style="display: inline-block;"></i>
+										</div>
+										<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the stop icon to cancel action while the vehicle is moving.') ?></h4>
+										
+										<div class="btn-circle btn-lg btn-popup btn-danger" style="display: block;">
+											<i class="fa fa-stop"></i>
+										</div>
+										<div style="clear:both;"></div>
+										<div class="checkbox checkbox_wrapper">
+											<label>
+												<input type="checkbox" value="" class="checkboxHelpGotopose">
+												<?= _('Don\'t show this message again')?>
+											</label>
+										</div>
+										<a href="#" class="btn btn-primary btn_footer_left btn_100 bHelpClickGotoPoseOk" data-dismiss="modal" ><?php echo __('Ok');?></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="popupHelp">
+					<h2><?= _('Help')?></h2>
+					<ul style="color:#000;">
+						<li><i class="fa fa-crosshairs iconMenuBlue"></i><span class="description"><?= _('Move the robot to this point')?></span></li>
+						<li><i class="fa fa-gamepad iconMenuPurple"></i><span class="description"><?= _('Teleop the robot')?></span></li>
+						<li style="position:relative;font-size:16px"><img class="route" src="assets/images/route_green.svg"/><span class="description" style="margin-left: 40px;position: relative;top: 3px;"><?= _('Test go to POI, dock or augmented pose')?></span></li>
+						<li style="position:relative;">
+						<svg class="svg_popupHelp_robot" xmlns="http://www.w3.org/2000/svg">
+							<circle cx="20" cy="20" r="12" class="robot_elem robot_elem_fond"></circle>
+							<polyline points="16 16 24 20 16 24" stroke="#FFFFFF" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round" class="robot_elem" transform="rotate(-90,20,20)"></polyline>
+						</svg>
+						<span class="description" style="margin-left: 40px;"><?= _('Robot position')?></span></li>
+					</ul>
+					<p class="legende"><?= _('Click to hide')?></p>
+				</div>
                 
                 <div id="user_edit_map_zoom_popup" style="position:absolute; top:20px; left:20px; width:101px; height:101px; border:1px solid #000; overflow:hidden; display:none; z-index:8000;">
                     <div id="user_edit_map_zoom_popup_content" style="position:absolute; top:0; height:0;"></div>
