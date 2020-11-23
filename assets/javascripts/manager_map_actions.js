@@ -2,6 +2,9 @@
 var canvas;
 var dessin;
 
+var boolModalGoToAugmentedPose = true;
+var boolModalGoToDock = true;
+
 var managerCurrentAction = '';
 var currentStep = '';
 
@@ -83,7 +86,6 @@ function ManagerCloseSelect()
 	currentStep = '';
 }
 
-
 function ManagerHideCurrentMenu()
 {
 	/*
@@ -112,8 +114,8 @@ function ManagerHideCurrentMenuNotSelect()
 }
 
 var managerHistoriques = Array();
-var managerHistoriqueIndex = -1;
 
+var managerHistoriqueIndex = -1;
 
 function ManagerUndo()
 {
@@ -290,64 +292,8 @@ $(document).ready(function() {
 			ManagerRedo();
 	});
 	
-	$('#manager_edit_map .bTestDock').click(function(e) {
-        e.preventDefault();
-		
-		if (currentDockManagerLongTouch.data('id_docking_station') >= 300000)
-		{
-			alert_wyca('You must save the map before testing a new docking station');
-		}
-		else
-		{
-			ManagerHideMenus();
-			
-			wycaApi.on('onGoToChargeResult', function (data){
-				$('#manager_edit_map_bStop').hide();
-				if (data.A == wycaApi.AnswerCode.NO_ERROR)
-				{
-					$('#manager_edit_map .modalFinTest section.panel-success').show();
-					$('#manager_edit_map .modalFinTest section.panel-danger').hide();
-				}
-				else
-				{
-					$('#manager_edit_map .modalFinTest section.panel-success').hide();
-					$('#manager_edit_map .modalFinTest section.panel-danger').show();
-					
-					if (data.M != '')
-						$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
-					else
-						$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
-				}
-				
-				// On rebranche l'ancienne fonction
-				wycaApi.on('onGoToChargeResult', onGoToChargeResult);
-				
-				$('#manager_edit_map .modalFinTest').modal('show');
-			});
-			wycaApi.GoToCharge(currentDockManagerLongTouch.data('id_docking_station'), function (data){
-				
-				if (data.A == wycaApi.AnswerCode.NO_ERROR)
-				{
-					$('#manager_edit_map_bStop').show();
-				}
-				else
-				{
-					$('#manager_edit_map .modalFinTest section.panel-success').hide();
-					$('#manager_edit_map .modalFinTest section.panel-danger').show();
-					
-					if (data.M != '')
-						$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
-					else
-						$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
-					
-					// On rebranche l'ancienne fonction
-					wycaApi.on('onGoToChargeResult', onGoToChargeResult);
-					
-					$('#manager_edit_map .modalFinTest').modal('show');
-				}
-			});
-		}
-    });
+	
+	/* MENU POI */
 	
 	$('#manager_edit_map_menu_poi .bDeletePoi').click(function(e) {
         e.preventDefault();
@@ -358,7 +304,7 @@ $(document).ready(function() {
 	
 	$('#manager_edit_map_menu_poi .bConfigPoi').click(function(e) {
         e.preventDefault();
-		ManagerHideMenus();
+		//ManagerHideMenus();
 		managerCurrentAction = 'editPoi';
 	
 		currentPoiIndex = GetPoiIndexFromID(currentPoiManagerLongTouch.data('id_poi'));
@@ -370,6 +316,235 @@ $(document).ready(function() {
 		$('#manager_edit_map_container_all .modalPoiOptions').modal('show');
 		
     });
+	
+	$('#manager_edit_map .bCancelTestPoi').click(function(e) {boolGotopoi=false});
+	
+	$('#manager_edit_map .bTestPoi').click(function(e) {
+        e.preventDefault();
+		
+		if (currentPoiManagerLongTouch.data('id_poi') >= 300000)
+		{
+			boolGotopoi = true;
+			statusSavingMapBeforeTestPoi=1;
+			timerSavingMapBeforeTestPoi=0;
+			$('#manager_edit_map_modalDoSaveBeforeTestPoi').modal('show');
+			TimerSavingMapBeforeTest('poi'); // LAUNCH ANIM PROGRESS BAR
+			
+			id_poi_test = currentPoiManagerLongTouch.data('id_poi');
+			i = GetPoiIndexFromID(currentPoiManagerLongTouch.data('id_poi'));
+			name = pois[i].name;
+			
+			data = GetDataMapToSave();
+			gotoTest = false;
+			
+			wycaApi.SetCurrentMapData(data, function(data){
+				if (data.A == wycaApi.AnswerCode.NO_ERROR){	
+					if (gommes.length == 0){	
+						wycaApi.GetCurrentMapData(function(data) {
+							if (data.A == wycaApi.AnswerCode.NO_ERROR){
+								console.log('Map Data Saved');
+								statusSavingMapBeforeTestPoi=2; //STOP ANIM PROGRESS BAR
+								/*
+								id_map = data.D.id_map;
+								id_map_last = data.D.id_map;
+								*/
+								forbiddens = data.D.forbiddens;
+								areas = data.D.areas;
+								gommes = Array();
+								docks = data.D.docks;
+								pois = data.D.pois;
+								augmented_poses = data.D.augmented_poses;
+								/*
+								$('#manager_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
+								
+								largeurSlam = data.D.ros_width;
+								hauteurSlam = data.D.ros_height;
+								largeurRos = data.D.ros_width;
+								hauteurRos = data.D.ros_height;
+								
+								ros_largeur = data.D.ros_width;
+								ros_hauteur = data.D.ros_height;
+								ros_resolution = data.D.ros_resolution;
+								
+								$('#manager_edit_map_svg').attr('width', data.D.ros_width);
+								$('#manager_edit_map_svg').attr('height', data.D.ros_height);
+								
+								$('#manager_edit_map_image').attr('width', data.D.ros_width);
+								$('#manager_edit_map_image').attr('height', data.D.ros_height);
+								$('#manager_edit_map_image').attr('xlink:href', 'data:image/png;base64,'+data.D.image_tri);
+								*/
+								managerHistoriques = Array();
+								managerHistoriqueIndex = -1;
+								ManagerRefreshHistorique();
+								
+								ManagerInitMap();
+								ManagerResizeSVG();
+								
+								// On recherche le nouveau poi créé avec le bon id
+								if (id_poi_test >= 300000)
+								{
+									$.each(pois, function( index, poi ) {
+										
+										if (poi.name == name)
+										{
+											currentPoiManagerLongTouch = $('#manager_edit_map_poi_robot_'+poi.id_poi);
+											setTimeout(function(){$('#manager_edit_map_modalDoSaveBeforeTestPoi').modal('hide')},1500);
+											if(boolGotopoi){
+												$('#manager_edit_map .bTestPoi').click();
+											}
+										}
+									});
+								}
+								
+							}
+							else
+							{
+								$('#manager_edit_map_modalDoSaveBeforeTestPoi').modal('hide')
+								alert_wyca('Init map error : ' + wycaApi.AnswerCodeToString(data.A));
+							}
+						});
+					}else{
+						// SI GOMMES TO SAVE
+						wycaApi.GetCurrentMapComplete(function(data) {
+							if (data.A == wycaApi.AnswerCode.NO_ERROR){
+								console.log('Map Complete Saved');
+								statusSavingMapBeforeTestPoi=2; //STOP ANIM PROGRESS BAR
+								
+								id_map = data.D.id_map;
+								id_map_last = data.D.id_map;
+								
+								forbiddens = data.D.forbiddens;
+								areas = data.D.areas;
+								gommes = Array();
+								docks = data.D.docks;
+								pois = data.D.pois;
+								augmented_poses = data.D.augmented_poses;
+								
+								$('#manager_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
+								
+								largeurSlam = data.D.ros_width;
+								hauteurSlam = data.D.ros_height;
+								largeurRos = data.D.ros_width;
+								hauteurRos = data.D.ros_height;
+								
+								ros_largeur = data.D.ros_width;
+								ros_hauteur = data.D.ros_height;
+								ros_resolution = data.D.ros_resolution;
+								
+								$('#manager_edit_map_svg').attr('width', data.D.ros_width);
+								$('#manager_edit_map_svg').attr('height', data.D.ros_height);
+								
+								$('#manager_edit_map_image').attr('width', data.D.ros_width);
+								$('#manager_edit_map_image').attr('height', data.D.ros_height);
+								$('#manager_edit_map_image').attr('xlink:href', 'data:image/png;base64,'+data.D.image_tri);
+								
+								managerHistoriques = Array();
+								managerHistoriqueIndex = -1;
+								ManagerRefreshHistorique();
+								
+								ManagerInitMap();
+								ManagerResizeSVG();
+								
+								// On recherche le nouveau poi créé avec le bon id
+								if (id_poi_test >= 300000)
+								{
+									$.each(pois, function( index, poi ) {
+										
+										if (poi.name == name)
+										{
+											currentPoiManagerLongTouch = $('#manager_edit_map_poi_robot_'+poi.id_poi);
+											setTimeout(function(){$('#manager_edit_map_modalDoSaveBeforeTestPoi').modal('hide')},1500);
+											if(boolGotopoi){
+												$('#manager_edit_map .bTestPoi').click();
+											}
+										}
+									});
+								}
+								
+							}
+							else
+							{
+								$('#manager_edit_map_modalDoSaveBeforeTestPoi').modal('hide')
+								alert_wyca('Init map error : ' + wycaApi.AnswerCodeToString(data.A));
+							}
+						});
+					}
+				}else{
+					$('#manager_edit_map_modalDoSaveBeforeTestPoi').modal('hide');
+					alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' + data.M);
+				}
+			});
+
+		}
+		else
+		{
+			//ManagerHideMenus();
+			
+			wycaApi.on('onGoToPoiResult', function (data){
+				$('#manager_edit_map_bStop').hide();
+				if (data.A == wycaApi.AnswerCode.NO_ERROR)
+				{
+					$('#manager_edit_map .modalFinTest section.panel-success').show();
+					$('#manager_edit_map .modalFinTest section.panel-danger').hide();
+					$('#manager_edit_map .modalFinTest section.panel-warning').hide();
+				}
+				else
+				{	
+					if(data.A == wycaApi.AnswerCode.CANCELED){
+						$('#manager_edit_map .modalFinTest section.panel-success').hide();
+						$('#manager_edit_map .modalFinTest section.panel-danger').hide();
+						$('#manager_edit_map .modalFinTest section.panel-warning').show();
+						
+						$('#manager_edit_map .modalFinTest section.panel-warning .error_details').html(wycaApi.AnswerCodeToString(data.A));
+					}else{
+						
+						$('#manager_edit_map .modalFinTest section.panel-success').hide();
+						$('#manager_edit_map .modalFinTest section.panel-danger').show();
+						$('#manager_edit_map .modalFinTest section.panel-warning').hide();
+						
+						if (data.M != '')
+							if(data.M.length > 50)
+								$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br><span>' +data.M+ '</span>');
+							else
+								$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+						else
+							$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
+					}
+				}
+				
+				// On rebranche l'ancienne fonction
+				wycaApi.on('onGoToPoiResult', onGoToPoiResult);
+			
+				$('#manager_edit_map .modalFinTest').modal('show');
+			});
+			
+			wycaApi.GoToPoi(currentPoiManagerLongTouch.data('id_poi'), function (data){
+				
+				if (data.A == wycaApi.AnswerCode.NO_ERROR)
+				{
+					$('#manager_edit_map_bStop').show();
+				}
+				else
+				{
+					$('#manager_edit_map .modalFinTest section.panel-success').hide();
+					$('#manager_edit_map .modalFinTest section.panel-danger').show();
+					$('#manager_edit_map .modalFinTest section.panel-warning').hide();
+					
+					if (data.M != '')
+						$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+					else
+						$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
+				
+					// On rebranche l'ancienne fonction
+					wycaApi.on('onGoToPoiResult', onGoToPoiResult);
+					
+					$('#manager_edit_map .modalFinTest').modal('show');
+				}
+			});
+		}
+    });
+	
+	/*
 	
 	$('#manager_edit_map .bTestPoi').click(function(e) {
         e.preventDefault();
@@ -430,28 +605,43 @@ $(document).ready(function() {
 			});
 		}
     });
+	*/
+	
+	/* AUGMENTED POSE */
 	
 	$('#manager_edit_map .bTestAugmentedPose').click(function(e) {
         e.preventDefault();
-		
-		ManagerHideMenus();
-		
+		RemoveClass('#manager_edit_map_svg .augmented_pose_elem', 'active');
 		wycaApi.on('onGoToAugmentedPoseResult', function (data){
 			$('#manager_edit_map_bStop').hide();
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
 				$('#manager_edit_map .modalFinTest section.panel-success').show();
 				$('#manager_edit_map .modalFinTest section.panel-danger').hide();
+				$('#manager_edit_map .modalFinTest section.panel-warning').hide();
 			}
 			else
-			{
-				$('#manager_edit_map .modalFinTest section.panel-success').hide();
-				$('#manager_edit_map .modalFinTest section.panel-danger').show();
-				
-				if (data.M != '')
-					$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
-				else
-					$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
+			{	
+				if(data.A == wycaApi.AnswerCode.CANCELED){
+					$('#manager_edit_map .modalFinTest section.panel-success').hide();
+					$('#manager_edit_map .modalFinTest section.panel-danger').hide();
+					$('#manager_edit_map .modalFinTest section.panel-warning').show();
+					
+					$('#manager_edit_map .modalFinTest section.panel-warning .error_details').html(wycaApi.AnswerCodeToString(data.A));
+				}else{
+					
+					$('#manager_edit_map .modalFinTest section.panel-success').hide();
+					$('#manager_edit_map .modalFinTest section.panel-danger').show();
+					$('#manager_edit_map .modalFinTest section.panel-warning').hide();
+					
+					if (data.M != '')
+						if(data.M.length > 50)
+							$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br><span>' +data.M+ '</span>');
+						else
+							$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+					else
+						$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
+				}
 			}
 			
 			// On rebranche l'ancienne fonction
@@ -469,6 +659,7 @@ $(document).ready(function() {
 			else
 			{
 				$('#manager_edit_map .modalFinTest section.panel-success').hide();
+				$('#manager_edit_map .modalFinTest section.panel-warning').hide();
 				$('#manager_edit_map .modalFinTest section.panel-danger').show();
 				
 				if (data.M != '')
@@ -478,6 +669,96 @@ $(document).ready(function() {
 			
 				// On rebranche l'ancienne fonction
 				wycaApi.on('onGoToAugmentedPoseResult', onGoToAugmentedPoseResult);
+				
+				$('#manager_edit_map .modalFinTest').modal('show');
+			}
+		});
+	
+    });
+	
+	$('#manager_edit_map .bModalGoToAugmentedPose').click(function(e){
+		e.preventDefault();
+		$('#manager_edit_map .bTestAugmentedPose').click();
+		boolModalGoToAugmentedPose = !$('#manager_edit_map .checkboxGotoaugmentedpose').prop('checked'); //ADD SAVING BDD / COOKIES ?
+	})
+	
+	$('#manager_edit_map .bModalCancelGoToAugmentedPose').click(function(){
+		boolModalGoToAugmentedPose = !$('#manager_edit_map .checkboxGotoaugmentedpose').prop('checked'); //ADD SAVING BDD / COOKIES ?
+		RemoveClass('#manager_edit_map_svg .active', 'active'); 
+	});
+	
+	/* DOCK */
+	
+	$('#manager_edit_map .bModalGoToDock').click(function(){
+		$('#manager_edit_map .bTestDock').click();
+		boolModalGoToDock = !$('#manager_edit_map .checkboxGotodock').prop('checked'); //ADD SAVING BDD / COOKIES ?
+	});
+	
+	$('#manager_edit_map .bModalCancelGoToDock').click(function(){
+		boolModalGoToDock = !$('#manager_edit_map .checkboxGotodock').prop('checked'); //ADD SAVING BDD / COOKIES ?
+		RemoveClass('#manager_edit_map_svg .active', 'active');
+	});
+	
+	$('#manager_edit_map .bTestDock').click(function(e) {
+        e.preventDefault();
+		RemoveClass('#manager_edit_map_svg .dock_elem', 'active');
+		wycaApi.on('onGoToChargeResult', function (data){
+			$('#manager_edit_map_bStop').hide();
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$('#manager_edit_map .modalFinTest section.panel-success').show();
+				$('#manager_edit_map .modalFinTest section.panel-danger').hide();
+				$('#manager_edit_map .modalFinTest section.panel-warning').hide();
+			}
+			else
+			{	
+				if(data.A == wycaApi.AnswerCode.CANCELED){
+					$('#manager_edit_map .modalFinTest section.panel-success').hide();
+					$('#manager_edit_map .modalFinTest section.panel-danger').hide();
+					$('#manager_edit_map .modalFinTest section.panel-warning').show();
+					
+					$('#manager_edit_map .modalFinTest section.panel-warning .error_details').html(wycaApi.AnswerCodeToString(data.A));
+				}else{
+					
+					$('#manager_edit_map .modalFinTest section.panel-success').hide();
+					$('#manager_edit_map .modalFinTest section.panel-danger').show();
+					$('#manager_edit_map .modalFinTest section.panel-warning').hide();
+					
+					if (data.M != '')
+						if(data.M.length > 50)
+							$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br><span>' +data.M+ '</span>');
+						else
+							$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+					else
+						$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
+				}
+			}
+			
+			// On rebranche l'ancienne fonction
+			wycaApi.on('onGoToChargeResult', onGoToChargeResult);
+		
+			$('#manager_edit_map .modalFinTest').modal('show');
+		});
+		
+		wycaApi.GoToCharge(currentDockManagerLongTouch.data('id_docking_station'), function (data){
+			
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$('#manager_edit_map_bStop').show();
+			}
+			else
+			{
+				$('#manager_edit_map .modalFinTest section.panel-success').hide();
+				$('#manager_edit_map .modalFinTest section.panel-warning').hide();
+				$('#manager_edit_map .modalFinTest section.panel-danger').show();
+				
+				if (data.M != '')
+					$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+				else
+					$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
+			
+				// On rebranche l'ancienne fonction
+				wycaApi.on('onGoToChargeResult', onGoToChargeResult);
 				
 				$('#manager_edit_map .modalFinTest').modal('show');
 			}
@@ -647,6 +928,11 @@ $(document).ready(function() {
 			AddClass('#manager_edit_map_svg .dock_elem_'+dock.id_docking_station, 'active');
 			//AddClass('#manager_edit_map_svg .dock_elem_'+dock.id_docking_station, 'movable');	// Dock non movable
 			
+			if(boolModalGoToDock)
+				$('#manager_edit_map_modalGoToDock').modal('show');
+			else
+				$('#manager_edit_map .bTestDock').click();
+			
 		}
 		else
 			ManagerAvertCantChange();
@@ -679,6 +965,14 @@ $(document).ready(function() {
 			
 			$('body').removeClass('no_current select');
 			$('.select').css("strokeWidth", minStokeWidth);
+			
+			currentPoiManagerLongTouch = $(this);
+			//MENU POI DISPLAY
+			if (managerCurrentAction != 'editPoi' && managerCurrentAction != 'addPoi')
+			{
+				ManagerHideCurrentMenuNotSelect();
+				ManagerDisplayMenu('manager_edit_map_menu_poi');
+			}
 			
 			managerCurrentAction = 'editPoi';	
 			currentStep = '';
@@ -728,6 +1022,11 @@ $(document).ready(function() {
 			saveCurrentAugmentedPose = JSON.stringify(augmented_pose);
 			
 			AddClass('#manager_edit_map_svg .augmented_pose_elem_'+augmented_pose.id_augmented_pose, 'active');
+			
+			if(boolModalGoToAugmentedPose)
+				$('#manager_edit_map_modalGoToAugmentedPose').modal('show');
+			else
+				$('#manager_edit_map .bTestAugmentedPose').click();
 		}
 		else
 			ManagerAvertCantChange();
@@ -736,70 +1035,40 @@ $(document).ready(function() {
 	/**************************/
 	/*  Click on element      */
 	/**************************/
+	
+	/* BTN GOTOPOSE */
+	
 	$('#manager_edit_map_menu .bMoveTo').click(function(e) {
         e.preventDefault();
-		
 		ManagerHideMenus();
-		
-		zoom = ManagerGetZoom();
-		p = $('#manager_edit_map_svg image').position();
-		x = (eventTouchStart.originalEvent.targetTouches[0] ? eventTouchStart.originalEvent.targetTouches[0].pageX : eventTouchStart.originalEvent.changedTouches[e.changedTouches.length-1].pageX) - p.left;
-		y = (eventTouchStart.originalEvent.targetTouches[0] ? eventTouchStart.originalEvent.targetTouches[0].pageY : eventTouchStart.originalEvent.changedTouches[e.changedTouches.length-1].pageY) - p.top;
-		x = x * zoom;
-		y = ros_hauteur - (y * zoom);
-		
-		xRos = x * ros_resolution / 100;
-		yRos = y * ros_resolution / 100;
-		
-		wycaApi.on('onGoToPoseResult', function (data){
-			$('#manager_edit_map_bStop').hide();
-			if (data.A == wycaApi.AnswerCode.NO_ERROR)
-			{
-				$('#manager_edit_map .modalFinTest section.panel-success').show();
-				$('#manager_edit_map .modalFinTest section.panel-danger').hide();
-			}
-			else
-			{
-				$('#manager_edit_map .modalFinTest section.panel-success').hide();
-				$('#manager_edit_map .modalFinTest section.panel-danger').show();
-				
-				if (data.M != '')
-					$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
-				else
-					$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
-			}
+		if (managerCanChangeMenu)
+		{
+			//CURRENT ACTION TARGET
+			managerCurrentAction = 'prepareGotoPose';
+			managerCanChangeMenu = false;
+			//AJOUT ICON MENU + CROIX
+			$('.burger_menu').hide('fast');
+			$('.icon_menu[data-menu="manager_edit_map_menu_gotopose"]').show('fast');
+			setTimeout(function(){$('.times_icon_menu').show('fast')},50);
 			
-			// On rebranche l'ancienne fonction
-			wycaApi.on('onGoToPoiResult', onGoToPoseResult);
+			if(boolHelpGotoPose){
+				$('.modalHelpClickGotoPose').modal('show');
+			}			
+		}
+		else
+			ManagerAvertCantChange();
 		
-			$('#manager_edit_map .modalFinTest').modal('show');
-		});
+    });
+	
+	$('#manager_edit_map .bHelpClickGotoPoseOk').click(function(){boolHelpGotoPose = !$('#manager_edit_map .checkboxHelpGotopose').prop('checked')});//ADD SAVING BDD / COOKIES ?
+	
+	/* BTN MENU POI */
 		
-		console.log('GoToPose', xRos, yRos);
-		
-		wycaApi.GoToPose(xRos, yRos, 0, 0, function (data){
-			
-			if (data.A == wycaApi.AnswerCode.NO_ERROR)
-			{
-				$('#manager_edit_map_bStop').show();
-			}
-			else
-			{
-				$('#manager_edit_map .modalFinTest section.panel-success').hide();
-				$('#manager_edit_map .modalFinTest section.panel-danger').show();
-				
-				if (data.M != '')
-					$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
-				else
-					$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
-			
-				// On rebranche l'ancienne fonction
-				wycaApi.on('onGoToPoseResult', onGoToPoseResult);
-				
-				$('#manager_edit_map .modalFinTest').modal('show');
-			}
-		});
-		
+	$('#manager_edit_map_bPoiDelete').click(function(e) {
+        if (confirm('Are you sure you want to delete this POI?'))
+		{
+			DeletePoi(currentPoiIndex);
+		}
     });
 	
 	$('#manager_edit_map_menu .bAddPOI').click(function(e) {
@@ -813,7 +1082,7 @@ $(document).ready(function() {
 			ManagerAvertCantChange();
 	});
 	
-	$('#manager_edit_map_container_all .modalAddPoi .bAddPoiAtCurrentPose').click(function(e) {
+	$('#manager_edit_map_container_all .modalAddPoi #manager_edit_map_bModalAddPoiSave').click(function(e) {
 		
 		nextIdPoi++;
 			
@@ -828,22 +1097,31 @@ $(document).ready(function() {
 		currentPoiIndex = pois.length-1;
 		poi = pois[currentPoiIndex];
 		
+		$('#manager_edit_map_poi_name').val(poi.name);
+		$('#manager_edit_map_poi_comment').val(poi.comment);
+		
 		$('#manager_edit_map_container_all .modalPoiOptions').modal('show');
 	});
 	
 	$('#manager_edit_map_bPoiSaveConfig').click(function(e) {
-		poi = pois[currentPoiIndex];
-		saveCurrentPoi = JSON.stringify(poi);
-				
-		poi.name = $('#manager_edit_map_poi_name').val();
-		poi.comment = $('#manager_edit_map_poi_comment').val();
+		if(!CheckName(pois, $('#manager_edit_map_poi_name').val(), currentPoiIndex)){
+			poi = pois[currentPoiIndex];
+			saveCurrentPoi = JSON.stringify(poi);
+					
+			poi.name = $('#manager_edit_map_poi_name').val();
+			poi.comment = $('#manager_edit_map_poi_comment').val();
+			pois[currentPoiIndex] = poi;
 			
-		pois[currentPoiIndex] = poi;
-				
-		if (managerCurrentAction == 'editPoi')
-			ManagerAddHistorique({'action':'edit_poi', 'data':{'index':currentPoiIndex, 'old':saveCurrentPoi, 'new':JSON.stringify(pois[currentPoiIndex])}});
-		
-		ManagerTracePoi(currentPoiIndex);
+			$('#manager_edit_map_bPoiCancelConfig').show();
+			
+			if (managerCurrentAction == 'editPoi')
+				ManagerAddHistorique({'action':'edit_poi', 'data':{'index':currentPoiIndex, 'old':saveCurrentPoi, 'new':JSON.stringify(pois[currentPoiIndex])}});
+			saveCurrentPoi = JSON.stringify(pois[currentPoiIndex]);
+			ManagerTracePoi(currentPoiIndex);
+			$('.modal.modalPoiOptions').modal('hide');	
+		}else{
+			alert_wyca(textNameUsed);
+		};
 	});
 	
 	$('#manager_edit_map_bPoiEditSaveConfig').click(function(e) {
@@ -904,6 +1182,97 @@ $(document).ready(function() {
     AppliquerZoom();
 	
 	ManagerSetModeSelect();
+	
+	$('#manager_edit_map_svg').click(function(e){
+		if(managerCanChangeMenu == false){
+			if(managerCurrentAction == 'prepareGotoPose'){
+	
+				//ManagerHideMenus();
+				
+				zoom = ManagerGetZoom();
+				p = $('#manager_edit_map_svg image').position();
+				/*x = (eventTouchStart.originalEvent.targetTouches[0] ? eventTouchStart.originalEvent.targetTouches[0].pageX : eventTouchStart.originalEvent.changedTouches[e.changedTouches.length-1].pageX) - p.left;
+				y = (eventTouchStart.originalEvent.targetTouches[0] ? eventTouchStart.originalEvent.targetTouches[0].pageY : eventTouchStart.originalEvent.changedTouches[e.changedTouches.length-1].pageY) - p.top;
+				x = x * zoom;
+				y = ros_hauteur - (y * zoom);
+				*/
+				
+				x = e.pageX - p.left;
+				y = e.pageY - p.top;
+				x = x * zoom;
+				y = ros_hauteur - (y * zoom);
+				
+				xRos = x * ros_resolution / 100;
+				yRos = y * ros_resolution / 100;
+				
+				wycaApi.on('onGoToPoseResult', function (data){
+					$('#manager_edit_map_bStop').hide();
+					if (data.A == wycaApi.AnswerCode.NO_ERROR)
+					{
+						$('#manager_edit_map .modalFinTest section.panel-success').show();
+						$('#manager_edit_map .modalFinTest section.panel-danger').hide();
+						$('#manager_edit_map .modalFinTest section.panel-warning').hide();
+					}
+					else
+					{	
+						if(data.A == wycaApi.AnswerCode.CANCELED){
+							$('#manager_edit_map .modalFinTest section.panel-success').hide();
+							$('#manager_edit_map .modalFinTest section.panel-danger').hide();
+							$('#manager_edit_map .modalFinTest section.panel-warning').show();
+							
+							$('#manager_edit_map .modalFinTest section.panel-warning .error_details').html(wycaApi.AnswerCodeToString(data.A));
+						}else{
+							
+							$('#manager_edit_map .modalFinTest section.panel-success').hide();
+							$('#manager_edit_map .modalFinTest section.panel-danger').show();
+							$('#manager_edit_map .modalFinTest section.panel-warning').hide();
+							
+							if (data.M != '')
+								if(data.M.length > 50)
+									$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br><span>' +data.M+ '</span>');
+								else
+									$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+								
+							else
+								$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
+						}
+					}
+					$('.icon_menu').click(); // POUR SORTIR DU MENU GOTOPOSE
+					// On rebranche l'ancienne fonction
+					wycaApi.on('onGoToPoseResult', onGoToPoseResult);
+				
+					$('#manager_edit_map .modalFinTest').modal('show');
+				});
+				
+				console.log('GoToPose', xRos, yRos);
+				
+				wycaApi.GoToPose(xRos, yRos, 0, 0, function (data){
+					
+					if (data.A == wycaApi.AnswerCode.NO_ERROR)
+					{
+						$('#manager_edit_map_bStop').show();
+					}
+					else
+					{
+						$('#manager_edit_map .modalFinTest section.panel-success').hide();
+						$('#manager_edit_map .modalFinTest section.panel-warning').hide();
+						$('#manager_edit_map .modalFinTest section.panel-danger').show();
+						
+						if (data.M != '')
+							$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
+						else
+							$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
+					
+						// On rebranche l'ancienne fonction
+						wycaApi.on('onGoToPoseResult', onGoToPoseResult);
+						
+						$('#manager_edit_map .modalFinTest').modal('show');
+					}
+				});
+			}
+		}
+	})
+	
 });
 
 var touchStarted = false;

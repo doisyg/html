@@ -491,8 +491,8 @@ function ManagerTraceAugmentedPose(indexAugmentedPose)
 		AddClass('#manager_edit_map_svg .augmented_pose_elem_'+augmented_pose.id_augmented_pose, 'active');
 }
 
-
 var robot_traced_manager = false;
+
 function ManagerTraceRobot(robot_x, robot_y, robot_theta)
 {
 	x = robot_x * 100 / ros_resolution;

@@ -168,7 +168,7 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 #install_normal_edit_map_all { height:100%; }
 #install_normal_edit_map_map_navigation { height:100%; }
 
-#install_normal_edit_map_zoom_carte_container { z-index:1000; background-color:#FFF; position:absolute; top:0px; right:20px; }
+#install_normal_edit_map_zoom_carte_container { z-index:1000; background-color:#FFF; position:absolute; top:10px; right:20px; }
 #main_row.hide_element #install_normal_edit_map_zoom_carte_container { right:50px; }
 #install_normal_edit_map_zoom_carte { position:relative; width:100px; border:1px solid #000; }
 
@@ -177,7 +177,7 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 #manager_edit_map_all { height:100%; }
 #manager_edit_map_map_navigation { height:100%; }
 
-#manager_edit_map_zoom_carte_container { z-index:1000; background-color:#FFF; position:absolute; top:0px; right:20px; }
+#manager_edit_map_zoom_carte_container { z-index:1000; background-color:#FFF; position:absolute;top:10px; right:20px; }
 #main_row.hide_element #manager_edit_map_zoom_carte_container { right:50px; }
 #manager_edit_map_zoom_carte { position:relative; width:100px; border:1px solid #000; }
 
@@ -186,10 +186,11 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 #user_edit_map_all { height:100%; }
 #user_edit_map_map_navigation { height:100%; }
 
-#user_edit_map_zoom_carte_container { z-index:1000; background-color:#FFF; position:absolute; top:0px; right:20px; }
+#user_edit_map_zoom_carte_container { z-index:1000; background-color:#FFF; position:absolute;top:10px;right:20px; }
 #main_row.hide_element #user_edit_map_zoom_carte_container { right:50px; }
 #user_edit_map_zoom_carte { position:relative; width:100px; border:1px solid #000; }
 
+#manager_edit_map_zone_zoom,#install_by_step_edit_map_zone_zoom,#install_normal_edit_map_zone_zoom,#user_edit_map_zone_zoom{border-color:rgb(88 159 178)!important;}
 
 .menu_icon_touch { position:absolute; display:none; z-index:1100; }
 .menu_icon_touch ul { list-style:none; padding:0; margin:0; overflow-y: scroll;}
@@ -229,11 +230,13 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 #install_normal_edit_map_bStop { position:absolute; bottom:15px; right:15px;display:none; z-index:4;border-color:transparent;}
 #install_normal_edit_map_bCancelCurrentElem { position:absolute; top:15px; left:115px; display:none; z-index:4;border-color:transparent;}
 
-#manager_edit_map_bEndGomme, #manager_edit_map_bSaveCurrentElem, #manager_edit_map_bStop { position:absolute; top:10px; left:10px; padding:0; display:none; z-index:4}
-#manager_edit_map_bCancelCurrentElem { position:absolute; top:10px; left:80px; padding:0; display:none;z-index:4}
+#manager_edit_map_bEndGomme, #manager_edit_map_bSaveCurrentElem{ position:absolute; top:15px; left:70px;display:none; z-index:4;border-color:transparent;}
+#manager_edit_map_bStop { position:absolute; bottom:15px; right:15px;display:none; z-index:4;border-color:transparent;}
+#manager_edit_map_bCancelCurrentElem { position:absolute; top:15px; left:115px; display:none; z-index:4;border-color:transparent;}
 
-#user_edit_map_bEndGomme, #user_edit_map_bSaveCurrentElem, #user_edit_map_bStop { position:absolute; top:10px; left:10px; padding:0; display:none; z-index:4}
-#user_edit_map_bCancelCurrentElem { position:absolute; top:10px; left:80px; padding:0; display:none; z-index:4}
+#user_edit_map_bEndGomme, #user_edit_map_bSaveCurrentElem{position:absolute; top:15px; left:70px;display:none; z-index:4;border-color:transparent;}
+#user_edit_map_bStop { position:absolute; bottom:15px; right:15px;display:none; z-index:4;border-color:transparent;}
+#user_edit_map_bCancelCurrentElem { position:absolute; top:15px; left:115px; display:none; z-index:4;border-color:transparent;}
 
 .h100vh_160 { height:calc(100vh - 60px); height: calc(var(--vh, 1vh) * 100 - 60px); }
 
@@ -1139,12 +1142,6 @@ span.error_details span{
 }
 .fa-pencil:before{
 	content:"\f304";
-}
-#install_by_step_edit_map_zone_zoom{
-	border-color:rgb(88 159 178)!important;
-}
-#install_normal_edit_map_zone_zoom {
-    border-color: rgb(88 159 178)!important;
 }
 .modal .modal-content .actions .row{
 	margin-right:0px;

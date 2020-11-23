@@ -26,6 +26,20 @@
         <div class="content">
                 
                 <div id="manager_edit_map_container_all">
+					<div class="btn-circle btn-lg burger_menu" data-open="manager_edit_map_menu">
+						<div class="burger_menu_trait"></div>
+						<div class="burger_menu_trait"></div>
+						<div class="burger_menu_trait"></div>
+					</div>
+					
+					<i class="fas fa-times times_icon_menu iconMenuRed"></i>
+					<div class="btn-circle btn-lg icon_menu" data-menu="manager_edit_map_menu_gotopose">
+						<i class="fa fa-crosshairs iconMenuBlue" style="left: -7px;"></i>
+					</div>
+					<div class="btn-circle btn-lg icon_menu" data-menu="manager_edit_map_menu_poi">
+						<i class="fa fa-map-marker-alt iconMenuBlue"></i>
+					</div>
+					
                     <div id="manager_edit_map_zoom_carte_container">
                         <div id="manager_edit_map_zoom_carte">
                             <img src=""  class="img-responsive" style="max-width:100%; max-height:100%;" />
@@ -69,6 +83,7 @@
 							<li><a href="#" class="btn btn-circle btn-default btn-menu bTestDock" ><img class="fi-route" src="assets/images/route_green.svg"/></a></li>
                         </ul>
                     </div>
+					
                     <div id="manager_edit_map_menu_poi" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
                         	<li><a href="#" class="btn btn-circle btn-default btn-menu bTestPoi"><img class="fi-route" src="assets/images/route_green.svg"/></a></li>
@@ -76,7 +91,8 @@
                         	<li><a href="#" class="btn btn-circle btn-default btn-menu bDeletePoi"><i class="fa fa-trash iconMenuRed"></i></a></li>
                         </ul>
                     </div>
-                    <div id="manager_edit_map_menu_augmented_pose" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
+                    
+					<div id="manager_edit_map_menu_augmented_pose" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
                         	<li><a href="#" class="btn btn-circle btn-default btn-menu bTestAugmentedPose"><img class="fi-route" src="assets/images/route_green.svg"/></a></li>
                         </ul>
@@ -107,7 +123,7 @@
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" class="btn btn-default btn_footer_left btn_100" data-dismiss="modal"><?php echo __('Close');?></a>
+                                        <a href="#" class="btn btn-primary btn_footer_left btn_100" data-dismiss="modal"><?php echo __('Close');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -151,68 +167,88 @@
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" class="btn btn-default btn_footer_left btn_100" data-dismiss="modal" ><?php echo __('Close');?></a>
+                                        <a href="#" class="btn btn-primary btn_footer_left btn_100" data-dismiss="modal" ><?php echo __('Close');?></a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
-                    <div id="manager_edit_map_modalDoSaveBeforeTestDock" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                    <div id="manager_edit_map_modalGoToDock" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
                         <div class="modal-dialog" role="dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <div class="actions mh100vh_55">
-                                        <div class="h100vh_160" style="overflow:auto; text-align:center">
-                                            
-                                            <h3 style="color:#F90; padding-bottom:20px;">&nbsp;</h3>
-                                            
-                                            <div class="row" style="margin-top:30px;">
-                                                <div class="col-xs-8">
-                                                    <span style="font-size:16px; color:#F90; padding-bottom:20px;"><?php echo __('Remember to save the map before launching a test');?></span>
-                                                </div>
-                                                <div class="col-xs-4">
-                                                    <a href="#" class="btn btn-primary bSaveMapTestDock" style="margin-top:7px;"><?php echo __('Save map');?> <i class="fa"></i></a>
-                                                </div>
-                                            </div>
-                                            
-                                            
-                                            <div class="row" style="margin-top:30px;">
-                                                <div class="col-xs-8">
-                                                    <span style="font-size:16px; padding-bottom:20px;"><?php echo __('You can change the position of the robot before the test');?></span>
-                                                </div>
-                                                <div class="col-xs-4">
-                                                    <a href="#" class="btn btn-primary bMoveRobotTest" style="margin-top:7px;"><?php echo __('Move robot');?></a>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="teleop" style="display:none; margin-top:30px;">
-                                                <a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
-                                            
-                                                <div class="ifUndocked">
-                                                    
-                                                    <div style="text-align:center; width:100%; z-index:2000; margin-top:50px;">
-                                                        <div class="joystickDiv" draggable="false" style="margin:auto;">
-                                                            <div class="fond"></div>
-                                                            <div class="curseur"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                        </div>
-                                        
-                                        <div style="clear:both;"></div>
-                                       
-                                        <a href="#" class="btn btn-default btn_footer_left btn_50 bInitModalTest" data-dismiss="modal" ><?php echo __('Cancel');?></a>
-                                        <a href="#" class="btn btn-primary bInitModalTest bTestDock btn_footer_right btn_50" data-dismiss="modal" ><?php echo __('Continue');?></a>
-                                    </div>
+										<div class="h100vh_160" style="overflow:auto; text-align:center;">
+											<h2><?= _('Go to Dock') ?></h2>
+											<h4 style="text-align:left;margin:30px 0;"><?= _('Do you want to send the vehicle to this docking station ?') ?></h4>
+											<div class="" style="display: flex;justify-content: space-around;align-items: center;">
+												<div class="btn-circle btn-lg btn-popup" style="display: block;position: unset;transform: none;">
+													<i class="fas fa-charging-station iconMenuGreen" style="position: relative;top: -10px;left: -5px;"></i>
+												</div>
+												<div class="btn-circle btn-lg btn-popup" style="display: block;position: unset;transform: none;padding: 10px;">
+													<img class="fi-route" src="assets/images/route_green.svg"/></a>
+												</div>
+											</div>
+											<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the stop icon to cancel action while the vehicle is moving.') ?></h4>
+											
+											<div class="btn-circle btn-lg btn-popup btn-danger" style="display: block;">
+												<i class="fa fa-stop"></i>
+											</div>
+											<div style="clear:both;"></div>
+											<div class="checkbox checkbox_wrapper">
+												<label>
+													<input type="checkbox" value="" class="checkboxGotodock">
+													<?= _('Don\'t show this message again')?>
+												</label>
+											</div>
+											<a href="#" class="btn btn-default btn_footer_left btn_50 bModalCancelGoToDock" data-dismiss="modal" ><?php echo __('Cancel');?></a>
+											<a href="#" class="btn btn-primary btn_footer_right btn_50 bModalGoToDock" data-dismiss="modal" ><?php echo __('Go');?></a>
+										</div>
+									</div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
-                    <div id="manager_edit_map_modalDoSaveBeforeTestPoi" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+					
+					<div id="manager_edit_map_modalGoToAugmentedPose" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+										<div class="h100vh_160" style="overflow:auto; text-align:center;">
+											<h2><?= _('Go to Augmented Pose') ?></h2>
+											<h4 style="text-align:left;margin:30px 0;"><?= _('Do you want to send the vehicle to this augmented pose ?') ?></h4>
+											<div class="" style="display: flex;justify-content: space-around;align-items: center;">
+												<div class="btn-circle btn-lg btn-popup" style="display: block;position: unset;transform: none;">
+													<div class="iconAugmentedPose" style="top: -15px;left: -10px;"><i class="fas fa-map-marker-alt iconMenuPurple"></i><i class="fas fa-barcode"></i></div>
+												</div>
+												<div class="btn-circle btn-lg btn-popup" style="display: block;position: unset;transform: none;padding: 10px;">
+													<img class="fi-route" src="assets/images/route_green.svg"/></a>
+												</div>
+											</div>
+											<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the stop icon to cancel action while the vehicle is moving.') ?></h4>
+											
+											<div class="btn-circle btn-lg btn-popup btn-danger" style="display: block;">
+												<i class="fa fa-stop"></i>
+											</div>
+											<div style="clear:both;"></div>
+											<div class="checkbox checkbox_wrapper">
+												<label>
+													<input type="checkbox" value="" class="checkboxGotoaugmentedpose">
+													<?= _('Don\'t show this message again')?>
+												</label>
+											</div>
+											<a href="#" class="btn btn-default btn_footer_left btn_50 bModalCancelGoToAugmentedPose" data-dismiss="modal" ><?php echo __('Cancel');?></a>
+											<a href="#" class="btn btn-primary btn_footer_right btn_50 bModalGoToAugmentedPose" data-dismiss="modal" ><?php echo __('Go');?></a>
+										</div>
+									</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					
+					<div id="manager_edit_map_modalDoSaveBeforeTestPoi" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
                         <div class="modal-dialog" role="dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -235,48 +271,6 @@
                                         </div>
                                         <div style="clear:both;"></div>
                                         <a href="#" class="btn btn-default btn_footer_right btn_100 bCancelTestPoi" data-dismiss="modal"><?php echo __('Cancel');?></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div id="manager_edit_map_modalDoSaveBeforeTestAugmentedPose" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
-                        <div class="modal-dialog" role="dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <div class="actions mh100vh_55">
-                                        <div class="h100vh_160" style="overflow:auto; text-align:center">
-                                            
-                                            <div class="row" style="margin-top:30px;">
-                                                <div class="col-xs-8">
-                                                    <span style="font-size:16px; padding-bottom:20px;"><?php echo __('You can change the position of the robot before the test');?></span>
-                                                </div>
-                                                <div class="col-xs-4">
-                                                    <a href="#" class="btn btn-primary bMoveRobotTest" style="margin-top:7px;"><?php echo __('Move robot');?></a>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="teleop" style="display:none; margin-top:30px;">
-                                                <a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
-                                            
-                                                <div class="ifUndocked">
-                                                    
-                                                    <div style="text-align:center; width:100%; z-index:2000; margin-top:50px;">
-                                                        <div class="joystickDiv" draggable="false" style="margin:auto;">
-                                                            <div class="fond"></div>
-                                                            <div class="curseur"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                        </div>
-                                        
-                                        <div style="clear:both;"></div>
-                                       
-                                        <a href="#" class="btn btn-default btn_footer_left btn_50 bInitModalTest" data-dismiss="modal"><?php echo __('Cancel');?></a>
-                                        <a href="#" class="btn btn-primary bInitModalTest bTestAugmentedPose btn_footer_right btn_50" data-dismiss="modal" ><?php echo __('Continue');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -350,6 +344,39 @@
                         </div>
                     </div>
                     
+                    <div class="modal fade modalHelpClickGotoPose" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+										<div class="h100vh_160" style="overflow:auto; text-align:center;">
+											<h2><?= _('Go to position') ?></h2>
+											<h4 style="text-align:left;margin:30px 0;"><?= _('Click on the map to choose the position you\'re aiming for.') ?></h4>
+											<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the menu icon to cancel.') ?></h4>
+											<div class="btn-circle btn-lg btn-popup" style="display: block;">
+												<i class="fas fa-crosshairs iconMenuBlue"></i>
+												<i class="fas fa-times times_icon iconMenuRed" style="display: inline-block;"></i>
+											</div>
+											<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the stop icon to cancel action while the vehicle is moving.') ?></h4>
+											
+											<div class="btn-circle btn-lg btn-popup btn-danger" style="display: block;">
+												<i class="fa fa-stop"></i>
+											</div>
+											<div style="clear:both;"></div>
+											<div class="checkbox checkbox_wrapper">
+												<label>
+													<input type="checkbox" value="" class="checkboxHelpGotopose">
+													<?= _('Don\'t show this message again')?>
+												</label>
+											</div>
+											<a href="#" class="btn btn-primary btn_footer_left btn_100 bHelpClickGotoPoseOk" data-dismiss="modal" ><?php echo __('Ok');?></a>
+										</div>
+									</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					
                     <div class="popupHelp">
                     	<h2><?= _('Help')?></h2>
                     	<ul style="color:#000;">

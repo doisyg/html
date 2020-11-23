@@ -208,6 +208,12 @@ $(document).ready(function(e) {
 			timerManagerVeryLongPress = null;
 		}
 	});
+	
+	$('#manager_edit_map_svg').on('touchstart', function(e) {
+		ManagerDisplayBlockZoom();
+	});
+	
+	/*
 	$('#manager_edit_map_svg').on('touchstart', function(e) {
 		
 		if (timerManagerLongPress != null)
@@ -231,9 +237,10 @@ $(document).ready(function(e) {
 		
 		ManagerHideMenus();
 		
-	});
+	});*/
+	
     $('#manager_edit_map_svg').on('touchmove', function(e) {
-		ManagerHideMenus();
+		//ManagerHideMenus();
 		if (timerManagerLongPress != null)
 		{
 			clearTimeout(timerManagerLongPress);
@@ -246,7 +253,6 @@ $(document).ready(function(e) {
 		}
 		ManagerDisplayBlockZoom();
 	});
-	
 	
 	$(document).on('touchend', '#manager_edit_map_svg .dock_elem', function(e) {
 		$('#manager_edit_map_zoom_popup').hide();
@@ -261,6 +267,7 @@ $(document).ready(function(e) {
 			timerManagerVeryLongPress = null;
 		}
 	});
+	
 	$(document).on('touchstart', '#manager_edit_map_svg .dock_elem', function(e) {
 		if (timerManagerLongPress != null)
 		{
@@ -313,6 +320,7 @@ $(document).ready(function(e) {
 			timerManagerVeryLongPress = null;
 		}
 	});
+	
 	$(document).on('touchstart', '#manager_edit_map_svg .poi_elem', function(e) {
 		if (timerManagerLongPress != null)
 		{
@@ -337,6 +345,7 @@ $(document).ready(function(e) {
 		ManagerHideMenus();
 		
 	});
+	
 	$(document).on('touchmove', '#manager_edit_map_svg .poi_elem', function(e) {
     	ManagerHideMenus();
 		if (timerManagerLongPress != null)
@@ -365,6 +374,7 @@ $(document).ready(function(e) {
 			timerManagerVeryLongPress = null;
 		}
 	});
+	
 	$(document).on('touchstart', '#manager_edit_map_svg .augmented_pose_elem', function(e) {
 		if (timerManagerLongPress != null)
 		{
@@ -389,6 +399,7 @@ $(document).ready(function(e) {
 		ManagerHideMenus();
 		
 	});
+	
 	$(document).on('touchmove', '#manager_edit_map_svg .augmented_pose_elem', function(e) {
     	ManagerHideMenus();
 		if (timerManagerLongPress != null)
@@ -403,10 +414,63 @@ $(document).ready(function(e) {
 		}
 		ManagerDisplayBlockZoom();
 	});
+
+	$('#manager_edit_map .burger_menu').on('click', function(e) {
+		if($(this).hasClass('burger_menu_open')){
+			ManagerHideMenus()
+		}else{
+			ManagerDisplayMenu($(this).data('open'))
+		}
+	});
+	
+	$('#manager_edit_map .icon_menu').on('click', function(e) {
+		
+		switch(managerCurrentAction){
+			case 'prepareArea': 
+			case 'prepareForbiddenArea': 
+			case 'prepareGotoPose': 
+				managerCurrentAction='';
+				managerCanChangeMenu = true;
+			break;
+		}
+		if (managerCanChangeMenu)
+		{
+			ManagerHideMenus();
+			
+			if($(this).data('menu') == 'manager_edit_map_menu_point')
+			{
+				if (managerCurrentAction == 'editForbiddenArea' || managerCurrentAction == 'addbiddenArea')
+				{
+					ManagerDisplayMenu('manager_edit_map_menu_forbidden');
+				}
+				else if (managerCurrentAction == 'editArea' || managerCurrentAction == 'addArea')
+				{
+					ManagerDisplayMenu('manager_edit_map_menu_area');
+				}
+			}
+			else
+			{
+				
+				RemoveClass('#manager_edit_map_svg .active', 'active');
+				RemoveClass('#manager_edit_map_svg .activ_select', 'activ_select'); 
+				
+				currentSelectedItem = Array();
+				managerCurrentAction='';
+				$('body').removeClass('no_current select');
+				$('.select').css("strokeWidth", minStokeWidth);
+			}
+		}
+	});
+	
+	$('#manager_edit_map .times_icon_menu').click(function(){
+		$('#manager_edit_map .icon_menu').click();
+	})
+
 });
 
 function ManagerHideMenus()
 {
+	$('#manager_edit_map .times_icon_menu').hide()
 	$('#manager_edit_map_menu li').hide();
 	$('#manager_edit_map_menu_point li').hide();
 	$('#manager_edit_map_menu_forbidden li').hide();
@@ -414,64 +478,90 @@ function ManagerHideMenus()
 	$('#manager_edit_map_menu_dock li').hide();
 	$('#manager_edit_map_menu_poi li').hide();
 	$('#manager_edit_map_menu_augmented_pose li').hide();
-	$('.popupHelp').hide();
+	$('#manager_edit_map_menu_erase li').hide();
+	$('#manager_edit_map .popupHelp').hide();
+	
+	$('#manager_edit_map .burger_menu_open').removeClass('burger_menu_open');
+	
+	$('#manager_edit_map .burger_menu').css('display','flex');
+	
+	$('#manager_edit_map .icon_menu').hide('fast');
 }
 
 function ManagerDisplayMenu(id_menu)
 {
-	$('#'+id_menu+' li').hide();
-	$('#'+id_menu).show();
+	ByStepHideMenus();
+		
+		
+		let idxH = 1;
+		let idxV = 1;
+		let idxD = 1;
+		console.log(id_menu);
+		
+		//ICONE CORRESPONDANTE INSTEAD BURGER MENU
+		let icon_menu = $('#manager_edit_map .icon_menu[data-menu="'+id_menu+'"]');
+		if(icon_menu.lentgh != 0){
+			if(id_menu == 'manager_edit_map_menu_forbidden' || id_menu == 'manager_edit_map_menu_area'){
+				icon_menu.show('fast');
+			}else{		
+				icon_menu.show('fast');
+			}
+		}
+		if(id_menu != 'manager_edit_map_menu_point')
+			RemoveClass('#manager_edit_map_svg .point_deletable', 'point_active');
+		if(id_menu != 'manager_edit_map_menu_area' && id_menu != 'manager_edit_map_menu_forbidden')
+			RemoveClass('#manager_edit_map_svg .point_deletable', 'active');
+		
+		
+		if(id_menu != 'manager_edit_map_menu'){
+			$('#manager_edit_map .burger_menu').hide('fast');
+			setTimeout(function(){$('#manager_edit_map .times_icon_menu').show('fast')},50);
+		}else{
+			$('#manager_edit_map .burger_menu').addClass('burger_menu_open');
+		}
+		
+		$('#'+id_menu+' li').hide();
+		$('#'+id_menu).show();
 
-	topCenter = eventTouchStart.originalEvent.targetTouches[0].clientY - $('#manager_edit_map_container_all').offset().top;
-	leftCenter = eventTouchStart.originalEvent.targetTouches[0].clientX - $('#manager_edit_map_container_all').offset().left;
-	
-	$('#'+id_menu).css({top: topCenter, left: leftCenter});
-	
-	rayon = 80;
-	
-	decallageX = 0;
-	decallageY = 0;
-	angleDep = 21;
-	
-	if (leftCenter > $('#manager_edit_map_container_all').width() - 100)
-		angleDep += 180;
-	
-	minLeft = 10000;
-	maxLeft = -100;
-	minTop = 10000;
-	maxTop = -100;
-	
-	$('#'+id_menu+' li').each(function(index, element) {
-		angle = (angleDep + 45*index) * Math.PI/180;
-		// x = rsin(θ), y = rcos(θ)
-		l = rayon * Math.sin(angle) - 25;
-		t = rayon * Math.cos(angle) - 25;
+		topMenu = 7.5; //px
+		leftMenu = 7.5; //px
 		
-		if (l < minLeft) minLeft = l;
-		if (l > maxLeft) maxLeft = l;
-		if (t < minTop) minTop = t;
-		if (t > maxTop) maxTop = t;
+		decallageY = 45;
+		decallageX = 45;
 		
-		$(this).css({left: l, top: t});
-		$(this).delay(100*index).fadeIn();
-    });
 		
-	if (leftCenter - 25 + minLeft < 20)
-		decallageX = 20 - (leftCenter - 25 + minLeft);
-	if (leftCenter + maxLeft + 50 > $('#manager_edit_map_container_all').width() - 20)
-		decallageX = ($('#manager_edit_map_container_all').width() - 20) - (leftCenter + maxLeft + 50);
-	
-	if (topCenter + minTop < 20)
-		decallageY = 20 - (topCenter + minTop);
-	if (topCenter + maxTop + 50 > $('#manager_edit_map_container_all').height() - 20)
-		decallageY = ($('#manager_edit_map_container_all').height() - 20) - (topCenter + maxTop + 50);
+		$('#'+id_menu).css({top: topMenu, left: leftMenu});
 		
-	if (decallageX != 0 || decallageY != 0)
-	{
 		$('#'+id_menu+' li').each(function(index, element) {
-			$(this).css({left: '+='+decallageX, top: '+='+decallageY});
-    	});
-	}
+			let orientation = $(element).find('a.btn-menu').data('orientation');
+			switch(orientation){
+				case 'V' : 
+					l = leftMenu;
+					t = topMenu + (idxH * decallageY+10)
+					idxH++; 
+				break;
+				case 'H' :  
+					l = leftMenu + (idxV * decallageX+10)
+					t = topMenu ;
+					idxV++;
+				break;
+				case 'D' : 
+					l = leftMenu + (idxD * decallageX+10)
+					t = topMenu + (idxD * decallageY+10) ;
+					idxD++;
+				break;
+				default:
+					l = leftMenu;
+					t = topMenu + (idxH * decallageY+10)
+					idxH++; 
+				break;
+			}
+			l = l+'px';
+			t = t+'px';
+			$(this).css({left: l, top: t});
+			delay = 15 * index + 25;
+			$(this).delay(delay).fadeIn();
+		});
 }
 
 function ManagerLongPressForbidden()
@@ -479,21 +569,25 @@ function ManagerLongPressForbidden()
 	timerManagerLongPress = null;
 	ManagerDisplayMenu('manager_edit_map_menu_forbidden');
 }
+
 function ManagerLongPressArea()
 {
 	timerManagerLongPress = null;
 	ManagerDisplayMenu('manager_edit_map_menu_area');
 }
+
 function ManagerLongPressDock()
 {
 	timerManagerLongPress = null;
 	ManagerDisplayMenu('manager_edit_map_menu_dock');
 }
+
 function ManagerLongPressPoi()
 {
 	timerManagerLongPress = null;
 	ManagerDisplayMenu('manager_edit_map_menu_poi');
 }
+
 function ManagerLongPressAugmentedPose()
 {
 	timerManagerLongPress = null;
@@ -520,6 +614,7 @@ function ManagerLongPressSVG()
 }
 
 var resetPan = false;
+
 $(document).ready(function(e) {
     $('#manager_edit_map_svg').on('touchend', function(e) {
 		resetPan = true;
@@ -528,6 +623,7 @@ $(document).ready(function(e) {
 		resetPan = true;
 	});
 });
+
 function ManagerInitMap()
 {
 	var eventsHandlerManager;
