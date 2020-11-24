@@ -96,11 +96,11 @@ function GetInfosCurrentMapDoManager()
 			managerHistoriques = Array();
 			managerHistoriqueIndex = -1;
 			ManagerRefreshHistorique();
-			
 			setTimeout(function(){
 				ManagerInitMap();
 				ManagerResizeSVG();			
 			},500);
+			$('#bHeaderInfo').attr('onClick',"TogglePopupHelp()");
 		}
 		else
 		{

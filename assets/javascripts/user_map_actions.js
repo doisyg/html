@@ -775,10 +775,9 @@ $(document).ready(function() {
 								$('#user_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
 						}
 					}
-					$('.icon_menu').click(); // POUR SORTIR DU MENU GOTOPOSE
 					// On rebranche l'ancienne fonction
 					wycaApi.on('onGoToPoseResult', onGoToPoseResult);
-				
+					userCanChangeMenu = true;
 					$('#user_edit_map .modalFinTest').modal('show');
 				});
 				
@@ -803,7 +802,7 @@ $(document).ready(function() {
 					
 						// On rebranche l'ancienne fonction
 						wycaApi.on('onGoToPoseResult', onGoToPoseResult);
-						
+						userCanChangeMenu = true;
 						$('#user_edit_map .modalFinTest').modal('show');
 					}
 				});

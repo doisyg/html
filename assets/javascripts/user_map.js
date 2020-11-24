@@ -102,6 +102,7 @@ function GetInfosCurrentMapDoUser()
 				UserInitMap();
 				UserResizeSVG();			
 			},500); 
+			$('#bHeaderInfo').attr('onClick',"TogglePopupHelp()");
 		}
 		else
 		{

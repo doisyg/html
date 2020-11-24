@@ -172,6 +172,7 @@ function GetInfosCurrentMapDoNormal()
 					}
 				}
 			},500);
+			$('#bHeaderInfo').attr('onClick',"TogglePopupHelp()");
 		}
 		else
 		{

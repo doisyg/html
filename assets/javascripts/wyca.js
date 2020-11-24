@@ -220,7 +220,7 @@ $(document).ready(function(e) {
 			let section_active = $('section.active');
 			$('section.active').removeClass('active');
 			$('section.page').hide();
-			$('#bHeaderInfo').attr('onTouchStart',""); // REINIT (i) icone
+			$('#bHeaderInfo').attr('onClick',""); // REINIT (i) icone
 			
 			console.log('next ',next);
 			
@@ -232,7 +232,7 @@ $(document).ready(function(e) {
 			if (next == 'install_by_step_mapping') InitMappingByStep();
 			
 			if (next == 'install_by_step_edit_map'){
-				$('#bHeaderInfo').attr('onTouchStart',"$('.popupHelp').toggle('fast')");
+				$('#bHeaderInfo').attr('onClick',"$('.popupHelp').toggle('fast')");
 				GetInfosCurrentMapByStep();
 			}
 			if (next == 'install_by_step_mapping_fin'){
@@ -1162,7 +1162,8 @@ function InitMappingByStep()
 	}
 }
 
-function InitMaintenanceByStep(){
+function InitMaintenanceByStep()
+{
 	console.log('InitMaintenanceByStep');
 	if(getCookie('create_new_site') != '')
 		create_new_site = getCookie('create_new_site');
@@ -1561,6 +1562,10 @@ function GetDataMapToSave()
 	});
 	
 	return data;
+}
+
+function TogglePopupHelp(){
+	$('.global_page.active .popupHelp').toggle('fast');
 }
 
 /* GESTION COOKIES */

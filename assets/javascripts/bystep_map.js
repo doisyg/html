@@ -176,9 +176,8 @@ function GetInfosCurrentMapDoByStep()
 					}
 				}				
 			},500); 
-			
+			$('#bHeaderInfo').attr('onClick',"TogglePopupHelp()");
 			if (gotoTest) InitTest();
-			$('#bHeaderInfo').attr('onTouchStart',"$('.popupHelp').toggle('fast')");
 			gotoTest = false;
 		}
 		else
