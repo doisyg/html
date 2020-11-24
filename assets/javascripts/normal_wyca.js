@@ -421,7 +421,7 @@ $(document).ready(function(e) {
 		if (!normalCanChangeMenu)
 		{
 			alert_wyca('You must confirm the active element');
-			console.log(bystepCurrentAction);
+			console.log(normalCurrentAction);
 			$('#bCloseAlertWyca').click(NormalShakeActiveElement());
 		}
 		else

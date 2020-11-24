@@ -1,47 +1,4 @@
 // JavaScript Document
-var isDown = false;
-
-var largeurSlam = 0;
-var hauteurSlam = 0;
-var largeurRos = 0;
-var hauteurRos = 0;
-
-var start = true;
-
-var svgTemp;
-var svgData;
-var imgForSVG;
-
-var canvas;
-var canvasWidth;
-var canvasHeight;
-var ctx;
-var canvasData;
-var zoom = 1.5;
-
-var ros_largeur = 0;
-var ros_hauteur = 0;
-var ros_resolution = 5;
-
-var positions = Array();
-
-var xObject = 0;
-var yObject = 0;
-
-var zoom_carte = 1;
-
-var nextIdArea = 300000;
-var nextIdDock = 300000;
-var nextIdPoi = 300000;
-var forbiddens = Array();
-var areas = Array();
-var gommes = Array();
-var docks = Array();
-var pois = Array();
-
-var blockZoom = false;
-var gotoTest = false;
-
 function GetInfosCurrentMapManager()
 {
 	if (wycaApi.websocketAuthed)
@@ -490,7 +447,7 @@ function ManagerHideMenus()
 
 function ManagerDisplayMenu(id_menu)
 {
-	ByStepHideMenus();
+	ManagerHideMenus();
 		
 		
 		let idxH = 1;

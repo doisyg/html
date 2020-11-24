@@ -1,79 +1,18 @@
 // JavaScript Document
-var canvas;
-var dessin;
-
 var boolModalGoToPoi = true;
 var boolModalGoToAugmentedPose = true;
 var boolModalGoToDock = true;
 var boolHelpGotoPose = true;
 
 var userCurrentAction = '';
-var currentStep = '';
-
-var currentStepAddPoi = '';
-
 var svgUser;
-
-var timerRotate = null;
-
-var previewDisplayed = false;
-var currentForbiddenIndex = -1;
-var saveCurrentForbidden = null;
-var currentAreaIndex = -1;
-var saveCurrentArea = null;
-var currentDockIndex = -1;
-var saveCurrentDock = null;
-var currentPoiIndex = -1;
-var saveCurrentPoi = null;
-
-var currentDockPose = {};
-var currentPoiPose = {};
-
-var downOnZoomClick = false;
 var userDownOnSVG = false;
 var userDownOnSVG_x = 0;
 var userDownOnSVG_y = 0;
 var userDownOnSVG_x_scroll = 0;
 var userDownOnSVG_y_scroll = 0;
-var downOnMovable = false;
-var movableDown = null;
-var currentForbiddenPoints = Array();
-var currentAreaPoints = Array();
-var currentGommePoints = Array();
-var ctrlZ = false;
-var previewInProgress = false;
-var displayHelpAddShelf = true;
-
 var userCanChangeMenu = true;
-
-var currentSelectedItem = Array();
-var ctrlClickIsPressed = false;
-var cPressed = false;
-
-var clickSelectSVG = false;
-var clickSelectSVG_x = 0;
-var clickSelectSVG_y = 0;
-var clickSelectSVG_x_last = -1;
-var clickSelectSVG_y_last = -1;
-
-var currentModePath;
-
-var timerSaveUserOptions = null;
-var timerOpenInfo = null;
-var id_info_to_open = -1;
-var info_to_open_x = -1;
-var info_to_open_y = -1;
-
-var intervalRefreshConn = null;
-
 var userSavedCanClose = true;
-
-var indexDockElem = 0;
-var indexPoiElem = 0;
-
-var poi_temp_add = {};
-
-var timerCantChange = null;
 
 function UserAvertCantChange()
 {

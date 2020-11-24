@@ -1,22 +1,6 @@
 
 /* ZOOM FUNCS */
 
-function AppliquerZoom()
-{
-	//$('#all').width(saveWidth * zoom_carte);
-	//Resize();
-	//$('#boxsmap').resize();
-	
-	if ($('#install_by_step_edit_map').is(':visible')) ByStepResizeSVG();
-	if ($('#install_normal_edit_map').is(':visible')) NormalResizeSVG();
-	
-	//RefreshZoomView();
-	//setTimeout(RefreshZoomView, 100);
-}
-
-function InitSVG()
-{
-}
 
 function ByStepGetZoom()
 {
@@ -902,24 +886,6 @@ function ByStepResizeSVG()
 	$.each(augmented_poses, function( index, augmented_pose ) {
 		ByStepTraceAugmentedPose(index);
 	});
-}
-
-/*  NOT BY STEP FUNCS */
-
-function makeSVGElement(tag, attrs, texte='')
-{
-    var el= document.createElementNS('http://www.w3.org/2000/svg', tag);
-    for (var k in attrs) {
-        el.setAttribute(k, attrs[k]);
-    }
-	
-	if (texte != '')
-	{
-		txt = document.createTextNode(texte);
-		el.appendChild(txt);
-	}
-	
-    return el;
 }
 
 function ExportSVG()
