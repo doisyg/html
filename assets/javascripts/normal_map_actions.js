@@ -306,6 +306,7 @@ $(document).ready(function() {
 		
 		normalCanChangeMenu = true;
 		$('#install_normal_edit_map_bEndGomme').hide();
+		$('#install_normal_edit_map_bCancelGomme').hide();
 		normalCurrentAction = '';
 		currentStep = '';
 		$('body').addClass('no_current');
@@ -313,6 +314,25 @@ $(document).ready(function() {
 		NormalHideMenus();
 		NormalSetModeSelect();
 		
+    });
+	
+	$('#install_normal_edit_map #install_normal_edit_map_bCancelGomme').click(function(e) {
+        e.preventDefault();
+		let lg = gommes.length;
+		gommes.pop[lg-1];
+		$('#install_normal_edit_map_svg .gomme_elem_current_'+(lg-1)).remove();
+		
+		normalCanChangeMenu = true;
+		$('#install_normal_edit_map_bEndGomme').hide();
+		$('#install_normal_edit_map_bCancelGomme').hide();
+		$('.times_icon_menu').show('fast');
+		
+		sizeGomme = $('#install_normal_edit_map_menu_erase .bGommeSize.selected').data('size');
+		normalCurrentAction = 'gomme';	
+		currentStep = '';
+		
+		$('body').removeClass('no_current');
+		$('body').addClass('gomme');		
     });
 	
 	$('#install_normal_edit_map #install_normal_edit_map_bStop').click(function(e) {
@@ -3543,6 +3563,7 @@ $(document).ready(function() {
 				
 				normalCanChangeMenu = false;
 				$('#install_normal_edit_map_bEndGomme').show();
+				$('#install_normal_edit_map_bCancelGomme').show();
 			}
 		}
 		else if (normalCurrentAction == 'addDock' && currentStep=='setPose')
