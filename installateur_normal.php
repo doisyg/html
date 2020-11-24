@@ -340,40 +340,33 @@
                                                     </div>
 													<div class="iro-colorpicker" data-color_init="#579fb1"></div>
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group sep">
                                                     <label class="col-xs-4 control-label"><?php echo __('LED Color');?></label>
                                                     <div class="col-xs-8">
-                                                        <select id="install_normal_edit_map_led_color_mode" name="led_color_mode" class="form-control input-sm mb-md selectChangeAffGroup">
-                                                            <option value="Automatic"><?php echo __('Automatic');?></option>
-                                                            <option value="Manual"><?php echo __('Manual');?></option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div id="install_normal_edit_map_led_color_group" class="form-group">
-                                                    <label class="col-xs-4 control-label"><?php echo __('LED Color');?></label>
-                                                    <div class="col-xs-8">
-                                                        <div id="install_normal_edit_map_led_color_elem" class="input-group color input-group-sm">
-															<span class="input-group-addon"><i class="fas fa-stop preview_color"></i></span>
-                                                            <input id="install_normal_edit_map_led_color" name="led_color" type="text" class="form-control" value="#ff92b4">
+                                                    	<div class="col-xs-12" style="padding:0; margin-bottom:5px;">
+                                                            <select id="install_normal_edit_map_led_color_mode" name="led_color_mode" class="form-control input-sm mb-md selectChangeAffGroup">
+                                                                <option value="Automatic"><?php echo __('Automatic');?></option>
+                                                                <option value="Manual"><?php echo __('Manual');?></option>
+                                                            </select>
+                                                        </div>
+                                                        <div id="install_normal_edit_map_led_color_group" class="col-xs-12" style="padding:0">
+                                                            <div id="install_normal_edit_map_led_color_elem" class="input-group color input-group-sm">
+                                                                <span class="input-group-addon"><i class="fas fa-stop preview_color"></i></span>
+                                                                <input id="install_normal_edit_map_led_color" name="led_color" type="text" class="form-control" value="#ff92b4">
+                                                            </div>
                                                         </div>
                                                     </div>
-													<div class="iro-colorpicker" data-color_init="#ff92b4"></div>
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group sep">
                                                     <label class="col-xs-4 control-label"><?php echo __('LED Animation');?></label>
                                                     <div class="col-xs-8">
-                                                    	<div class="col-xs-12" style="padding:0">
+                                                    	<div class="col-xs-12" style="padding:0; margin-bottom:5px;">
                                                             <select id="install_normal_edit_map_led_animation_mode" name="led_animation_mode" class="form-control input-sm mb-md selectChangeAffGroup">
                                                                 <option value="Automatic"><?php echo __('Automatic');?></option>
                                                                 <option value="Manual"><?php echo __('Manual');?></option>
                                                             </select>
                                                         </div>
-                                                    </div>
-                                                </div>
-												<div id="install_normal_edit_map_led_animation_group" class="form-group">
-                                                    <label class="col-xs-4 control-label"><?php echo __('LED Animation');?></label>
-                                                    <div class="col-xs-8">
-                                                        <div id="" class="col-xs-12" style="padding:0">
+                                                        <div id="install_normal_edit_map_led_animation_group" class="col-xs-12" style="padding:0">
                                                             <select id="install_normal_edit_map_led_animation" name="led_animation" class="form-control input-sm mb-md" style="padding:0">
                                                                 <option value="1"><?php echo __('Progress');?></option>
                                                                 <option value="2"><?php echo __('Progress from center');?></option>
@@ -389,46 +382,36 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group sep">
                                                     <label class="col-xs-4 control-label"><?php echo __('Max Speed');?></label>
                                                     <div class="col-xs-8">
-                                                    	<div class="col-xs-12" style="padding:0">
+                                                    	<div class="col-xs-12" style="padding:0; margin-bottom:5px;">
                                                             <select id="install_normal_edit_map_max_speed_mode" name="max_speed_mode" class="form-control input-sm mb-md selectChangeAffGroup">
                                                                 <option value="Automatic"><?php echo __('Automatic');?></option>
                                                                 <option value="Manual"><?php echo __('Manual');?></option>
                                                             </select>
                                                         </div>
-                                                        
-                                                    </div>
-                                                </div>
-												<div id="install_normal_edit_map_max_speed_group" class="form-group">
-                                                    <label class="col-xs-4 control-label"><?php echo __('Max Speed');?></label>
-                                                    <div class="col-xs-8">
-                                                        <div id="" class="col-xs-12 input-group input-group-sm mb-md" style="padding:0">
+                                                        <div id="install_normal_edit_map_max_speed_group" class="col-xs-12 input-group input-group-sm mb-md" style="padding:0">
                                                             <input step="0.1" type="number" id="install_normal_edit_map_max_speed" name="max_speed" class="form-control input-sm mb-md" />
                                                             <span class="input-group-addon">m/s</span>
                                                         </div>
+                                                        
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label class="col-xs-4 control-label"><?php echo __('Obstacle Distance');?></label>
+                                                <div class="form-group sep">
+                                                    <label class="col-xs-4 control-label"><?php echo __('Min Obstacle Distance');?></label>
                                                     <div class="col-xs-8">
-                                                    	<div class="col-xs-12" style="padding:0">
+                                                    	<div class="col-xs-12" style="padding:0; margin-bottom:5px;">
                                                         <select id="install_normal_edit_map_min_distance_obstacle_mode" name="min_distance_obstacle_mode" class="form-control input-sm mb-md selectChangeAffGroup">
                                                             <option value="Automatic"><?php echo __('Automatic');?></option>
                                                             <option value="Manual"><?php echo __('Manual');?></option>
                                                         </select>
                                                         </div>
-                                                       
-                                                    </div>
-                                                </div>
-												<div id="install_normal_edit_map_min_distance_obstacle_group" class="form-group">
-                                                    <label class="col-xs-4 control-label"><?php echo __('Obstacle Distance');?></label>
-                                                    <div class="col-xs-8">
-														<div id="" class="col-xs-12 input-group input-group-sm mb-md" style="padding:0">
+														<div id="install_normal_edit_map_min_distance_obstacle_group" class="col-xs-12 input-group input-group-sm mb-md" style="padding:0">
                                                             <input type="number" id="install_normal_edit_map_min_distance_obstacle" name="min_distance_obstacle" class="form-control input-sm mb-md" />
                                                             <span class="input-group-addon">cm</span>
                                                         </div>
+                                                       
                                                     </div>
                                                 </div>
                                             </form>

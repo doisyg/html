@@ -1205,3 +1205,5 @@ span.error_details span{
 	text-align:justify;
 	margin:30px 0;
 }
+
+.form-group.sep { border-top:1px solid #EFEFEF; padding-top:15px; }
