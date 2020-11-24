@@ -1173,21 +1173,20 @@ var save_check_components_result = undefined;
 
 function InitCheckByStep()
 {
-	
-	
 	if (wycaApi.websocketAuthed)
 	{
+		//INIT 
+		$('#install_by_step_check .test').removeClass('test'); // REMOVE CLASS TEST
+		$('#install_by_step_check .checked').removeClass('checked'); // REMOVE CLASS CHECKED
+		$('.install_by_step_check_next').removeClass('disabled').addClass('disabled'); //DISABLE BTN
+		$('.install_by_step_check_next').html('<i class="fa fa fa-spinner fa-pulse"></i> '+textBtnCheckTest); // ADD SPINNER ON BTN
+		$('#install_by_step_check .is_checkbox').removeClass('component_ok component_warning component_error'); // REMOVE OLD TEST CLASS
+		
 		if(timer_anim_check!=undefined){clearTimeout(timer_anim_check);timer_anim_check=undefined;}
-		$('#install_by_step_check .test').removeClass('test');
+		
 		let lg = $('#install_by_step_check div.is_checkbox:not(".checked")').length;
 		let rd = Math.floor(Math.random() * Math.floor(lg));
 		$('#install_by_step_check div.is_checkbox:not(".checked")').eq(rd).addClass('test');
-		
-		$('#install_by_step_check .checked').removeClass('checked');
-		$('.install_by_step_check_next').removeClass('disabled');
-		$('.install_by_step_check_next').addClass('disabled');
-		$('.install_by_step_check_next').html('<i class="fa fa fa-spinner fa-pulse"></i> '+textBtnCheckTest);
-		$('#install_by_step_check .is_checkbox').removeClass('component_ok component_warning component_error');
 		
 		wycaApi.CheckComponents(function (data){
 			
