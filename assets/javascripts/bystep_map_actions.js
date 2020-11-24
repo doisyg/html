@@ -311,13 +311,13 @@ function ByStepAddHistorique(elem)
 function ByStepRefreshHistorique()
 {
 	if (bystepHistoriqueIndex == -1)
-		$('#install_by_step_edit_map_bByStepUndo').addClass('disabled');
+		$('#install_by_step_edit_map_bUndo').addClass('disabled');
 	else
-		$('#install_by_step_edit_map_bByStepUndo').removeClass('disabled');
+		$('#install_by_step_edit_map_bUndo').removeClass('disabled');
 	if (bystepHistoriqueIndex == bystepHistoriques.length-1)
-		$('#install_by_step_edit_map_bByStepRedo').addClass('disabled');
+		$('#install_by_step_edit_map_bRedo').addClass('disabled');
 	else
-		$('#install_by_step_edit_map_bByStepRedo').removeClass('disabled');
+		$('#install_by_step_edit_map_bRedo').removeClass('disabled');
 }
 
 function ByStepSetModeSelect()
@@ -438,27 +438,27 @@ $(document).ready(function() {
 	
 	/* BTNS HISTORIQUE */
 	
-	$('#install_by_step_edit_map_bByStepUndo').click(function(e) {
+	$('#install_by_step_edit_map_bUndo').click(function(e) {
         e.preventDefault();
-		if (!$('#install_by_step_edit_map_bByStepUndo').hasClass('disabled'))
+		if (!$('#install_by_step_edit_map_bUndo').hasClass('disabled'))
 			ByStepUndo();
 	});
 	
-	$('#install_by_step_edit_map_bByStepUndo').on('touchstart', function(e) { 
+	$('#install_by_step_edit_map_bUndo').on('touchstart', function(e) { 
 		e.preventDefault();
-		if (!$('#install_by_step_edit_map_bByStepUndo').hasClass('disabled'))
+		if (!$('#install_by_step_edit_map_bUndo').hasClass('disabled'))
 			ByStepUndo();
 	});
 	
-	$('#install_by_step_edit_map_bByStepRedo').click(function(e) {
+	$('#install_by_step_edit_map_bRedo').click(function(e) {
         e.preventDefault();
-		if (!$('#install_by_step_edit_map_bByStepRedo').hasClass('disabled'))
+		if (!$('#install_by_step_edit_map_bRedo').hasClass('disabled'))
 			ByStepRedo();
     });
 	
-	$('#install_by_step_edit_map_bByStepRedo').on('touchstart', function(e) { 
+	$('#install_by_step_edit_map_bRedo').on('touchstart', function(e) { 
 		e.preventDefault();
-		if (!$('#install_by_step_edit_map_bByStepRedo').hasClass('disabled'))
+		if (!$('#install_by_step_edit_map_bRedo').hasClass('disabled'))
 			ByStepRedo();
 	});
 	
