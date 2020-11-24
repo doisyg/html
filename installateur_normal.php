@@ -354,6 +354,7 @@
                                                                 <span class="input-group-addon"><i class="fas fa-stop preview_color"></i></span>
                                                                 <input id="install_normal_edit_map_led_color" name="led_color" type="text" class="form-control" value="#ff92b4">
                                                             </div>
+															<div class="iro-colorpicker" data-color_init="#ff92b4"></div>
                                                         </div>
                                                     </div>
                                                 </div>

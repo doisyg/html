@@ -1124,6 +1124,7 @@ ul#MasterDockList li .tuile_img.is_checkbox p.dockname {margin-top: 0px;font-wei
 .password_format ~ div.form-group:after{margin-bottom:0;padding-top:0}
 .nopymy{margin-top:0;margin-bottom:0;padding-top:0;padding-bottom:0;}
 .nopymy:after{margin-top:0;margin-bottom:0;padding-top:0;padding-bottom:0;}
+
 /* CSS FIXES */
 .input-group[class*='col-']{
 	padding-left:15px;
@@ -1159,6 +1160,9 @@ span.error_details span{
 }
 
 /* COLOR PICKER IRO */
+.col-xs-8 .iro-colorpicker{
+	transform: scale(0.75)translateX(-40%);
+}
 .iro-colorpicker{
 	width: 100%;
     display: none;
