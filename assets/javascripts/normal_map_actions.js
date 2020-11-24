@@ -570,7 +570,7 @@ $(document).ready(function() {
 	
 	$('#install_normal_edit_map_menu_area .bConfigArea').click(function(e) {
         e.preventDefault();
-		NormalHideMenus();
+		//NormalHideMenus();
 		if (normalCurrentAction == "select" || normalCurrentAction == 'editArea')
 		{
 			currentAreaIndex = GetAreaIndexFromID(currentAreaNormalLongTouch.data('id_area'));
@@ -913,7 +913,7 @@ $(document).ready(function() {
 	
 	$('#install_normal_edit_map_menu_poi .bConfigPoi').click(function(e) {
         e.preventDefault();
-		NormalHideMenus();
+		//NormalHideMenus();
 		normalCurrentAction = 'editPoi';
 	
 		currentPoiIndex = GetPoiIndexFromID(currentPoiNormalLongTouch.data('id_poi'));
