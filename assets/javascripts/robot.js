@@ -37,24 +37,27 @@ var imgMappingLoaded = true;
 $(document).ready(function(e) {
 	
 	var img = document.getElementById("install_by_step_mapping_img_map_saved");
-	img.onload = function () {
-		imgMappingLoaded = true;	
-		InitPosCarteMapping();
-		
-		if (mappingStarted && timerGetMappingInConstruction == null)
-		{
-			// Le timer a déjà sauté, on relance l'appel
-			GetMappingInConstruction();
-		}
-	};
-	img.onerror  = function () {
-		imgMappingLoaded = true;
-		if (mappingStarted && timerGetMappingInConstruction == null)
-		{
-			// Le timer a déjà sauté, on relance l'appel
-			GetMappingInConstruction();
-		}
-	};
+	if (img != null)
+	{
+		img.onload = function () {
+			imgMappingLoaded = true;	
+			InitPosCarteMapping();
+			
+			if (mappingStarted && timerGetMappingInConstruction == null)
+			{
+				// Le timer a déjà sauté, on relance l'appel
+				GetMappingInConstruction();
+			}
+		};
+		img.onerror  = function () {
+			imgMappingLoaded = true;
+			if (mappingStarted && timerGetMappingInConstruction == null)
+			{
+				// Le timer a déjà sauté, on relance l'appel
+				GetMappingInConstruction();
+			}
+		};
+	}
 	
 	wycaApi = new WycaAPI({
 		host:robot_host, //192.168.1.32:9090', // host:'192.168.100.245:9090',
