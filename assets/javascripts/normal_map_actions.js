@@ -2290,7 +2290,7 @@ $(document).ready(function() {
 			$('#install_normal_edit_map_min_distance_obstacle_group').show();
     });
 	
-	$('#install_normal_edit_map_bNormalAreaSaveConfig').click(function(e) {
+	$('#install_normal_edit_map_bAreaSaveConfig').click(function(e) {
 		area = areas[currentAreaIndex];
 		saveCurrentArea = JSON.stringify(area);
 			
