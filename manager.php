@@ -179,23 +179,19 @@
 							<div class="modal-header">
 								<div class="actions mh100vh_55">
 									<div class="h100vh_160" style="overflow:auto; text-align:center;">
-										<h2><?= _('Go to Dock') ?></h2>
-										<h4 style="text-align:left;margin:30px 0;"><?= _('Do you want to send the vehicle to this docking station ?') ?></h4>
-										<div class="" style="display: flex;justify-content: space-around;align-items: center;">
-											<div class="btn-circle btn-lg btn-popup" style="display: block;position: unset;transform: none;">
+										<h2 class="h2ModalGoTo">
+											<?= _('Go to Dock ?') ?>
+											<div class="btn-circle btn-lg btn-popup">
 												<i class="fas fa-charging-station iconMenuGreen" style="position: relative;top: -10px;left: -5px;"></i>
 											</div>
-											<div class="btn-circle btn-lg btn-popup" style="display: block;position: unset;transform: none;padding: 10px;">
-												<img class="fi-route" src="assets/images/route_green.svg"/></a>
-											</div>
-										</div>
-										<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the stop icon to cancel action while the vehicle is moving.') ?></h4>
+										</h2>
+										<h4 class="h4ModalGoTo"><?= _('Do you want to send the vehicle to this docking station ?') ?></h4>
 										
-										<div class="btn-circle btn-lg btn-popup btn-danger" style="display: block;">
-											<i class="fa fa-stop"></i>
-										</div>
-										<div style="clear:both;"></div>
-										<div class="checkbox checkbox_wrapper">
+										<h5 class="h5ModalGoTo">
+											<?= _('Click on the stop icon to cancel action while the vehicle is moving.') ?>
+										</h5>
+										
+										<div class="checkbox checkbox_wrapper" style="display:none">
 											<label>
 												<input type="checkbox" value="" class="checkboxGotodock">
 												<?= _('Don\'t show this message again')?>
@@ -216,23 +212,19 @@
 							<div class="modal-header">
 								<div class="actions mh100vh_55">
 									<div class="h100vh_160" style="overflow:auto; text-align:center;">
-										<h2><?= _('Go to Augmented Pose') ?></h2>
-										<h4 style="text-align:left;margin:30px 0;"><?= _('Do you want to send the vehicle to this augmented pose ?') ?></h4>
-										<div class="" style="display: flex;justify-content: space-around;align-items: center;">
-											<div class="btn-circle btn-lg btn-popup" style="display: block;position: unset;transform: none;">
+										<h2 class="h2ModalGoTo">
+											<?= _('Go to Augmented Pose ?') ?>
+											<div class="btn-circle btn-lg btn-popup">
 												<div class="iconAugmentedPose" style="top: -15px;left: -10px;"><i class="fas fa-map-marker-alt iconMenuPurple"></i><i class="fas fa-barcode"></i></div>
 											</div>
-											<div class="btn-circle btn-lg btn-popup" style="display: block;position: unset;transform: none;padding: 10px;">
-												<img class="fi-route" src="assets/images/route_green.svg"/></a>
-											</div>
-										</div>
-										<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the stop icon to cancel action while the vehicle is moving.') ?></h4>
+										</h2>
+										<h4 class="h4ModalGoTo"><?= _('Do you want to send the vehicle to this augmented pose ?') ?></h4>
 										
-										<div class="btn-circle btn-lg btn-popup btn-danger" style="display: block;">
-											<i class="fa fa-stop"></i>
-										</div>
-										<div style="clear:both;"></div>
-										<div class="checkbox checkbox_wrapper">
+										<h5 class="h5ModalGoTo">
+											<?= _('Click on the stop icon to cancel action while the vehicle is moving.') ?>
+										</h5>
+										
+										<div class="checkbox checkbox_wrapper" style="display:none">
 											<label>
 												<input type="checkbox" value="" class="checkboxGotoaugmentedpose">
 												<?= _('Don\'t show this message again')?>
@@ -319,13 +311,13 @@
 									
 										<form>
 											<div class="form-group">
-												<label class="col-xs-4 control-label">Name</label>
+												<label class="col-xs-4 control-label"><?= _('Name')?></label>
 												<div class="col-xs-8">
 													<input type="text" id="manager_edit_map_poi_name" name="poi_name" value="" class="form-control input-sm mb-md" />
 												</div>
 											</div>
 											<div class="form-group">
-												<label class="col-xs-4 control-label">Comment</label>
+												<label class="col-xs-4 control-label"><?= _('Comment')?></label>
 												<div class="col-xs-8">
 													<textarea id="manager_edit_map_poi_comment" name="poi_comment" class="form-control input-sm mb-md"></textarea>
 												</div>

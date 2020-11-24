@@ -44,10 +44,12 @@
                     
 					<a href="#" id="user_edit_map_bStop" class="btn btn-circle btn-danger btn-menu"><i class="fa fa-stop"></i></a>
 					
-                    <div id="user_edit_map_menu" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
+					<i class="fas fa-times times_icon_menu iconMenuRed"></i>
+				
+                    <div id="user_edit_map_menu" class="menu_icon_touch" style="position: absolute; display: block; top: 7.5px; left: 7.5px;z-index:0;">
                     	<ul>
-                        	<li><a href="#" class="btn btn-circle btn-default bMoveTo btn-menu" data-orientation="H"><i class="fa fa-crosshairs iconMenuBlue" style="font-size:24px"></i></a></li>
-							<li><a href="#" class="btn btn-circle btn-default bMove btn-menu" data-orientation="H" data-toggle="modal" data-target="#user_edit_map_modalTeleop">
+                        	<li style="display: list-item; left: 12.5px; top: 7.5px;"><a href="#" class="btn btn-circle btn-default bMoveTo btn-menu" data-orientation="H"><i class="fa fa-crosshairs iconMenuBlue" style="font-size:24px"></i></a></li>
+							<li style="display: list-item; left: 57.5px; top: 7.5px;"><a href="#" class="btn btn-circle btn-default bMove btn-menu" data-orientation="H" data-toggle="modal" data-target="#user_edit_map_modalTeleop"><i class="fa fa-gamepad iconMenuPurple"></i></a></li>
                         </ul>
                     </div>
                     
@@ -152,23 +154,19 @@
 							<div class="modal-header">
 								<div class="actions mh100vh_55">
 									<div class="h100vh_160" style="overflow:auto; text-align:center;">
-										<h2><?= _('Go to Dock') ?></h2>
-										<h4 style="text-align:left;margin:30px 0;"><?= _('Do you want to send the vehicle to this docking station ?') ?></h4>
-										<div class="" style="display: flex;justify-content: space-around;align-items: center;">
-											<div class="btn-circle btn-lg btn-popup" style="display: block;position: unset;transform: none;">
+										<h2 class="h2ModalGoTo">
+											<?= _('Go to Dock ?') ?>
+											<div class="btn-circle btn-lg btn-popup">
 												<i class="fas fa-charging-station iconMenuGreen" style="position: relative;top: -10px;left: -5px;"></i>
 											</div>
-											<div class="btn-circle btn-lg btn-popup" style="display: block;position: unset;transform: none;padding: 10px;">
-												<img class="fi-route" src="assets/images/route_green.svg"/></a>
-											</div>
-										</div>
-										<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the stop icon to cancel action while the vehicle is moving.') ?></h4>
+										</h2>
+										<h4 class="h4ModalGoTo"><?= _('Do you want to send the vehicle to this docking station ?') ?></h4>
 										
-										<div class="btn-circle btn-lg btn-popup btn-danger" style="display: block;">
-											<i class="fa fa-stop"></i>
-										</div>
-										<div style="clear:both;"></div>
-										<div class="checkbox checkbox_wrapper">
+										<h5 class="h5ModalGoTo">
+											<?= _('Click on the stop icon to cancel action while the vehicle is moving.') ?>
+										</h5>
+										
+										<div class="checkbox checkbox_wrapper" style="display:none">
 											<label>
 												<input type="checkbox" value="" class="checkboxGotodock">
 												<?= _('Don\'t show this message again')?>
@@ -189,23 +187,19 @@
 							<div class="modal-header">
 								<div class="actions mh100vh_55">
 									<div class="h100vh_160" style="overflow:auto; text-align:center;">
-										<h2><?= _('Go to Augmented Pose') ?></h2>
-										<h4 style="text-align:left;margin:30px 0;"><?= _('Do you want to send the vehicle to this augmented pose ?') ?></h4>
-										<div class="" style="display: flex;justify-content: space-around;align-items: center;">
-											<div class="btn-circle btn-lg btn-popup" style="display: block;position: unset;transform: none;">
+										<h2 class="h2ModalGoTo">
+											<?= _('Go to Augmented Pose ?') ?>
+											<div class="btn-circle btn-lg btn-popup">
 												<div class="iconAugmentedPose" style="top: -15px;left: -10px;"><i class="fas fa-map-marker-alt iconMenuPurple"></i><i class="fas fa-barcode"></i></div>
 											</div>
-											<div class="btn-circle btn-lg btn-popup" style="display: block;position: unset;transform: none;padding: 10px;">
-												<img class="fi-route" src="assets/images/route_green.svg"/></a>
-											</div>
-										</div>
-										<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the stop icon to cancel action while the vehicle is moving.') ?></h4>
+										</h2>
+										<h4 class="h4ModalGoTo"><?= _('Do you want to send the vehicle to this augmented pose ?') ?></h4>
 										
-										<div class="btn-circle btn-lg btn-popup btn-danger" style="display: block;">
-											<i class="fa fa-stop"></i>
-										</div>
-										<div style="clear:both;"></div>
-										<div class="checkbox checkbox_wrapper">
+										<h5 class="h5ModalGoTo">
+											<?= _('Click on the stop icon to cancel action while the vehicle is moving.') ?>
+										</h5>
+										
+										<div class="checkbox checkbox_wrapper" style="display:none">
 											<label>
 												<input type="checkbox" value="" class="checkboxGotoaugmentedpose">
 												<?= _('Don\'t show this message again')?>
@@ -226,23 +220,19 @@
 							<div class="modal-header">
 								<div class="actions mh100vh_55">
 									<div class="h100vh_160" style="overflow:auto; text-align:center;">
-										<h2><?= _('Go to POI') ?></h2>
-										<h4 style="text-align:left;margin:30px 0;"><?= _('Do you want to send the vehicle to this POI ?') ?></h4>
-										<div class="" style="display: flex;justify-content: space-around;align-items: center;">
+										<h2 class="h2ModalGoTo">
+											<?= _('Go to POI ?') ?>
 											<div class="btn-circle btn-lg btn-popup" style="display: block;position: unset;transform: none;">
 												<i class="fa fa-map-marker-alt iconMenuBlue" style="position: relative;top: -12px;left: -3px;"></i>
 											</div>
-											<div class="btn-circle btn-lg btn-popup" style="display: block;position: unset;transform: none;padding: 10px;">
-												<img class="fi-route" src="assets/images/route_green.svg"/></a>
-											</div>
-										</div>
-										<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the stop icon to cancel action while the vehicle is moving.') ?></h4>
+										</h2>
+										<h4 class="h4ModalGoTo"><?= _('Do you want to send the vehicle to this POI ?') ?></h4>
 										
-										<div class="btn-circle btn-lg btn-popup btn-danger" style="display: block;">
-											<i class="fa fa-stop"></i>
-										</div>
-										<div style="clear:both;"></div>
-										<div class="checkbox checkbox_wrapper">
+										<h5 class="h5ModalGoTo">
+											<?= _('Click on the stop icon to cancel action while the vehicle is moving.') ?>
+										</h5>
+										
+										<div class="checkbox checkbox_wrapper" style="display:none">
 											<label>
 												<input type="checkbox" value="" class="checkboxGotopoi">
 												<?= _('Don\'t show this message again')?>
@@ -276,7 +266,7 @@
 											<i class="fa fa-stop"></i>
 										</div>
 										<div style="clear:both;"></div>
-										<div class="checkbox checkbox_wrapper">
+										<div class="checkbox checkbox_wrapper" >
 											<label>
 												<input type="checkbox" value="" class="checkboxHelpGotopose">
 												<?= _('Don\'t show this message again')?>
