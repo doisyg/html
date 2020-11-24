@@ -413,14 +413,15 @@ $(document).ready(function(e) {
 
 function UserHideMenus()
 {
-	$('#user_edit_map_menu li').hide();
+	//$('#user_edit_map_menu li').hide();
 	$('#user_edit_map_menu_point li').hide();
 	$('#user_edit_map_menu_forbidden li').hide();
 	$('#user_edit_map_menu_area li').hide();
 	$('#user_edit_map_menu_dock li').hide();
 	$('#user_edit_map_menu_poi li').hide();
 	$('#user_edit_map_menu_augmented_pose li').hide();
-	$('.popupHelp').hide();
+	$('#user_edit_map_menu .popupHelp').hide();
+	$('#user_edit_map .times_icon_menu').hide();
 }
 
 function UserDisplayMenu(id_menu)
@@ -485,11 +486,13 @@ function UserLongPressForbidden()
 	timerUserLongPress = null;
 	UserDisplayMenu('user_edit_map_menu_forbidden');
 }
+
 function UserLongPressArea()
 {
 	timerUserLongPress = null;
 	UserDisplayMenu('user_edit_map_menu_area');
 }
+
 function UserLongPressDock()
 {
 	timerUserLongPress = null;
@@ -504,6 +507,7 @@ function UserLongPressPoi()
 	
 	UserDisplayMenu('user_edit_map_menu_poi');
 }
+
 function UserLongPressAugmentedPose()
 {
 	timerUserLongPress = null;
@@ -512,7 +516,6 @@ function UserLongPressAugmentedPose()
 	
 	UserDisplayMenu('user_edit_map_menu_augmented_pose');
 }
-
 
 function UserLongPressPointDeletable()
 {
@@ -524,24 +527,27 @@ function UserLongVeryPressSVG()
 {
 	timerUserVeryLongPress = null;
 	
-	$('#user_edit_map_container_all .popupHelp').show(200);	
+	//$('#user_edit_map_container_all .popupHelp').show(200);	
 }
 
 function UserLongPressSVG()
 {
 	timerUserLongPress = null;
-	UserDisplayMenu('user_edit_map_menu');
+	//UserDisplayMenu('user_edit_map_menu');
 }
 
 var resetPan = false;
+
 $(document).ready(function(e) {
     $('#user_edit_map_svg').on('touchend', function(e) {
 		resetPan = true;
 	});
+	
 	$('#user_edit_map_svg').on('touchstart', function(e) {
 		resetPan = true;
 	});
 });
+
 function UserInitMap()
 {
 	var eventsHandlerUser;

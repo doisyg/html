@@ -1178,3 +1178,30 @@ span.error_details span{
     padding: 6px 8px;
     border-radius: 8px;
 }
+/* MODAL GOTO */
+.h2ModalGoTo{
+	display:flex;
+	justify-content:space-around;
+	align-items:center;
+}
+.h2ModalGoTo > .btn-popup{
+	display: block;
+    position: unset;
+    transform: none;
+}
+.h5ModalGoTo{
+	font-style: italic;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: absolute;
+    bottom: 70px;
+    left: 0;
+    right: 0;
+    margin: 0 20px;
+	text-align: justify;
+}
+.h4ModalGoTo{
+	text-align:justify;
+	margin:30px 0;
+}

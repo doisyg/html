@@ -293,8 +293,6 @@ $(document).ready(function() {
 			UserRedo();
 	});
 	
-	
-		
 	/* AUGMENTED POSE */
 	
 	$('#user_edit_map .bTestAugmentedPose').click(function(e) {
@@ -691,6 +689,12 @@ $(document).ready(function() {
 	/**************************/
 	/*  Click on element      */
 	/**************************/
+	
+	
+	$('#user_edit_map .times_icon_menu').click(function(e) {
+		$('#user_edit_map_menu .bMoveTo').click();
+    });
+	
 	$('#user_edit_map_menu .bMoveTo').click(function(e) {
 		e.preventDefault();
 		UserHideMenus();
@@ -700,18 +704,23 @@ $(document).ready(function() {
 			userCurrentAction = 'prepareGotoPose';
 			userCanChangeMenu = false;
 			//AJOUT ICON MENU + CROIX
-			$('.burger_menu').hide('fast');
-			$('.icon_menu[data-menu="user_edit_map_menu_gotopose"]').show('fast');
-			setTimeout(function(){$('.times_icon_menu').show('fast')},50);
+			
+			setTimeout(function(){$('#user_edit_map .times_icon_menu').show('fast')},50);
 			
 			if(boolHelpGotoPose){
 				$('.modalHelpClickGotoPose').modal('show');
 			}			
 		}
-		else
+		else if(userCurrentAction == 'prepareGotoPose'){
+			$('#user_edit_map .times_icon_menu').hide();
+			userCurrentAction = '';
+			userCanChangeMenu = true;
+		}else
 			UserAvertCantChange();
 		
     });
+	
+	$('#user_edit_map .bHelpClickGotoPoseOk').click(function(){boolHelpGotoPose = !$('#user_edit_map .checkboxHelpGotopose').prop('checked')});//ADD SAVING BDD / COOKIES ?
 	
 	InitTaille();
     
@@ -724,7 +733,7 @@ $(document).ready(function() {
 	$('#user_edit_map_svg').click(function(e){
 		if(userCanChangeMenu == false){
 			if(userCurrentAction == 'prepareGotoPose'){
-	
+				$('#user_edit_map_menu .times_icon_menu').hide();
 				//UserHideMenus();
 				
 				zoom = UserGetZoom();
@@ -778,6 +787,7 @@ $(document).ready(function() {
 					// On rebranche l'ancienne fonction
 					wycaApi.on('onGoToPoseResult', onGoToPoseResult);
 					userCanChangeMenu = true;
+					
 					$('#user_edit_map .modalFinTest').modal('show');
 				});
 				
