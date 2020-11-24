@@ -184,13 +184,13 @@ function ManagerAddHistorique(elem)
 function ManagerRefreshHistorique()
 {
 	if (managerHistoriqueIndex == -1)
-		$('#manager_edit_map_bManagerUndo').addClass('disabled');
+		$('#manager_edit_map_bUndo').addClass('disabled');
 	else
-		$('#manager_edit_map_bManagerUndo').removeClass('disabled');
+		$('#manager_edit_map_bUndo').removeClass('disabled');
 	if (managerHistoriqueIndex == managerHistoriques.length-1)
-		$('#manager_edit_map_bManagerRedo').addClass('disabled');
+		$('#manager_edit_map_bRedo').addClass('disabled');
 	else
-		$('#manager_edit_map_bManagerRedo').removeClass('disabled');
+		$('#manager_edit_map_bRedo').removeClass('disabled');
 }
 
 function ManagerSetModeSelect()
@@ -268,27 +268,27 @@ $(document).ready(function() {
 			ManagerForbiddenCancel();		
     });
 	
-	$('#manager_edit_map_bManagerUndo').click(function(e) {
+	$('#manager_edit_map_bUndo').click(function(e) {
         e.preventDefault();
-		if (!$('#manager_edit_map_bManagerUndo').hasClass('disabled'))
+		if (!$('#manager_edit_map_bUndo').hasClass('disabled'))
 			ManagerUndo();
 	});
 	
-	$('#manager_edit_map_bManagerUndo').on('touchstart', function(e) { 
+	$('#manager_edit_map_bUndo').on('touchstart', function(e) { 
 		e.preventDefault();
-		if (!$('#manager_edit_map_bManagerUndo').hasClass('disabled'))
+		if (!$('#manager_edit_map_bUndo').hasClass('disabled'))
 			ManagerUndo();
 	});
 	
-	$('#manager_edit_map_bManagerRedo').click(function(e) {
+	$('#manager_edit_map_bRedo').click(function(e) {
         e.preventDefault();
-		if (!$('#manager_edit_map_bManagerRedo').hasClass('disabled'))
+		if (!$('#manager_edit_map_bRedo').hasClass('disabled'))
 			ManagerRedo();
     });
 	
-	$('#manager_edit_map_bManagerRedo').on('touchstart', function(e) { 
+	$('#manager_edit_map_bRedo').on('touchstart', function(e) { 
 		e.preventDefault();
-		if (!$('#manager_edit_map_bManagerRedo').hasClass('disabled'))
+		if (!$('#manager_edit_map_bRedo').hasClass('disabled'))
 			ManagerRedo();
 	});
 	
