@@ -547,7 +547,7 @@ $(document).ready(function() {
 	
 	$('#install_normal_edit_map_menu_forbidden .bDeleteForbidden').click(function(e) {
         e.preventDefault();
-		NormalSaveElementNeeded(true);
+		//NormalSaveElementNeeded(true);
 		NormalHideMenus();
 		if (normalCurrentAction == "select" || normalCurrentAction == 'editForbiddenArea')
 		{
