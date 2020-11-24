@@ -80,8 +80,8 @@
                     <a href="#" id="install_normal_edit_map_bSaveCurrentElem" class="btn btn-circle btn-primary btn-menu btnSaveElem"><i class="fa fa-check"></i></a>
                     <a href="#" id="install_normal_edit_map_bCancelCurrentElem" class="btn btn-circle btn-warning btn-menu btnSaveElem"><i class="fa fa-times"></i></a>
                     
-                    <a href="#" id="install_normal_edit_map_bNormalUndo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:20px; left:10px;"><i class="fas fa-undo-alt"></i></a>
-                    <a href="#" id="install_normal_edit_map_bNormalRedo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:20px; left:45px;"><i class="fas fa-redo-alt"></i></a>
+                    <a href="#" id="install_normal_edit_map_bUndo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:20px; left:10px;"><i class="fas fa-undo-alt"></i></a>
+                    <a href="#" id="install_normal_edit_map_bRedo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:20px; left:45px;"><i class="fas fa-redo-alt"></i></a>
                     
                     <div id="install_normal_edit_map_menu" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
@@ -436,8 +436,8 @@
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" class="btn btn-primary btn_footer_left btn_50" data-dismiss="modal"><?php echo __('Cancel');?></a> 
-										<a href="#" id="install_normal_edit_map_bAreaSaveConfig" class="btn btn-default btn_footer_right btn_50" data-dismiss="modal"><?php echo __('Save');?></a>
+                                        <a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal"><?php echo __('Cancel');?></a> 
+										<a href="#" id="install_normal_edit_map_bAreaSaveConfig" class="btn btn-primary btn_footer_right btn_50" data-dismiss="modal"><?php echo __('Save');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -545,8 +545,8 @@
                                         <div style="clear:both;"></div>
                                        
                                        
-                                        <a href="#" class="btn btn-primary btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Cancel');?></a> 
-										<a href="#" id="install_normal_edit_map_bDockSaveConfig" class="btn btn-default btn_footer_right btn_50"><?php echo __('Save');?></a>
+                                        <a href="#" id="install_normal_edit_map_bDockCancelConfig" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Cancel');?></a> 
+										<a href="#" id="install_normal_edit_map_bDockSaveConfig" class="btn btn-primary btn_footer_right btn_50"><?php echo __('Save');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -613,8 +613,8 @@
                                         <div style="clear:both;"></div>
                                        
                                        
-                                        <a href="#" class="btn btn-primary btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Cancel');?></a> 
-										<a href="#" class="btn btn-default bDockElemSave btn_footer_right btn_50" data-dismiss="modal"><?php echo __('Save');?></a>
+                                        <a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Cancel');?></a> 
+										<a href="#" class="btn btn-primary bDockElemSave btn_footer_right btn_50" data-dismiss="modal"><?php echo __('Save');?></a>
                                     </div>
                                 </div>
                             </div>
