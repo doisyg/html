@@ -276,7 +276,7 @@
 				<h4 style="text-align:center;margin:30px 0"><?= __('Import site or create a new one ?') ?></h4>
 				<ul class="tuiles row">
                     <li class="col-xs-6">
-                    	<div class="is_checkbox tuile_img no_update button_goto" id="bImportSite" data-goto="install_by_step_import_site" style="height:max-content;bottom:0;border-radius:10px" onTouchStart="InitBystepSiteImport()">
+                    	<div class="is_checkbox tuile_img no_update button_goto" id="bImportSite" data-goto="install_by_step_import_site" style="height:max-content;bottom:0;border-radius:10px">
                     		<i class="fas fa-file-import" style="padding-top:5px"></i>
 							<h5 class="" style="margin-top: 0px;font-weight:700;font-size: 15px;"><?php echo __('Import existing site with map');?></h5>
                         </div>

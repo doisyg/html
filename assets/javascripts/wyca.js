@@ -204,6 +204,36 @@ $(document).ready(function(e) {
 					}
 				});
 			}
+			if(target == 'install_by_step_wifi'){ //UPDATE INSTALL STEP ON BACK FROM CREATE NEW SITE PROCESS NORMAL
+				if(getCookie('create_new_site') || create_new_site){
+					setCookie('create_new_site',false);
+					$.ajax({
+						type: "POST",
+						url: 'ajax/install_by_step_finish.php',
+						data: {
+						},
+						dataType: 'json',
+						success: function(data) {
+						},
+						error: function(e) {
+							alert_wyca('Error step site ; ' + e.responseText);
+						}
+					});
+					
+					$('#pages_install_by_step').removeClass('active');
+					$('#pages_install_normal').addClass('active');
+					
+					//AFFICHER QQ CHOSE
+					$('section#install_normal_setup_sites').show('slow');
+					
+					if ($('#install_normal_setup_sites').is(':visible'))
+					{
+						GetSitesNormal();
+					}
+					
+		
+				}
+			}
 			
 		}else{
 			let fromBackBtn = false;
@@ -230,6 +260,7 @@ $(document).ready(function(e) {
 			if (next == 'install_by_step_wifi') InitInstallWifiPageByStep();
 			if (next == 'install_by_step_config') GetConfigurationsByStep();
 			if (next == 'install_by_step_mapping') InitMappingByStep();
+			if (next == 'install_by_step_import_site') InitSiteImportByStep();
 			
 			if (next == 'install_by_step_edit_map'){
 				$('#bHeaderInfo').attr('onClick',"$('.popupHelp').toggle('fast')");
@@ -339,6 +370,7 @@ $(document).ready(function(e) {
 			}
     });
 	/* ------------------------- GESTION BTN GOTO -----------------------*/
+	
 	$(document).on('touchstart', '.ui-slider-handle', function(event) {
 		var self = this;
 	

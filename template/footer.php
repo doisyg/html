@@ -133,6 +133,9 @@
             <?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 61) {?>
 			InitBystepSiteMasterDock();
 			<?php }?>
+			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 10) {?>
+			InitSiteImportByStep();
+			<?php }?>
 			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 12) {?>
 			InitMappingByStep();
 			<?php }?>

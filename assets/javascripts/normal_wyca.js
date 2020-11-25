@@ -4,6 +4,7 @@ var selectedWifi = '';
 
 var currentNameSiteExport = '';
 var NormalBufferMapSaveElemName = '';
+
 $(document).ready(function(e) {
 	// ----------------------- SITE EXPORT ------------------------
 		
@@ -651,6 +652,8 @@ var width_normal = 0;
 var height_normal = 0;
 
 /* INSTALLATEUR WYCA.JS */
+var create_new_site = false;
+var id_site_to_delete = -1;
 
 $(document).ready(function(e) {
 	//----------------------- IMPORT SITE ----------------------------
