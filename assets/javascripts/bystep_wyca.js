@@ -2105,14 +2105,14 @@ function RefreshDisplayManagerByStep(){
 		$('#install_by_step_manager a.bAddManager').show();
 		$('#install_by_step_manager .bValidManagerNext').show();
 		
-		$('#install_by_step_manager .bValidManager_Skip').hide();
+		$('#install_by_step_manager .bValidManagerSkip').hide();
 		$('#install_by_step_manager .bAddManagerTuile').hide();
 	}else{
 		//AFF TUILE ET SKIP
 		$('#install_by_step_manager a.bAddManager').hide();
 		$('#install_by_step_manager .bValidManagerNext').hide();
 		
-		$('#install_by_step_manager .bValidManager_Skip').show();
+		$('#install_by_step_manager .bValidManagerSkip').show();
 		$('#install_by_step_manager .bAddManagerTuile').show();
 	}
 	
