@@ -75,7 +75,7 @@ if(isset($_GET['ns'])){
 							<div class="form-group">
 								<label><?php echo __('Password');?></label>
 								<div class="input-group input-group-icon">
-									<input id="password" name="password" type="password" class="form-control input-lg" pattern="(?=^.{8,}$)(?=.+[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|])(?=.+[a-z])(?=.+[A-Z])(?=.+[0-9]).*$"/>
+									<input id="password" name="password" type="password" class="form-control input-lg" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|0-9]).{8,}"/>
 									<span class="input-group-addon">
 										<span class="icon icon-lg">
 											<i class="fa fa-lock"></i>
@@ -84,14 +84,14 @@ if(isset($_GET['ns'])){
 									
 								</div>
 							</div>
-							<p class="password_format"><?= _('At least 6 characters, 1 letter, 1 digit')?> </p>
+							<p class="password_format"><?= _('8 characters, lower and uppercase, digit or special char.')?></p>
 							<div class="form-group">
 								<div class="clearfix">
 									<label class="pull-left"><?php echo __('Confirm Password');?></label>
 									<!--<a href="#" id="bLostPassword" class="pull-right"><?php echo __('Lost Password?');?></a>-->
 								</div>
 								<div class="input-group input-group-icon">
-									<input id="confirm_password" name="confirm_password" type="password" class="form-control input-lg" pattern="(?=^.{8,}$)(?=.+[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|])(?=.+[a-z])(?=.+[A-Z])(?=.+[0-9]).*$"/>
+									<input id="confirm_password" name="confirm_password" type="password" class="form-control input-lg" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|0-9]).{8,}"/>
 									<span class="input-group-addon">
 										<span class="icon icon-lg">
 											<i class="fa fa-lock"></i>
@@ -99,7 +99,7 @@ if(isset($_GET['ns'])){
 									</span>
 								</div>
 							</div>
-							<p class="password_format"><?= _('At least 6 characters, 1 letter, 1 digit')?> </p>
+							<p class="password_format"><?= _('8 characters, lower and uppercase, digit or special char.')?></p>
 							<div class="row">
 								<div class="col-sm-12 text-right">
 									<button type="submit" class="btn btn-primary hidden-xs"><?php echo __('Change password');?></button>

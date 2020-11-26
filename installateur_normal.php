@@ -1627,7 +1627,7 @@
                                                 <div class="form-group nopymy">
                                                     <label class="col-xs-12 col-md-3 control-label" for="password"><?php echo __('Password');?></label>
                                                     <div class="col-xs-12 col-md-6 input-group input-group-icon">
-                                                        <input id="install_normal_user_i_user_password" name="password" type="password" required="required" class="form-control" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|0-9]).{8,}$"> 
+                                                        <input id="install_normal_user_i_user_password" name="password" type="password" required="required" class="form-control" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|0-9]).{8,}"> 
 														<span class="input-group-addon">
 															<span class="icon icon-lg">
 																<i class="fa fa-lock"></i>
@@ -1639,7 +1639,7 @@
                                                 <div class="form-group">
                                                     <label class="col-xs-12 col-md-3 control-label" for="cpassword"><?php echo __('Confirm password');?></label>
                                                     <div class="col-xs-12 col-md-6 input-group input-group-icon">
-                                                        <input id="install_normal_user_i_user_cpassword" name="cpassword" type="password" required="required" class="form-control" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|0-9]).{8,}$">
+                                                        <input id="install_normal_user_i_user_cpassword" name="cpassword" type="password" required="required" class="form-control" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|0-9]).{8,}">
 														<span class="input-group-addon">
 															<span class="icon icon-lg">
 																<i class="fa fa-lock"></i>
@@ -1766,7 +1766,7 @@
                                                 <div class="form-group nopymy">
                                                     <label class="col-xs-12 col-md-3 control-label" for="password"><?php echo __('Password');?></label>
                                                     <div class="col-xs-12 col-md-6 input-group input-group-icon">
-                                                        <input id="install_normal_manager_i_manager_password" name="password" type="password" required="required" class="form-control" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|0-9]).{8,}$"> 
+                                                        <input id="install_normal_manager_i_manager_password" name="password" type="password" required="required" class="form-control" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|0-9]).{8,}"> 
 														<span class="input-group-addon">
 															<span class="icon icon-lg">
 																<i class="fa fa-lock"></i>
@@ -1778,7 +1778,7 @@
                                                 <div class="form-group">
                                                     <label class="col-xs-12 col-md-3 control-label" for="cpassword"><?php echo __('Confirm password');?></label>
                                                     <div class="col-xs-12 col-md-6 input-group input-group-icon">
-                                                        <input id="install_normal_manager_i_manager_cpassword" name="cpassword" type="password" required="required" class="form-control" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|0-9]).{8,}$">
+                                                        <input id="install_normal_manager_i_manager_cpassword" name="cpassword" type="password" required="required" class="form-control" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|0-9]).{8,}">
 														<span class="input-group-addon">
 															<span class="icon icon-lg">
 																<i class="fa fa-lock"></i>
