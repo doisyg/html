@@ -663,10 +663,12 @@ $(document).ready(function(e) {
 			{
 				if (normalCurrentAction == 'editForbiddenArea' || normalCurrentAction == 'addbiddenArea')
 				{
+					RemoveClass('#install_normal_edit_map_svg .point_deletable', 'point_active');
 					NormalDisplayMenu('install_normal_edit_map_menu_forbidden');
 				}
 				else if (normalCurrentAction == 'editArea' || normalCurrentAction == 'addArea')
 				{
+					RemoveClass('#install_normal_edit_map_svg .point_deletable', 'point_active');
 					NormalDisplayMenu('install_normal_edit_map_menu_area');
 				}
 			}
@@ -884,7 +886,8 @@ function NormalLongPressAugmentedPose()
 function NormalLongPressPointDeletable()
 {
 	timerNormalLongPress = null;
-	NormalDisplayMenu('install_normal_edit_map_menu_point');
+	if($('#install_normal_edit_map .icon_menu[data-menu="install_normal_edit_map_menu_point"]:visible').length == 0 && (normalCurrentAction == 'addForbiddenArea' || normalCurrentAction == 'addArea' || normalCurrentAction == 'editForbiddenArea' || normalCurrentAction == 'editArea') )
+		NormalDisplayMenu('install_normal_edit_map_menu_point');
 }
 
 function NormalLongVeryPressSVG()
@@ -901,6 +904,7 @@ function NormalLongPressSVG()
 }
 
 var resetPan = false;
+
 $(document).ready(function(e) {
     $('#install_normal_edit_map_svg').on('touchend', function(e) {
 		resetPan = true;
@@ -909,6 +913,7 @@ $(document).ready(function(e) {
 		resetPan = true;
 	});
 });
+
 function NormalInitMap()
 {
 	var eventsHandlerNormal;

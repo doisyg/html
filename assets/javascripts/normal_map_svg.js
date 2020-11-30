@@ -168,9 +168,14 @@ function NormalTraceForbidden(indexForbidden)
 				x = point.x * 100 / ros_resolution;
 				y = ros_hauteur - (point.y * 100 / ros_resolution);
 				
+				let	pointActiveClass = '';
+				if(typeof(currentPointNormalLongTouch) != 'undefined' && currentPointNormalLongTouch != null){
+					pointActiveClass = indexPoint == currentPointNormalLongTouch.data('index_point') ? ' point_active' : '' ;
+				}
+				
 				path = makeSVGElement('rect', { x: x-5, y:y-5, height:10, width:10,
 							   'stroke-width': minStokeWidth,
-							   'class':'movable point_deletable poly_elem forbidden_elem forbidden_elem_'+forbidden.id_area,
+							   'class':'movable point_deletable poly_elem forbidden_elem forbidden_elem_'+forbidden.id_area+pointActiveClass,
 							   'id': 'install_normal_edit_map_forbidden_'+forbidden.id_area+'_'+indexPoint,
 							   'data-id_area': forbidden.id_area,
 							   'data-index_point': indexPoint,
@@ -274,9 +279,15 @@ function NormalTraceArea(indexArea)
 				x = point.x * 100 / ros_resolution;
 				y = ros_hauteur - (point.y * 100 / ros_resolution);
 				
+				let	pointActiveClass = '';
+				if(typeof(currentPointNormalLongTouch) != 'undefined' && currentPointNormalLongTouch != null){
+					pointActiveClass = indexPoint == currentPointNormalLongTouch.data('index_point') ? ' point_active' : '' ;
+				}
+				
+				
 				path = makeSVGElement('rect', { x: x-5, y:y-5, height:10, width:10,
 							   'stroke-width': minStokeWidth,
-							   'class':'movable point_deletable poly_elem area_elem area_elem_'+area.id_area,
+							   'class':'movable point_deletable poly_elem area_elem area_elem_'+area.id_area+pointActiveClass,
 							   'id': 'install_normal_edit_map_area_'+area.id_area+'_'+indexPoint,
 							   'data-id_area': area.id_area,
 							   'data-index_point': indexPoint,

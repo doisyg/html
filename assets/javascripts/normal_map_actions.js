@@ -358,7 +358,7 @@ $(document).ready(function() {
 	
 	$('#install_normal_edit_map #install_normal_edit_map_bCancelCurrentElem').click(function(e) {
         e.preventDefault();
-		
+		NormalHideMenus();
 		if (normalCurrentAction == 'addPoi' || normalCurrentAction == 'editPoi')
 			NormalPoiCancel();
 		else if (normalCurrentAction == 'addAugmentedPose' || normalCurrentAction == 'editAugmentedPose')
@@ -369,7 +369,7 @@ $(document).ready(function() {
 			NormalAreaCancel();
 		else if (normalCurrentAction == 'addForbiddenArea' || normalCurrentAction == 'editForbiddenArea')
 			NormalForbiddenCancel();		
-		NormalHideMenus();
+		
     });
 	
 	/* BTNS HISTORIQUE */
@@ -4753,29 +4753,36 @@ function NormalAreaCancel()
 	NormalSaveElementNeeded(false);
 	
 	$('#install_normal_edit_map_svg .area_elem_current').remove();
-	RemoveClass('#install_normal_edit_map_svg .active', 'active');
+	//RemoveClass('#install_normal_edit_map_svg .active', 'active');
 
 	$('body').addClass('no_current');
+	if(currentPointNormalLongTouch != null)
+		currentPointNormalLongTouch.data('index_point',-1);
+	currentPointNormalLongTouch = null;
 	
 	if (normalCurrentAction == 'addArea')
 	{
 		NormalDeleteArea(currentAreaIndex);
 		normalHistoriques.pop();
 		normalHistoriqueIndex--;
+		$('#install_normal_edit_map .times_icon_menu').hide();
 	}
 	else if (normalCurrentAction == 'editArea')
 	{
 		areas[currentAreaIndex] = JSON.parse(saveCurrentArea);
 		NormalTraceArea(currentAreaIndex);
+		normalCurrentAction = 'editArea';
+		NormalDisplayMenu('install_normal_edit_map_menu_area');
 	}
-	normalCurrentAction = '';
+	
 	currentStep = '';
 	
 	$('#install_normal_edit_map_boutonsArea').hide();
 	$('#install_normal_edit_map_boutonsStandard').show();
 	blockZoom = false;
 	
-	NormalSetModeSelect();
+	//NormalSetModeSelect();
+	
 }
 
 function NormalDeleteArea(indexInArray)
@@ -4869,29 +4876,36 @@ function NormalForbiddenCancel()
 	NormalSaveElementNeeded(false);
 	
 	$('#install_normal_edit_map_svg .forbidden_elem_current').remove();
-	RemoveClass('#install_normal_edit_map_svg .active', 'active');
-
+	//RemoveClass('#install_normal_edit_map_svg .active', 'active');
+	
 	$('body').addClass('no_current');
+
+	if(currentPointNormalLongTouch != null)
+		currentPointNormalLongTouch.data('index_point',-1);
+	currentPointNormalLongTouch = null;
 	
 	if (normalCurrentAction == 'addForbiddenArea')
 	{
 		NormalDeleteForbidden(currentForbiddenIndex);
 		normalHistoriques.pop();
 		normalHistoriqueIndex--;
+		$('#install_normal_edit_map .times_icon_menu').hide();
 	}
 	else if (normalCurrentAction == 'editForbiddenArea')
 	{
 		forbiddens[currentForbiddenIndex] = JSON.parse(saveCurrentForbidden);
 		NormalTraceForbidden(currentForbiddenIndex);
+		normalCurrentAction = 'editForbiddenArea';
+		NormalDisplayMenu('install_normal_edit_map_menu_forbidden');
 	}
-	normalCurrentAction = '';
+	
 	currentStep = '';
 	
 	$('#install_normal_edit_map_boutonsForbidden').hide();
 	$('#install_normal_edit_map_boutonsStandard').show();
 	blockZoom = false;
 	
-	NormalSetModeSelect();
+	//NormalSetModeSelect();
 }
 
 function NormalDeleteForbidden(indexInArray)
