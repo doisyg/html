@@ -58,6 +58,7 @@ function GetInfosCurrentMapDoManager()
 				ManagerResizeSVG();			
 			},500);
 			$('#bHeaderInfo').attr('onClick',"TogglePopupHelp()");
+			$('#manager_edit_map .modal').each(function(){$(this).modal('hide')});
 		}
 		else
 		{

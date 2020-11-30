@@ -59,6 +59,7 @@ function GetInfosCurrentMapDoUser()
 				UserInitMap();
 				UserResizeSVG();			
 			},500); 
+			$('#user_edit_map .modal').each(function(){$(this).modal('hide')});
 			$('#bHeaderInfo').attr('onClick',"TogglePopupHelp()");
 		}
 		else

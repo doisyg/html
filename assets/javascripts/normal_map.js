@@ -113,6 +113,7 @@ function GetInfosCurrentMapDoNormal()
 					}
 				}
 			},500);
+			$('#install_normal_edit_map .modal').each(function(){$(this).modal('hide')});
 			$('#bHeaderInfo').attr('onClick',"TogglePopupHelp()");
 		}
 		else
