@@ -139,6 +139,7 @@ $(document).ready(function(e) {
 	<?php if ($server_request_scheme == 'http')
 	{
 		// We test if we can do https on webservice
+		/*
 		?>
 		$.ajax({
 			type: "GET",
@@ -152,6 +153,7 @@ $(document).ready(function(e) {
 			}
 		});
 		<?php
+		*/
 	}
 	else
 	{
