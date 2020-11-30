@@ -117,6 +117,7 @@ function GetInfosCurrentMapDoByStep()
 					}
 				}				
 			},500); 
+			$('#install_by_step_edit_map .modal').each(function(){$(this).modal('hide')});
 			$('#bHeaderInfo').attr('onClick',"TogglePopupHelp()");
 			if (gotoTest) InitTest();
 			gotoTest = false;
