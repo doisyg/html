@@ -2,14 +2,14 @@
 include ('template/header_test.php');
 ?>
 
-<section id="install_dashbord" class="page hmi_tuile active">
+<section id="install_dashboard" class="page hmi_tuile active">
 	<header>
     	<div class="pull-left"><img src="assets/images/logo.png" /></div>
         <h2>Dashboard</h2>
     </header>
     <div class="content">
         <ul class="tuiles row">
-        	<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile1" data-goto="install_map" href="#"><i class="fa fa-map-o"></i>Maps</a></li>
+        	<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile1" data-goto="install_map" href="#"><i class="far fa-map"></i>Maps</a></li>
         	<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="install_setup" href="#"><i class="fa fa-gears"></i>Setup</a></li>
         	<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="install_move" href="#"><i class="fa fa-gamepad"></i>Control robot</a></li>
         	<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="install_users" href="#"><i class="fa fa-group"></i>Managers</a></li>
@@ -28,7 +28,7 @@ include ('template/header_test.php');
         MAPS
     </div>
     <footer>
-    	<a href="#" class="btn btn-wyca button_goto" data-goto="install_dashbord"><i class="fa fa-chevron-left"></i> Back</a>
+    	<a href="#" class="btn btn-wyca button_goto" data-goto="install_dashboard"><i class="fa fa-chevron-left"></i> Back</a>
     </footer>
 </section>
 
@@ -47,7 +47,7 @@ include ('template/header_test.php');
         </ul>
     </div>
     <footer>
-    	<a href="#" class="btn btn-wyca button_goto" data-goto="install_dashbord"><i class="fa fa-chevron-left"></i> Back</a>
+    	<a href="#" class="btn btn-wyca button_goto" data-goto="install_dashboard"><i class="fa fa-chevron-left"></i> Back</a>
     </footer>
 </section>
 
@@ -60,7 +60,7 @@ include ('template/header_test.php');
         CONTROL ROBOTS
     </div>
     <footer>
-    	<a href="#" class="btn btn-wyca button_goto" data-goto="install_dashbord"><i class="fa fa-chevron-left"></i> Back</a>
+    	<a href="#" class="btn btn-wyca button_goto" data-goto="install_dashboard"><i class="fa fa-chevron-left"></i> Back</a>
     </footer>
 </section>
 
@@ -73,7 +73,7 @@ include ('template/header_test.php');
         MANAGERS
     </div>
     <footer>
-    	<a href="#" class="btn btn-wyca button_goto" data-goto="install_dashbord"><i class="fa fa-chevron-left"></i> Back</a>
+    	<a href="#" class="btn btn-wyca button_goto" data-goto="install_dashboard"><i class="fa fa-chevron-left"></i> Back</a>
     </footer>
 </section>
 
@@ -86,20 +86,20 @@ include ('template/header_test.php');
         SERVICE BOOK
     </div>
     <footer>
-    	<a href="#" class="btn btn-wyca button_goto" data-goto="install_dashbord"><i class="fa fa-chevron-left"></i> Back</a>
+    	<a href="#" class="btn btn-wyca button_goto" data-goto="install_dashboard"><i class="fa fa-chevron-left"></i> Back</a>
     </footer>
 </section>
 
 <section id="install_help" class="page with_footer">
 	<header>
     	<div class="pull-left"><img src="assets/images/logo.png" /></div>
-        <h2>Help</h2>
+        <h2><?= _('Help')?></h2>
     </header>
     <div class="content">
         HELP
     </div>
     <footer>
-    	<a href="#" class="btn btn-wyca button_goto" data-goto="install_dashbord"><i class="fa fa-chevron-left"></i> Back</a>
+    	<a href="#" class="btn btn-wyca button_goto" data-goto="install_dashboard"><i class="fa fa-chevron-left"></i> Back</a>
     </footer>
 </section>
 

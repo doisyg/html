@@ -341,4 +341,29 @@ $(document).ready(function(e) {
 		}
     });
 	
+	
+	
+	// RESTART BROWSER
+	
+	$('#wyca_bRestartBrowerTrue').click(function(e) {
+        e.preventDefault();
+		wycaApi.DoBrowserRestart(true,function(data){
+			if (data.A == wycaApi.AnswerCode.NO_ERROR){
+				success_wyca('Browser Restarted Fullscreen');			
+			}else{
+				ParseAPIAnswerError(data);
+			}
+		})
+    });
+	$('#wyca_bRestartBrowerFalse').click(function(e) {
+        e.preventDefault();
+		wycaApi.DoBrowserRestart(false,function(data){
+			if (data.A == wycaApi.AnswerCode.NO_ERROR){
+				success_wyca('Browser Restarted Windowed');			
+			}else{
+				ParseAPIAnswerError(data);
+			}
+		})
+    });
+	
 });

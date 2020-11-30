@@ -34,11 +34,11 @@ var mappingLastOrigin = {'x':0, 'y':0 };
 
 var imgMappingLoaded = true;
 
+var battery_lvl_current=0;
 $(document).ready(function(e) {
 	
 	var img = document.getElementById("install_by_step_mapping_img_map_saved");
-	if (img != null)
-	{
+	if(img != null){
 		img.onload = function () {
 			imgMappingLoaded = true;	
 			InitPosCarteMapping();
@@ -49,6 +49,7 @@ $(document).ready(function(e) {
 				GetMappingInConstruction();
 			}
 		};
+		
 		img.onerror  = function () {
 			imgMappingLoaded = true;
 			if (mappingStarted && timerGetMappingInConstruction == null)
@@ -147,9 +148,11 @@ $(document).ready(function(e) {
 		onGoToPoseResult: onGoToPoseResult,
 		onMoveInProgress: function(data){
 			if (data)
-				$('body > header .stop_move').show();
+				//$('body > header .stop_move').show(); 
+				$('.stop_move').show(); //AJOUT btn.stop_move autre part que dans le header
 			else
-				$('body > header .stop_move').hide();
+				//$('body > header .stop_move').hide();
+				$('.stop_move').hide(); //AJOUT btn.stop_move autre part que dans le header
 		},
 		onReceviedSegmented: function(data){
 			if (data.I == data.NB)
@@ -160,6 +163,15 @@ $(document).ready(function(e) {
 			{
 				$('#modalLoading').modal('show');
 				
+				if (data.O == wycaApi.CommandCode.GET_CURRENT_MAP_COMPLETE || data.O == wycaApi.CommandCode.GET_CURRENT_MAP_DATA)
+				{
+					$('#modalLoading h3').html('Updating map');
+				}
+				else
+				{
+					$('#modalLoading h3').html('Loading');
+				}
+				
 				valeur = parseInt(data.I / data.NB * 100);
 				$('#modalLoading .loadingProgress .progress-bar').css('width', valeur+'%').attr('aria-valuenow', valeur); 
 			}
@@ -169,8 +181,14 @@ $(document).ready(function(e) {
 	
 	
 	wycaApi.init();	
-	
+	/*
+	//AJOUT btn.stop_move autre part que dans le header
 	$('body > header .stop_move').click(function(e) {
+        e.preventDefault();
+		wycaApi.StopMove();
+    });
+	*/
+	$('.stop_move').click(function(e) {
         e.preventDefault();
 		wycaApi.StopMove();
     });
@@ -259,18 +277,27 @@ function onGoToChargeResult(data)
 
 function InitDockingState()
 {
-	if (dockingStateLast == "docked")
+	if (dockingStateLast == "docked"){
 		$('.ifDocked').show();
-	else
+		$('.ifDocked_disabled').addClass('disabled');
+		$('.ifUndocked_disabled').removeClass('disabled');
+	}else{
 		$('.ifDocked').hide();
-	
-	if (dockingStateLast == 'undocked')
+		$('.ifDocked_disabled').removeClass('disabled');
+		$('.ifUndocked_disabled').addClass('disabled');
+	}
+	if (dockingStateLast == 'undocked'){
 		$('.ifUndocked').show();
-	else
+		$('.ifDocked_disabled').removeClass('disabled');
+		$('.ifUndocked_disabled').addClass('disabled');
+	}else{
 		$('.ifUndocked').hide();
+		$('.ifDocked_disabled').addClass('disabled');
+		$('.ifUndocked_disabled').removeClass('disabled');
+	}
 		
 	
-	// Le jpystick s'affiche quand le robot passe de docker à dédocker, donc on recheck l'initialisation du joystick
+	// Le joystick s'affiche quand le robot passe de docker à dédocker, donc on recheck l'initialisation du joystick
 	InitJoystick();
 }
 
@@ -311,6 +338,7 @@ function initPoweredState(data)
 
 function initBatteryState(data)
 {
+	battery_lvl_current = data;
 	$('#icoBattery i').removeClass('fa-battery-0 fa-battery-1 fa-battery-2 fa-battery-3 fa-battery-4');
     $('#icoBattery').removeClass('battery-ko');
     if (data < 15)
