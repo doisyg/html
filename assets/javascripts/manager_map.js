@@ -420,7 +420,7 @@ $(document).ready(function(e) {
 	});
 	
 	$('#manager_edit_map .times_icon_menu').click(function(){
-		$('#manager_edit_map .icon_menu').click();
+		$('#manager_edit_map .icon_menu:visible').click();
 	})
 
 });

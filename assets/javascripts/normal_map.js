@@ -685,7 +685,7 @@ $(document).ready(function(e) {
 	});
 	
 	$('#install_normal_edit_map .times_icon_menu').click(function(){
-		$('#install_normal_edit_map .icon_menu').click();
+		$('#install_normal_edit_map .icon_menu:visible').click();
 	})
 });
 

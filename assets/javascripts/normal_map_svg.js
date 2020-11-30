@@ -11,7 +11,7 @@ function NormalGetZoom()
 	   obj.css("-o-transform")      ||
 	   obj.css("transform");
 	   
-	 if (transformMatrix == undefined)
+	 if (transformMatrix == undefined && typeof(window.panZoomNormal) != 'undefined' )
 	 	return  ros_largeur / $('#install_normal_edit_map_svg').width() / window.panZoomNormal.getZoom()
 	 
 	 var matrix = transformMatrix.replace(/[^0-9\-.,]/g, '').split(',');

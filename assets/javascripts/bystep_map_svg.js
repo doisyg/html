@@ -12,7 +12,7 @@ function ByStepGetZoom()
 	   obj.css("-o-transform")      ||
 	   obj.css("transform");
 	   
-	 if (transformMatrix == undefined)
+	 if (transformMatrix == undefined && typeof(window.panZoom) != 'undefined')
 	 	return  ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom()
 	 
 	 var matrix = transformMatrix.replace(/[^0-9\-.,]/g, '').split(',');

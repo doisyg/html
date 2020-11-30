@@ -736,7 +736,7 @@ $(document).ready(function(e) {
 	});
 	
 	$('#install_by_step_edit_map .times_icon_menu').click(function(){
-		$('#install_by_step_edit_map .icon_menu').click();
+		$('#install_by_step_edit_map .icon_menu:visible').click();
 	})
 });
 

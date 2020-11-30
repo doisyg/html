@@ -13,7 +13,7 @@ function UserGetZoom()
 	   obj.css("-o-transform")      ||
 	   obj.css("transform");
 	   
-	 if (transformMatrix == undefined)
+	 if (transformMatrix == undefined && typeof(window.panZoomUser) != 'undefined' )
 	 	return  ros_largeur / $('#user_edit_map_svg').width() / window.panZoomUser.getZoom()
 	 
 	 var matrix = transformMatrix.replace(/[^0-9\-.,]/g, '').split(',');

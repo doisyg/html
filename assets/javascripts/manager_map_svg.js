@@ -13,7 +13,7 @@ function ManagerGetZoom()
 	   obj.css("-o-transform")      ||
 	   obj.css("transform");
 	   
-	 if (transformMatrix == undefined)
+	 if (transformMatrix == undefined  && typeof(window.panZoomManager) != 'undefined')
 	 	return  ros_largeur / $('#manager_edit_map_svg').width() / window.panZoomManager.getZoom()
 	 
 	 var matrix = transformMatrix.replace(/[^0-9\-.,]/g, '').split(',');
