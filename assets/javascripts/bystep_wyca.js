@@ -1808,7 +1808,7 @@ $(document).ready(function(e) {
 		$('#pages_install_normal').addClass('active');
 		
 		//AFFICHER QQ CHOSE
-		$('section#install_normal_dashboard').show('slow');
+		$('#install_normal_edit_map .bBackButton').click();
 		
 		if ($('#install_normal_setup_sites').is(':visible'))
 		{
