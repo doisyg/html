@@ -12,13 +12,16 @@ function ByStepGetZoom()
 	   obj.css("-o-transform")      ||
 	   obj.css("transform");
 	   
-	 if (transformMatrix == undefined && typeof(window.panZoom) != 'undefined')
+	if (transformMatrix == undefined && typeof(window.panZoom) != 'undefined')
 	 	return  ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom()
+	if(transformMatrix != undefined){
+		var matrix = transformMatrix.replace(/[^0-9\-.,]/g, '').split(',');
 	 
-	 var matrix = transformMatrix.replace(/[^0-9\-.,]/g, '').split(',');
 	 
-	 
-	 return 1 / parseFloat(matrix[0]);
+		return 1 / parseFloat(matrix[0]);
+	}else{
+		return 1;
+	}
 }
 
 /* TRACE FUNCS */

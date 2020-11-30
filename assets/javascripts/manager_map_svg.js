@@ -13,13 +13,14 @@ function ManagerGetZoom()
 	   obj.css("-o-transform")      ||
 	   obj.css("transform");
 	   
-	 if (transformMatrix == undefined  && typeof(window.panZoomManager) != 'undefined')
+	if (transformMatrix == undefined  && typeof(window.panZoomManager) != 'undefined')
 	 	return  ros_largeur / $('#manager_edit_map_svg').width() / window.panZoomManager.getZoom()
-	 
-	 var matrix = transformMatrix.replace(/[^0-9\-.,]/g, '').split(',');
-	 
-	 
-	 return 1 / parseFloat(matrix[0]);
+	if(transformMatrix != undefined){
+		var matrix = transformMatrix.replace(/[^0-9\-.,]/g, '').split(',');
+		return 1 / parseFloat(matrix[0]);
+	}else{
+		return 1;
+	}
 }
 
 /* TRACE FUNCS */

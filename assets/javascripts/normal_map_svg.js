@@ -11,13 +11,16 @@ function NormalGetZoom()
 	   obj.css("-o-transform")      ||
 	   obj.css("transform");
 	   
-	 if (transformMatrix == undefined && typeof(window.panZoomNormal) != 'undefined' )
+	if (transformMatrix == undefined && typeof(window.panZoomNormal) != 'undefined' )
 	 	return  ros_largeur / $('#install_normal_edit_map_svg').width() / window.panZoomNormal.getZoom()
+	if(transformMatrix != undefined){
+		var matrix = transformMatrix.replace(/[^0-9\-.,]/g, '').split(',');
 	 
-	 var matrix = transformMatrix.replace(/[^0-9\-.,]/g, '').split(',');
 	 
-	 
-	 return 1 / parseFloat(matrix[0]);
+		return 1 / parseFloat(matrix[0]);
+	}else{
+		return 1;
+	}
 }
 
 function NormalInitSVG()
