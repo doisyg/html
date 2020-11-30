@@ -1,20 +1,6 @@
 
-function AppliquerZoom()
-{
-	//$('#all').width(saveWidth * zoom_carte);
-	//Resize();
-	//$('#boxsmap').resize();
-	
-	if ($('#install_by_step_edit_map').is(':visible')) ByStepResizeSVG();
-	if ($('#install_normal_edit_map').is(':visible')) NormalResizeSVG();
-	
-	//RefreshZoomView();
-	//setTimeout(RefreshZoomView, 100);
-}
+/* ZOOM FUNCS */
 
-function InitSVG()
-{
-}
 
 function ByStepGetZoom()
 {
@@ -26,14 +12,19 @@ function ByStepGetZoom()
 	   obj.css("-o-transform")      ||
 	   obj.css("transform");
 	   
-	 if (transformMatrix == undefined)
+	if (transformMatrix == undefined && typeof(window.panZoom) != 'undefined')
 	 	return  ros_largeur / $('#install_by_step_edit_map_svg').width() / window.panZoom.getZoom()
+	if(transformMatrix != undefined){
+		var matrix = transformMatrix.replace(/[^0-9\-.,]/g, '').split(',');
 	 
-	 var matrix = transformMatrix.replace(/[^0-9\-.,]/g, '').split(',');
 	 
-	 
-	 return 1 / parseFloat(matrix[0]);
+		return 1 / parseFloat(matrix[0]);
+	}else{
+		return 1;
+	}
 }
+
+/* TRACE FUNCS */
 
 function ByStepTraceSection(x1, y1, x2, y2)
 {
@@ -54,8 +45,9 @@ function ByStepTraceSection(x1, y1, x2, y2)
 	svgByStep.appendChild(path);
 }
 
-function ByStepTraceCurrentGomme(points, index)
+function ByStepTraceCurrentGomme(gomme, index)
 {
+	points = gomme.points;
 	$('#install_by_step_edit_map_svg .gomme_elem_current_'+index).remove();
 	
 	if (points.length > 1)
@@ -70,18 +62,20 @@ function ByStepTraceCurrentGomme(points, index)
 		});
 		
 		path = makeSVGElement('polyline', { points: gomme_point,
-								   'stroke-width': 2,
+								  'stroke-width': gomme.size,
 								   'stroke': '#FFF',
 								   'fill': 'none',
 								   'class':'gomme_elem gomme_elem_current_'+index,
-								   'data-index': 'current'
+								   'data-index': 'current',
+								   'shape-rendering': 'crispEdges' // anti aliasing
 								  });
 								  
 		svgByStep.appendChild(path);
 		$('#install_by_step_edit_map_svg .gomme_elem_current_'+index).insertAfter($('#install_by_step_edit_map_svg image'));
 		
+		/*
 		path = makeSVGElement('polyline', { points: gomme_point,
-								   'stroke-width': 2,
+								   'stroke-width': gomme.size,
 								   'stroke': '#FFF',
 								   'fill': 'none',
 								   'class':'gomme_elem gomme_elem_current_'+index,
@@ -90,6 +84,7 @@ function ByStepTraceCurrentGomme(points, index)
 								  
 		svgByStep.appendChild(path);
 		$('#install_by_step_edit_map_svg .gomme_elem_current_'+index).insertAfter($('#install_by_step_edit_map_svg image'));
+		*/
 	}
 }
 
@@ -158,6 +153,7 @@ function GetCenterForbidden(indexForbidden)
 	
 	return { "x":x, "y":y};
 }
+
 function ByStepTraceForbidden(indexForbidden)
 {
 	forbidden = forbiddens[indexForbidden];
@@ -201,7 +197,7 @@ function ByStepTraceForbidden(indexForbidden)
 							   'id':'install_by_step_edit_map_forbidden_'+forbidden.id_area,
 							   'data-id_area': forbidden.id_area
 							  });
-		path.style.fill = 'rgba(0,0,0,0.5)'
+		path.style.fill = 'rgba(255,0,0,0.3)';
 		svgByStep.appendChild(path);
 		
 		lastPointIndex = points.length-1;
@@ -217,7 +213,7 @@ function ByStepTraceForbidden(indexForbidden)
 				
 				x2 = lastPoint.x * 100 / ros_resolution;
 				y2 = ros_hauteur - (lastPoint.y * 100 / ros_resolution);
-				
+								
 				path = makeSVGElement('line', { x1: x, y1:y, x2:x2, y2:y2,
 							   'stroke-width': downOnMovable?1:5,
 							   'class':'secable poly_elem forbidden_elem forbidden_elem_'+forbidden.id_area,
@@ -247,9 +243,15 @@ function ByStepTraceForbidden(indexForbidden)
 				x = point.x * 100 / ros_resolution;
 				y = ros_hauteur - (point.y * 100 / ros_resolution);
 				
+				let	pointActiveClass = '';
+				if(typeof(currentPointByStepLongTouch) != 'undefined' && currentPointByStepLongTouch != null){
+					pointActiveClass = indexPoint == currentPointByStepLongTouch.data('index_point') ? ' point_active' : '' ;
+				}
+				
+
 				path = makeSVGElement('rect', { x: x-5, y:y-5, height:10, width:10,
 							   'stroke-width': minStokeWidth,
-							   'class':'movable point_deletable poly_elem forbidden_elem forbidden_elem_'+forbidden.id_area,
+							   'class':'movable point_deletable poly_elem forbidden_elem forbidden_elem_'+forbidden.id_area+pointActiveClass,
 							   'id': 'install_by_step_edit_map_forbidden_'+forbidden.id_area+'_'+indexPoint,
 							   'data-id_area': forbidden.id_area,
 							   'data-index_point': indexPoint,
@@ -333,6 +335,7 @@ function GetCenterArea(indexArea)
 	
 	return { "x":x, "y":y};
 }
+
 function ByStepTraceArea(indexArea)
 {
 	area = areas[indexArea];
@@ -392,7 +395,7 @@ function ByStepTraceArea(indexArea)
 				
 				x2 = lastPoint.x * 100 / ros_resolution;
 				y2 = ros_hauteur - (lastPoint.y * 100 / ros_resolution);
-				
+								
 				path = makeSVGElement('line', { x1: x, y1:y, x2:x2, y2:y2,
 							   'stroke-width': downOnMovable?1:5,
 							   'class':'secable poly_elem area_elem area_elem_'+area.id_area,
@@ -419,9 +422,15 @@ function ByStepTraceArea(indexArea)
 				x = point.x * 100 / ros_resolution;
 				y = ros_hauteur - (point.y * 100 / ros_resolution);
 				
+				
+				let	pointActiveClass = '';
+				if(typeof(currentPointByStepLongTouch) != 'undefined' && currentPointByStepLongTouch != null){
+					pointActiveClass = indexPoint == currentPointByStepLongTouch.data('index_point') ? ' point_active' : '' ;
+				}
+				
 				path = makeSVGElement('rect', { x: x-5, y:y-5, height:10, width:10,
 							   'stroke-width': minStokeWidth,
-							   'class':'movable point_deletable poly_elem area_elem area_elem_'+area.id_area,
+							   'class':'movable point_deletable poly_elem area_elem area_elem_'+area.id_area+pointActiveClass,
 							   'id': 'install_by_step_edit_map_area_'+area.id_area+'_'+indexPoint,
 							   'data-id_area': area.id_area,
 							   'data-index_point': indexPoint,
@@ -437,6 +446,7 @@ function ByStepTraceArea(indexArea)
 	}
 }
 
+/*
 function ByStepTraceCurrentDock(pose)
 {
 	$('#install_by_step_edit_map_svg .dock_elem_current').remove();
@@ -463,6 +473,8 @@ function ByStepTraceCurrentDock(pose)
 				  });
 	svgByStep.appendChild(path);
 }
+*/
+
 function ByStepTraceDock(indexDock)
 {
 	dock = docks[indexDock];
@@ -521,10 +533,20 @@ function ByStepTraceDock(indexDock)
 	
 	rayonRobot = (26 / ros_resolution);
 	rayonRobotSecure = ((26+15) / ros_resolution);
-	
+		
 	path = makeSVGElement('circle', { cx: x,
 									cy: y,
 								   r: rayonRobot,
+								   'class': 'dock_elem dock_elem_circle dock_elem_'+dock.id_docking_station,
+								   'id': 'install_by_step_edit_map_dock_secure_'+dock.id_docking_station,
+								   'data-id_docking_station': dock.id_docking_station,
+								   'data-element_type': 'dock',
+								   'data-element': 'dock'
+								   });
+	svgByStep.appendChild(path);
+	path = makeSVGElement('circle', { cx: x,
+									cy: y,
+								   r: rayonRobot * 0.60,
 								   'class': 'dock_elem dock_elem_robot dock_elem_fond dock_elem_'+dock.id_docking_station,
 								   'id': 'install_by_step_edit_map_dock_robot_'+dock.id_docking_station,
 								   'data-id_docking_station': dock.id_docking_station,
@@ -533,7 +555,7 @@ function ByStepTraceDock(indexDock)
 								   });
 	svgByStep.appendChild(path);
 	
-	path = makeSVGElement('polyline', { 'points': (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2),
+	path = makeSVGElement('polyline', { 'points': (x-1.5)+' '+(y-1.5)+' '+(x+1.5)+' '+(y)+' '+(x-1.5)+' '+(y+1.5),
 									'stroke':'#FFFFFF',
 									'stroke-width':1,
 									'fill':'none',
@@ -552,6 +574,7 @@ function ByStepTraceDock(indexDock)
 		AddClass('#install_by_step_edit_map_svg .dock_elem_'+dock.id_docking_station, 'active');
 }
 
+/*
 function ByStepTraceCurrentPoi(pose)
 {
 	$('#install_by_step_edit_map_svg .poi_elem_current').remove();
@@ -590,6 +613,8 @@ function ByStepTraceCurrentPoi(pose)
 								   });
 	svgByStep.appendChild(path);
 }
+*/
+
 function ByStepTracePoi(indexPoi)
 {
 	poi = pois[indexPoi];
@@ -618,7 +643,7 @@ function ByStepTracePoi(indexPoi)
 	
 	rayonRobot = (26 / ros_resolution);
 	rayonRobotSecure = ((26+15) / ros_resolution);
-	
+	/*
 	path = makeSVGElement('circle', { cx: x,
 									cy: y,
 								   r: rayonRobotSecure,
@@ -629,10 +654,22 @@ function ByStepTracePoi(indexPoi)
 								   'data-element': 'poi'
 								   });
 	svgByStep.appendChild(path);
+	*/
 	
 	path = makeSVGElement('circle', { cx: x,
 									cy: y,
 								   r: rayonRobot,
+								   'class': 'poi_elem poi_elem_circle poi_elem_'+poi.id_poi,
+								   'id': 'install_by_step_edit_map_poi_secure_'+poi.id_poi,
+								   'data-id_poi': poi.id_poi,
+								   'data-element_type': 'poi',
+								   'data-element': 'poi'
+								   });
+	svgByStep.appendChild(path);
+	
+	path = makeSVGElement('circle', { cx: x,
+									cy: y,
+								   r: rayonRobot * 0.6,
 								   'class': 'poi_elem poi_elem_fond poi_elem_'+poi.id_poi,
 								   'id': 'install_by_step_edit_map_poi_robot_'+poi.id_poi,
 								   'data-id_poi': poi.id_poi,
@@ -641,7 +678,7 @@ function ByStepTracePoi(indexPoi)
 								   });
 	svgByStep.appendChild(path);
 	
-	path = makeSVGElement('polyline', { 'points': (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2),
+	path = makeSVGElement('polyline', { 'points': (x-1.5)+' '+(y-1.5)+' '+(x+1.5)+' '+(y)+' '+(x-1.5)+' '+(y+1.5),
 									'stroke':'#FFFFFF',
 									'stroke-width':1,
 									'fill':'none',
@@ -660,8 +697,10 @@ function ByStepTracePoi(indexPoi)
 		AddClass('#install_by_step_edit_map_svg .poi_elem_'+poi.id_poi, 'active');
 }
 
+/*
 function ByStepTraceCurrentAugmentedPose(pose)
 {
+	
 	$('#install_by_step_edit_map_svg .augmented_pose_elem_current').remove();
 	
 	x = pose.final_pose_x * 100 / ros_resolution;
@@ -698,6 +737,8 @@ function ByStepTraceCurrentAugmentedPose(pose)
 								   });
 	svgByStep.appendChild(path);
 }
+*/
+
 function ByStepTraceAugmentedPose(indexAugmentedPose)
 {
 	augmented_pose = augmented_poses[indexAugmentedPose];
@@ -727,10 +768,20 @@ function ByStepTraceAugmentedPose(indexAugmentedPose)
 	rayonRobot = (26 / ros_resolution);
 	rayonRobotSecure = ((26+15) / ros_resolution);
 	
-	path = makeSVGElement('circle', { cx: x,
+	/*path = makeSVGElement('circle', { cx: x,
 									cy: y,
 								   r: rayonRobotSecure,
 								   'class': 'augmented_pose_elem augmented_pose_elem_secure augmented_pose_elem_'+augmented_pose.id_augmented_pose,
+								   'id': 'install_by_step_edit_map_augmented_pose_secure_'+augmented_pose.id_augmented_pose,
+								   'data-id_augmented_pose': augmented_pose.id_augmented_pose,
+								   'data-element_type': 'augmented_pose',
+								   'data-element': 'augmented_pose'
+								   });
+	svgByStep.appendChild(path);*/
+	path = makeSVGElement('circle', { cx: x,
+									cy: y,
+								   r: rayonRobot,
+								   'class': 'augmented_pose_elem augmented_pose_elem_circle augmented_pose_elem_'+augmented_pose.id_augmented_pose,
 								   'id': 'install_by_step_edit_map_augmented_pose_secure_'+augmented_pose.id_augmented_pose,
 								   'data-id_augmented_pose': augmented_pose.id_augmented_pose,
 								   'data-element_type': 'augmented_pose',
@@ -740,7 +791,7 @@ function ByStepTraceAugmentedPose(indexAugmentedPose)
 	
 	path = makeSVGElement('circle', { cx: x,
 									cy: y,
-								   r: rayonRobot,
+								   r: rayonRobot * 0.6,
 								   'class': 'augmented_pose_elem augmented_pose_elem_fond augmented_pose_elem_'+augmented_pose.id_augmented_pose,
 								   'id': 'install_by_step_edit_map_augmented_pose_robot_'+augmented_pose.id_augmented_pose,
 								   'data-id_augmented_pose': augmented_pose.id_augmented_pose,
@@ -749,7 +800,7 @@ function ByStepTraceAugmentedPose(indexAugmentedPose)
 								   });
 	svgByStep.appendChild(path);
 	
-	path = makeSVGElement('polyline', { 'points': (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2),
+	path = makeSVGElement('polyline', { 'points': (x-1.5)+' '+(y-1.5)+' '+(x+1.5)+' '+(y)+' '+(x-1.5)+' '+(y+1.5),
 									'stroke':'#FFFFFF',
 									'stroke-width':1,
 									'fill':'none',
@@ -769,6 +820,7 @@ function ByStepTraceAugmentedPose(indexAugmentedPose)
 }
 
 var robot_traced = false;
+
 function ByStepTraceRobot(robot_x, robot_y, robot_theta)
 {
 	x = robot_x * 100 / ros_resolution;
@@ -839,23 +891,8 @@ function ByStepResizeSVG()
 	});
 }
 
-function makeSVGElement(tag, attrs, texte='')
+function ExportSVG()
 {
-    var el= document.createElementNS('http://www.w3.org/2000/svg', tag);
-    for (var k in attrs) {
-        el.setAttribute(k, attrs[k]);
-    }
-	
-	if (texte != '')
-	{
-		txt = document.createTextNode(texte);
-		el.appendChild(txt);
-	}
-	
-    return el;
-}
-
-function ExportSVG() {
 
 	var rawSVG = $("#install_by_step_edit_map_svg").outerHTML;;
 	

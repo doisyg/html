@@ -117,13 +117,6 @@ include_once('./config/initSite.php');
 	</body>
 </html>
 <script>
-	$(document).ready(function(e) {
-		if(screen.height < 600){
-			DisplayError('The screen\'s height of your telephone is too small for the app. Some features can be impacted');
-		}
-	})
-</script>
-<script>
 
 function DisplayError(text)
 {
@@ -133,12 +126,19 @@ function DisplayError(text)
 
 var ws;
 var use_ssl = <?php echo $server_request_scheme == 'http'?'false':'true';?>;
+var save_msg;
 
 $(document).ready(function(e) {
+
+	if(screen.height < 600)
+	{
+		DisplayError('The screen\'s height of your telephone is too small for the app. Some features can be impacted');
+	}
 
 	<?php if ($server_request_scheme == 'http')
 	{
 		// We test if we can do https on webservice
+		/*
 		?>
 		$.ajax({
 			type: "GET",
@@ -152,6 +152,7 @@ $(document).ready(function(e) {
 			}
 		});
 		<?php
+		*/
 	}
 	else
 	{
@@ -187,8 +188,8 @@ $(document).ready(function(e) {
 		}
 		else
 		{
-			var robot_host = '<?php echo (file_exists('C:\\'))?((file_exists('C:\\Users\\F'))?'10.0.0.39:'.($server_request_scheme == 'http'?'9094':'9095'):'192.168.0.33:'.($server_request_scheme == 'http'?'9094':'9095')):'wyca.run:'.($server_request_scheme == 'http'?'9094':'9095');?>';
-			//var robot_host = '<?php echo (file_exists('C:\\'))?'10.0.0.44:'.($server_request_scheme == 'http'?'9094':'9095'):'wyca.run:'.($server_request_scheme == 'http'?'9094':'9095');?>';
+			//var robot_host = '<?php echo (file_exists('C:\\'))?((file_exists('C:\\Users\\F'))?'10.0.0.39:'.($server_request_scheme == 'http'?'9094':'9095'):'192.168.0.33:'.($server_request_scheme == 'http'?'9094':'9095')):'wyca.run:'.($server_request_scheme == 'http'?'9094':'9095');?>';
+			var robot_host = '<?php echo (file_exists('C:\\'))?'10.0.0.44:'.($server_request_scheme == 'http'?'9094':'9095'):'wyca.run:'.($server_request_scheme == 'http'?'9094':'9095');?>';
 			
 			if ("WebSocket" in window) {
 				ws = new WebSocket((use_ssl?'wss':'ws') + '://'+ robot_host);
@@ -215,7 +216,7 @@ $(document).ready(function(e) {
 				if (e.data == 'ack') return;
 				msg = JSON.parse(e.data);
 				
-				ws.close()
+				ws.close();
 				
 				if (msg.A > 0)
 				{
@@ -224,6 +225,7 @@ $(document).ready(function(e) {
 				else
 				{
 					// Connexion OK, on save l'api_key
+					save_msg = msg;
 					$.ajax({
 						type: "POST",
 						url: 'ajax/connection.php',
@@ -233,7 +235,12 @@ $(document).ready(function(e) {
 							g: msg.D.GROUP
 						},
 						success: function(data) {
-							location.href = 'index.php';
+							
+							if (save_msg.D.NCP)
+								//location.href = 'index.php';
+								location.href = 'change_password.php';
+							else
+								location.href = 'index.php';
 						},
 						error: function(e) {
 							alert(e.responseText);

@@ -1,47 +1,4 @@
 // JavaScript Document
-var isDown = false;
-
-var largeurSlam = 0;
-var hauteurSlam = 0;
-var largeurRos = 0;
-var hauteurRos = 0;
-
-var start = true;
-
-var svgTemp;
-var svgData;
-var imgForSVG;
-
-var canvas;
-var canvasWidth;
-var canvasHeight;
-var ctx;
-var canvasData;
-var zoom = 1.5;
-
-var ros_largeur = 0;
-var ros_hauteur = 0;
-var ros_resolution = 5;
-
-var positions = Array();
-
-var xObject = 0;
-var yObject = 0;
-
-var zoom_carte = 1;
-
-var nextIdArea = 300000;
-var nextIdDock = 300000;
-var nextIdPoi = 300000;
-var forbiddens = Array();
-var areas = Array();
-var gommes = Array();
-var docks = Array();
-var pois = Array();
-
-var blockZoom = false;
-var gotoTest = false;
-
 function GetInfosCurrentMapUser()
 {
 	if (wycaApi.websocketAuthed)
@@ -102,6 +59,7 @@ function GetInfosCurrentMapDoUser()
 				UserInitMap();
 				UserResizeSVG();			
 			},500); 
+			$('#bHeaderInfo').attr('onClick',"TogglePopupHelp()");
 		}
 		else
 		{
@@ -412,14 +370,15 @@ $(document).ready(function(e) {
 
 function UserHideMenus()
 {
-	$('#user_edit_map_menu li').hide();
+	//$('#user_edit_map_menu li').hide();
 	$('#user_edit_map_menu_point li').hide();
 	$('#user_edit_map_menu_forbidden li').hide();
 	$('#user_edit_map_menu_area li').hide();
 	$('#user_edit_map_menu_dock li').hide();
 	$('#user_edit_map_menu_poi li').hide();
 	$('#user_edit_map_menu_augmented_pose li').hide();
-	$('.popupHelp').hide();
+	$('#user_edit_map_menu .popupHelp').hide();
+	$('#user_edit_map .times_icon_menu').hide();
 }
 
 function UserDisplayMenu(id_menu)
@@ -484,11 +443,13 @@ function UserLongPressForbidden()
 	timerUserLongPress = null;
 	UserDisplayMenu('user_edit_map_menu_forbidden');
 }
+
 function UserLongPressArea()
 {
 	timerUserLongPress = null;
 	UserDisplayMenu('user_edit_map_menu_area');
 }
+
 function UserLongPressDock()
 {
 	timerUserLongPress = null;
@@ -503,6 +464,7 @@ function UserLongPressPoi()
 	
 	UserDisplayMenu('user_edit_map_menu_poi');
 }
+
 function UserLongPressAugmentedPose()
 {
 	timerUserLongPress = null;
@@ -511,7 +473,6 @@ function UserLongPressAugmentedPose()
 	
 	UserDisplayMenu('user_edit_map_menu_augmented_pose');
 }
-
 
 function UserLongPressPointDeletable()
 {
@@ -523,24 +484,27 @@ function UserLongVeryPressSVG()
 {
 	timerUserVeryLongPress = null;
 	
-	$('#user_edit_map_container_all .popupHelp').show(200);	
+	//$('#user_edit_map_container_all .popupHelp').show(200);	
 }
 
 function UserLongPressSVG()
 {
 	timerUserLongPress = null;
-	UserDisplayMenu('user_edit_map_menu');
+	//UserDisplayMenu('user_edit_map_menu');
 }
 
 var resetPan = false;
+
 $(document).ready(function(e) {
     $('#user_edit_map_svg').on('touchend', function(e) {
 		resetPan = true;
 	});
+	
 	$('#user_edit_map_svg').on('touchstart', function(e) {
 		resetPan = true;
 	});
 });
+
 function UserInitMap()
 {
 	var eventsHandlerUser;

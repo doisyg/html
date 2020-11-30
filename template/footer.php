@@ -43,11 +43,14 @@
 		var robot_http = '<?php echo (file_exists('C:\\'))?((file_exists('C:\\Users\\F'))?$server_request_scheme.'://10.0.0.39':$server_request_scheme.'://192.168.0.33'):'';?>';
 		//var robot_host = '<?php echo (file_exists('C:\\'))?'10.0.0.44:'.($server_request_scheme == 'http'?'9094':'9095'):'wyca.run:'.($server_request_scheme == 'http'?'9094':'9095');?>';
 		var use_ssl = <?php echo $server_request_scheme == 'http'?'false':'true';?>;
+		var app_url = '<?php echo $server_request_scheme;?>://wyca.run';
 
 		var user_api_key = '<?php echo $_SESSION["api_key"];?>';
 		// TODO var id_map_last = <?php // echo $currentIdMap;?>;
 		var textSelectOnOrMoreTops = "<?php echo addslashes(stripslashes(__('You must select one or more tops')));?>";
+		var textAvailablesTopsSaved = "<?php echo addslashes(stripslashes(__('Available tops saved')));?>";
 		var textIndicateAName = "<?php echo addslashes(stripslashes(__('You must indicate a name')));?>";
+		var textSiteImported = "<?php echo addslashes(stripslashes(__('Site successfully imported')));?>";
 		var textNameUsed = "<?php echo addslashes(stripslashes(__('Name already used please change')));?>";
 		var textStartMapping = "<?php echo addslashes(stripslashes(__('Start mapping')));?>";
 		var textStopNavigation = "<?php echo addslashes(stripslashes(__('Stop navigation')));?>";
@@ -55,6 +58,11 @@
 		var textStartAutonomous = "<?php echo addslashes(stripslashes(__('Start autonomous navigation')));?>";
 		var textBtnCheckTest = "<?php echo addslashes(stripslashes(__('Testing')));?>";
 		var textBtnCheckNext = "<?php echo addslashes(stripslashes(__('Next')));?>";
+		var textLessThanOne = "<?php echo addslashes(stripslashes(__('Less than 1')));?>";
+		var textPasswordRequired = "<?php echo addslashes(stripslashes(__('Passwords required.')));?>";
+		var textPasswordMatching = "<?php echo addslashes(stripslashes(__('Passwords not matching.')));?>";
+		var textPasswordPattern = "<?php echo addslashes(stripslashes(__('Passwords needs to be 8 character long with at least 1 uppercase letter and 1 special character or digit')));?>";
+		var textLoginPattern = "<?php echo addslashes(stripslashes(__('Login needs to be a valid mail adress.')));?>";
 		</script>
 
 		<!-- Vendor -->
@@ -66,13 +74,13 @@
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/ios7-switch/ios7-switch.js"></script>
 		<!-- Specific Page Vendor -->
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js"></script>
+		
+		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/iro/iro.js"></script>
         
         
         <script src="<?php echo $_CONFIG['URL'];?>assets/vendor/svg-pan-zoom/svg-pan-zoom.js"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/svg-pan-zoom/hammer.js"></script>
 
-		<?php $lastUpdate = '20201118';?>
-        
         <script src="<?php echo $_CONFIG['URL_API'];?>wyca_socket_api.js?v=<?php echo $lastUpdate;?>"></script>
 
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/mouse_to_touch.js?v=<?php echo $lastUpdate;?>"></script>
@@ -80,25 +88,26 @@
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/joystick.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/robot.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/wyca.js?v=<?php echo $lastUpdate;?>"></script>
-		
+        
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/init_map.js?v=<?php echo $lastUpdate;?>"></script>
+        <?php if ($_SESSION['id_groupe_user'] == 1) {?>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/wyca_wyca.js?v=<?php echo $lastUpdate;?>"></script>
+		<?php } if ($_SESSION['id_groupe_user'] == 2) {?>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/bystep_wyca.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/bystep_map.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/bystep_map_actions.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/bystep_map_svg.js?v=<?php echo $lastUpdate;?>"></script>
-        <?php if ($_SESSION['id_groupe_user'] == 1) {?>
-		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/wyca_wyca.js?v=<?php echo $lastUpdate;?>"></script>
-		<?php } if ($_SESSION['id_groupe_user'] <= 2) {?>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/normal_wyca.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/normal_map.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/normal_map_actions.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/normal_map_svg.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/installateur_wyca.js?v=<?php echo $lastUpdate;?>"></script>
-		<?php } if ($_SESSION['id_groupe_user'] <= 3) {?>
+		<?php } if ($_SESSION['id_groupe_user'] == 3) {?>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/manager_wyca.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/manager_map.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/manager_map_actions.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/manager_map_svg.js?v=<?php echo $lastUpdate;?>"></script>
-        <?php } if ($_SESSION['id_groupe_user'] <= 4) {?>
+        <?php } if ($_SESSION['id_groupe_user'] == 4) {?>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/user_wyca.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/user_map.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/user_map_actions.js?v=<?php echo $lastUpdate;?>"></script>
@@ -108,36 +117,44 @@
         <script>
 		$(document).ready(function(e) {
 			
-            <?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 1) {?>
-			InitInstallWifiPageByStep();
-			<?php }?>
-            <?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 3) {?>
+           
+            <?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 2) {?>
 			InitTopsByStep();
 			<?php }?>
-            <?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 4) {?>
+            <?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 3) {?>
 			InitTopsActiveByStep();
 			<?php }?>
-            <?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 7) {?>
-			InitMappingByStep();
-			<?php }?>
-			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 8) {?>
-			GetLastMappingByStep();
-			<?php }?>
-			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 9) {?>
-			GetInfosCurrentMapByStep();
-			<?php }?>
-			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 10) {?>
-			GetConfigurationsByStep();
-			<?php }?>
-			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 11) {?>
-			GetManagersByStep();
-			<?php }?>
-			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 12) {?>
-			GetServiceBooksByStep();
-			<?php }?>
-			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 5) {?>
+			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 4) {?>
 			InitCheckByStep();
 			<?php }?>
+			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 5) {?>
+			InitInstallWifiPageByStep();
+			<?php }?>
+            <?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 61) {?>
+			InitBystepSiteMasterDock();
+			<?php }?>
+			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 10) {?>
+			InitSiteImportByStep();
+			<?php }?>
+			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 12) {?>
+			InitMappingByStep();
+			<?php }?>
+			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 13) {?>
+			GetLastMappingByStep();
+			<?php }?>
+			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 20) {?>
+			GetInfosCurrentMapByStep();
+			<?php }?>
+			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 30) {?>
+			GetConfigurationsByStep();
+			<?php }?>
+			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 32) {?>
+			GetManagersByStep();
+			<?php }?>
+			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 33) {?>
+			GetServiceBooksByStep();
+			<?php }?>
+			
         });
 		</script>
 	</body>

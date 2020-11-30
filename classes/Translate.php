@@ -18,7 +18,31 @@ class Translate
 		global $_LANG_MAIL;
 		
 		self::$current_lang = $lang;
-		include(dirname(__FILE__).'/../lang/'.$lang.'.php');
+		$file_path = dirname(__FILE__).'/../lang/'.$lang.'.php';
+		try{
+			if (file_exists($file_path))
+			{
+				include($file_path);
+			}
+			else{
+				throw new Exception('Trad files not found. Check access rights');
+			}
+		}
+		catch (Exception $e) {
+			echo '
+			<div id="alert_wyca" class="alert_wyca_trad" style="display: block;">
+				<section class="panel panel-danger">
+					<header class="panel-heading">
+						<h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fa fa-remove"></i></h2>
+					</header>
+					<div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
+						<p class="content">'.$e->getMessage().'</p>
+						<a onClick="$(\'.alert_wyca_trad\').hide()" href="#" class="btn btn-default">OK</a>
+					</div>
+				</section>
+			</div>';
+		}
+		
 		
 		$_LANG_MAIL = array();
 		for ($i=1; $i<10; $i++)
@@ -93,14 +117,28 @@ class Translate
 	public static function CreateFileLang($to_insert, $lang)
 	{
 		$file_path = dirname(__FILE__).'/../lang/'.$lang.'.php';
-		if ($fd = fopen($file_path, 'w'))
-		{	
-			fwrite($fd, "<?php\n\nglobal \$_LANG;\n\$_LANG = array();\n");
-			foreach ($to_insert as $key => $value)
-				fwrite($fd, '$_LANG[\''.$key.'\'] = \''.addslashes(stripslashes($value)).'\';'."\n");
-			fwrite($fd, "\n?>");
-			fclose($fd);
+		try{
+			if (file_exists($file_path))
+			{
+				if ($fd = fopen($file_path, 'w'))
+				{	
+					fwrite($fd, "<?php\n\nglobal \$_LANG;\n\$_LANG = array();\n");
+					foreach ($to_insert as $key => $value)
+						fwrite($fd, '$_LANG[\''.$key.'\'] = \''.addslashes(stripslashes($value)).'\';'."\n");
+					fwrite($fd, "\n?>");
+					fclose($fd);
+				}else{
+					throw new Exception('Error in Trad File open.');
+				}
+			}
+			else{
+				throw new Exception('Trad not found.');
+			}
 		}
+		catch (Exception $e) {
+			//echo"<script>alert_wyca('Error on loading trad' + '".$e->getMessage()."')</script>";
+			//echo $e->getMessage();
+		}		
 	}
 	
 	public static function CreateFileLangMail($to_insert, $lang)
