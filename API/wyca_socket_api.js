@@ -1,5 +1,12 @@
 function WycaAPI(options){
-
+	
+	this.GroupUser = {
+		WYCA						: 1,
+		DISTRIBUTOR					: 2,
+		MANAGER						: 3,
+		USER						: 4
+	}
+	
 	this.AnswerCode = {
 		NO_ERROR                    : 0x000,
 		FORMAT_ERROR_MISSING_DATA   : 0x001,
@@ -9,6 +16,9 @@ function WycaAPI(options){
 		UNKNOW_API_OPERATION        : 0x005,
 		NOT_IMPLEMENTED             : 0x006,
 		INVALID_ID                  : 0x007,
+		INVALID_FILE                : 0x008,
+		INVALID_KEY                 : 0x009,
+		EMAIL_ALREADY_USED          : 0x00A,
 	
 		DETAILS_IN_MESSAGE          : 0x064,
 		AUTH_KO                     : 0x065,
@@ -1205,88 +1215,88 @@ function WycaAPI(options){
 			{
 				/********** Actions *********/
 				case this.EventCode.GO_TO_CHARGE_FEEDBACK:
-					if (_this.options.onGoToChargeFeedback != undefined) { delete msg.E; _this.options.onGoToChargeFeedback(msg); }
+					if (_this.options.onGoToChargeFeedback != undefined) { _this.options.onGoToChargeFeedback(msg.D); }
 					break;
 				case this.EventCode.GO_TO_CHARGE_RESULT:
-					if (_this.options.onGoToChargeResult != undefined) { delete msg.E; _this.options.onGoToChargeResult(msg); }
+					if (_this.options.onGoToChargeResult != undefined) { _this.options.onGoToChargeResult(msg.D); }
 					break;
 				case this.EventCode.GO_TO_POI_FEEDBACK:
-					if (_this.options.onGoToPoiFeedback != undefined) { delete msg.E; _this.options.onGoToPoiFeedback(msg); }
+					if (_this.options.onGoToPoiFeedback != undefined) { _this.options.onGoToPoiFeedback(msg.D); }
 					break;
 				case this.EventCode.GO_TO_POI_RESULT:
-					if (_this.options.onGoToPoiResult != undefined) { delete msg.E; _this.options.onGoToPoiResult(msg); }
+					if (_this.options.onGoToPoiResult != undefined) { _this.options.onGoToPoiResult(msg.D); }
 					break;
 				case this.EventCode.GO_TO_POSE_FEEDBACK:
-					if (_this.options.onGoToPoseFeedback != undefined) { delete msg.E; _this.options.onGoToPoseFeedback(msg); }
+					if (_this.options.onGoToPoseFeedback != undefined) { _this.options.onGoToPoseFeedback(msg.D); }
 					break;
 				case this.EventCode.GO_TO_POSE_RESULT:
-					if (_this.options.onGoToPoseResult != undefined) { delete msg.E; _this.options.onGoToPoseResult(msg); }
+					if (_this.options.onGoToPoseResult != undefined) { _this.options.onGoToPoseResult(msg.D); }
 					break;
 				case this.EventCode.GO_TO_POSE_ACCURATE_FEEDBACK:
-					if (_this.options.onGoToPoseAccurateFeedback != undefined) { delete msg.E; _this.options.onGoToPoseAccurateFeedback(msg); }
+					if (_this.options.onGoToPoseAccurateFeedback != undefined) { _this.options.onGoToPoseAccurateFeedback(msg.D); }
 					break;
 				case this.EventCode.GO_TO_POSE_ACCURATE_RESULT:
-					if (_this.options.onGoToPoseAccurateResult != undefined) { delete msg.E; _this.options.onGoToPoseAccurateResult(msg); }
+					if (_this.options.onGoToPoseAccurateResult != undefined) { _this.options.onGoToPoseAccurateResult(msg.D); }
 					break;
 				case this.EventCode.GO_TO_POSE_FLEXIBLE_FEEDBACK:
-					if (_this.options.onGoToPoseFlexibleFeedback != undefined) { delete msg.E; _this.options.onGoToPoseFlexibleFeedback(msg); }
+					if (_this.options.onGoToPoseFlexibleFeedback != undefined) { _this.options.onGoToPoseFlexibleFeedback(msg.D); }
 					break;
 				case this.EventCode.GO_TO_POSE_FLEXIBLE_RESULT:
-					if (_this.options.onGoToPoseFlexibleResult != undefined) { delete msg.E; _this.options.onGoToPoseFlexibleResult(msg); }
+					if (_this.options.onGoToPoseFlexibleResult != undefined) { _this.options.onGoToPoseFlexibleResult(msg.D); }
 					break;
 				case this.EventCode.GO_TO_AUGMENTED_POSE_FEEDBACK:
-					if (_this.options.onGoToAugmentedPoseFeedback != undefined) { delete msg.E; _this.options.onGoToAugmentedPoseFeedback(msg); }
+					if (_this.options.onGoToAugmentedPoseFeedback != undefined) { _this.options.onGoToAugmentedPoseFeedback(msg.D); }
 					break;
 				case this.EventCode.GO_TO_AUGMENTED_POSE_RESULT:
-					if (_this.options.onGoToAugmentedPoseResult != undefined) { delete msg.E; _this.options.onGoToAugmentedPoseResult(msg); }
+					if (_this.options.onGoToAugmentedPoseResult != undefined) { _this.options.onGoToAugmentedPoseResult(msg.D); }
 					break;
 				case this.EventCode.DOCK_FEEDBACK:
-					if (_this.options.onDockFeedback != undefined) { delete msg.E; _this.options.onDockFeedback(msg); }
+					if (_this.options.onDockFeedback != undefined) { _this.options.onDockFeedback(msg.D); }
 					break;
 				case this.EventCode.DOCK_RESULT:
-					if (_this.options.onDockResult != undefined) {delete msg.E; _this.options.onDockResult(msg); }
+					if (_this.options.onDockResult != undefined) {_this.options.onDockResult(msg.D); }
 					break;
 				case this.EventCode.UNDOCK_FEEDBACK:
-					if (_this.options.onUndockFeedback != undefined) { delete msg.E; _this.options.onUndockFeedback(msg); }
+					if (_this.options.onUndockFeedback != undefined) { _this.options.onUndockFeedback(msg.D); }
 					break;
 				case this.EventCode.UNDOCK_RESULT:
-					if (_this.options.onUndockResult != undefined) { delete msg.E; _this.options.onUndockResult(msg); }
+					if (_this.options.onUndockResult != undefined) { _this.options.onUndockResult(msg.D); }
 					break;
 				case _this.EventCode.SET_ACTIVE_TOP_FEEDBACK:
-					if (_this.options.onSetActiveTopFeedback != undefined) { delete msg.E; _this.options.onSetActiveTopFeedback(msg); }
+					if (_this.options.onSetActiveTopFeedback != undefined) { _this.options.onSetActiveTopFeedback(msg.D); }
 					break;
 				case _this.EventCode.SET_ACTIVE_TOP_RESULT:
-					if (_this.options.onSetActiveTopResult != undefined) { delete msg.E; _this.options.onSetActiveTopResult(msg); }
+					if (_this.options.onSetActiveTopResult != undefined) { _this.options.onSetActiveTopResult(msg.D); }
 					break;
 				case _this.EventCode.INSTALL_NEW_TOP_FEEDBACK:
-					if (_this.options.onInstallNewTopFeedback != undefined) { delete msg.E; _this.options.onInstallNewTopFeedback(msg); }
+					if (_this.options.onInstallNewTopFeedback != undefined) { _this.options.onInstallNewTopFeedback(msg.D); }
 					break;
 				case _this.EventCode.INSTALL_NEW_TOP_RESULT:
-					if (_this.options.onInstallNewTopResult != undefined) { delete msg.E; _this.options.onInstallNewTopResult(msg); }
+					if (_this.options.onInstallNewTopResult != undefined) { _this.options.onInstallNewTopResult(msg.D); }
 					break;
 				case this.EventCode.MAPPING_START_FEEDBACK:
-					if (_this.options.onMappingStartFeedback != undefined) { delete msg.E; _this.options.onMappingStartFeedback(msg); }
+					if (_this.options.onMappingStartFeedback != undefined) { _this.options.onMappingStartFeedback(msg.D); }
 					break;
 				case this.EventCode.MAPPING_START_RESULT:
-					if (_this.options.onMappingStartResult != undefined) { delete msg.E; _this.options.onMappingStartResult(msg); }
+					if (_this.options.onMappingStartResult != undefined) { _this.options.onMappingStartResult(msg.D); }
 					break;
 				case this.EventCode.NAVIGATION_START_FEEDBACK:
-					if (_this.options.onNavigationStartFeedback != undefined) { delete msg.E; _this.options.onNavigationStartFeedback(msg); }
+					if (_this.options.onNavigationStartFeedback != undefined) { _this.options.onNavigationStartFeedback(msg.D); }
 					break;
 				case this.EventCode.NAVIGATION_START_RESULT:
-					if (_this.options.onNavigationStartResult != undefined) { delete msg.E; _this.options.onNavigationStartResult(msg); }
+					if (_this.options.onNavigationStartResult != undefined) { _this.options.onNavigationStartResult(msg.D); }
 					break;
 				case this.EventCode.DOCK_RECOVERY_FEEDBACK:
-					if (_this.options.onDockRecoveryFeedback != undefined) { delete msg.E; _this.options.onDockRecoveryFeedback(msg); }
+					if (_this.options.onDockRecoveryFeedback != undefined) { _this.options.onDockRecoveryFeedback(msg.D); }
 					break;
 				case this.EventCode.DOCK_RECOVERY_RESULT:
-					if (_this.options.onDockRecoveryResult != undefined) { delete msg.E; _this.options.onDockRecoveryResult(msg); }
+					if (_this.options.onDockRecoveryResult != undefined) { _this.options.onDockRecoveryResult(msg.D); }
 					break;
 				case this.EventCode.RECOVERY_FROM_FIDUCIAL_FEEDBACK:
-					if (_this.options.onRecoveryFromFiducialFeedback != undefined) { delete msg.E; _this.options.onRecoveryFromFiducialFeedback(msg); }
+					if (_this.options.onRecoveryFromFiducialFeedback != undefined) { _this.options.onRecoveryFromFiducialFeedback(msg.D); }
 					break;
 				case this.EventCode.RECOVERY_FROM_FIDUCIAL_RESULT:
-					if (_this.options.onRecoveryFromFiducialResult != undefined) { delete msg.E; _this.options.onRecoveryFromFiducialResult(msg); }
+					if (_this.options.onRecoveryFromFiducialResult != undefined) { _this.options.onRecoveryFromFiducialResult(msg.D); }
 					break;
 				/********** Topics *********/
 				case this.EventCode.BATTERY_STATE:
@@ -1418,6 +1428,9 @@ function WycaAPI(options){
 			case _this.AnswerCode.UNKNOW_API_OPERATION : return 'Unknow API operation'; break;
 			case _this.AnswerCode.NOT_IMPLEMENTED : return 'Not implemented'; break;
 			case _this.AnswerCode.INVALID_ID : return 'Invalid ID'; break;
+			case _this.AnswerCode.INVALID_FILE : return 'Invalid file'; break;
+			case _this.AnswerCode.INVALID_KEY : return 'Invalid key'; break;
+			case _this.AnswerCode.EMAIL_ALREADY_USED : return 'Email already used'; break;
 			case _this.AnswerCode.DETAILS_IN_MESSAGE : return 'Details in message'; break;
 			case _this.AnswerCode.AUTH_KO : return 'Auth KO'; break;
 			case _this.AnswerCode.AUTH_NEEDED : return 'Auth needed'; break;

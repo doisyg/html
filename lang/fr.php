@@ -214,5 +214,25 @@ $_LANG['1f1f029f4f19e1254aea91225b370c21'] = 'Create manager';
 $_LANG['63ac6e1c5ae0bc417f8aa49d68e0904e'] = 'The robot needs to relocate itself in the new map.';
 $_LANG['8f7589ce40934ea04a59bd1e3ddbf894'] = 'Move the robot near a reflector (dock or augmented pose) then click on the recovery button';
 $_LANG['1ba9079e4cad4c5653a85702da6f4579'] = 'The robot needs to relocate itself.';
+$_LANG['17e88a8aca7c2d27584ab7823e1cfee7'] = 'Move the robot using the joystick.';
+$_LANG['0323de4f66a1700e2173e9bcdce02715'] = 'Logout';
+$_LANG['884441f623b400768b491296549803cb'] = 'Setting new active top';
+$_LANG['11c92c2829c7a77791b73d52b8c04752'] = 'Available tops saved';
+$_LANG['b0519851f2414e277fa2dfe378b9f391'] = 'Site successfully imported';
+$_LANG['2b1332774a26889f402d28a305dcbd9f'] = 'Export your sites by clicking on the icon';
+$_LANG['9b945efebb006547a94415eadaa12921'] = 'Accounts';
+$_LANG['55ea14fa53cbbbba5cea4312faa32053'] = 'Export sites by clicking on the icon';
+$_LANG['a2c9e7f48646664118ff543b27bcbfb4'] = 'Battery Configuration';
+$_LANG['6852ff686fa7216ba1c9b958d5f80f23'] = 'Battery settings';
+$_LANG['7ad51d59926d9281d04b502e8983892a'] = 'Import site';
+$_LANG['591bcfaf5a4bd8634bc0c00e73ce0ffa'] = 'Passwords needs to be 8 character long with at least 1 uppercase letter and 1 special character or digit';
+$_LANG['8a6d1cedd49bdb5f8dd41007ab57b294'] = 'Create user';
+$_LANG['7dd25522a9a5714ff3de1c817b61502b'] = 'Min distance obstacle';
+$_LANG['50fece4e95d5808227ac3cac7b1dc8de'] = 'Area Color';
+$_LANG['11277841472fe98392e4ef731cc8db69'] = 'Min Obstacle Distance';
+$_LANG['84ad838df107d85a4609cdbbbc18e5ab'] = 'Max Speed';
+$_LANG['133280ca5e0c40e6248a59a6789fdac0'] = 'Min Osbtacle Distance';
+$_LANG['0aa6f4210bf373c95eda00232e93cd98'] = 'Distance';
+$_LANG['b57ac47a1cb5706285d005337f87e47b'] = 'Obstacle Distance';
 
 ?>

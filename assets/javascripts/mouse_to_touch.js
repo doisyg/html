@@ -17,10 +17,6 @@ function mouseHandler(event)
 		default:           return;
 	}
 	
-	//console.log(event.type);
-	
-	
-	
 	const touchObj = new Touch({
 		identifier: Date.now(),
 		target: event.target,

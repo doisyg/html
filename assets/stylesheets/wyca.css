@@ -168,7 +168,7 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 #install_normal_edit_map_all { height:100%; }
 #install_normal_edit_map_map_navigation { height:100%; }
 
-#install_normal_edit_map_zoom_carte_container { z-index:1000; background-color:#FFF; position:absolute; top:0px; right:20px; }
+#install_normal_edit_map_zoom_carte_container { z-index:1000; background-color:#FFF; position:absolute; top:10px; right:20px; }
 #main_row.hide_element #install_normal_edit_map_zoom_carte_container { right:50px; }
 #install_normal_edit_map_zoom_carte { position:relative; width:100px; border:1px solid #000; }
 
@@ -177,7 +177,7 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 #manager_edit_map_all { height:100%; }
 #manager_edit_map_map_navigation { height:100%; }
 
-#manager_edit_map_zoom_carte_container { z-index:1000; background-color:#FFF; position:absolute; top:0px; right:20px; }
+#manager_edit_map_zoom_carte_container { z-index:1000; background-color:#FFF; position:absolute;top:10px; right:20px; }
 #main_row.hide_element #manager_edit_map_zoom_carte_container { right:50px; }
 #manager_edit_map_zoom_carte { position:relative; width:100px; border:1px solid #000; }
 
@@ -186,10 +186,11 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 #user_edit_map_all { height:100%; }
 #user_edit_map_map_navigation { height:100%; }
 
-#user_edit_map_zoom_carte_container { z-index:1000; background-color:#FFF; position:absolute; top:0px; right:20px; }
+#user_edit_map_zoom_carte_container { z-index:1000; background-color:#FFF; position:absolute;top:10px;right:20px; }
 #main_row.hide_element #user_edit_map_zoom_carte_container { right:50px; }
 #user_edit_map_zoom_carte { position:relative; width:100px; border:1px solid #000; }
 
+#manager_edit_map_zone_zoom,#install_by_step_edit_map_zone_zoom,#install_normal_edit_map_zone_zoom,#user_edit_map_zone_zoom{border-color:rgb(88 159 178)!important;}
 
 .menu_icon_touch { position:absolute; display:none; z-index:1100; }
 .menu_icon_touch ul { list-style:none; padding:0; margin:0; overflow-y: scroll;}
@@ -223,16 +224,19 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 
 #install_by_step_edit_map_bEndGomme, #install_by_step_edit_map_bSaveCurrentElem{ position:absolute; top:15px; left:70px;display:none; z-index:4;border-color:transparent;}
 #install_by_step_edit_map_bStop { position:absolute; bottom:15px; right:15px;display:none; z-index:4;border-color:transparent;}
-#install_by_step_edit_map_bCancelCurrentElem { position:absolute; top:15px; left:115px; display:none; z-index:4;border-color:transparent;}
+#install_by_step_edit_map_bCancelCurrentElem,#install_by_step_edit_map_bCancelGomme{ position:absolute; top:15px; left:115px; display:none; z-index:4;border-color:transparent;}
 
-#install_normal_edit_map_bEndGomme, #install_normal_edit_map_bSaveCurrentElem, #install_normal_edit_map_bStop { position:absolute; top:10px; left:10px; padding:0; display:none; z-index:4}
-#install_normal_edit_map_bCancelCurrentElem { position:absolute; top:10px; left:80px; padding:0; display:none; z-index:4}
+#install_normal_edit_map_bEndGomme, #install_normal_edit_map_bSaveCurrentElem{ position:absolute; top:15px; left:70px;display:none; z-index:4;border-color:transparent;}
+#install_normal_edit_map_bStop { position:absolute; bottom:15px; right:15px;display:none; z-index:4;border-color:transparent;}
+#install_normal_edit_map_bCancelCurrentElem ,#install_normal_edit_map_bCancelGomme{ position:absolute; top:15px; left:115px; display:none; z-index:4;border-color:transparent;}
 
-#manager_edit_map_bEndGomme, #manager_edit_map_bSaveCurrentElem, #manager_edit_map_bStop { position:absolute; top:10px; left:10px; padding:0; display:none; z-index:4}
-#manager_edit_map_bCancelCurrentElem { position:absolute; top:10px; left:80px; padding:0; display:none;z-index:4}
+#manager_edit_map_bEndGomme, #manager_edit_map_bSaveCurrentElem{ position:absolute; top:15px; left:70px;display:none; z-index:4;border-color:transparent;}
+#manager_edit_map_bStop { position:absolute; bottom:15px; right:15px;display:none; z-index:4;border-color:transparent;}
+#manager_edit_map_bCancelCurrentElem { position:absolute; top:15px; left:115px; display:none; z-index:4;border-color:transparent;}
 
-#user_edit_map_bEndGomme, #user_edit_map_bSaveCurrentElem, #user_edit_map_bStop { position:absolute; top:10px; left:10px; padding:0; display:none; z-index:4}
-#user_edit_map_bCancelCurrentElem { position:absolute; top:10px; left:80px; padding:0; display:none; z-index:4}
+#user_edit_map_bEndGomme, #user_edit_map_bSaveCurrentElem{position:absolute; top:15px; left:70px;display:none; z-index:4;border-color:transparent;}
+#user_edit_map_bStop { position:absolute; bottom:15px; right:15px;display:none; z-index:4;border-color:transparent;}
+#user_edit_map_bCancelCurrentElem { position:absolute; top:15px; left:115px; display:none; z-index:4;border-color:transparent;}
 
 .h100vh_160 { height:calc(100vh - 60px); height: calc(var(--vh, 1vh) * 100 - 60px); }
 
@@ -810,18 +814,21 @@ img.fi-robot{
 	font-weight:501;
 }
 /* REAL TEST */
-#start_point_text{
+.start_point_text{
 	font-family: "Font Awesome 5 Free", Open Sans;
 	font-weight:501;
 }
-#end_point_text{
+.end_point_text{
 	font-family: "Font Awesome 5 Free", Open Sans;
 	font-weight:501;
 }
-#result_RealTest{
+.result_RealTest{
     border-top: 1px solid #DCDCDC;
     margin-top: 10px;
     padding-top: 20px;
+}
+.modalRealTestResult .stop_move{
+	transition:0.5s all
 }
 /* BURGER MENU MAP */
 
@@ -1117,6 +1124,7 @@ ul#MasterDockList li .tuile_img.is_checkbox p.dockname {margin-top: 0px;font-wei
 .password_format ~ div.form-group:after{margin-bottom:0;padding-top:0}
 .nopymy{margin-top:0;margin-bottom:0;padding-top:0;padding-bottom:0;}
 .nopymy:after{margin-top:0;margin-bottom:0;padding-top:0;padding-bottom:0;}
+
 /* CSS FIXES */
 .input-group[class*='col-']{
 	padding-left:15px;
@@ -1136,9 +1144,6 @@ span.error_details span{
 .fa-pencil:before{
 	content:"\f304";
 }
-#install_by_step_edit_map_zone_zoom{
-	border-color:rgb(88 159 178)!important;
-}
 .modal .modal-content .actions .row{
 	margin-right:0px;
 	margin-left:0px;
@@ -1155,6 +1160,9 @@ span.error_details span{
 }
 
 /* COLOR PICKER IRO */
+.col-xs-8 .iro-colorpicker{
+	transform: scale(0.75)translateX(-40%);
+}
 .iro-colorpicker{
 	width: 100%;
     display: none;
@@ -1174,3 +1182,32 @@ span.error_details span{
     padding: 6px 8px;
     border-radius: 8px;
 }
+/* MODAL GOTO */
+.h2ModalGoTo{
+	display:flex;
+	justify-content:space-around;
+	align-items:center;
+}
+.h2ModalGoTo > .btn-popup{
+	display: block;
+    position: unset;
+    transform: none;
+}
+.h5ModalGoTo{
+	font-style: italic;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: absolute;
+    bottom: 70px;
+    left: 0;
+    right: 0;
+    margin: 0 20px;
+	text-align: justify;
+}
+.h4ModalGoTo{
+	text-align:justify;
+	margin:30px 0;
+}
+
+.form-group.sep { border-top:1px solid #EFEFEF; padding-top:15px; }

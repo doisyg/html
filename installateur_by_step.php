@@ -58,9 +58,9 @@
                 </ul>
                 
                 <div style="clear:both; height:40px;"></div>
-                <a href="#" class="import_top btn btn-lg btn-success" style="margin-left:50%; transform:translateX(-50%)">Import new top</a>   
+                <a href="#" class="import_top btn btn-lg btn-success" style="margin-left:50%; transform:translateX(-50%)"><?= _('Import new top')?></a>   
                 
-                <a href="#" class="save_tops_next_select button_goto" data-goto="install_by_step_top" style="display:none;" data-goto="install_by_step_top"></a>   
+                <a href="#" class="save_tops_next_select button_goto" data-goto="install_by_step_top" style="display:none;" data-goto="install_by_step_top"></a>
                 <a href="#" class="save_tops_next_check button_goto" data-goto="install_by_step_check" style="display:none;" data-goto="install_by_step_top"></a>   
                 
             
@@ -276,7 +276,7 @@
 				<h4 style="text-align:center;margin:30px 0"><?= __('Import site or create a new one ?') ?></h4>
 				<ul class="tuiles row">
                     <li class="col-xs-6">
-                    	<div class="is_checkbox tuile_img no_update button_goto" id="bImportSite" data-goto="install_by_step_import_site" style="height:max-content;bottom:0;border-radius:10px" onTouchStart="InitBystepSiteImport()">
+                    	<div class="is_checkbox tuile_img no_update button_goto" id="bImportSite" data-goto="install_by_step_import_site" style="height:max-content;bottom:0;border-radius:10px">
                     		<i class="fas fa-file-import" style="padding-top:5px"></i>
 							<h5 class="" style="margin-top: 0px;font-weight:700;font-size: 15px;"><?php echo __('Import existing site with map');?></h5>
                         </div>
@@ -349,7 +349,7 @@
 			<div class="content">
 				
             	<h4 style="text-align:center;margin:15px 0"><?= __('The robot needs to relocate itself.') ?><br><br><?= __('Move the robot near a reflector (dock or augmented pose) then click on the recovery button') ?></h4>
-                <div style="text-align:center; margin-top:20px;"><a href="#" class="bRecovery btn btn-warning btn_big_popup" >Recovery</a></div>
+                <div style="text-align:center; margin-top:20px;"><a href="#" class="bRecovery btn btn-warning btn_big_popup" ><?= _('Recovery') ?></a></div>
                 
             
                 <div style="text-align:center"><a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a></div>
@@ -539,9 +539,7 @@
                 <h2><?php echo __('Edit map');?></h2>
             </header>
             <div class="content">
-                
                 <div id="install_by_step_edit_map_container_all">
-					
 					<div class="btn-circle btn-lg burger_menu" data-open="install_by_step_edit_map_menu">
 						<div class="burger_menu_trait"></div>
 						<div class="burger_menu_trait"></div>
@@ -593,12 +591,12 @@
                     
                     <a href="#" id="install_by_step_edit_map_bStop" class="btn btn-circle btn-danger btn-menu"><i class="fa fa-stop"></i></a>
                     <a href="#" id="install_by_step_edit_map_bEndGomme" class="btn btn-circle btn-primary btn-menu"><i class="fa fa-check"></i></a>
+                    <a href="#" id="install_by_step_edit_map_bCancelGomme" class="btn btn-circle btn-warning btn-menu"><i class="fa fa-times"></i></a>
                     <a href="#" id="install_by_step_edit_map_bSaveCurrentElem" class="btn btn-circle btn-primary btn-menu btnSaveElem"><i class="fa fa-check"></i></a>
                     <a href="#" id="install_by_step_edit_map_bCancelCurrentElem" class="btn btn-circle btn-warning btn-menu btnSaveElem"><i class="fa fa-times"></i></a>
                     
-                    <a href="#" id="install_by_step_edit_map_bByStepUndo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:20px; left:10px;">
-					<i class="fas fa-undo-alt"></i></a>
-                    <a href="#" id="install_by_step_edit_map_bByStepRedo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:20px; left:45px;"><i class="fas fa-redo-alt"></i></a>
+                    <a href="#" id="install_by_step_edit_map_bUndo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:20px; left:10px;"><i class="fas fa-undo-alt"></i></a>
+                    <a href="#" id="install_by_step_edit_map_bRedo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:20px; left:45px;"><i class="fas fa-redo-alt"></i></a>
                     
                     <div id="install_by_step_edit_map_menu" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
@@ -664,7 +662,6 @@
 							<li><a href="#" class="btn btn-circle btn-default btn-menu bTestAugmentedPose"><img class="fi-route" src="assets/images/route_green.svg"/></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-menu bConfigAugmentedPose"><i class="fa fa-gears iconMenuBlue"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-menu bDeleteAugmentedPose"><i class="fa fa-trash iconMenuRed"></i></a></li>
-                        	
                         </ul>
                     </div>
                     <div id="install_by_step_edit_map_menu_erase" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
@@ -672,7 +669,6 @@
 							<li><a href="#" class="btn btn-circle btn-default btn-menu bGommeSize" data-size="10"><i class="fas fa-circle" style="font-size: 22px;position: relative;top: -0px;"></i></a></li>
 							<li><a href="#" class="btn btn-circle btn-default btn-menu bGommeSize" data-size="5" ><i class="fas fa-circle" style="font-size: 16px;position: relative;top: -2px;"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-menu bGommeSize selected" data-size="1" ><i class="fas fa-circle" style="font-size: 10px;position: relative;top: -5px;"></i></a></li>
-                        	
                         </ul>
                     </div>
                     
@@ -714,7 +710,6 @@
                                 <div class="modal-header">
                                     <div class="actions mh100vh_55">
                                         <div class="h100vh_160" style="overflow:auto">
-                                            
                                             <section class="panel panel-success">
                                                 <header class="panel-heading">
                                                     <h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fas fa-info"></i></h2>
@@ -852,7 +847,7 @@
                                         <div class="h100vh_160" style="overflow:auto">
                                             <form>
                                                 <div class="form-group">
-                                                    <label class="col-xs-4 control-label">Area color</label>
+                                                    <label class="col-xs-4 control-label"><?php echo __('Area Color');?></label>
                                                     <div class="col-xs-8">
                                                         <div id="install_by_step_edit_map_area_color_elem" class="input-group color input-group-sm">
                                                             <span class="input-group-addon"><i class="fas fa-stop preview_color"></i></span>
@@ -861,64 +856,77 @@
                                                     </div>
 													<div class="iro-colorpicker" data-color_init="#579fb1"></div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label class="col-xs-4 control-label" for="inputSuccess"><?php echo __('LED Color');?></label>
+												<div class="form-group sep">
+                                                    <label class="col-xs-4 control-label"><?php echo __('LED Color');?></label>
                                                     <div class="col-xs-8">
-                                                        <select id="install_by_step_edit_map_led_color_mode" name="led_color_mode" class="form-control input-sm mb-md selectChangeAffGroup">
-                                                            <option value="Automatic"><?php echo __('Automatic');?></option>
-                                                            <option value="Manual"><?php echo __('Manual');?></option>
-                                                        </select>
-                                                    </div>
+														<div class="col-xs-12" style="padding:0; margin-bottom:5px;">
+															<select id="install_by_step_edit_map_led_color_mode" name="led_color_mode" class="form-control input-sm mb-md selectChangeAffGroup">
+																<option value="Automatic"><?php echo __('Automatic');?></option>
+																<option value="Manual"><?php echo __('Manual');?></option>
+															</select>
+														</div>
+														<div id="install_by_step_edit_map_led_color_group" class="col-xs-12" style="padding:0">
+																<div id="install_by_step_edit_map_led_color_elem" class="input-group color input-group-sm">
+																	<span class="input-group-addon"><i class="fas fa-stop preview_color"></i></span>
+																	<input id="install_by_step_edit_map_led_color" name="led_color" type="text" class="form-control" value="#ff92b4">
+																</div>
+															<div class="iro-colorpicker" data-color_init="#ff92b4"></div>
+														</div>
+													</div>
                                                 </div>
-                                                <div id="install_by_step_edit_map_led_color_group" class="form-group">
-                                                    <label class="col-xs-4 control-label">LED color</label>
+                                                <div class="form-group sep">
+                                                    <label class="col-xs-4 control-label"><?php echo __('LED Animation');?></label>
                                                     <div class="col-xs-8">
-                                                        <div id="install_by_step_edit_map_led_color_elem" class="input-group color input-group-sm">
-                                                            <span class="input-group-addon"><i class="fas fa-stop preview_color"></i></span>
-                                                            <input id="install_by_step_edit_map_led_color" name="led_color" type="text" class="form-control" value="#ff92b4">
+                                                    	<div class="col-xs-12" style="padding:0;margin-bottom:5px;">
+                                                            <select id="install_by_step_edit_map_led_animation_mode" name="led_animation_mode" class="form-control input-sm mb-md selectChangeAffGroup">
+                                                                <option value="Automatic"><?php echo __('Automatic');?></option>
+                                                                <option value="Manual"><?php echo __('Manual');?></option>
+                                                            </select>
+                                                    	</div>
+                                                        <div id="install_by_step_edit_map_led_animation_group" class="col-xs-12" style="padding:0">
+                                                            <select id="install_by_step_edit_map_led_animation" name="led_animation" class="form-control input-sm mb-md">
+                                                                <option value="1"><?php echo __('Progress');?></option>
+                                                                <option value="2"><?php echo __('Progress from center');?></option>
+                                                                <option value="3"><?php echo __('Rainbow');?></option>
+                                                                <option value="4"><?php echo __('K2000');?></option>
+                                                                <option value="5"><?php echo __('Blink');?></option>
+                                                                <option value="6"><?php echo __('Blink 2');?></option>
+                                                                <option value="7"><?php echo __('Police');?></option>
+                                                                <option value="8"><?php echo __('Fade');?></option>
+                                                                <option value="9"><?php echo __('Move');?></option>
+                                                                <option value="10"><?php echo __('Light');?></option>
+                                                            </select>
                                                         </div>
                                                     </div>
-													<div class="iro-colorpicker" data-color_init="#ff92b4"></div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label class="col-xs-4 control-label" for="inputSuccess"><?php echo __('LED Animation');?></label>
+                                                <div class="form-group sep">
+                                                    <label class="col-xs-4 control-label"><?php echo __('Max Speed');?></label>
                                                     <div class="col-xs-8">
-                                                        <select id="install_by_step_edit_map_led_animation_mode" name="led_animation_mode" class="form-control input-sm mb-md selectChangeAffGroup">
-                                                            <option value="Automatic"><?php echo __('Automatic');?></option>
-                                                            <option value="Manual"><?php echo __('Manual');?></option>
-                                                        </select>
+                                                    	<div class="col-xs-12" style="padding:0;margin-bottom:5px;">
+                                                            <select id="install_by_step_edit_map_max_speed_mode" name="max_speed_mode" class="form-control input-sm mb-md selectChangeAffGroup">
+                                                                <option value="Automatic"><?php echo __('Automatic');?></option>
+                                                                <option value="Manual"><?php echo __('Manual');?></option>
+                                                            </select>
+                                                        </div>
+                                                        <div id="install_by_step_edit_map_max_speed_group" class="col-xs-12 input-group input-group-sm mb-md" style="padding:0">
+                                                            <input type="number" id="install_by_step_edit_map_max_speed" name="max_speed" class="form-control input-sm mb-md" />
+                                                            <span class="input-group-addon">m/s</span>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div id="install_by_step_edit_map_led_animation_group" class="form-group">
-                                                    <label class="col-xs-4 control-label" for="inputSuccess"><?php echo __('Animation');?></label>
+                                                <div class="form-group sep">
+                                                    <label class="col-xs-4 control-label"><?php echo __('Min Obstacle Distance');?></label>
                                                     <div class="col-xs-8">
-                                                        <select id="install_by_step_edit_map_led_animation" name="led_animation" class="form-control input-sm mb-md">
-                                                            <option value="1"><?php echo __('Progress');?></option>
-                                                            <option value="2"><?php echo __('Progress from center');?></option>
-                                                            <option value="3"><?php echo __('Rainbow');?></option>
-                                                            <option value="4"><?php echo __('K2000');?></option>
-                                                            <option value="5"><?php echo __('Blink');?></option>
-                                                            <option value="6"><?php echo __('Blink 2');?></option>
-                                                            <option value="7"><?php echo __('Police');?></option>
-                                                            <option value="8"><?php echo __('Fade');?></option>
-                                                            <option value="9"><?php echo __('Move');?></option>
-                                                            <option value="10"><?php echo __('Light');?></option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-xs-4 control-label" for="inputSuccess"><?php echo __('Max speed');?></label>
-                                                    <div class="col-xs-8">
-                                                        <select id="install_by_step_edit_map_max_speed_mode" name="max_speed_mode" class="form-control input-sm mb-md selectChangeAffGroup">
-                                                            <option value="Automatic"><?php echo __('Automatic');?></option>
-                                                            <option value="Manual"><?php echo __('Manual');?></option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div id="install_by_step_edit_map_max_speed_group" class="form-group">
-                                                    <label class="col-xs-4 control-label" for="inputSuccess"><?php echo __('Max speed');?></label>
-                                                    <div class="col-xs-8">
-                                                        <input type="number" id="install_by_step_edit_map_max_speed" name="max_speed" class="form-control input-sm mb-md" />
+                                                    	<div class="col-xs-12" style="padding:0;margin-bottom:5px;">
+															<select id="install_by_step_edit_map_min_distance_obstacle_mode" name="min_distance_obstacle_mode" class="form-control input-sm mb-md selectChangeAffGroup">
+																<option value="Automatic"><?php echo __('Automatic');?></option>
+																<option value="Manual"><?php echo __('Manual');?></option>
+															</select>
+                                                        </div>
+                                                        <div id="install_by_step_edit_map_min_distance_obstacle_group" class="col-xs-12 input-group input-group-sm mb-md" style="padding:0">
+                                                            <input type="number" id="install_by_step_edit_map_min_distance_obstacle" name="min_distance_obstacle" class="form-control input-sm mb-md" />
+                                                            <span class="input-group-addon">cm</span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </form>
@@ -1129,7 +1137,6 @@
                                                         <div class="curseur"></div>
                                                     </div>
                                                 </div>
-                                                
                                             </div>
                                         </div>
                                         
@@ -1362,7 +1369,7 @@
 											
 											<div class="checkbox checkbox_wrapper">
 												<label>
-													<input type="checkbox" value="" id="checkboxHelpArea">
+													<input type="checkbox" value="" class="checkboxHelpArea">
 													<?= _('Don\'t show this message again')?>
 												</label>
 											</div>
@@ -1403,7 +1410,7 @@
 											
 											<div class="checkbox checkbox_wrapper">
 												<label>
-													<input type="checkbox" value="" id="checkboxHelpForbidden">
+													<input type="checkbox" value="" class="checkboxHelpForbidden">
 													<?= _('Don\'t show this message again')?>
 												</label>
 											</div>
@@ -1441,7 +1448,7 @@
 											<div style="clear:both;"></div>
 											<div class="checkbox checkbox_wrapper">
 												<label>
-													<input type="checkbox" value="" id="checkboxHelpGotopose">
+													<input type="checkbox" value="" class="checkboxHelpGotopose">
 													<?= _('Don\'t show this message again')?>
 												</label>
 											</div>
@@ -1454,7 +1461,7 @@
                     </div>
 					
                     <div class="popupHelp">
-                    	<h2>Help</h2>
+                    	<h2><?= _('Help')?></h2>
                     	<ul style="color:#000;">
                         	<li><div class="iconForbiddenArea"><i class="fas fa-vector-square"></i><i class="fa fa-minus-circle iconMenuRed"></i></div><span class="description"><?= _('Add forbidden area')?></span></li>
                         	<li><i class="fa fa-draw-polygon iconMenuGreen" style="font-size: 26px;"></i><span class="description"><?= _('Add custom area')?></span></li>
@@ -1474,7 +1481,6 @@
                         </ul>
                         <p class="legende"><?= _('Click to hide')?></p>
                     </div>
-                    
                     
                 </div>
                 
@@ -1562,13 +1568,13 @@
 										<div class="modalRealTest_content">
 											<p><?= _('Please choose a start position')?></p>
 											<div class="form-group">
-												<select class="form-control form-fa" id="real_test_start">
+												<select class="form-control form-fa real_test_start">
 													<option value=""><?= _('Start position')?></option>
 												</select>
 											</div>
 											<p><?= _('Please choose a destination')?></p>
 											<div class="form-group">
-												<select class="form-control form-fa" id="real_test_end">
+												<select class="form-control form-fa real_test_end">
 													<option value=""><?= _('Arrival position')?></option>		
 												</select>
 											</div>
@@ -1590,9 +1596,9 @@
 									<div class="h100vh_160" style="overflow:auto; text-align:center">
 										<div class="modalRealTestResult_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
 										<div class="modalRealTestResult_content text-center">
-											<div id="start_point">
+											<div class="start_point">
 												<h4><?= _('Go to start position')?></h4>
-												<span id="start_point_text"></span>
+												<span class="start_point_text"></span>
 												<div class="row" style="margin: 0;">
 													<div class="col-xs-3">
 														<a href="#" class="stop_move btn btn-danger btn-circle" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Stop move" style="display: none;"><i class="fa fa-stop battery-ko"></i></a>
@@ -1605,9 +1611,9 @@
 													</div>														
 												</div>														
 											</div>
-											<div id="end_point">
+											<div class="end_point">
 												<h4><?= _('Go to destination')?></h4>
-												<span id="end_point_text"></span>
+												<span class="end_point_text"></span>
 												<div class="row" style="margin: 0;">
 													<div class="col-xs-3">
 														<a href="#" class="stop_move btn btn-danger btn-circle" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Stop move" style="display: none;"><i class="fa fa-stop battery-ko"></i></a>
@@ -1620,10 +1626,10 @@
 													</div>														
 												</div>
 											</div>
-											<div id="result_RealTest" style="border-top:1px solid #DCDCDC">
-												<h4><?= _('Battery used :') ?> <span id="battery_used">0</span> %</h4>
+											<div class="result_RealTest" style="border-top:1px solid #DCDCDC">
+												<h4><?= _('Battery used :') ?> <span class="battery_used">0</span> %</h4>
 												<p><?= _('Use this result as reference for battery configuration') ?></p>
-												<a href="#" id="bUseRealTest" class="btn btn-success"><?php echo __('Use');?></a>
+												<a href="#" class="btn btn-success bUseRealTest"><?php echo __('Use');?></a>
 											</div>
 										</div>
 									</div>
@@ -1678,7 +1684,7 @@
 											<div class="form-group nopymy">
 												<label class="col-xs-12 col-md-3 control-label" for="password"><?php echo __('Password');?></label>
 												<div class="col-xs-12 col-md-6 input-group input-group-icon">
-													<input id="install_by_step_maintenance_i_maintenance_password" name="password" type="password" required="required" class="form-control" pattern="(?=^.{8,}$)(?=.+[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|0-9])(?=.+[a-z])(?=.+[A-Z]).*$">
+													<input id="install_by_step_maintenance_i_maintenance_password" name="password" type="password" required="required" class="form-control" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|0-9]).{8,}">
 													<span class="input-group-addon">
 														<span class="icon icon-lg">
 															<i class="fa fa-lock"></i>
@@ -1690,7 +1696,7 @@
 											<div class="form-group">
 												<label class="col-xs-12 col-md-3 control-label" for="cpassword"><?php echo __('Confirm password');?></label>
 												<div class="col-xs-12 col-md-6 input-group input-group-icon">
-													<input id="install_by_step_maintenance_i_maintenance_cpassword" name="cpassword" type="password" required="required" class="form-control" pattern="(?=^.{8,}$)(?=.+[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|0-9])(?=.+[a-z])(?=.+[A-Z]).*$">
+													<input id="install_by_step_maintenance_i_maintenance_cpassword" name="cpassword" type="password" required="required" class="form-control" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|0-9]).{8,}">
 													<span class="input-group-addon">
 														<span class="icon icon-lg">
 															<i class="fa fa-lock"></i>
@@ -1729,7 +1735,7 @@
                 
                 <div class="loaded col-md-12" style="padding-top:30px;">
                 	
-					<ul class="tuiles row" id="bAddManagerTuile" style="margin-bottom:30px;">
+					<ul class="tuiles row bAddManagerTuile" style="margin-bottom:30px;">
 						<li class="col-xs-6" style="margin-left: 25%;">
 							<div class="is_checkbox tuile_img no_update bAddManager" style="height:max-content;bottom:0;border-radius:10px">
 								<i class="fas fa-user-plus" style="padding-top:5px"></i>
@@ -1763,7 +1769,7 @@
 											<div style="clear:both;"></div>
 											<div class="checkbox checkbox_wrapper">
 												<label>
-													<input type="checkbox" value="" id="checkboxHelpManager">
+													<input type="checkbox" value="" class="checkboxHelpManager">
 													<?= _('Don\'t show this message again')?>
 												</label>
 											</div>
@@ -1817,7 +1823,7 @@
                                                 <div class="form-group nopymy">
                                                     <label class="col-xs-12 col-md-3 control-label" for="password"><?php echo __('Password');?></label>
                                                     <div class="col-xs-12 col-md-6 input-group input-group-icon">
-                                                        <input id="install_by_step_manager_i_manager_password" name="password" type="password" required="required" class="form-control" pattern="(?=^.{8,}$)(?=.+[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|0-9])(?=.+[a-z])(?=.+[A-Z]).*$"> 
+                                                        <input id="install_by_step_manager_i_manager_password" name="password" type="password" required="required" class="form-control" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|0-9]).{8,}"> 
 														<span class="input-group-addon">
 															<span class="icon icon-lg">
 																<i class="fa fa-lock"></i>
@@ -1829,7 +1835,7 @@
                                                 <div class="form-group">
                                                     <label class="col-xs-12 col-md-3 control-label" for="cpassword"><?php echo __('Confirm password');?></label>
                                                     <div class="col-xs-12 col-md-6 input-group input-group-icon">
-                                                        <input id="install_by_step_manager_i_manager_cpassword" name="cpassword" type="password" required="required" class="form-control" pattern="(?=^.{8,}$)(?=.+[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|0-9])(?=.+[a-z])(?=.+[A-Z]).*$">
+                                                        <input id="install_by_step_manager_i_manager_cpassword" name="cpassword" type="password" required="required" class="form-control" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|0-9]).{8,}">
 														<span class="input-group-addon">
 															<span class="icon icon-lg">
 																<i class="fa fa-lock"></i>
@@ -1855,8 +1861,8 @@
             </div>
             <footer>
 				<a href="#" class="btn btn-default button_goto btn_footer_left btn_50 btn_back" data-goto="install_by_step_maintenance"><?php echo __('Back');?></a>
-            	<a href="#" id="bValidManager_Next" class="btn btn-primary button_goto bValidManager btn_footer_right btn_50" data-goto="install_by_step_service_book" style="display:none;"><?php echo __('Next');?></a>
-            	<a href="#" id="bValidManager_Skip" class="btn btn-warning button_goto bValidManager btn_footer_right btn_50" data-goto="install_by_step_service_book"><?php echo __('Skip');?></a>
+            	<a href="#" class="bValidManagerNext btn btn-primary button_goto bValidManager btn_footer_right btn_50" data-goto="install_by_step_service_book" style="display:none;"><?php echo __('Next');?></a>
+            	<a href="#" class="bValidManagerSkip btn btn-warning button_goto bValidManager btn_footer_right btn_50" data-goto="install_by_step_service_book"><?php echo __('Skip');?></a>
             </footer>
         </section>
 		
