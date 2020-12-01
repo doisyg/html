@@ -81,6 +81,13 @@ $(document).ready(function(e) {
 		}
 	});
 	
+	$('.joystickDiv').on('blur', function(e) {
+		if(isDown)
+		{
+			SetCurseurV2(xCentre, yCentre);
+		}
+	});
+	
 	
 	//setInterval(RefreshJoystickOn, 300);
 	
