@@ -584,4 +584,7 @@ function UserInitMap()
 	//window.panZoomUser = {};
 	//window.panZoomUser.getZoom = function () { return 1; }
 	UserRefreshZoomView();
+	
+	
+	$('.user_edit_map_loading').hide();
 }

@@ -1482,6 +1482,7 @@
                         <p class="legende"><?= _('Click to hide')?></p>
                     </div>
                     
+					<div class="install_by_step_edit_map_loading loading_big loading_map"><i class="fa fa fa-spinner fa-pulse fa-3x"></i></div>
                 </div>
                 
                 <div id="install_by_step_edit_map_zoom_popup" style="position:absolute; top:20px; left:20px; width:101px; height:101px; border:1px solid #000; overflow:hidden; display:none; z-index:8000;">

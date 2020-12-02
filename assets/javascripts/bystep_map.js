@@ -981,6 +981,8 @@ function ByStepInitMap()
 	//window.panZoom = {};
 	//window.panZoom.getZoom = function () { return 1; }
 	RefreshZoomView();
+	
+	$('.install_by_step_edit_map_loading').hide();
 }
 
 function ByStepShakeActiveElement()
