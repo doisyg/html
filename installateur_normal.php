@@ -1505,7 +1505,7 @@
                 
             </div>
             <footer>
-                <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="install_normal_setup"><?php echo __('Back');?></a>
+                <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="install_normal_setup_tops"><?php echo __('Back');?></a>
             </footer>
         </section>
         
