@@ -1000,7 +1000,7 @@
                                         
                                         	<form>
                                                 <div class="form-group">
-                                                    <label class="col-xs-4 control-label">Name</label>
+                                                    <label class="col-xs-4 control-label"><?= __('Name')?></label>
                                                     <div class="col-xs-8">
                                                         <input type="text" id="install_by_step_edit_map_dock_name" name="dock_name" value="" class="form-control input-sm mb-md" />
                                                     </div>
@@ -1016,19 +1016,19 @@
                                                 <input type="hidden" id="install_by_step_edit_map_dock_number" name="dock_number" value="1" />
                                                 
                                                 <div class="form-group">
-                                                    <label for="dock_is_master" class="col-xs-10 control-label">Is default docking station for this robot</label>
+                                                    <label for="dock_is_master" class="col-xs-10 control-label"><?= __('Is default docking station for this robot')?></label>
                                                     <div class="col-xs-2">
                                                         <input type="checkbox" id="install_by_step_edit_map_dock_is_master" name="dock_is_master" class="input-sm mb-md" style="height:auto;" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="col-xs-4 control-label">Comment</label>
+                                                    <label class="col-xs-4 control-label"><?= __('Comment')?></label>
                                                     <div class="col-xs-8">
                                                         <textarea id="install_by_step_edit_map_dock_comment" name="dock_comment" class="form-control input-sm mb-md"></textarea>
                                                     </div>
                                                 </div>
                                                 <fieldset>
-                                                	<legend>Undock procedure</legend>
+                                                	<legend><?= __('Undock procedure')?></legend>
                                                     <div style="text-align:left;">
                                                         <a href="#" class="bByStepUndockProcedureAddElem btn btn-circle btn-default"><i class="fa fa-plus"></i></a>
                                                         <ul class="list_undock_procedure list_elem">

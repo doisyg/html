@@ -165,11 +165,11 @@ $(document).ready(function(e) {
 				
 				if (data.O == wycaApi.CommandCode.GET_CURRENT_MAP_COMPLETE || data.O == wycaApi.CommandCode.GET_CURRENT_MAP_DATA)
 				{
-					$('#modalLoading h3').html('Updating map');
+					$('#modalLoading h3').html(textUpdatingMap);
 				}
 				else
 				{
-					$('#modalLoading h3').html('Loading');
+					$('#modalLoading h3').html(textLoading);
 				}
 				
 				valeur = parseInt(data.I / data.NB * 100);
