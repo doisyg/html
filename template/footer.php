@@ -47,6 +47,8 @@
 
 		var user_api_key = '<?php echo $_SESSION["api_key"];?>';
 		// TODO var id_map_last = <?php // echo $currentIdMap;?>;
+		var textLoading = "<?php echo __js('Loading');?>";
+		var textUpdatingMap = "<?php echo __js('Updating Map');?>";
 		var textSelectOnOrMoreTops = "<?php echo __js('You must select one or more tops');?>";
 		var textAvailablesTopsSaved = "<?php echo __js('Available tops saved');?>";
 		var textIndicateAName = "<?php echo __js('You must indicate a name');?>";
