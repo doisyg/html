@@ -140,8 +140,8 @@
 												<h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fas fa-info"></i></h2>
 											</header>
 											<div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
-												<strong><?= _('Action finished !') ?></strong><br />
-												<?= _('No error during action.') ?>
+												<strong><?=__('Action finished !') ?></strong><br />
+												<?=__('No error during action.') ?>
 											</div>
 										</section>
 										<section class="panel panel-danger">
@@ -149,7 +149,7 @@
 												<h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fa fa-remove"></i></h2>
 											</header>
 											<div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
-												<strong><?= _('Error !') ?></strong><br />
+												<strong><?=__('Error !') ?></strong><br />
 												<span class="error_details"></span>
 											</div>
 										</section>
@@ -158,7 +158,7 @@
 												<h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fas fa-exclamation-triangle"></i></h2>
 											</header>
 											<div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
-												<strong><?= _('Warning !') ?></strong><br />
+												<strong><?=__('Warning !') ?></strong><br />
 												<span class="error_details"></span>
 											</div>
 										</section>
@@ -180,21 +180,21 @@
 								<div class="actions mh100vh_55">
 									<div class="h100vh_160" style="overflow:auto; text-align:center;">
 										<h2 class="h2ModalGoTo">
-											<?= _('Go to Dock ?') ?>
+											<?=__('Go to Dock ?') ?>
 											<div class="btn-circle btn-lg btn-popup">
 												<i class="fas fa-charging-station iconMenuGreen" style="position: relative;top: -10px;left: -5px;"></i>
 											</div>
 										</h2>
-										<h4 class="h4ModalGoTo"><?= _('Do you want to send the vehicle to this docking station ?') ?></h4>
+										<h4 class="h4ModalGoTo"><?=__('Do you want to send the vehicle to this docking station ?') ?></h4>
 										
 										<h5 class="h5ModalGoTo">
-											<?= _('Click on the stop icon to cancel action while the vehicle is moving.') ?>
+											<?=__('Click on the stop icon to cancel action while the vehicle is moving.') ?>
 										</h5>
 										
 										<div class="checkbox checkbox_wrapper" style="display:none">
 											<label>
 												<input type="checkbox" value="" class="checkboxGotodock">
-												<?= _('Don\'t show this message again')?>
+												<?=__('Don\'t show this message again')?>
 											</label>
 										</div>
 										<a href="#" class="btn btn-default btn_footer_left btn_50 bModalCancelGoToDock" data-dismiss="modal" ><?php echo __('Cancel');?></a>
@@ -213,21 +213,21 @@
 								<div class="actions mh100vh_55">
 									<div class="h100vh_160" style="overflow:auto; text-align:center;">
 										<h2 class="h2ModalGoTo">
-											<?= _('Go to Augmented Pose ?') ?>
+											<?=__('Go to Augmented Pose ?') ?>
 											<div class="btn-circle btn-lg btn-popup">
 												<div class="iconAugmentedPose" style="top: -15px;left: -10px;"><i class="fas fa-map-marker-alt iconMenuPurple"></i><i class="fas fa-barcode"></i></div>
 											</div>
 										</h2>
-										<h4 class="h4ModalGoTo"><?= _('Do you want to send the vehicle to this augmented pose ?') ?></h4>
+										<h4 class="h4ModalGoTo"><?=__('Do you want to send the vehicle to this augmented pose ?') ?></h4>
 										
 										<h5 class="h5ModalGoTo">
-											<?= _('Click on the stop icon to cancel action while the vehicle is moving.') ?>
+											<?=__('Click on the stop icon to cancel action while the vehicle is moving.') ?>
 										</h5>
 										
 										<div class="checkbox checkbox_wrapper" style="display:none">
 											<label>
 												<input type="checkbox" value="" class="checkboxGotoaugmentedpose">
-												<?= _('Don\'t show this message again')?>
+												<?=__('Don\'t show this message again')?>
 											</label>
 										</div>
 										<a href="#" class="btn btn-default btn_footer_left btn_50 bModalCancelGoToAugmentedPose" data-dismiss="modal" ><?php echo __('Cancel');?></a>
@@ -245,7 +245,7 @@
 							<div class="modal-header">
 								<div class="actions mh100vh_55">
 									<div class="h100vh_160" style="overflow:auto; text-align:center">
-										<h4><?= _('Saving map before testing')?></h4>
+										<h4><?=__('Saving map before testing')?></h4>
 										<span id="start_point_text"></span>
 										<div class="row" style="margin: 0;">
 											<div class="col-xs-3">
@@ -311,13 +311,13 @@
 									
 										<form>
 											<div class="form-group">
-												<label class="col-xs-4 control-label"><?= _('Name')?></label>
+												<label class="col-xs-4 control-label"><?=__('Name')?></label>
 												<div class="col-xs-8">
 													<input type="text" id="manager_edit_map_poi_name" name="poi_name" value="" class="form-control input-sm mb-md" />
 												</div>
 											</div>
 											<div class="form-group">
-												<label class="col-xs-4 control-label"><?= _('Comment')?></label>
+												<label class="col-xs-4 control-label"><?=__('Comment')?></label>
 												<div class="col-xs-8">
 													<textarea id="manager_edit_map_poi_comment" name="poi_comment" class="form-control input-sm mb-md"></textarea>
 												</div>
@@ -341,14 +341,14 @@
 							<div class="modal-header">
 								<div class="actions mh100vh_55">
 									<div class="h100vh_160" style="overflow:auto; text-align:center;">
-										<h2><?= _('Go to position') ?></h2>
-										<h4 style="text-align:left;margin:30px 0;"><?= _('Click on the map to choose the position you\'re aiming for.') ?></h4>
-										<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the menu icon to cancel.') ?></h4>
+										<h2><?=__('Go to position') ?></h2>
+										<h4 style="text-align:left;margin:30px 0;"><?=__('Click on the map to choose the position you\'re aiming for.') ?></h4>
+										<h4 style="text-align:justify;margin:30px 0;"><?=__('Click on the menu icon to cancel.') ?></h4>
 										<div class="btn-circle btn-lg btn-popup" style="display: block;">
 											<i class="fas fa-crosshairs iconMenuBlue"></i>
 											<i class="fas fa-times times_icon iconMenuRed" style="display: inline-block;"></i>
 										</div>
-										<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the stop icon to cancel action while the vehicle is moving.') ?></h4>
+										<h4 style="text-align:justify;margin:30px 0;"><?=__('Click on the stop icon to cancel action while the vehicle is moving.') ?></h4>
 										
 										<div class="btn-circle btn-lg btn-popup btn-danger" style="display: block;">
 											<i class="fa fa-stop"></i>
@@ -357,7 +357,7 @@
 										<div class="checkbox checkbox_wrapper">
 											<label>
 												<input type="checkbox" value="" class="checkboxHelpGotopose">
-												<?= _('Don\'t show this message again')?>
+												<?=__('Don\'t show this message again')?>
 											</label>
 										</div>
 										<a href="#" class="btn btn-primary btn_footer_left btn_100 bHelpClickGotoPoseOk" data-dismiss="modal" ><?php echo __('Ok');?></a>
@@ -369,20 +369,20 @@
 				</div>
 				
 				<div class="popupHelp">
-					<h2><?= _('Help')?></h2>
+					<h2><?=__('Help')?></h2>
 					<ul style="color:#000;">
-						<li><i class="fa fa-map-marker-alt iconMenuBlue"></i><span class="description"><?= _('Add POI')?></span></li>
-						<li><i class="fa fa-crosshairs iconMenuBlue"></i><span class="description"><?= _('Move the robot to this point')?></span></li>
-						<li><i class="fa fa-gamepad iconMenuPurple"></i><span class="description"><?= _('Teleop the robot')?></span></li>
-						<li style="position:relative;font-size:16px"><img class="route" src="assets/images/route_green.svg"/><span class="description" style="margin-left: 40px;position: relative;top: 3px;"><?= _('Test go to POI, dock or augmented pose')?></span></li>
+						<li><i class="fa fa-map-marker-alt iconMenuBlue"></i><span class="description"><?=__('Add POI')?></span></li>
+						<li><i class="fa fa-crosshairs iconMenuBlue"></i><span class="description"><?=__('Move the robot to this point')?></span></li>
+						<li><i class="fa fa-gamepad iconMenuPurple"></i><span class="description"><?=__('Teleop the robot')?></span></li>
+						<li style="position:relative;font-size:16px"><img class="route" src="assets/images/route_green.svg"/><span class="description" style="margin-left: 40px;position: relative;top: 3px;"><?=__('Test go to POI, dock or augmented pose')?></span></li>
 						<li style="position:relative;">
 						<svg class="svg_popupHelp_robot" xmlns="http://www.w3.org/2000/svg">
 							<circle cx="20" cy="20" r="12" class="robot_elem robot_elem_fond"></circle>
 							<polyline points="16 16 24 20 16 24" stroke="#FFFFFF" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round" class="robot_elem" transform="rotate(-90,20,20)"></polyline>
 						</svg>
-						<span class="description" style="margin-left: 40px;"><?= _('Robot position')?></span></li>
+						<span class="description" style="margin-left: 40px;"><?=__('Robot position')?></span></li>
 					</ul>
-					<p class="legende"><?= _('Click to hide')?></p>
+					<p class="legende"><?=__('Click to hide')?></p>
 				</div>
 				
 				<div class="manager_edit_map_loading loading_big loading_map"><i class="fa fa fa-spinner fa-pulse fa-3x"></i></div>
@@ -429,7 +429,7 @@
         </header>
         <div class="content">
             	<div class="manager_top_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
-				<h5 class="text-center" style="margin-bottom:30px;"><?= _('Please select the active top for the vehicle.') ?></h5>
+				<h5 class="text-center" style="margin-bottom:30px;"><?=__('Please select the active top for the vehicle.') ?></h5>
                 <ul class="tuiles row">
                 </ul>
                 
@@ -473,7 +473,7 @@
         <div class="content">
             
 			<h4 style="text-align:center"><?= __('Move the robot near a reflector (dock or augmented pose) then click on the recovery button') ?></h4>
-			<div style="text-align:center; margin-top:20px;"><a href="#" class="bRecovery ifDocked_disabled btn btn-warning btn_big_popup "><?= _('Recovery') ?></a></div>
+			<div style="text-align:center; margin-top:20px;"><a href="#" class="bRecovery ifDocked_disabled btn btn-warning btn_big_popup "><?=__('Recovery') ?></a></div>
 			
 		
 			<div style="text-align:center"><a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a></div>
@@ -553,7 +553,7 @@
 													</span>
 												</div>
 											</div>
-											<p class="password_format" style="margin-bottom:0"><?= _('A valid mail adress.')?> </p>
+											<p class="password_format" style="margin-bottom:0"><?=__('A valid mail adress.')?> </p>
 											<div class="form-group nopymy">
 												<label class="col-xs-12 col-md-3 control-label" for="password"><?php echo __('Password');?></label>
 												<div class="col-xs-12 col-md-6 input-group input-group-icon">
@@ -565,7 +565,7 @@
 													</span>
 												</div>
 											</div>
-											<p class="password_format"><?= _('8 characters, lower and uppercase, digit or special char.')?> </p>
+											<p class="password_format"><?=__('8 characters, lower and uppercase, digit or special char.')?> </p>
 											<div class="form-group">
 												<label class="col-xs-12 col-md-3 control-label" for="cpassword"><?php echo __('Confirm password');?></label>
 												<div class="col-xs-12 col-md-6 input-group input-group-icon">
@@ -577,7 +577,7 @@
 													</span>
 												</div>
 											</div>
-											<p class="password_format"><?= _('8 characters, lower and uppercase, digit or special char.')?> </p>
+											<p class="password_format"><?=__('8 characters, lower and uppercase, digit or special char.')?> </p>
 										</form>
 									</div>
 									
