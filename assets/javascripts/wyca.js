@@ -219,7 +219,7 @@ $(document).ready(function(e) {
 							alert_wyca('Error step site ; ' + e.responseText);
 						}
 					});
-					
+					$('#modalBack').modal('hide');
 					$('#pages_install_by_step').removeClass('active');
 					$('#pages_install_normal').addClass('active');
 					
