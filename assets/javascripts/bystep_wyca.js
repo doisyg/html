@@ -73,7 +73,7 @@ $(document).ready(function(e) {
 			dataType: 'json',
 			success: function(data) {
 				if (data.need_restart == 1)
-					window.location.href = window.location.href;
+					window.location.href = app_url; // equivalent window.location.reload()
 			},
 			error: function(e) {
 				alert_wyca('Error set lang ; ' + e.responseText);
