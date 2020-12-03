@@ -177,7 +177,7 @@ $(document).ready(function(e) {
 	
 	/* ------------------------- GESTION BTN GOTO -----------------------*/
 	$( 'body' ).on( 'click', '.button_goto', function(e) {
-		
+		if(isDown)SetCurseurV2(xCentre, yCentre); // REINIT JOYSTICK TO MIDDLE
 		let anim_show = true; // TRIGGER ANIM ? 
 		if($(this).hasClass('btn_back')){
 			

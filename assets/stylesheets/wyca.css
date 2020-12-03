@@ -8,6 +8,27 @@ body{color:#777;font-family:"Open Sans",Arial,sans-serif;line-height:22px;margin
 .icone_header i { display:block; }
 .icone_header span { font-size:12px; }
 body > header { background-color:#589FB2; padding:5px; color:#FFFFFF; height:54px;}
+header .pull-right{position: absolute;right: 2px;top: 11px;}
+header .pull-left{    position: absolute;left: 0;top: 5px;}
+
+img.nav_logo{
+	height: 34px;
+    padding: 5px;
+	display:inline-block;
+}
+
+.title_section{
+	display:inline-block;
+	font-size:20px;
+	margin:0;
+	vertical-align: middle;
+	margin-left:5px;
+	max-width:66%;
+}
+
+section.page > header {
+	display:none
+}
 
 #contentAll { position:relative; }
 .global_page { position:absolute; top:0; left:0; display:none; min-height:calc(100vh - 54px); min-height: calc(var(--vh, 1vh) * 100 - 54px); width:100%; }
@@ -58,7 +79,6 @@ ul.tuiles li .tuile_img { background-color:#FFFFFF; color:#333; border:1px solid
 @media only screen and (min-width: 420px){
 	#install_by_step_check ul.tuiles.row{ margin: -20px auto;}
 }
-
 ul.tuiles li a.todo, ul.tuiles li div.todo { background-color:#999; }
 
 ul.tuiles li .tuile_img.is_checkbox { background-color:#EEEEEE; border-color:#666666; }
@@ -548,33 +568,10 @@ ul.list_test li.done { color:#006600; border-color:#006600; }
 	padding:1px;
 }
 
-
 .colorpicker.colorpicker-visible { z-index:10000; }
-
 
 .list_actions li:first-child a.bUpToAction { visibility:hidden; }
 .list_actions li:last-child a.bDownToAction { visibility:hidden; }
-
-
-
-img.nav_logo{
-	height: 40px;
-    padding: 5px;
-	display:inline-block;
-}
-
-.title_section{
-	display:inline-block;
-	font-size:20px;
-	margin:0;
-	vertical-align: middle;
-	margin-left:5px;
-	max-width:66%;
-}
-
-section.page > header {
-	display:none
-}
 
 .btn.btn_25{width:25%;}
 .btn.btn_33{width:33.3333%;}
@@ -1112,6 +1109,19 @@ div.icon_menu .iconForbiddenArea .fa-minus-circle{
 	fill: darkorange;
     stroke-width: 2px;
     stroke: black;
+}
+.loading_map{
+	display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgb(255 255 255 / 66%);
+    bottom: 0;
+    /* display: flex; */
+    margin: 0;
+    z-index: 8000;
+    padding-top: 50%;
 }
 /* */
 ul#MasterDockList li .tuile_img.is_checkbox{border-radius:10px;bottom:0;}

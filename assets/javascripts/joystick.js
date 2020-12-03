@@ -80,10 +80,10 @@ $(document).ready(function(e) {
 			SetCurseurV2((event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX), (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY));
 		}
 	});
-	
-	
-	//setInterval(RefreshJoystickOn, 300);
-	
+	$(document).on('touchcancel', function(e) {
+		isDown = false;
+		SetCurseurV2(xCentre, yCentre);
+	});
 });	
 
 function SetInterfaceManette()

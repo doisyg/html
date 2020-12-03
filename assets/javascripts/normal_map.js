@@ -993,6 +993,8 @@ function NormalInitMap()
 	//window.panZoomNormal = {};
 	//window.panZoomNormal.getZoom = function () { return 1; }
 	NormalRefreshZoomView();
+	
+	$('.install_normal_edit_map_loading').hide();
 }
 
 function NormalShakeActiveElement()

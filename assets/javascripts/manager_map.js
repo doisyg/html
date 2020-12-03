@@ -660,4 +660,6 @@ function ManagerInitMap()
 	//window.panZoomManager = {};
 	//window.panZoomManager.getZoom = function () { return 1; }
 	ManagerRefreshZoomView();
+	
+	$('.manager_edit_map_loading').hide();
 }
