@@ -1302,10 +1302,7 @@ $(document).ready(function(e) {
 			else
 			{
 				$('#install_normal_recovery .bRecovery').removeClass('disabled');
-				console.log(JSON.stringify(data)); 
-				text = wycaApi.AnswerCodeToString(data.A);
-				if (data.M != '') text += '<br />'+data.M;
-				alert_wyca(text);
+				ParseAPIAnswerError(data);
 			}
 		});
 		
@@ -1316,10 +1313,7 @@ $(document).ready(function(e) {
 			else
 			{
 				$('#install_normal_recovery .bRecovery').removeClass('disabled');
-				console.log(JSON.stringify(data)); 
-				text = wycaApi.AnswerCodeToString(data.A);
-				if (data.M != '') text += '<br />'+data.M;
-				alert_wyca(text);
+				ParseAPIAnswerError(data);
 			}
 		});
     });
@@ -1464,10 +1458,7 @@ $(document).ready(function(e) {
 			}
 			else
 			{
-				console.log(JSON.stringify(data)); 
-				text = wycaApi.AnswerCodeToString(data.A);
-				if (data.M != '') text += '<br />'+data.M;
-				alert_wyca(text);
+				ParseAPIAnswerError(data);
 			}
 		});
 		
@@ -1486,10 +1477,7 @@ $(document).ready(function(e) {
 			else
 			{
 				InitTopsActiveNormal();
-				console.log(JSON.stringify(data)); 
-				text = wycaApi.AnswerCodeToString(data.A);
-				if (data.M != '') text += '<br />'+data.M;
-				alert_wyca(text);
+				ParseAPIAnswerError(data);
 			}	
 		});		
 	});
