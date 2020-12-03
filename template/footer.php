@@ -47,26 +47,9 @@
 
 		var user_api_key = '<?php echo $_SESSION["api_key"];?>';
 		// TODO var id_map_last = <?php // echo $currentIdMap;?>;
-		var textLoading = "<?php echo __js('Loading');?>";
-		var textUpdatingMap = "<?php echo __js('Updating Map');?>";
-		var textSelectOnOrMoreTops = "<?php echo __js('You must select one or more tops');?>";
-		var textAvailablesTopsSaved = "<?php echo __js('Available tops saved');?>";
-		var textIndicateAName = "<?php echo __js('You must indicate a name');?>";
-		var textSiteImported = "<?php echo __js('Site successfully imported');?>";
-		var textNameUsed = "<?php echo __js('Name already used please change');?>";
-		var textStartMapping = "<?php echo __js('Start mapping');?>";
-		var textStopNavigation = "<?php echo __js('Stop navigation');?>";
-		var textBuildingMap = "<?php echo __js('Building the map');?>";
-		var textStartAutonomous = "<?php echo __js('Start autonomous navigation');?>";
-		var textBtnCheckTest = "<?php echo __js('Testing');?>";
-		var textBtnCheckNext = "<?php echo __js('Next');?>";
-		var textLessThanOne = "<?php echo __js('Less than 1');?>";
-		var textPasswordRequired = "<?php echo __js('Passwords required.');?>";
-		var textPasswordMatching = "<?php echo __js('Passwords not matching.');?>";
-		var textPasswordPattern = "<?php echo __js('Passwords needs to be 8 character long with at least 1 uppercase letter and 1 special character or digit');?>";
-		var textLoginPattern = "<?php echo __js('Login needs to be a valid mail adress.');?>";
-		</script>
 
+		</script>
+		<script src="<?php echo $_CONFIG['URL'];?>lang/trad_js.php?v=<?php echo $lastUpdate;?>"></script>
 		<!-- Vendor -->
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/jquery/jquery.js"></script>
         <script src="<?php echo $_CONFIG['URL'];?>assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js"></script>
