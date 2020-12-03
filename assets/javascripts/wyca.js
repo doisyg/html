@@ -762,7 +762,7 @@ function GetServiceBooksByStep()
 					case 'en': d_txt = (d.getMonth()+1) + '/' + d.getDate() + '/' +  d.getFullYear() ; break;
 					default: break;
 				}
-				$('#install_by_step_service_book .list_service_books').append('' +
+				$('#install_by_step_service_book .list_service_books').prepend('' +
 						'<li>'+
 						'	<div class="date">'+d_txt+'</div>'+
 						'	<div class="title">'+value.title+'</div>'+
