@@ -78,7 +78,7 @@
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/iro/iro.js"></script>
         
         
-        <script src="<?php echo $_CONFIG['URL'];?>assets/vendor/svg-pan-zoom/svg-pan-zoom.js"></script>
+        <script src="<?php echo $_CONFIG['URL'];?>assets/vendor/svg-pan-zoom/svg-pan-zoom.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/svg-pan-zoom/hammer.js"></script>
 
         <script src="<?php echo $_CONFIG['URL_API'];?>wyca_socket_api.js?v=<?php echo $lastUpdate;?>"></script>
