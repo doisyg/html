@@ -1879,7 +1879,7 @@
                 
                 <div class="loaded col-md-12" style="padding-top:0px;">
 					<h5><?=__('Service books describe the vehicle\'s maintenance and deployement operations') ?></h5>
-                    <a href="#" class="bAddServiceBook btn btn-primary">Add a service book</a>
+                    <a href="#" class="bAddServiceBook btn btn-primary"><?= __('Add a service book')?></a>
                     <ul class="list_service_books list_elem">
                     </ul>
                     
@@ -1935,8 +1935,8 @@
                         <h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fa fa-thumbs-up"></i></h2>
                     </header>
                     <div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
-                        <strong>Congratulations !</strong><br />
-						The installation process is now complete.
+                        <strong><?= __('Congratulations !')?></strong><br />
+						<?= __('The installation process is now complete.') ?>
                     </div>
                 </section>
                 
@@ -1956,7 +1956,7 @@
 									<h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fa fa-question-circle"></i></h2>
 								</header>
 								<div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
-									<h1>You're about to cancel all information not saved.</h1>
+									<h1><?= __('You\'re about to cancel all information not saved.')?></h1>
 								</div>
 							</section>
 							<div style="clear:both;"></div>

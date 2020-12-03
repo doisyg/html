@@ -1178,7 +1178,7 @@
                 </div>         
             </div>
             <footer>
-            	<a href="#" class="btn btn-default btn_footer_left btn_50 button_goto" data-goto="install_normal_setup"><?php echo __('Cancel');?></a>           
+            	<a href="#" class="btn btn-default btn_footer_left btn_50 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>           
                 <a href="#" class="btn btn-primary bSaveTrinaryMap btn_footer_right btn_50"><?php echo __('Save');?></a>
             </footer>
         </section>
@@ -1835,7 +1835,7 @@
                 <div class="install_normal_service_book_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
                 
                 <div class="loaded col-md-12" style="padding-top:30px;">
-                    <a href="#" class="bAddServiceBook btn btn-primary">Add a service book</a>
+                    <a href="#" class="bAddServiceBook btn btn-primary"><?= __('Add a service book')?></a>
                     <ul class="list_service_books list_elem">
                     </ul>
                     

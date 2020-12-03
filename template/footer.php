@@ -49,7 +49,7 @@
 		// TODO var id_map_last = <?php // echo $currentIdMap;?>;
 
 		</script>
-		<script src="<?php echo $_CONFIG['URL'];?>lang/trad_js.php?v=<?php echo $lastUpdate;?>"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>template/trad_js.php?v=<?php echo $lastUpdate;?>"></script>
 		<!-- Vendor -->
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/jquery/jquery.js"></script>
         <script src="<?php echo $_CONFIG['URL'];?>assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js"></script>
