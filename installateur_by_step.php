@@ -1554,7 +1554,7 @@
 						<a href="#" class="btn btn-sm btn-primary bResetValueEblMbl" style="margin-left:50%; transform:translateX(-50%);margin-bottom:10px;"><?php echo __('Reset values');?></a>
 						
 						<p><?=__('For more precise values, try to test battery in real conditions') ?></p>
-						<a href="#" class="real_test btn btn-lg btn-success" style="margin-left:50%; transform:translateX(-50%)"><i class="fas fa-route"></i> <?=('Real Test')?></a>
+						<a href="#" class="real_test btn btn-lg btn-success" style="margin-left:50%; transform:translateX(-50%)"><i class="fas fa-route"></i> <?= __('Real Test')?></a>
 						
 						<a href="#" class="install_by_step_config_next button_goto" data-goto="install_by_step_maintenance" style="display:none;"></a>   
 					</div>
