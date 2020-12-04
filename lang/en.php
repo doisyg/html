@@ -253,5 +253,6 @@ $_LANG['e73bc05f842c4400261bace866c503a2'] = 'Go to Augmented Pose ?';
 $_LANG['15c6ae20d513d6653e8d9df6a4168248'] = 'Do you want to send the vehicle to this augmented pose ?';
 $_LANG['a8d7ea9a5ef3488213f840b861a43421'] = 'Go to POI ?';
 $_LANG['c5617a1349f064e19293818c4b8ad263'] = 'Do you want to send the vehicle to this POI ?';
+$_LANG['53a5ba41fc434b76520c033702270d06'] = 'You need at least 2 docks, POIs or augmented poses to launch real test.';
 
 ?>

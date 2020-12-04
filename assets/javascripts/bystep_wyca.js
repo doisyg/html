@@ -1382,6 +1382,7 @@ $(document).ready(function(e) {
 		wycaApi.GetCurrentMapData(function(data){
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
+				let n = 0 ;
 				$('#pages_install_by_step .modalRealTest_loading').hide();
 				$('#pages_install_by_step .modalRealTest_content').show();
 				$('#pages_install_by_step select.real_test_start > option').hide();
@@ -1390,18 +1391,25 @@ $(document).ready(function(e) {
 				$.each(data.D.pois,function(i, item){
 					$('#pages_install_by_step select.real_test_start').append('<option value="poi_'+item.id_poi+'" data-type="poi" data-id="'+item.id_poi+'" >&#xf3c5 - POI - '+item.name+'</option>' );
 					$('#pages_install_by_step select.real_test_end').append('<option value="poi_'+item.id_poi+'" data-type="poi" data-id="'+item.id_poi+'">&#xf3c5 - POI - '+item.name+'</option>' );
+					n++;
 				});
 				//ADD DOCKS
 				$.each(data.D.docks,function(i, item){
 					$('#pages_install_by_step select.real_test_start').append('<option value="dock_'+item.id_docking_station+'" data-type="dock" data-id="'+item.id_docking_station+'" >&#xf5e7 - Dock - '+item.name+'</option>' );
 					$('#pages_install_by_step select.real_test_end').append('<option value="dock_'+item.id_docking_station+'" data-type="dock" data-id="'+item.id_docking_station+'" >&#xf5e7 - Dock - '+item.name+'</option>' );
+					n++;
 				});
 				//ADD A POSES
 				$.each(data.D.augmented_poses,function(i, item){
 					$('#pages_install_by_step select.real_test_start').append('<option value="augmented_pose_'+item.id_docking_station+'" data-type="augmented_pose" data-id="'+item.id_augmented_pose+'" >&#xf02a; - A. pose - '+item.name+'</option>' );
 					$('#pages_install_by_step select.real_test_end').append('<option value="augmented_pose_'+item.id_docking_station+'" data-type="augmented_pose" data-id="'+item.id_augmented_pose+'" >&#xf02a; - A. pose - '+item.name+'</option>' );
+					n++;
 				});
-				
+				if(n < 2){
+					
+					$('#pages_install_by_step .modalRealTest').modal('hide');
+					alert_wyca(textNoRealTest);
+				}
 			}
 			else
 			{
