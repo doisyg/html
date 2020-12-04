@@ -325,7 +325,7 @@ $(document).ready(function() {
 		normalCanChangeMenu = true;
 		$('#install_normal_edit_map_bEndGomme').hide();
 		$('#install_normal_edit_map_bCancelGomme').hide();
-		$('.times_icon_menu').show('fast');
+		$('#install_normal_edit_map .times_icon_menu').show('fast');
 		
 		sizeGomme = $('#install_normal_edit_map_menu_erase .bGommeSize.selected').data('size');
 		normalCurrentAction = 'gomme';	
@@ -1794,7 +1794,7 @@ $(document).ready(function() {
 			setTimeout(function(){$('#install_normal_edit_map .times_icon_menu').show('fast')},50);
 			
 			if(boolHelpGotoPose){
-				$('.modalHelpClickGotoPose').modal('show');
+				$('#install_normal_edit_map .modalHelpClickGotoPose').modal('show');
 			}			
 		}
 		else
@@ -1875,7 +1875,7 @@ $(document).ready(function() {
 			setTimeout(function(){$('#install_normal_edit_map .times_icon_menu').show('fast')},50);
 			
 			if(boolHelpForbidden){
-				$('.modalHelpClickForbidden').modal('show');
+				$('#install_normal_edit_map .modalHelpClickForbidden').modal('show');
 			}			
 		}
 		else
@@ -2179,7 +2179,7 @@ $(document).ready(function() {
 			setTimeout(function(){$('#install_normal_edit_map .times_icon_menu').show('fast')},50);
 			
 			if(boolHelpForbidden){
-				$('.modalHelpClickArea').modal('show');
+				$('#install_normal_edit_map .modalHelpClickArea').modal('show');
 			}
 			
 		}
@@ -2721,7 +2721,7 @@ $(document).ready(function() {
 				NormalAddHistorique({'action':'edit_poi', 'data':{'index':currentPoiIndex, 'old':saveCurrentPoi, 'new':JSON.stringify(pois[currentPoiIndex])}});
 			saveCurrentPoi = JSON.stringify(pois[currentPoiIndex]);
 			NormalTracePoi(currentPoiIndex);
-			$('.modal.modalPoiOptions').modal('hide');			
+			$('#install_normal_edit_map .modal.modalPoiOptions').modal('hide');			
 		}else{
 			alert_wyca(textNameUsed);
 		};
@@ -3040,7 +3040,7 @@ $(document).ready(function() {
 				NormalAddHistorique({'action':'edit_augmented_pose', 'data':{'index':currentAugmentedPoseIndex, 'old':saveCurrentAugmentedPose, 'new':JSON.stringify(augmented_poses[currentAugmentedPoseIndex])}});
 			saveCurrentAugmentedPose = JSON.stringify(augmented_poses[currentAugmentedPoseIndex]);
 			NormalTraceAugmentedPose(currentAugmentedPoseIndex);
-			$('.modal.modalAugmentedPoseOptions').modal('hide');
+			$('#install_normal_edit_map .modal.modalAugmentedPoseOptions').modal('hide');
 		}else{
 			alert_wyca(textNameUsed);
 		};
@@ -4787,7 +4787,6 @@ function NormalAreaCancel()
 
 function NormalDeleteArea(indexInArray)
 {
-	console.log('Delete Area');
 	if ($('.cancel:visible').length > 0) $('.cancel:visible').click();
 	
 	areas[indexInArray].deleted = true;
