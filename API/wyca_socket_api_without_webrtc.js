@@ -20,8 +20,8 @@ function WycaAPI(options){
 	    SERVICE_UNAVAILABLE         : 0x0CB,
 	    BATTERY_TOO_LOW		        : 0x0CC,
 		
-		NAVIGTION_IS_NOT_STARTED    : 0x12C,
-		NAVIGTION_IS_ACTIVE		    : 0x12D,
+		NAVIGATION_IS_NOT_STARTED   : 0x12C,
+		NAVIGATION_IS_ACTIVE	    : 0x12D,
 		MAPPING_IS_NOT_STARTED  	: 0x12E,
 		MAPPING_IS_ACTIVE		    : 0x12F,
 		MAP_NOT_IN_SITE			    : 0x130,
@@ -714,8 +714,8 @@ function WycaAPI(options){
 			case _this.AnswerCode.CANCELED : return 'Action canceled'; break;
 			case _this.AnswerCode.SERVICE_UNAVAILABLE : return 'Service unvailable'; break;
 			case _this.AnswerCode.BATTERY_TOO_LOW : return 'Battery too low'; break;
-			case _this.AnswerCode.NAVIGTION_IS_NOT_STARTED : return 'Navigation is not started'; break;
-			case _this.AnswerCode.NAVIGTION_IS_ACTIVE : return 'Navigation is active and block current operation'; break;
+			case _this.AnswerCode.NAVIGATION_IS_NOT_STARTED : return 'Navigation is not started'; break;
+			case _this.AnswerCode.NAVIGATION_IS_ACTIVE : return 'Navigation is active and block current operation'; break;
 			case _this.AnswerCode.MAPPING_IS_NOT_STARTED : return 'Mapping is not started'; break;
 			case _this.AnswerCode.MAPPING_IS_ACTIVE : return 'Mapping is active and block current operation'; break;
 			case _this.AnswerCode.MAP_NOT_IN_SITE : return 'Map not in current site'; break;
@@ -738,7 +738,7 @@ function WycaAPI(options){
 			case _this.AnswerCode.CLOSE_FAILURE : return 'Dock fail too close to dock'; break;
 			case _this.AnswerCode.MOVE_BASIC_FAILED : return 'Move basic action failed'; break;
 	    	case _this.AnswerCode.GOTOPOSE_FAILED : return 'Go to pose action failed'; break;
-			default: return 'Unknow error code';
+			default: return 'Unknown error code';
 		}
 	}
 		

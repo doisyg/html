@@ -1216,7 +1216,6 @@ $(document).ready(function(e) {
 				});
 				
 				if(n < 2){
-					
 					$('#pages_install_normal .modalRealTest').modal('hide');
 					alert_wyca(textNoRealTest);
 				}
