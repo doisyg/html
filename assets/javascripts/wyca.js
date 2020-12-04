@@ -1198,9 +1198,8 @@ function InitMappingByStep()
 
 function InitMaintenanceByStep()
 {
-	console.log('InitMaintenanceByStep');
 	if(getCookie('create_new_site') != '')
-		create_new_site = getCookie('create_new_site');
+		create_new_site = JSON.parse(getCookie('create_new_site'));
 }
 
 var save_check_components_result = undefined;
@@ -1627,3 +1626,29 @@ function getCookie(cname)
 	}
 	return "";
 }
+
+function deleteCookie(cname)
+{
+	cvalue = '';
+	var d = new Date(null); //1 Janv 1970 use passed date to delete cookies
+	d.setTime(d.getTime() + (90 * 24 * 60 * 60 * 1000));
+	var expires = "expires="+d.toUTCString();
+	document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function resetCookies()
+{
+	let tab =['create_new_site','boolHelpManagerI','boolHelpAreaI','boolHelpForbiddenI','boolHelpGotoPoseI','boolHelpGotoPoseM','boolHelpGotoPoseU'];
+	tab.forEach(cookie => deleteCookie(cookie))
+}
+
+function listCookies()
+{
+    var theCookies = document.cookie.split(';');
+    var aString = '';
+    for (var i = 1 ; i <= theCookies.length; i++) {
+        aString += i + ' ' + theCookies[i-1] + "\n";
+    }
+    return aString;
+}
+

@@ -63,6 +63,7 @@ $(document).ready(function(e) {
 	
 	//AJAX INSTALL STEP CALL
 	$('#pages_install_by_step a.select_langue').click(function(e) {
+		resetCookies();
         e.preventDefault();
 		$.ajax({
 			type: "POST",
