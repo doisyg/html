@@ -984,12 +984,12 @@ $(document).ready(function() {
 			managerCurrentAction = 'prepareGotoPose';
 			managerCanChangeMenu = false;
 			//AJOUT ICON MENU + CROIX
-			$('.burger_menu').hide('fast');
-			$('.icon_menu[data-menu="manager_edit_map_menu_gotopose"]').show('fast');
-			setTimeout(function(){$('.times_icon_menu').show('fast')},50);
+			$('#manager_edit_map .burger_menu').hide('fast');
+			$('#manager_edit_map .icon_menu[data-menu="manager_edit_map_menu_gotopose"]').show('fast');
+			setTimeout(function(){$('#manager_edit_map .times_icon_menu').show('fast')},50);
 			
 			if(boolHelpGotoPose){
-				$('.modalHelpClickGotoPose').modal('show');
+				$('#manager_edit_map .modalHelpClickGotoPose').modal('show');
 			}			
 		}
 		else
@@ -1055,7 +1055,7 @@ $(document).ready(function() {
 				ManagerAddHistorique({'action':'edit_poi', 'data':{'index':currentPoiIndex, 'old':saveCurrentPoi, 'new':JSON.stringify(pois[currentPoiIndex])}});
 			saveCurrentPoi = JSON.stringify(pois[currentPoiIndex]);
 			ManagerTracePoi(currentPoiIndex);
-			$('.modal.modalPoiOptions').modal('hide');	
+			$('#manager_edit_map .modal.modalPoiOptions').modal('hide');	
 		}else{
 			alert_wyca(textNameUsed);
 		};
@@ -1174,7 +1174,7 @@ $(document).ready(function() {
 								$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
 						}
 					}
-					$('.icon_menu').click(); // POUR SORTIR DU MENU GOTOPOSE
+					$('#manager_edit_map .icon_menu').click(); // POUR SORTIR DU MENU GOTOPOSE
 					// On rebranche l'ancienne fonction
 					wycaApi.on('onGoToPoseResult', onGoToPoseResult);
 				
