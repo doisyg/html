@@ -1034,7 +1034,6 @@ $(document).ready(function(e) {
 			else
 			{
 				$('#pages_install_by_step #install_by_step_site_recovery .bRecovery').removeClass('disabled');
-				console.log(JSON.stringify(data)); 
 				ParseAPIAnswerError(data);
 			}
 		});

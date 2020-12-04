@@ -1524,6 +1524,7 @@ function FindElemByName(tab, nom)
 
 function ParseAPIAnswerError(data,pre_txt = '' ,post_txt = '')
 {
+	console.log('ERROR API');
 	console.log(JSON.stringify(data));
 	let txt = '';
 	if( data.A == wycaApi.AnswerCode.CANCELED ){
