@@ -925,6 +925,7 @@ function GetUsersNormal()
 
 function GetManagersNormal()
 {
+	boolHelpManager = getCookie('boolHelpManagerI') != '' ? JSON.parse(getCookie('boolHelpManagerI')) : true; // TRICK JSON.parse STR TO BOOL
 	if(boolHelpManager)
 		$('#install_normal_manager .modalHelpManager').modal('show');
 	$('.install_normal_manager_loading').show();
@@ -962,6 +963,7 @@ function GetManagersNormal()
 
 function GetManagersByStep()
 {
+	boolHelpManager = getCookie('boolHelpManagerI') != '' ? JSON.parse(getCookie('boolHelpManagerI')) : true; // TRICK JSON.parse STR TO BOOL
 	if(boolHelpManager)
 		$('#install_by_step_manager .modalHelpManager').modal('show');
 	$('.install_by_step_manager_loading').show();

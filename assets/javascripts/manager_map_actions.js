@@ -988,6 +988,8 @@ $(document).ready(function() {
 			$('#manager_edit_map .icon_menu[data-menu="manager_edit_map_menu_gotopose"]').show('fast');
 			setTimeout(function(){$('#manager_edit_map .times_icon_menu').show('fast')},50);
 			
+			boolHelpGotoPose = getCookie('boolHelpGotoPoseM') != '' ? JSON.parse(getCookie('boolHelpGotoPoseM')) : true; // TRICK JSON.parse STR TO BOOL
+			
 			if(boolHelpGotoPose){
 				$('#manager_edit_map .modalHelpClickGotoPose').modal('show');
 			}			
@@ -997,7 +999,7 @@ $(document).ready(function() {
 		
     });
 	
-	$('#manager_edit_map .bHelpClickGotoPoseOk').click(function(){boolHelpGotoPose = !$('#manager_edit_map .checkboxHelpGotopose').prop('checked')});//ADD SAVING BDD / COOKIES ?
+	$('#manager_edit_map .bHelpClickGotoPoseOk').click(function(){boolHelpGotoPose = !$('#manager_edit_map .checkboxHelpGotopose').prop('checked');setCookie('boolHelpGotoPoseM',boolHelpGotoPose);});//ADD SAVING BDD / COOKIES ?
 	
 	/* BTN MENU POI */
 		

@@ -863,7 +863,7 @@ $(document).ready(function(e) {
 	
 	//------------------- ACCOUNTS ------------------------
 	//MANAGERS
-	$('#install_normal_manager .bHelpManagerOk').click(function(){boolHelpManager = !$('#install_normal_manager .checkboxHelpManager').prop('checked')});//ADD SAVING BDD / COOKIES ?
+	$('#install_normal_manager .bHelpManagerOk').click(function(){boolHelpManager = !$('#install_normal_manager .checkboxHelpManager').prop('checked');setCookie('boolHelpManagerI',boolHelpManager);});//ADD SAVING BDD / COOKIES ?
 	
 	$('#install_normal_manager .bAddManager').click(function(e) {
 	
