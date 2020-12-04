@@ -1842,12 +1842,12 @@ $(document).ready(function() {
 			bystepCurrentAction = 'prepareGotoPose';
 			bystepCanChangeMenu = false;
 			//AJOUT ICON MENU + CROIX
-			$('.burger_menu').hide('fast');
-			$('.icon_menu[data-menu="install_by_step_edit_map_menu_gotopose"]').show('fast');
-			setTimeout(function(){$('.times_icon_menu').show('fast')},50);
+			$('#install_by_step_edit_map .burger_menu').hide('fast');
+			$('#install_by_step_edit_map .icon_menu[data-menu="install_by_step_edit_map_menu_gotopose"]').show('fast');
+			setTimeout(function(){$('#install_by_step_edit_map .times_icon_menu').show('fast')},50);
 			
 			if(boolHelpGotoPose){
-				$('.modalHelpClickGotoPose').modal('show');
+				$('#install_by_step_edit_map .modalHelpClickGotoPose').modal('show');
 			}			
 		}
 		else
@@ -1923,12 +1923,12 @@ $(document).ready(function() {
 			bystepCurrentAction = 'prepareForbiddenArea';
 			bystepCanChangeMenu = false;
 			//AJOUT ICON MENU + CROIX
-			$('.burger_menu').hide('fast');
-			$('.icon_menu[data-menu="install_by_step_edit_map_menu_forbidden"]').show('fast');
-			setTimeout(function(){$('.times_icon_menu').show('fast')},50);
+			$('#install_by_step_edit_map .burger_menu').hide('fast');
+			$('#install_by_step_edit_map .icon_menu[data-menu="install_by_step_edit_map_menu_forbidden"]').show('fast');
+			setTimeout(function(){$('#install_by_step_edit_map .times_icon_menu').show('fast')},50);
 			
 			if(boolHelpForbidden){
-				$('.modalHelpClickForbidden').modal('show');
+				$('#install_by_step_edit_map .modalHelpClickForbidden').modal('show');
 			}			
 		}
 		else
@@ -2172,7 +2172,7 @@ $(document).ready(function() {
 									$('#install_by_step_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
 							}
 						}
-						$('.icon_menu').click(); // POUR SORTIR DU MENU GOTOPOSE
+						$('#install_by_step_edit_map .icon_menu').click(); // POUR SORTIR DU MENU GOTOPOSE
 						// On rebranche l'ancienne fonction
 						wycaApi.on('onGoToPoseResult', onGoToPoseResult);
 					
@@ -2227,12 +2227,13 @@ $(document).ready(function() {
 			bystepCurrentAction = 'prepareArea';
 			bystepCanChangeMenu = false;
 			//AJOUT ICON MENU + CROIX
-			$('.burger_menu').hide('fast');
-			$('.icon_menu[data-menu="install_by_step_edit_map_menu_area"]').show('fast');
-			setTimeout(function(){$('.times_icon_menu').show('fast')},50);
+			$('#install_by_step_edit_map .burger_menu').hide('fast');
+			$('#install_by_step_edit_map .icon_menu[data-menu="install_by_step_edit_map_menu_area"]').show('fast');
+			setTimeout(function(){$('#install_by_step_edit_map .times_icon_menu').show('fast')},50);
 			
 			if(boolHelpForbidden){
 				$('.modalHelpClickArea').modal('show');
+				$('#install_by_step_edit_map .modalHelpClickArea').modal('show');
 			}
 			
 		}
@@ -2768,7 +2769,7 @@ $(document).ready(function() {
 				ByStepAddHistorique({'action':'edit_poi', 'data':{'index':currentPoiIndex, 'old':saveCurrentPoi, 'new':JSON.stringify(pois[currentPoiIndex])}});
 			saveCurrentPoi = JSON.stringify(pois[currentPoiIndex]);
 			ByStepTracePoi(currentPoiIndex);
-			$('.modal.modalPoiOptions').modal('hide');			
+			$('#install_by_step_edit_map .modal.modalPoiOptions').modal('hide');			
 		}else{
 			alert_wyca(textNameUsed);
 		};
@@ -3087,7 +3088,7 @@ $(document).ready(function() {
 				ByStepAddHistorique({'action':'edit_augmented_pose', 'data':{'index':currentAugmentedPoseIndex, 'old':saveCurrentAugmentedPose, 'new':JSON.stringify(augmented_poses[currentAugmentedPoseIndex])}});
 			saveCurrentAugmentedPose = JSON.stringify(augmented_poses[currentAugmentedPoseIndex]);
 			ByStepTraceAugmentedPose(currentAugmentedPoseIndex);
-			$('.modal.modalAugmentedPoseOptions').modal('hide');
+			$('#install_by_step_edit_map .modal.modalAugmentedPoseOptions').modal('hide');
 		}else{
 			alert_wyca(textNameUsed);
 		};
@@ -3588,7 +3589,7 @@ $(document).ready(function() {
 		
 		if (bystepCurrentAction == 'gomme' && currentStep=='')
 		{
-			$('.times_icon_menu').hide();
+			$('#install_by_step_edit_map .times_icon_menu').hide();
 			currentStep='trace';
 			if (gommes.length == 0 || Object.keys(gommes[gommes.length-1]).length > 0)
 			{
@@ -4845,7 +4846,6 @@ function AreaCancel()
 
 function DeleteArea(indexInArray)
 {
-	console.log('Delete Area');
 	if ($('.cancel:visible').length > 0) $('.cancel:visible').click();
 	
 	areas[indexInArray].deleted = true;
