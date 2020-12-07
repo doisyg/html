@@ -226,13 +226,15 @@ $(document).ready(function(e) {
 				{
 					// Connexion OK, on save l'api_key
 					save_msg = msg;
+					save_msg.D.NCP = true;
 					$.ajax({
 						type: "POST",
 						url: 'ajax/connection.php',
 						data: {
 							id: msg.D.ID,
 							k: msg.D.KEY,
-							g: msg.D.GROUP
+							g: msg.D.GROUP,
+							ncp: save_msg.D.NCP
 						},
 						success: function(data) {
 							

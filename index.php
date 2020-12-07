@@ -1,6 +1,7 @@
 <?php 
 require_once ('./config/initSite.php');
 if (!isset($_SESSION["id_user"])) { header("location:login.php"); }
+if (isset($_SESSION["need_change_password"]) && $_SESSION["need_change_password"]) { header("location:change_password.php"); }
 
 include ('template/header.php');
 
