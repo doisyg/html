@@ -11,7 +11,9 @@ else
 <?php
 }
 ?>
-	
+
+var textNeedReconnect = "<?php echo __js('Reconnection is required');?>";
+
 var textLoading = "<?php echo __js('Loading');?>";
 var textUpdatingMap = "<?php echo __js('Updating Map');?>";
 var textSelectOnOrMoreTops = "<?php echo __js('You must select one or more tops');?>";

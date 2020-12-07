@@ -336,5 +336,6 @@ $_LANG['bdc69990db335e939b3d17166bbda7fd'] = 'Dockage échoué : trop près du d
 $_LANG['c4c6a99d5a48a3fd032af0f63664ae11'] = 'L\'instruction de déplacement a échouée';
 $_LANG['bdef851f91ba319f33850e55ec8213b2'] = 'L\'instruction Go to pose a échouée';
 $_LANG['7c180304cb209dcba4442a5e4814e5ba'] = 'Code d\'erreur inconnu';
+$_LANG['d1b3dc54fb93198104b855fd44ae6ddf'] = 'Reconnexion nécessaire';
 
 ?>

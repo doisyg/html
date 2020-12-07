@@ -299,5 +299,6 @@ $_LANG['c4c6a99d5a48a3fd032af0f63664ae11'] = 'Move basic action failed';
 $_LANG['bdef851f91ba319f33850e55ec8213b2'] = 'Go to pose action failed';
 $_LANG['52bf0d207cca46502de46a7443d3294f'] = 'Unknow error code';
 $_LANG['7c180304cb209dcba4442a5e4814e5ba'] = 'Unknown error code';
+$_LANG['d1b3dc54fb93198104b855fd44ae6ddf'] = 'Reconnection is required';
 
 ?>
