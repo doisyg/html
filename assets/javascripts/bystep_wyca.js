@@ -89,18 +89,35 @@ $(document).ready(function(e) {
 	
 	//------------------- STEP SELECT AVAILABLES TOPS ------------------------
 	
-	$('#pages_install_by_step .file_import_top').change(function(){
-		//console.log('here');
-		$('#pages_install_by_step .filename_import_top').html($(this)[0].files[0].name);
-		$('#pages_install_by_step .filename_import_top').show();
-		$('#pages_install_by_step .file_import_top_wrapper').css('background-color','#47a4476e');
+	$('#pages_install_by_step a.import_top').click(function(e) {
+        e.preventDefault();
 		
+		$('#pages_install_by_step .modalImportTop_loading').hide();
+		$('#pages_install_by_step .modalImportTop_content').show();
+		
+		$('#pages_install_by_step .modalImportTop').modal('show');
+		InitTopImportByStep();
+	});
+	
+	$('#pages_install_by_step .file_import_top').change(function(){
+		
+		let fname = $(this)[0].files[0].name;console.log(fname);
+		if(fname.slice(fname.length - 5) == '.wyca'){
+			$('#pages_install_by_step .file_import_top_wrapper').css('background-color','#47a4476e');
+		}else{
+			$('#pages_install_by_step .file_import_top_wrapper').css('background-color','#e611116e');
+			let icon = $('#pages_install_by_step .file_import_top_wrapper > p > i');
+			icon.toggleClass('shake');
+			setTimeout(function(){icon.toggleClass('shake')},2000);
+		}
+		$('#pages_install_by_step .filename_import_top').html(fname);
+		$('#pages_install_by_step .filename_import_top').show();
 	})
 	
 	$('#pages_install_by_step a.bImportTopDo').click(function(e) {
         e.preventDefault();
 		file = $('#pages_install_by_step .file_import_top')[0].files[0];
-		if(file != undefined){
+		if(file != undefined && file.name.slice(file.name.length - 5) == '.wyca'){
 			$('#pages_install_by_step .modalImportTop_loading').show();
 			$('#pages_install_by_step .modalImportTop_content').hide();
 			var reader = new FileReader();
@@ -131,16 +148,6 @@ $(document).ready(function(e) {
 			setTimeout(function(){icon.toggleClass('shake')},2000);
 		}
     });
-	
-	$('#pages_install_by_step a.import_top').click(function(e) {
-        e.preventDefault();
-		
-		$('#pages_install_by_step .modalImportTop_loading').hide();
-		$('#pages_install_by_step .modalImportTop_content').show();
-		
-		$('#pages_install_by_step .modalImportTop').modal('show');
-		InitTopImportByStep();
-	});
 	
 	//AJAX INSTALL STEP CALL
 	$('#pages_install_by_step a.save_tops').click(function(e) {
@@ -889,10 +896,18 @@ $(document).ready(function(e) {
 	//------------------- STEP IMPORT SITE ------------------------
 	
 	$('#pages_install_by_step .file_import_site').change(function(){
-		//console.log('here');
-		$('#pages_install_by_step .filename_import_site').html($(this)[0].files[0].name);
+		
+		let fname = $(this)[0].files[0].name;
+		if(fname.slice(fname.length - 5) == '.wyca'){
+			$('#pages_install_by_step .file_import_site_wrapper').css('background-color','#47a4476e');
+		}else{
+			$('#pages_install_by_step .file_import_site_wrapper').css('background-color','#e611116e');
+			let icon = $('#pages_install_by_step .file_import_site_wrapper > p > i');
+			icon.toggleClass('shake');
+			setTimeout(function(){icon.toggleClass('shake')},2000);
+		}
+		$('#pages_install_by_step .filename_import_site').html(fname);
 		$('#pages_install_by_step .filename_import_site').show();
-		$('#pages_install_by_step .file_import_site_wrapper').css('background-color','#47a4476e');
 		
 	})
 	
@@ -900,7 +915,7 @@ $(document).ready(function(e) {
 	$('#pages_install_by_step a.bImportSiteDo').click(function(e) {
         e.preventDefault();
 		file = $('#pages_install_by_step .file_import_site')[0].files[0];
-		if(file != undefined){
+		if(file != undefined && file.name.slice(file.name.length - 5) == '.wyca'){
 			
 			$('#pages_install_by_step .install_by_step_setup_import_loading').show();
 			$('#pages_install_by_step .install_by_step_setup_import_content').hide();
