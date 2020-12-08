@@ -107,7 +107,7 @@
 										<div style="height:60px;"></div>
 										
 										<a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
-									
+										<div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div>
 										<div class="ifUndocked">
 											
 											<div style="text-align:center; width:100%; z-index:2000; margin-top:50px;">
@@ -276,7 +276,7 @@
 									<div class="h100vh_160" style="overflow:auto; text-align:center">
 									
 										<a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
-									
+										<div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div>
 										<div class="ifUndocked">
 										
 											<div class ="modal-advice">
@@ -406,7 +406,7 @@
         <div class="content" style="text-align:center;">
 			<h4 style="text-align:center;margin-bottom:30px"><?= __('Move the robot using the joystick.') ?></h4>    
 			<a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
-									
+			<div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div>
 			<div class="ifUndocked">
 				
 				<div style="text-align:center; width:100%; z-index:2000; margin-top:50px;">
@@ -477,6 +477,7 @@
 			
 		
 			<div style="text-align:center"><a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a></div>
+			<div style="text-align:center"><div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div></div>
 									
 			<div class="ifUndocked">
 				

@@ -353,7 +353,7 @@
                 
             
                 <div style="text-align:center"><a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a></div>
-                                        
+                <div style="text-align:center"><div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div></div>
                 <div class="ifUndocked">
                     <div style="text-align:center; width:100%; z-index:2000; margin-top:20px;">
                         <div class="joystickDiv" draggable="false" style="margin:auto;">
@@ -423,6 +423,7 @@
                     </div>
 					
                     <a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked" style="position: absolute;bottom: 50px;z-index: 2000;display: none;left:50%;transform:translateX(-50%)"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
+                    <div class="btn_big_popup ifDocking ifUndocking" style="position: absolute;bottom: 50px;z-index: 2000;display: none;left:50%;transform:translateX(-50%)"><i class="fa fa fa-spinner fa-pulse"></i></div>
                     <div class="ifUndocked" style="position:absolute; bottom:50px; left:0; width:100%; z-index:2000;">
                         <div class="joystickDiv" draggable="false" style="margin:auto;">
                             <div class="fond"></div>
@@ -682,7 +683,7 @@
                                             <div style="height:60px;"></div>
                                             
                                             <a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
-                                        
+											<div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div>
                                         	<div class="ifUndocked">
                                                 
                                                 <div style="text-align:center; width:100%; z-index:2000; margin-top:50px;">
@@ -950,7 +951,7 @@
                                         <div class="h100vh_160" style="overflow:auto; text-align:center">
                                         
                                         	<a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
-                                        
+											<div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div>
                                         	<div class="ifUndocked">
                                                 <div style="height:200px; position:relative;">
                                                 
@@ -1124,7 +1125,7 @@
                                         <div class="h100vh_160" style="overflow:auto; text-align:center">
                                         
                                         	<a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
-                                        
+											<div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div>
                                         	<div class="ifUndocked">
                                             
                                             	<div class ="modal-advice">
@@ -1192,7 +1193,7 @@
                                         <div class="h100vh_160" style="overflow:auto; text-align:center">
                                         
                                         	<a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
-                                        
+											<div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div>
                                         	<div class="ifUndocked">
                                                 
                                                 <div style="height:200px; position:relative;">
