@@ -1204,6 +1204,96 @@ function InitMaintenanceByStep()
 
 var save_check_components_result = undefined;
 
+function DrawSvgCheckByStep()
+{
+	let svg = $('#install_by_step_check svg.svg_legende');
+	if(!svg.data('drawed')){
+		
+		let base_w = 375;
+		let base_h = 492.5;
+		let base_hw_card = 111.65625;
+		let base_elodie_height = 120;
+		let base_offsetY = base_hw_card  + 50 + 20;
+		let base_offsetX = (base_w/4) + 10;
+		
+		let elodie_height = $('#install_by_step_check img#elodie_import_top')[0].getBoundingClientRect().height;
+		
+		let data = $('svg.svg_legende')[0].getBoundingClientRect();
+		let svg_offsetX = data.x;
+		let svg_offsetY = data.y;
+		$('#install_by_step_check div.is_checkbox').each(function(idx,item){
+			let data = item.getBoundingClientRect();
+			
+			let top = window.scrollY + data.top;
+			let left = window.scrollX + data.left;
+			
+			let height = data.height;
+			let width = data.width;
+			
+			let offsetY = height + 50 + 20; //(50 margin et padding div , 20 margin img elodie)
+			let offsetX = height + 50 + 20; //(50 margin et padding div , 20 margin img elodie)
+			
+			let line = $(item).data('line');
+			let placement = $(item).data('line-placement');
+			let svgLine = $('svg.svg_legende .'+line);
+			
+			let x1 = svgLine.attr('x1');
+			let y1 = svgLine.attr('y1');
+			let x2 = svgLine.attr('x2');
+			let y2 = svgLine.attr('y2');
+			
+			let _x1,_x2,_y1,_y2;
+			
+			
+			let ratioX = (x2 - base_offsetX)/base_w;
+			_x2 = (window.innerWidth/4 + 10) + ratioX * window.innerWidth;
+			
+			let ratioY = (y2 - base_offsetY)/base_elodie_height;
+			_y2 = ratioY * elodie_height + offsetY;
+			
+			if(typeof(placement) != 'undefined'){
+				switch(placement){
+					case 'bottom' : 
+						_x1 = left + width/2 - svg_offsetX;
+						_y1 = top + height - svg_offsetY;
+					break;				
+					case 'top' : 
+						_x1 = left + width/2 - svg_offsetX;
+						_y1 = top - svg_offsetY;
+					break;				
+					case 'left' : 
+						_x1 = left - svg_offsetX;
+						_y1 = top + height/2 - svg_offsetY;
+					break;				
+					case 'right' : 
+						_x1 = left + width - svg_offsetX;
+						_y1 = top + height/2 - svg_offsetY;
+					break;				
+					default:
+						_x1 = left + width/2 - svg_offsetX;
+						_y1 = top + height - svg_offsetY;
+					break;			
+				}
+			}
+			
+			_x1 = Math.round(_x1);
+			_x2 = Math.round(_x2);
+			_y1 = Math.round(_y1);
+			_y2 = Math.round(_y2);
+			
+			console.log('Origine Calcul',_x1,_y1,'Origine Svg',svgLine.attr('x1'),svgLine.attr('y1'));
+			console.log('Cible Calcul',_x2,_y2,'Cible Svg',svgLine.attr('x2'),svgLine.attr('y2'));
+			
+			svgLine.attr('x1',_x1);
+			svgLine.attr('y1',_y1);
+			svgLine.attr('x2',_x2);
+			svgLine.attr('y2',_y2);
+		})
+		
+		svg.data('drawed',true);
+	}		
+}
+
 function InitCheckByStep()
 {
 	if (wycaApi.websocketAuthed)

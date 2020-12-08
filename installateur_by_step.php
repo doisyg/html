@@ -131,7 +131,7 @@
 					<svg class="svg_legende" xmlns="http://www.w3.org/2000/svg" style="z-index:10;">
 						<line x1="65" y1="142" x2="109" y2="226" stroke-width="1" stroke="#343434" class="line_lidar"/>
 						<line x1="187" y1="122" x2="168" y2="197" stroke-width="1" stroke="#343434" class="line_us"/>
-						<line x1="187" y1="122" x2="134" y2="197" stroke-width="1" stroke="#343434" class="line_us"/>
+						<line x1="187" y1="122" x2="134" y2="197" stroke-width="1" stroke="#343434" class="line_us2"/>
 						<line x1="308" y1="142" x2="226" y2="281" stroke-width="1" stroke="#343434" class="line_motor"/>
 						<line x1="65" y1="351" x2="109" y2="286" stroke-width="1" stroke="#343434" class="line_battery"/>
 						<line x1="187" y1="371" x2="155" y2="265" stroke-width="1" stroke="#343434" class="line_sensor"/>
@@ -141,7 +141,7 @@
                     <ul class="tuiles row" style="position:relative;max-width:375px; margin:0;">
                        
                         <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
-                            <div id="install_by_step_check_lidar" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
+                            <div id="install_by_step_check_lidar" data-line="line_lidar" data-line-placement="bottom" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
                                 <i class="fa fa-check component_state component_ok"></i>
                                 <i class="fa fa-exclamation-triangle component_state component_warning"></i>
                                 <i class="fa fa-exclamation-circle component_state component_error"></i>
@@ -151,7 +151,7 @@
                             </div>
                         </li>
                         <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
-                            <div id="install_by_step_check_us" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
+                            <div id="install_by_step_check_us" data-line="line_us" data-line-placement="bottom" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
                                 <i class="fa fa-check component_state component_ok"></i>
                                 <i class="fa fa-exclamation-triangle component_state component_warning"></i>
                                 <i class="fa fa-exclamation-circle component_state component_error"></i>
@@ -162,7 +162,7 @@
                             <span class="trait_legende" style="width:calc(var(--vh, 1vh) * 20);transform:rotate(50deg)translateX(0px)translateY(0px);"></span>
                         </li>
                         <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
-                            <div id="install_by_step_check_motor" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
+                            <div id="install_by_step_check_motor" data-line="line_motor" data-line-placement="bottom" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
                                 <i class="fa fa-check component_state component_ok"></i>
                                 <i class="fa fa-exclamation-triangle component_state component_warning"></i>
                                 <i class="fa fa-exclamation-circle component_state component_error"></i>
@@ -176,7 +176,7 @@
                             <img class="img-responsive" id="elodie_import_top" src="assets/images/elodie_form.png" style="z-index:5">
                         </li>
                         <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
-                            <div id="install_by_step_check_battery" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
+                            <div id="install_by_step_check_battery" data-line="line_battery" data-line-placement="top" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
                                 <i class="fa fa-check component_state component_ok"></i>
                                 <i class="fa fa-exclamation-triangle component_state component_warning"></i>
                                 <i class="fa fa-exclamation-circle component_state component_error"></i>
@@ -186,7 +186,7 @@
                             </div>
                         </li>
                         <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
-                            <div id="install_by_step_check_cam3d" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
+                            <div id="install_by_step_check_cam3d" data-line="line_sensor" data-line-placement="top" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
                                 <i class="fa fa-check component_state component_ok"></i>
                                 <i class="fa fa-exclamation-triangle component_state component_warning"></i>
                                 <i class="fa fa-exclamation-circle component_state component_error"></i>
@@ -196,7 +196,7 @@
                             </div>
                         </li>
                         <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
-                            <div id="install_by_step_check_leds" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
+                            <div id="install_by_step_check_leds" data-line="line_leds" data-line-placement="top" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
                                 <i class="fa fa-check component_state component_ok"></i>
                                 <i class="fa fa-exclamation-triangle component_state component_warning"></i>
                                 <i class="fa fa-exclamation-circle component_state component_error"></i>

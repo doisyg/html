@@ -740,7 +740,7 @@ ul.list_test li.done { color:#006600; border-color:#006600; }
 }
 @media only screen and (max-width:374px)
 {
-	.svg_legende{display:none}
+	/* .svg_legende{display:none} */
 }
 img.elodie_legende{
 	width: 50%;
