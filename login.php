@@ -226,7 +226,6 @@ $(document).ready(function(e) {
 				{
 					// Connexion OK, on save l'api_key
 					save_msg = msg;
-					save_msg.D.NCP = true;
 					$.ajax({
 						type: "POST",
 						url: 'ajax/connection.php',
