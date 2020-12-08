@@ -2,7 +2,13 @@
 session_start();
 
 if (isset($_POST['cp']))
- $_SESSION["need_change_password"] = false;
+{
+	if ($_POST['kp'] == $_SESSION["api_key"])
+	{
+		$_SESSION["need_change_password"] = false;
+		$_SESSION["api_key"] = $_POST['k'];
+	}
+}
 elseif (isset($_POST['id']))
 {
 	$_SESSION["id_user"] = $_POST['id'];
