@@ -131,7 +131,7 @@
 					<svg class="svg_legende" xmlns="http://www.w3.org/2000/svg" style="z-index:10;">
 						<line x1="65" y1="142" x2="109" y2="226" stroke-width="1" stroke="#343434" class="line_lidar"/>
 						<line x1="187" y1="122" x2="168" y2="197" stroke-width="1" stroke="#343434" class="line_us"/>
-						<line x1="187" y1="122" x2="134" y2="197" stroke-width="1" stroke="#343434" class="line_us2"/>
+						<line x1="187" y1="122" x2="134" y2="197" stroke-width="1" stroke="#343434" class="line_us"/>
 						<line x1="308" y1="142" x2="226" y2="281" stroke-width="1" stroke="#343434" class="line_motor"/>
 						<line x1="65" y1="351" x2="109" y2="286" stroke-width="1" stroke="#343434" class="line_battery"/>
 						<line x1="187" y1="371" x2="155" y2="265" stroke-width="1" stroke="#343434" class="line_sensor"/>
