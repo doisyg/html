@@ -1755,6 +1755,7 @@
 						</div>
 					</div>
 				</div>
+				
             </div>
             <footer>
 				<a href="#" class="btn btn-default button_goto btn_footer_left btn_100 btn_back" data-goto="install_by_step_config"><?php echo __('Back');?></a>
