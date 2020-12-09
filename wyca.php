@@ -8,9 +8,10 @@
         <div class="content">
             <ul class="tuiles row">
                 <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile1" data-goto="wyca_demo_mode_start_stop" href="#"><i class="fa fa-recycle"></i><?php echo __('Demo mode');?><br /><?php echo __('Start / Stop');?></a></li>
-                <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile1" data-goto="wyca_demo_mode_config" href="#"><i class="fa fa-gears"></i><?php echo __('Demo mode');?><br /><?php echo __('Config');?></a></li>
-                <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile1" data-goto="wyca_browser_restart" href="#"><i class="fab fa-chrome"></i><?php echo __('Restart Browser');?></a></li>
-                <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4 todo" data-goto="wyca_help" href="#"><i class="fa fa-question"></i><?php echo __('Help');?></a></li>
+                <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="wyca_demo_mode_config" href="#"><i class="fa fa-gears"></i><?php echo __('Demo mode');?><br /><?php echo __('Config');?></a></li>
+                <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="wyca_browser_restart" href="#"><i class="fab fa-chrome"></i><?php echo __('Restart Browser');?></a></li>
+				<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" href="logout.php"><i class="fas fa-power-off"></i><?php echo __('Logout');?></a></li>
+                <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5 todo" data-goto="wyca_help" href="#"><i class="fa fa-question"></i><?php echo __('Help');?></a></li>
             </ul>
         </div>
     </section>
