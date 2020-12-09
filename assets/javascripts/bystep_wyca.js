@@ -1580,6 +1580,8 @@ $(document).ready(function(e) {
 					},
 					dataType: 'json',
 					success: function(data) {
+						success_info_wyca(textAccountDeleted);
+						$('#install_by_step_maintenance .install_by_step_maintenance_next').click();
 					},
 					error: function(e) {
 						if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
@@ -1590,7 +1592,7 @@ $(document).ready(function(e) {
 						}
 					}
 				});
-				$('#install_by_step_maintenance .install_by_step_maintenance_next').click();
+				
 			}
 			else
 			{
@@ -1600,14 +1602,45 @@ $(document).ready(function(e) {
 	});
 		
 	$('#install_by_step_maintenance #bKeepMaintenanceAccount').click(function(e){
+		$('#install_by_step_maintenance .modalMaintenance').modal('show');
+	});
+	
+	$('#install_by_step_maintenance #bChangeMaintenanceAccountPassword').click(function(e){
+		$('#install_by_step_maintenance .modalPasswordMaintenance').modal('show');
+	});
+		
+	$('#install_by_step_maintenance #bKeepMaintenanceAccountPassword').click(function(e){
+		$.ajax({
+			type: "POST",
+			url: 'ajax/install_by_step_maintenance.php',
+			data: {
+			},
+			dataType: 'json',
+			success: function(data) {
+				$('#install_by_step_maintenance .install_by_step_maintenance_next').click();
+				$('#install_by_step_maintenance .modalMaintenance').modal('hide');
+				$('#install_by_step_maintenance .modalPasswordMaintenance').modal('hide');
+			},
+			error: function(e) {
+				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+					alert_wyca('Error step maintenance account save ; ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					setTimeout(function(){window.location.href = 'logout.php'},3000);
+				}else{
+					alert_wyca('Error step maintenance account save ;' + e.responseText );
+				}
+			}
+		});
+	});
+	
+	$('#install_by_step_maintenance #bChangeMaintenanceAccountPassword').click(function(e){
 		$('#install_by_step_maintenance_i_maintenance_password').val('')
 		$('#install_by_step_maintenance_i_maintenance_cpassword').val('')
-		$('#install_by_step_maintenance .modalMaintenance').modal('show');
+		$('#install_by_step_maintenance .modalPasswordMaintenance').modal('show');
 		
 	});
 	
 	//AJAX INSTALL STEP CALL
-	$('#install_by_step_maintenance #install_by_step_maintenance_bMaintenanceSave').click(function(e){
+	$('#install_by_step_maintenance #install_by_step_maintenance_bPasswordMaintenanceSave').click(function(e){
 		let pass = $('#install_by_step_maintenance_i_maintenance_password');
 		let cpass = $('#install_by_step_maintenance_i_maintenance_password');
 		
@@ -1628,6 +1661,9 @@ $(document).ready(function(e) {
 						},
 						dataType: 'json',
 						success: function(data) {
+							$('#install_by_step_maintenance .install_by_step_maintenance_next').click();
+							$('#install_by_step_maintenance .modalMaintenance').modal('hide');
+							$('#install_by_step_maintenance .modalPasswordMaintenance').modal('hide');
 						},
 						error: function(e) {
 							if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
@@ -1637,8 +1673,8 @@ $(document).ready(function(e) {
 								alert_wyca('Error step maintenance account save ;' + e.responseText );
 							}
 						}
-				});
-					$('#install_by_step_maintenance .install_by_step_maintenance_next').click();
+					});
+					
 				}
 				else
 				{

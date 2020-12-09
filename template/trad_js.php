@@ -13,6 +13,7 @@ else
 ?>
 
 var textNeedReconnect = "<?php echo __js('Reconnection is required');?>";
+var textAccountDeleted = "<?php echo __js('Account deleted');?>";
 
 var textLoading = "<?php echo __js('Loading');?>";
 var textUpdatingMap = "<?php echo __js('Updating Map');?>";

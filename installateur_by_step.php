@@ -1660,21 +1660,57 @@
 				<h4 style="text-align:center;margin:30px 0"><?= __('Keep Wyca maintenance account ?') ?></h4>
 				<ul class="tuiles row">
                     <li class="col-xs-6">
-                    	<div class="is_checkbox tuile_img no_update" id="bKeepMaintenanceAccount" style="bottom:0;border-radius:10px">
-                    		<i class="fas fa-user-cog iconMenuGreen" style="padding-top:5px"></i>
-							<h4 class="iconMenuGreen" style="margin-top: 0px;font-weight:700"><?php echo __('Keep');?></h4>
-                        </div>
-                    </li>
-                    <li class="col-xs-6">
                     	<div class="is_checkbox tuile_img no_update" id="bDeleteMaintenanceAccount" style="bottom:0;border-radius:10px">
                     		<i class="fas fa-user-times iconMenuRed" style="padding-top:5px"></i>
 							<h4 class="iconMenuRed" style="margin-top: 0px;font-weight:700"><?php echo __('Delete');?></h4>
                         </div>
                     </li>
+					<li class="col-xs-6">
+                    	<div class="is_checkbox tuile_img no_update" id="bKeepMaintenanceAccount" style="bottom:0;border-radius:10px">
+                    		<i class="fas fa-user-cog iconMenuGreen" style="padding-top:5px"></i>
+							<h4 class="iconMenuGreen" style="margin-top: 0px;font-weight:700"><?php echo __('Keep');?></h4>
+                        </div>
+                    </li>
+                    
 				</ul>
 				<a href="#" class="install_by_step_maintenance_next button_goto" data-goto="install_by_step_manager" style="display:none;"></a>
 				
 				<div class="modal fade modalMaintenance" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+					<div class="modal-dialog" role="dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<div class="actions mh100vh_55">
+									<div class="h100vh_160" style="overflow:auto">
+										<form>
+											<h4 style="text-align:center"><i class="fas fa-key" style="color:#ed9c28;font-size:20px"></i> <?=__('Keep account default password') ?></h4>
+											<p style="margin:20px 0"> <?=__('Do you want to keep the default password for Wyca maintenance account ?')?> </p>
+											<ul class="tuiles row">
+												<li class="col-xs-6">
+													<div class="is_checkbox tuile_img no_update" id="bChangeMaintenanceAccountPassword" style="bottom:0;border-radius:10px">
+														<i class="fas fa-exchange-alt iconMenuRed" style="padding-top:5px"></i>
+														<h4 class="iconMenuRed" style="margin-top: 0px;font-weight:700"><?php echo __('Change');?></h4>
+													</div>
+												</li>
+												<li class="col-xs-6">
+													<div class="is_checkbox tuile_img no_update" id="bKeepMaintenanceAccountPassword" style="bottom:0;border-radius:10px">
+														<i class="fas fa-lock iconMenuGreen" style="padding-top:5px"></i>
+														<h4 class="iconMenuGreen" style="margin-top: 0px;font-weight:700"><?php echo __('Keep');?></h4>
+													</div>
+												</li>
+											</ul>
+											<p style="margin:20px 0"> <?=__('If you change and loose this password, the robot could become unusable with no recovery options other than a factory return.') ?> </p>
+										</form>
+									</div>
+									
+									<div style="clear:both;"></div>
+									<a href="#" class="btn btn-default btn_footer_left btn_100" data-dismiss="modal" ><?php echo __('Back');?></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="modal fade modalPasswordMaintenance" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
 					<div class="modal-dialog" role="dialog">
 						<div class="modal-content">
 							<div class="modal-header">
@@ -1712,7 +1748,7 @@
 									
 									<div style="clear:both;"></div>
 									<a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Cancel');?></a>
-									<a href="#" id="install_by_step_maintenance_bMaintenanceSave" class="btn btn-primary btn_footer_right btn_50"><?php echo __('Save');?></a>
+									<a href="#" id="install_by_step_maintenance_bPasswordMaintenanceSave" class="btn btn-primary btn_footer_right btn_50"><?php echo __('Save');?></a>
 									
 								</div>
 							</div>

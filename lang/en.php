@@ -300,5 +300,15 @@ $_LANG['bdef851f91ba319f33850e55ec8213b2'] = 'Go to pose action failed';
 $_LANG['52bf0d207cca46502de46a7443d3294f'] = 'Unknow error code';
 $_LANG['7c180304cb209dcba4442a5e4814e5ba'] = 'Unknown error code';
 $_LANG['d1b3dc54fb93198104b855fd44ae6ddf'] = 'Reconnection is required';
+$_LANG['802f9bbcbaa37632bcd07a4dc4622e1f'] = 'Keep default account password';
+$_LANG['9b8ff4fa727b9d077da503a72b3ab7af'] = 'Do you want to keep the default password for Wyca maintenance account ?';
+$_LANG['29a2d4e05f636c8e5dfb65d999613ead'] = 'If you loose this password, the robot could become unusable with no recovery options other than a factory return.';
+$_LANG['4893d10825deeefc2bfba463599f5fb1'] = 'Keep maintenance account default password';
+$_LANG['f505780f0bc83c71ad20e8b7a6db39b9'] = 'Keep maintenance default password';
+$_LANG['4399a7d78e44fd3b986e3addaf2b4052'] = 'Keep account default password';
+$_LANG['698b1fad9af16214f7691a5821104bf3'] = 'If you change and loose this password, the robot could become unusable with no recovery options other than a factory return.';
+$_LANG['f4ec5f57bd4d31b803312d873be40da9'] = 'Change';
+$_LANG['50fa80862dc0dc95194d28dee41bed74'] = 'Keep password';
+$_LANG['4780a9b20e98f142d900b67d0f0ba8da'] = 'Account deleted';
 
 ?>
