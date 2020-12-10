@@ -1968,11 +1968,11 @@
             </header>
             <div class="content">
                 
-                <section class="panel panel-success">
-                    <header class="panel-heading" style="    background: unset;padding: 0;">
+                <section class="panel panel-success" style="border: 0;box-shadow: unset;">
+                    <header class="panel-heading" style="background: unset;padding: 0;border: 0;">
                         <img src="assets/images/Robot.gif" class="img-responsive" style="width: 100%;height: auto;"/>
                     </header>
-                    <div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
+                    <div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;    border: 0;">
                         <strong><?= __('Congratulations !')?></strong><br />
 						<?= __('The installation process is now complete.') ?>
                     </div>
