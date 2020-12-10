@@ -32,6 +32,9 @@
                 </ul>
             </div>
         </div>
+		<footer>           
+            <a href="#" class="btn btn-default button_goto" data-goto="wyca_dashboard" style="position:absolute; width:100%; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+        </footer>
     </section>
     
     

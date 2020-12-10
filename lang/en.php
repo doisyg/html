@@ -310,5 +310,17 @@ $_LANG['698b1fad9af16214f7691a5821104bf3'] = 'If you change and loose this passw
 $_LANG['f4ec5f57bd4d31b803312d873be40da9'] = 'Change';
 $_LANG['50fa80862dc0dc95194d28dee41bed74'] = 'Keep password';
 $_LANG['4780a9b20e98f142d900b67d0f0ba8da'] = 'Account deleted';
+$_LANG['039def2895d2d63a2f795cc70c1a922d'] = 'Top is now active !';
+$_LANG['948a2986c50ad6bb8c90b4d93ae5c04d'] = 'Demo mode';
+$_LANG['0b4ded1cc6ee7723c2331e5af5255880'] = 'Start / Stop';
+$_LANG['fa535ffb25e1fd20341652f9be21e06e'] = 'Config';
+$_LANG['bf1e178e5fceb8d1609a23263eb236b2'] = 'Restart Browser';
+$_LANG['2807031730d75e38fb2b3579711081cb'] = 'Demo mode Start / Stop';
+$_LANG['a6122a65eaa676f700ae68d393054a37'] = 'Start';
+$_LANG['11a755d598c0c417f9a36758c3da7481'] = 'Stop';
+$_LANG['5050505df1a51030bd67f5406dd477d3'] = 'Demo mode configuration';
+$_LANG['9a7b768938a9e551fa88faf99acac139'] = 'Add wait step';
+$_LANG['0829ea6734059d66e6bf87096b215dc1'] = 'Fullscreen';
+$_LANG['b13311ab51c4c34757f67f26580018dd'] = 'Windowed';
 
 ?>

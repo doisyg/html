@@ -49,7 +49,8 @@ function InitWycaDemo()
 	if (wycaApi.websocketAuthed)
 	{
 		wycaApi.GetGlobalVehiculePersistanteDataStorage(function(data){
-			
+			console.log('GetGlobalVehiculePersistanteDataStorage');
+			console.log(JSON.parse(data.D));
 			if (data.D == '')
 				dataStorage = {};
 			else
