@@ -131,14 +131,28 @@ $(document).ready(function(e) {
     });
 	
 	$('.bUndock').click(function(e) {
+		
         e.preventDefault();
+		wycaApi.on('onUndockResult', function (data){
+			console.log('onUndockResult',data);
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+			}
+			else
+			{	
+				ParseAPIAnswerError(data);
+			}
+			// On rebranche l'ancienne fonction
+			wycaApi.on('onUndockResult', onUndockResult);
+		});
+		
 		wycaApi.Undock(function(data){
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
 			}
 			else
 			{
-				alert_wyca(wycaApi.AnswerCodeToString(data.A));
+				ParseAPIAnswerError(data);
 			}
 		});
     });
@@ -1634,8 +1648,7 @@ function FindElemByName(tab, nom)
 
 function ParseAPIAnswerError(data,pre_txt = '' ,post_txt = '')
 {
-	console.log('ERROR API');
-	console.log(JSON.stringify(data));
+	console.log('ERROR API',JSON.stringify(data));
 	let txt = '';
 	if( data.A == wycaApi.AnswerCode.CANCELED ){
 		if (data.M != ''){

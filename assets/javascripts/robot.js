@@ -146,6 +146,9 @@ $(document).ready(function(e) {
 		onGoToAugmentedPoseResult: onGoToAugmentedPoseResult,
 		onGoToChargeResult: onGoToChargeResult,
 		onGoToPoseResult: onGoToPoseResult,
+		onDockResult: onDockResult,
+		onUndockResult: onUndockResult,
+		onUndockFeedback: onUndockFeedback,
 		onMoveInProgress: function(data){
 			if (data)
 				//$('body > header .stop_move').show(); 
@@ -265,13 +268,22 @@ function GetMappingInConstruction()
 function onGoToPoseResult(data)
 {
 }
+function onGoToChargeResult(data)
+{
+}
 function onGoToPoiResult(data)
 {
 }
 function onGoToAugmentedPoseResult(data)
 {
 }
-function onGoToChargeResult(data)
+function onDockResult(data)
+{
+}
+function onUndockResult(data)
+{
+}
+function onUndockFeedback(data)
 {
 }
 
