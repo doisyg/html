@@ -1687,8 +1687,8 @@
 											<ul class="tuiles row">
 												<li class="col-xs-6">
 													<div class="is_checkbox tuile_img no_update" id="bChangeMaintenanceAccountPassword" style="bottom:0;border-radius:10px">
-														<i class="fas fa-exchange-alt iconMenuRed" style="padding-top:5px"></i>
-														<h4 class="iconMenuRed" style="margin-top: 0px;font-weight:700"><?php echo __('Change');?></h4>
+														<i class="fas fa-exchange-alt iconMenuBlue" style="padding-top:5px"></i>
+														<h4 class="iconMenuBlue" style="margin-top: 0px;font-weight:700"><?php echo __('Change');?></h4>
 													</div>
 												</li>
 												<li class="col-xs-6">
