@@ -47,6 +47,8 @@ foreach ($_POST as $key => $value)
 	elseif ($key != 'b64' && $key!='imageData' && $key!='image_tri')
 		$_POST[$key] = xss_clean($value); 
 
+
+/*
 if (isset($_SESSION['id_lang']))
 	$currentIdLang = $_SESSION['id_lang'];
 else
@@ -54,6 +56,9 @@ else
 	$currentIdLang = 2;
 	$_SESSION['id_lang'] = $currentIdLang;
 }
+*/
+$currentIdLang = Configuration::GetValue('ID_LANG');
+if ($currentIdLang == '') $currentIdLang = 2;
 
 $currentLang = new Lang($currentIdLang);
 $translate = new Translate($currentLang->iso);

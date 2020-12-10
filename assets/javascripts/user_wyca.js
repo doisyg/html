@@ -14,10 +14,7 @@ $(document).ready(function(e) {
 			else
 			{
 				$('#user_recovery .bRecovery').removeClass('disabled');
-				console.log(JSON.stringify(data)); 
-				text = wycaApi.AnswerCodeToString(data.A);
-				if (data.M != '') text += '<br />'+data.M;
-				alert_wyca(text);
+				ParseAPIAnswerError(data);
 			}
 		});
 		
@@ -28,10 +25,7 @@ $(document).ready(function(e) {
 			else
 			{
 				$('#user_recovery .bRecovery').removeClass('disabled');
-				console.log(JSON.stringify(data)); 
-				text = wycaApi.AnswerCodeToString(data.A);
-				if (data.M != '') text += '<br />'+data.M;
-				alert_wyca(text);
+				ParseAPIAnswerError(data);
 			}
 		});
     });

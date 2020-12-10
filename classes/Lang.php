@@ -10,7 +10,7 @@ class Lang
 	
 	public static function Init()
 	{
-		self::$_langues[] = array();
+		self::$_langues = array();
 		$l = new Lang(); $l->id_lang=1; $l->iso = 'fr'; $l->langue = 'Français';
 		self::$_langues[] = $l;
 		$_idbyiso['fr'] = $l;

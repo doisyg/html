@@ -168,7 +168,7 @@
                                             <div style="height:60px;"></div>
                                             
                                             <a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
-                                        
+											<div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div>
                                         	<div class="ifUndocked">
                                                 
                                                 <div style="text-align:center; width:100%; z-index:2000; margin-top:50px;">
@@ -201,8 +201,8 @@
                                                     <h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fas fa-info"></i></h2>
                                                 </header>
                                                 <div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
-                                                    <strong><?= _('Action finished !') ?></strong><br />
-													<?= _('No error during action.') ?>
+                                                    <strong><?=__('Action finished !') ?></strong><br />
+													<?=__('No error during action.') ?>
                                                 </div>
                                             </section>
                                             <section class="panel panel-danger">
@@ -210,7 +210,7 @@
                                                     <h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fa fa-remove"></i></h2>
                                                 </header>
                                                 <div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
-                                                    <strong><?= _('Error !') ?></strong><br />
+                                                    <strong><?=__('Error !') ?></strong><br />
                                                     <span class="error_details"></span>
                                                 </div>
                                             </section>
@@ -219,7 +219,7 @@
                                                     <h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fas fa-exclamation-triangle"></i></h2>
                                                 </header>
                                                 <div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
-                                                    <strong><?= _('Warning !') ?></strong><br />
+                                                    <strong><?=__('Warning !') ?></strong><br />
                                                     <span class="error_details"></span>
                                                 </div>
                                             </section>
@@ -240,7 +240,7 @@
                                 <div class="modal-header">
                                     <div class="actions mh100vh_55">
                                         <div class="h100vh_160" style="overflow:auto; text-align:center">
-                                            <h4><?= _('Saving map before testing')?></h4>
+                                            <h4><?=__('Saving map before testing')?></h4>
 											<span id="start_point_text"></span>
 											<div class="row" style="margin: 0;">
 												<div class="col-xs-3">
@@ -270,7 +270,7 @@
                                 <div class="modal-header">
                                     <div class="actions mh100vh_55">
                                         <div class="h100vh_160" style="overflow:auto; text-align:center">
-                                            <h4><?= _('Saving map before testing')?></h4>
+                                            <h4><?=__('Saving map before testing')?></h4>
 											<span id="start_point_text"></span>
 											<div class="row" style="margin: 0;">
 												<div class="col-xs-3">
@@ -300,7 +300,7 @@
                                 <div class="modal-header">
                                     <div class="actions mh100vh_55">
                                         <div class="h100vh_160" style="overflow:auto; text-align:center">
-                                            <h4><?= _('Saving map before testing')?></h4>
+                                            <h4><?=__('Saving map before testing')?></h4>
 											<span id="start_point_text"></span>
 											<div class="row" style="margin: 0;">
 												<div class="col-xs-3">
@@ -437,7 +437,7 @@
                                         <div class="h100vh_160" style="overflow:auto; text-align:center">
                                         
                                         	<a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
-                                        
+											<div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div>
                                         	<div class="ifUndocked">
                                                 <div style="height:200px; position:relative;">
                                                 
@@ -452,7 +452,7 @@
                                                     
                                                 </div>
                                             
-                                            	<div style="color:#CC0000;">
+                                            	<div class ="modal-advice">
                                                     <p class="texts_add_dock text_prepare_robot"><?php echo stripslashes(__('Move the robot in front of the dock and click on the "Scan" button'));?></p>
                                                     <p class="texts_add_dock text_set_dock"><?php echo stripslashes(__('Click on the fiducial to create the docking station'));?></p>
                                                 </div>
@@ -614,10 +614,10 @@
                                         <div class="h100vh_160" style="overflow:auto; text-align:center">
                                         
                                         	<a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
-                                        
+											<div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div>
                                         	<div class="ifUndocked">
                                             
-                                            	<div style="color:#CC0000;">
+                                            	<div class ="modal-advice">
                                                     <p><?php echo stripslashes(__('Move the robot at the final position desired and click on the "Add POI" button'));?></p>
                                                 </div>                                                
                                                 
@@ -682,7 +682,7 @@
                                         <div class="h100vh_160" style="overflow:auto; text-align:center">
                                         
                                         	<a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
-                                        
+											<div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div>
                                         	<div class="ifUndocked">
                                                 
                                                 <div style="height:200px; position:relative;">
@@ -698,7 +698,7 @@
                                                     
                                                 </div>
                                             
-                                            	<div style="color:#CC0000;">
+                                            	<div class ="modal-advice">
                                                     <p class="texts_add_augmented_pose text_prepare_approch"><?php echo stripslashes(__('Move the robot at the approach position desired and click on the "Scan" button'));?></p>
                                                     <p class="texts_add_augmented_pose text_set_approch"><?php echo stripslashes(__('Click on the fiducial to set the approch position'));?></p>
                                                     <p class="texts_add_augmented_pose text_prepare_final"><?php echo stripslashes(__('Move the robot at the final position desired and click on the "Scan" button'));?></p>
@@ -842,8 +842,8 @@
                                 <div class="modal-header">
                                     <div class="actions mh100vh_55">
 										<div class="h100vh_160" style="overflow:auto; text-align:center;">
-											<h2><?= _('Add area') ?></h2>
-											<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the map to choose the position of the top-left corner point of your area.') ?></h4>
+											<h2><?=__('Add area') ?></h2>
+											<h4 style="text-align:justify;margin:30px 0;"><?=__('Click on the map to choose the position of the top-left corner point of your area.') ?></h4>
 											<svg id="" width="100" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events" preserveAspectRatio="xMinYMax meet" >
 												<polygon points="30,30 70,30 70,70 30,70" style="fill: rgba(87, 159, 177, 0.5);"></polygon>
 												<line x1="30" y1="30" x2="30" y2="70" stroke-width="5" style="stroke: #589FB2;"></line>
@@ -856,12 +856,12 @@
 												<rect x="25" y="65" height="10" width="10" stroke-width="1" ></rect>
 												<path fill="currentColor" transform="scale(0.05) translate(550,550)" d="M302.189 329.126H196.105l55.831 135.993c3.889 9.428-.555 19.999-9.444 23.999l-49.165 21.427c-9.165 4-19.443-.571-23.332-9.714l-53.053-129.136-86.664 89.138C18.729 472.71 0 463.554 0 447.977V18.299C0 1.899 19.921-6.096 30.277 5.443l284.412 292.542c11.472 11.179 3.007 31.141-12.5 31.141z"></path>
 											</svg>
-											<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the menu icon to cancel.') ?></h4>
+											<h4 style="text-align:justify;margin:30px 0;"><?=__('Click on the menu icon to cancel.') ?></h4>
 											
 											<div class="checkbox checkbox_wrapper">
 												<label>
 													<input type="checkbox" value="" class="checkboxHelpArea">
-													<?= _('Don\'t show this message again')?>
+													<?=__('Don\'t show this message again')?>
 												</label>
 											</div>
 											<div class="btn-circle btn-lg btn-popup" style="display: block;">
@@ -883,8 +883,8 @@
                                 <div class="modal-header">
                                     <div class="actions mh100vh_55">
 										<div class="h100vh_160" style="overflow:auto; text-align:center;">
-											<h2><?= _('Add forbidden area') ?></h2>
-											<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the map to choose the position of the top-left corner point of your forbidden area.') ?></h4>
+											<h2><?=__('Add forbidden area') ?></h2>
+											<h4 style="text-align:justify;margin:30px 0;"><?=__('Click on the map to choose the position of the top-left corner point of your forbidden area.') ?></h4>
 											<svg id="" width="100" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events" preserveAspectRatio="xMinYMax meet" >
 												<polygon points="30,30 70,30 70,70 30,70" style="fill: rgba(255, 0, 0, 0.3);"></polygon>
 												<line x1="30" y1="30" x2="30" y2="70" stroke-width="5" style="stroke: #da3939;"></line>
@@ -897,12 +897,12 @@
 												<rect x="25" y="65" height="10" width="10" stroke-width="1" ></rect>
 												<path fill="currentColor" transform="scale(0.05) translate(550,550)" d="M302.189 329.126H196.105l55.831 135.993c3.889 9.428-.555 19.999-9.444 23.999l-49.165 21.427c-9.165 4-19.443-.571-23.332-9.714l-53.053-129.136-86.664 89.138C18.729 472.71 0 463.554 0 447.977V18.299C0 1.899 19.921-6.096 30.277 5.443l284.412 292.542c11.472 11.179 3.007 31.141-12.5 31.141z"></path>
 											</svg>
-											<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the menu icon to cancel.') ?></h4>
+											<h4 style="text-align:justify;margin:30px 0;"><?=__('Click on the menu icon to cancel.') ?></h4>
 											
 											<div class="checkbox checkbox_wrapper">
 												<label>
 													<input type="checkbox" value="" class="checkboxHelpForbidden">
-													<?= _('Don\'t show this message again')?>
+													<?=__('Don\'t show this message again')?>
 												</label>
 											</div>
 											<div class="btn-circle btn-lg btn-popup" style="display: block;">
@@ -924,14 +924,14 @@
                                 <div class="modal-header">
                                     <div class="actions mh100vh_55">
 										<div class="h100vh_160" style="overflow:auto; text-align:center;">
-											<h2><?= _('Go to position') ?></h2>
-											<h4 style="text-align:left;margin:30px 0;"><?= _('Click on the map to choose the position you\'re aiming for.') ?></h4>
-											<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the menu icon to cancel.') ?></h4>
+											<h2><?=__('Go to position') ?></h2>
+											<h4 style="text-align:left;margin:30px 0;"><?=__('Click on the map to choose the position you\'re aiming for.') ?></h4>
+											<h4 style="text-align:justify;margin:30px 0;"><?=__('Click on the menu icon to cancel.') ?></h4>
 											<div class="btn-circle btn-lg btn-popup" style="display: block;">
 												<i class="fas fa-crosshairs iconMenuBlue"></i>
 												<i class="fas fa-times times_icon iconMenuRed" style="display: inline-block;"></i>
 											</div>
-											<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the stop icon to cancel action while the vehicle is moving.') ?></h4>
+											<h4 style="text-align:justify;margin:30px 0;"><?=__('Click on the stop icon to cancel action while the vehicle is moving.') ?></h4>
 											
 											<div class="btn-circle btn-lg btn-popup btn-danger" style="display: block;">
 												<i class="fa fa-stop"></i>
@@ -940,7 +940,7 @@
 											<div class="checkbox checkbox_wrapper">
 												<label>
 													<input type="checkbox" value="" class="checkboxHelpGotopose">
-													<?= _('Don\'t show this message again')?>
+													<?=__('Don\'t show this message again')?>
 												</label>
 											</div>
 											<a href="#" class="btn btn-primary btn_footer_left btn_100 bHelpClickGotoPoseOk" data-dismiss="modal" ><?php echo __('Ok');?></a>
@@ -952,25 +952,25 @@
                     </div>
 					
                     <div class="popupHelp">
-                    	<h2><?= _('Help')?></h2>
+                    	<h2><?=__('Help')?></h2>
                     	<ul style="color:#000;">
-                        	<li><div class="iconForbiddenArea"><i class="fas fa-vector-square"></i><i class="fa fa-minus-circle iconMenuRed"></i></div><span class="description"><?= _('Add forbidden area')?></span></li>
-                        	<li><i class="fa fa-draw-polygon iconMenuGreen" style="font-size: 26px;"></i><span class="description"><?= _('Add custom area')?></span></li>
-                        	<li><i class="fa fa-map-marker-alt iconMenuBlue"></i><span class="description"><?= _('Add POI')?></span></li>
-                        	<li><div class="iconAugmentedPose"><i class="fas fa-map-marker-alt iconMenuPurple"></i><i class="fas fa-barcode"></i></div><span class="description"><?= _('Add Augmented pose')?></span></li>
-                        	<li><i class="fa fa-charging-station iconMenuGreen"></i><span class="description"><?= _('Add docking station')?></span></li>
-                        	<li><i class="fa fa-eraser"></i><span class="description"><?= _('Erase pixel')?></span></li>
-                        	<li><i class="fa fa-crosshairs iconMenuBlue"></i><span class="description"><?= _('Move the robot to this point')?></span></li>
-                        	<li><i class="fa fa-gamepad iconMenuPurple"></i><span class="description"><?= _('Teleop the robot')?></span></li>
-                        	<li style="position:relative;font-size:16px"><img class="route" src="assets/images/route_green.svg"/><span class="description" style="margin-left: 40px;position: relative;top: 3px;"><?= _('Test go to POI, dock or augmented pose')?></span></li>
+                        	<li><div class="iconForbiddenArea"><i class="fas fa-vector-square"></i><i class="fa fa-minus-circle iconMenuRed"></i></div><span class="description"><?=__('Add forbidden area')?></span></li>
+                        	<li><i class="fa fa-draw-polygon iconMenuGreen" style="font-size: 26px;"></i><span class="description"><?=__('Add custom area')?></span></li>
+                        	<li><i class="fa fa-map-marker-alt iconMenuBlue"></i><span class="description"><?=__('Add POI')?></span></li>
+                        	<li><div class="iconAugmentedPose"><i class="fas fa-map-marker-alt iconMenuPurple"></i><i class="fas fa-barcode"></i></div><span class="description"><?=__('Add Augmented pose')?></span></li>
+                        	<li><i class="fa fa-charging-station iconMenuGreen"></i><span class="description"><?=__('Add docking station')?></span></li>
+                        	<li><i class="fa fa-eraser"></i><span class="description"><?=__('Erase pixel')?></span></li>
+                        	<li><i class="fa fa-crosshairs iconMenuBlue"></i><span class="description"><?=__('Move the robot to this point')?></span></li>
+                        	<li><i class="fa fa-gamepad iconMenuPurple"></i><span class="description"><?=__('Teleop the robot')?></span></li>
+                        	<li style="position:relative;font-size:16px"><img class="route" src="assets/images/route_green.svg"/><span class="description" style="margin-left: 40px;position: relative;top: 3px;"><?=__('Test go to POI, dock or augmented pose')?></span></li>
                         	<li style="position:relative;">
 							<svg class="svg_popupHelp_robot" xmlns="http://www.w3.org/2000/svg">
 								<circle cx="20" cy="20" r="12" class="robot_elem robot_elem_fond"></circle>
 								<polyline points="16 16 24 20 16 24" stroke="#FFFFFF" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round" class="robot_elem" transform="rotate(-90,20,20)"></polyline>
 							</svg>
-							<span class="description" style="margin-left: 40px;"><?= _('Robot position')?></span></li>
+							<span class="description" style="margin-left: 40px;"><?=__('Robot position')?></span></li>
                         </ul>
-                        <p class="legende"><?= _('Click to hide')?></p>
+                        <p class="legende"><?=__('Click to hide')?></p>
                     </div>
                     
 					<div class="install_normal_edit_map_loading loading_big loading_map"><i class="fa fa fa-spinner fa-pulse fa-3x"></i></div>
@@ -1098,7 +1098,7 @@
 										<ul class="tuiles row" id="MasterDockList">
 											
 										</ul>
-										<p style="padding-left:5px;margin-top:10px"><i class="fas fa-asterisk" style="color: darkorange;"></i> <?= _('Actual default dock') ?></p>
+										<p style="padding-left:5px;margin-top:10px"><i class="fas fa-asterisk" style="color: darkorange;"></i> <?=__('Actual default dock') ?></p>
 										
                                     </div>
                                     
@@ -1178,7 +1178,7 @@
                 </div>         
             </div>
             <footer>
-            	<a href="#" class="btn btn-default btn_footer_left btn_50 button_goto" data-goto="install_normal_setup"><?php echo __('Cancel');?></a>           
+            	<a href="#" class="btn btn-default btn_footer_left btn_50 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>           
                 <a href="#" class="btn btn-primary bSaveTrinaryMap btn_footer_right btn_50"><?php echo __('Save');?></a>
             </footer>
         </section>
@@ -1220,7 +1220,7 @@
                         </a>
                     </li>
 					<li class="col-xs-6 col-md-6 col-lg-6">
-                        <h2 style="margin-top:35px"><?= _('Français') ?></h2>
+                        <h2 style="margin-top:35px"><?=__('Français') ?></h2>
                     </li>
                 	<li class="col-xs-6 col-md-6 col-lg-6" style="clear:both; margin-top:20px">
                         <a href="#" class="select_langue anim_tuiles tuile_img tuile2" data-id_lang="2">
@@ -1228,7 +1228,7 @@
                         </a>
                     </li>
 					<li class="col-xs-6 col-md-6 col-lg-6" style="margin-top:20px">
-                        <h2 style="margin-top:35px"><?= _('English') ?></h2>
+                        <h2 style="margin-top:35px"><?=__('English') ?></h2>
                     </li>
                 </ul>
                 
@@ -1312,8 +1312,8 @@
 						</div>
 						<a href="#" class="btn btn-sm btn-primary bResetValueEblMbl" style="margin-left:50%; transform:translateX(-50%);margin-bottom:10px;"><?php echo __('Reset values');?></a>
 						
-						<p><?= _('For more precise values, try to test battery in real conditions') ?></p>
-						<a href="#" class="real_test btn btn-lg btn-success" style="margin-left:50%; transform:translateX(-50%)"><i class="fas fa-route"></i> <?=('Real Test')?></a>
+						<p><?=__('For more precise values, try to test battery in real conditions') ?></p>
+						<a href="#" class="real_test btn btn-lg btn-success" style="margin-left:50%; transform:translateX(-50%)"><i class="fas fa-route"></i> <?= __('Real Test')?></a>
 						
 						<a href="#" class="install_normal_setup_config_next button_goto" data-goto="install_normal_maintenance" style="display:none;"></a>   
 					</div>
@@ -1324,18 +1324,18 @@
 							<div class="modal-header">
 								<div class="actions mh100vh_55">
 									<div class="h100vh_160" style="overflow:auto; text-align:center">
-										<div class="modalRealTest_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i><br><?= _('Loading map\'s data') ?></div>
+										<div class="modalRealTest_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i><br><?=__('Loading map\'s data') ?></div>
 										<div class="modalRealTest_content">
-											<p><?= _('Please choose a start position')?></p>
+											<p><?=__('Please choose a start position')?></p>
 											<div class="form-group">
 												<select class="form-control form-fa real_test_start">
-													<option value=""><?= _('Start position')?></option>
+													<option value=""><?=__('Start position')?></option>
 												</select>
 											</div>
-											<p><?= _('Please choose a destination')?></p>
+											<p><?=__('Please choose a destination')?></p>
 											<div class="form-group">
 												<select class="form-control form-fa real_test_end">
-													<option value=""><?= _('Arrival position')?></option>		
+													<option value=""><?=__('Arrival position')?></option>		
 												</select>
 											</div>
 										</div>
@@ -1357,7 +1357,7 @@
 										<div class="modalRealTestResult_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
 										<div class="modalRealTestResult_content text-center">
 											<div class="start_point">
-												<h4><?= _('Go to start position')?></h4>
+												<h4><?=__('Go to start position')?></h4>
 												<span class="start_point_text"></span>
 												<div class="row" style="margin: 0;">
 													<div class="col-xs-3">
@@ -1372,7 +1372,7 @@
 												</div>														
 											</div>
 											<div class="end_point">
-												<h4><?= _('Go to destination')?></h4>
+												<h4><?=__('Go to destination')?></h4>
 												<span class="end_point_text"></span>
 												<div class="row" style="margin: 0;">
 													<div class="col-xs-3">
@@ -1387,8 +1387,8 @@
 												</div>
 											</div>
 											<div class="result_RealTest" style="border-top:1px solid #DCDCDC">
-												<h4><?= _('Battery used :') ?> <span class="battery_used">0</span> %</h4>
-												<p><?= _('Use this result as reference for battery configuration') ?></p>
+												<h4><?=__('Battery used :') ?> <span class="battery_used">0</span> %</h4>
+												<p><?=__('Use this result as reference for battery configuration') ?></p>
 												<a href="#" class="btn btn-success bUseRealTest"><?php echo __('Use');?></a>
 											</div>
 										</div>
@@ -1415,8 +1415,8 @@
             </header>
             <div class="content">
 				<div class="install_normal_setup_tops_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
-				<h5 class="text-center" style="margin-bottom:5px;"><?= _('Please select available tops for the vehicle.') ?></h5>
-				<p class="text-center" style="margin-bottom:30px;"><i class="fas fa-exclamation-triangle"></i> <?= _('This is not the active top selection.') ?></p>
+				<h5 class="text-center" style="margin-bottom:5px;"><?=__('Please select available tops for the vehicle.') ?></h5>
+				<p class="text-center" style="margin-bottom:30px;"><i class="fas fa-exclamation-triangle"></i> <?=__('This is not the active top selection.') ?></p>
             	
                 <ul class="tuiles row">
                 </ul>
@@ -1424,8 +1424,8 @@
                 
                 <div style="clear:both; height:20px;"></div>
                 <div style="display:flex;justify-content:space-around">
-					<a href="#" class="import_top btn btn-success"><?= _('Import new top')?></a>
-					<a href="#" class="button_goto btn btn-info" data-goto="install_normal_setup_top"><?= _('Select active Top')?></a>
+					<a href="#" class="import_top btn btn-success"><?=__('Import new top')?></a>
+					<a href="#" class="button_goto btn btn-info" data-goto="install_normal_setup_top"><?=__('Select active Top')?></a>
 				</div>
                 <div class="modal fade modalImportTop" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
                     <div class="modal-dialog" role="dialog">
@@ -1461,7 +1461,7 @@
             <footer>
 				
                 <a href="#" class="btn btn-default btn_footer_left btn_50 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>
-				<a href="#" class="save_tops btn btn-primary btn_footer_right btn_50"><?= _('Save')?></a> 
+				<a href="#" class="save_tops btn btn-primary btn_footer_right btn_50"><?=__('Save')?></a> 
             </footer>
         </section>
         
@@ -1469,11 +1469,11 @@
 	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup_tops"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
-                <h2><?php echo __('Seclect active top');?></h2>
+                <h2><?php echo __('Select active top');?></h2>
             </header>
             <div class="content">
             	<div class="install_by_step_top_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
-				<h5 class="text-center" style="margin-bottom:30px;"><?= _('Please select the active top for the vehicle.') ?></h5>
+				<h5 class="text-center" style="margin-bottom:30px;"><?=__('Please select the active top for the vehicle.') ?></h5>
                 <ul class="tuiles row">
                 </ul>
                 
@@ -1486,7 +1486,7 @@
                                 <div class="actions mh100vh_55">
                                     
                                     <div class="h100vh_160" style="overflow:auto">
-                                        <div class="progressSetActiveTop" style="display:none;">
+                                        <div class="progressSetActiveTop">
                                             <h4 style="text-align:center;margin-bottom:20px"><?php echo __('Setting new active top');?></h4>
                                             <div class="setActiveTopProgress progress progress-striped light active m-md">
                                                 <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;">
@@ -1518,8 +1518,8 @@
             <div class="content" style="text-align:center;">
 				<h4 style="text-align:center;margin-bottom:30px"><?= __('Move the robot using the joystick.') ?></h4>      
                 <a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
+				<div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div>
                 <div class="ifUndocked">
-                    
                     <div style="text-align:center; width:100%; z-index:2000; margin-top:50px;">
                         <div class="joystickDiv" draggable="false" style="margin:auto;">
                             <div class="fond"></div>
@@ -1542,10 +1542,11 @@
             <div class="content">
             
             	<h4 style="text-align:center"><?= __('Move the robot near a reflector (dock or augmented pose) then click on the recovery button') ?></h4>
-                <div style="text-align:center; margin-top:20px;"><a href="#" class="bRecovery ifDocked_disabled btn btn-warning btn_big_popup "><?= _('Recovery') ?></a></div>
+                <div style="text-align:center; margin-top:20px;"><a href="#" class="bRecovery ifDocked_disabled btn btn-warning btn_big_popup "><?=__('Recovery') ?></a></div>
                 
             
                 <div style="text-align:center"><a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a></div>
+                <div style="text-align:center"><div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div></div>
                                         
                 <div class="ifUndocked">
                     
@@ -1624,7 +1625,7 @@
 													</div>
 													
                                                 </div>
-												<p class="password_format" style="margin-bottom:0"><?= _('A valid mail adress.')?> </p>
+												<p class="password_format" style="margin-bottom:0"><?=__('A valid mail adress.')?> </p>
                                                 <div class="form-group nopymy">
                                                     <label class="col-xs-12 col-md-3 control-label" for="password"><?php echo __('Password');?></label>
                                                     <div class="col-xs-12 col-md-6 input-group input-group-icon">
@@ -1636,7 +1637,7 @@
 														</span>
                                                     </div>
                                                 </div>
-												<p class="password_format"><?= _('8 characters, lower and uppercase, digit or special char.')?> </p>
+												<p class="password_format"><?=__('8 characters, lower and uppercase, digit or special char.')?> </p>
                                                 <div class="form-group">
                                                     <label class="col-xs-12 col-md-3 control-label" for="cpassword"><?php echo __('Confirm password');?></label>
                                                     <div class="col-xs-12 col-md-6 input-group input-group-icon">
@@ -1648,7 +1649,7 @@
 														</span>
                                                     </div>
                                                 </div>
-												<p class="password_format"><?= _('8 characters, lower and uppercase, digit or special char.')?> </p>
+												<p class="password_format"><?=__('8 characters, lower and uppercase, digit or special char.')?> </p>
                                             </form>
                                         </div>
                                         
@@ -1698,8 +1699,8 @@
                                 <div class="modal-header">
                                     <div class="actions mh100vh_55">
 										<div class="h100vh_160" style="overflow:auto; text-align:center;">
-											<h2><?= _('Managers') ?></h2>
-											<h4 style="text-align:left;margin:30px 0;"><?= _('Managers are the end-users of the vehicle, able to create POIs and take control of the robot.') ?></h4>
+											<h2><?=__('Managers') ?></h2>
+											<h4 style="text-align:left;margin:30px 0;"><?=__('Managers are the end-users of the vehicle, able to create POIs and take control of the robot.') ?></h4>
 											<div style="display:flex;justify-content:space-around;">
 												<div class="btn-circle btn-lg btn-popup" style="display:inline-block;position:unset;transform:unset;">
 													<i class="fas fa-map-marker-alt iconMenuBlue" style="position: relative;left: -2px;line-height:1;"></i>
@@ -1708,13 +1709,13 @@
 													<i class="fas fa-gamepad iconMenuPurple" style="position: relative;left: -11px;line-height:1;"></i>
 												</div>
 											</div>
-											<h4 style="text-align:justify;margin:30px 0;"><?= _('The manager can also switch the active top among the available tops listed earlier in the installation process.') ?></h4>
+											<h4 style="text-align:justify;margin:30px 0;"><?=__('The manager can also switch the active top among the available tops listed earlier in the installation process.') ?></h4>
 											
 											<div style="clear:both;"></div>
 											<div class="checkbox checkbox_wrapper">
 												<label>
 													<input type="checkbox" value="" class="checkboxHelpManager">
-													<?= _('Don\'t show this message again')?>
+													<?=__('Don\'t show this message again')?>
 												</label>
 											</div>
 											<a href="#" class="btn btn-primary btn_footer_left btn_100 bHelpManagerOk" data-dismiss="modal" ><?php echo __('Ok');?></a>
@@ -1763,7 +1764,7 @@
 													</div>
 													
                                                 </div>
-												<p class="password_format" style="margin-bottom:0"><?= _('A valid mail adress.')?> </p>
+												<p class="password_format" style="margin-bottom:0"><?=__('A valid mail adress.')?> </p>
                                                 <div class="form-group nopymy">
                                                     <label class="col-xs-12 col-md-3 control-label" for="password"><?php echo __('Password');?></label>
                                                     <div class="col-xs-12 col-md-6 input-group input-group-icon">
@@ -1775,7 +1776,7 @@
 														</span>
                                                     </div>
                                                 </div>
-												<p class="password_format"><?= _('8 characters, lower and uppercase, digit or special char.')?> </p>
+												<p class="password_format"><?=__('8 characters, lower and uppercase, digit or special char.')?> </p>
                                                 <div class="form-group">
                                                     <label class="col-xs-12 col-md-3 control-label" for="cpassword"><?php echo __('Confirm password');?></label>
                                                     <div class="col-xs-12 col-md-6 input-group input-group-icon">
@@ -1787,7 +1788,7 @@
 														</span>
                                                     </div>
                                                 </div>
-												<p class="password_format"><?= _('8 characters, lower and uppercase, digit or special char.')?> </p>
+												<p class="password_format"><?=__('8 characters, lower and uppercase, digit or special char.')?> </p>
                                             </form>
                                         </div>
                                         
@@ -1835,7 +1836,7 @@
                 <div class="install_normal_service_book_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
                 
                 <div class="loaded col-md-12" style="padding-top:30px;">
-                    <a href="#" class="bAddServiceBook btn btn-primary">Add a service book</a>
+                    <a href="#" class="bAddServiceBook btn btn-primary"><?= __('Add a service book')?></a>
                     <ul class="list_service_books list_elem">
                     </ul>
                     

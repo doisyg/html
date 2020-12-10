@@ -325,7 +325,7 @@ $(document).ready(function() {
 		normalCanChangeMenu = true;
 		$('#install_normal_edit_map_bEndGomme').hide();
 		$('#install_normal_edit_map_bCancelGomme').hide();
-		$('.times_icon_menu').show('fast');
+		$('#install_normal_edit_map .times_icon_menu').show('fast');
 		
 		sizeGomme = $('#install_normal_edit_map_menu_erase .bGommeSize.selected').data('size');
 		normalCurrentAction = 'gomme';	
@@ -1793,8 +1793,10 @@ $(document).ready(function() {
 			$('#install_normal_edit_map .icon_menu[data-menu="install_normal_edit_map_menu_gotopose"]').show('fast');
 			setTimeout(function(){$('#install_normal_edit_map .times_icon_menu').show('fast')},50);
 			
+			boolHelpGotoPose = getCookie('boolHelpGotoPoseI') != '' ? JSON.parse(getCookie('boolHelpGotoPoseI')) : true; // TRICK JSON.parse STR TO BOOL
+			
 			if(boolHelpGotoPose){
-				$('.modalHelpClickGotoPose').modal('show');
+				$('#install_normal_edit_map .modalHelpClickGotoPose').modal('show');
 			}			
 		}
 		else
@@ -1802,7 +1804,7 @@ $(document).ready(function() {
 		
     });
 	
-	$('#install_normal_edit_map .bHelpClickGotoPoseOk').click(function(){boolHelpGotoPose = !$('#install_normal_edit_map .checkboxHelpGotopose').prop('checked')});//ADD SAVING BDD / COOKIES ?
+	$('#install_normal_edit_map .bHelpClickGotoPoseOk').click(function(){boolHelpGotoPose = !$('#install_normal_edit_map .checkboxHelpGotopose').prop('checked');setCookie('boolHelpGotoPoseI',boolHelpGotoPose);});//ADD SAVING BDD / COOKIES ?
 		
 	/* BTNS GOMME */
 	
@@ -1874,15 +1876,17 @@ $(document).ready(function() {
 			$('#install_normal_edit_map .icon_menu[data-menu="install_normal_edit_map_menu_forbidden"]').show('fast');
 			setTimeout(function(){$('#install_normal_edit_map .times_icon_menu').show('fast')},50);
 			
+			boolHelpForbidden = getCookie('boolHelpForbiddenI') != '' ? JSON.parse(getCookie('boolHelpForbiddenI')) : true; // TRICK JSON.parse STR TO BOOL
+			
 			if(boolHelpForbidden){
-				$('.modalHelpClickForbidden').modal('show');
+				$('#install_normal_edit_map .modalHelpClickForbidden').modal('show');
 			}			
 		}
 		else
 			NormalAvertCantChange();
 	});
 	
-	$('#install_normal_edit_map .bHelpClickForbiddenOk').click(function(){boolHelpForbidden = !$('#install_normal_edit_map .checkboxHelpForbidden').prop('checked')});//ADD SAVING BDD / COOKIES ?
+	$('#install_normal_edit_map .bHelpClickForbiddenOk').click(function(){boolHelpForbidden = !$('#install_normal_edit_map .checkboxHelpForbidden').prop('checked');setCookie('boolHelpForbiddenI',boolHelpForbidden);});//ADD SAVING BDD / COOKIES ?
 
 	$('#install_normal_edit_map_bForbiddenDelete').click(function(e) {
         if (confirm('Are you sure you want to delete this area?'))
@@ -2177,9 +2181,11 @@ $(document).ready(function() {
 			$('#install_normal_edit_map .burger_menu').hide('fast');
 			$('#install_normal_edit_map .icon_menu[data-menu="install_normal_edit_map_menu_area"]').show('fast');
 			setTimeout(function(){$('#install_normal_edit_map .times_icon_menu').show('fast')},50);
+
+			boolHelpArea = getCookie('boolHelpAreaI') != '' ? JSON.parse(getCookie('boolHelpAreaI')) : true; // TRICK JSON.parse STR TO BOOL
 			
 			if(boolHelpForbidden){
-				$('.modalHelpClickArea').modal('show');
+				$('#install_normal_edit_map .modalHelpClickArea').modal('show');
 			}
 			
 		}
@@ -2187,7 +2193,7 @@ $(document).ready(function() {
 			NormalAvertCantChange();
 	});
 	
-	$('#install_normal_edit_map .bHelpClickAreaOk').click(function(){boolHelpArea = !$('#install_normal_edit_map .checkboxHelpArea').prop('checked')});//ADD SAVING BDD / COOKIES ?
+	$('#install_normal_edit_map .bHelpClickAreaOk').click(function(){boolHelpArea = !$('#install_normal_edit_map .checkboxHelpArea').prop('checked');setCookie('boolHelpAreaI',boolHelpArea);});//ADD SAVING BDD / COOKIES ?
 	
 	$('#install_normal_edit_map_bAreaDelete').click(function(e) {
         if (confirm('Are you sure you want to delete this area?'))
@@ -2721,7 +2727,7 @@ $(document).ready(function() {
 				NormalAddHistorique({'action':'edit_poi', 'data':{'index':currentPoiIndex, 'old':saveCurrentPoi, 'new':JSON.stringify(pois[currentPoiIndex])}});
 			saveCurrentPoi = JSON.stringify(pois[currentPoiIndex]);
 			NormalTracePoi(currentPoiIndex);
-			$('.modal.modalPoiOptions').modal('hide');			
+			$('#install_normal_edit_map .modal.modalPoiOptions').modal('hide');			
 		}else{
 			alert_wyca(textNameUsed);
 		};
@@ -3040,7 +3046,7 @@ $(document).ready(function() {
 				NormalAddHistorique({'action':'edit_augmented_pose', 'data':{'index':currentAugmentedPoseIndex, 'old':saveCurrentAugmentedPose, 'new':JSON.stringify(augmented_poses[currentAugmentedPoseIndex])}});
 			saveCurrentAugmentedPose = JSON.stringify(augmented_poses[currentAugmentedPoseIndex]);
 			NormalTraceAugmentedPose(currentAugmentedPoseIndex);
-			$('.modal.modalAugmentedPoseOptions').modal('hide');
+			$('#install_normal_edit_map .modal.modalAugmentedPoseOptions').modal('hide');
 		}else{
 			alert_wyca(textNameUsed);
 		};
@@ -4787,7 +4793,6 @@ function NormalAreaCancel()
 
 function NormalDeleteArea(indexInArray)
 {
-	console.log('Delete Area');
 	if ($('.cancel:visible').length > 0) $('.cancel:visible').click();
 	
 	areas[indexInArray].deleted = true;
