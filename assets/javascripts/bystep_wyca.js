@@ -78,25 +78,47 @@ $(document).ready(function(e) {
 					window.location.href = app_url; // equivalent window.location.reload()
 			},
 			error: function(e) {
-				alert_wyca('Error set lang ; ' + e.responseText);
+				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+					alert_wyca('Error set lang ; ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					setTimeout(function(){window.location.href = 'logout.php'},3000);
+				}else{
+					alert_wyca('Error set lang ; ' + e.responseText );
+				}
 			}
 		});
     });
 	
 	//------------------- STEP SELECT AVAILABLES TOPS ------------------------
 	
-	$('#pages_install_by_step .file_import_top').change(function(){
-		//console.log('here');
-		$('#pages_install_by_step .filename_import_top').html($(this)[0].files[0].name);
-		$('#pages_install_by_step .filename_import_top').show();
-		$('#pages_install_by_step .file_import_top_wrapper').css('background-color','#47a4476e');
+	$('#pages_install_by_step a.import_top').click(function(e) {
+        e.preventDefault();
 		
+		$('#pages_install_by_step .modalImportTop_loading').hide();
+		$('#pages_install_by_step .modalImportTop_content').show();
+		
+		$('#pages_install_by_step .modalImportTop').modal('show');
+		InitTopImportByStep();
+	});
+	
+	$('#pages_install_by_step .file_import_top').change(function(){
+		
+		let fname = $(this)[0].files[0].name;console.log(fname);
+		if(fname.slice(fname.length - 5) == '.wyca'){
+			$('#pages_install_by_step .file_import_top_wrapper').css('background-color','#47a4476e');
+		}else{
+			$('#pages_install_by_step .file_import_top_wrapper').css('background-color','#e611116e');
+			let icon = $('#pages_install_by_step .file_import_top_wrapper > p > i');
+			icon.toggleClass('shake');
+			setTimeout(function(){icon.toggleClass('shake')},2000);
+		}
+		$('#pages_install_by_step .filename_import_top').html(fname);
+		$('#pages_install_by_step .filename_import_top').show();
 	})
 	
 	$('#pages_install_by_step a.bImportTopDo').click(function(e) {
         e.preventDefault();
 		file = $('#pages_install_by_step .file_import_top')[0].files[0];
-		if(file != undefined){
+		if(file != undefined && file.name.slice(file.name.length - 5) == '.wyca'){
 			$('#pages_install_by_step .modalImportTop_loading').show();
 			$('#pages_install_by_step .modalImportTop_content').hide();
 			var reader = new FileReader();
@@ -128,16 +150,6 @@ $(document).ready(function(e) {
 		}
     });
 	
-	$('#pages_install_by_step a.import_top').click(function(e) {
-        e.preventDefault();
-		
-		$('#pages_install_by_step .modalImportTop_loading').hide();
-		$('#pages_install_by_step .modalImportTop_content').show();
-		
-		$('#pages_install_by_step .modalImportTop').modal('show');
-		InitTopImportByStep();
-	});
-	
 	//AJAX INSTALL STEP CALL
 	$('#pages_install_by_step a.save_tops').click(function(e) {
         e.preventDefault();
@@ -167,7 +179,12 @@ $(document).ready(function(e) {
 					success: function(data) {
 					},
 					error: function(e) {
-						alert_wyca('Error save tops ; ' + e.responseText);
+						if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+							alert_wyca('Error save tops ; ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+							setTimeout(function(){window.location.href = 'logout.php'},3000);
+						}else{
+							alert_wyca('Error save tops ; ' + e.responseText );
+						}
 					}
 				});
 				
@@ -199,7 +216,12 @@ $(document).ready(function(e) {
 			success: function(data) {
 			},
 			error: function(e) {
-				alert_wyca('Error set top ; ' + e.responseText);
+				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+					alert_wyca('Error save top ; ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					setTimeout(function(){window.location.href = 'logout.php'},3000);
+				}else{
+					alert_wyca('Error save top ; ' + e.responseText );
+				}
 			}
 		});
 		
@@ -218,7 +240,12 @@ $(document).ready(function(e) {
 			success: function(data) {
 			},
 			error: function(e) {
-				alert_wyca('Error step check ; ' + e.responseText);
+				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+					alert_wyca('Error step check ; ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					setTimeout(function(){window.location.href = 'logout.php'},3000);
+				}else{
+					alert_wyca('Error step check ; ' + e.responseText );
+				}
 			}
 		});
     });
@@ -369,7 +396,12 @@ $(document).ready(function(e) {
 			success: function(data) {
 			},
 			error: function(e) {
-				alert_wyca('Error skip wifi ; ' + e.responseText);
+				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+					alert_wyca('Error skip wifi ; ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					setTimeout(function(){window.location.href = 'logout.php'},3000);
+				}else{
+					alert_wyca('Error skip wifi ; ' + e.responseText );
+				}
 			}
 		});
     });
@@ -423,7 +455,12 @@ $(document).ready(function(e) {
 														success: function(data) {
 														},
 														error: function(e) {
-															alert_wyca('Error step site ; ' + e.responseText);
+															if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+																alert_wyca('Error step site ; ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+																setTimeout(function(){window.location.href = 'logout.php'},3000);
+															}else{
+																alert_wyca('Error step site ; ' + e.responseText );
+															}
 														}
 													});
 													$('#pages_install_by_step a.install_by_step_site_next').click();
@@ -833,11 +870,15 @@ $(document).ready(function(e) {
 												
 											},
 											error: function(e) {
-												
 												var img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
 												img.src = "assets/images/vide.png";
 												
-												alert_wyca('Error get map trinary ; ' + e.responseText);
+												if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+													alert_wyca('Error get map trinary ; ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+													setTimeout(function(){window.location.href = 'logout.php'},3000);
+												}else{
+													alert_wyca('Error get map trinary ; ' + e.responseText );
+												}
 											}
 										});
 										
@@ -856,10 +897,18 @@ $(document).ready(function(e) {
 	//------------------- STEP IMPORT SITE ------------------------
 	
 	$('#pages_install_by_step .file_import_site').change(function(){
-		//console.log('here');
-		$('#pages_install_by_step .filename_import_site').html($(this)[0].files[0].name);
+		
+		let fname = $(this)[0].files[0].name;
+		if(fname.slice(fname.length - 5) == '.wyca'){
+			$('#pages_install_by_step .file_import_site_wrapper').css('background-color','#47a4476e');
+		}else{
+			$('#pages_install_by_step .file_import_site_wrapper').css('background-color','#e611116e');
+			let icon = $('#pages_install_by_step .file_import_site_wrapper > p > i');
+			icon.toggleClass('shake');
+			setTimeout(function(){icon.toggleClass('shake')},2000);
+		}
+		$('#pages_install_by_step .filename_import_site').html(fname);
 		$('#pages_install_by_step .filename_import_site').show();
-		$('#pages_install_by_step .file_import_site_wrapper').css('background-color','#47a4476e');
 		
 	})
 	
@@ -867,7 +916,7 @@ $(document).ready(function(e) {
 	$('#pages_install_by_step a.bImportSiteDo').click(function(e) {
         e.preventDefault();
 		file = $('#pages_install_by_step .file_import_site')[0].files[0];
-		if(file != undefined){
+		if(file != undefined && file.name.slice(file.name.length - 5) == '.wyca'){
 			
 			$('#pages_install_by_step .install_by_step_setup_import_loading').show();
 			$('#pages_install_by_step .install_by_step_setup_import_content').hide();
@@ -900,7 +949,12 @@ $(document).ready(function(e) {
 														$('.install_by_step_site_master_dock_next').click();
 													},
 													error: function(e) {
-														alert_wyca('Error step check ; ' + e.responseText);
+														if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+															alert_wyca('Error step import site ; ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+															setTimeout(function(){window.location.href = 'logout.php'},3000);
+														}else{
+															alert_wyca('Error step import site ; ' + e.responseText );
+														}
 													}
 												});
 											}else{
@@ -991,7 +1045,12 @@ $(document).ready(function(e) {
 						
 					},
 					error: function(e) {
-						alert_wyca('Error step check ; ' + e.responseText);
+						if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+							alert_wyca('Error step master dock ; ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+							setTimeout(function(){window.location.href = 'logout.php'},3000);
+						}else{
+							alert_wyca('Error step master dock ; ' + e.responseText );
+						}
 					}
 				});
 			}else{
@@ -1351,7 +1410,12 @@ $(document).ready(function(e) {
 			success: function(data) {
 			},
 			error: function(e) {
-				alert_wyca('Error step finish ; ' + e.responseText);
+				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+					alert_wyca('Error step test finish ; ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					setTimeout(function(){window.location.href = 'logout.php'},3000);
+				}else{
+					alert_wyca('Error step test finish ; ' + e.responseText );
+				}
 			}
 		});
     });
@@ -1367,7 +1431,12 @@ $(document).ready(function(e) {
 			success: function(data) {
 			},
 			error: function(e) {
-				alert_wyca('Error step finish ; ' + e.responseText);
+				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+					alert_wyca('Error step edit map ; ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					setTimeout(function(){window.location.href = 'logout.php'},3000);
+				}else{
+					alert_wyca('Error step edit map ;' + e.responseText );
+				}
 			}
 		});
     });
@@ -1480,7 +1549,12 @@ $(document).ready(function(e) {
 					success: function(data) {
 					},
 					error: function(e) {
-						alert_wyca('Error step finish ; ' + e.responseText);
+						if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+							alert_wyca('Error step battery config ; ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+							setTimeout(function(){window.location.href = 'logout.php'},3000);
+						}else{
+							alert_wyca('Error step battery config ;' + e.responseText );
+						}
 					}
 				});
 				$('#install_by_step_config .install_by_step_config_next').click();
@@ -1506,12 +1580,19 @@ $(document).ready(function(e) {
 					},
 					dataType: 'json',
 					success: function(data) {
+						success_info_wyca(textAccountDeleted);
+						$('#install_by_step_maintenance .install_by_step_maintenance_next').click();
 					},
 					error: function(e) {
-						alert_wyca('Error step finish ; ' + e.responseText);
+						if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+							alert_wyca('Error step maintenance account ; ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+							setTimeout(function(){window.location.href = 'logout.php'},3000);
+						}else{
+							alert_wyca('Error step maintenance account ;' + e.responseText );
+						}
 					}
 				});
-				$('#install_by_step_maintenance .install_by_step_maintenance_next').click();
+				
 			}
 			else
 			{
@@ -1521,14 +1602,45 @@ $(document).ready(function(e) {
 	});
 		
 	$('#install_by_step_maintenance #bKeepMaintenanceAccount').click(function(e){
+		$('#install_by_step_maintenance .modalMaintenance').modal('show');
+	});
+	
+	$('#install_by_step_maintenance #bChangeMaintenanceAccountPassword').click(function(e){
+		$('#install_by_step_maintenance .modalPasswordMaintenance').modal('show');
+	});
+		
+	$('#install_by_step_maintenance #bKeepMaintenanceAccountPassword').click(function(e){
+		$.ajax({
+			type: "POST",
+			url: 'ajax/install_by_step_maintenance.php',
+			data: {
+			},
+			dataType: 'json',
+			success: function(data) {
+				$('#install_by_step_maintenance .install_by_step_maintenance_next').click();
+				$('#install_by_step_maintenance .modalMaintenance').modal('hide');
+				$('#install_by_step_maintenance .modalPasswordMaintenance').modal('hide');
+			},
+			error: function(e) {
+				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+					alert_wyca('Error step maintenance account save ; ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					setTimeout(function(){window.location.href = 'logout.php'},3000);
+				}else{
+					alert_wyca('Error step maintenance account save ;' + e.responseText );
+				}
+			}
+		});
+	});
+	
+	$('#install_by_step_maintenance #bChangeMaintenanceAccountPassword').click(function(e){
 		$('#install_by_step_maintenance_i_maintenance_password').val('')
 		$('#install_by_step_maintenance_i_maintenance_cpassword').val('')
-		$('#install_by_step_maintenance .modalMaintenance').modal('show');
+		$('#install_by_step_maintenance .modalPasswordMaintenance').modal('show');
 		
 	});
 	
 	//AJAX INSTALL STEP CALL
-	$('#install_by_step_maintenance #install_by_step_maintenance_bMaintenanceSave').click(function(e){
+	$('#install_by_step_maintenance #install_by_step_maintenance_bPasswordMaintenanceSave').click(function(e){
 		let pass = $('#install_by_step_maintenance_i_maintenance_password');
 		let cpass = $('#install_by_step_maintenance_i_maintenance_password');
 		
@@ -1549,12 +1661,20 @@ $(document).ready(function(e) {
 						},
 						dataType: 'json',
 						success: function(data) {
+							$('#install_by_step_maintenance .install_by_step_maintenance_next').click();
+							$('#install_by_step_maintenance .modalMaintenance').modal('hide');
+							$('#install_by_step_maintenance .modalPasswordMaintenance').modal('hide');
 						},
 						error: function(e) {
-							alert_wyca('Error step finish ; ' + e.responseText);
+							if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+								alert_wyca('Error step maintenance account save ; ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+								setTimeout(function(){window.location.href = 'logout.php'},3000);
+							}else{
+								alert_wyca('Error step maintenance account save ;' + e.responseText );
+							}
 						}
 					});
-					$('#install_by_step_maintenance .install_by_step_maintenance_next').click();
+					
 				}
 				else
 				{
@@ -1731,7 +1851,12 @@ $(document).ready(function(e) {
 			success: function(data) {
 			},
 			error: function(e) {
-				alert_wyca('Error step managers ; ' + e.responseText);
+				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+					alert_wyca('Error step managers ; ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					setTimeout(function(){window.location.href = 'logout.php'},3000);
+				}else{
+					alert_wyca('Error step managers ;' + e.responseText );
+				}
 			}
 		});
     });
@@ -1809,7 +1934,12 @@ $(document).ready(function(e) {
 			success: function(data) {
 			},
 			error: function(e) {
-				alert_wyca('Error step finish ; ' + e.responseText);
+				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+					alert_wyca('Error step finish ; ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					setTimeout(function(){window.location.href = 'logout.php'},3000);
+				}else{
+					alert_wyca('Error step finish ;' + e.responseText );
+				}
 			}
 		});
 		

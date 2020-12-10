@@ -135,13 +135,13 @@
 						<line x1="308" y1="142" x2="226" y2="281" stroke-width="1" stroke="#343434" class="line_motor"/>
 						<line x1="65" y1="351" x2="109" y2="286" stroke-width="1" stroke="#343434" class="line_battery"/>
 						<line x1="187" y1="371" x2="155" y2="265" stroke-width="1" stroke="#343434" class="line_sensor"/>
-						<line x1="308" y1="351" x2="174" y2="286" stroke-width="1" stroke="#343434" class="line_leds"/>
+						<line x1="308" y1="351" x2="174" y2="288" stroke-width="1" stroke="#343434" class="line_leds"/>
 					</svg>
                     
                     <ul class="tuiles row" style="position:relative;max-width:375px; margin:0;">
                        
                         <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
-                            <div id="install_by_step_check_lidar" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
+                            <div id="install_by_step_check_lidar" data-line="line_lidar" data-line-placement="bottom" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
                                 <i class="fa fa-check component_state component_ok"></i>
                                 <i class="fa fa-exclamation-triangle component_state component_warning"></i>
                                 <i class="fa fa-exclamation-circle component_state component_error"></i>
@@ -151,7 +151,7 @@
                             </div>
                         </li>
                         <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
-                            <div id="install_by_step_check_us" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
+                            <div id="install_by_step_check_us" data-line="line_us" data-line-placement="bottom" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
                                 <i class="fa fa-check component_state component_ok"></i>
                                 <i class="fa fa-exclamation-triangle component_state component_warning"></i>
                                 <i class="fa fa-exclamation-circle component_state component_error"></i>
@@ -162,7 +162,7 @@
                             <span class="trait_legende" style="width:calc(var(--vh, 1vh) * 20);transform:rotate(50deg)translateX(0px)translateY(0px);"></span>
                         </li>
                         <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
-                            <div id="install_by_step_check_motor" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
+                            <div id="install_by_step_check_motor" data-line="line_motor" data-line-placement="bottom" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
                                 <i class="fa fa-check component_state component_ok"></i>
                                 <i class="fa fa-exclamation-triangle component_state component_warning"></i>
                                 <i class="fa fa-exclamation-circle component_state component_error"></i>
@@ -176,7 +176,7 @@
                             <img class="img-responsive" id="elodie_import_top" src="assets/images/elodie_form.png" style="z-index:5">
                         </li>
                         <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
-                            <div id="install_by_step_check_battery" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
+                            <div id="install_by_step_check_battery" data-line="line_battery" data-line-placement="top" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
                                 <i class="fa fa-check component_state component_ok"></i>
                                 <i class="fa fa-exclamation-triangle component_state component_warning"></i>
                                 <i class="fa fa-exclamation-circle component_state component_error"></i>
@@ -186,7 +186,7 @@
                             </div>
                         </li>
                         <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
-                            <div id="install_by_step_check_cam3d" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
+                            <div id="install_by_step_check_cam3d" data-line="line_sensor" data-line-placement="top" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
                                 <i class="fa fa-check component_state component_ok"></i>
                                 <i class="fa fa-exclamation-triangle component_state component_warning"></i>
                                 <i class="fa fa-exclamation-circle component_state component_error"></i>
@@ -196,7 +196,7 @@
                             </div>
                         </li>
                         <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
-                            <div id="install_by_step_check_leds" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
+                            <div id="install_by_step_check_leds" data-line="line_leds" data-line-placement="top" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
                                 <i class="fa fa-check component_state component_ok"></i>
                                 <i class="fa fa-exclamation-triangle component_state component_warning"></i>
                                 <i class="fa fa-exclamation-circle component_state component_error"></i>
@@ -353,7 +353,7 @@
                 
             
                 <div style="text-align:center"><a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a></div>
-                                        
+                <div style="text-align:center"><div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div></div>
                 <div class="ifUndocked">
                     <div style="text-align:center; width:100%; z-index:2000; margin-top:20px;">
                         <div class="joystickDiv" draggable="false" style="margin:auto;">
@@ -423,6 +423,7 @@
                     </div>
 					
                     <a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked" style="position: absolute;bottom: 50px;z-index: 2000;display: none;left:50%;transform:translateX(-50%)"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
+                    <div class="btn_big_popup ifDocking ifUndocking" style="position: absolute;bottom: 50px;z-index: 2000;display: none;left:50%;transform:translateX(-50%)"><i class="fa fa fa-spinner fa-pulse"></i></div>
                     <div class="ifUndocked" style="position:absolute; bottom:50px; left:0; width:100%; z-index:2000;">
                         <div class="joystickDiv" draggable="false" style="margin:auto;">
                             <div class="fond"></div>
@@ -682,7 +683,7 @@
                                             <div style="height:60px;"></div>
                                             
                                             <a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
-                                        
+											<div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div>
                                         	<div class="ifUndocked">
                                                 
                                                 <div style="text-align:center; width:100%; z-index:2000; margin-top:50px;">
@@ -950,7 +951,7 @@
                                         <div class="h100vh_160" style="overflow:auto; text-align:center">
                                         
                                         	<a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
-                                        
+											<div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div>
                                         	<div class="ifUndocked">
                                                 <div style="height:200px; position:relative;">
                                                 
@@ -1124,7 +1125,7 @@
                                         <div class="h100vh_160" style="overflow:auto; text-align:center">
                                         
                                         	<a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
-                                        
+											<div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div>
                                         	<div class="ifUndocked">
                                             
                                             	<div class ="modal-advice">
@@ -1192,7 +1193,7 @@
                                         <div class="h100vh_160" style="overflow:auto; text-align:center">
                                         
                                         	<a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
-                                        
+											<div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div>
                                         	<div class="ifUndocked">
                                                 
                                                 <div style="height:200px; position:relative;">
@@ -1659,21 +1660,57 @@
 				<h4 style="text-align:center;margin:30px 0"><?= __('Keep Wyca maintenance account ?') ?></h4>
 				<ul class="tuiles row">
                     <li class="col-xs-6">
-                    	<div class="is_checkbox tuile_img no_update" id="bKeepMaintenanceAccount" style="bottom:0;border-radius:10px">
-                    		<i class="fas fa-user-cog iconMenuGreen" style="padding-top:5px"></i>
-							<h4 class="iconMenuGreen" style="margin-top: 0px;font-weight:700"><?php echo __('Keep');?></h4>
-                        </div>
-                    </li>
-                    <li class="col-xs-6">
                     	<div class="is_checkbox tuile_img no_update" id="bDeleteMaintenanceAccount" style="bottom:0;border-radius:10px">
                     		<i class="fas fa-user-times iconMenuRed" style="padding-top:5px"></i>
 							<h4 class="iconMenuRed" style="margin-top: 0px;font-weight:700"><?php echo __('Delete');?></h4>
                         </div>
                     </li>
+					<li class="col-xs-6">
+                    	<div class="is_checkbox tuile_img no_update" id="bKeepMaintenanceAccount" style="bottom:0;border-radius:10px">
+                    		<i class="fas fa-user-cog iconMenuGreen" style="padding-top:5px"></i>
+							<h4 class="iconMenuGreen" style="margin-top: 0px;font-weight:700"><?php echo __('Keep');?></h4>
+                        </div>
+                    </li>
+                    
 				</ul>
 				<a href="#" class="install_by_step_maintenance_next button_goto" data-goto="install_by_step_manager" style="display:none;"></a>
 				
 				<div class="modal fade modalMaintenance" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+					<div class="modal-dialog" role="dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<div class="actions mh100vh_55">
+									<div class="h100vh_160" style="overflow:auto">
+										<form>
+											<h4 style="text-align:center"><i class="fas fa-key" style="color:#ed9c28;font-size:20px"></i> <?=__('Keep account default password') ?></h4>
+											<p style="margin:20px 0"> <?=__('Do you want to keep the default password for Wyca maintenance account ?')?> </p>
+											<ul class="tuiles row">
+												<li class="col-xs-6">
+													<div class="is_checkbox tuile_img no_update" id="bChangeMaintenanceAccountPassword" style="bottom:0;border-radius:10px">
+														<i class="fas fa-exchange-alt iconMenuBlue" style="padding-top:5px"></i>
+														<h4 class="iconMenuBlue" style="margin-top: 0px;font-weight:700"><?php echo __('Change');?></h4>
+													</div>
+												</li>
+												<li class="col-xs-6">
+													<div class="is_checkbox tuile_img no_update" id="bKeepMaintenanceAccountPassword" style="bottom:0;border-radius:10px">
+														<i class="fas fa-lock iconMenuGreen" style="padding-top:5px"></i>
+														<h4 class="iconMenuGreen" style="margin-top: 0px;font-weight:700"><?php echo __('Keep');?></h4>
+													</div>
+												</li>
+											</ul>
+											<p style="margin:20px 0"> <?=__('If you change and loose this password, the robot could become unusable with no recovery options other than a factory return.') ?> </p>
+										</form>
+									</div>
+									
+									<div style="clear:both;"></div>
+									<a href="#" class="btn btn-default btn_footer_left btn_100" data-dismiss="modal" ><?php echo __('Back');?></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="modal fade modalPasswordMaintenance" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
 					<div class="modal-dialog" role="dialog">
 						<div class="modal-content">
 							<div class="modal-header">
@@ -1711,13 +1748,14 @@
 									
 									<div style="clear:both;"></div>
 									<a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Cancel');?></a>
-									<a href="#" id="install_by_step_maintenance_bMaintenanceSave" class="btn btn-primary btn_footer_right btn_50"><?php echo __('Save');?></a>
+									<a href="#" id="install_by_step_maintenance_bPasswordMaintenanceSave" class="btn btn-primary btn_footer_right btn_50"><?php echo __('Save');?></a>
 									
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+				
             </div>
             <footer>
 				<a href="#" class="btn btn-default button_goto btn_footer_left btn_100 btn_back" data-goto="install_by_step_config"><?php echo __('Back');?></a>
@@ -1926,13 +1964,13 @@
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_service_book"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
-                <h2><?php echo __('Congratulations !');?></h2>
+                <h2><?php echo __('Congratulations');?></h2>
             </header>
             <div class="content">
                 
                 <section class="panel panel-success">
-                    <header class="panel-heading">
-                        <h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fa fa-thumbs-up"></i></h2>
+                    <header class="panel-heading" style="    background: unset;padding: 0;">
+                        <img src="assets/images/Robot.gif" class="img-responsive" style="width: 100%;height: auto;"/>
                     </header>
                     <div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
                         <strong><?= __('Congratulations !')?></strong><br />

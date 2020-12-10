@@ -146,6 +146,9 @@ $(document).ready(function(e) {
 		onGoToAugmentedPoseResult: onGoToAugmentedPoseResult,
 		onGoToChargeResult: onGoToChargeResult,
 		onGoToPoseResult: onGoToPoseResult,
+		onDockResult: onDockResult,
+		onUndockResult: onUndockResult,
+		onUndockFeedback: onUndockFeedback,
 		onMoveInProgress: function(data){
 			if (data)
 				//$('body > header .stop_move').show(); 
@@ -265,37 +268,69 @@ function GetMappingInConstruction()
 function onGoToPoseResult(data)
 {
 }
+function onGoToChargeResult(data)
+{
+}
 function onGoToPoiResult(data)
 {
 }
 function onGoToAugmentedPoseResult(data)
 {
 }
-function onGoToChargeResult(data)
+function onDockResult(data)
+{
+}
+function onUndockResult(data)
+{
+}
+function onUndockFeedback(data)
 {
 }
 
 function InitDockingState()
 {
-	if (dockingStateLast == "docked"){
-		$('.ifDocked').show();
-		$('.ifDocked_disabled').addClass('disabled');
-		$('.ifUndocked_disabled').removeClass('disabled');
-	}else{
-		$('.ifDocked').hide();
-		$('.ifDocked_disabled').removeClass('disabled');
-		$('.ifUndocked_disabled').addClass('disabled');
+	switch(dockingStateLast){
+		case "docked" :
+			$('.ifDocked').show();
+			$('.ifUndocked').hide();
+			$('.ifDocking').hide();
+			$('.ifUndocking').hide();
+			$('.ifDocked_disabled').addClass('disabled');
+			$('.ifUndocked_disabled').removeClass('disabled');
+		break;
+		case "undocked" : 
+			$('.ifDocked').hide();
+			$('.ifUndocked').show();
+			$('.ifDocking').hide();
+			$('.ifUndocking').hide();
+			$('.ifDocked_disabled').removeClass('disabled');
+			$('.ifUndocked_disabled').addClass('disabled');
+		break;
+		case "undocking" :
+			$('.ifDocked').hide();
+			$('.ifUndocked').hide();
+			$('.ifDocking').hide();
+			$('.ifUndocking').show();
+			$('.ifDocked_disabled').addClass('disabled');
+			$('.ifUndocked_disabled').addClass('disabled');
+		break;
+		case "docking" : 
+			$('.ifDocked').hide();
+			$('.ifUndocked').hide();
+			$('.ifUndocking').hide();
+			$('.ifDocking').show();
+			$('.ifDocked_disabled').addClass('disabled');
+			$('.ifUndocked_disabled').addClass('disabled');
+		break;
+		default : 
+			$('.ifDocked').hide();
+			$('.ifUndocked').hide();
+			$('.ifDocking').show();
+			$('.ifUndocking').hide();
+			$('.ifDocked_disabled').addClass('disabled');
+			$('.ifUndocked_disabled').addClass('disabled');
+		break;
 	}
-	if (dockingStateLast == 'undocked'){
-		$('.ifUndocked').show();
-		$('.ifDocked_disabled').removeClass('disabled');
-		$('.ifUndocked_disabled').addClass('disabled');
-	}else{
-		$('.ifUndocked').hide();
-		$('.ifDocked_disabled').addClass('disabled');
-		$('.ifUndocked_disabled').removeClass('disabled');
-	}
-		
 	
 	// Le joystick s'affiche quand le robot passe de docker à dédocker, donc on recheck l'initialisation du joystick
 	InitJoystick();

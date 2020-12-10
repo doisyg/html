@@ -1,4 +1,4 @@
-
+var JoystickDebug = false;
 var marginLeft = 70;
 var marginTop = 70;
 
@@ -168,6 +168,10 @@ function SendCommande()
 			{
 				nbCall0++;
 				wycaApi.Teleop(lastValueX * -0.7, lastValueY * -1.2);
+				if(JoystickDebug){
+					console.log('Wyca Teleop 0/0');
+					console.log(Date.now(),lastValueX * -0.7, lastValueY * -1.2);
+				}
 			}
 			else
 			{
@@ -179,6 +183,10 @@ function SendCommande()
 		{
 			nbCall0 = 0;
 			wycaApi.Teleop(lastValueX * -0.7, lastValueY * -1.2);
+			if(JoystickDebug){
+				console.log('Wyca Teleop linear speed/angular speed');
+				console.log(Date.now(),lastValueX * -0.7, lastValueY * -1.2);
+			}
 		}
 	}
 }

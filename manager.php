@@ -107,7 +107,7 @@
 										<div style="height:60px;"></div>
 										
 										<a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
-									
+										<div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div>
 										<div class="ifUndocked">
 											
 											<div style="text-align:center; width:100%; z-index:2000; margin-top:50px;">
@@ -276,7 +276,7 @@
 									<div class="h100vh_160" style="overflow:auto; text-align:center">
 									
 										<a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
-									
+										<div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div>
 										<div class="ifUndocked">
 										
 											<div class ="modal-advice">
@@ -406,7 +406,7 @@
         <div class="content" style="text-align:center;">
 			<h4 style="text-align:center;margin-bottom:30px"><?= __('Move the robot using the joystick.') ?></h4>    
 			<a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
-									
+			<div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div>
 			<div class="ifUndocked">
 				
 				<div style="text-align:center; width:100%; z-index:2000; margin-top:50px;">
@@ -425,7 +425,7 @@
     <section id="manager_top" class="page with_footer">
         <header>
             <div class="pull-left"><img src="assets/images/logo.png" /></div>
-            <h2><?php echo __('Seclect active top');?></h2>
+            <h2><?php echo __('Select active top');?></h2>
         </header>
         <div class="content">
             	<div class="manager_top_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
@@ -442,7 +442,7 @@
                                 <div class="actions mh100vh_55">
                                     
                                     <div class="h100vh_160" style="overflow:auto">
-                                        <div class="progressSetActiveTop" style="display:none;">
+                                        <div class="progressSetActiveTop">
                                             <h4 style="text-align:center;margin-bottom:20px"><?php echo __('Setting new active top');?></h4>
                                             <div class="setActiveTopProgress progress progress-striped light active m-md">
                                                 <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;">
@@ -477,6 +477,7 @@
 			
 		
 			<div style="text-align:center"><a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a></div>
+			<div style="text-align:center"><div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div></div>
 									
 			<div class="ifUndocked">
 				
