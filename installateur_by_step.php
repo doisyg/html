@@ -1964,13 +1964,13 @@
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_service_book"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
-                <h2><?php echo __('Congratulations !');?></h2>
+                <h2><?php echo __('Congratulations');?></h2>
             </header>
             <div class="content">
                 
                 <section class="panel panel-success">
-                    <header class="panel-heading">
-                        <h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fa fa-thumbs-up"></i></h2>
+                    <header class="panel-heading" style="    background: unset;padding: 0;">
+                        <img src="assets/images/Robot.gif" class="img-responsive" style="width: 100%;height: auto;"/>
                     </header>
                     <div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
                         <strong><?= __('Congratulations !')?></strong><br />
