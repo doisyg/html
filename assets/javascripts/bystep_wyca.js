@@ -1942,16 +1942,18 @@ $(document).ready(function(e) {
 				}
 			}
 		});
-		
+		 //AFFICHER QQ CHOSE
+		$('section#install_normal_dashboard').hide();
+
 		$('#pages_install_by_step').removeClass('active');
 		$('#pages_install_normal').addClass('active');
-		
-		//AFFICHER QQ CHOSE
-		$('#install_normal_edit_map .bBackButton').click();
 		
 		if ($('#install_normal_setup_sites').is(':visible'))
 		{
 			GetSitesNormal();
+		}else{
+			//AFFICHER QQ CHOSE
+			$('section#install_normal_dashboard').show('slow');
 		}
 		
 		
