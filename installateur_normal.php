@@ -1469,7 +1469,7 @@
 	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup_tops"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
-                <h2><?php echo __('Seclect active top');?></h2>
+                <h2><?php echo __('Select active top');?></h2>
             </header>
             <div class="content">
             	<div class="install_by_step_top_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
@@ -1486,7 +1486,7 @@
                                 <div class="actions mh100vh_55">
                                     
                                     <div class="h100vh_160" style="overflow:auto">
-                                        <div class="progressSetActiveTop" style="display:none;">
+                                        <div class="progressSetActiveTop">
                                             <h4 style="text-align:center;margin-bottom:20px"><?php echo __('Setting new active top');?></h4>
                                             <div class="setActiveTopProgress progress progress-striped light active m-md">
                                                 <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;">

@@ -271,11 +271,17 @@ $(document).ready(function(e) {
 		wycaApi.on('onSetActiveTopResult', function(data) {
 			
 			InitTopsActiveManager();
-			$('#manager_top .modalSetActiveTop').modal('hide');
+			timerSetActiveTop = 90;
+			statusSetActiveTop = 2;
+			setTimeout(function(){
+				$('#manager_top .modalSetActiveTop').modal('hide');
+				$('#manager_top .modalSetActiveTop a').removeClass('disabled');
+				
+			},750);
 			
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
-				success_wyca('Top is now active !');
+				setTimeout(success_wyca,750,textTopNowActive);
 			}
 			else
 			{
@@ -287,13 +293,13 @@ $(document).ready(function(e) {
 			
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
-				//success_wyca('Recovery done !');
 				$('#manager_top .modalSetActiveTop').modal('show');
 				$('#manager_top .modalSetActiveTop a').addClass('disabled');
-				timerSetActiveTop = 10;
-				timerSetActiveTopCurrent = 10;
-				$('#manager_top .progressSetActiveTop').show();
-				NextTimerSetActiveTop();
+				statusSetActiveTop = 1;
+				timerSetActiveTop = 0;
+
+				//$('#pages_install_normal .progressSetActiveTop').show();
+				TimerActiveTopNormal();
 			}
 			else
 			{
@@ -442,6 +448,27 @@ $(document).ready(function(e) {
 	})
 });
 
+
+//------------------- ACTIVE TOP ------------------------
+
+var statusSetActiveTop = 0;
+var timerSetActiveTop = 0;
+	
+function TimerActiveTopNormal(){
+	if(statusSetActiveTop > 0){
+		if(statusSetActiveTop == 2 && timerSetActiveTop==100){
+			statusSetActiveTop=0;
+			timerSetActiveTop=0;
+			
+		}else{
+			delay = statusSetActiveTop == 2 ? 1 : 100;
+			timerSetActiveTop++;
+			if(timerSetActiveTop == 101)timerSetActiveTop=0;
+			$('#manager_top .modalSetActiveTop .progressSetActiveTop .progress-bar').css('width', timerSetActiveTop+'%').attr('aria-valuenow', timerSetActiveTop); 
+			setTimeout(TimerActiveTopNormal,delay);
+		}
+	}
+}
 
 
 //------------------- USERS ------------------------	

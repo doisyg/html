@@ -1169,7 +1169,11 @@ span.error_details span{
     transform: translateX(-50%);
     margin: 10px 0;
 }
-
+.progress-bar{
+	webkit-transition: width 0.2s ease!important;
+    -o-transition: width 0.2s ease!important;
+    transition: width 0.2s ease!important;
+}
 /* COLOR PICKER IRO */
 .col-xs-8 .iro-colorpicker{
 	transform: scale(0.75)translateX(-40%);

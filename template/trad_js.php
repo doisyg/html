@@ -34,6 +34,7 @@ var textPasswordMatching = "<?php echo __js('Passwords not matching.');?>";
 var textPasswordPattern = "<?php echo __js('Passwords needs to be 8 character long with at least 1 uppercase letter and 1 special character or digit');?>";
 var textLoginPattern = "<?php echo __js('Login needs to be a valid mail adress.');?>";
 var textNoRealTest = "<?php echo __js('You need at least 2 docks, POIs or augmented poses to launch real test.');?>";
+var textTopNowActive = "<?php echo __js('Top is now active !');?>";
 
 //ANSWERCODE API
 
