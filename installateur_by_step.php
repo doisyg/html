@@ -135,7 +135,7 @@
 						<line x1="308" y1="142" x2="226" y2="281" stroke-width="1" stroke="#343434" class="line_motor"/>
 						<line x1="65" y1="351" x2="109" y2="286" stroke-width="1" stroke="#343434" class="line_battery"/>
 						<line x1="187" y1="371" x2="155" y2="265" stroke-width="1" stroke="#343434" class="line_sensor"/>
-						<line x1="308" y1="351" x2="174" y2="286" stroke-width="1" stroke="#343434" class="line_leds"/>
+						<line x1="308" y1="351" x2="174" y2="288" stroke-width="1" stroke="#343434" class="line_leds"/>
 					</svg>
                     
                     <ul class="tuiles row" style="position:relative;max-width:375px; margin:0;">
