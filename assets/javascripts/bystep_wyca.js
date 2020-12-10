@@ -2257,6 +2257,40 @@ function RefreshDisplayManagerByStep(){
 	
 }
 
+//-------------------- EXPORT SITE END PROCESS-----------------------
+function ExportCurrentSite(){
+	wycaApi.GetCurrentSite(function(data){
+		if (data.A == wycaApi.AnswerCode.NO_ERROR)
+		{
+			let id = data.D.id_site;
+			wycaApi.ExportSite(id, function(data){
+				if (data.A == wycaApi.AnswerCode.NO_ERROR)
+				{
+					var a = document.createElement("a");
+					document.body.appendChild(a);
+					a.style = "display: none";
+					
+					var blob = new Blob([data.D], {type: "octet/stream"}),
+					url = window.URL.createObjectURL(blob);
+					a.href = url;
+					a.download = 'export_site_'+currentNameSiteExport+'.wyca';
+					a.click();
+					window.URL.revokeObjectURL(url);
+				}
+				else
+				{
+					ParseAPIAnswerError(data,'Exporting site : ');
+					alert_wyca(+ wycaApi.AnswerCodeToString(data.A) + '<br>'+ data.M);
+				}							
+			});
+		}
+		else
+		{
+			ParseAPIAnswerError(data,'Getting current site');
+		}
+	})
+
+}
 
 //------------------- STEP MAPPING CONFIG ------------------------	
 

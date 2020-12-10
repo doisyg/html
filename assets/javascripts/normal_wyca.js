@@ -14,7 +14,6 @@ $(document).ready(function(e) {
 		currentNameSiteExport = $(this).find('.societe').text();
 		
 		wycaApi.ExportSite($(this).data('id_site'), function(data){
-			console.log(data);
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
 				$('#install_normal_setup_export .bSiteExportElem').removeClass('disabled');
@@ -32,7 +31,7 @@ $(document).ready(function(e) {
 			else
 			{
 				$('#install_normal_setup_export .bSiteExportElem').removeClass('disabled');
-				alert_wyca('Save map error : ' + wycaApi.AnswerCodeToString(data.A) + '<br>'+ data.M);
+				ParseAPIAnswerError(data,'Exporting site : ');
 			}							
 		});
 		
