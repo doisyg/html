@@ -102,55 +102,59 @@ var vitesseX = 0
 function SetCurseurV2(x, y)
 {	
 	if ($('.joystickDiv:visible').length > 0)
-		offset = $('.joystickDiv:visible').offset()
+		offset = $('.joystickDiv:visible').offset();
 	else
-		offset = $('.joystickDiv').offset()
-	marginLeft = offset.left;
-	marginTop = offset.top;
-	xCentre = 112 + marginLeft;
-	yCentre = 112 + marginTop; 
-
-	d = distanceJoystick (x, y, xCentre, yCentre);
-	if (d <34)
-	{
-		$('.joystickDiv:visible .curseur').css({'left': (x-xCentreCurseur-marginLeft)+'px', 'top': (y-yCentreCurseur-marginTop)+'px'});
-		vitesseAngulaire = yCentre-y;
-		vitesseX = xCentre-x;
-	}
-	else
-	{
-		xt = x - xCentre;
-		yt = y - yCentre;
-		
-		xt2 = xt * 34 / d;
-		yt2 = yt * 34 / d;
-		
-		xt2 += xCentre;
-		yt2 += yCentre;
-		
-		x = xt2;
-		y = yt2;
-		
+		offset = $('.joystickDiv').offset();
 	
-		vitesseAngulaire = yCentre-yt2;
-		vitesseX = xCentre-xt2;
-		
-		$('.joystickDiv:visible .curseur').css({'left': (xt2-xCentreCurseur-marginLeft)+'px', 'top': (yt2-yCentreCurseur-marginTop)+'px'});
-	}
-
-	valueY = (x - xCentre) / 37;
-	valueX = (y - yCentre) / 37;
-	
-	lastValueX = valueX;
-	lastValueY = valueY;
-	
-	nbCall++;
-	if (nbCall % 5 == 0)
+	if(typeof(offset) != 'undefined')
 	{
-		nbCall = 0;
-	}
+		marginLeft = offset.left;
+		marginTop = offset.top;
+		xCentre = 112 + marginLeft;
+		yCentre = 112 + marginTop; 
+	
+		d = distanceJoystick (x, y, xCentre, yCentre);
+		if (d <34)
+		{
+			$('.joystickDiv:visible .curseur').css({'left': (x-xCentreCurseur-marginLeft)+'px', 'top': (y-yCentreCurseur-marginTop)+'px'});
+			vitesseAngulaire = yCentre-y;
+			vitesseX = xCentre-x;
+		}
+		else
+		{
+			xt = x - xCentre;
+			yt = y - yCentre;
+			
+			xt2 = xt * 34 / d;
+			yt2 = yt * 34 / d;
+			
+			xt2 += xCentre;
+			yt2 += yCentre;
+			
+			x = xt2;
+			y = yt2;
+			
 		
-	//wycaApi.Teleop(valueY * -0.5, valueX * -0.8);
+			vitesseAngulaire = yCentre-yt2;
+			vitesseX = xCentre-xt2;
+			
+			$('.joystickDiv:visible .curseur').css({'left': (xt2-xCentreCurseur-marginLeft)+'px', 'top': (yt2-yCentreCurseur-marginTop)+'px'});
+		}
+	
+		valueY = (x - xCentre) / 37;
+		valueX = (y - yCentre) / 37;
+		
+		lastValueX = valueX;
+		lastValueY = valueY;
+		
+		nbCall++;
+		if (nbCall % 5 == 0)
+		{
+			nbCall = 0;
+		}
+			
+		//wycaApi.Teleop(valueY * -0.5, valueX * -0.8);
+	}
 }
 
 var lastValueX = 0;

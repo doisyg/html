@@ -9,7 +9,7 @@
             <ul class="tuiles row">
                 <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile1" data-goto="wyca_demo_mode_start_stop" href="#"><i class="fa fa-recycle"></i><?php echo __('Demo mode');?><br /><?php echo __('Start / Stop');?></a></li>
                 <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="wyca_demo_mode_config" href="#"><i class="fa fa-gears"></i><?php echo __('Demo mode');?><br /><?php echo __('Config');?></a></li>
-                <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="wyca_browser_restart" href="#"><i class="fab fa-chrome"></i><?php echo __('Restart Browser');?></a></li>
+                <!--<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="wyca_browser_restart" href="#"><i class="fab fa-chrome"></i><?php echo __('Restart Browser');?></a></li>-->
 				<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" href="logout.php"><i class="fas fa-power-off"></i><?php echo __('Logout');?></a></li>
                 <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5 todo" data-goto="wyca_help" href="#"><i class="fa fa-question"></i><?php echo __('Help');?></a></li>
             </ul>
@@ -32,6 +32,9 @@
                 </ul>
             </div>
         </div>
+		<footer>           
+            <a href="#" class="btn btn-default button_goto" data-goto="wyca_dashboard" style="position:absolute; width:100%; left:0; bottom:0px; font-size:30px;"><?php echo __('Back');?></a>
+        </footer>
     </section>
     
     
@@ -103,9 +106,9 @@
                                     </div>
                                     
                                     <div style="clear:both;"></div>
-                                   
-                                    <a href="#" id="wyca_demo_mode_config_bSaveWait" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
-                                    <a href="#" id="wyca_demo_mode_config_bCancelWait" class="btn btn-warning" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
+                            
+                                    <a href="#" id="wyca_demo_mode_config_bCancelWait" class="btn btn-default" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>       
+                                    <a href="#" id="wyca_demo_mode_config_bSaveWait" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
                                 </div>
                             </div>
                         </div>
@@ -114,11 +117,9 @@
             </div>
         </div>
         <footer>
+            <a href="#" class="btn btn-default button_goto" data-goto="wyca_dashboard" style="position:absolute; width:50%; left:0; bottom:0px; font-size:30px;"><?php echo __('Back');?></a>
         
-            
-            <a href="#" class="btn btn-primary button_goto" data-goto="wyca_dashboard" style="position:absolute; width:50%; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>
-        
-            <a href="#" class="btn btn-warning button_goto bSaveDemoMode" data-goto="wyca_demo_mode_config" style="position:absolute; width:50%; right:0; left:auto; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
+            <a href="#" class="btn btn-primary button_goto bSaveDemoMode" data-goto="wyca_demo_mode_config" style="position:absolute; width:50%; right:0; left:auto; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
         </footer>
     </section>
 	
