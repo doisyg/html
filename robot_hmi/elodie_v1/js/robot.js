@@ -208,7 +208,7 @@ function RetryDock()
 		timeoutRetryDock = null;
 	}
 	robotMoveToDock = true;
-	RefreshDisplayRobotMoveToDock();
+	//RefreshDisplayRobotMoveToDock();
 	wycaApi.GoToCharge(-1, ResultSendToDockDemand);
 }
 
