@@ -28,7 +28,7 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
 	<link href="<?php echo $_CONFIG['URL_API'];?>css/map_wyca.css" rel="stylesheet">
     <script src="<?php echo $_CONFIG['URL_API'];?>extern/jquery-1.11.3.min.js"></script>
     <script src="<?php echo $_CONFIG['URL_API'];?>webrtc.wyca2.min.js"></script>
-    <script src="<?php echo $_CONFIG['URL_API'];?>wyca_socket_api_top.js"></script>
+    <script src="<?php echo $_CONFIG['URL_API'];?>wyca_socket_api.js"></script>
     
     <script src="<?php echo $_CONFIG['URL'];?>js/bootstrap.js"></script>
     
@@ -54,8 +54,9 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
     <div id="waitClick" style="font-size:68px; position:fixed; display:none; top:0; left:0; width:100%; height:100vh; background-color:rgba(255,255,255,0.5);">
     	<a id="bNextWaitClick" href="#" class="btn btn-primary" style="font-size:100px; text-align:center; margin-top:32vh; border-radius:50px; padding:100px;"><i style="" class="fa fa-forward"></i> Next step</a>
     </div>
-    <div id="waitTime" style="font-size:68px; display:none; ">Wait <em></em> seconde<span class="pluriel">s</span></div>
-    
+    <div style="display:none;">
+	    <div id="waitTime" style="font-size:68px; display:none; ">Wait <em></em> seconde<span class="pluriel">s</span></div>
+    </div>
     <a href="#" id="bHideBouton" style="position:absolute; bottom:0px; right:0px; width:150px; height:150px;"></a>
 	
     <div id="modalAskCode" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">

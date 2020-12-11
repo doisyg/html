@@ -30,7 +30,7 @@ var codeSaisie = "";
 $(document).ready(function(e) {
 	
 	wycaApi = new WycaAPI({
-		api_key:'bsEV6A6Bd8mVQefnoUj48fGwYeJbsYkChNEXKP21HxaAIE',
+		api_key:'4tEV6A6Bd8mVQtgHjUj85fGwYeJbsYkChHSRGP21HxaAIE',
 		host:robot_host,
 		
 		onRobotConnexionError: function(data){
