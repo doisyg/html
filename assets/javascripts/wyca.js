@@ -1775,4 +1775,3 @@ function listCookies()
     }
     return aString;
 }
-
