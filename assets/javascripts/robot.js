@@ -150,12 +150,25 @@ $(document).ready(function(e) {
 		onUndockResult: onUndockResult,
 		onUndockFeedback: onUndockFeedback,
 		onMoveInProgress: function(data){
-			if (data)
+			if (data){
 				//$('body > header .stop_move').show(); 
 				$('.stop_move').show(); //AJOUT btn.stop_move autre part que dans le header
-			else
+				
+				//DISABLE BUTTONS GOTO
+				$('.bTestPoi').addClass('disabled');
+				$('.bTestAugmentedPose').addClass('disabled');
+				$('.bTestDock').addClass('disabled');
+				$('.bMoveTo').addClass('disabled');
+			}else{
 				//$('body > header .stop_move').hide();
 				$('.stop_move').hide(); //AJOUT btn.stop_move autre part que dans le header
+				
+				//ENABLE BUTTONS GOTO
+				$('.bTestPoi').removeClass('disabled');
+				$('.bTestAugmentedPose').removeClass('disabled');
+				$('.bTestDock').removeClass('disabled');
+				$('.bMoveTo').removeClass('disabled');
+			}
 		},
 		onReceviedSegmented: function(data){
 			if (data.I == data.NB)
