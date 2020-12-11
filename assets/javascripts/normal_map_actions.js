@@ -2311,6 +2311,11 @@ $(document).ready(function() {
 				
 				posRobot = $('#install_normal_edit_map_container_all .modalAddDock #install_normal_edit_map_modalAddDock_robot').offset();
 				
+				let modalOffset = $('#install_normal_edit_map_container_all .modalAddDock .modal-content').offset();
+				
+				posRobot.left -= modalOffset.left; 
+				posRobot.top -= modalOffset.top; 
+				
 				$('#install_normal_edit_map_container_all .texts_add_dock').hide();
 				if (data.D.length > 0)
 					$('#install_normal_edit_map_container_all .text_set_dock').show();
@@ -2917,6 +2922,11 @@ $(document).ready(function() {
 				$('#install_normal_edit_map_container_all .modalAddAugmentedPose .augmented_pose').hide();
 				
 				posRobot = $('#install_normal_edit_map_container_all .modalAddAugmentedPose #install_normal_edit_map_modalAddAugmentedPose_robot').offset();
+				
+				let modalOffset = $('#install_normal_edit_map_container_all .modalAddAugmentedPose .modal-content').offset();
+				
+				posRobot.left -= modalOffset.left; 
+				posRobot.top -= modalOffset.top; 
 				
 				if (data.D.length > 0)
 				{
