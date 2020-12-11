@@ -7,9 +7,11 @@ require_once ('./config/config.php');
 $_SESSION['is_robot'] = 1;
 session_write_close();
 
-$_CONFIG['URL_ROOT'] = 'https://wyca.run/';
-$_CONFIG['URL'] = 'https://wyca.run/robot_hmi/elodie_v1/';
-$_CONFIG['URL_API'] = 'https://wyca.run/API/';
+
+
+$_CONFIG['URL_ROOT'] = $server_request_scheme.'://wyca.run/';
+$_CONFIG['URL'] = $server_request_scheme.'://wyca.run/robot_hmi/elodie_v1/';
+$_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -26,7 +28,7 @@ $_CONFIG['URL_API'] = 'https://wyca.run/API/';
 	<link href="<?php echo $_CONFIG['URL_API'];?>css/map_wyca.css" rel="stylesheet">
     <script src="<?php echo $_CONFIG['URL_API'];?>extern/jquery-1.11.3.min.js"></script>
     <script src="<?php echo $_CONFIG['URL_API'];?>webrtc.wyca2.min.js"></script>
-    <script src="<?php echo $_CONFIG['URL_API'];?>wyca_socket_api.js"></script>
+    <script src="<?php echo $_CONFIG['URL_API'];?>wyca_socket_api_top.js"></script>
     
     <script src="<?php echo $_CONFIG['URL'];?>js/bootstrap.js"></script>
     
