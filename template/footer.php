@@ -133,10 +133,10 @@
 			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 30) {?>
 			GetConfigurationsByStep();
 			<?php }?>
-			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 32) {?>
+			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 33) {?>
 			GetManagersByStep();
 			<?php }?>
-			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 33) {?>
+			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 34) {?>
 			GetServiceBooksByStep();
 			<?php }?>
 			

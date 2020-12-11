@@ -1557,7 +1557,7 @@
 						<p><?=__('For more precise values, try to test battery in real conditions') ?></p>
 						<a href="#" class="real_test btn btn-lg btn-success" style="margin-left:50%; transform:translateX(-50%)"><i class="fas fa-route"></i> <?= __('Real Test')?></a>
 						
-						<a href="#" class="install_by_step_config_next button_goto" data-goto="install_by_step_maintenance" style="display:none;"></a>   
+						<a href="#" class="install_by_step_config_next button_goto" data-goto="install_by_step_export_site" style="display:none;"></a>   
 					</div>
                 </form>
 				<div class="modal fade modalRealTest" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
@@ -1645,12 +1645,41 @@
             </div>
             <footer>
 				<a href="#" class="btn btn-default button_goto btn_footer_left btn_50 btn_back" data-goto="install_by_step_edit_map"><?php echo __('Back');?></a>
-            	<a href="#" class="bConfigurationSave btn btn-primary btn_footer_right btn_50" data-goto="install_by_step_maintenance"><?php echo __('Save');?></a>
+            	<a href="#" class="bConfigurationSave btn btn-primary btn_footer_right btn_50" data-goto="install_by_step_export_site"><?php echo __('Save');?></a>
             </footer>
         </section>
 		
-        <section id="install_by_step_maintenance" class="page <?php echo $INSTALL_STEP == 31?'active':'';?> with_footer">
+		<section id="install_by_step_export_site" class="page <?php echo $INSTALL_STEP == 31?'active':'';?> with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_config"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Site export');?></h2>
+            </header>
+            <div class="content">
+                <div class="loaded col-md-12" style="padding-top:10px;">
+                	<p> <?=__('The export of a site is a backup of all the configuration linked to a site (map, charging stations, areas...).') ?></p>
+					<ul class="tuiles row" style="margin-bottom:30px;">
+						<li class="col-xs-6" style="margin-left: 25%;">
+							<div class="is_checkbox tuile_img no_update bExportSite" style="height:max-content;bottom:0;border-radius:10px">
+								<i class="fas fa-download iconMenuGreen" style="padding-top:5px"></i>
+								<h4 class="iconMenuGreen" style="margin-top: 0px;font-weight:700;font-size: 15px;"><?php echo __('Export Site');?></h4>
+							</div>
+						</li>
+					</ul>
+					<p><?=__('You can also use the generated file to import this site on another vehicle.') ?><br><br><?=__('Keep this copy as it will allow you to reload your site in case of factory reset.') ?></p>
+					<a href="#" class="install_by_step_export_site_next button_goto" data-goto="install_by_step_maintenance" style="display:none;"></a>
+				
+                </div>
+                
+            </div>
+            <footer>
+				<a href="#" class="btn btn-default button_goto btn_footer_left btn_50 btn_back" data-goto="install_by_step_config"><?php echo __('Back');?></a>
+            	<a href="#" class="btn btn-warning button_goto btn_footer_right btn_50" data-goto="install_by_step_maintenance"><?php echo __('Skip');?></a>
+            </footer>
+        </section>
+		
+        <section id="install_by_step_maintenance" class="page <?php echo $INSTALL_STEP == 32?'active':'';?> with_footer">
+        	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_export_site"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
                 <h2><?php echo __('Maintenance');?></h2>
@@ -1758,11 +1787,11 @@
 				
             </div>
             <footer>
-				<a href="#" class="btn btn-default button_goto btn_footer_left btn_100 btn_back" data-goto="install_by_step_config"><?php echo __('Back');?></a>
+				<a href="#" class="btn btn-default button_goto btn_footer_left btn_100 btn_back" data-goto="install_by_step_export_site"><?php echo __('Back');?></a>
             </footer>
         </section>
         
-        <section id="install_by_step_manager" class="page <?php echo $INSTALL_STEP == 32?'active':'';?> with_footer">
+        <section id="install_by_step_manager" class="page <?php echo $INSTALL_STEP == 33?'active':'';?> with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_maintenance"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
@@ -1905,7 +1934,7 @@
             </footer>
         </section>
 		
-        <section id="install_by_step_service_book" class="page <?php echo $INSTALL_STEP == 33?'active':'';?> with_footer">
+        <section id="install_by_step_service_book" class="page <?php echo $INSTALL_STEP == 34?'active':'';?> with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_manager"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
@@ -1968,11 +1997,11 @@
             </header>
             <div class="content">
                 
-                <section class="panel panel-success">
-                    <header class="panel-heading" style="    background: unset;padding: 0;">
+                <section class="panel panel-success" style="border: 0;box-shadow: unset;">
+                    <header class="panel-heading" style="background: unset;padding: 0;border: 0;">
                         <img src="assets/images/Robot.gif" class="img-responsive" style="width: 100%;height: auto;"/>
                     </header>
-                    <div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
+                    <div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;    border: 0;">
                         <strong><?= __('Congratulations !')?></strong><br />
 						<?= __('The installation process is now complete.') ?>
                     </div>
