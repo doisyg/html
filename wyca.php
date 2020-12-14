@@ -28,7 +28,7 @@
             <div class="loaded">
                 <ul class="tuiles row">
                     <li class="col-xs-4 col-md-3 col-lg-2"><a id="wyca_demo_mode_start_stop_bStart" class="anim_tuiles tuile1" href="#"><i class="fa fa-play"></i><?php echo __('Start');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a id="wyca_demo_mode_start_stop_bStop" class="anim_tuiles tuile1 todo" href="#"><i class="fa fa-gears"></i><?php echo __('Stop');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a id="wyca_demo_mode_start_stop_bStop" class="anim_tuiles tuile1 todo" href="#"><i class="fa fa-stop"></i><?php echo __('Stop');?></a></li>
                 </ul>
             </div>
         </div>
