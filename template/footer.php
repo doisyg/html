@@ -116,7 +116,7 @@
 			InitInstallWifiPageByStep();
 			<?php }?>
             <?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 61) {?>
-			InitBystepSiteMasterDock();
+			InitMasterDockByStep();
 			<?php }?>
 			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 10) {?>
 			InitSiteImportByStep();
