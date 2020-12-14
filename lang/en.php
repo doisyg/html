@@ -310,5 +310,13 @@ $_LANG['698b1fad9af16214f7691a5821104bf3'] = 'If you change and loose this passw
 $_LANG['f4ec5f57bd4d31b803312d873be40da9'] = 'Change';
 $_LANG['50fa80862dc0dc95194d28dee41bed74'] = 'Keep password';
 $_LANG['4780a9b20e98f142d900b67d0f0ba8da'] = 'Account deleted';
+$_LANG['039def2895d2d63a2f795cc70c1a922d'] = 'Top is now active !';
+$_LANG['4ce0b3338614f8a6e8896e831b550996'] = 'Site export';
+$_LANG['8995909435a1e387c7ae6ebf20d2a526'] = 'The export of a site is a backup of all the configuration linked to a site (map, charging stations, areas...).';
+$_LANG['9d9fea49ed1194d4ab850e3cc87963d9'] = 'Export Site';
+$_LANG['61c5f9cccff6ced0d42902c49839fcb3'] = 'You can also use the generated file to import this site on another vehicle.';
+$_LANG['fd8493d68848aefae8adf080792246fd'] = 'Keep this copy as it will allow you to reload your site in case of factory reset.';
+$_LANG['2e781e46cd473612f108b29a62e711ab'] = 'Congratulations';
+$_LANG['2066b22ed70c258066dd274046d5afb7'] = 'Select active top';
 
 ?>
