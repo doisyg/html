@@ -1670,7 +1670,7 @@
             </div>
             <footer>
 				<a href="#" class="btn btn-default button_goto btn_footer_left btn_50 btn_back" data-goto="install_by_step_config"><?php echo __('Back');?></a>
-            	<a href="#" class="btn btn-warning button_goto btn_footer_right btn_50" data-goto="install_by_step_maintenance"><?php echo __('Skip');?></a>
+            	<a href="#" class="btn btn-warning button_goto btn_footer_right btn_50 bExportSiteSkip" data-goto="install_by_step_maintenance"><?php echo __('Skip');?></a>
             </footer>
         </section>
 		
