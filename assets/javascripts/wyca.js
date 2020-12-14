@@ -595,15 +595,15 @@ function InitMasterDockByStep(back = false)
 	
 	if(docks != 'undefined' && docks.length > 1){
 		$.each(docks,function(idx,item){
-			let li_html="";
-			li_html+='<li class="col-xs-6">';
-			li_html+='	<div class="is_checkbox tuile_img no_update MasterDockItem" id="'+item.id_docking_station+'">';
-			li_html+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
-			li_html+='		<i class="fas fa-charging-station" style="padding-top:5px"></i>';
-			li_html+='		<p class="dockname">'+item.name+'</p>';
-			li_html+='   </div>';
-			li_html+='</li>';
-			$('#pages_install_by_step #MasterDockList').append(li_html);
+			let master_dock="";
+			master_dock+='<div class="col-xs-6 text-center">';
+			master_dock+='	<div class="MasterDockItem btn bTuile" id="'+item.id_docking_station+'">';
+			master_dock+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
+			master_dock+='		<i class="fas fa-charging-station"></i>';
+			master_dock+='		<p class="dockname">'+item.name+'</p>';
+			master_dock+='   </div>';
+			master_dock+='</div>';
+			$('#pages_install_by_step #MasterDockList').append(master_dock);
 		});
 		$('#pages_install_by_step .MasterDock_loading').hide();
 	}else{
@@ -623,15 +623,15 @@ function InitMasterDockByStep(back = false)
 						augmented_poses = data.D.augmented_poses;
 						
 						$.each(docks,function(idx,item){
-							let li_html="";
-							li_html+='<li class="col-xs-6">';
-							li_html+='	<div class="is_checkbox tuile_img no_update MasterDockItem" id="'+item.id_docking_station+'">';
-							li_html+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
-							li_html+='		<i class="fas fa-charging-station" style="padding-top:5px"></i>';
-							li_html+='		<p class="dockname">'+item.name+'</p>';
-							li_html+='   </div>';
-							li_html+='</li>';
-							$('#pages_install_by_step #MasterDockList').append(li_html);
+							let master_dock="";
+							master_dock+='<div class="col-xs-6 text-center">';
+							master_dock+='	<div class="MasterDockItem btn bTuile" id="'+item.id_docking_station+'">';
+							master_dock+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
+							master_dock+='		<i class="fas fa-charging-station"></i>';
+							master_dock+='		<p class="dockname">'+item.name+'</p>';
+							master_dock+='   </div>';
+							master_dock+='</div>';
+							$('#pages_install_by_step #MasterDockList').append(master_dock);
 						});
 						$('#pages_install_by_step .MasterDock_loading').hide();
 					}
@@ -654,15 +654,15 @@ function InitMasterDockNormal()
 	
 	if(docks != 'undefined' && docks.length > 1){
 		$.each(docks,function(idx,item){
-			let li_html="";
-			li_html+='<li class="col-xs-6">';
-			li_html+='	<div class="is_checkbox tuile_img no_update MasterDockItem" id="'+item.id_docking_station+'">';
-			li_html+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
-			li_html+='		<i class="fas fa-charging-station" style="padding-top:5px"></i>';
-			li_html+='		<p class="dockname">'+item.name+'</p>';
-			li_html+='   </div>';
-			li_html+='</li>';
-			$('#pages_install_normal #MasterDockList').append(li_html);
+			let master_dock="";
+			master_dock+='<div class="col-xs-6 text-center">';
+			master_dock+='	<div class="MasterDockItem btn bTuile" id="'+item.id_docking_station+'">';
+			master_dock+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
+			master_dock+='		<i class="fas fa-charging-station"></i>';
+			master_dock+='		<p class="dockname">'+item.name+'</p>';
+			master_dock+='   </div>';
+			master_dock+='</div>';
+			$('#pages_install_normal #MasterDockList').append(master_dock);
 		});
 		$('#pages_install_normal .MasterDock_loading').hide();
 	}else{
@@ -679,15 +679,15 @@ function InitMasterDockNormal()
 						augmented_poses = data.D.augmented_poses;
 						
 						$.each(docks,function(idx,item){
-							let li_html="";
-							li_html+='<li class="col-xs-6">';
-							li_html+='	<div class="is_checkbox tuile_img no_update MasterDockItem" id="'+item.id_docking_station+'">';
-							li_html+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
-							li_html+='		<i class="fas fa-charging-station" style="padding-top:5px"></i>';
-							li_html+='		<p class="dockname">'+item.name+'</p>';
-							li_html+='   </div>';
-							li_html+='</li>';
-							$('#pages_install_normal #MasterDockList').append(li_html);
+							let master_dock="";
+							master_dock+='<div class="col-xs-6 text-center">';
+							master_dock+='	<div class="MasterDockItem btn bTuile" id="'+item.id_docking_station+'">';
+							master_dock+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
+							master_dock+='		<i class="fas fa-charging-station"></i>';
+							master_dock+='		<p class="dockname">'+item.name+'</p>';
+							master_dock+='   </div>';
+							master_dock+='</div>';
+							$('#pages_install_normal #MasterDockList').append(master_dock);
 						});
 						$('#pages_install_normal .MasterDock_loading').hide();
 					}

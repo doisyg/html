@@ -274,20 +274,20 @@
             </header>
             <div class="content">
 				<h4 style="text-align:center;margin:30px 0"><?= __('Import site or create a new one ?') ?></h4>
-				<ul class="tuiles row">
-                    <li class="col-xs-6">
-                    	<div class="is_checkbox tuile_img no_update button_goto" id="bImportSite" data-goto="install_by_step_import_site" style="height:max-content;bottom:0;border-radius:10px">
-                    		<i class="fas fa-file-import" style="padding-top:5px"></i>
-							<h5 class="" style="margin-top: 0px;font-weight:700;font-size: 15px;"><?php echo __('Import existing site with map');?></h5>
-                        </div>
-                    </li>
-                    <li class="col-xs-6">
-                    	<div class="is_checkbox tuile_img no_update button_goto" id="bCreateSite" data-goto="install_by_step_new_site" style="height:max-content;bottom:0;border-radius:10px">
-                    		<i class="fas fa-hotel" style="padding-top:5px"></i>
-							<h5 class="" style="margin-top: 0px;font-weight:700;font-size: 15px;"><?php echo __('Create new site with mapping');?></h5>
-                        </div>
-                    </li>
-				</ul>
+				<div class="row">
+                    <div class="col-xs-6 text-center">
+                    	<a class="button_goto bTuile btn" id="bImportSite" data-goto="install_by_step_import_site">
+                    		<i class="fas fa-file-import iconMenuBlue"></i>
+							<h5 class="iconMenuBlue"><?php echo __('Import existing site with map');?></h5>
+                        </a>
+                    </div>
+                    <div class="col-xs-6 text-center">
+                    	<a class="button_goto bTuile btn" id="bCreateSite" data-goto="install_by_step_new_site" >
+                    		<i class="fas fa-hotel iconMenuGreen"></i>
+							<h5 class="iconMenuGreen"><?php echo __('Create new site with mapping');?></h5>
+                        </a>
+                    </div>
+				</div>
 				
 				<!-- <a href="#" class="install_by_step_maintenance_next button_goto" data-goto="install_by_step_manager" style="display:none;"></a> -->
             </div>
@@ -329,9 +329,9 @@
 				<h4 style="text-align:center;margin:30px 0"><?= __('Pick the default docking station') ?></h4>
 				
 				<div class="MasterDock_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
-				<ul class="tuiles row" id="MasterDockList">
+				<div class="row" id="MasterDockList">
                     
-				</ul>
+				</div>
 				<p style="padding-left:5px;margin-top:10px"><i class="fas fa-asterisk" style="color: darkorange;"></i> <?=__('Actual default dock') ?></p>
 				<a href="#" class="install_by_step_site_master_dock_next button_goto" data-goto="install_by_step_site_recovery" style="display:none;"></a>
             </div>
@@ -1656,16 +1656,12 @@
                 <h2><?php echo __('Site export');?></h2>
             </header>
             <div class="content">
-                <div class="loaded col-md-12" style="padding-top:10px;">
+                <div class="col-md-12" style="padding-top:10px;">
                 	<p> <?=__('The export of a site is a backup of all the configuration linked to a site (map, charging stations, areas...).') ?></p>
-					<ul class="tuiles row" style="margin-bottom:30px;">
-						<li class="col-xs-6" style="margin-left: 25%;">
-							<div class="is_checkbox tuile_img no_update bExportSite" style="height:max-content;bottom:0;border-radius:10px">
-								<i class="fas fa-download iconMenuGreen" style="padding-top:5px"></i>
-								<h4 class="iconMenuGreen" style="margin-top: 0px;font-weight:700;font-size: 15px;"><?php echo __('Export Site');?></h4>
-							</div>
-						</li>
-					</ul>
+					<a class="bExportSite bTuile center btn">
+						<i class="fas fa-download iconMenuGreen"></i>
+						<h4 class="iconMenuGreen"><?php echo __('Export Site');?></h4>
+					</a>
 					<p><?=__('You can also use the generated file to import this site on another vehicle.') ?><br><br><?=__('Keep this copy as it will allow you to reload your site in case of factory reset.') ?></p>
 					<a href="#" class="install_by_step_export_site_next button_goto" data-goto="install_by_step_maintenance" style="display:none;"></a>
 				
@@ -1674,7 +1670,7 @@
             </div>
             <footer>
 				<a href="#" class="btn btn-default button_goto btn_footer_left btn_50 btn_back" data-goto="install_by_step_config"><?php echo __('Back');?></a>
-            	<a href="#" class="btn btn-warning button_goto btn_footer_right btn_50" data-goto="install_by_step_maintenance"><?php echo __('Skip');?></a>
+            	<a href="#" class="btn btn-warning button_goto btn_footer_right btn_50 bExportSiteSkip" data-goto="install_by_step_maintenance"><?php echo __('Skip');?></a>
             </footer>
         </section>
 		
@@ -1687,21 +1683,20 @@
             <div class="content">
 				<p><?= __('A maintenance account for Wyca is by default enabled, however it can be removed to suit your security requirement.') ?></p>
 				<h4 style="text-align:center;margin:30px 0"><?= __('Keep Wyca maintenance account ?') ?></h4>
-				<ul class="tuiles row">
-                    <li class="col-xs-6">
-                    	<div class="is_checkbox tuile_img no_update" id="bDeleteMaintenanceAccount" style="bottom:0;border-radius:10px">
-                    		<i class="fas fa-user-times iconMenuRed" style="padding-top:5px"></i>
-							<h4 class="iconMenuRed" style="margin-top: 0px;font-weight:700"><?php echo __('Delete');?></h4>
-                        </div>
-                    </li>
-					<li class="col-xs-6">
-                    	<div class="is_checkbox tuile_img no_update" id="bKeepMaintenanceAccount" style="bottom:0;border-radius:10px">
-                    		<i class="fas fa-user-cog iconMenuGreen" style="padding-top:5px"></i>
-							<h4 class="iconMenuGreen" style="margin-top: 0px;font-weight:700"><?php echo __('Keep');?></h4>
-                        </div>
-                    </li>
-                    
-				</ul>
+				<div class="tuiles row">
+                    <div class="col-xs-6 text-center">
+                    	<a class="bTuile btn" id="bDeleteMaintenanceAccount">
+                    		<i class="fas fa-user-times iconMenuRed"></i>
+							<h4 class="iconMenuRed"><?php echo __('Delete');?></h4>
+                        </a>
+                    </div>
+					<div class="col-xs-6 text-center">
+                    	<a class="bTuile btn" id="bKeepMaintenanceAccount">
+                    		<i class="fas fa-user-cog iconMenuGreen"></i>
+							<h4 class="iconMenuGreen"><?php echo __('Keep');?></h4>
+                        </a>
+                    </div>
+				</div>
 				<a href="#" class="install_by_step_maintenance_next button_goto" data-goto="install_by_step_manager" style="display:none;"></a>
 				
 				<div class="modal fade modalMaintenance" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
@@ -1713,20 +1708,20 @@
 										<form>
 											<h4 style="text-align:center"><i class="fas fa-key" style="color:#ed9c28;font-size:20px"></i> <?=__('Keep account default password') ?></h4>
 											<p style="margin:20px 0"> <?=__('Do you want to keep the default password for Wyca maintenance account ?')?> </p>
-											<ul class="tuiles row">
-												<li class="col-xs-6">
-													<div class="is_checkbox tuile_img no_update" id="bChangeMaintenanceAccountPassword" style="bottom:0;border-radius:10px">
-														<i class="fas fa-exchange-alt iconMenuBlue" style="padding-top:5px"></i>
-														<h4 class="iconMenuBlue" style="margin-top: 0px;font-weight:700"><?php echo __('Change');?></h4>
-													</div>
-												</li>
-												<li class="col-xs-6">
-													<div class="is_checkbox tuile_img no_update" id="bKeepMaintenanceAccountPassword" style="bottom:0;border-radius:10px">
-														<i class="fas fa-lock iconMenuGreen" style="padding-top:5px"></i>
-														<h4 class="iconMenuGreen" style="margin-top: 0px;font-weight:700"><?php echo __('Keep');?></h4>
-													</div>
-												</li>
-											</ul>
+											<div class="row">
+												<div class="col-xs-6 text-center">
+													<a class="bTuile btn" id="bChangeMaintenanceAccountPassword">
+														<i class="fas fa-exchange-alt iconMenuBlue"></i>
+														<h4 class="iconMenuBlue"><?php echo __('Change');?></h4>
+													</a>
+												</div>
+												<div class="col-xs-6 text-center">
+													<a class="bTuile btn" id="bKeepMaintenanceAccountPassword">
+														<i class="fas fa-lock iconMenuGreen"></i>
+														<h4 class="iconMenuGreen"><?php echo __('Keep');?></h4>
+													</a>
+												</div>
+											</div>
 											<p style="margin:20px 0"> <?=__('If you change and loose this password, the robot could become unusable with no recovery options other than a factory return.') ?> </p>
 										</form>
 									</div>
@@ -1802,17 +1797,12 @@
                 <div class="install_by_step_manager_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
                 
                 <div class="loaded col-md-12" style="padding-top:30px;">
-                	
-					<ul class="tuiles row bAddManagerTuile" style="margin-bottom:30px;">
-						<li class="col-xs-6" style="margin-left: 25%;">
-							<div class="is_checkbox tuile_img no_update bAddManager" style="height:max-content;bottom:0;border-radius:10px">
-								<i class="fas fa-user-plus" style="padding-top:5px"></i>
-								<h4 class="" style="margin-top: 0px;font-weight:700;font-size: 15px;"><?php echo __('Create manager');?></h4>
-							</div>
-						</li>
-					</ul>
+					<a class="bTuile bAddManager center btn" id="bCreateManager">
+						<i class="fas fa-user-plus iconMenuGreen"></i>
+						<h4 class="iconMenuGreen" ><?php echo __('Create manager');?></h4>
+					</a>
 					
-					<a href="#" class="bAddManager btn btn-primary"><?= ('Add an account') ?></a>
+					<a href="#" class="bAddManager btn btn-primary" style="margin-left: 50%;transform: translateX(-50%);" id="bAddManager"><?= ('Add an account') ?></a>
                     <ul class="list_managers list_elem">
                     </ul>
 					

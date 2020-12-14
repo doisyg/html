@@ -1095,9 +1095,8 @@
 										<h4 style="text-align:center;margin:30px 0"><?= __('Pick the default docking station') ?></h4>
 										
 										<div class="MasterDock_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
-										<ul class="tuiles row" id="MasterDockList">
-											
-										</ul>
+										<div class="row" id="MasterDockList">
+										</div>
 										<p style="padding-left:5px;margin-top:10px"><i class="fas fa-asterisk" style="color: darkorange;"></i> <?=__('Actual default dock') ?></p>
 										
                                     </div>
@@ -1574,16 +1573,12 @@
                 <div class="install_normal_user_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
                 
                 <div class="loaded col-md-12" style="padding-top:30px;">
-					<ul class="tuiles row bAddUserTuile" style="margin-bottom:30px;">
-						<li class="col-xs-6" style="margin-left: 25%;">
-							<div class="is_checkbox tuile_img no_update bAddUser" style="height:max-content;bottom:0;border-radius:10px">
-								<i class="fas fa-user-plus" style="padding-top:5px"></i>
-								<h4 class="" style="margin-top: 0px;font-weight:700;font-size: 15px;"><?php echo __('Create user');?></h4>
-							</div>
-						</li>
-					</ul>
+					<div class="btn bTuile bAddUser bAddUserTuile center">
+						<i class="fas fa-user-plus iconMenuGreen"></i>
+						<h4 class="iconMenuGreen"><?php echo __('Create user');?></h4>
+					</div>
 					
-					<a href="#" class="bAddUser btn btn-primary"><?= ('Add an account') ?></a>
+					<a href="#" class="bAddUser btn btn-primary" style="margin-left:50%;transform:translateX(-50%);"><?= ('Add an account') ?></a>
 					<ul class="list_users list_elem">
 					</ul>
 					
@@ -1680,16 +1675,12 @@
                 <div class="install_normal_manager_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
                 
                 <div class="loaded col-md-12" style="padding-top:30px;">
-					<ul class="tuiles row bAddManagerTuile" style="margin-bottom:30px;">
-						<li class="col-xs-6" style="margin-left: 25%;">
-							<div class="is_checkbox tuile_img no_update bAddManager" style="height:max-content;bottom:0;border-radius:10px">
-								<i class="fas fa-user-plus" style="padding-top:5px"></i>
-								<h4 class="" style="margin-top: 0px;font-weight:700;font-size: 15px;"><?php echo __('Create manager');?></h4>
-							</div>
-						</li>
-					</ul>
+					<div class="btn bTuile bAddManager bAddManagerTuile center">
+						<i class="fas fa-user-plus iconMenuGreen"></i>
+						<h4 class="iconMenuGreen"><?php echo __('Create manager');?></h4>
+					</div>
 					
-					<a href="#" class="bAddManager btn btn-primary"><?= ('Add an account') ?></a>
+					<a href="#" class="bAddManager btn btn-primary" style="margin-left:50%;transform:translateX(-50%);"><?= ('Add an account') ?></a>
 					<ul class="list_managers list_elem">
 					</ul>
 					

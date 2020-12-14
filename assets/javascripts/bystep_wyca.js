@@ -1567,7 +1567,7 @@ $(document).ready(function(e) {
     });
 	
 	//------------------- STEP EXPORT SITE ------------------------
-	
+	//AJAX INSTALL STEP CALL
 	$('#install_by_step_export_site .bExportSite').click(function(e){
 		
 		$('#install_by_step_export_site .bExportSite').addClass('disabled');
@@ -1616,7 +1616,6 @@ $(document).ready(function(e) {
 					{
 						$('#install_by_step_export_site .bExportSite').removeClass('disabled');
 						ParseAPIAnswerError(data,'Exporting site : ');
-						alert_wyca(+ wycaApi.AnswerCodeToString(data.A) + '<br>'+ data.M);
 					}							
 				});
 			}
@@ -1626,6 +1625,27 @@ $(document).ready(function(e) {
 				ParseAPIAnswerError(data,'Getting current site');
 			}
 		})
+	})
+	//AJAX INSTALL STEP CALL
+	
+	$('#install_by_step_export_site .bExportSiteSkip').click(function(e){
+		$.ajax({
+			type: "POST",
+			url: 'ajax/install_by_step_export_site.php',
+			data: {
+			},
+			dataType: 'json',
+			success: function(data) {
+			},
+			error: function(e) {
+				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+					alert_wyca('Error step maintenance account ; ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					setTimeout(function(){window.location.href = 'logout.php'},3000);
+				}else{
+					alert_wyca('Error step maintenance account ;' + e.responseText );
+				}
+			}
+		});
 	})
 	//------------------- STEP MAINTENANCE ACCOUNT ------------------------
 	
@@ -2318,14 +2338,14 @@ function RefreshDisplayManagerByStep(){
 		$('#install_by_step_manager .bValidManagerNext').show();
 		
 		$('#install_by_step_manager .bValidManagerSkip').hide();
-		$('#install_by_step_manager .bAddManagerTuile').hide();
+		$('#install_by_step_manager a.bAddManager.bTuile').hide();
 	}else{
 		//AFF TUILE ET SKIP
 		$('#install_by_step_manager a.bAddManager').hide();
 		$('#install_by_step_manager .bValidManagerNext').hide();
 		
 		$('#install_by_step_manager .bValidManagerSkip').show();
-		$('#install_by_step_manager .bAddManagerTuile').show();
+		$('#install_by_step_manager a.bAddManager.bTuile').show();
 	}
 	
 }
