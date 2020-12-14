@@ -8,6 +8,27 @@ body{color:#777;font-family:"Open Sans",Arial,sans-serif;line-height:22px;margin
 .icone_header i { display:block; }
 .icone_header span { font-size:12px; }
 body > header { background-color:#589FB2; padding:5px; color:#FFFFFF; height:54px;}
+header .pull-right{position: absolute;right: 2px;top: 11px;}
+header .pull-left{    position: absolute;left: 0;top: 5px;}
+
+img.nav_logo{
+	height: 34px;
+    padding: 5px;
+	display:inline-block;
+}
+
+.title_section{
+	display:inline-block;
+	font-size:20px;
+	margin:0;
+	vertical-align: middle;
+	margin-left:5px;
+	max-width:66%;
+}
+
+section.page > header {
+	display:none
+}
 
 #contentAll { position:relative; }
 .global_page { position:absolute; top:0; left:0; display:none; min-height:calc(100vh - 54px); min-height: calc(var(--vh, 1vh) * 100 - 54px); width:100%; }
@@ -40,12 +61,13 @@ section.hide_photo_back { background-color:rgba(255,255,255,0.8);}
 
 .btn_big_popup { font-size:22px; padding:30px; margin-bottom:30px; }
 .btn_big_popup i { font-size:60px; display:block; margin:10px 0; }
-
+.btn_big_popup span {visibility:hidden; /*HEIGHT TRICK*/} 
+.btn_big_popup.ifDocking.ifUndocking{overflow:hidden;}
 
 ul.tuiles { list-style:none; margin:0; padding:5px; }
 ul.tuiles li { padding-top:33.33333333%; position:relative; }
 ul.tuiles.heightauto li { padding-top:0; position:relative; }
-ul.tuiles li a, ul.tuiles li div { display:block; background-color:#589FB2; position:absolute; top:5px; left:5px; bottom:5px; right:5px; color:#FFFFFF; padding:10px; text-align:center; vertical-align:middle; font-size:11px; perspective:'outerWidth'; transition:"all .2s ease-out"; }
+ul.tuiles li a, ul.tuiles li div { display:block; background-color:#589FB2; position:absolute; top:5px; left:5px; bottom:5px; right:5px; color:#FFFFFF; padding:10px; text-align:center; vertical-align:middle; font-size:11px;line-height: 15px;perspective:'outerWidth'; transition:"all .2s ease-out"; }
 ul.tuiles.heightauto  li a, ul.tuiles.heightauto  li div { position:relative; }
 ul.tuiles li a:hover { text-decoration:none; }
 ul.tuiles li i { font-size:40px; padding-top:10%; display:block; padding-bottom:10px; }
@@ -58,7 +80,6 @@ ul.tuiles li .tuile_img { background-color:#FFFFFF; color:#333; border:1px solid
 @media only screen and (min-width: 420px){
 	#install_by_step_check ul.tuiles.row{ margin: -20px auto;}
 }
-
 ul.tuiles li a.todo, ul.tuiles li div.todo { background-color:#999; }
 
 ul.tuiles li .tuile_img.is_checkbox { background-color:#EEEEEE; border-color:#666666; }
@@ -548,33 +569,10 @@ ul.list_test li.done { color:#006600; border-color:#006600; }
 	padding:1px;
 }
 
-
 .colorpicker.colorpicker-visible { z-index:10000; }
-
 
 .list_actions li:first-child a.bUpToAction { visibility:hidden; }
 .list_actions li:last-child a.bDownToAction { visibility:hidden; }
-
-
-
-img.nav_logo{
-	height: 40px;
-    padding: 5px;
-	display:inline-block;
-}
-
-.title_section{
-	display:inline-block;
-	font-size:20px;
-	margin:0;
-	vertical-align: middle;
-	margin-left:5px;
-	max-width:66%;
-}
-
-section.page > header {
-	display:none
-}
 
 .btn.btn_25{width:25%;}
 .btn.btn_33{width:33.3333%;}
@@ -742,7 +740,7 @@ section.page > header {
 }
 @media only screen and (max-width:374px)
 {
-	.svg_legende{display:none}
+	/* .svg_legende{display:none} */
 }
 img.elodie_legende{
 	width: 50%;
@@ -1113,6 +1111,19 @@ div.icon_menu .iconForbiddenArea .fa-minus-circle{
     stroke-width: 2px;
     stroke: black;
 }
+.loading_map{
+	display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgb(255 255 255 / 66%);
+    bottom: 0;
+    /* display: flex; */
+    margin: 0;
+    z-index: 8000;
+    padding-top: 50%;
+}
 /* */
 ul#MasterDockList li .tuile_img.is_checkbox{border-radius:10px;bottom:0;}
 ul#MasterDockList li .tuile_img.is_checkbox p{border-radius:10px;bottom:0;}
@@ -1158,7 +1169,11 @@ span.error_details span{
     transform: translateX(-50%);
     margin: 10px 0;
 }
-
+.progress-bar{
+	webkit-transition: width 0.2s ease!important;
+    -o-transition: width 0.2s ease!important;
+    transition: width 0.2s ease!important;
+}
 /* COLOR PICKER IRO */
 .col-xs-8 .iro-colorpicker{
 	transform: scale(0.75)translateX(-40%);

@@ -420,12 +420,12 @@ ShadowViewport.prototype.getCTM = function() {
   var safeCTM = this.options.svg.createSVGMatrix();
 
   // Copy values manually as in FF they are not itterable
-  safeCTM.a = this.activeState.zoom;
+  if ( isNaN(this.activeState.zoom) === false ) safeCTM.a = this.activeState.zoom;
   safeCTM.b = 0;
   safeCTM.c = 0;
-  safeCTM.d = this.activeState.zoom;
-  safeCTM.e = this.activeState.x;
-  safeCTM.f = this.activeState.y;
+  if ( isNaN(this.activeState.zoom) === false ) safeCTM.d = this.activeState.zoom;
+  if ( isNaN(this.activeState.x) === false ) safeCTM.e = this.activeState.x;
+  if ( isNaN(this.activeState.y) === false ) safeCTM.f = this.activeState.y;
 
   return safeCTM;
 };

@@ -646,8 +646,10 @@ $(document).ready(function() {
 			
 			setTimeout(function(){$('#user_edit_map .times_icon_menu').show('fast')},50);
 			
+			boolHelpGotoPose = getCookie('boolHelpGotoPoseU') != '' ? JSON.parse(getCookie('boolHelpGotoPoseU')) : true; // TRICK JSON.parse STR TO BOOL
+			
 			if(boolHelpGotoPose){
-				$('.modalHelpClickGotoPose').modal('show');
+				$('#user_edit_map .modalHelpClickGotoPose').modal('show');
 			}			
 		}
 		else if(userCurrentAction == 'prepareGotoPose'){
@@ -659,7 +661,7 @@ $(document).ready(function() {
 		
     });
 	
-	$('#user_edit_map .bHelpClickGotoPoseOk').click(function(){boolHelpGotoPose = !$('#user_edit_map .checkboxHelpGotopose').prop('checked')});//ADD SAVING BDD / COOKIES ?
+	$('#user_edit_map .bHelpClickGotoPoseOk').click(function(){boolHelpGotoPose = !$('#user_edit_map .checkboxHelpGotopose').prop('checked');setCookie('boolHelpGotoPoseU',boolHelpGotoPose);});//ADD SAVING BDD / COOKIES ?
 	
 	InitTaille();
     

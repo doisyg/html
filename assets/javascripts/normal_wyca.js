@@ -14,7 +14,6 @@ $(document).ready(function(e) {
 		currentNameSiteExport = $(this).find('.societe').text();
 		
 		wycaApi.ExportSite($(this).data('id_site'), function(data){
-			console.log(data);
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
 				$('#install_normal_setup_export .bSiteExportElem').removeClass('disabled');
@@ -32,7 +31,7 @@ $(document).ready(function(e) {
 			else
 			{
 				$('#install_normal_setup_export .bSiteExportElem').removeClass('disabled');
-				alert_wyca('Save map error : ' + wycaApi.AnswerCodeToString(data.A) + '<br>'+ data.M);
+				ParseAPIAnswerError(data,'Exporting site : ');
 			}							
 		});
 		
@@ -659,17 +658,25 @@ $(document).ready(function(e) {
 	//----------------------- IMPORT SITE ----------------------------
 	
 	$('#pages_install_normal .file_import_site').change(function(){
-		//console.log('here');
-		$('#pages_install_normal .filename_import_site').html($(this)[0].files[0].name);
+		
+		let fname = $(this)[0].files[0].name;
+		if(fname.slice(fname.length - 5) == '.wyca'){
+			$('#pages_install_normal .file_import_site_wrapper').css('background-color','#47a4476e');
+		}else{
+			$('#pages_install_normal .file_import_site_wrapper').css('background-color','#e611116e');
+			let icon = $('#pages_install_normal .file_import_site_wrapper > p > i');
+			icon.toggleClass('shake');
+			setTimeout(function(){icon.toggleClass('shake')},2000);
+		}
+		$('#pages_install_normal .filename_import_site').html(fname);
 		$('#pages_install_normal .filename_import_site').show();
-		$('#pages_install_normal .file_import_site_wrapper').css('background-color','#47a4476e');
 		
 	})
 	
 	$('#pages_install_normal a.bImportSiteDo').click(function(e) {
         e.preventDefault();
 		file = $('#pages_install_normal .file_import_site')[0].files[0];
-		if(file != undefined){
+		if(file != undefined && file.name.slice(file.name.length - 5) == '.wyca'){
 			
 			$('#pages_install_normal .install_normal_setup_import_loading').show();
 			$('#pages_install_normal .install_normal_setup_import_content').hide();
@@ -800,10 +807,7 @@ $(document).ready(function(e) {
 			}
 			else
 			{
-				console.log(JSON.stringify(data)); 
-				text = wycaApi.AnswerCodeToString(data.A);
-				if (data.M != '') text += '<br />'+data.M;
-				alert_wyca(text);
+				ParseAPIAnswerError(data);
 			}
 		});
 	});
@@ -852,10 +856,7 @@ $(document).ready(function(e) {
 				}
 				else
 				{
-					console.log(JSON.stringify(data)); 
-					text = wycaApi.AnswerCodeToString(data.A);
-					if (data.M != '') text += '<br />'+data.M;
-					alert_wyca(text);
+					ParseAPIAnswerError(data);
 				}
 			});
 		}
@@ -863,7 +864,7 @@ $(document).ready(function(e) {
 	
 	//------------------- ACCOUNTS ------------------------
 	//MANAGERS
-	$('#install_normal_manager .bHelpManagerOk').click(function(){boolHelpManager = !$('#install_normal_manager .checkboxHelpManager').prop('checked')});//ADD SAVING BDD / COOKIES ?
+	$('#install_normal_manager .bHelpManagerOk').click(function(){boolHelpManager = !$('#install_normal_manager .checkboxHelpManager').prop('checked');setCookie('boolHelpManagerI',boolHelpManager);});//ADD SAVING BDD / COOKIES ?
 	
 	$('#install_normal_manager .bAddManager').click(function(e) {
 	
@@ -1197,6 +1198,7 @@ $(document).ready(function(e) {
 		wycaApi.GetCurrentMapData(function(data){
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
+				let n = 0;
 				$('#pages_install_normal .modalRealTest_loading').hide();
 				$('#pages_install_normal .modalRealTest_content').show();
 				$('#pages_install_normal select.real_test_start > option').hide();
@@ -1205,18 +1207,25 @@ $(document).ready(function(e) {
 				$.each(data.D.pois,function(i, item){
 					$('#pages_install_normal select.real_test_start').append('<option value="poi_'+item.id_poi+'" data-type="poi" data-id="'+item.id_poi+'" >&#xf3c5 - POI - '+item.name+'</option>' );
 					$('#pages_install_normal select.real_test_end').append('<option value="poi_'+item.id_poi+'" data-type="poi" data-id="'+item.id_poi+'">&#xf3c5 - POI - '+item.name+'</option>' );
+					n++;
 				});
 				//ADD DOCKS
 				$.each(data.D.docks,function(i, item){
 					$('#pages_install_normal select.real_test_start').append('<option value="dock_'+item.id_docking_station+'" data-type="dock" data-id="'+item.id_docking_station+'" >&#xf5e7 - Dock - '+item.name+'</option>' );
 					$('#pages_install_normal select.real_test_end').append('<option value="dock_'+item.id_docking_station+'" data-type="dock" data-id="'+item.id_docking_station+'" >&#xf5e7 - Dock - '+item.name+'</option>' );
+					n++;
 				});
 				//ADD A POSES
 				$.each(data.D.augmented_poses,function(i, item){
 					$('#pages_install_normal select.real_test_start').append('<option value="augmented_pose_'+item.id_docking_station+'" data-type="augmented_pose" data-id="'+item.id_augmented_pose+'" >&#xf02a; - A. pose - '+item.name+'</option>' );
 					$('#pages_install_normal select.real_test_end').append('<option value="augmented_pose_'+item.id_docking_station+'" data-type="augmented_pose" data-id="'+item.id_augmented_pose+'" >&#xf02a; - A. pose - '+item.name+'</option>' );
+					n++;
 				});
 				
+				if(n < 2){
+					$('#pages_install_normal .modalRealTest').modal('hide');
+					alert_wyca(textNoRealTest);
+				}
 			}
 			else
 			{
@@ -1302,10 +1311,7 @@ $(document).ready(function(e) {
 			else
 			{
 				$('#install_normal_recovery .bRecovery').removeClass('disabled');
-				console.log(JSON.stringify(data)); 
-				text = wycaApi.AnswerCodeToString(data.A);
-				if (data.M != '') text += '<br />'+data.M;
-				alert_wyca(text);
+				ParseAPIAnswerError(data);
 			}
 		});
 		
@@ -1316,10 +1322,7 @@ $(document).ready(function(e) {
 			else
 			{
 				$('#install_normal_recovery .bRecovery').removeClass('disabled');
-				console.log(JSON.stringify(data)); 
-				text = wycaApi.AnswerCodeToString(data.A);
-				if (data.M != '') text += '<br />'+data.M;
-				alert_wyca(text);
+				ParseAPIAnswerError(data);
 			}
 		});
     });
@@ -1337,7 +1340,7 @@ $(document).ready(function(e) {
 			dataType: 'json',
 			success: function(data) {
 				if (data.need_restart == 1)
-					window.location.href = app_url;
+					window.location.href = app_url; // equivalent window.location.reload()
 			},
 			error: function(e) {
 				alert_wyca('Error set lang ; ' + e.responseText);
@@ -1348,17 +1351,25 @@ $(document).ready(function(e) {
 	//------------------- AVAILABLES TOPS ------------------------
 	
 	$('#pages_install_normal .file_import_top').change(function(){
-		//console.log('here');
-		$('#pages_install_normal .filename_import_top').html($(this)[0].files[0].name);
+		
+		let fname = $(this)[0].files[0].name;console.log(fname);
+		if(fname.slice(fname.length - 5) == '.wyca'){
+			$('#pages_install_normal .file_import_top_wrapper').css('background-color','#47a4476e');
+		}else{
+			$('#pages_install_normal .file_import_top_wrapper').css('background-color','#e611116e');
+			let icon = $('#pages_install_normal .file_import_top_wrapper > p > i');
+			icon.toggleClass('shake');
+			setTimeout(function(){icon.toggleClass('shake')},2000);
+		}
+		$('#pages_install_normal .filename_import_top').html(fname);
 		$('#pages_install_normal .filename_import_top').show();
-		$('#pages_install_normal .file_import_top_wrapper').css('background-color','#47a4476e');
 		
 	})
 	
 	$('#pages_install_normal a.bImportTopDo').click(function(e) {
         e.preventDefault();
 		file = $('#pages_install_normal .file_import_top')[0].files[0];
-		if(file != undefined){
+		if(file != undefined && file.name.slice(file.name.length - 5) == '.wyca'){
 			$('#pages_install_normal .modalImportTop_loading').show();
 			$('#pages_install_normal .modalImportTop_content').hide();
 			var reader = new FileReader();
@@ -1456,18 +1467,20 @@ $(document).ready(function(e) {
 		wycaApi.on('onSetActiveTopResult', function(data) {
 			
 			InitTopsActiveNormal();
-			$('#install_normal_setup_top .modalSetActiveTop').modal('hide');
-			
+			timerSetActiveTop = 90;
+			statusSetActiveTop = 2;
+			setTimeout(function(){
+				$('#install_normal_setup_top .modalSetActiveTop').modal('hide');
+				$('#install_normal_setup_top .modalSetActiveTop a').removeClass('disabled');
+				
+			},750);
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
-				success_wyca('Top is now active !');
+				setTimeout(success_wyca,750,textTopNowActive);
 			}
 			else
 			{
-				console.log(JSON.stringify(data)); 
-				text = wycaApi.AnswerCodeToString(data.A);
-				if (data.M != '') text += '<br />'+data.M;
-				alert_wyca(text);
+				ParseAPIAnswerError(data);
 			}
 		});
 		
@@ -1475,21 +1488,18 @@ $(document).ready(function(e) {
 			
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
-				//success_wyca('Recovery done !');
 				$('#install_normal_setup_top .modalSetActiveTop').modal('show');
 				$('#install_normal_setup_top .modalSetActiveTop a').addClass('disabled');
-				timerSetActiveTop = 10;
-				timerSetActiveTopCurrent = 10;
-				$('#pages_install_normal .progressSetActiveTop').show();
-				NextTimerSetActiveTop();
+				statusSetActiveTop = 1;
+				timerSetActiveTop = 0;
+
+				//$('#pages_install_normal .progressSetActiveTop').show();
+				TimerActiveTopNormal();
 			}
 			else
 			{
 				InitTopsActiveNormal();
-				console.log(JSON.stringify(data)); 
-				text = wycaApi.AnswerCodeToString(data.A);
-				if (data.M != '') text += '<br />'+data.M;
-				alert_wyca(text);
+				ParseAPIAnswerError(data);
 			}	
 		});		
 	});
@@ -1744,9 +1754,24 @@ function RealTestGotoEndNormal(end){
 
 //------------------- ACTIVE TOP ------------------------
 
-var timerSetActiveTop = 10;
-var timerSetActiveTopCurrent = 10;
-var timeoutTimerSetActiveTopInterval = null;
+var statusSetActiveTop = 0;
+var timerSetActiveTop = 0;
+	
+function TimerActiveTopNormal(){
+	if(statusSetActiveTop > 0){
+		if(statusSetActiveTop == 2 && timerSetActiveTop==100){
+			statusSetActiveTop=0;
+			timerSetActiveTop=0;
+			
+		}else{
+			delay = statusSetActiveTop == 2 ? 1 : 100;
+			timerSetActiveTop++;
+			if(timerSetActiveTop == 101)timerSetActiveTop=0;
+			$('#install_normal_setup_top .modalSetActiveTop .progressSetActiveTop .progress-bar').css('width', timerSetActiveTop+'%').attr('aria-valuenow', timerSetActiveTop); 
+			setTimeout(TimerActiveTopNormal,delay);
+		}
+	}
+}
 
 function NextTimerSetActiveTop()
 {

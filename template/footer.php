@@ -47,24 +47,9 @@
 
 		var user_api_key = '<?php echo $_SESSION["api_key"];?>';
 		// TODO var id_map_last = <?php // echo $currentIdMap;?>;
-		var textSelectOnOrMoreTops = "<?php echo addslashes(stripslashes(__('You must select one or more tops')));?>";
-		var textAvailablesTopsSaved = "<?php echo addslashes(stripslashes(__('Available tops saved')));?>";
-		var textIndicateAName = "<?php echo addslashes(stripslashes(__('You must indicate a name')));?>";
-		var textSiteImported = "<?php echo addslashes(stripslashes(__('Site successfully imported')));?>";
-		var textNameUsed = "<?php echo addslashes(stripslashes(__('Name already used please change')));?>";
-		var textStartMapping = "<?php echo addslashes(stripslashes(__('Start mapping')));?>";
-		var textStopNavigation = "<?php echo addslashes(stripslashes(__('Stop navigation')));?>";
-		var textBuildingMap = "<?php echo addslashes(stripslashes(__('Building the map')));?>";
-		var textStartAutonomous = "<?php echo addslashes(stripslashes(__('Start autonomous navigation')));?>";
-		var textBtnCheckTest = "<?php echo addslashes(stripslashes(__('Testing')));?>";
-		var textBtnCheckNext = "<?php echo addslashes(stripslashes(__('Next')));?>";
-		var textLessThanOne = "<?php echo addslashes(stripslashes(__('Less than 1')));?>";
-		var textPasswordRequired = "<?php echo addslashes(stripslashes(__('Passwords required.')));?>";
-		var textPasswordMatching = "<?php echo addslashes(stripslashes(__('Passwords not matching.')));?>";
-		var textPasswordPattern = "<?php echo addslashes(stripslashes(__('Passwords needs to be 8 character long with at least 1 uppercase letter and 1 special character or digit')));?>";
-		var textLoginPattern = "<?php echo addslashes(stripslashes(__('Login needs to be a valid mail adress.')));?>";
-		</script>
 
+		</script>
+		<script src="<?php echo $_CONFIG['URL'];?>template/trad_js.php?v=<?php echo $lastUpdate;?>"></script>
 		<!-- Vendor -->
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/jquery/jquery.js"></script>
         <script src="<?php echo $_CONFIG['URL'];?>assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js"></script>
@@ -78,7 +63,7 @@
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/iro/iro.js"></script>
         
         
-        <script src="<?php echo $_CONFIG['URL'];?>assets/vendor/svg-pan-zoom/svg-pan-zoom.js"></script>
+        <script src="<?php echo $_CONFIG['URL'];?>assets/vendor/svg-pan-zoom/svg-pan-zoom.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/vendor/svg-pan-zoom/hammer.js"></script>
 
         <script src="<?php echo $_CONFIG['URL_API'];?>wyca_socket_api.js?v=<?php echo $lastUpdate;?>"></script>
@@ -101,7 +86,7 @@
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/normal_map.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/normal_map_actions.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/normal_map_svg.js?v=<?php echo $lastUpdate;?>"></script>
-		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/installateur_wyca.js?v=<?php echo $lastUpdate;?>"></script>
+		<!-- <script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/installateur_wyca.js?v=<?php echo $lastUpdate;?>"></script> -->
 		<?php } if ($_SESSION['id_groupe_user'] == 3) {?>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/manager_wyca.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/manager_map.js?v=<?php echo $lastUpdate;?>"></script>
@@ -148,10 +133,10 @@
 			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 30) {?>
 			GetConfigurationsByStep();
 			<?php }?>
-			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 32) {?>
+			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 33) {?>
 			GetManagersByStep();
 			<?php }?>
-			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 33) {?>
+			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 34) {?>
 			GetServiceBooksByStep();
 			<?php }?>
 			

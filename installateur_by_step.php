@@ -12,7 +12,7 @@
                         </a>
                     </li>
                 	<li class="col-xs-6 col-md-6 col-lg-6">
-                        <h2 style="margin-top:35px"><?= _('Français') ?></h2>
+                        <h2 style="margin-top:35px"><?=__('Français') ?></h2>
                     </li>
                 	<li class="col-xs-6 col-md-6 col-lg-6" style="clear:both; margin-top:20px">
                         <a href="#" class="select_langue button_goto anim_tuiles tuile_img tuile2" data-goto="install_by_step_tops" data-id_lang="2">
@@ -20,7 +20,7 @@
                         </a>
                     </li>
 					<li class="col-xs-6 col-md-6 col-lg-6" style="margin-top:20px">
-                        <h2 style="margin-top:35px"><?= _('English') ?></h2>
+                        <h2 style="margin-top:35px"><?=__('English') ?></h2>
                     </li>
                 </ul>
             </div>
@@ -52,13 +52,13 @@
             </header>
             <div class="content">
             	<div class="install_by_step_tops_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
-				<h5 class="text-center" style="margin-bottom:5px;"><?= _('Please select available tops for the vehicle.') ?></h5>
-				<p class="text-center" style="margin-bottom:30px;"><i class="fas fa-exclamation-triangle"></i> <?= _('This is not the active top selection.') ?></p>
+				<h5 class="text-center" style="margin-bottom:5px;"><?=__('Please select available tops for the vehicle.') ?></h5>
+				<p class="text-center" style="margin-bottom:30px;"><i class="fas fa-exclamation-triangle"></i> <?=__('This is not the active top selection.') ?></p>
                 <ul class="tuiles row">
                 </ul>
                 
                 <div style="clear:both; height:40px;"></div>
-                <a href="#" class="import_top btn btn-lg btn-success" style="margin-left:50%; transform:translateX(-50%)"><?= _('Import new top')?></a>   
+                <a href="#" class="import_top btn btn-lg btn-success" style="margin-left:50%; transform:translateX(-50%)"><?= __('Import new top')?></a>   
                 
                 <a href="#" class="save_tops_next_select button_goto" data-goto="install_by_step_top" style="display:none;" data-goto="install_by_step_top"></a>
                 <a href="#" class="save_tops_next_check button_goto" data-goto="install_by_step_check" style="display:none;" data-goto="install_by_step_top"></a>   
@@ -108,7 +108,7 @@
             </header>
             <div class="content">
             	<div class="install_by_step_top_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
-				<h5 class="text-center" style="margin-bottom:30px;"><?= _('Please select the active top for the vehicle.') ?></h5>
+				<h5 class="text-center" style="margin-bottom:30px;"><?=__('Please select the active top for the vehicle.') ?></h5>
                 <ul class="tuiles row">
                 </ul>
                 
@@ -135,13 +135,13 @@
 						<line x1="308" y1="142" x2="226" y2="281" stroke-width="1" stroke="#343434" class="line_motor"/>
 						<line x1="65" y1="351" x2="109" y2="286" stroke-width="1" stroke="#343434" class="line_battery"/>
 						<line x1="187" y1="371" x2="155" y2="265" stroke-width="1" stroke="#343434" class="line_sensor"/>
-						<line x1="308" y1="351" x2="174" y2="286" stroke-width="1" stroke="#343434" class="line_leds"/>
+						<line x1="308" y1="351" x2="174" y2="288" stroke-width="1" stroke="#343434" class="line_leds"/>
 					</svg>
                     
                     <ul class="tuiles row" style="position:relative;max-width:375px; margin:0;">
                        
                         <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
-                            <div id="install_by_step_check_lidar" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
+                            <div id="install_by_step_check_lidar" data-line="line_lidar" data-line-placement="bottom" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
                                 <i class="fa fa-check component_state component_ok"></i>
                                 <i class="fa fa-exclamation-triangle component_state component_warning"></i>
                                 <i class="fa fa-exclamation-circle component_state component_error"></i>
@@ -151,7 +151,7 @@
                             </div>
                         </li>
                         <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
-                            <div id="install_by_step_check_us" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
+                            <div id="install_by_step_check_us" data-line="line_us" data-line-placement="bottom" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
                                 <i class="fa fa-check component_state component_ok"></i>
                                 <i class="fa fa-exclamation-triangle component_state component_warning"></i>
                                 <i class="fa fa-exclamation-circle component_state component_error"></i>
@@ -162,7 +162,7 @@
                             <span class="trait_legende" style="width:calc(var(--vh, 1vh) * 20);transform:rotate(50deg)translateX(0px)translateY(0px);"></span>
                         </li>
                         <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
-                            <div id="install_by_step_check_motor" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
+                            <div id="install_by_step_check_motor" data-line="line_motor" data-line-placement="bottom" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
                                 <i class="fa fa-check component_state component_ok"></i>
                                 <i class="fa fa-exclamation-triangle component_state component_warning"></i>
                                 <i class="fa fa-exclamation-circle component_state component_error"></i>
@@ -176,7 +176,7 @@
                             <img class="img-responsive" id="elodie_import_top" src="assets/images/elodie_form.png" style="z-index:5">
                         </li>
                         <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
-                            <div id="install_by_step_check_battery" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
+                            <div id="install_by_step_check_battery" data-line="line_battery" data-line-placement="top" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
                                 <i class="fa fa-check component_state component_ok"></i>
                                 <i class="fa fa-exclamation-triangle component_state component_warning"></i>
                                 <i class="fa fa-exclamation-circle component_state component_error"></i>
@@ -186,7 +186,7 @@
                             </div>
                         </li>
                         <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
-                            <div id="install_by_step_check_cam3d" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
+                            <div id="install_by_step_check_cam3d" data-line="line_sensor" data-line-placement="top" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
                                 <i class="fa fa-check component_state component_ok"></i>
                                 <i class="fa fa-exclamation-triangle component_state component_warning"></i>
                                 <i class="fa fa-exclamation-circle component_state component_error"></i>
@@ -196,7 +196,7 @@
                             </div>
                         </li>
                         <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
-                            <div id="install_by_step_check_leds" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
+                            <div id="install_by_step_check_leds" data-line="line_leds" data-line-placement="top" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
                                 <i class="fa fa-check component_state component_ok"></i>
                                 <i class="fa fa-exclamation-triangle component_state component_warning"></i>
                                 <i class="fa fa-exclamation-circle component_state component_error"></i>
@@ -332,7 +332,7 @@
 				<ul class="tuiles row" id="MasterDockList">
                     
 				</ul>
-				<p style="padding-left:5px;margin-top:10px"><i class="fas fa-asterisk" style="color: darkorange;"></i> <?= _('Actual default dock') ?></p>
+				<p style="padding-left:5px;margin-top:10px"><i class="fas fa-asterisk" style="color: darkorange;"></i> <?=__('Actual default dock') ?></p>
 				<a href="#" class="install_by_step_site_master_dock_next button_goto" data-goto="install_by_step_site_recovery" style="display:none;"></a>
             </div>
             <footer>
@@ -349,11 +349,11 @@
 			<div class="content">
 				
             	<h4 style="text-align:center;margin:15px 0"><?= __('The robot needs to relocate itself.') ?><br><br><?= __('Move the robot near a reflector (dock or augmented pose) then click on the recovery button') ?></h4>
-                <div style="text-align:center; margin-top:20px;"><a href="#" class="bRecovery btn btn-warning btn_big_popup" ><?= _('Recovery') ?></a></div>
+                <div style="text-align:center; margin-top:20px;"><a href="#" class="bRecovery ifDocked_disabled btn btn-warning btn_big_popup" ><?=__('Recovery') ?></a></div>
                 
             
                 <div style="text-align:center"><a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a></div>
-                                        
+                <div style="text-align:center"><div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div></div>
                 <div class="ifUndocked">
                     <div style="text-align:center; width:100%; z-index:2000; margin-top:20px;">
                         <div class="joystickDiv" draggable="false" style="margin:auto;">
@@ -423,6 +423,7 @@
                     </div>
 					
                     <a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked" style="position: absolute;bottom: 50px;z-index: 2000;display: none;left:50%;transform:translateX(-50%)"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
+                    <div class="btn_big_popup ifDocking ifUndocking" style="position: absolute;bottom: 50px;z-index: 2000;display: none;left:50%;transform:translateX(-50%)"><i class="fa fa fa-spinner fa-pulse"></i></div>
                     <div class="ifUndocked" style="position:absolute; bottom:50px; left:0; width:100%; z-index:2000;">
                         <div class="joystickDiv" draggable="false" style="margin:auto;">
                             <div class="fond"></div>
@@ -682,7 +683,7 @@
                                             <div style="height:60px;"></div>
                                             
                                             <a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
-                                        
+											<div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div>
                                         	<div class="ifUndocked">
                                                 
                                                 <div style="text-align:center; width:100%; z-index:2000; margin-top:50px;">
@@ -715,8 +716,8 @@
                                                     <h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fas fa-info"></i></h2>
                                                 </header>
                                                 <div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
-                                                    <strong><?= _('Action finished !') ?></strong><br />
-													<?= _('No error during action.') ?>
+                                                    <strong><?=__('Action finished !') ?></strong><br />
+													<?=__('No error during action.') ?>
                                                 </div>
                                             </section>
                                             <section class="panel panel-danger">
@@ -724,7 +725,7 @@
                                                     <h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fa fa-remove"></i></h2>
                                                 </header>
                                                 <div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
-                                                    <strong><?= _('Error !') ?></strong><br />
+                                                    <strong><?=__('Error !') ?></strong><br />
                                                     <span class="error_details"></span>
                                                 </div>
                                             </section>
@@ -733,7 +734,7 @@
                                                     <h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fas fa-exclamation-triangle"></i></h2>
                                                 </header>
                                                 <div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
-                                                    <strong><?= _('Warning !') ?></strong><br />
+                                                    <strong><?=__('Warning !') ?></strong><br />
                                                     <span class="error_details"></span>
                                                 </div>
                                             </section>
@@ -755,7 +756,7 @@
                                 <div class="modal-header">
                                     <div class="actions mh100vh_55">
                                         <div class="h100vh_160" style="overflow:auto; text-align:center">
-                                            <h4><?= _('Saving map before testing')?></h4>
+                                            <h4><?=__('Saving map before testing')?></h4>
 											<span id="start_point_text"></span>
 											<div class="row" style="margin: 0;">
 												<div class="col-xs-3">
@@ -785,7 +786,7 @@
                                 <div class="modal-header">
                                     <div class="actions mh100vh_55">
                                         <div class="h100vh_160" style="overflow:auto; text-align:center">
-                                            <h4><?= _('Saving map before testing')?></h4>
+                                            <h4><?=__('Saving map before testing')?></h4>
 											<span id="start_point_text"></span>
 											<div class="row" style="margin: 0;">
 												<div class="col-xs-3">
@@ -815,7 +816,7 @@
                                 <div class="modal-header">
                                     <div class="actions mh100vh_55">
                                         <div class="h100vh_160" style="overflow:auto; text-align:center">
-                                            <h4><?= _('Saving map before testing')?></h4>
+                                            <h4><?=__('Saving map before testing')?></h4>
 											<span id="start_point_text"></span>
 											<div class="row" style="margin: 0;">
 												<div class="col-xs-3">
@@ -950,7 +951,7 @@
                                         <div class="h100vh_160" style="overflow:auto; text-align:center">
                                         
                                         	<a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
-                                        
+											<div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div>
                                         	<div class="ifUndocked">
                                                 <div style="height:200px; position:relative;">
                                                 
@@ -1000,7 +1001,7 @@
                                         
                                         	<form>
                                                 <div class="form-group">
-                                                    <label class="col-xs-4 control-label">Name</label>
+                                                    <label class="col-xs-4 control-label"><?= __('Name')?></label>
                                                     <div class="col-xs-8">
                                                         <input type="text" id="install_by_step_edit_map_dock_name" name="dock_name" value="" class="form-control input-sm mb-md" />
                                                     </div>
@@ -1016,19 +1017,19 @@
                                                 <input type="hidden" id="install_by_step_edit_map_dock_number" name="dock_number" value="1" />
                                                 
                                                 <div class="form-group">
-                                                    <label for="dock_is_master" class="col-xs-10 control-label">Is default docking station for this robot</label>
+                                                    <label for="dock_is_master" class="col-xs-10 control-label"><?= __('Is default docking station for this robot')?></label>
                                                     <div class="col-xs-2">
                                                         <input type="checkbox" id="install_by_step_edit_map_dock_is_master" name="dock_is_master" class="input-sm mb-md" style="height:auto;" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="col-xs-4 control-label">Comment</label>
+                                                    <label class="col-xs-4 control-label"><?= __('Comment')?></label>
                                                     <div class="col-xs-8">
                                                         <textarea id="install_by_step_edit_map_dock_comment" name="dock_comment" class="form-control input-sm mb-md"></textarea>
                                                     </div>
                                                 </div>
                                                 <fieldset>
-                                                	<legend>Undock procedure</legend>
+                                                	<legend><?= __('Undock procedure')?></legend>
                                                     <div style="text-align:left;">
                                                         <a href="#" class="bByStepUndockProcedureAddElem btn btn-circle btn-default"><i class="fa fa-plus"></i></a>
                                                         <ul class="list_undock_procedure list_elem">
@@ -1124,7 +1125,7 @@
                                         <div class="h100vh_160" style="overflow:auto; text-align:center">
                                         
                                         	<a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
-                                        
+											<div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div>
                                         	<div class="ifUndocked">
                                             
                                             	<div class ="modal-advice">
@@ -1192,7 +1193,7 @@
                                         <div class="h100vh_160" style="overflow:auto; text-align:center">
                                         
                                         	<a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
-                                        
+											<div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div>
                                         	<div class="ifUndocked">
                                                 
                                                 <div style="height:200px; position:relative;">
@@ -1351,8 +1352,8 @@
                                 <div class="modal-header">
                                     <div class="actions mh100vh_55">
 										<div class="h100vh_160" style="overflow:auto; text-align:center;">
-											<h2><?= _('Add area') ?></h2>
-											<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the map to choose the position of the top-left corner point of your area.') ?></h4>
+											<h2><?=__('Add area') ?></h2>
+											<h4 style="text-align:justify;margin:30px 0;"><?=__('Click on the map to choose the position of the top-left corner point of your area.') ?></h4>
 											<svg id="" width="100" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events" preserveAspectRatio="xMinYMax meet" >
 												<polygon points="30,30 70,30 70,70 30,70" style="fill: rgba(87, 159, 177, 0.5);"></polygon>
 												<line x1="30" y1="30" x2="30" y2="70" stroke-width="5" style="stroke: #589FB2;"></line>
@@ -1365,12 +1366,12 @@
 												<rect x="25" y="65" height="10" width="10" stroke-width="1" ></rect>
 												<path fill="currentColor" transform="scale(0.05) translate(550,550)" d="M302.189 329.126H196.105l55.831 135.993c3.889 9.428-.555 19.999-9.444 23.999l-49.165 21.427c-9.165 4-19.443-.571-23.332-9.714l-53.053-129.136-86.664 89.138C18.729 472.71 0 463.554 0 447.977V18.299C0 1.899 19.921-6.096 30.277 5.443l284.412 292.542c11.472 11.179 3.007 31.141-12.5 31.141z"></path>
 											</svg>
-											<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the menu icon to cancel.') ?></h4>
+											<h4 style="text-align:justify;margin:30px 0;"><?=__('Click on the menu icon to cancel.') ?></h4>
 											
 											<div class="checkbox checkbox_wrapper">
 												<label>
 													<input type="checkbox" value="" class="checkboxHelpArea">
-													<?= _('Don\'t show this message again')?>
+													<?=__('Don\'t show this message again')?>
 												</label>
 											</div>
 											<div class="btn-circle btn-lg btn-popup" style="display: block;">
@@ -1392,8 +1393,8 @@
                                 <div class="modal-header">
                                     <div class="actions mh100vh_55">
 										<div class="h100vh_160" style="overflow:auto; text-align:center;">
-											<h2><?= _('Add forbidden area') ?></h2>
-											<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the map to choose the position of the top-left corner point of your forbidden area.') ?></h4>
+											<h2><?=__('Add forbidden area') ?></h2>
+											<h4 style="text-align:justify;margin:30px 0;"><?=__('Click on the map to choose the position of the top-left corner point of your forbidden area.') ?></h4>
 											<svg id="" width="100" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events" preserveAspectRatio="xMinYMax meet" >
 												<polygon points="30,30 70,30 70,70 30,70" style="fill: rgba(255, 0, 0, 0.3);"></polygon>
 												<line x1="30" y1="30" x2="30" y2="70" stroke-width="5" style="stroke: #da3939;"></line>
@@ -1406,12 +1407,12 @@
 												<rect x="25" y="65" height="10" width="10" stroke-width="1" ></rect>
 												<path fill="currentColor" transform="scale(0.05) translate(550,550)" d="M302.189 329.126H196.105l55.831 135.993c3.889 9.428-.555 19.999-9.444 23.999l-49.165 21.427c-9.165 4-19.443-.571-23.332-9.714l-53.053-129.136-86.664 89.138C18.729 472.71 0 463.554 0 447.977V18.299C0 1.899 19.921-6.096 30.277 5.443l284.412 292.542c11.472 11.179 3.007 31.141-12.5 31.141z"></path>
 											</svg>
-											<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the menu icon to cancel.') ?></h4>
+											<h4 style="text-align:justify;margin:30px 0;"><?=__('Click on the menu icon to cancel.') ?></h4>
 											
 											<div class="checkbox checkbox_wrapper">
 												<label>
 													<input type="checkbox" value="" class="checkboxHelpForbidden">
-													<?= _('Don\'t show this message again')?>
+													<?=__('Don\'t show this message again')?>
 												</label>
 											</div>
 											<div class="btn-circle btn-lg btn-popup" style="display: block;">
@@ -1433,14 +1434,14 @@
                                 <div class="modal-header">
                                     <div class="actions mh100vh_55">
 										<div class="h100vh_160" style="overflow:auto; text-align:center;">
-											<h2><?= _('Go to position') ?></h2>
-											<h4 style="text-align:left;margin:30px 0;"><?= _('Click on the map to choose the position you\'re aiming for.') ?></h4>
-											<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the menu icon to cancel.') ?></h4>
+											<h2><?=__('Go to position') ?></h2>
+											<h4 style="text-align:left;margin:30px 0;"><?=__('Click on the map to choose the position you\'re aiming for.') ?></h4>
+											<h4 style="text-align:justify;margin:30px 0;"><?=__('Click on the menu icon to cancel.') ?></h4>
 											<div class="btn-circle btn-lg btn-popup" style="display: block;">
 												<i class="fas fa-crosshairs iconMenuBlue"></i>
 												<i class="fas fa-times times_icon iconMenuRed" style="display: inline-block;"></i>
 											</div>
-											<h4 style="text-align:justify;margin:30px 0;"><?= _('Click on the stop icon to cancel action while the vehicle is moving.') ?></h4>
+											<h4 style="text-align:justify;margin:30px 0;"><?=__('Click on the stop icon to cancel action while the vehicle is moving.') ?></h4>
 											
 											<div class="btn-circle btn-lg btn-popup btn-danger" style="display: block;">
 												<i class="fa fa-stop"></i>
@@ -1449,7 +1450,7 @@
 											<div class="checkbox checkbox_wrapper">
 												<label>
 													<input type="checkbox" value="" class="checkboxHelpGotopose">
-													<?= _('Don\'t show this message again')?>
+													<?=__('Don\'t show this message again')?>
 												</label>
 											</div>
 											<a href="#" class="btn btn-primary btn_footer_left btn_100 bHelpClickGotoPoseOk" data-dismiss="modal" ><?php echo __('Ok');?></a>
@@ -1461,27 +1462,28 @@
                     </div>
 					
                     <div class="popupHelp">
-                    	<h2><?= _('Help')?></h2>
+                    	<h2><?=__('Help')?></h2>
                     	<ul style="color:#000;">
-                        	<li><div class="iconForbiddenArea"><i class="fas fa-vector-square"></i><i class="fa fa-minus-circle iconMenuRed"></i></div><span class="description"><?= _('Add forbidden area')?></span></li>
-                        	<li><i class="fa fa-draw-polygon iconMenuGreen" style="font-size: 26px;"></i><span class="description"><?= _('Add custom area')?></span></li>
-                        	<li><i class="fa fa-map-marker-alt iconMenuBlue"></i><span class="description"><?= _('Add POI')?></span></li>
-                        	<li><div class="iconAugmentedPose"><i class="fas fa-map-marker-alt iconMenuPurple"></i><i class="fas fa-barcode"></i></div><span class="description"><?= _('Add Augmented pose')?></span></li>
-                        	<li><i class="fa fa-charging-station iconMenuGreen"></i><span class="description"><?= _('Add docking station')?></span></li>
-                        	<li><i class="fa fa-eraser"></i><span class="description"><?= _('Erase pixel')?></span></li>
-                        	<li><i class="fa fa-crosshairs iconMenuBlue"></i><span class="description"><?= _('Move the robot to this point')?></span></li>
-                        	<li><i class="fa fa-gamepad iconMenuPurple"></i><span class="description"><?= _('Teleop the robot')?></span></li>
-                        	<li style="position:relative;font-size:16px"><img class="route" src="assets/images/route_green.svg"/><span class="description" style="margin-left: 40px;position: relative;top: 3px;"><?= _('Test go to POI, dock or augmented pose')?></span></li>
+                        	<li><div class="iconForbiddenArea"><i class="fas fa-vector-square"></i><i class="fa fa-minus-circle iconMenuRed"></i></div><span class="description"><?=__('Add forbidden area')?></span></li>
+                        	<li><i class="fa fa-draw-polygon iconMenuGreen" style="font-size: 26px;"></i><span class="description"><?=__('Add custom area')?></span></li>
+                        	<li><i class="fa fa-map-marker-alt iconMenuBlue"></i><span class="description"><?=__('Add POI')?></span></li>
+                        	<li><div class="iconAugmentedPose"><i class="fas fa-map-marker-alt iconMenuPurple"></i><i class="fas fa-barcode"></i></div><span class="description"><?=__('Add Augmented pose')?></span></li>
+                        	<li><i class="fa fa-charging-station iconMenuGreen"></i><span class="description"><?=__('Add docking station')?></span></li>
+                        	<li><i class="fa fa-eraser"></i><span class="description"><?=__('Erase pixel')?></span></li>
+                        	<li><i class="fa fa-crosshairs iconMenuBlue"></i><span class="description"><?=__('Move the robot to this point')?></span></li>
+                        	<li><i class="fa fa-gamepad iconMenuPurple"></i><span class="description"><?=__('Teleop the robot')?></span></li>
+                        	<li style="position:relative;font-size:16px"><img class="route" src="assets/images/route_green.svg"/><span class="description" style="margin-left: 40px;position: relative;top: 3px;"><?=__('Test go to POI, dock or augmented pose')?></span></li>
                         	<li style="position:relative;">
 							<svg class="svg_popupHelp_robot" xmlns="http://www.w3.org/2000/svg">
 								<circle cx="20" cy="20" r="12" class="robot_elem robot_elem_fond"></circle>
 								<polyline points="16 16 24 20 16 24" stroke="#FFFFFF" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round" class="robot_elem" transform="rotate(-90,20,20)"></polyline>
 							</svg>
-							<span class="description" style="margin-left: 40px;"><?= _('Robot position')?></span></li>
+							<span class="description" style="margin-left: 40px;"><?=__('Robot position')?></span></li>
                         </ul>
-                        <p class="legende"><?= _('Click to hide')?></p>
+                        <p class="legende"><?=__('Click to hide')?></p>
                     </div>
                     
+					<div class="install_by_step_edit_map_loading loading_big loading_map"><i class="fa fa fa-spinner fa-pulse fa-3x"></i></div>
                 </div>
                 
                 <div id="install_by_step_edit_map_zoom_popup" style="position:absolute; top:20px; left:20px; width:101px; height:101px; border:1px solid #000; overflow:hidden; display:none; z-index:8000;">
@@ -1552,10 +1554,10 @@
 						</div>
 						<a href="#" class="btn btn-sm btn-primary bResetValueEblMbl" style="margin-left:50%; transform:translateX(-50%);margin-bottom:10px;"><?php echo __('Reset values');?></a>
 						
-						<p><?= _('For more precise values, try to test battery in real conditions') ?></p>
-						<a href="#" class="real_test btn btn-lg btn-success" style="margin-left:50%; transform:translateX(-50%)"><i class="fas fa-route"></i> <?=('Real Test')?></a>
+						<p><?=__('For more precise values, try to test battery in real conditions') ?></p>
+						<a href="#" class="real_test btn btn-lg btn-success" style="margin-left:50%; transform:translateX(-50%)"><i class="fas fa-route"></i> <?= __('Real Test')?></a>
 						
-						<a href="#" class="install_by_step_config_next button_goto" data-goto="install_by_step_maintenance" style="display:none;"></a>   
+						<a href="#" class="install_by_step_config_next button_goto" data-goto="install_by_step_export_site" style="display:none;"></a>   
 					</div>
                 </form>
 				<div class="modal fade modalRealTest" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
@@ -1564,18 +1566,18 @@
 							<div class="modal-header">
 								<div class="actions mh100vh_55">
 									<div class="h100vh_160" style="overflow:auto; text-align:center">
-										<div class="modalRealTest_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i><br><?= _('Loading map\'s data') ?></div>
+										<div class="modalRealTest_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i><br><?=__('Loading map\'s data') ?></div>
 										<div class="modalRealTest_content">
-											<p><?= _('Please choose a start position')?></p>
+											<p><?=__('Please choose a start position')?></p>
 											<div class="form-group">
 												<select class="form-control form-fa real_test_start">
-													<option value=""><?= _('Start position')?></option>
+													<option value=""><?=__('Start position')?></option>
 												</select>
 											</div>
-											<p><?= _('Please choose a destination')?></p>
+											<p><?=__('Please choose a destination')?></p>
 											<div class="form-group">
 												<select class="form-control form-fa real_test_end">
-													<option value=""><?= _('Arrival position')?></option>		
+													<option value=""><?=__('Arrival position')?></option>		
 												</select>
 											</div>
 										</div>
@@ -1597,7 +1599,7 @@
 										<div class="modalRealTestResult_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
 										<div class="modalRealTestResult_content text-center">
 											<div class="start_point">
-												<h4><?= _('Go to start position')?></h4>
+												<h4><?=__('Go to start position')?></h4>
 												<span class="start_point_text"></span>
 												<div class="row" style="margin: 0;">
 													<div class="col-xs-3">
@@ -1612,7 +1614,7 @@
 												</div>														
 											</div>
 											<div class="end_point">
-												<h4><?= _('Go to destination')?></h4>
+												<h4><?=__('Go to destination')?></h4>
 												<span class="end_point_text"></span>
 												<div class="row" style="margin: 0;">
 													<div class="col-xs-3">
@@ -1627,8 +1629,8 @@
 												</div>
 											</div>
 											<div class="result_RealTest" style="border-top:1px solid #DCDCDC">
-												<h4><?= _('Battery used :') ?> <span class="battery_used">0</span> %</h4>
-												<p><?= _('Use this result as reference for battery configuration') ?></p>
+												<h4><?=__('Battery used :') ?> <span class="battery_used">0</span> %</h4>
+												<p><?=__('Use this result as reference for battery configuration') ?></p>
 												<a href="#" class="btn btn-success bUseRealTest"><?php echo __('Use');?></a>
 											</div>
 										</div>
@@ -1643,12 +1645,41 @@
             </div>
             <footer>
 				<a href="#" class="btn btn-default button_goto btn_footer_left btn_50 btn_back" data-goto="install_by_step_edit_map"><?php echo __('Back');?></a>
-            	<a href="#" class="bConfigurationSave btn btn-primary btn_footer_right btn_50" data-goto="install_by_step_maintenance"><?php echo __('Save');?></a>
+            	<a href="#" class="bConfigurationSave btn btn-primary btn_footer_right btn_50" data-goto="install_by_step_export_site"><?php echo __('Save');?></a>
             </footer>
         </section>
 		
-        <section id="install_by_step_maintenance" class="page <?php echo $INSTALL_STEP == 31?'active':'';?> with_footer">
+		<section id="install_by_step_export_site" class="page <?php echo $INSTALL_STEP == 31?'active':'';?> with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_config"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Site export');?></h2>
+            </header>
+            <div class="content">
+                <div class="loaded col-md-12" style="padding-top:10px;">
+                	<p> <?=__('The export of a site is a backup of all the configuration linked to a site (map, charging stations, areas...).') ?></p>
+					<ul class="tuiles row" style="margin-bottom:30px;">
+						<li class="col-xs-6" style="margin-left: 25%;">
+							<div class="is_checkbox tuile_img no_update bExportSite" style="height:max-content;bottom:0;border-radius:10px">
+								<i class="fas fa-download iconMenuGreen" style="padding-top:5px"></i>
+								<h4 class="iconMenuGreen" style="margin-top: 0px;font-weight:700;font-size: 15px;"><?php echo __('Export Site');?></h4>
+							</div>
+						</li>
+					</ul>
+					<p><?=__('You can also use the generated file to import this site on another vehicle.') ?><br><br><?=__('Keep this copy as it will allow you to reload your site in case of factory reset.') ?></p>
+					<a href="#" class="install_by_step_export_site_next button_goto" data-goto="install_by_step_maintenance" style="display:none;"></a>
+				
+                </div>
+                
+            </div>
+            <footer>
+				<a href="#" class="btn btn-default button_goto btn_footer_left btn_50 btn_back" data-goto="install_by_step_config"><?php echo __('Back');?></a>
+            	<a href="#" class="btn btn-warning button_goto btn_footer_right btn_50" data-goto="install_by_step_maintenance"><?php echo __('Skip');?></a>
+            </footer>
+        </section>
+		
+        <section id="install_by_step_maintenance" class="page <?php echo $INSTALL_STEP == 32?'active':'';?> with_footer">
+        	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_export_site"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
                 <h2><?php echo __('Maintenance');?></h2>
@@ -1658,17 +1689,18 @@
 				<h4 style="text-align:center;margin:30px 0"><?= __('Keep Wyca maintenance account ?') ?></h4>
 				<ul class="tuiles row">
                     <li class="col-xs-6">
-                    	<div class="is_checkbox tuile_img no_update" id="bKeepMaintenanceAccount" style="bottom:0;border-radius:10px">
-                    		<i class="fas fa-user-cog iconMenuGreen" style="padding-top:5px"></i>
-							<h4 class="iconMenuGreen" style="margin-top: 0px;font-weight:700"><?php echo __('Keep');?></h4>
-                        </div>
-                    </li>
-                    <li class="col-xs-6">
                     	<div class="is_checkbox tuile_img no_update" id="bDeleteMaintenanceAccount" style="bottom:0;border-radius:10px">
                     		<i class="fas fa-user-times iconMenuRed" style="padding-top:5px"></i>
 							<h4 class="iconMenuRed" style="margin-top: 0px;font-weight:700"><?php echo __('Delete');?></h4>
                         </div>
                     </li>
+					<li class="col-xs-6">
+                    	<div class="is_checkbox tuile_img no_update" id="bKeepMaintenanceAccount" style="bottom:0;border-radius:10px">
+                    		<i class="fas fa-user-cog iconMenuGreen" style="padding-top:5px"></i>
+							<h4 class="iconMenuGreen" style="margin-top: 0px;font-weight:700"><?php echo __('Keep');?></h4>
+                        </div>
+                    </li>
+                    
 				</ul>
 				<a href="#" class="install_by_step_maintenance_next button_goto" data-goto="install_by_step_manager" style="display:none;"></a>
 				
@@ -1679,8 +1711,43 @@
 								<div class="actions mh100vh_55">
 									<div class="h100vh_160" style="overflow:auto">
 										<form>
-											<h4 style="text-align:center"><i class="fas fa-exclamation-triangle" style="color:#ed9c28;font-size:20px"></i> <?= _('Maintenance account password') ?></h4>
-											<p style="margin:20px 0"> <?= _('Please save this password, it will be required by WYCA for maintenance operation.') ?><br><?= _('If you loose this password, the robot could become unusable with no recovery options.') ?></p>
+											<h4 style="text-align:center"><i class="fas fa-key" style="color:#ed9c28;font-size:20px"></i> <?=__('Keep account default password') ?></h4>
+											<p style="margin:20px 0"> <?=__('Do you want to keep the default password for Wyca maintenance account ?')?> </p>
+											<ul class="tuiles row">
+												<li class="col-xs-6">
+													<div class="is_checkbox tuile_img no_update" id="bChangeMaintenanceAccountPassword" style="bottom:0;border-radius:10px">
+														<i class="fas fa-exchange-alt iconMenuBlue" style="padding-top:5px"></i>
+														<h4 class="iconMenuBlue" style="margin-top: 0px;font-weight:700"><?php echo __('Change');?></h4>
+													</div>
+												</li>
+												<li class="col-xs-6">
+													<div class="is_checkbox tuile_img no_update" id="bKeepMaintenanceAccountPassword" style="bottom:0;border-radius:10px">
+														<i class="fas fa-lock iconMenuGreen" style="padding-top:5px"></i>
+														<h4 class="iconMenuGreen" style="margin-top: 0px;font-weight:700"><?php echo __('Keep');?></h4>
+													</div>
+												</li>
+											</ul>
+											<p style="margin:20px 0"> <?=__('If you change and loose this password, the robot could become unusable with no recovery options other than a factory return.') ?> </p>
+										</form>
+									</div>
+									
+									<div style="clear:both;"></div>
+									<a href="#" class="btn btn-default btn_footer_left btn_100" data-dismiss="modal" ><?php echo __('Back');?></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="modal fade modalPasswordMaintenance" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+					<div class="modal-dialog" role="dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<div class="actions mh100vh_55">
+									<div class="h100vh_160" style="overflow:auto">
+										<form>
+											<h4 style="text-align:center"><i class="fas fa-exclamation-triangle" style="color:#ed9c28;font-size:20px"></i> <?=__('Maintenance account password') ?></h4>
+											<p style="margin:20px 0"> <?=__('Please save this password, it will be required by WYCA for maintenance operation.') ?><br><?=__('If you loose this password, the robot could become unusable with no recovery options.') ?></p>
 											<div class="form-group nopymy">
 												<label class="col-xs-12 col-md-3 control-label" for="password"><?php echo __('Password');?></label>
 												<div class="col-xs-12 col-md-6 input-group input-group-icon">
@@ -1692,7 +1759,7 @@
 													</span>
 												</div>
 											</div>
-											<p class="password_format"><?= _('8 characters, lower and uppercase, digit or special char.')?> </p>
+											<p class="password_format"><?=__('8 characters, lower and uppercase, digit or special char.')?> </p>
 											<div class="form-group">
 												<label class="col-xs-12 col-md-3 control-label" for="cpassword"><?php echo __('Confirm password');?></label>
 												<div class="col-xs-12 col-md-6 input-group input-group-icon">
@@ -1704,26 +1771,27 @@
 													</span>
 												</div>
 											</div>
-											<p class="password_format"><?= _('8 characters, lower and uppercase, digit or special char.')?> </p>
+											<p class="password_format"><?=__('8 characters, lower and uppercase, digit or special char.')?> </p>
 										</form>
 									</div>
 									
 									<div style="clear:both;"></div>
 									<a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Cancel');?></a>
-									<a href="#" id="install_by_step_maintenance_bMaintenanceSave" class="btn btn-primary btn_footer_right btn_50"><?php echo __('Save');?></a>
+									<a href="#" id="install_by_step_maintenance_bPasswordMaintenanceSave" class="btn btn-primary btn_footer_right btn_50"><?php echo __('Save');?></a>
 									
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+				
             </div>
             <footer>
-				<a href="#" class="btn btn-default button_goto btn_footer_left btn_100 btn_back" data-goto="install_by_step_config"><?php echo __('Back');?></a>
+				<a href="#" class="btn btn-default button_goto btn_footer_left btn_100 btn_back" data-goto="install_by_step_export_site"><?php echo __('Back');?></a>
             </footer>
         </section>
         
-        <section id="install_by_step_manager" class="page <?php echo $INSTALL_STEP == 32?'active':'';?> with_footer">
+        <section id="install_by_step_manager" class="page <?php echo $INSTALL_STEP == 33?'active':'';?> with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_maintenance"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
@@ -1754,8 +1822,8 @@
                                 <div class="modal-header">
                                     <div class="actions mh100vh_55">
 										<div class="h100vh_160" style="overflow:auto; text-align:center;">
-											<h2><?= _('Managers') ?></h2>
-											<h4 style="text-align:left;margin:30px 0;"><?= _('Managers are the end-users of the vehicle, able to create POIs and take control of the robot.') ?></h4>
+											<h2><?=__('Managers') ?></h2>
+											<h4 style="text-align:left;margin:30px 0;"><?=__('Managers are the end-users of the vehicle, able to create POIs and take control of the robot.') ?></h4>
 											<div style="display:flex;justify-content:space-around;">
 												<div class="btn-circle btn-lg btn-popup" style="display:inline-block;position:unset;transform:unset;">
 													<i class="fas fa-map-marker-alt iconMenuBlue" style="position: relative;left: -2px;line-height:1;"></i>
@@ -1764,13 +1832,13 @@
 													<i class="fas fa-gamepad iconMenuPurple" style="position: relative;left: -11px;line-height:1;"></i>
 												</div>
 											</div>
-											<h4 style="text-align:justify;margin:30px 0;"><?= _('The manager can also switch the active top among the available tops listed earlier in the installation process.') ?></h4>
+											<h4 style="text-align:justify;margin:30px 0;"><?=__('The manager can also switch the active top among the available tops listed earlier in the installation process.') ?></h4>
 											
 											<div style="clear:both;"></div>
 											<div class="checkbox checkbox_wrapper">
 												<label>
 													<input type="checkbox" value="" class="checkboxHelpManager">
-													<?= _('Don\'t show this message again')?>
+													<?=__('Don\'t show this message again')?>
 												</label>
 											</div>
 											<a href="#" class="btn btn-primary btn_footer_left btn_100 bHelpManagerOk" data-dismiss="modal" ><?php echo __('Ok');?></a>
@@ -1819,7 +1887,7 @@
 													</div>
 													
                                                 </div>
-												<p class="password_format" style="margin-bottom:0"><?= _('A valid mail adress.')?> </p>
+												<p class="password_format" style="margin-bottom:0"><?=__('A valid mail adress.')?> </p>
                                                 <div class="form-group nopymy">
                                                     <label class="col-xs-12 col-md-3 control-label" for="password"><?php echo __('Password');?></label>
                                                     <div class="col-xs-12 col-md-6 input-group input-group-icon">
@@ -1831,7 +1899,7 @@
 														</span>
                                                     </div>
                                                 </div>
-												<p class="password_format"><?= _('8 characters, lower and uppercase, digit or special char.')?> </p>
+												<p class="password_format"><?=__('8 characters, lower and uppercase, digit or special char.')?> </p>
                                                 <div class="form-group">
                                                     <label class="col-xs-12 col-md-3 control-label" for="cpassword"><?php echo __('Confirm password');?></label>
                                                     <div class="col-xs-12 col-md-6 input-group input-group-icon">
@@ -1843,7 +1911,7 @@
 														</span>
                                                     </div>
                                                 </div>
-												<p class="password_format"><?= _('8 characters, lower and uppercase, digit or special char.')?> </p>
+												<p class="password_format"><?=__('8 characters, lower and uppercase, digit or special char.')?> </p>
                                             </form>
                                         </div>
                                         
@@ -1866,7 +1934,7 @@
             </footer>
         </section>
 		
-        <section id="install_by_step_service_book" class="page <?php echo $INSTALL_STEP == 33?'active':'';?> with_footer">
+        <section id="install_by_step_service_book" class="page <?php echo $INSTALL_STEP == 34?'active':'';?> with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_manager"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
@@ -1877,8 +1945,8 @@
                 <div class="install_by_step_service_book_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
                 
                 <div class="loaded col-md-12" style="padding-top:0px;">
-					<h5><?= _('Service books describe the vehicle\'s maintenance and deployement operations') ?></h5>
-                    <a href="#" class="bAddServiceBook btn btn-primary">Add a service book</a>
+					<h5><?=__('Service books describe the vehicle\'s maintenance and deployement operations') ?></h5>
+                    <a href="#" class="bAddServiceBook btn btn-primary"><?= __('Add a service book')?></a>
                     <ul class="list_service_books list_elem">
                     </ul>
                     
@@ -1925,17 +1993,17 @@
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_service_book"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
-                <h2><?php echo __('Congratulations !');?></h2>
+                <h2><?php echo __('Congratulations');?></h2>
             </header>
             <div class="content">
                 
-                <section class="panel panel-success">
-                    <header class="panel-heading">
-                        <h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fa fa-thumbs-up"></i></h2>
+                <section class="panel panel-success" style="border: 0;box-shadow: unset;">
+                    <header class="panel-heading" style="background: unset;padding: 0;border: 0;">
+                        <img src="assets/images/Robot.gif" class="img-responsive" style="width: 100%;height: auto;"/>
                     </header>
-                    <div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
-                        <strong>Congratulations !</strong><br />
-						The installation process is now complete.
+                    <div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;    border: 0;">
+                        <strong><?= __('Congratulations !')?></strong><br />
+						<?= __('The installation process is now complete.') ?>
                     </div>
                 </section>
                 
@@ -1955,7 +2023,7 @@
 									<h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fa fa-question-circle"></i></h2>
 								</header>
 								<div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
-									<h1>You're about to cancel all information not saved.</h1>
+									<h1><?= __('You\'re about to cancel all information not saved.')?></h1>
 								</div>
 							</section>
 							<div style="clear:both;"></div>

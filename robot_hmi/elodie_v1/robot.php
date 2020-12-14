@@ -7,9 +7,11 @@ require_once ('./config/config.php');
 $_SESSION['is_robot'] = 1;
 session_write_close();
 
-$_CONFIG['URL_ROOT'] = 'https://wyca.run/';
-$_CONFIG['URL'] = 'https://wyca.run/robot_hmi/elodie_v1/';
-$_CONFIG['URL_API'] = 'https://wyca.run/API/';
+
+
+$_CONFIG['URL_ROOT'] = $server_request_scheme.'://wyca.run/';
+$_CONFIG['URL'] = $server_request_scheme.'://wyca.run/robot_hmi/elodie_v1/';
+$_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -52,8 +54,9 @@ $_CONFIG['URL_API'] = 'https://wyca.run/API/';
     <div id="waitClick" style="font-size:68px; position:fixed; display:none; top:0; left:0; width:100%; height:100vh; background-color:rgba(255,255,255,0.5);">
     	<a id="bNextWaitClick" href="#" class="btn btn-primary" style="font-size:100px; text-align:center; margin-top:32vh; border-radius:50px; padding:100px;"><i style="" class="fa fa-forward"></i> Next step</a>
     </div>
-    <div id="waitTime" style="font-size:68px; display:none; ">Wait <em></em> seconde<span class="pluriel">s</span></div>
-    
+    <div style="display:none;">
+	    <div id="waitTime" style="font-size:68px; display:none; ">Wait <em></em> seconde<span class="pluriel">s</span></div>
+    </div>
     <a href="#" id="bHideBouton" style="position:absolute; bottom:0px; right:0px; width:150px; height:150px;"></a>
 	
     <div id="modalAskCode" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">

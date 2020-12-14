@@ -9,6 +9,11 @@ function __m($id_lang, $texte)
 	return Translate::m($id_lang, $texte);
 }
 
+function __js($texte)
+{
+	return addslashes(stripslashes(__($texte)));
+}
+
 class Translate
 { 
 	private $dossier_lang;
