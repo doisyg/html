@@ -38,7 +38,7 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
 	var robot_host = '<?php echo (file_exists('C:\\'))?'192.168.0.33:9095':'wyca.run:9095';?>';
 	</script>
     
-    <script src="<?php echo $_CONFIG['URL'];?>js/robot.js<?php /*?v=<?php echo date('YmdHis');*/?>"></script>
+    <script src="<?php echo $_CONFIG['URL'];?>js/robot.js?v=202012141414"></script>
 
 </head>
 

@@ -256,6 +256,17 @@ function ResultSendToDock(data)
 			timeoutRetryDock = null;
 		}
 		nbDockAttempt = 0;
+		
+		
+		queueState = 'done';
+		gotoPoiInProgress = false;
+		if (currentBatteryState < dataStorage.min_goto_charge)
+		{
+			$('#current_action').html('Low battery, charging');
+		}
+		else
+			NextAction();
+		
 	}
 }
 
