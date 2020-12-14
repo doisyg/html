@@ -318,5 +318,6 @@ $_LANG['61c5f9cccff6ced0d42902c49839fcb3'] = 'You can also use the generated fil
 $_LANG['fd8493d68848aefae8adf080792246fd'] = 'Keep this copy as it will allow you to reload your site in case of factory reset.';
 $_LANG['2e781e46cd473612f108b29a62e711ab'] = 'Congratulations';
 $_LANG['2066b22ed70c258066dd274046d5afb7'] = 'Select active top';
+$_LANG['736a80f6c57858155a4edc629012f420'] = 'Are you sure to delete this element ?';
 
 ?>

@@ -925,7 +925,8 @@ $(document).ready(function(e) {
 						$('#install_normal_manager .list_managers').append('' +
 							'<li id="install_normal_manager_list_manager_elem_'+id_user+'" data-id_user="'+id_user+'">'+
 							'	<span class="email">'+json_user.email+'</span>'+
-							'	<a href="#" class="bManagerDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+							'	<a href="#" class="bManagerDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>'+
+							'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>'+
 							'	<a href="#" class="bManagerEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
 							'</li>'
 							);
@@ -944,7 +945,6 @@ $(document).ready(function(e) {
 	
 	$(document).on('click', '#install_normal_manager .bManagerDeleteElem', function(e) {
 		e.preventDefault();
-		
 		id_user_to_delete = parseInt($(this).closest('li').data('id_user'));
 		
 		wycaApi.DeleteUser(id_user_to_delete, function(data) {
@@ -1067,7 +1067,8 @@ $(document).ready(function(e) {
 						$('#install_normal_user .list_users').append('' +
 							'<li id="install_normal_user_list_user_elem_'+id_user+'" data-id_user="'+id_user+'">'+
 							'	<span class="email">'+json_user.email+'</span>'+
-							'	<a href="#" class="bUserDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+							'	<a href="#" class="bUserDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>'+
+							'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>'+
 							'	<a href="#" class="bUserEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
 							'</li>'
 							);

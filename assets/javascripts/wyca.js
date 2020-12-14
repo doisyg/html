@@ -526,8 +526,25 @@ $(document).ready(function(e) {
 		slider.find('.ui-slider-range').css('width',temp+'%');
 		slider.find('.ui-slider-handle').css('left',temp+'%');
 	})	
+	//CONFIRM DELETE
+	$(document).on('click', '.confirm_delete', function(e) {
+		e.preventDefault();
+		$(this).data('confirmed_delete',false);
+		if($(this)[0].nodeName == 'A'){
+			currentDeleteId = $(this).parent().attr('id');
+		}
+		$('#modalConfirmDelete').modal('show');
+	})
+	
+	$('#bModalConfirmDeleteOk').click(function(e){
+		if(currentDeleteId !=''){
+			$('#'+currentDeleteId).find('.btn_confirm_delete').click();
+			currentDeleteId = '';
+		}
+	})
+	
 });
-
+var currentDeleteId = '';
 var touchHandled = false;
 
 function simulateMouseEvent (event, simulatedType)
@@ -812,7 +829,8 @@ function GetUsersManager()
 					$('#manager_users .list_users').append('' +
 						'<li id="manager_users_list_user_elem_'+value.id_user+'" data-id_user="'+value.id_user+'">'+
 						'	<span class="email">'+value.email+'</span>'+
-						'	<a href="#" class="bUserDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="bUserDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>'+
 						'	<a href="#" class="bUserEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pen"></i></a>'+
 						'</li>'
 						);
@@ -851,7 +869,8 @@ function GetSitesNormal()
 					$('#install_normal_setup_sites .list_sites').append('' +
 						'<li id="install_normal_setup_sites_list_site_elem_'+value.id_site+'" data-id_site="'+value.id_site+'">'+
 						'	<span class="societe">'+value.name+'</span>'+
-						(current_site.id_site != value.id_site?'	<a href="#" class="bSiteDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>':'')+
+						(current_site.id_site != value.id_site?'	<a href="#" class="bSiteDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>':'')+
+						(current_site.id_site != value.id_site?'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>':'')+
 						(current_site.id_site != value.id_site?'	<a href="#" class="bSiteSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-check"></i></a>':'')+
 						'</li>'
 						);
@@ -919,7 +938,8 @@ function GetUsersNormal()
 					$('#install_normal_user .list_users').append('' +
 						'<li id="install_normal_user_list_user_elem_'+value.id_user+'" data-id_user="'+value.id_user+'">'+
 						'	<span class="email">'+value.email+'</span>'+
-						'	<a href="#" class="bUserDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="bUserDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>'+
 						'	<a href="#" class="bUserEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pen"></i></a>'+
 						'</li>'
 						);
@@ -957,7 +977,8 @@ function GetManagersNormal()
 					$('#install_normal_manager .list_managers').append('' +
 						'<li id="install_normal_manager_list_manager_elem_'+value.id_user+'" data-id_user="'+value.id_user+'">'+
 						'	<span class="email">'+value.email+'</span>'+
-						'	<a href="#" class="bManagerDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="bManagerDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>'+
 						'	<a href="#" class="bManagerEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pen"></i></a>'+
 						'</li>'
 						);
@@ -995,7 +1016,8 @@ function GetManagersByStep()
 					$('#install_by_step_manager .list_managers').append('' +
 						'<li id="install_by_step_manager_list_manager_elem_'+value.id_user+'" data-id_user="'+value.id_user+'">'+
 						'	<span class="email">'+value.email+'</span>'+
-						'	<a href="#" class="bManagerDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="bManagerDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>'+
 						'	<a href="#" class="bManagerEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pen"></i></a>'+
 						'</li>'
 						);

@@ -1231,7 +1231,10 @@ span.error_details span{
 	display:none!important;
 }
 
-
+/* MODAL CONFIRM DELETE */
+.btn_confirm_delete{
+	display:none;
+}
 
 /* WYCA PAGES */
 .fakeScreen:before{
