@@ -319,5 +319,6 @@ $_LANG['fd8493d68848aefae8adf080792246fd'] = 'Keep this copy as it will allow yo
 $_LANG['2e781e46cd473612f108b29a62e711ab'] = 'Congratulations';
 $_LANG['2066b22ed70c258066dd274046d5afb7'] = 'Select active top';
 $_LANG['736a80f6c57858155a4edc629012f420'] = 'Are you sure to delete this element ?';
+$_LANG['0f96070b3a86cb9028f6f8d278dadb25'] = 'Change top';
 
 ?>

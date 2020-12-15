@@ -12,6 +12,9 @@ var managerDownOnSVG_y_scroll = 0;
 var managerCanChangeMenu = true;
 var managerSavedCanClose = true;
 
+var xGotoPose = 0 ;
+var yGotoPose = 0 ;
+
 function ManagerAvertCantChange()
 {
 	$('#manager_edit_map_bModalCancelEdit').click();
@@ -1141,10 +1144,14 @@ $(document).ready(function() {
 				x = x * zoom;
 				y = ros_hauteur - (y * zoom);
 				
+				xGotoPose = x ;
+				yGotoPose = ros_hauteur - y;
+					
 				xRos = x * ros_resolution / 100;
 				yRos = y * ros_resolution / 100;
 				
 				wycaApi.on('onGoToPoseResult', function (data){
+					$('#manager_edit_map_svg .go_to_pose_elem').remove();
 					$('#manager_edit_map_bStop').hide();
 					if (data.A == wycaApi.AnswerCode.NO_ERROR)
 					{
@@ -1176,7 +1183,7 @@ $(document).ready(function() {
 								$('#manager_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
 						}
 					}
-					$('#manager_edit_map .icon_menu').click(); // POUR SORTIR DU MENU GOTOPOSE
+					
 					// On rebranche l'ancienne fonction
 					wycaApi.on('onGoToPoseResult', onGoToPoseResult);
 				
@@ -1186,13 +1193,15 @@ $(document).ready(function() {
 				console.log('GoToPose', xRos, yRos);
 				
 				wycaApi.GoToPose(xRos, yRos, 0, 0, function (data){
-					
+					$('#manager_edit_map .icon_menu').click(); // POUR SORTIR DU MENU GOTOPOSE
 					if (data.A == wycaApi.AnswerCode.NO_ERROR)
 					{
 						$('#manager_edit_map_bStop').show();
+						ManagerTraceGoToPose(xGotoPose,yGotoPose);
 					}
 					else
 					{
+						$('#manager_edit_map_svg .go_to_pose_elem').remove();
 						$('#manager_edit_map .modalFinTest section.panel-success').hide();
 						$('#manager_edit_map .modalFinTest section.panel-warning').hide();
 						$('#manager_edit_map .modalFinTest section.panel-danger').show();

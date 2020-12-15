@@ -651,6 +651,49 @@ function NormalTraceAugmentedPose(indexAugmentedPose)
 		AddClass('#install_normal_edit_map_svg .augmented_pose_elem_'+augmented_pose.id_augmented_pose, 'active');
 }
 
+function NormalTraceGoToPose(x,y)
+{
+	path = makeSVGElement('circle', { cx: x,
+									cy: y,
+									r: rayonRobot*0.9,
+									'class': 'go_to_pose_elem',
+									'id': 'go_to_pose_elem_circle',
+									});
+	svgNormal.appendChild(path);
+	
+	path = makeSVGElement('circle', { cx: x,
+									cy: y,
+									r: rayonRobot*0.1,
+									'class': 'go_to_pose_elem',
+									'id': 'go_to_pose_elem_dot',
+									});
+	svgNormal.appendChild(path);
+
+	path = makeSVGElement('line', { x1: x+(rayonRobot*0.9)  + rayonRobot/3 , y1:y, x2:x+(rayonRobot*0.9)  - rayonRobot/3, y2:y,
+						   'class':'go_to_pose_elem go_to_pose_elem_line',
+						   'id': 'go_to_pose_elem_line_left',
+						  });
+	svgNormal.appendChild(path);
+	
+	path = makeSVGElement('line', { x1: x-(rayonRobot*0.9)  + rayonRobot/3 , y1:y, x2:x-(rayonRobot*0.9)  - rayonRobot/3, y2:y,
+						   'class':'go_to_pose_elem go_to_pose_elem_line',
+						   'id': 'go_to_pose_elem_line_right',
+						  });
+	svgNormal.appendChild(path);
+	
+	path = makeSVGElement('line', { x1: x  , y1:y  -(rayonRobot*0.9)  + rayonRobot/3 , x2:x  , y2:y-(rayonRobot*0.9)  - rayonRobot/3,
+						   'class':'go_to_pose_elem go_to_pose_elem_line',
+						   'id': 'go_to_pose_elem_line_bottom',
+						  });
+	svgNormal.appendChild(path);
+	
+	path = makeSVGElement('line', { x1: x , y1:y  +(rayonRobot*0.9)  + rayonRobot/3 , x2:x  , y2:y+(rayonRobot*0.9)  - rayonRobot/3,
+						   'class':'go_to_pose_elem go_to_pose_elem_line',
+						   'id': 'go_to_pose_elem_line_top',
+						  });
+	svgNormal.appendChild(path);
+}
+
 var robot_traced_normal = false;
 
 function NormalTraceRobot(robot_x, robot_y, robot_theta)

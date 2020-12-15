@@ -14,6 +14,9 @@ var userDownOnSVG_y_scroll = 0;
 var userCanChangeMenu = true;
 var userSavedCanClose = true;
 
+var xGotoPose = 0 ;
+var yGotoPose = 0 ;
+
 function UserAvertCantChange()
 {
 	$('#user_edit_map_bModalCancelEdit').click();
@@ -690,10 +693,14 @@ $(document).ready(function() {
 				x = x * zoom;
 				y = ros_hauteur - (y * zoom);
 				
+				xGotoPose = x ;
+				yGotoPose = ros_hauteur-y ;
+
 				xRos = x * ros_resolution / 100;
 				yRos = y * ros_resolution / 100;
 				
 				wycaApi.on('onGoToPoseResult', function (data){
+					$('#user_edit_map_svg .go_to_pose_elem').remove();
 					$('#user_edit_map_bStop').hide();
 					if (data.A == wycaApi.AnswerCode.NO_ERROR)
 					{
@@ -739,9 +746,12 @@ $(document).ready(function() {
 					if (data.A == wycaApi.AnswerCode.NO_ERROR)
 					{
 						$('#user_edit_map_bStop').show();
+						UserTraceGoToPose(xGotoPose,yGotoPose);
 					}
 					else
 					{
+						$('#user_edit_map_svg .go_to_pose_elem').remove();
+						
 						$('#user_edit_map .modalFinTest section.panel-success').hide();
 						$('#user_edit_map .modalFinTest section.panel-warning').hide();
 						$('#user_edit_map .modalFinTest section.panel-danger').show();

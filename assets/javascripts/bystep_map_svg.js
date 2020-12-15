@@ -819,6 +819,48 @@ function ByStepTraceAugmentedPose(indexAugmentedPose)
 		AddClass('#install_by_step_edit_map_svg .augmented_pose_elem_'+augmented_pose.id_augmented_pose, 'active');
 }
 
+function ByStepTraceGoToPose(x,y)
+{
+	path = makeSVGElement('circle', { cx: x,
+									cy: y,
+									r: rayonRobot*0.9,
+									'class': 'go_to_pose_elem',
+									'id': 'go_to_pose_elem_circle',
+									});
+	svgByStep.appendChild(path);
+	
+	path = makeSVGElement('circle', { cx: x,
+									cy: y,
+									r: rayonRobot*0.1,
+									'class': 'go_to_pose_elem',
+									'id': 'go_to_pose_elem_dot',
+									});
+	svgByStep.appendChild(path);
+
+	path = makeSVGElement('line', { x1: x+(rayonRobot*0.9)  + rayonRobot/3 , y1:y, x2:x+(rayonRobot*0.9)  - rayonRobot/3, y2:y,
+						   'class':'go_to_pose_elem go_to_pose_elem_line',
+						   'id': 'go_to_pose_elem_line_left',
+						  });
+	svgByStep.appendChild(path);
+	
+	path = makeSVGElement('line', { x1: x-(rayonRobot*0.9)  + rayonRobot/3 , y1:y, x2:x-(rayonRobot*0.9)  - rayonRobot/3, y2:y,
+						   'class':'go_to_pose_elem go_to_pose_elem_line',
+						   'id': 'go_to_pose_elem_line_right',
+						  });
+	svgByStep.appendChild(path);
+	
+	path = makeSVGElement('line', { x1: x  , y1:y  -(rayonRobot*0.9)  + rayonRobot/3 , x2:x  , y2:y-(rayonRobot*0.9)  - rayonRobot/3,
+						   'class':'go_to_pose_elem go_to_pose_elem_line',
+						   'id': 'go_to_pose_elem_line_bottom',
+						  });
+	svgByStep.appendChild(path);
+	
+	path = makeSVGElement('line', { x1: x , y1:y  +(rayonRobot*0.9)  + rayonRobot/3 , x2:x  , y2:y+(rayonRobot*0.9)  - rayonRobot/3,
+						   'class':'go_to_pose_elem go_to_pose_elem_line',
+						   'id': 'go_to_pose_elem_line_top',
+						  });
+	svgByStep.appendChild(path);
+}
 var robot_traced = false;
 
 function ByStepTraceRobot(robot_x, robot_y, robot_theta)
