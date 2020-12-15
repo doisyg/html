@@ -1279,7 +1279,7 @@
                 
             </div>
 			<footer>
-				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50" data-goto="install_normal_setup_wifi"><?= __('Back')?></a>
+				<a href="#" class="install_normal_setup_wifi_password_back button_goto btn btn-default btn_footer_left btn_50" data-goto="install_normal_setup_wifi"><?= __('Back')?></a>
 				<a href="#" class="install_normal_setup_wifi_password_save btn btn-primary btn_footer_right btn_50"><?= __('Connect')?></a>
 			</footer>
         </section>
