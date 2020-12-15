@@ -319,7 +319,10 @@ $(document).ready(function(e) {
 			if (next == 'install_normal_setup_top') InitTopsActiveNormal();
 			if (next == 'install_normal_setup_config') GetConfigurationsNormal();
 			if (next == 'install_normal_setup_wifi') InitInstallWifiPageNormal();
-			if (next == 'install_normal_manager') GetManagersNormal();
+			if (next == 'install_normal_manager') {
+				GetManagersNormal();
+				$('#bHeaderInfo').attr('onClick',"$('#install_normal_manager .modalHelpManager').modal('show')");
+			}
 			if (next == 'install_normal_user') GetUsersNormal();
 			if (next == 'install_normal_service_book') GetServiceBooksNormal();
 			if (next == 'install_normal_edit_map') GetInfosCurrentMapNormal();
@@ -1750,7 +1753,7 @@ function GetDataMapToSave()
 }
 
 function TogglePopupHelp(){
-	$('.global_page.active .popupHelp').toggle('fast');
+	$('.global_sub_page.active section.active .popupHelp').toggle('fast');
 }
 
 /* GESTION COOKIES */

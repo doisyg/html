@@ -23,14 +23,15 @@
                         <h2 style="margin-top:35px"><?=__('English') ?></h2>
                     </li>
                 </ul>
-            </div>
-			<div class="popupHelp">
-				<h2><?=__('Help')?></h2>
-				<div class="content">
-					<p><?= __('Please select the language displayed on the app by clicking on the correspondant flag.')?></p>					
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content sm-content">
+						<p><?= __('Please select the language displayed on the app by clicking on the correspondant flag.')?></p>					
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
 				</div>
-				<p class="legende"><?=__('Click to hide')?></p>
 			</div>
+			
         </section>
 		
     	<!--
@@ -133,7 +134,7 @@
   				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
 					<div class="content text-left">
-						<p><?= __('Please select active top by clicking on it. That will indicate to the vehicle that the current top on it is the one you picked.')?></p>
+						<p><?= __('Please select active top by clicking on it. That will indicate to the vehicle that its current top on it is the one you picked.')?></p>
 						
 					</div>
 					<p class="legende"><?=__('Click to hide')?></p>
@@ -278,7 +279,7 @@
 						<p><?= __('If you do not want to connect the robot to a Wifi network, you can skip this step by clicking on the Skip button.')?></p>
 						<p><?= __('This page will present the list of detected wifi networks.')?></p>
 						<p><?= __('If the robot is currently connected to a Wifi network, it will appear in bold on a gray background.')?></p>
-						<p><?= __('To connect the robot to a network, click on it, a popup will then allow you to enter the password of the network..')?></p>
+						<p><?= __('To connect the robot to a network, click on it, a popup will then allow you to enter the password of the network.')?></p>
 					</div>
 					<p class="legende"><?=__('Click to hide')?></p>
 				</div>
@@ -1738,7 +1739,7 @@
 						<p class=""><?= __('Emergency battery level is the minimum level allowed on the robot. If the robot goes under it will automatically go to its default charging station')?></p>
 						<p class=""><?= __('The second threshold is the level below which the robot will refuse to perform a task when docked')?></p>
 						<p class=""><?= __('You can set these values manually or use the tool to evaluate the load consumption on a site in real conditions.')?></p>
-						<p class=""><?= __('The real test tool will ask for two points, a starting and a arrival. It will automatically calculate the level of battery used betwwen these two points.')?></p>
+						<p class=""><?= __('The real test tool will ask for two points, a starting and a arrival. It will automatically calculate the level of battery used between these two points.')?></p>
 						<p class=""><?= __('You can then click on the Use button to let the tool fill yours battery levels. You can always change these values by hand.')?></p>
 						<p class=""><?= __('Try to use the farthest points in order to have the most relevant test possible.')?></p>
 					</div>

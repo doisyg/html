@@ -15,6 +15,14 @@
                 <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" href="logout.php"><i class="fas fa-power-off"></i><?php echo __('Logout');?></a></li>
 				<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7 todo" data-goto="manager_help" href="#"><i class="fa fa-question"></i><?php echo __('Help');?></a></li>
             </ul>
+			<div class="popupHelp">
+				<h2><?=__('Help')?></h2>
+				<div class="content sm-content text-left">
+					<p class=""><?= __('This dashboard display all available functionalities for a manager.')?></p>
+					<p class=""><?= __('Use Logout button to log out of the app')?></p>
+				</div>
+				<p class="legende"><?=__('Click to hide')?></p>
+			</div>
         </div>
     </section>
         
@@ -416,6 +424,14 @@
 					</div>
 				</div>
 			</div>
+			<div class="popupHelp">
+				<h2><?=__('Help')?></h2>
+				<div class="content sm-content text-left">
+					<p><?= __('This page allows you to control the robot using the virtual joystick.')?></p>
+					<p><?= __('If the robot is docked on a docking station or on an augmented position, the joystick will be hidden and an Undock button will be present to allow you to undock the robot.')?></p>	
+				</div>
+				<p class="legende"><?=__('Click to hide')?></p>
+			</div>
 		</div>
         <footer>
             <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="manager_dashboard"><?php echo __('Back');?></a>
@@ -428,38 +444,45 @@
             <h2><?php echo __('Select active top');?></h2>
         </header>
         <div class="content">
-            	<div class="manager_top_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
-				<h5 class="text-center" style="margin-bottom:30px;"><?=__('Please select the active top for the vehicle.') ?></h5>
-                <ul class="tuiles row">
-                </ul>
-                
-                <div style="clear:both; height:20px;"></div>
-                
-                <div class="modal fade modalSetActiveTop" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
-                    <div class="modal-dialog" role="dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <div class="actions mh100vh_55">
-                                    
-                                    <div class="h100vh_160" style="overflow:auto">
-                                        <div class="progressSetActiveTop">
-                                            <h4 style="text-align:center;margin-bottom:20px"><?php echo __('Setting new active top');?></h4>
-                                            <div class="setActiveTopProgress progress progress-striped light active m-md">
-                                                <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;">
-                                                </div>
-                                            </div>
-                                        </div>
-			                                    
-            	                        <div style="clear:both;"></div>
-                					</div>                   
-                                    <a href="#" class="btn btn-primary" data-dismiss="modal" style="width:100%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Close');?></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
+			<div class="manager_top_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
+			<h5 class="text-center" style="margin-bottom:30px;"><?=__('Please select the active top for the vehicle.') ?></h5>
+			<ul class="tuiles row">
+			</ul>
+			
+			<div style="clear:both; height:20px;"></div>
+			
+			<div class="modal fade modalSetActiveTop" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+				<div class="modal-dialog" role="dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<div class="actions mh100vh_55">
+								
+								<div class="h100vh_160" style="overflow:auto">
+									<div class="progressSetActiveTop">
+										<h4 style="text-align:center;margin-bottom:20px"><?php echo __('Setting new active top');?></h4>
+										<div class="setActiveTopProgress progress progress-striped light active m-md">
+											<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;">
+											</div>
+										</div>
+									</div>
+											
+									<div style="clear:both;"></div>
+								</div>                   
+								<a href="#" class="btn btn-primary" data-dismiss="modal" style="width:100%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Close');?></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="popupHelp">
+				<h2><?=__('Help')?></h2>
+				<div class="content text-left">
+					<p><?= __('Please select active top by clicking on it. That will indicate to the vehicle that its current top on it is the one you picked.')?></p>
+					
+				</div>
+				<p class="legende"><?=__('Click to hide')?></p>
+			</div>
+		</div>
         <footer>
             <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="manager_dashboard"><?php echo __('Back');?></a>
         </footer>
@@ -487,6 +510,16 @@
 						<div class="curseur"></div>
 					</div>
 				</div>
+			</div>
+			<div class="popupHelp">
+				<h2><?=__('Help')?></h2>
+				<div class="content sm-content text-left">
+					<p><?= __('If you start the robot undocked to a docking station or if the robot is lost, this page will allow you to relocate the robot correctly.')?></p>
+					<p><?= __('If the robot has just been started, a success message will be displayed.')?></p>
+					<p><?= __('If the robot was lost, it will rotate 360° to clean the obstacles it could have wrongly spotted due to its bad location.')?></p>
+					<p><?= __('A feedback popup will indicate the success or failure of the recovery.')?></p>	
+				</div>
+				<p class="legende"><?=__('Click to hide')?></p>
 			</div>
 		</div>
         <footer>
@@ -592,6 +625,16 @@
 						</div>
 					</div>
 				</div>
+			</div>
+			<div class="popupHelp">
+				<h2><?=__('Help')?></h2>
+				<div class="content sm-content text-left">
+					<p class=""><?= __('This page allows you to manage user accounts.')?></p>
+					<p class=""><?= __('You can edit, add or delete user accounts.')?></p>
+					<p class=""><?= __('User accounts can mainly :')?></p>
+					<p class="">&nbsp;&nbsp;&nbsp;<?= __('- Move the robot through map.')?></p>
+				</div>
+				<p class="legende"><?=__('Click to hide')?></p>
 			</div>
 		</div>
         <footer>

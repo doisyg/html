@@ -328,6 +328,14 @@
 					</div>
 				</div>
 			</div>
+			<div class="popupHelp">
+				<h2><?=__('Help')?></h2>
+				<div class="content sm-content text-left">
+					<p><?= __('This page allows you to control the robot using the virtual joystick.')?></p>
+					<p><?= __('If the robot is docked on a docking station or on an augmented position, the joystick will be hidden and an Undock button will be present to allow you to undock the robot.')?></p>	
+				</div>
+				<p class="legende"><?=__('Click to hide')?></p>
+			</div>
 		</div>
         <footer>
             <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="user_dashboard"><?php echo __('Back');?></a>
@@ -356,6 +364,16 @@
 						<div class="curseur"></div>
 					</div>
 				</div>
+			</div>
+			<div class="popupHelp">
+				<h2><?=__('Help')?></h2>
+				<div class="content sm-content text-left">
+					<p><?= __('If you start the robot undocked to a docking station or if the robot is lost, this page will allow you to relocate the robot correctly.')?></p>
+					<p><?= __('If the robot has just been started, a success message will be displayed.')?></p>
+					<p><?= __('If the robot was lost, it will rotate 360° to clean the obstacles it could have wrongly spotted due to its bad location.')?></p>
+					<p><?= __('A feedback popup will indicate the success or failure of the recovery.')?></p>	
+				</div>
+				<p class="legende"><?=__('Click to hide')?></p>
 			</div>
 		</div>
         <footer>

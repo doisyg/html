@@ -15,6 +15,14 @@
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7" href="logout.php"><i class="fas fa-power-off"></i><?php echo __('Logout');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8 todo" data-goto="install_normal_help" href="#"><i class="fa fa-question"></i><?php echo __('Help');?></a></li>
                 </ul>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content sm-content text-left">
+						<p class=""><?= __('This dashboard allow you to access all features and settings of the vehicle')?></p>
+						<p class=""><?= __('Use Logout button to log out of the app')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
             </div>
         </section>
         
@@ -1004,7 +1012,15 @@
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" data-goto="install_normal_setup_export" href="#"><i class="fa fa-upload"></i><?php echo __('Export site');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7" data-goto="install_normal_setup_import" href="#"><i class="fa fa-download"></i><?php echo __('Import site');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8" data-goto="install_normal_setup_reset" href="#"><i class="fa fa-eraser"></i><?php echo __('Factory data reset');?></a></li>
-                </ul>
+				</ul>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content sm-content text-left">
+						<p class=""><?= __('This dashboard allow you to access and edit vehicle configuration')?></p>
+						<p class=""><?= __('Use back button to go back to the main dashboard')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
             </div>
             <footer>
                 <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="install_normal_dashboard"><?php echo __('Back');?></a>
@@ -1025,8 +1041,18 @@
                     
                     <div style="margin-top:50px;"><input type="checkbox" class="cb_confirm" id="install_normal_setup_reset_cbConfirm" name="cb_confirm" />  <label for="install_normal_setup_reset_cbConfirm" style="font-size:16px; color:#000000;"><?php echo __('I confirm that I want to delete all data.');?></label></div>
                     
-                </div>         
-            </div>
+                </div>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content sm-content text-left">
+						<p class=""><?= __('This page allows you to reset all robot data to the factory default settings.')?></p>
+						<p class=""><?= __('All data will be permanently deleted including maps and user and manager accounts.')?></p>
+						<p class=""><?= __('Once the data is reset, you will be redirected to the login page.')?></p>
+						<p class=""><?= __('You will need to use the default login and password for your first login.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
+			</div>
             <footer>
             	<a href="#" class="btn btn-default button_goto btn_footer_left btn_50" data-goto="install_normal_setup" ><?php echo __('Cancel');?></a>
                 <a href="#" class="btn btn-danger bReset btn_footer_right btn_50"><?php echo __('Reset');?></a>
@@ -1064,7 +1090,17 @@
                 	<ul class="list_sites list_elem">
                     </ul>
                 </div>
-            </div>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left sm-content">
+						<p class=""><?= __('Ths page allow you to export a site by clicking on the correspondant icon.')?></p>
+						<p class=""><?= __('The export of a site is a backup of all the configuration linked to a site (map, charging stations, areas...).')?></p>
+						<p class=""><?= __('You can also use the .wyca generated file to import this site on another vehicle.')?></p>
+						<p class=""><?= __('Keep this copy as it will allow you to reload your site in case of factory reset.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
+			</div>
             <footer>
                 <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="install_normal_setup"><?php echo __('Back');?></a>
             </footer>
@@ -1110,7 +1146,11 @@
                         </div>
                     </div>
                 </div>
-                
+                <div class="content text-left sm-content">
+					<p class=""><?= __('Ths page allow you to import a site by uploading the .wyca file associated.')?></p>
+					<p class=""><?= __('You recover all the configuration linked to a site (map, charging stations, areas...).')?></p>
+					<p class=""><?= __('Whitout having to map again the same site.')?></p>
+				</div>
             </div>
             <footer>
                 <a href="#" class="btn btn-default button_goto bImportSiteBack" data-goto="install_normal_setup" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><i class="fa fa-chevron-left"></i> <?php echo __('Back');?></a>
@@ -1175,7 +1215,17 @@
                     <div style="clear:both; height:10px;"></div>
                     
                 </div>         
-            </div>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left sm-content">
+						<p class=""><?= __('You have the possibility to optimize the final result by playing on two values.')?></p>
+						<p class=""><?= __('The default values are judicious in 95% of the cases.')?></p>
+						<p class=""><?= __('It might be necessary to play with these values to correct navigation problems in particular cases.')?></p>
+						<p class=""><?= __(' The goal is to make sure that all the walls are shown in black on the map and that all the areas where the robot has to move are shown in white on the map.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
+			</div>
             <footer>
             	<a href="#" class="btn btn-default btn_footer_left btn_50 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>           
                 <a href="#" class="btn btn-primary bSaveTrinaryMap btn_footer_right btn_50"><?php echo __('Save');?></a>
@@ -1198,6 +1248,17 @@
                     <ul class="list_sites list_elem">
                     </ul>
                 </div>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content sm-content text-left">
+						<p class=""><?= __('This page allow you to manage sites')?></p>
+						<p class=""><?= __('You can create a new site by clicking on the correspondant button.')?></p>
+						<p class=""><?= __('You can delete a site by clicking on the red cross icon.')?></p>
+						<p class=""><?= __('A confimation will be asked for each site you want to delete.')?></p>
+						<p class=""><?= __('You can switch site by clicking on the blue check icon of the site you want to load.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
             </div>
             <footer>
                 <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>
@@ -1230,7 +1291,13 @@
                         <h2 style="margin-top:35px"><?=__('English') ?></h2>
                     </li>
                 </ul>
-                
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content sm-content">
+						<p><?= __('Please select the language displayed on the app by clicking on the correspondant flag.')?></p>					
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
             </div>
             <footer>
                 <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>
@@ -1252,6 +1319,18 @@
                     </tbody>
                 </table>
                 <a href="#" class="refresh_wifi btn btn-default pull-left"><i class="fa fa-refresh"></i></a>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left">
+						<p><?= __('You have the possibility to connect the robot to a Wifi network to give it Internet access.')?></p>
+						<p><?= __('This Internet access can be useful to allow Wyca to take control of the robot remotely and thus make updates or specific settings.')?></p>
+						<p><?= __('If you do not want to connect the robot to a Wifi network, you can skip this step by clicking on the Skip button.')?></p>
+						<p><?= __('This page will present the list of detected wifi networks.')?></p>
+						<p><?= __('If the robot is currently connected to a Wifi network, it will appear in bold on a gray background.')?></p>
+						<p><?= __('To connect the robot to a network, click on it, a popup will then allow you to enter the password of the network.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
             </div>
             <footer>
                 <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>
@@ -1399,7 +1478,20 @@
 						</div>
 					</div>
 				</div>
-            </div>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left sm-content-text">
+						<p class=""><?= __('You can configure two battery levels to avoid the robot getting stuck in the middle of an area because of battery breakdown.')?></p>
+						<p class=""><?= __('Emergency battery level is the minimum level allowed on the robot. If the robot goes under it will automatically go to its default charging station')?></p>
+						<p class=""><?= __('The second threshold is the level below which the robot will refuse to perform a task when docked')?></p>
+						<p class=""><?= __('You can set these values manually or use the tool to evaluate the load consumption on a site in real conditions.')?></p>
+						<p class=""><?= __('The real test tool will ask for two points, a starting and a arrival. It will automatically calculate the level of battery used between these two points.')?></p>
+						<p class=""><?= __('You can then click on the Use button to let the tool fill yours battery levels. You can always change these values by hand.')?></p>
+						<p class=""><?= __('Try to use the farthest points in order to have the most relevant test possible.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
+			</div>
             <footer>
                 <a href="#" class="btn btn-default btn_footer_left btn_50 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>
                 <a href="#" class="btn btn-primary btn_footer_right btn_50 bConfigurationSave"><?php echo __('Save');?></a>
@@ -1455,7 +1547,18 @@
                         </div>
                     </div>
                 </div>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left">
+						<p><?= __('Please select available tops by checkboxing its. These tops will then be available to indicate the active top on the robot.')?></p>
+						
+						<p><?= __('If you select only one top, the next step of choosing the active top will be ignored (the active top being the only available top).')?></p>					
+						<p><?= __('You can also import a .wyca top config file.')?><br><div class="text-center"><a href="#" class="import_top btn btn-lg btn-success"><?= __('Import new top')?></a></div></p>			
+						   
                 
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
             </div>
             <footer>
 				
@@ -1501,7 +1604,14 @@
                         </div>
                     </div>
                 </div>
-                
+                <div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left">
+						<p><?= __('Please select active top by clicking on it. That will indicate to the vehicle that its current top on it is the one you picked.')?></p>
+						
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
             </div>
             <footer>
                 <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="install_normal_setup_tops"><?php echo __('Back');?></a>
@@ -1526,6 +1636,14 @@
                         </div>
                     </div>
                 </div>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content sm-content text-left">
+						<p><?= __('This page allows you to control the robot using the virtual joystick.')?></p>
+						<p><?= __('If the robot is docked on a docking station or on an augmented position, the joystick will be hidden and an Undock button will be present to allow you to undock the robot.')?></p>	
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
             </div>
             <footer>
                 <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="install_normal_dashboard"><?php echo __('Back');?></a>
@@ -1556,6 +1674,16 @@
                         </div>
                     </div>
                 </div>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content sm-content text-left">
+						<p><?= __('If you start the robot undocked to a docking station or if the robot is lost, this page will allow you to relocate the robot correctly.')?></p>
+						<p><?= __('If the robot has just been started, a success message will be displayed.')?></p>
+						<p><?= __('If the robot was lost, it will rotate 360° to clean the obstacles it could have wrongly spotted due to its bad location.')?></p>
+						<p><?= __('A feedback popup will indicate the success or failure of the recovery.')?></p>	
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
             </div>
             <footer>
                 <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_dashboard"><?php echo __('Back');?></a>
@@ -1658,7 +1786,17 @@
                         </div>
                     </div>
                 </div>
-            </div>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content sm-content text-left">
+						<p class=""><?= __('This page allows you to manage user accounts.')?></p>
+						<p class=""><?= __('You can edit, add or delete user accounts.')?></p>
+						<p class=""><?= __('User accounts can mainly :')?></p>
+						<p class="">&nbsp;&nbsp;&nbsp;<?= __('- Move the robot through map.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
+			</div>
             <footer>
                 <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_accounts"><?php echo __('Back');?></a>
             </footer>
@@ -1810,6 +1948,17 @@
 					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile1" data-goto="install_normal_manager" href="#"><i class="fas fa-users-cog" style="transform:scaleX(-1)"></i><?php echo __('Managers');?></a></li>
 					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="install_normal_user" href="#"><i class="fas fa-user-friends"></i><?php echo __('Users');?></a></li>
 				</ul>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content sm-content text-left">
+						<p class=""><?= __('This page allows you to manage manager and user accounts.')?></p>
+						<p class=""><?= __('Manager accounts can mainly be :')?></p>
+						<p class="">&nbsp;&nbsp;&nbsp;<?= __('- Move the robot through the map.')?><br><br>&nbsp;&nbsp;&nbsp;<?= __('- Add POI')?><br><br>&nbsp;&nbsp;&nbsp;<?= __('- Change active top on the robot among the preselected tops.')?></p>
+						<p class=""><?= __('User accounts can mainly :')?></p>
+						<p class="">&nbsp;&nbsp;&nbsp;<?= __('- Move the robot through map.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
             </div>
             <footer>
                 <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_dashboard"><?php echo __('Back');?></a>
@@ -1863,6 +2012,16 @@
                             </div>
                         </div>
                     </div>
+				</div>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left">
+						<p class=""><?= __('The robot\'s service book indicate all the important elements concerning the life and maintenance of the robot to facilitate future maintenance.')?></p>
+						<p class=""><?= __('To add an entry to the service log, click on the button in the center of the screen.')?></p>
+						<p class=""><?= __('A popup will open allowing you to enter a title and description.')?></p>
+						<p class=""><?= __('The various items in the service book are not removable or editable once created.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
 				</div>
             </div>
             <footer>

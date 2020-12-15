@@ -239,7 +239,7 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 .popupHelp .content.sm-content-text > p {font-size:14px}
 .popupHelp .content p { font-size:16px}
 .popupHelp .svg_popupHelp_robot{height: 40px;width: 40px; position: absolute; left:-5px;top:0; }
-.popupHelp p.legende{      position: absolute; right: 10px; bottom: 5px; }
+.popupHelp p.legende{     position: fixed; right: 5px; bottom: 0px; background: #b4e6f4; padding: 2px; border-radius: 10px;}
 .popupHelp ul { list-style:none; margin:0; padding:0px 0px; }
 .popupHelp ul li { font-size:18px; padding:10px 0; border-bottom:1px solid #CCC;height:46px;}
 .popupHelp ul li;first-child { border-top:1px solid #EEEEEE; }
