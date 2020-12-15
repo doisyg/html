@@ -1160,6 +1160,7 @@ $(document).ready(function(e) {
 		selectedWifi = $(this).data('ssid');
 		
 		$('#install_normal_setup_wifi_password .wifi_connexion_error').html('');
+		$('#install_normal_setup_wifi_password .i_wifi_passwd_name').val('');
 		$('#install_normal_setup_wifi_password .install_normal_setup_wifi_password_save').show();
 		$('#install_normal_setup_wifi_password .wifi_connexion_progress').hide();
 
@@ -1180,8 +1181,9 @@ $(document).ready(function(e) {
 			}
 			else
 			{
-				$('#install_normal_setup_wifi_password .skip_wifi').click();
+				$('#install_normal_setup_wifi_password .install_normal_setup_wifi_password_back').click();
 				$('#install_normal_setup_wifi_password .wifi_connexion_error').html('');
+				$('#install_normal_setup_wifi_password .i_wifi_passwd_name').val('');
 			}
 			$('#install_normal_setup_wifi_password .install_normal_setup_wifi_password_save').show();
 			$('#install_normal_setup_wifi_password .wifi_connexion_progress').hide();
