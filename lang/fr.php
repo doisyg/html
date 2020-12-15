@@ -337,5 +337,23 @@ $_LANG['c4c6a99d5a48a3fd032af0f63664ae11'] = 'L\'instruction de déplacement a �
 $_LANG['bdef851f91ba319f33850e55ec8213b2'] = 'L\'instruction Go to pose a échouée';
 $_LANG['7c180304cb209dcba4442a5e4814e5ba'] = 'Code d\'erreur inconnu';
 $_LANG['d1b3dc54fb93198104b855fd44ae6ddf'] = 'Reconnexion nécessaire';
+$_LANG['4780a9b20e98f142d900b67d0f0ba8da'] = 'Account deleted';
+$_LANG['039def2895d2d63a2f795cc70c1a922d'] = 'Top is now active !';
+$_LANG['736a80f6c57858155a4edc629012f420'] = 'Are you sure to delete this element ?';
+$_LANG['4ce0b3338614f8a6e8896e831b550996'] = 'Site export';
+$_LANG['8995909435a1e387c7ae6ebf20d2a526'] = 'The export of a site is a backup of all the configuration linked to a site (map, charging stations, areas...).';
+$_LANG['9d9fea49ed1194d4ab850e3cc87963d9'] = 'Export Site';
+$_LANG['61c5f9cccff6ced0d42902c49839fcb3'] = 'You can also use the generated file to import this site on another vehicle.';
+$_LANG['fd8493d68848aefae8adf080792246fd'] = 'Keep this copy as it will allow you to reload your site in case of factory reset.';
+$_LANG['4399a7d78e44fd3b986e3addaf2b4052'] = 'Keep account default password';
+$_LANG['9b8ff4fa727b9d077da503a72b3ab7af'] = 'Do you want to keep the default password for Wyca maintenance account ?';
+$_LANG['f4ec5f57bd4d31b803312d873be40da9'] = 'Change';
+$_LANG['698b1fad9af16214f7691a5821104bf3'] = 'If you change and loose this password, the robot could become unusable with no recovery options other than a factory return.';
+$_LANG['2e781e46cd473612f108b29a62e711ab'] = 'Congratulations';
+$_LANG['2066b22ed70c258066dd274046d5afb7'] = 'Select active top';
+$_LANG['d6b8c0fd5daa6d808288892ac030c6ab'] = 'Please select your language by clicking on the correspondant flag.';
+$_LANG['326b6c35cad8408ff3cf5e4390548171'] = 'Please select the language displayed on the app by clicking on the correspondant flag.';
+$_LANG['dc040e22293e8d118fd2c34b4b916eac'] = 'Please select available tops by clicking on them. These tops will then be available to indicate the active top on the robot.';
+$_LANG['753b193d75b4b6ffc63da598c767bafe'] = 'If you select only one top, the next step of choosing the active top will be ignored (the active top being the only available top).';
 
 ?>

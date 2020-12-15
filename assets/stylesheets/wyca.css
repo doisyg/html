@@ -231,10 +231,15 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 #manager_edit_map_zoom_carte { overflow:hidden; }
 #user_edit_map_zoom_carte { overflow:hidden; }
 
-.popupHelp { position:absolute; z-index:20000; background-color:rgba(255,255,255,0.95); top:0; left:0; right:0; bottom:0; display:none; padding:10px; }
-.popupHelp h2{ margin-top: 5px; margin-bottom: 15px;}
+.popupHelp { position:absolute; z-index:20000; background-color:rgba(255,255,255,0.99); top:0; left:0; right:0; bottom:0; display:none; padding:10px; }
+.popupHelp h2{ margin:20px 0;text-align:center}
+.popupHelp .content { display:flex;justify-content:space-between;flex-direction:column;min-height:80%;height: unset!important;}
+.popupHelp .content.sm-content {justify-content:start;}
+.popupHelp .content.sm-content > p {margin:20px 0}
+.popupHelp .content.sm-content-text > p {font-size:14px}
+.popupHelp .content p { font-size:16px}
 .popupHelp .svg_popupHelp_robot{height: 40px;width: 40px; position: absolute; left:-5px;top:0; }
-.popupHelp p.legende{  float:right;font-style: italic; }
+.popupHelp p.legende{      position: absolute; right: 10px; bottom: 5px; }
 .popupHelp ul { list-style:none; margin:0; padding:0px 0px; }
 .popupHelp ul li { font-size:18px; padding:10px 0; border-bottom:1px solid #CCC;height:46px;}
 .popupHelp ul li;first-child { border-top:1px solid #EEEEEE; }
@@ -1271,3 +1276,10 @@ span.error_details span{
 }
 
 .form-group.sep { border-top:1px solid #EFEFEF; padding-top:15px; }
+
+
+
+.row.row-eq-height{
+	display: flex;
+    flex-wrap: wrap;
+}

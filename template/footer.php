@@ -135,6 +135,7 @@
 			<?php }?>
 			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 33) {?>
 			GetManagersByStep();
+			$('#bHeaderInfo').attr('onClick',"$('#install_by_step_manager .modalHelpManager').modal('show')");
 			<?php }?>
 			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 34) {?>
 			GetServiceBooksByStep();

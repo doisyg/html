@@ -47,6 +47,8 @@ $(window).on("popstate", function(e) {
 })(history.pushState);
 
 $(document).ready(function(e) {
+	$('#bHeaderInfo').attr('onClick',"$('.global_sub_page.active section.active .popupHelp').toggle('fast')");
+	
 	$('.iro-colorpicker').each(function(){
 		let preview = $(this).parent().find('.preview_color');
 		let input = $(this).parent().find('input[type="text"]');
@@ -264,7 +266,9 @@ $(document).ready(function(e) {
 			let section_active = $('section.active');
 			$('section.active').removeClass('active');
 			$('section.page').hide();
+			
 			$('#bHeaderInfo').attr('onClick',""); // REINIT (i) icone
+			$('#bHeaderInfo').attr('onClick',"$('#"+next+" .popupHelp').toggle('fast')");
 			
 			console.log('next ',next);
 			
@@ -276,10 +280,7 @@ $(document).ready(function(e) {
 			if (next == 'install_by_step_mapping') InitMappingByStep();
 			if (next == 'install_by_step_import_site') InitSiteImportByStep();
 			
-			if (next == 'install_by_step_edit_map'){
-				$('#bHeaderInfo').attr('onClick',"$('.popupHelp').toggle('fast')");
-				GetInfosCurrentMapByStep();
-			}
+			if (next == 'install_by_step_edit_map')GetInfosCurrentMapByStep();
 			if (next == 'install_by_step_mapping_fin'){
 				if(typeof(window.site_name) != 'undefined' && window.site_name != ""){
 					$('#install_by_step_mapping_from_name').val(window.site_name)
@@ -305,7 +306,10 @@ $(document).ready(function(e) {
 			
 			if (next == 'install_by_step_site_master_dock' && fromBackBtn) InitMasterDockByStep('back');
 			if (next == 'install_by_step_site_master_dock' && !fromBackBtn) InitMasterDockByStep();
-			if (next == 'install_by_step_manager') GetManagersByStep();
+			if (next == 'install_by_step_manager') {
+				GetManagersByStep();
+				$('#bHeaderInfo').attr('onClick',"$('#install_by_step_manager .modalHelpManager').modal('show')");
+			}
 			if (next == 'install_by_step_service_book') GetServiceBooksByStep();
 			
 			if (next == 'install_normal_setup_sites') GetSitesNormal();
@@ -377,6 +381,7 @@ $(document).ready(function(e) {
 				// ADD TITLE CHANGE 
 					
 				$('.title_section').html($('#'+next+' > header > h2').text());
+				
 				//
 				InitJoystick();
 
