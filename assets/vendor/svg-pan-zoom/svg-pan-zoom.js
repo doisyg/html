@@ -317,18 +317,21 @@ ShadowViewport.prototype.processCTM = function() {
 
   if (this.options.fit || this.options.contain) {
     var newScale;
-    if (this.options.fit) {
-      newScale = Math.min(
-        this.options.width / this.viewBox.width,
-        this.options.height / this.viewBox.height
-      );
-    } else {
-      newScale = Math.max(
-        this.options.width / this.viewBox.width,
-        this.options.height / this.viewBox.height
-      );
-    }
-
+	if( this.viewBox.height == 0 ||  this.viewBox.width == 0}
+		newScale = 1
+	else{	
+		if (this.options.fit) {
+		  newScale = Math.min(
+			this.options.width / this.viewBox.width,
+			this.options.height / this.viewBox.height
+		  );
+		} else {
+		  newScale = Math.max(
+			this.options.width / this.viewBox.width,
+			this.options.height / this.viewBox.height
+		  );
+		}
+	}
     newCTM.a = newScale; //x-scale
     newCTM.d = newScale; //y-scale
     newCTM.e = -this.viewBox.x * newScale; //x-transform
