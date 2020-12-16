@@ -2707,22 +2707,44 @@ $(document).ready(function() {
 	
 	$('#install_normal_edit_map_container_all .modalAddPoi #install_normal_edit_map_bModalAddPoiSave').click(function(e) {
         e.preventDefault();
-		nextIdPoi++;
-		poi_temp_add = {'id_poi':nextIdPoi, 'id_map':id_map, 'final_pose_x':lastRobotPose.X, 'final_pose_y':lastRobotPose.Y, 'final_pose_t':lastRobotPose.T, 'name':'POI', 'comment':'', 'color':'', 'icon':'', 'active':true};
 		
-		NormalAddHistorique({'action':'add_poi', 'data':JSON.stringify(poi_temp_add)});
-		pois.push(poi_temp_add);
-		NormalTracePoi(pois.length-1);
+		
+		wycaApi.CheckPosition(lastRobotPose.X, lastRobotPose.Y, function(data)
+		{
+			if (data.A == wycaApi.AnswerCode.NO_ERROR && data.D)
+			{
+				nextIdPoi++;
+				poi_temp_add = {'id_poi':nextIdPoi, 'id_map':id_map, 'final_pose_x':lastRobotPose.X, 'final_pose_y':lastRobotPose.Y, 'final_pose_t':lastRobotPose.T, 'name':'POI', 'comment':'', 'color':'', 'icon':'', 'active':true};
 				
-		$('#install_normal_edit_map_container_all .modalAddPoi').modal('hide');
+				NormalAddHistorique({'action':'add_poi', 'data':JSON.stringify(poi_temp_add)});
+				pois.push(poi_temp_add);
+				NormalTracePoi(pois.length-1);
+						
+				$('#install_normal_edit_map_container_all .modalAddPoi').modal('hide');
+				
+				currentPoiIndex = pois.length-1;
+				poi = pois[currentPoiIndex];
+				
+				$('#install_normal_edit_map_poi_name').val(poi.name);
+				$('#install_normal_edit_map_poi_comment').val(poi.comment);
+				
+				$('#install_normal_edit_map_container_all .modalPoiOptions').modal('show');
+			}
+			else
+			{
+				if (data.A != wycaApi.AnswerCode.NO_ERROR)
+				{
+					alert_wyca('Check position error : ' + wycaApi.AnswerCodeToString(data.A));
+				}
+				else
+				{
+					alert_wyca('Invalid position, please move the vehicule to another place');
+				}
+				$('#install_normal_edit_map_container_all .modalAddPoi').modal('show');
+			}
+		});
 		
-		currentPoiIndex = pois.length-1;
-		poi = pois[currentPoiIndex];
 		
-		$('#install_normal_edit_map_poi_name').val(poi.name);
-		$('#install_normal_edit_map_poi_comment').val(poi.comment);
-		
-		$('#install_normal_edit_map_container_all .modalPoiOptions').modal('show');
     });
 	
 	$('#install_normal_edit_map_bPoiSaveConfig').click(function(e) {
