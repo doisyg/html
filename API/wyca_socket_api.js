@@ -142,6 +142,9 @@ function WycaAPI(options){
 		GET_PATH			: 0x0115,
 		GET_PATH_FROM_CURRENT_POSE			: 0x0116,
 		GET_MOVE_IN_PROGRESS			: 0x011F,
+		
+		SOUND_PLAY		: 0x8101,
+		SOUND_STOP		: 0x8102,
 	 
 	// Services DB
 		CHECK_USER_KEY			: 0x6109,
@@ -304,6 +307,13 @@ function WycaAPI(options){
 		GO_TO_AUGMENTED_POSE_FEEDBACK	: 0x001D,
 		GO_TO_AUGMENTED_POSE_RESULT		: 0x001E
 	 
+	};
+
+	this.SOUND = {
+		ALERT 		: 1,
+		HORN		: 2,
+		REVERSE 	: 3,
+		SUCCESS 	: 4
 	};
 
 	this.ROBOT_STATE = {
@@ -2044,6 +2054,28 @@ function WycaAPI(options){
 			this.callbacks[_this.CommandCode.GET_MOVE_IN_PROGRESS] = callback;
 		var action = {
 			"O": _this.CommandCode.GET_MOVE_IN_PROGRESS
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	
+	
+	this.PlaySound  = function(sound, nb_loops, callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.SOUND_PLAY] = callback;
+		var action = {
+			"O": _this.CommandCode.SOUND_PLAY,
+			"P":{
+				"S":sound,
+				"N":nb_loops
+			}
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	this.StopSound  = function(callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.SOUND_STOP] = callback;
+		var action = {
+			"O": _this.CommandCode.SOUND_STOP
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
