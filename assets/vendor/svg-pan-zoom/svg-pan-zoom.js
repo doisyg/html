@@ -317,9 +317,10 @@ ShadowViewport.prototype.processCTM = function() {
 
   if (this.options.fit || this.options.contain) {
     var newScale;
-	if( this.viewBox.height == 0 ||  this.viewBox.width == 0}
+	if (this.viewBox.height == 0 || this.viewBox.width == 0)
 		newScale = 1
-	else{	
+	else
+	{	
 		if (this.options.fit) {
 		  newScale = Math.min(
 			this.options.width / this.viewBox.width,
