@@ -785,6 +785,7 @@ $(document).ready(function() {
 				$('#install_normal_edit_map_bStop').hide();
 				if (data.A == wycaApi.AnswerCode.NO_ERROR)
 				{
+					wycaApi.PlaySound(wycaApi.SOUND.SUCCESS, 1);
 					$('#install_normal_edit_map .modalFinTest section.panel-success').show();
 					$('#install_normal_edit_map .modalFinTest section.panel-danger').hide();
 					$('#install_normal_edit_map .modalFinTest section.panel-warning').hide();
@@ -1031,6 +1032,7 @@ $(document).ready(function() {
 				$('#install_normal_edit_map_bStop').hide();
 				if (data.A == wycaApi.AnswerCode.NO_ERROR)
 				{
+					wycaApi.PlaySound(wycaApi.SOUND.SUCCESS, 1);
 					$('#install_normal_edit_map .modalFinTest section.panel-success').show();
 					$('#install_normal_edit_map .modalFinTest section.panel-danger').hide();
 					$('#install_normal_edit_map .modalFinTest section.panel-warning').hide();
@@ -1317,6 +1319,7 @@ $(document).ready(function() {
 				$('#install_normal_edit_map_bStop').hide();
 				if (data.A == wycaApi.AnswerCode.NO_ERROR)
 				{
+					wycaApi.PlaySound(wycaApi.SOUND.SUCCESS, 1);
 					$('#install_normal_edit_map .modalFinTest section.panel-success').show();
 					$('#install_normal_edit_map .modalFinTest section.panel-danger').hide();
 					$('#install_normal_edit_map .modalFinTest section.panel-warning').hide();
@@ -2102,6 +2105,7 @@ $(document).ready(function() {
 						$('#install_normal_edit_map_svg .go_to_pose_elem').remove();
 						if (data.A == wycaApi.AnswerCode.NO_ERROR)
 						{
+							wycaApi.PlaySound(wycaApi.SOUND.SUCCESS, 1);
 							$('#install_normal_edit_map .modalFinTest section.panel-success').show();
 							$('#install_normal_edit_map .modalFinTest section.panel-danger').hide();
 							$('#install_normal_edit_map .modalFinTest section.panel-warning').hide();
