@@ -141,6 +141,9 @@ function WycaAPI(options){
 	 
 		GET_PATH			: 0x0115,
 		GET_PATH_FROM_CURRENT_POSE			: 0x0116,
+		
+		CHECK_POSITION			: 0x012A,
+		
 		GET_MOVE_IN_PROGRESS			: 0x011F,
 	 
 	// Services DB
@@ -2286,6 +2289,20 @@ function WycaAPI(options){
 			this.callbacks[_this.CommandCode.NAVIGATION_START_CANCEL] = callback;
 		var action = {
 			"O": _this.CommandCode.NAVIGATION_START_CANCEL,
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	
+	
+	this.CheckPosition  = function(x, y, callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.CHECK_POSITION] = callback;
+		var action = {
+			"O": _this.CommandCode.CHECK_POSITION,
+			"P": {
+				"X": x,
+				"Y": y,
+			}
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
