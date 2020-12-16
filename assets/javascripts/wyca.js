@@ -1702,8 +1702,9 @@ function ParseAPIAnswerError(data,pre_txt = '' ,post_txt = '')
 		}else{
 			txt = wycaApi.AnswerCodeToString(data.A);
 		}
-		txt = pre_txt == '' ? txt : pre_txt.txt;
-		txt = post_txt == '' ? txt : txt.post_txt;
+		pre_txt  = pre_txt == ''  ? '' : pre_txt + '<br>';
+		post_txt = post_txt == '' ? '' : '<br>' + post_txt;
+		txt = pre_txt + txt + post_txt;
 		alert_wyca(txt);
 	}
 }

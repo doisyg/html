@@ -11,6 +11,7 @@ var normalSavedCanClose = true;
 
 var xGotoPose = 0 ;
 var yGotoPose = 0 ;
+                                                        
 function NormalAvertCantChange()
 {
 	$('#install_normal_edit_map_bModalCancelEdit').click();
@@ -2376,8 +2377,7 @@ $(document).ready(function() {
 	
 	$('#install_normal_edit_map_container_all .modalAddDock .dock').click(function(e) {
         e.preventDefault();
-		
-		nextIdDock++;
+		that = $(this);
 		
 		distance_centre_robot_fiducial = 0.26;
 		distance_approche_robot_fiducial = 0.76;
@@ -2390,52 +2390,70 @@ $(document).ready(function() {
 		approch_pose_y = $(this).data('y') + Math.sin($(this).data('theta')) * distance_approche_robot_fiducial;
 		approch_pose_t = $(this).data('theta') + Math.PI;
 		
-		dock_master = false;
-		if (docks.length == 0)
+		wycaApi.CheckPosition(approch_pose_x, approch_pose_y, function(data)
 		{
-			// First dock
-			dock_master = true;
-		}
-		if (!dock_master && docks.length > 0)
-		{
-			dock_master = true;
-			$.each(docks, function( index, dock ) {
-				if (dock.is_master && (dock.deleted == undefined || !dock.deleted))
-					dock_master = false;
-			});
-		}
+			if (data.A == wycaApi.AnswerCode.NO_ERROR && data.D)
+			{
+				nextIdDock++;
 		
-		num = GetMaxNumDock()+1;
-		d = {'id_docking_station':nextIdDock, 'id_map':id_map, 'id_fiducial':$(this).data('id_fiducial'), 'final_pose_x':final_pose_x, 'final_pose_y':final_pose_y, 'final_pose_t':final_pose_t, 'approch_pose_x':approch_pose_x, 'approch_pose_y':approch_pose_y, 'approch_pose_t':approch_pose_t, 'num':parseInt(num), 'fiducial_pose_x':$(this).data('x'), 'fiducial_pose_y':$(this).data('y'), 'fiducial_pose_t':$(this).data('theta'), 'name':'Dock '+num, 'comment':'', 'undock_path':[{'linear_distance':-0.4, 'angular_distance':0}], 'is_master':dock_master};
-		NormalAddHistorique({'action':'add_dock', 'data':JSON.stringify(d)});
-        docks.push(d);
-		NormalTraceDock(docks.length-1);
-		
-		$('#install_normal_edit_map_container_all .modalAddDock').modal('hide');
-		
-		currentDockIndex = docks.length-1;
-		dock = docks[currentDockIndex];
-		
-		$('#install_normal_edit_map_dock_name').val(dock.name);
-		$('#install_normal_edit_map_dock_comment').val(dock.comment);
-		$('#install_normal_edit_map_dock_number').val(dock.num);
-		$('#install_normal_edit_map_dock_is_master').prop('checked', dock.is_master);
-		
-		
-		$('#install_normal_edit_map_container_all .modalDockOptions .list_undock_procedure li').remove();
-		
-		indexDockElem++;
-		
-		$('#install_normal_edit_map_container_all .modalDockOptions .list_undock_procedure').append('' +
-			'<li id="install_normal_edit_map_list_undock_procedure_elem_'+indexDockElem+'" data-index_dock_procedure="'+indexDockElem+'" data-action="move" data-distance="-0.4">'+
-			'	<span>Move back 0.4m</span>'+
-			'	<a href="#" class="bNormalUndockProcedureDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
-			'	<a href="#" class="bNormalUndockProcedureEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
-			'</li>'
-			);
-		$('#install_normal_edit_map_container_all .modalDockOptions #install_normal_edit_map_bDockCancelConfig').addClass('disabled');
-		$('#install_normal_edit_map_container_all .modalDockOptions').modal('show');
-		
+				dock_master = false;
+				if (docks.length == 0)
+				{
+					// First dock
+					dock_master = true;
+				}
+				if (!dock_master && docks.length > 0)
+				{
+					dock_master = true;
+					$.each(docks, function( index, dock ) {
+						if (dock.is_master && (dock.deleted == undefined || !dock.deleted))
+							dock_master = false;
+					});
+				}
+				
+				num = GetMaxNumDock()+1;
+				d = {'id_docking_station':nextIdDock, 'id_map':id_map, 'id_fiducial':that.data('id_fiducial'), 'final_pose_x':final_pose_x, 'final_pose_y':final_pose_y, 'final_pose_t':final_pose_t, 'approch_pose_x':approch_pose_x, 'approch_pose_y':approch_pose_y, 'approch_pose_t':approch_pose_t, 'num':parseInt(num), 'fiducial_pose_x':that.data('x'), 'fiducial_pose_y':that.data('y'), 'fiducial_pose_t':that.data('theta'), 'name':'Dock '+num, 'comment':'', 'undock_path':[{'linear_distance':-0.4, 'angular_distance':0}], 'is_master':dock_master};
+				NormalAddHistorique({'action':'add_dock', 'data':JSON.stringify(d)});
+				docks.push(d);
+				NormalTraceDock(docks.length-1);
+				
+				$('#install_normal_edit_map_container_all .modalAddDock').modal('hide');
+				
+				currentDockIndex = docks.length-1;
+				dock = docks[currentDockIndex];
+				
+				$('#install_normal_edit_map_dock_name').val(dock.name);
+				$('#install_normal_edit_map_dock_comment').val(dock.comment);
+				$('#install_normal_edit_map_dock_number').val(dock.num);
+				$('#install_normal_edit_map_dock_is_master').prop('checked', dock.is_master);
+				
+				
+				$('#install_normal_edit_map_container_all .modalDockOptions .list_undock_procedure li').remove();
+				
+				indexDockElem++;
+				
+				$('#install_normal_edit_map_container_all .modalDockOptions .list_undock_procedure').append('' +
+					'<li id="install_normal_edit_map_list_undock_procedure_elem_'+indexDockElem+'" data-index_dock_procedure="'+indexDockElem+'" data-action="move" data-distance="-0.4">'+
+					'	<span>Move back 0.4m</span>'+
+					'	<a href="#" class="bNormalUndockProcedureDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+					'	<a href="#" class="bNormalUndockProcedureEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
+					'</li>'
+					);
+				$('#install_normal_edit_map_container_all .modalDockOptions #install_normal_edit_map_bDockCancelConfig').addClass('disabled');
+				$('#install_normal_edit_map_container_all .modalDockOptions').modal('show');
+			}
+			else
+			{
+				if (data.A != wycaApi.AnswerCode.NO_ERROR)
+				{
+					ParseAPIAnswerError(data,'Check position error : ');
+				}
+				else
+				{
+					alert_wyca(textInvalidPositionDock);
+				}
+			}
+		})
     });
 	
 	$('#install_normal_edit_map_bDockSaveConfig').click(function(e) {
@@ -2708,7 +2726,6 @@ $(document).ready(function() {
 	$('#install_normal_edit_map_container_all .modalAddPoi #install_normal_edit_map_bModalAddPoiSave').click(function(e) {
         e.preventDefault();
 		
-		
 		wycaApi.CheckPosition(lastRobotPose.X, lastRobotPose.Y, function(data)
 		{
 			if (data.A == wycaApi.AnswerCode.NO_ERROR && data.D)
@@ -2734,12 +2751,13 @@ $(document).ready(function() {
 			{
 				if (data.A != wycaApi.AnswerCode.NO_ERROR)
 				{
-					alert_wyca('Check position error : ' + wycaApi.AnswerCodeToString(data.A));
+					ParseAPIAnswerError(data,'Check position error : ');
 				}
 				else
 				{
-					alert_wyca('Invalid position, please move the vehicule to another place');
+					alert_wyca(textInvalidPositionRobot);
 				}
+				
 				$('#install_normal_edit_map_container_all .modalAddPoi').modal('show');
 			}
 		});
@@ -3011,17 +3029,38 @@ $(document).ready(function() {
 	$('#install_normal_edit_map_container_all .modalAddAugmentedPose .augmented_pose').click(function(e) {
         e.preventDefault();
 		
+		
 		if (currentStepAddAugmentedPose == 'set_approch')
 		{
-			nextIdAugmentedPose++;
+			that = $(this);
 			
-			augmented_pose_temp_add = {'id_augmented_pose':nextIdAugmentedPose, 'id_map':id_map, 'id_fiducial':$(this).data('id_fiducial'), 'fiducial_pose_x':$(this).data('x'), 'fiducial_pose_y':$(this).data('y'), 'fiducial_pose_t':$(this).data('theta'), 'final_pose_x':lastRobotPose.X, 'final_pose_y':lastRobotPose.Y, 'final_pose_t':lastRobotPose.T, 'approch_pose_x':lastRobotPose.X, 'approch_pose_y':lastRobotPose.Y, 'approch_pose_t':lastRobotPose.T, 'name':'Augmented pose', 'comment':'', 'color':'', 'icon':'', 'active':true};
+			wycaApi.CheckPosition(lastRobotPose.X, lastRobotPose.Y, function(data)
+			{
+				if (data.A == wycaApi.AnswerCode.NO_ERROR && data.D)
+				{
 			
-			$('#install_normal_edit_map_container_all .modalAddAugmentedPose .augmented_pose').hide();
-			
- 			currentStepAddAugmentedPose = 'set_final';
-			$('#install_normal_edit_map_container_all .texts_add_augmented_pose').hide();
-			$('#install_normal_edit_map_container_all .text_prepare_final').show();
+					nextIdAugmentedPose++;
+					
+					augmented_pose_temp_add = {'id_augmented_pose':nextIdAugmentedPose, 'id_map':id_map, 'id_fiducial':that.data('id_fiducial'), 'fiducial_pose_x':that.data('x'), 'fiducial_pose_y':that.data('y'), 'fiducial_pose_t':that.data('theta'), 'final_pose_x':lastRobotPose.X, 'final_pose_y':lastRobotPose.Y, 'final_pose_t':lastRobotPose.T, 'approch_pose_x':lastRobotPose.X, 'approch_pose_y':lastRobotPose.Y, 'approch_pose_t':lastRobotPose.T, 'name':'Augmented pose', 'comment':'', 'color':'', 'icon':'', 'active':true};
+					
+					$('#install_normal_edit_map_container_all .modalAddAugmentedPose .augmented_pose').hide();
+					
+					currentStepAddAugmentedPose = 'set_final';
+					$('#install_normal_edit_map_container_all .texts_add_augmented_pose').hide();
+					$('#install_normal_edit_map_container_all .text_prepare_final').show();
+				}
+				else
+				{
+					if (data.A != wycaApi.AnswerCode.NO_ERROR)
+					{
+						ParseAPIAnswerError(data,'Check position error : ');
+					}
+					else
+					{
+						alert_wyca(textInvalidPositionRobot);
+					}
+				}
+			})
 		}
 		else
 		{

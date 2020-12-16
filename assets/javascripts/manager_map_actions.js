@@ -1025,24 +1025,42 @@ $(document).ready(function() {
 	});
 	
 	$('#manager_edit_map_container_all .modalAddPoi #manager_edit_map_bModalAddPoiSave').click(function(e) {
+		e.preventDefault();
 		
-		nextIdPoi++;
-			
-		poi_temp_add = {'id_poi':nextIdPoi, 'id_map':id_map, 'id_fiducial':-1, 'fiducial_pose_x':-1, 'fiducial_pose_y':-1, 'fiducial_pose_t':-1, 'final_pose_x':lastRobotPose.X, 'final_pose_y':lastRobotPose.Y, 'final_pose_t':lastRobotPose.T, 'approch_pose_x':-1, 'approch_pose_y':-1, 'approch_pose_t':-1, 'name':'POI', 'comment':'', 'color':'', 'icon':'', 'active':true};
-		
-		ManagerAddHistorique({'action':'add_poi', 'data':poi_temp_add});
-		pois.push(poi_temp_add);
-		ManagerTracePoi(pois.length-1);
+		wycaApi.CheckPosition(lastRobotPose.X, lastRobotPose.Y, function(data)
+		{
+			if (data.A == wycaApi.AnswerCode.NO_ERROR && data.D){
+				nextIdPoi++;
+					
+				poi_temp_add = {'id_poi':nextIdPoi, 'id_map':id_map, 'id_fiducial':-1, 'fiducial_pose_x':-1, 'fiducial_pose_y':-1, 'fiducial_pose_t':-1, 'final_pose_x':lastRobotPose.X, 'final_pose_y':lastRobotPose.Y, 'final_pose_t':lastRobotPose.T, 'approch_pose_x':-1, 'approch_pose_y':-1, 'approch_pose_t':-1, 'name':'POI', 'comment':'', 'color':'', 'icon':'', 'active':true};
 				
-		$('#manager_edit_map_container_all .modalAddPoi').modal('hide');
-		
-		currentPoiIndex = pois.length-1;
-		poi = pois[currentPoiIndex];
-		
-		$('#manager_edit_map_poi_name').val(poi.name);
-		$('#manager_edit_map_poi_comment').val(poi.comment);
-		
-		$('#manager_edit_map_container_all .modalPoiOptions').modal('show');
+				ManagerAddHistorique({'action':'add_poi', 'data':poi_temp_add});
+				pois.push(poi_temp_add);
+				ManagerTracePoi(pois.length-1);
+						
+				$('#manager_edit_map_container_all .modalAddPoi').modal('hide');
+				
+				currentPoiIndex = pois.length-1;
+				poi = pois[currentPoiIndex];
+				
+				$('#manager_edit_map_poi_name').val(poi.name);
+				$('#manager_edit_map_poi_comment').val(poi.comment);
+				
+				$('#manager_edit_map_container_all .modalPoiOptions').modal('show');
+			}
+			else
+			{
+				if (data.A != wycaApi.AnswerCode.NO_ERROR)
+				{
+					ParseAPIAnswerError(data,'Check position error : ');
+				}
+				else
+				{
+					alert_wyca(textInvalidPositionRobot);
+				}
+				$('#install_normal_edit_map_container_all .modalAddPoi').modal('show');
+			}
+		});
 	});
 	
 	$('#manager_edit_map_bPoiSaveConfig').click(function(e) {

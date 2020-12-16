@@ -15,6 +15,8 @@ else
 var textNeedReconnect = "<?php echo __js('Reconnection is required');?>";
 var textAccountDeleted = "<?php echo __js('Account deleted');?>";
 
+var textInvalidPositionRobot = "<?php echo __js('Invalid position, please move the vehicule to another place');?>";
+var textInvalidPositionDock = "<?php echo __js('Invalid position, please move the dock in an open environment around it.');?>";
 var textLoading = "<?php echo __js('Loading');?>";
 var textUpdatingMap = "<?php echo __js('Updating Map');?>";
 var textSelectOnOrMoreTops = "<?php echo __js('You must select one or more tops');?>";

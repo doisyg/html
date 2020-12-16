@@ -456,5 +456,8 @@ $_LANG['ca86e4730369ee61b0190ad3320493de'] = 'Le départ et / ou l\'objectif son
 $_LANG['558067a2a05f531ee89d870373fca106'] = 'La carte ne fonctionne pas correctement';
 $_LANG['d0e2f5256760e75ddaca63d7381f66b6'] = 'L\'exécution du contrôleur a été rigoureusement interrompue.';
 $_LANG['4f2ba5b245624fa6fda6ce335d92813d'] = 'Objectif trop proche';
+$_LANG['de0a95efc34574f76066c4992692fd78'] = 'Position invalide, veuillez déplacer le véhicule';
+$_LANG['828ad7357e52bd24e14e814375279317'] = 'Position invalide, veuillez déplacer la station de recharge';
+$_LANG['c85a251cc457840f1e032f1b733e9398'] = 'Timeout';
 
 ?>

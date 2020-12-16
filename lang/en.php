@@ -431,5 +431,8 @@ $_LANG['ca86e4730369ee61b0190ad3320493de'] = 'The start and / or the goal are ou
 $_LANG['558067a2a05f531ee89d870373fca106'] = 'The map is not running properly';
 $_LANG['d0e2f5256760e75ddaca63d7381f66b6'] = 'The controller execution has been stopped rigorously.';
 $_LANG['4f2ba5b245624fa6fda6ce335d92813d'] = 'Target too close';
+$_LANG['c85a251cc457840f1e032f1b733e9398'] = 'Timeout';
+$_LANG['de0a95efc34574f76066c4992692fd78'] = 'Invalid position, please move the vehicule to another place';
+$_LANG['828ad7357e52bd24e14e814375279317'] = 'Invalid position, please move the dock in an open environment around it.';
 
 ?>
