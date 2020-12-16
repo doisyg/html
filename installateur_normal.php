@@ -1146,10 +1146,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="content text-left sm-content">
-					<p class=""><?= __('Ths page allow you to import a site by uploading the .wyca file associated.')?></p>
-					<p class=""><?= __('You recover all the configuration linked to a site (map, charging stations, areas...).')?></p>
-					<p class=""><?= __('Whitout having to map again the same site.')?></p>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left sm-content">
+						<p class=""><?= __('Ths page allow you to import a site by uploading the .wyca file associated.')?></p>
+						<p class=""><?= __('You recover all the configuration linked to a site (map, charging stations, areas...).')?></p>
+						<p class=""><?= __('Whitout having to map again the same site.')?></p>
+					</div>
 				</div>
             </div>
             <footer>
