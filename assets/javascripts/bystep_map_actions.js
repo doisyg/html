@@ -2771,10 +2771,12 @@ $(document).ready(function() {
 	
 	$('#install_by_step_edit_map_container_all .modalAddPoi #install_by_step_edit_map_bModalAddPoiSave').click(function(e) {
         e.preventDefault();
+		
 		wycaApi.CheckPosition(lastRobotPose.X, lastRobotPose.Y, function(data)
 		{
 			if (data.A == wycaApi.AnswerCode.NO_ERROR && data.D)
 			{
+				
 				nextIdPoi++;
 				poi_temp_add = {'id_poi':nextIdPoi, 'id_map':id_map, 'final_pose_x':lastRobotPose.X, 'final_pose_y':lastRobotPose.Y, 'final_pose_t':lastRobotPose.T, 'name':'POI', 'comment':'', 'color':'', 'icon':'', 'active':true};
 				
@@ -2790,6 +2792,7 @@ $(document).ready(function() {
 				$('#install_by_step_edit_map_poi_name').val(poi.name);
 				$('#install_by_step_edit_map_poi_comment').val(poi.comment);
 				
+				$('#install_by_step_edit_map_container_all .modalAddPoi').modal('hide');
 				$('#install_by_step_edit_map_container_all .modalPoiOptions').modal('show');
 			}
 			else
@@ -2802,8 +2805,6 @@ $(document).ready(function() {
 				{
 					alert_wyca(textInvalidPositionRobot);
 				}
-				//
-				$('#install_by_step_edit_map_container_all .modalAddPoi').modal('show');
 			}
 		});
     });

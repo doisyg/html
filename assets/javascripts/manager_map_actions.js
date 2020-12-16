@@ -1046,6 +1046,7 @@ $(document).ready(function() {
 				$('#manager_edit_map_poi_name').val(poi.name);
 				$('#manager_edit_map_poi_comment').val(poi.comment);
 				
+				$('#manager_edit_map_container_all .modalAddPoi').modal('hide');
 				$('#manager_edit_map_container_all .modalPoiOptions').modal('show');
 			}
 			else
@@ -1058,7 +1059,7 @@ $(document).ready(function() {
 				{
 					alert_wyca(textInvalidPositionRobot);
 				}
-				$('#install_normal_edit_map_container_all .modalAddPoi').modal('show');
+				
 			}
 		});
 	});
