@@ -293,6 +293,7 @@ $(document).ready(function(e) {
 					})
 				}
 			}
+			
 			if (next == 'install_by_step_maintenance'){
 				InitMaintenanceByStep();
 				if(create_new_site){
@@ -310,7 +311,10 @@ $(document).ready(function(e) {
 				GetManagersByStep();
 				$('#bHeaderInfo').attr('onClick',"$('#install_by_step_manager .modalHelpManager').modal('show')");
 			}
+			
 			if (next == 'install_by_step_service_book') GetServiceBooksByStep();
+			
+			// NORMAL
 			
 			if (next == 'install_normal_setup_sites') GetSitesNormal();
 			if (next == 'install_normal_setup_export') GetSitesForExportNormal();
@@ -327,10 +331,32 @@ $(document).ready(function(e) {
 			if (next == 'install_normal_service_book') GetServiceBooksNormal();
 			if (next == 'install_normal_edit_map') GetInfosCurrentMapNormal();
 			if (next == 'install_normal_setup_trinary') NormalInitTrinary();
-					
+			
+			// WYCA
+			
+			if (next == 'wyca_setup_sites') GetSitesWyca();
+			if (next == 'wyca_setup_export') GetSitesForExportWyca();
+			if (next == 'wyca_setup_import') InitSiteImportWyca();
+			if (next == 'wyca_setup_tops') InitTopsWyca();
+			if (next == 'wyca_setup_top') InitTopsActiveWyca();
+			if (next == 'wyca_setup_config') GetConfigurationsWyca();
+			if (next == 'wyca_setup_wifi') InitInstallWifiPageWyca();
+			if (next == 'wyca_manager') {
+				GetManagersWyca();
+				$('#bHeaderInfo').attr('onClick',"$('#wyca_manager .modalHelpManager').modal('show')");
+			}
+			if (next == 'wyca_user') GetUsersWyca();
+			if (next == 'wyca_service_book') GetServiceBooksWyca();
+			if (next == 'wyca_edit_map') GetInfosCurrentMapWyca();
+			if (next == 'wyca_setup_trinary') WycaInitTrinary();
+			
+			// MANAGER
+			
 			if (next == 'manager_edit_map') GetInfosCurrentMapManager();
 			if (next == 'manager_top') InitTopsActiveManager();
 			if (next == 'manager_users') GetUsersManager();
+			
+			// USER
 			
 			if (next == 'user_edit_map') GetInfosCurrentMapUser();
 			
@@ -552,44 +578,21 @@ $(document).ready(function(e) {
 	})
 	
 });
-var currentDeleteId = '';
-var touchHandled = false;
 
-function simulateMouseEvent (event, simulatedType)
+/* USER GROUP FUNCTIONS */
+
+// SITE
+
+function InitSiteImportWyca()
 {
-
-    // Ignore multi-touch events
-    if (event.originalEvent.touches.length > 1) {
-      return;
-    }
-
-    event.preventDefault();
-
-    var touch = event.originalEvent.changedTouches[0],
-        simulatedEvent = document.createEvent('MouseEvents');
-
-    // Initialize the simulated mouse event using the touch event's coordinates
-    simulatedEvent.initMouseEvent(
-      simulatedType,    // type
-      true,             // bubbles
-      true,             // cancelable
-      window,           // view
-      1,                // detail
-      touch.screenX,    // screenX
-      touch.screenY,    // screenY
-      touch.clientX,    // clientX
-      touch.clientY,    // clientY
-      false,            // ctrlKey
-      false,            // altKey
-      false,            // shiftKey
-      false,            // metaKey
-      0,                // button
-      null              // relatedTarget
-    );
-
-    // Dispatch the simulated event to the target element
-    event.target.dispatchEvent(simulatedEvent);
-  }
+	$('#pages_wyca .filename_import_site').html('');
+	$('#pages_wyca .filename_import_site').hide();
+	$('#pages_wyca .file_import_site_wrapper').css('background-color','#589fb26e');
+	$('#pages_wyca .file_import_site').val('');
+	
+	$('#pages_wyca .wyca_setup_import_loading').hide();
+	$('#pages_wyca .wyca_setup_import_content').show();
+}
 
 function InitSiteImportNormal()
 {
@@ -611,6 +614,264 @@ function InitSiteImportByStep()
 	
 	$('#pages_install_by_step .install_by_step_setup_import_loading').hide();
 	$('#pages_install_by_step .install_by_step_setup_import_content').show();
+}
+
+var current_site = {};
+
+function GetSitesWyca()
+{
+	$('.wyca_setup_sites_loading').show();
+	$('#wyca_setup_sites .loaded').hide();
+	if (wycaApi.websocketAuthed)
+	{
+		
+		wycaApi.GetCurrentSite(function(data) {
+			current_site = data.D;
+			//console.log(current_site);
+			wycaApi.GetSitesList(function(data) {
+				
+				$('#wyca_setup_sites .list_sites').html('');
+				
+				if (data.D != undefined)
+				$.each(data.D,function(index, value){
+					$('#wyca_setup_sites .list_sites').append('' +
+						'<li id="wyca_setup_sites_list_site_elem_'+value.id_site+'" data-id_site="'+value.id_site+'">'+
+						'	<span class="societe">'+value.name+'</span>'+
+						(current_site.id_site != value.id_site?'	<a href="#" class="bSiteDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>':'')+
+						(current_site.id_site != value.id_site?'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>':'')+
+						(current_site.id_site != value.id_site?'	<a href="#" class="bSiteSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-check"></i></a>':'')+
+						'</li>'
+						);
+				});
+				
+				$('.wyca_setup_sites_loading').hide();
+				$('#wyca_setup_sites .loaded').show();
+			});
+		});
+	}
+	else
+	{
+		setTimeout(GetSitesWyca, 500);
+	}
+}
+
+function GetSitesForExportWyca()
+{
+	$('.wyca_setup_export_loading').show();
+	$('#wyca_setup_export .loaded').hide();
+	if (wycaApi.websocketAuthed)
+	{
+		
+		wycaApi.GetCurrentSite(function(data) {
+			current_site = data.D;
+			//console.log(current_site);
+			wycaApi.GetSitesList(function(data) {
+				
+				$('#wyca_setup_export .list_sites').html('');
+				
+				if (data.D != undefined)
+				$.each(data.D,function(index, value){
+					$('#wyca_setup_export .list_sites').append('' +
+						'<li id="wyca_setup_export_list_site_elem_'+value.id_site+'" data-id_site="'+value.id_site+'" class="bSiteExportElem">'+
+						'	<span class="societe">'+value.name+'</span>'+
+						'	<a href="#" class="btn btn-sm btn-circle btn-success pull-right"><i class="fa fa-upload"></i></a>'+
+						'</li>'
+						);
+				});
+				
+				$('.wyca_setup_export_loading').hide();
+				$('#wyca_setup_export .loaded').show();
+			});
+		});
+	}
+	else
+	{
+		setTimeout(GetSitesWyca, 500);
+	}
+}
+
+function GetSitesNormal()
+{
+	$('.install_normal_setup_sites_loading').show();
+	$('#install_normal_setup_sites .loaded').hide();
+	if (wycaApi.websocketAuthed)
+	{
+		
+		wycaApi.GetCurrentSite(function(data) {
+			current_site = data.D;
+			//console.log(current_site);
+			wycaApi.GetSitesList(function(data) {
+				
+				$('#install_normal_setup_sites .list_sites').html('');
+				
+				if (data.D != undefined)
+				$.each(data.D,function(index, value){
+					$('#install_normal_setup_sites .list_sites').append('' +
+						'<li id="install_normal_setup_sites_list_site_elem_'+value.id_site+'" data-id_site="'+value.id_site+'">'+
+						'	<span class="societe">'+value.name+'</span>'+
+						(current_site.id_site != value.id_site?'	<a href="#" class="bSiteDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>':'')+
+						(current_site.id_site != value.id_site?'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>':'')+
+						(current_site.id_site != value.id_site?'	<a href="#" class="bSiteSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-check"></i></a>':'')+
+						'</li>'
+						);
+				});
+				
+				$('.install_normal_setup_sites_loading').hide();
+				$('#install_normal_setup_sites .loaded').show();
+			});
+		});
+	}
+	else
+	{
+		setTimeout(GetSitesNormal, 500);
+	}
+}
+
+function GetSitesForExportNormal()
+{
+	$('.install_normal_setup_export_loading').show();
+	$('#install_normal_setup_export .loaded').hide();
+	if (wycaApi.websocketAuthed)
+	{
+		
+		wycaApi.GetCurrentSite(function(data) {
+			current_site = data.D;
+			//console.log(current_site);
+			wycaApi.GetSitesList(function(data) {
+				
+				$('#install_normal_setup_export .list_sites').html('');
+				
+				if (data.D != undefined)
+				$.each(data.D,function(index, value){
+					$('#install_normal_setup_export .list_sites').append('' +
+						'<li id="install_normal_setup_export_list_site_elem_'+value.id_site+'" data-id_site="'+value.id_site+'" class="bSiteExportElem">'+
+						'	<span class="societe">'+value.name+'</span>'+
+						'	<a href="#" class="btn btn-sm btn-circle btn-success pull-right"><i class="fa fa-upload"></i></a>'+
+						'</li>'
+						);
+				});
+				
+				$('.install_normal_setup_export_loading').hide();
+				$('#install_normal_setup_export .loaded').show();
+			});
+		});
+	}
+	else
+	{
+		setTimeout(GetSitesNormal, 500);
+	}
+}
+
+// MASTER DOCK
+
+function InitMasterDockWyca()
+{
+	$('#pages_wyca .modalMasterDock #MasterDockList').html('');
+	$('#pages_wyca .modalMasterDock .MasterDock_loading').show();
+	$('#pages_wyca .modalMasterDock').modal('show');
+	
+	if(docks != 'undefined' && docks.length > 1){
+		$.each(docks,function(idx,item){
+			let master_dock="";
+			master_dock+='<div class="col-xs-6 text-center">';
+			master_dock+='	<div class="MasterDockItem btn bTuile" id="'+item.id_docking_station+'">';
+			master_dock+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
+			master_dock+='		<i class="fas fa-charging-station"></i>';
+			master_dock+='		<p class="dockname">'+item.name+'</p>';
+			master_dock+='   </div>';
+			master_dock+='</div>';
+			$('#pages_wyca #MasterDockList').append(master_dock);
+		});
+		$('#pages_wyca .MasterDock_loading').hide();
+	}else{
+		if (wycaApi.websocketAuthed){
+			wycaApi.GetCurrentMapData(function(data){
+				if (data.A == wycaApi.AnswerCode.NO_ERROR){
+					if(data.D.docks.length <= 1){
+						$('#pages_wyca #wyca_setup_import .bImportSiteBack').click();
+					}else{
+						forbiddens = data.D.forbiddens;
+						areas = data.D.areas;
+						docks = data.D.docks;
+						pois = data.D.pois;
+						augmented_poses = data.D.augmented_poses;
+						
+						$.each(docks,function(idx,item){
+							let master_dock="";
+							master_dock+='<div class="col-xs-6 text-center">';
+							master_dock+='	<div class="MasterDockItem btn bTuile" id="'+item.id_docking_station+'">';
+							master_dock+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
+							master_dock+='		<i class="fas fa-charging-station"></i>';
+							master_dock+='		<p class="dockname">'+item.name+'</p>';
+							master_dock+='   </div>';
+							master_dock+='</div>';
+							$('#pages_wyca #MasterDockList').append(master_dock);
+						});
+						$('#pages_wyca .MasterDock_loading').hide();
+					}
+				}else{
+					ParseAPIAnswerError(data);
+				}
+			})
+		}else{
+			setTimeout(InitMasterDockWyca, 500);
+		}
+	}
+}
+
+function InitMasterDockNormal()
+{
+	$('#pages_install_normal .modalMasterDock #MasterDockList').html('');
+	$('#pages_install_normal .modalMasterDock .MasterDock_loading').show();
+	$('#pages_install_normal .modalMasterDock').modal('show');
+	
+	if(docks != 'undefined' && docks.length > 1){
+		$.each(docks,function(idx,item){
+			let master_dock="";
+			master_dock+='<div class="col-xs-6 text-center">';
+			master_dock+='	<div class="MasterDockItem btn bTuile" id="'+item.id_docking_station+'">';
+			master_dock+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
+			master_dock+='		<i class="fas fa-charging-station"></i>';
+			master_dock+='		<p class="dockname">'+item.name+'</p>';
+			master_dock+='   </div>';
+			master_dock+='</div>';
+			$('#pages_install_normal #MasterDockList').append(master_dock);
+		});
+		$('#pages_install_normal .MasterDock_loading').hide();
+	}else{
+		if (wycaApi.websocketAuthed){
+			wycaApi.GetCurrentMapData(function(data){
+				if (data.A == wycaApi.AnswerCode.NO_ERROR){
+					if(data.D.docks.length <= 1){
+						$('#pages_install_normal #install_normal_setup_import .bImportSiteBack').click();
+					}else{
+						forbiddens = data.D.forbiddens;
+						areas = data.D.areas;
+						docks = data.D.docks;
+						pois = data.D.pois;
+						augmented_poses = data.D.augmented_poses;
+						
+						$.each(docks,function(idx,item){
+							let master_dock="";
+							master_dock+='<div class="col-xs-6 text-center">';
+							master_dock+='	<div class="MasterDockItem btn bTuile" id="'+item.id_docking_station+'">';
+							master_dock+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
+							master_dock+='		<i class="fas fa-charging-station"></i>';
+							master_dock+='		<p class="dockname">'+item.name+'</p>';
+							master_dock+='   </div>';
+							master_dock+='</div>';
+							$('#pages_install_normal #MasterDockList').append(master_dock);
+						});
+						$('#pages_install_normal .MasterDock_loading').hide();
+					}
+				}else{
+					ParseAPIAnswerError(data);
+				}
+			})
+		}else{
+			setTimeout(InitMasterDockNormal, 500);
+		}
+	}
 }
 
 function InitMasterDockByStep(back = false)
@@ -671,59 +932,22 @@ function InitMasterDockByStep(back = false)
 	
 }
 
-function InitMasterDockNormal()
+// TOP IMPORT
+
+function InitTopImportWyca()
 {
-	$('#pages_install_normal .modalMasterDock #MasterDockList').html('');
-	$('#pages_install_normal .modalMasterDock .MasterDock_loading').show();
-	$('#pages_install_normal .modalMasterDock').modal('show');
-	
-	if(docks != 'undefined' && docks.length > 1){
-		$.each(docks,function(idx,item){
-			let master_dock="";
-			master_dock+='<div class="col-xs-6 text-center">';
-			master_dock+='	<div class="MasterDockItem btn bTuile" id="'+item.id_docking_station+'">';
-			master_dock+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
-			master_dock+='		<i class="fas fa-charging-station"></i>';
-			master_dock+='		<p class="dockname">'+item.name+'</p>';
-			master_dock+='   </div>';
-			master_dock+='</div>';
-			$('#pages_install_normal #MasterDockList').append(master_dock);
-		});
-		$('#pages_install_normal .MasterDock_loading').hide();
-	}else{
-		if (wycaApi.websocketAuthed){
-			wycaApi.GetCurrentMapData(function(data){
-				if (data.A == wycaApi.AnswerCode.NO_ERROR){
-					if(data.D.docks.length <= 1){
-						$('#pages_install_normal #install_normal_setup_import .bImportSiteBack').click();
-					}else{
-						forbiddens = data.D.forbiddens;
-						areas = data.D.areas;
-						docks = data.D.docks;
-						pois = data.D.pois;
-						augmented_poses = data.D.augmented_poses;
-						
-						$.each(docks,function(idx,item){
-							let master_dock="";
-							master_dock+='<div class="col-xs-6 text-center">';
-							master_dock+='	<div class="MasterDockItem btn bTuile" id="'+item.id_docking_station+'">';
-							master_dock+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
-							master_dock+='		<i class="fas fa-charging-station"></i>';
-							master_dock+='		<p class="dockname">'+item.name+'</p>';
-							master_dock+='   </div>';
-							master_dock+='</div>';
-							$('#pages_install_normal #MasterDockList').append(master_dock);
-						});
-						$('#pages_install_normal .MasterDock_loading').hide();
-					}
-				}else{
-					ParseAPIAnswerError(data);
-				}
-			})
-		}else{
-			setTimeout(InitMasterDockNormal, 500);
-		}
-	}
+	$('#pages_wyca .modalImportTop .filename_import_top').html('');
+	$('#pages_wyca .modalImportTop .filename_import_top').hide();
+	$('#pages_wyca .modalImportTop .file_import_top_wrapper').css('background-color','#589fb26e');
+	$('#pages_wyca .modalImportTop .file_import_top').val('');
+}
+
+function InitTopImportNormal()
+{
+	$('#pages_install_normal .modalImportTop .filename_import_top').html('');
+	$('#pages_install_normal .modalImportTop .filename_import_top').hide();
+	$('#pages_install_normal .modalImportTop .file_import_top_wrapper').css('background-color','#589fb26e');
+	$('#pages_install_normal .modalImportTop .file_import_top').val('');
 }
 
 function InitTopImportByStep()
@@ -734,12 +958,45 @@ function InitTopImportByStep()
 	$('#pages_install_by_step .modalImportTop .file_import_top').val('');
 }
 
-function InitTopImportNormal()
+// SERVICE BOOK
+
+function GetServiceBooksWyca()
 {
-	$('#pages_install_normal .modalImportTop .filename_import_top').html('');
-	$('#pages_install_normal .modalImportTop .filename_import_top').hide();
-	$('#pages_install_normal .modalImportTop .file_import_top_wrapper').css('background-color','#589fb26e');
-	$('#pages_install_normal .modalImportTop .file_import_top').val('');
+	$('.wyca_service_book_loading').show();
+	$('#wyca_service_book .loaded').hide();
+	
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetServiceBooksList(function(data) {
+			
+			$('#wyca_service_book .list_service_books').html('');
+			
+			if (data.D != undefined)
+			$.each(data.D,function(index, value){
+				let d = new Date(value.date * 1000);
+				let d_txt="";
+				switch(lang){
+					case 'fr': d_txt = d.getDate() + '/' + (d.getMonth()+1) + '/' +  d.getFullYear() ; break;
+					case 'en': d_txt = (d.getMonth()+1) + '/' + d.getDate() + '/' +  d.getFullYear() ; break;
+					default: break;
+				}
+				$('#wyca_service_book .list_service_books').prepend('' +
+						'<li>'+
+						'	<div class="date">'+d_txt+'</div>'+
+						'	<div class="title">'+value.title+'</div>'+
+						'	<div class="comment">'+value.comment+'</div>'+
+						'</li>'
+						);
+			});
+			
+			$('.wyca_service_book_loading').hide();
+			$('#wyca_service_book .loaded').show();
+		});
+	}
+	else
+	{
+		setTimeout(GetServiceBooksNormal, 500);
+	}
 }
 
 function GetServiceBooksNormal()
@@ -820,6 +1077,8 @@ function GetServiceBooksByStep()
 	}
 }
 
+// USER
+
 function GetUsersManager()
 {
 	$('.manager_users_loading').show();
@@ -856,77 +1115,38 @@ function GetUsersManager()
 
 }
 
-var current_site = {};
-
-function GetSitesNormal()
+function GetUsersWyca()
 {
-	$('.install_normal_setup_sites_loading').show();
-	$('#install_normal_setup_sites .loaded').hide();
+	$('.wyca_user_loading').show();
+	$('#wyca_user .loaded').hide();
 	if (wycaApi.websocketAuthed)
 	{
-		
-		wycaApi.GetCurrentSite(function(data) {
-			current_site = data.D;
-			//console.log(current_site);
-			wycaApi.GetSitesList(function(data) {
-				
-				$('#install_normal_setup_sites .list_sites').html('');
-				
-				if (data.D != undefined)
-				$.each(data.D,function(index, value){
-					$('#install_normal_setup_sites .list_sites').append('' +
-						'<li id="install_normal_setup_sites_list_site_elem_'+value.id_site+'" data-id_site="'+value.id_site+'">'+
-						'	<span class="societe">'+value.name+'</span>'+
-						(current_site.id_site != value.id_site?'	<a href="#" class="bSiteDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>':'')+
-						(current_site.id_site != value.id_site?'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>':'')+
-						(current_site.id_site != value.id_site?'	<a href="#" class="bSiteSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-check"></i></a>':'')+
+		wycaApi.GetUsersList(function(data) {
+			$('#wyca_user .list_users').html('');
+			
+			if (data.D != undefined)
+			$.each(data.D,function(index, value){
+				if (value.id_group_user  == wycaApi.GroupUser.USER)
+				{
+					$('#wyca_user .list_users').append('' +
+						'<li id="wyca_user_list_user_elem_'+value.id_user+'" data-id_user="'+value.id_user+'">'+
+						'	<span class="email">'+value.email+'</span>'+
+						'	<a href="#" class="bUserDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="bUserEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pen"></i></a>'+
 						'</li>'
 						);
-				});
-				
-				$('.install_normal_setup_sites_loading').hide();
-				$('#install_normal_setup_sites .loaded').show();
+				}
 			});
+			
+			$('.wyca_user_loading').hide();
+			$('#wyca_user .loaded').show();
+			RefreshDisplayUserWyca();
 		});
 	}
 	else
 	{
-		setTimeout(GetSitesNormal, 500);
-	}
-}
-
-function GetSitesForExportNormal()
-{
-	$('.install_normal_setup_export_loading').show();
-	$('#install_normal_setup_export .loaded').hide();
-	if (wycaApi.websocketAuthed)
-	{
-		
-		wycaApi.GetCurrentSite(function(data) {
-			current_site = data.D;
-			//console.log(current_site);
-			wycaApi.GetSitesList(function(data) {
-				
-				$('#install_normal_setup_export .list_sites').html('');
-				
-				if (data.D != undefined)
-				$.each(data.D,function(index, value){
-					$('#install_normal_setup_export .list_sites').append('' +
-						'<li id="install_normal_setup_export_list_site_elem_'+value.id_site+'" data-id_site="'+value.id_site+'" class="bSiteExportElem">'+
-						'	<span class="societe">'+value.name+'</span>'+
-						'	<a href="#" class="btn btn-sm btn-circle btn-success pull-right"><i class="fa fa-upload"></i></a>'+
-						'</li>'
-						);
-				});
-				
-				$('.install_normal_setup_export_loading').hide();
-				$('#install_normal_setup_export .loaded').show();
-			});
-		});
-	}
-	else
-	{
-		setTimeout(GetSitesNormal, 500);
+		setTimeout(GetUsersWyca, 500);
 	}
 }
 
@@ -962,6 +1182,47 @@ function GetUsersNormal()
 	else
 	{
 		setTimeout(GetUsersNormal, 500);
+	}
+}
+
+// MANAGER
+
+function GetManagersWyca()
+{
+	boolHelpManager = getCookie('boolHelpManagerI') != '' ? JSON.parse(getCookie('boolHelpManagerI')) : true; // TRICK JSON.parse STR TO BOOL
+	if(boolHelpManager)
+		$('#wyca_manager .modalHelpManager').modal('show');
+	$('.wyca_manager_loading').show();
+	$('#wyca_manager .loaded').hide();
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetUsersList(function(data) {
+			
+			$('#wyca_manager .list_managers').html('');
+			
+			if (data.D != undefined)
+			$.each(data.D,function(index, value){
+				if (value.id_group_user  == wycaApi.GroupUser.MANAGER)
+				{
+					$('#wyca_manager .list_managers').append('' +
+						'<li id="wyca_manager_list_manager_elem_'+value.id_user+'" data-id_user="'+value.id_user+'">'+
+						'	<span class="email">'+value.email+'</span>'+
+						'	<a href="#" class="bManagerDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="bManagerEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pen"></i></a>'+
+						'</li>'
+						);
+				}
+			});
+			
+			$('.wyca_manager_loading').hide();
+			$('#wyca_manager .loaded').show();
+			RefreshDisplayManagerWyca();
+		});
+	}
+	else
+	{
+		setTimeout(GetManagersWyca, 500);
 	}
 }
 
@@ -1045,6 +1306,27 @@ function GetManagersByStep()
 
 }
 
+// CONFIGURATION BATTERY
+
+function GetConfigurationsWyca()
+{
+	$('.wyca_setup_config_loading').show();
+	$('#wyca_setup_config .loaded').hide();
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetEnergyConfiguration(function(data) {
+			$('#wyca_setup_config #wyca_setup_config_i_level_min_gotocharge').val(data.D.EBL);
+			$('#wyca_setup_config #wyca_setup_config_i_level_min_dotask').val(data.D.MBL);
+			$('.wyca_setup_config_loading').hide();
+			$('#wyca_setup_config .loaded').show();
+		});
+	}
+	else
+	{
+		setTimeout(GetConfigurationsWyca, 500);
+	}
+}
+
 function GetConfigurationsNormal()
 {
 	$('.install_normal_setup_config_loading').show();
@@ -1083,6 +1365,33 @@ function GetConfigurationsByStep()
 	}
 }
 
+// TOP
+
+function InitTopsWyca()
+{
+	$('.wyca_setup_tops_loading').show();
+	$('#wyca_setup_tops .tuiles').html('');
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetTopsList(function(data) {
+			//console.log(data);
+			$.each(data.D,function(index, value){
+				$('#wyca_setup_tops .tuiles').append('<li class="col-xs-4 col-md-3 col-lg-2">'+
+				'	<a class="is_checkbox '+(value.active?'active no_update':'')+' '+(value.available?'checked':'')+' anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'" href="#">'+
+				'		<i class="fa fa-check"></i>'+
+				'		<img src="data:image/png;base64, '+value.image_b64+'" />'+value.name+''+
+				'	</a>'+
+				'</li>');
+			});
+			$('.wyca_setup_tops_loading').hide();
+		});
+	}
+	else
+	{
+		setTimeout(InitTopsWyca, 500);
+	}
+}
+
 function InitTopsNormal()
 {
 	$('.install_normal_setup_tops_loading').show();
@@ -1105,6 +1414,31 @@ function InitTopsNormal()
 	else
 	{
 		setTimeout(InitTopsNormal, 500);
+	}
+}
+
+function InitTopsByStep()
+{
+	$('.install_by_step_tops_loading').show();
+	$('#install_by_step_tops .tuiles').html('');
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetTopsList(function(data) {
+			//console.log(data);
+			$.each(data.D,function(index, value){
+				$('#install_by_step_tops .tuiles').append('<li class="col-xs-4 col-md-3 col-lg-2">'+
+				'	<a class="is_checkbox '+(value.available?'checked':'')+' anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'" href="#">'+
+				'		<i class="fa fa-check"></i>'+
+				'		<img src="data:image/png;base64, '+value.image_b64+'" />'+value.name+''+
+				'	</a>'+
+				'</li>');
+			});
+			$('.install_by_step_tops_loading').hide();
+		});
+	}
+	else
+	{
+		setTimeout(InitTopsByStep, 500);
 	}
 }
 
@@ -1133,6 +1467,35 @@ function InitTopsActiveManager()
 	else
 	{
 		setTimeout(InitTopsActiveManager, 500);
+
+	}
+}
+
+function InitTopsActiveWyca()
+{
+	$('.wyca_setup_top_loading').show();
+	$('#wyca_setup_top .tuiles').html('');
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetTopsList(function(data) {
+			//console.log(data);
+			$.each(data.D,function(index, value){
+				if (value.available)
+				{
+					$('#wyca_setup_top .tuiles').append('<li class="col-xs-4 col-md-3 col-lg-2 bTop' + value.id_top + '">'+
+					'	<a href="#" class="is_checkbox set_top '+(value.active?'checked':'')+' anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'">'+
+					'		<i class="fa fa-check"></i>'+
+					'		<img src="data:image/png;base64, '+value.image_b64+'" />'+value.name+''+
+					'	</a>'+
+					'</li>');
+				}
+			});
+			$('.wyca_setup_top_loading').hide();
+		});
+	}
+	else
+	{
+		setTimeout(InitTopsActiveWyca, 500);
 
 	}
 }
@@ -1166,31 +1529,162 @@ function InitTopsActiveNormal()
 	}
 }
 
-function InitTopsByStep()
+function InitTopsActiveByStep()
 {
-	$('.install_by_step_tops_loading').show();
-	$('#install_by_step_tops .tuiles').html('');
+	$('.install_by_step_top_loading').show();
+	$('#install_by_step_top .tuiles').html('');
 	if (wycaApi.websocketAuthed)
 	{
 		wycaApi.GetTopsList(function(data) {
-			//console.log(data);
 			$.each(data.D,function(index, value){
-				$('#install_by_step_tops .tuiles').append('<li class="col-xs-4 col-md-3 col-lg-2">'+
-				'	<a class="is_checkbox '+(value.available?'checked':'')+' anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'" href="#">'+
-				'		<i class="fa fa-check"></i>'+
-				'		<img src="data:image/png;base64, '+value.image_b64+'" />'+value.name+''+
-				'	</a>'+
-				'</li>');
+				if (value.available)
+				{
+					$('#install_by_step_top .tuiles').append('<li class="col-xs-4 col-md-3 col-lg-2 bTop' + value.id_top + '">'+
+					'	<a href="#" class="set_top button_goto anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'" data-goto="install_by_step_check">'+
+					'		<img src="data:image/png;base64, '+value.image_b64+'" />'+value.name+''+
+					'	</a>'+
+					'</li>');
+				}
 			});
-			$('.install_by_step_tops_loading').hide();
+			$('.install_by_step_top_loading').hide();
 		});
 	}
 	else
 	{
-		setTimeout(InitTopsByStep, 500);
+		setTimeout(InitTopsActiveByStep, 500);
+
 	}
 }
 
+// WIFI
+
+function InitInstallWifiPageWyca()
+{
+	if (wycaApi.websocketAuthed)
+	{
+		
+		wycaApi.GetWifiList(function(data) {
+			$('.wyca_setup_wifi_loading').hide();
+			$('#wyca_setup_wifi tr').hide();
+			if (data.D.length > 0)
+			{
+				$.each(data.D,function(index, value){
+					signal = parseInt(value.signal/20);
+					if ($('#wyca_setup_wifi .wifi'+value.bssid).length > 0)
+					{
+						$('#wyca_setup_wifi tr').show();
+						$('#wyca_setup_wifi .wifi'+value.bssid+' img').attr('src', 'assets/images/signal-'+signal+'.png');
+						if (value.state == 'active')
+						{
+							$('#wyca_setup_wifi tr').removeClass('active');
+							$('#wyca_setup_wifi .wifi'+value.bssid).addClass('active');
+						}
+					}
+					else
+					{
+						if (value.state == 'active')
+							$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td><i class="fas fa-check"></i> '+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
+						else
+							$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td>'+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
+					}
+				});
+			}
+		});
+		
+		if ($('#wyca_setup_wifi').is(':visible'))
+			setTimeout(InitInstallWifiPageWyca, 3000);
+	}
+	else
+	{
+		setTimeout(InitInstallWifiPageWyca, 500);
+	}
+}
+
+function InitInstallWifiPageNormal()
+{
+	if (wycaApi.websocketAuthed)
+	{
+		
+		wycaApi.GetWifiList(function(data) {
+			$('.install_normal_setup_wifi_loading').hide();
+			$('#install_normal_setup_wifi tr').hide();
+			if (data.D.length > 0)
+			{
+				$.each(data.D,function(index, value){
+					signal = parseInt(value.signal/20);
+					if ($('#install_normal_setup_wifi .wifi'+value.bssid).length > 0)
+					{
+						$('#install_normal_setup_wifi tr').show();
+						$('#install_normal_setup_wifi .wifi'+value.bssid+' img').attr('src', 'assets/images/signal-'+signal+'.png');
+						if (value.state == 'active')
+						{
+							$('#install_normal_setup_wifi tr').removeClass('active');
+							$('#install_normal_setup_wifi .wifi'+value.bssid).addClass('active');
+						}
+					}
+					else
+					{
+						if (value.state == 'active')
+							$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td><i class="fas fa-check"></i> '+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
+						else
+							$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td>'+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
+					}
+				});
+			}
+		});
+		
+		if ($('#install_normal_setup_wifi').is(':visible'))
+			setTimeout(InitInstallWifiPageNormal, 3000);
+	}
+	else
+	{
+		setTimeout(InitInstallWifiPageNormal, 500);
+	}
+}
+
+function InitInstallWifiPageByStep()
+{
+	if (wycaApi.websocketAuthed)
+	{
+		
+		wycaApi.GetWifiList(function(data) {
+			$('.install_bystep_setup_wifi_loading').hide();
+			$('#install_by_step_wifi tr').hide();
+			if (data.D.length > 0)
+			{
+				$.each(data.D,function(index, value){
+					signal = parseInt(value.signal/20);
+					if ($('#install_by_step_wifi .wifi'+value.bssid).length > 0)
+					{
+						$('#install_by_step_wifi tr').show();
+						$('#install_by_step_wifi .wifi'+value.bssid+' img').attr('src', 'assets/images/signal-'+signal+'.png');
+						if (value.state == 'active')
+						{
+							$('#install_by_step_wifi tr').removeClass('active');
+							$('#install_by_step_wifi .wifi'+value.bssid).addClass('active');
+						}
+					}
+					else
+					{
+						if (value.state == 'active')
+							$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td><i class="fas fa-check"></i> '+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
+						else
+							$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td>'+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
+					}
+				});
+			}
+		});
+		
+		if ($('#install_by_step_wifi').is(':visible'))
+			setTimeout(InitInstallWifiPageByStep, 3000);
+	}
+	else
+	{
+		setTimeout(InitInstallWifiPageByStep, 500);
+	}
+}
+
+// BYSTEP RELATED FUNCS
 function InitMappingByStep()
 {
 	imgMappingLoaded = true;
@@ -1240,13 +1734,86 @@ function InitMappingByStep()
 	}
 }
 
+function GetLastMappingByStep()
+{
+	$('#install_by_step_mapping_fin .loading_fin_create_map').show();
+	
+	img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
+	img.src = 'assets/images/vide.png';
+	
+	if(typeof(window.site_name) != 'undefined' && window.site_name != ""){
+		$('#install_by_step_mapping_from_name').val(window.site_name)
+	}else{
+		wycaApi.GetCurrentSite(function(data){
+			if (data.A == wycaApi.AnswerCode.NO_ERROR){
+				window.site_name=data.D.name;
+				$('#install_by_step_mapping_from_name').val(window.site_name)
+			}
+		})
+	}
+	
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetLastMapping(function(data) {
+			
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+			
+				var img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
+				img.src = 'data:image/png;base64,' + data.D;
+				
+				finalMapData = 'data:image/png;base64,' + data.D;
+				
+				setTimeout(function() {
+					canvas = document.createElement('canvas');
+					
+					width = img.naturalWidth;
+					height = img.naturalHeight;
+					
+					$('#install_by_step_mapping_canvas_result_trinary').attr('width', img.naturalWidth);
+					$('#install_by_step_mapping_canvas_result_trinary').attr('height', img.naturalHeight);
+					
+					canvas.width = img.naturalWidth;
+					canvas.height = img.naturalHeight;
+					canvas.getContext('2d').drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
+					
+					CalculateMapTrinary();
+				}, 100);
+			}
+			else
+			{
+				$('#install_by_step_mapping_fin .loading_fin_create_map').hide();
+				
+				alert_wyca('Recovery mapping error ; ' + data.M);
+			}
+		});
+		
+		mappingStarted = false;
+		$('#install_by_step_mapping .switchLiveMapping').hide();
+		$('#install_by_step_mapping .bMappingStop').hide();
+		$('#install_by_step_mapping .mapping_view').hide();
+		$('#install_by_step_mapping .bMappingStart').show();
+		
+		$('#install_by_step_mapping_fin .bMappingCancelMap2').show();
+		$('#install_by_step_mapping_fin .bMappingSaveMap').show();
+		
+		if (intervalMap != null)
+		{
+			clearInterval(intervalMap);
+			intervalMap = null;
+		}
+	}
+	else
+	{
+		setTimeout(GetLastMappingByStep, 500);
+	}
+}
+
 function InitMaintenanceByStep()
 {
 	if(getCookie('create_new_site') != '')
 		create_new_site = JSON.parse(getCookie('create_new_site'));
 }
-
-var save_check_components_result = undefined;
 
 function DrawSvgCheckByStep()
 {
@@ -1355,6 +1922,8 @@ function DrawSvgCheckByStep()
 	}
 }
 
+var save_check_components_result = undefined;
+
 function InitCheckByStep()
 {
 	
@@ -1422,190 +1991,45 @@ function InitCheckByStep()
 	}
 }
 
-function GetLastMappingByStep()
-{
-	$('#install_by_step_mapping_fin .loading_fin_create_map').show();
-	
-	img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
-	img.src = 'assets/images/vide.png';
-	
-	if(typeof(window.site_name) != 'undefined' && window.site_name != ""){
-		$('#install_by_step_mapping_from_name').val(window.site_name)
-	}else{
-		wycaApi.GetCurrentSite(function(data){
-			if (data.A == wycaApi.AnswerCode.NO_ERROR){
-				window.site_name=data.D.name;
-				$('#install_by_step_mapping_from_name').val(window.site_name)
-			}
-		})
-	}
-	
-	if (wycaApi.websocketAuthed)
-	{
-		wycaApi.GetLastMapping(function(data) {
-			
-			if (data.A == wycaApi.AnswerCode.NO_ERROR)
-			{
-			
-				var img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
-				img.src = 'data:image/png;base64,' + data.D;
-				
-				finalMapData = 'data:image/png;base64,' + data.D;
-				
-				setTimeout(function() {
-					canvas = document.createElement('canvas');
-					
-					width = img.naturalWidth;
-					height = img.naturalHeight;
-					
-					$('#install_by_step_mapping_canvas_result_trinary').attr('width', img.naturalWidth);
-					$('#install_by_step_mapping_canvas_result_trinary').attr('height', img.naturalHeight);
-					
-					canvas.width = img.naturalWidth;
-					canvas.height = img.naturalHeight;
-					canvas.getContext('2d').drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
-					
-					CalculateMapTrinary();
-				}, 100);
-			}
-			else
-			{
-				$('#install_by_step_mapping_fin .loading_fin_create_map').hide();
-				
-				alert_wyca('Recovery mapping error ; ' + data.M);
-			}
-		});
-		
-		mappingStarted = false;
-		$('#install_by_step_mapping .switchLiveMapping').hide();
-		$('#install_by_step_mapping .bMappingStop').hide();
-		$('#install_by_step_mapping .mapping_view').hide();
-		$('#install_by_step_mapping .bMappingStart').show();
-		
-		$('#install_by_step_mapping_fin .bMappingCancelMap2').show();
-		$('#install_by_step_mapping_fin .bMappingSaveMap').show();
-		
-		if (intervalMap != null)
-		{
-			clearInterval(intervalMap);
-			intervalMap = null;
-		}
-	}
-	else
-	{
-		setTimeout(GetLastMappingByStep, 500);
-	}
-}
+/* GENERAL FUNCTIONS */
 
-function InitTopsActiveByStep()
-{
-	$('.install_by_step_top_loading').show();
-	$('#install_by_step_top .tuiles').html('');
-	if (wycaApi.websocketAuthed)
-	{
-		wycaApi.GetTopsList(function(data) {
-			$.each(data.D,function(index, value){
-				if (value.available)
-				{
-					$('#install_by_step_top .tuiles').append('<li class="col-xs-4 col-md-3 col-lg-2 bTop' + value.id_top + '">'+
-					'	<a href="#" class="set_top button_goto anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'" data-goto="install_by_step_check">'+
-					'		<img src="data:image/png;base64, '+value.image_b64+'" />'+value.name+''+
-					'	</a>'+
-					'</li>');
-				}
-			});
-			$('.install_by_step_top_loading').hide();
-		});
-	}
-	else
-	{
-		setTimeout(InitTopsActiveByStep, 500);
+var currentDeleteId = '';
+var touchHandled = false;
 
-	}
-}
-
-function InitInstallWifiPageNormal()
+function simulateMouseEvent (event, simulatedType)
 {
-	if (wycaApi.websocketAuthed)
-	{
-		
-		wycaApi.GetWifiList(function(data) {
-			$('.install_normal_setup_wifi_loading').hide();
-			$('#install_normal_setup_wifi tr').hide();
-			if (data.D.length > 0)
-			{
-				$.each(data.D,function(index, value){
-					signal = parseInt(value.signal/20);
-					if ($('#install_normal_setup_wifi .wifi'+value.bssid).length > 0)
-					{
-						$('#install_normal_setup_wifi tr').show();
-						$('#install_normal_setup_wifi .wifi'+value.bssid+' img').attr('src', 'assets/images/signal-'+signal+'.png');
-						if (value.state == 'active')
-						{
-							$('#install_normal_setup_wifi tr').removeClass('active');
-							$('#install_normal_setup_wifi .wifi'+value.bssid).addClass('active');
-						}
-					}
-					else
-					{
-						if (value.state == 'active')
-							$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td><i class="fas fa-check"></i> '+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
-						else
-							$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td>'+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
-					}
-				});
-			}
-		});
-		
-		if ($('#install_normal_setup_wifi').is(':visible'))
-			setTimeout(InitInstallWifiPageNormal, 3000);
-	}
-	else
-	{
-		setTimeout(InitInstallWifiPageNormal, 500);
-	}
-}
 
-function InitInstallWifiPageByStep()
-{
-	if (wycaApi.websocketAuthed)
-	{
-		
-		wycaApi.GetWifiList(function(data) {
-			$('.install_bystep_setup_wifi_loading').hide();
-			$('#install_by_step_wifi tr').hide();
-			if (data.D.length > 0)
-			{
-				$.each(data.D,function(index, value){
-					signal = parseInt(value.signal/20);
-					if ($('#install_by_step_wifi .wifi'+value.bssid).length > 0)
-					{
-						$('#install_by_step_wifi tr').show();
-						$('#install_by_step_wifi .wifi'+value.bssid+' img').attr('src', 'assets/images/signal-'+signal+'.png');
-						if (value.state == 'active')
-						{
-							$('#install_by_step_wifi tr').removeClass('active');
-							$('#install_by_step_wifi .wifi'+value.bssid).addClass('active');
-						}
-					}
-					else
-					{
-						if (value.state == 'active')
-							$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td><i class="fas fa-check"></i> '+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
-						else
-							$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td>'+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
-					}
-				});
-			}
-		});
-		
-		if ($('#install_by_step_wifi').is(':visible'))
-			setTimeout(InitInstallWifiPageByStep, 3000);
-	}
-	else
-	{
-		setTimeout(InitInstallWifiPageByStep, 500);
-	}
+    // Ignore multi-touch events
+    if (event.originalEvent.touches.length > 1) {
+      return;
+    }
+
+    event.preventDefault();
+
+    var touch = event.originalEvent.changedTouches[0],
+        simulatedEvent = document.createEvent('MouseEvents');
+
+    // Initialize the simulated mouse event using the touch event's coordinates
+    simulatedEvent.initMouseEvent(
+      simulatedType,    // type
+      true,             // bubbles
+      true,             // cancelable
+      window,           // view
+      1,                // detail
+      touch.screenX,    // screenX
+      touch.screenY,    // screenY
+      touch.clientX,    // clientX
+      touch.clientY,    // clientY
+      false,            // ctrlKey
+      false,            // altKey
+      false,            // shiftKey
+      false,            // metaKey
+      0,                // button
+      null              // relatedTarget
+    );
+
+    // Dispatch the simulated event to the target element
+    event.target.dispatchEvent(simulatedEvent);
 }
 
 function alert_wyca(text)
@@ -1753,7 +2177,8 @@ function GetDataMapToSave()
 	return data;
 }
 
-function TogglePopupHelp(){
+function TogglePopupHelp()
+{
 	$('.global_sub_page.active section.active .popupHelp').toggle('fast');
 }
 
