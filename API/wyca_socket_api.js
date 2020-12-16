@@ -58,7 +58,7 @@ function WycaAPI(options){
 		ROBOT_TOO_FAR               : 0x14D,
 		UNDOCK_FAIL                 : 0x14E,
 		NO_VALID_CMD                : 0x14F,
-		PAT_EXCEEDED                : 0x150,
+		TIMEOUT                : 0x150,
 		COLLISION                   : 0x151,
 		OSCILLATION                 : 0x152,
 		ROBOT_STUCK                 : 0x153,
@@ -1488,7 +1488,7 @@ function WycaAPI(options){
 				case _this.AnswerCode.ROBOT_TOO_FAR : return typeof(textAPIAnswerCode.ROBOT_TOO_FAR) != 'undefined' ? textAPIAnswerCode.ROBOT_TOO_FAR : 'Robot too far'; break; 
 				case _this.AnswerCode.UNDOCK_FAIL : return typeof(textAPIAnswerCode.UNDOCK_FAIL) != 'undefined' ? textAPIAnswerCode.UNDOCK_FAIL : 'Undock failed'; break; 
 				case _this.AnswerCode.NO_VALID_CMD : return typeof(textAPIAnswerCode.NO_VALID_CMD) != 'undefined' ? textAPIAnswerCode.NO_VALID_CMD : 'No valid command'; break; 
-				case _this.AnswerCode.PAT_EXCEEDED : return typeof(textAPIAnswerCode.PAT_EXCEEDED) != 'undefined' ? textAPIAnswerCode.PAT_EXCEEDED : 'PAT Exceeded'; break; 
+				case _this.AnswerCode.TIMEOUT : return typeof(textAPIAnswerCode.TIMEOUT) != 'undefined' ? textAPIAnswerCode.TIMEOUT : 'Timeout'; break; 
 				case _this.AnswerCode.COLLISION : return typeof(textAPIAnswerCode.COLLISION) != 'undefined' ? textAPIAnswerCode.COLLISION : 'Collision'; break; 
 				case _this.AnswerCode.OSCILLATION : return typeof(textAPIAnswerCode.OSCILLATION) != 'undefined' ? textAPIAnswerCode.OSCILLATION : 'Oscillation'; break; 
 				case _this.AnswerCode.ROBOT_STUCK : return typeof(textAPIAnswerCode.ROBOT_STUCK) != 'undefined' ? textAPIAnswerCode.ROBOT_STUCK : 'Robot stuck'; break; 
@@ -1557,7 +1557,7 @@ function WycaAPI(options){
 				case _this.AnswerCode.ROBOT_TOO_FAR : return 'Robot too far'; break; 
 				case _this.AnswerCode.UNDOCK_FAIL : return 'Undock failed'; break; 
 				case _this.AnswerCode.NO_VALID_CMD : return  'No valid command'; break; 
-				case _this.AnswerCode.PAT_EXCEEDED : return 'PAT Exceeded'; break; 
+				case _this.AnswerCode.TIMEOUT : return 'Timeout'; break; 
 				case _this.AnswerCode.COLLISION : return 'Collision'; break; 
 				case _this.AnswerCode.OSCILLATION : return 'Oscillation'; break; 
 				case _this.AnswerCode.ROBOT_STUCK : return 'Robot stuck'; break; 
