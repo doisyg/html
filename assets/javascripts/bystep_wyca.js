@@ -1566,6 +1566,87 @@ $(document).ready(function(e) {
 		});
     });
 	
+	//------------------- STEP EXPORT SITE ------------------------
+	//AJAX INSTALL STEP CALL
+	$('#install_by_step_export_site .bExportSite').click(function(e){
+		
+		$('#install_by_step_export_site .bExportSite').addClass('disabled');
+		
+		wycaApi.GetCurrentSite(function(data){
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				let id = data.D.id_site;
+				currentNameSiteExport = data.D.name;
+				
+				wycaApi.ExportSite(id, function(data){
+					if (data.A == wycaApi.AnswerCode.NO_ERROR)
+					{
+						var a = document.createElement("a");
+						document.body.appendChild(a);
+						a.style = "display: none";
+						
+						var blob = new Blob([data.D], {type: "octet/stream"}),
+						url = window.URL.createObjectURL(blob);
+						a.href = url;
+						a.download = 'export_site_'+currentNameSiteExport+'.wyca';
+						a.click();
+						window.URL.revokeObjectURL(url);
+						
+						$.ajax({
+							type: "POST",
+							url: 'ajax/install_by_step_export_site.php',
+							data: {
+							},
+							dataType: 'json',
+							success: function(data) {
+								$('#install_by_step_export_site .bExportSite').removeClass('disabled');
+								setTimeout(function(){$('#install_by_step_export_site .install_by_step_export_site_next').click();},100)
+							},
+							error: function(e) {
+								if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+									alert_wyca('Error step maintenance account ; ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+									setTimeout(function(){window.location.href = 'logout.php'},3000);
+								}else{
+									alert_wyca('Error step maintenance account ;' + e.responseText );
+								}
+							}
+						});
+					}
+					else
+					{
+						$('#install_by_step_export_site .bExportSite').removeClass('disabled');
+						ParseAPIAnswerError(data,'Exporting site : ');
+					}							
+				});
+			}
+			else
+			{
+				$('#install_by_step_export_site .bExportSite').removeClass('disabled');
+				ParseAPIAnswerError(data,'Getting current site');
+			}
+		})
+	})
+	//AJAX INSTALL STEP CALL
+	
+	$('#install_by_step_export_site .bExportSiteSkip').click(function(e){
+		$.ajax({
+			type: "POST",
+			url: 'ajax/install_by_step_export_site.php',
+			data: {
+			},
+			dataType: 'json',
+			success: function(data) {
+			},
+			error: function(e) {
+				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+					alert_wyca('Error step maintenance account ; ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					setTimeout(function(){window.location.href = 'logout.php'},3000);
+				}else{
+					alert_wyca('Error step maintenance account ;' + e.responseText );
+				}
+			}
+		});
+	})
 	//------------------- STEP MAINTENANCE ACCOUNT ------------------------
 	
 	//AJAX INSTALL STEP CALL
@@ -1760,7 +1841,8 @@ $(document).ready(function(e) {
 						$('#install_by_step_manager .list_managers').append('' +
 							'<li id="install_by_step_manager_list_manager_elem_'+id_user+'" data-id_user="'+id_user+'">'+
 							'	<span class="email">'+json_user.email+'</span>'+
-							'	<a href="#" class="bManagerDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+							'	<a href="#" class="bManagerDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>'+
+							'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>'+
 							'	<a href="#" class="bManagerEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pen"></i></a>'+
 							'</li>'
 							);
@@ -1943,16 +2025,28 @@ $(document).ready(function(e) {
 			}
 		});
 		
+		
+		//AFFICHER QQ CHOSE
+		//$('section#install_normal_dashboard').hide();
+
 		$('#pages_install_by_step').removeClass('active');
 		$('#pages_install_normal').addClass('active');
 		
-		//AFFICHER QQ CHOSE
+		
+		// back
 		$('#install_normal_edit_map .bBackButton').click();
 		
+		/*
 		if ($('#install_normal_setup_sites').is(':visible'))
 		{
 			GetSitesNormal();
 		}
+		else
+		{
+			//AFFICHER QQ CHOSE
+			$('section#install_normal_dashboard').show('slow');
+		}
+		*/
 		
 		
 		$('.menu_groupe button').show();
@@ -2245,14 +2339,14 @@ function RefreshDisplayManagerByStep(){
 		$('#install_by_step_manager .bValidManagerNext').show();
 		
 		$('#install_by_step_manager .bValidManagerSkip').hide();
-		$('#install_by_step_manager .bAddManagerTuile').hide();
+		$('#install_by_step_manager a.bAddManager.bTuile').hide();
 	}else{
 		//AFF TUILE ET SKIP
 		$('#install_by_step_manager a.bAddManager').hide();
 		$('#install_by_step_manager .bValidManagerNext').hide();
 		
 		$('#install_by_step_manager .bValidManagerSkip').show();
-		$('#install_by_step_manager .bAddManagerTuile').show();
+		$('#install_by_step_manager a.bAddManager.bTuile').show();
 	}
 	
 }

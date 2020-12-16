@@ -30,7 +30,7 @@ var codeSaisie = "";
 $(document).ready(function(e) {
 	
 	wycaApi = new WycaAPI({
-		api_key:'5LGU.LaYMMncJaA0i42HwsX9ZX-RCNgj-9V17ROFXt71st',
+		api_key:'4tEV6A6Bd8mVQtgHjUj85fGwYeJbsYkChHSRGP21HxaAIE',
 		host:robot_host,
 		
 		onRobotConnexionError: function(data){
@@ -208,7 +208,7 @@ function RetryDock()
 		timeoutRetryDock = null;
 	}
 	robotMoveToDock = true;
-	RefreshDisplayRobotMoveToDock();
+	//RefreshDisplayRobotMoveToDock();
 	wycaApi.GoToCharge(-1, ResultSendToDockDemand);
 }
 
@@ -256,6 +256,17 @@ function ResultSendToDock(data)
 			timeoutRetryDock = null;
 		}
 		nbDockAttempt = 0;
+		
+		
+		queueState = 'done';
+		gotoPoiInProgress = false;
+		if (currentBatteryState < dataStorage.min_goto_charge)
+		{
+			$('#current_action').html('Low battery, charging');
+		}
+		else
+			NextAction();
+		
 	}
 }
 

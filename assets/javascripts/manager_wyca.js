@@ -366,7 +366,8 @@ $(document).ready(function(e) {
 						$('#manager_users .list_users').append('' +
 							'<li id="manager_users_list_user_elem_'+id_user+'" data-id_user="'+id_user+'">'+
 							'	<span class="email">'+json_user.email+'</span>'+
-							'	<a href="#" class="bUserDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+							'	<a href="#" class="bUserDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>'+
+							'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>'+
 							'	<a href="#" class="bUserEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
 							'</li>'
 							);

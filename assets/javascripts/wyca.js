@@ -47,6 +47,8 @@ $(window).on("popstate", function(e) {
 })(history.pushState);
 
 $(document).ready(function(e) {
+	$('#bHeaderInfo').attr('onClick',"$('.global_sub_page.active section.active .popupHelp').toggle('fast')");
+	
 	$('.iro-colorpicker').each(function(){
 		let preview = $(this).parent().find('.preview_color');
 		let input = $(this).parent().find('input[type="text"]');
@@ -264,7 +266,9 @@ $(document).ready(function(e) {
 			let section_active = $('section.active');
 			$('section.active').removeClass('active');
 			$('section.page').hide();
+			
 			$('#bHeaderInfo').attr('onClick',""); // REINIT (i) icone
+			$('#bHeaderInfo').attr('onClick',"$('#"+next+" .popupHelp').toggle('fast')");
 			
 			console.log('next ',next);
 			
@@ -276,10 +280,7 @@ $(document).ready(function(e) {
 			if (next == 'install_by_step_mapping') InitMappingByStep();
 			if (next == 'install_by_step_import_site') InitSiteImportByStep();
 			
-			if (next == 'install_by_step_edit_map'){
-				$('#bHeaderInfo').attr('onClick',"$('.popupHelp').toggle('fast')");
-				GetInfosCurrentMapByStep();
-			}
+			if (next == 'install_by_step_edit_map')GetInfosCurrentMapByStep();
 			if (next == 'install_by_step_mapping_fin'){
 				if(typeof(window.site_name) != 'undefined' && window.site_name != ""){
 					$('#install_by_step_mapping_from_name').val(window.site_name)
@@ -305,7 +306,10 @@ $(document).ready(function(e) {
 			
 			if (next == 'install_by_step_site_master_dock' && fromBackBtn) InitMasterDockByStep('back');
 			if (next == 'install_by_step_site_master_dock' && !fromBackBtn) InitMasterDockByStep();
-			if (next == 'install_by_step_manager') GetManagersByStep();
+			if (next == 'install_by_step_manager') {
+				GetManagersByStep();
+				$('#bHeaderInfo').attr('onClick',"$('#install_by_step_manager .modalHelpManager').modal('show')");
+			}
 			if (next == 'install_by_step_service_book') GetServiceBooksByStep();
 			
 			if (next == 'install_normal_setup_sites') GetSitesNormal();
@@ -315,7 +319,10 @@ $(document).ready(function(e) {
 			if (next == 'install_normal_setup_top') InitTopsActiveNormal();
 			if (next == 'install_normal_setup_config') GetConfigurationsNormal();
 			if (next == 'install_normal_setup_wifi') InitInstallWifiPageNormal();
-			if (next == 'install_normal_manager') GetManagersNormal();
+			if (next == 'install_normal_manager') {
+				GetManagersNormal();
+				$('#bHeaderInfo').attr('onClick',"$('#install_normal_manager .modalHelpManager').modal('show')");
+			}
 			if (next == 'install_normal_user') GetUsersNormal();
 			if (next == 'install_normal_service_book') GetServiceBooksNormal();
 			if (next == 'install_normal_edit_map') GetInfosCurrentMapNormal();
@@ -377,6 +384,7 @@ $(document).ready(function(e) {
 				// ADD TITLE CHANGE 
 					
 				$('.title_section').html($('#'+next+' > header > h2').text());
+				
 				//
 				InitJoystick();
 
@@ -526,8 +534,25 @@ $(document).ready(function(e) {
 		slider.find('.ui-slider-range').css('width',temp+'%');
 		slider.find('.ui-slider-handle').css('left',temp+'%');
 	})	
+	//CONFIRM DELETE
+	$(document).on('click', '.confirm_delete', function(e) {
+		e.preventDefault();
+		$(this).data('confirmed_delete',false);
+		if($(this)[0].nodeName == 'A'){
+			currentDeleteId = $(this).parent().attr('id');
+		}
+		$('#modalConfirmDelete').modal('show');
+	})
+	
+	$('#bModalConfirmDeleteOk').click(function(e){
+		if(currentDeleteId !=''){
+			$('#'+currentDeleteId).find('.btn_confirm_delete').click();
+			currentDeleteId = '';
+		}
+	})
+	
 });
-
+var currentDeleteId = '';
 var touchHandled = false;
 
 function simulateMouseEvent (event, simulatedType)
@@ -595,15 +620,15 @@ function InitMasterDockByStep(back = false)
 	
 	if(docks != 'undefined' && docks.length > 1){
 		$.each(docks,function(idx,item){
-			let li_html="";
-			li_html+='<li class="col-xs-6">';
-			li_html+='	<div class="is_checkbox tuile_img no_update MasterDockItem" id="'+item.id_docking_station+'">';
-			li_html+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
-			li_html+='		<i class="fas fa-charging-station" style="padding-top:5px"></i>';
-			li_html+='		<p class="dockname">'+item.name+'</p>';
-			li_html+='   </div>';
-			li_html+='</li>';
-			$('#pages_install_by_step #MasterDockList').append(li_html);
+			let master_dock="";
+			master_dock+='<div class="col-xs-6 text-center">';
+			master_dock+='	<div class="MasterDockItem btn bTuile" id="'+item.id_docking_station+'">';
+			master_dock+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
+			master_dock+='		<i class="fas fa-charging-station"></i>';
+			master_dock+='		<p class="dockname">'+item.name+'</p>';
+			master_dock+='   </div>';
+			master_dock+='</div>';
+			$('#pages_install_by_step #MasterDockList').append(master_dock);
 		});
 		$('#pages_install_by_step .MasterDock_loading').hide();
 	}else{
@@ -623,15 +648,15 @@ function InitMasterDockByStep(back = false)
 						augmented_poses = data.D.augmented_poses;
 						
 						$.each(docks,function(idx,item){
-							let li_html="";
-							li_html+='<li class="col-xs-6">';
-							li_html+='	<div class="is_checkbox tuile_img no_update MasterDockItem" id="'+item.id_docking_station+'">';
-							li_html+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
-							li_html+='		<i class="fas fa-charging-station" style="padding-top:5px"></i>';
-							li_html+='		<p class="dockname">'+item.name+'</p>';
-							li_html+='   </div>';
-							li_html+='</li>';
-							$('#pages_install_by_step #MasterDockList').append(li_html);
+							let master_dock="";
+							master_dock+='<div class="col-xs-6 text-center">';
+							master_dock+='	<div class="MasterDockItem btn bTuile" id="'+item.id_docking_station+'">';
+							master_dock+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
+							master_dock+='		<i class="fas fa-charging-station"></i>';
+							master_dock+='		<p class="dockname">'+item.name+'</p>';
+							master_dock+='   </div>';
+							master_dock+='</div>';
+							$('#pages_install_by_step #MasterDockList').append(master_dock);
 						});
 						$('#pages_install_by_step .MasterDock_loading').hide();
 					}
@@ -654,15 +679,15 @@ function InitMasterDockNormal()
 	
 	if(docks != 'undefined' && docks.length > 1){
 		$.each(docks,function(idx,item){
-			let li_html="";
-			li_html+='<li class="col-xs-6">';
-			li_html+='	<div class="is_checkbox tuile_img no_update MasterDockItem" id="'+item.id_docking_station+'">';
-			li_html+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
-			li_html+='		<i class="fas fa-charging-station" style="padding-top:5px"></i>';
-			li_html+='		<p class="dockname">'+item.name+'</p>';
-			li_html+='   </div>';
-			li_html+='</li>';
-			$('#pages_install_normal #MasterDockList').append(li_html);
+			let master_dock="";
+			master_dock+='<div class="col-xs-6 text-center">';
+			master_dock+='	<div class="MasterDockItem btn bTuile" id="'+item.id_docking_station+'">';
+			master_dock+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
+			master_dock+='		<i class="fas fa-charging-station"></i>';
+			master_dock+='		<p class="dockname">'+item.name+'</p>';
+			master_dock+='   </div>';
+			master_dock+='</div>';
+			$('#pages_install_normal #MasterDockList').append(master_dock);
 		});
 		$('#pages_install_normal .MasterDock_loading').hide();
 	}else{
@@ -679,15 +704,15 @@ function InitMasterDockNormal()
 						augmented_poses = data.D.augmented_poses;
 						
 						$.each(docks,function(idx,item){
-							let li_html="";
-							li_html+='<li class="col-xs-6">';
-							li_html+='	<div class="is_checkbox tuile_img no_update MasterDockItem" id="'+item.id_docking_station+'">';
-							li_html+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
-							li_html+='		<i class="fas fa-charging-station" style="padding-top:5px"></i>';
-							li_html+='		<p class="dockname">'+item.name+'</p>';
-							li_html+='   </div>';
-							li_html+='</li>';
-							$('#pages_install_normal #MasterDockList').append(li_html);
+							let master_dock="";
+							master_dock+='<div class="col-xs-6 text-center">';
+							master_dock+='	<div class="MasterDockItem btn bTuile" id="'+item.id_docking_station+'">';
+							master_dock+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
+							master_dock+='		<i class="fas fa-charging-station"></i>';
+							master_dock+='		<p class="dockname">'+item.name+'</p>';
+							master_dock+='   </div>';
+							master_dock+='</div>';
+							$('#pages_install_normal #MasterDockList').append(master_dock);
 						});
 						$('#pages_install_normal .MasterDock_loading').hide();
 					}
@@ -812,7 +837,8 @@ function GetUsersManager()
 					$('#manager_users .list_users').append('' +
 						'<li id="manager_users_list_user_elem_'+value.id_user+'" data-id_user="'+value.id_user+'">'+
 						'	<span class="email">'+value.email+'</span>'+
-						'	<a href="#" class="bUserDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="bUserDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>'+
 						'	<a href="#" class="bUserEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pen"></i></a>'+
 						'</li>'
 						);
@@ -851,7 +877,8 @@ function GetSitesNormal()
 					$('#install_normal_setup_sites .list_sites').append('' +
 						'<li id="install_normal_setup_sites_list_site_elem_'+value.id_site+'" data-id_site="'+value.id_site+'">'+
 						'	<span class="societe">'+value.name+'</span>'+
-						(current_site.id_site != value.id_site?'	<a href="#" class="bSiteDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>':'')+
+						(current_site.id_site != value.id_site?'	<a href="#" class="bSiteDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>':'')+
+						(current_site.id_site != value.id_site?'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>':'')+
 						(current_site.id_site != value.id_site?'	<a href="#" class="bSiteSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-check"></i></a>':'')+
 						'</li>'
 						);
@@ -919,7 +946,8 @@ function GetUsersNormal()
 					$('#install_normal_user .list_users').append('' +
 						'<li id="install_normal_user_list_user_elem_'+value.id_user+'" data-id_user="'+value.id_user+'">'+
 						'	<span class="email">'+value.email+'</span>'+
-						'	<a href="#" class="bUserDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="bUserDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>'+
 						'	<a href="#" class="bUserEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pen"></i></a>'+
 						'</li>'
 						);
@@ -957,7 +985,8 @@ function GetManagersNormal()
 					$('#install_normal_manager .list_managers').append('' +
 						'<li id="install_normal_manager_list_manager_elem_'+value.id_user+'" data-id_user="'+value.id_user+'">'+
 						'	<span class="email">'+value.email+'</span>'+
-						'	<a href="#" class="bManagerDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="bManagerDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>'+
 						'	<a href="#" class="bManagerEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pen"></i></a>'+
 						'</li>'
 						);
@@ -995,7 +1024,8 @@ function GetManagersByStep()
 					$('#install_by_step_manager .list_managers').append('' +
 						'<li id="install_by_step_manager_list_manager_elem_'+value.id_user+'" data-id_user="'+value.id_user+'">'+
 						'	<span class="email">'+value.email+'</span>'+
-						'	<a href="#" class="bManagerDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="bManagerDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>'+
 						'	<a href="#" class="bManagerEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pen"></i></a>'+
 						'</li>'
 						);
@@ -1672,8 +1702,9 @@ function ParseAPIAnswerError(data,pre_txt = '' ,post_txt = '')
 		}else{
 			txt = wycaApi.AnswerCodeToString(data.A);
 		}
-		txt = pre_txt == '' ? txt : pre_txt.txt;
-		txt = post_txt == '' ? txt : txt.post_txt;
+		pre_txt  = pre_txt == ''  ? '' : pre_txt + '<br>';
+		post_txt = post_txt == '' ? '' : '<br>' + post_txt;
+		txt = pre_txt + txt + post_txt;
 		alert_wyca(txt);
 	}
 }
@@ -1723,7 +1754,7 @@ function GetDataMapToSave()
 }
 
 function TogglePopupHelp(){
-	$('.global_page.active .popupHelp').toggle('fast');
+	$('.global_sub_page.active section.active .popupHelp').toggle('fast');
 }
 
 /* GESTION COOKIES */
@@ -1775,4 +1806,3 @@ function listCookies()
     }
     return aString;
 }
-

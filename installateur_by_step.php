@@ -23,7 +23,15 @@
                         <h2 style="margin-top:35px"><?=__('English') ?></h2>
                     </li>
                 </ul>
-            </div>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content sm-content">
+						<p><?= __('Please select the language displayed on the app by clicking on the correspondant flag.')?></p>					
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
+			</div>
+			
         </section>
 		
     	<!--
@@ -50,7 +58,7 @@
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
                 <h2><?php echo __('Select available Tops');?></h2>
             </header>
-            <div class="content">
+            <div class="content text-center">
             	<div class="install_by_step_tops_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
 				<h5 class="text-center" style="margin-bottom:5px;"><?=__('Please select available tops for the vehicle.') ?></h5>
 				<p class="text-center" style="margin-bottom:30px;"><i class="fas fa-exclamation-triangle"></i> <?=__('This is not the active top selection.') ?></p>
@@ -58,7 +66,7 @@
                 </ul>
                 
                 <div style="clear:both; height:40px;"></div>
-                <a href="#" class="import_top btn btn-lg btn-success" style="margin-left:50%; transform:translateX(-50%)"><?= __('Import new top')?></a>   
+                <a href="#" class="import_top btn btn-lg btn-success"><?= __('Import new top')?></a>   
                 
                 <a href="#" class="save_tops_next_select button_goto" data-goto="install_by_step_top" style="display:none;" data-goto="install_by_step_top"></a>
                 <a href="#" class="save_tops_next_check button_goto" data-goto="install_by_step_check" style="display:none;" data-goto="install_by_step_top"></a>   
@@ -93,6 +101,18 @@
                 </div>
                 
                 
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left">
+						<p><?= __('Please select available tops by checkboxing its. These tops will then be available to indicate the active top on the robot.')?></p>
+						
+						<p><?= __('If you select only one top, the next step of choosing the active top will be ignored (the active top being the only available top).')?></p>					
+						<p><?= __('You can also import a .wyca top config file.')?><br><div class="text-center"><a href="#" class="import_top btn btn-lg btn-success"><?= __('Import new top')?></a></div></p>			
+						   
+                
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
             </div>
             <footer>
 				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50 btn_back" data-goto="install_by_step_lang"><?= __('Back')?></a>
@@ -111,8 +131,14 @@
 				<h5 class="text-center" style="margin-bottom:30px;"><?=__('Please select the active top for the vehicle.') ?></h5>
                 <ul class="tuiles row">
                 </ul>
-                
-                <div style="clear:both; height:20px;"></div>
+  				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left">
+						<p><?= __('Please select active top by clicking on it. That will indicate to the vehicle that its current top on it is the one you picked.')?></p>
+						
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
             </div>
 			<footer>
 				<a href="#" class="button_goto btn btn-default btn_footer_left btn_100 btn_back" data-goto="install_by_step_tops"><?= __('Back')?></a>
@@ -208,6 +234,20 @@
                         
                     </ul>  
                 </div>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left">
+						<p><?= __('This step will test the robot\'s components. For each tested components the result will appear on your screen.')?></p>
+						<div style="display: flex;justify-content: space-around;">	
+							<i class="fa fa-2x fa-check component_state component_ok"></i>
+							<i class="fa fa-2x fa-exclamation-triangle component_state component_warning"></i>
+							<i class="fa fa-2x fa-exclamation-circle component_state component_error"></i>
+						</div>
+						<p><?= __('If it turns green, this means no problem has been detected, if not click on the element to have more details')?></p>
+						
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
             </div>
 			<footer>
 				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50 btn_back" data-goto="install_by_step_top"><?= __('Back')?></a>
@@ -231,6 +271,18 @@
                 </table>
                 
                 <a href="#" class="refresh_wifi btn btn-default pull-left"><i class="fa fa-refresh"></i></a>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left">
+						<p><?= __('You have the possibility to connect the robot to a Wifi network to give it Internet access.')?></p>
+						<p><?= __('This Internet access can be useful to allow Wyca to take control of the robot remotely and thus make updates or specific settings.')?></p>
+						<p><?= __('If you do not want to connect the robot to a Wifi network, you can skip this step by clicking on the Skip button.')?></p>
+						<p><?= __('This page will present the list of detected wifi networks.')?></p>
+						<p><?= __('If the robot is currently connected to a Wifi network, it will appear in bold on a gray background.')?></p>
+						<p><?= __('To connect the robot to a network, click on it, a popup will then allow you to enter the password of the network.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
             </div>
 			<footer>
 				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50 btn_back" data-goto="install_by_step_check" ><?= __('Back')?></a>
@@ -274,22 +326,29 @@
             </header>
             <div class="content">
 				<h4 style="text-align:center;margin:30px 0"><?= __('Import site or create a new one ?') ?></h4>
-				<ul class="tuiles row">
-                    <li class="col-xs-6">
-                    	<div class="is_checkbox tuile_img no_update button_goto" id="bImportSite" data-goto="install_by_step_import_site" style="height:max-content;bottom:0;border-radius:10px">
-                    		<i class="fas fa-file-import" style="padding-top:5px"></i>
-							<h5 class="" style="margin-top: 0px;font-weight:700;font-size: 15px;"><?php echo __('Import existing site with map');?></h5>
-                        </div>
-                    </li>
-                    <li class="col-xs-6">
-                    	<div class="is_checkbox tuile_img no_update button_goto" id="bCreateSite" data-goto="install_by_step_new_site" style="height:max-content;bottom:0;border-radius:10px">
-                    		<i class="fas fa-hotel" style="padding-top:5px"></i>
-							<h5 class="" style="margin-top: 0px;font-weight:700;font-size: 15px;"><?php echo __('Create new site with mapping');?></h5>
-                        </div>
-                    </li>
-				</ul>
-				
-				<!-- <a href="#" class="install_by_step_maintenance_next button_goto" data-goto="install_by_step_manager" style="display:none;"></a> -->
+				<div class="row">
+                    <div class="col-xs-6 text-center">
+                    	<a class="button_goto bTuile btn" id="bImportSite" data-goto="install_by_step_import_site">
+                    		<i class="fas fa-file-import iconMenuBlue"></i>
+							<h5 class="iconMenuBlue"><?php echo __('Import existing site with map');?></h5>
+                        </a>
+                    </div>
+                    <div class="col-xs-6 text-center">
+                    	<a class="button_goto bTuile btn" id="bCreateSite" data-goto="install_by_step_new_site" >
+                    		<i class="fas fa-hotel iconMenuGreen"></i>
+							<h5 class="iconMenuGreen"><?php echo __('Create new site with mapping');?></h5>
+                        </a>
+                    </div>
+				</div>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left" style="justify-content: space-evenly;">
+						<p><?= __('The vehicle can handle multiple sites and can change from one to another.')?></p>
+						<p><?= __('You can import a site (using a .wyca file exported from another robot or from a backup for example).')?></p>
+						<p><?= __('Or you can create a new site and do mapping next.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
             </div>
 			<footer>
 				<a href="#" class="button_goto btn btn-default btn_footer_left btn_100 btn_back" data-goto="install_by_step_wifi"><?= __('Back')?></a>
@@ -329,9 +388,9 @@
 				<h4 style="text-align:center;margin:30px 0"><?= __('Pick the default docking station') ?></h4>
 				
 				<div class="MasterDock_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
-				<ul class="tuiles row" id="MasterDockList">
+				<div class="row" id="MasterDockList">
                     
-				</ul>
+				</div>
 				<p style="padding-left:5px;margin-top:10px"><i class="fas fa-asterisk" style="color: darkorange;"></i> <?=__('Actual default dock') ?></p>
 				<a href="#" class="install_by_step_site_master_dock_next button_goto" data-goto="install_by_step_site_recovery" style="display:none;"></a>
             </div>
@@ -383,7 +442,15 @@
 	                <input type="text" class="form-control i_site_name" value="" />
                 </form>
                 
-                <a href="#" class="install_by_step_site_next button_goto" data-goto="install_by_step_mapping" style="display:none;"></a>   
+                <a href="#" class="install_by_step_site_next button_goto" data-goto="install_by_step_mapping" style="display:none;"></a>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left sm-content">
+						<p><?= __('Choose a name for the new site.')?></p>
+						<p><?= __('Keep in mind that Elodie cannot have two sites with the same name.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
             </div>
 			<footer>
 				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50 btn_back" data-goto="install_by_step_site"><?= __('Back')?></a>
@@ -431,11 +498,24 @@
                         </div>
                     </div>
                     
-                </div>         
+                </div>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left sm-content">
+						<p class="ifNMapping"><?= __('To start the mapping, you need to undock the robot if it docked to the charging station.')?></p>
+						<p class="ifNMapping"><?= __('Then move the vehicle using the joystick to the start position.')?></p>
+						<p class="ifNMapping"><?= __('Once you\'re ready, click on the Start button and begin mapping.')?></p>
+						<p class="ifMapping"><?= __('When the mapping is started, the map will being built dynamically on your screen.')?></p>
+						<p class="ifMapping"><?= __('The blue point is representing the vehicle facing toward. The map is automatically positioned according to this representation of the robot')?></p>
+						<p class="ifMapping"><?= __('Continue the creation of the map by moving the robot using the joystick.')?></p>
+						<p class="ifMapping"><?= __('Once the map is finalized, you can validate it by clicking on the Done button.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>				
             </div>
             <footer>
             	<a href="#" class="ifNMapping bMappingBack btn btn-default button_goto btn_footer_left btn_33 btn_back" data-goto="install_by_step_new_site" ><?php echo __('Back');?></a>
-            	<a href="#" class="ifNMapping bMappingStart btn btn-primary btn_footer_right btn_66" ><?php echo __('Start Mapping');?></a>
+            	<a href="#" class="ifNMapping bMappingStart btn btn-primary btn_footer_right btn_66 ifUndocked" ><?php echo __('Start Mapping');?></a>
             	<a href="#" class="ifMapping bMappingStop button_goto btn btn-primary btn_footer_right btn_100" data-goto="install_by_step_mapping_fin" style="display:none"><?php echo __('Done');?></a>
             </footer>
         </section>
@@ -488,7 +568,7 @@
                             <a href="#" class="btn btn-sm btn-primary bResetValueThreshold"><?php echo __('Reset values');?></a>
                         </div>
                         <div id="install_by_step_mapping_divResultTrinary">
-                            <div style="height:80vh; overflow:auto;">
+                            <div style="max-height:80vh; overflow:auto;">
                                 <i style="font-size:60px;" class="fa fa-spinner fa-pulse loading_fin_create_map"></i>
                                 <canvas id="install_by_step_mapping_canvas_result_trinary" width="" height="" style="max-width:100%; max-height:65vh;"></canvas>
                             </div>
@@ -497,7 +577,17 @@
                     
                     <div style="clear:both; height:10px;"></div>
                     
-                </div>         
+                </div>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left sm-content">
+						<p class=""><?= __('Once the mapping is finished, you have the possibility to optimize the final result by playing on two values.')?></p>
+						<p class=""><?= __('The default values are judicious in 95% of the cases.')?></p>
+						<p class=""><?= __('It might be necessary to play with these values to correct navigation problems in particular cases.')?></p>
+						<p class=""><?= __(' The goal is to make sure that all the walls are shown in black on the map and that all the areas where the robot has to move are shown in white on the map.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
             </div>
             <footer>
             	<a href="#" class="btn btn-default button_goto bMappingCancelMap2 btn_footer_left btn_50 btn_back" data-goto="install_by_step_mapping"><?php echo __('Back');?></a>           
@@ -1462,7 +1552,7 @@
                     </div>
 					
                     <div class="popupHelp">
-                    	<h2><?=__('Help')?></h2>
+                    	<h2 style="margin-top: 5px; margin-bottom: 15px;"><?=__('Help')?></h2>
                     	<ul style="color:#000;">
                         	<li><div class="iconForbiddenArea"><i class="fas fa-vector-square"></i><i class="fa fa-minus-circle iconMenuRed"></i></div><span class="description"><?=__('Add forbidden area')?></span></li>
                         	<li><i class="fa fa-draw-polygon iconMenuGreen" style="font-size: 26px;"></i><span class="description"><?=__('Add custom area')?></span></li>
@@ -1557,7 +1647,7 @@
 						<p><?=__('For more precise values, try to test battery in real conditions') ?></p>
 						<a href="#" class="real_test btn btn-lg btn-success" style="margin-left:50%; transform:translateX(-50%)"><i class="fas fa-route"></i> <?= __('Real Test')?></a>
 						
-						<a href="#" class="install_by_step_config_next button_goto" data-goto="install_by_step_maintenance" style="display:none;"></a>   
+						<a href="#" class="install_by_step_config_next button_goto" data-goto="install_by_step_export_site" style="display:none;"></a>   
 					</div>
                 </form>
 				<div class="modal fade modalRealTest" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
@@ -1642,15 +1732,61 @@
 						</div>
 					</div>
 				</div>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left sm-content-text">
+						<p class=""><?= __('You can configure two battery levels to avoid the robot getting stuck in the middle of an area because of battery breakdown.')?></p>
+						<p class=""><?= __('Emergency battery level is the minimum level allowed on the robot. If the robot goes under it will automatically go to its default charging station')?></p>
+						<p class=""><?= __('The second threshold is the level below which the robot will refuse to perform a task when docked')?></p>
+						<p class=""><?= __('You can set these values manually or use the tool to evaluate the load consumption on a site in real conditions.')?></p>
+						<p class=""><?= __('The real test tool will ask for two points, a starting and a arrival. It will automatically calculate the level of battery used between these two points.')?></p>
+						<p class=""><?= __('You can then click on the Use button to let the tool fill yours battery levels. You can always change these values by hand.')?></p>
+						<p class=""><?= __('Try to use the farthest points in order to have the most relevant test possible.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
             </div>
             <footer>
 				<a href="#" class="btn btn-default button_goto btn_footer_left btn_50 btn_back" data-goto="install_by_step_edit_map"><?php echo __('Back');?></a>
-            	<a href="#" class="bConfigurationSave btn btn-primary btn_footer_right btn_50" data-goto="install_by_step_maintenance"><?php echo __('Save');?></a>
+            	<a href="#" class="bConfigurationSave btn btn-primary btn_footer_right btn_50" data-goto="install_by_step_export_site"><?php echo __('Save');?></a>
             </footer>
         </section>
 		
-        <section id="install_by_step_maintenance" class="page <?php echo $INSTALL_STEP == 31?'active':'';?> with_footer">
+		<section id="install_by_step_export_site" class="page <?php echo $INSTALL_STEP == 31?'active':'';?> with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_config"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Site export');?></h2>
+            </header>
+            <div class="content">
+                <div class="col-md-12" style="padding-top:10px;">
+                	<p> <?=__('The export of a site is a backup of all the configuration linked to a site (map, charging stations, areas...).') ?></p>
+					<a class="bExportSite bTuile center btn">
+						<i class="fas fa-download iconMenuGreen"></i>
+						<h4 class="iconMenuGreen"><?php echo __('Export Site');?></h4>
+					</a>
+					<p><?=__('You can also use the generated file to import this site on another vehicle.') ?><br><br><?=__('Keep this copy as it will allow you to reload your site in case of factory reset.') ?></p>
+					<a href="#" class="install_by_step_export_site_next button_goto" data-goto="install_by_step_maintenance" style="display:none;"></a>
+				
+                </div>
+                <div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left sm-content">
+						<p class=""><?= __('The export of a site is a backup of all the configuration linked to a site (map, charging stations, areas...).')?></p>
+						<p class=""><?= __('You can also use the .wyca generated file to import this site on another vehicle.')?></p>
+						<p class=""><?= __('Keep this copy as it will allow you to reload your site in case of factory reset.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
+            </div>
+            <footer>
+				<a href="#" class="btn btn-default button_goto btn_footer_left btn_50 btn_back" data-goto="install_by_step_config"><?php echo __('Back');?></a>
+            	<a href="#" class="btn btn-warning button_goto btn_footer_right btn_50 bExportSiteSkip" data-goto="install_by_step_maintenance"><?php echo __('Skip');?></a>
+            </footer>
+        </section>
+		
+        <section id="install_by_step_maintenance" class="page <?php echo $INSTALL_STEP == 32?'active':'';?> with_footer">
+        	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_export_site"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
                 <h2><?php echo __('Maintenance');?></h2>
@@ -1658,21 +1794,20 @@
             <div class="content">
 				<p><?= __('A maintenance account for Wyca is by default enabled, however it can be removed to suit your security requirement.') ?></p>
 				<h4 style="text-align:center;margin:30px 0"><?= __('Keep Wyca maintenance account ?') ?></h4>
-				<ul class="tuiles row">
-                    <li class="col-xs-6">
-                    	<div class="is_checkbox tuile_img no_update" id="bDeleteMaintenanceAccount" style="bottom:0;border-radius:10px">
-                    		<i class="fas fa-user-times iconMenuRed" style="padding-top:5px"></i>
-							<h4 class="iconMenuRed" style="margin-top: 0px;font-weight:700"><?php echo __('Delete');?></h4>
-                        </div>
-                    </li>
-					<li class="col-xs-6">
-                    	<div class="is_checkbox tuile_img no_update" id="bKeepMaintenanceAccount" style="bottom:0;border-radius:10px">
-                    		<i class="fas fa-user-cog iconMenuGreen" style="padding-top:5px"></i>
-							<h4 class="iconMenuGreen" style="margin-top: 0px;font-weight:700"><?php echo __('Keep');?></h4>
-                        </div>
-                    </li>
-                    
-				</ul>
+				<div class="tuiles row">
+                    <div class="col-xs-6 text-center">
+                    	<a class="bTuile btn" id="bDeleteMaintenanceAccount">
+                    		<i class="fas fa-user-times iconMenuRed"></i>
+							<h4 class="iconMenuRed"><?php echo __('Delete');?></h4>
+                        </a>
+                    </div>
+					<div class="col-xs-6 text-center">
+                    	<a class="bTuile btn" id="bKeepMaintenanceAccount">
+                    		<i class="fas fa-user-cog iconMenuGreen"></i>
+							<h4 class="iconMenuGreen"><?php echo __('Keep');?></h4>
+                        </a>
+                    </div>
+				</div>
 				<a href="#" class="install_by_step_maintenance_next button_goto" data-goto="install_by_step_manager" style="display:none;"></a>
 				
 				<div class="modal fade modalMaintenance" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
@@ -1684,20 +1819,20 @@
 										<form>
 											<h4 style="text-align:center"><i class="fas fa-key" style="color:#ed9c28;font-size:20px"></i> <?=__('Keep account default password') ?></h4>
 											<p style="margin:20px 0"> <?=__('Do you want to keep the default password for Wyca maintenance account ?')?> </p>
-											<ul class="tuiles row">
-												<li class="col-xs-6">
-													<div class="is_checkbox tuile_img no_update" id="bChangeMaintenanceAccountPassword" style="bottom:0;border-radius:10px">
-														<i class="fas fa-exchange-alt iconMenuBlue" style="padding-top:5px"></i>
-														<h4 class="iconMenuBlue" style="margin-top: 0px;font-weight:700"><?php echo __('Change');?></h4>
-													</div>
-												</li>
-												<li class="col-xs-6">
-													<div class="is_checkbox tuile_img no_update" id="bKeepMaintenanceAccountPassword" style="bottom:0;border-radius:10px">
-														<i class="fas fa-lock iconMenuGreen" style="padding-top:5px"></i>
-														<h4 class="iconMenuGreen" style="margin-top: 0px;font-weight:700"><?php echo __('Keep');?></h4>
-													</div>
-												</li>
-											</ul>
+											<div class="row">
+												<div class="col-xs-6 text-center">
+													<a class="bTuile btn" id="bChangeMaintenanceAccountPassword">
+														<i class="fas fa-exchange-alt iconMenuBlue"></i>
+														<h4 class="iconMenuBlue"><?php echo __('Change');?></h4>
+													</a>
+												</div>
+												<div class="col-xs-6 text-center">
+													<a class="bTuile btn" id="bKeepMaintenanceAccountPassword">
+														<i class="fas fa-lock iconMenuGreen"></i>
+														<h4 class="iconMenuGreen"><?php echo __('Keep');?></h4>
+													</a>
+												</div>
+											</div>
 											<p style="margin:20px 0"> <?=__('If you change and loose this password, the robot could become unusable with no recovery options other than a factory return.') ?> </p>
 										</form>
 									</div>
@@ -1755,14 +1890,24 @@
 						</div>
 					</div>
 				</div>
-				
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left sm-content">
+						<p class=""><?= __('A maintenance account for Wyca is by default enabled, however it can be removed to suit your security requirement.')?></p>
+						<p class=""><?= __('Wyca can need this account to perfom maintenance stuff on the vehicle')?></p>
+						<p class=""><?= __('If you keep this account, you could change the default password or keep it too.')?></p>
+						<p class=""><?= __('This password will be communicated to the Wyca team if necessary.')?></p>
+						<p class=""><?= __('If you choose to change it, keep it safe beacuse if you lose the password, there will be no way to retrieve or reset it without returning the robot to Wyca\'s location.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
             </div>
             <footer>
-				<a href="#" class="btn btn-default button_goto btn_footer_left btn_100 btn_back" data-goto="install_by_step_config"><?php echo __('Back');?></a>
+				<a href="#" class="btn btn-default button_goto btn_footer_left btn_100 btn_back" data-goto="install_by_step_export_site"><?php echo __('Back');?></a>
             </footer>
         </section>
         
-        <section id="install_by_step_manager" class="page <?php echo $INSTALL_STEP == 32?'active':'';?> with_footer">
+        <section id="install_by_step_manager" class="page <?php echo $INSTALL_STEP == 33?'active':'';?> with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_maintenance"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
@@ -1773,17 +1918,12 @@
                 <div class="install_by_step_manager_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
                 
                 <div class="loaded col-md-12" style="padding-top:30px;">
-                	
-					<ul class="tuiles row bAddManagerTuile" style="margin-bottom:30px;">
-						<li class="col-xs-6" style="margin-left: 25%;">
-							<div class="is_checkbox tuile_img no_update bAddManager" style="height:max-content;bottom:0;border-radius:10px">
-								<i class="fas fa-user-plus" style="padding-top:5px"></i>
-								<h4 class="" style="margin-top: 0px;font-weight:700;font-size: 15px;"><?php echo __('Create manager');?></h4>
-							</div>
-						</li>
-					</ul>
+					<a class="bTuile bAddManager center btn" id="bCreateManager">
+						<i class="fas fa-user-plus iconMenuGreen"></i>
+						<h4 class="iconMenuGreen" ><?php echo __('Create manager');?></h4>
+					</a>
 					
-					<a href="#" class="bAddManager btn btn-primary"><?= ('Add an account') ?></a>
+					<a href="#" class="bAddManager btn btn-primary" style="margin-left: 50%;transform: translateX(-50%);" id="bAddManager"><?= ('Add an account') ?></a>
                     <ul class="list_managers list_elem">
                     </ul>
 					
@@ -1896,7 +2036,7 @@
                         </div>
                     </div>
                 </div>
-                
+				
             </div>
             <footer>
 				<a href="#" class="btn btn-default button_goto btn_footer_left btn_50 btn_back" data-goto="install_by_step_maintenance"><?php echo __('Back');?></a>
@@ -1905,7 +2045,7 @@
             </footer>
         </section>
 		
-        <section id="install_by_step_service_book" class="page <?php echo $INSTALL_STEP == 33?'active':'';?> with_footer">
+        <section id="install_by_step_service_book" class="page <?php echo $INSTALL_STEP == 34?'active':'';?> with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_manager"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
@@ -1952,7 +2092,18 @@
                             </div>
                         </div>
                     </div>
-				</div>                
+				</div>     
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left">
+						<p class=""><?= __('The last step in the process is to complete the robot\'s service book.')?></p>
+						<p class=""><?= __('You need to indicate all the important elements concerning the life and maintenance of the robot to facilitate future maintenance.')?></p>
+						<p class=""><?= __('To add an entry to the service log, click on the button in the center of the screen.')?></p>
+						<p class=""><?= __('A popup will open allowing you to enter a title and description.')?></p>
+						<p class=""><?= __('The various items in the service book are not removable or editable once created.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
             </div>
             <footer>
 				<a href="#" class="btn btn-default button_goto btn_footer_left btn_50 btn_back" data-goto="install_by_step_manager"><?php echo __('Back');?></a>
@@ -1968,11 +2119,11 @@
             </header>
             <div class="content">
                 
-                <section class="panel panel-success">
-                    <header class="panel-heading" style="    background: unset;padding: 0;">
+                <section class="panel panel-success" style="border: 0;box-shadow: unset;">
+                    <header class="panel-heading" style="background: unset;padding: 0;border: 0;">
                         <img src="assets/images/Robot.gif" class="img-responsive" style="width: 100%;height: auto;"/>
                     </header>
-                    <div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
+                    <div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;    border: 0;">
                         <strong><?= __('Congratulations !')?></strong><br />
 						<?= __('The installation process is now complete.') ?>
                     </div>

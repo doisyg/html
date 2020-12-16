@@ -15,6 +15,8 @@ else
 var textNeedReconnect = "<?php echo __js('Reconnection is required');?>";
 var textAccountDeleted = "<?php echo __js('Account deleted');?>";
 
+var textInvalidPositionRobot = "<?php echo __js('Invalid position, please move the vehicule to another place');?>";
+var textInvalidPositionDock = "<?php echo __js('Invalid position, please move the dock in an open environment around it.');?>";
 var textLoading = "<?php echo __js('Loading');?>";
 var textUpdatingMap = "<?php echo __js('Updating Map');?>";
 var textSelectOnOrMoreTops = "<?php echo __js('You must select one or more tops');?>";
@@ -83,4 +85,24 @@ textAPIAnswerCode.WRONG_GOAL = "<?php echo __js('Wrong goal: Fiducial type and i
 textAPIAnswerCode.CLOSE_FAILURE = "<?php echo __js('Dock fail too close to dock');?>";
 textAPIAnswerCode.MOVE_BASIC_FAILED = "<?php echo __js('Move basic action failed');?>";
 textAPIAnswerCode.GOTOPOSE_FAILED = "<?php echo __js('Go to pose action failed');?>";
+
+textAPIAnswerCode.ROBOT_TOO_FAR = "<?php echo __js('Robot too far');?>";
+textAPIAnswerCode.UNDOCK_FAIL = "<?php echo __js('Robot too far');?>";
+textAPIAnswerCode.NO_VALID_CMD = "<?php echo __js('No valid command');?>";
+textAPIAnswerCode.TIMEOUT = "<?php echo __js( 'Timeout');?>";
+textAPIAnswerCode.COLLISION = "<?php echo __js( 'Collision');?>";
+textAPIAnswerCode.OSCILLATION = "<?php echo __js( 'Oscillation');?>";
+textAPIAnswerCode.ROBOT_STUCK = "<?php echo __js( 'Robot stuck');?>";
+textAPIAnswerCode.MISSED_GOAL = "<?php echo __js( 'Missed goal');?>";
+textAPIAnswerCode.MISSED_PATH = "<?php echo __js( 'Missed path');?>";
+textAPIAnswerCode.BLOCKED_PATH = "<?php echo __js( 'Blocked path');?>";
+textAPIAnswerCode.INVALID_PATH = "<?php echo __js( 'Invalid path');?>";
+textAPIAnswerCode.TF_ERROR = "<?php echo __js( 'TF error');?>";
+textAPIAnswerCode.NOT_INITIALIZED = "<?php echo __js( 'Not initialized');?>";
+textAPIAnswerCode.INVALID_PLUGIN = "<?php echo __js('Invalid plugin');?>";
+textAPIAnswerCode.INTERNAL_ERROR = "<?php echo __js( 'Internal error');?>";
+textAPIAnswerCode.OUT_OF_MAP = "<?php echo __js( 'The start and / or the goal are outside the map');?>";
+textAPIAnswerCode.MAP_ERROR = "<?php echo __js( 'The map is not running properly');?>";
+textAPIAnswerCode.STOPPED = "<?php echo __js( 'The controller execution has been stopped rigorously.');?>";
+textAPIAnswerCode.TARGET_TOO_CLOSE = "<?php echo __js( 'Target too close');?>";
 textAPIAnswerCode.DEFAULT = "<?php echo __js('Unknown error code');?>";

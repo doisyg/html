@@ -102,15 +102,17 @@ var vitesseX = 0
 function SetCurseurV2(x, y)
 {	
 	if ($('.joystickDiv:visible').length > 0)
-		offset = $('.joystickDiv:visible').offset()
+		offset = $('.joystickDiv:visible').offset();
 	else
-		offset = $('.joystickDiv').offset()
-	if(typeof(offset) != 'undefined'){
+		offset = $('.joystickDiv').offset();
+	
+	if(typeof(offset) != 'undefined')
+	{
 		marginLeft = offset.left;
 		marginTop = offset.top;
 		xCentre = 112 + marginLeft;
 		yCentre = 112 + marginTop; 
-
+	
 		d = distanceJoystick (x, y, xCentre, yCentre);
 		if (d <34)
 		{
@@ -138,7 +140,7 @@ function SetCurseurV2(x, y)
 			
 			$('.joystickDiv:visible .curseur').css({'left': (xt2-xCentreCurseur-marginLeft)+'px', 'top': (yt2-yCentreCurseur-marginTop)+'px'});
 		}
-
+	
 		valueY = (x - xCentre) / 37;
 		valueX = (y - yCentre) / 37;
 		

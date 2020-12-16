@@ -116,7 +116,7 @@
 			InitInstallWifiPageByStep();
 			<?php }?>
             <?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 61) {?>
-			InitBystepSiteMasterDock();
+			InitMasterDockByStep();
 			<?php }?>
 			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 10) {?>
 			InitSiteImportByStep();
@@ -133,10 +133,11 @@
 			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 30) {?>
 			GetConfigurationsByStep();
 			<?php }?>
-			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 32) {?>
-			GetManagersByStep();
-			<?php }?>
 			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 33) {?>
+			GetManagersByStep();
+			$('#bHeaderInfo').attr('onClick',"$('#install_by_step_manager .modalHelpManager').modal('show')");
+			<?php }?>
+			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 34) {?>
 			GetServiceBooksByStep();
 			<?php }?>
 			

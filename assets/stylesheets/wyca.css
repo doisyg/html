@@ -231,10 +231,15 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 #manager_edit_map_zoom_carte { overflow:hidden; }
 #user_edit_map_zoom_carte { overflow:hidden; }
 
-.popupHelp { position:absolute; z-index:20000; background-color:rgba(255,255,255,0.95); top:0; left:0; right:0; bottom:0; display:none; padding:10px; }
-.popupHelp h2{ margin-top: 5px; margin-bottom: 15px;}
+.popupHelp { position:absolute; z-index:20000; background-color:rgba(255,255,255,0.99); top:0; left:0; right:0; bottom:0; display:none; padding:10px; }
+.popupHelp h2{ margin:20px 0;text-align:center}
+.popupHelp .content { display:flex;justify-content:space-between;flex-direction:column;min-height:80%;height: unset!important;}
+.popupHelp .content.sm-content {justify-content:start;}
+.popupHelp .content.sm-content > p {margin:20px 0}
+.popupHelp .content.sm-content-text > p {font-size:14px}
+.popupHelp .content p { font-size:16px}
 .popupHelp .svg_popupHelp_robot{height: 40px;width: 40px; position: absolute; left:-5px;top:0; }
-.popupHelp p.legende{  float:right;font-style: italic; }
+.popupHelp p.legende{     position: fixed; right: 5px; bottom: 0px; background: #b4e6f4; padding: 2px; border-radius: 10px;}
 .popupHelp ul { list-style:none; margin:0; padding:0px 0px; }
 .popupHelp ul li { font-size:18px; padding:10px 0; border-bottom:1px solid #CCC;height:46px;}
 .popupHelp ul li;first-child { border-top:1px solid #EEEEEE; }
@@ -1125,10 +1130,9 @@ div.icon_menu .iconForbiddenArea .fa-minus-circle{
     padding-top: 50%;
 }
 /* */
-ul#MasterDockList li .tuile_img.is_checkbox{border-radius:10px;bottom:0;}
-ul#MasterDockList li .tuile_img.is_checkbox p{border-radius:10px;bottom:0;}
-ul#MasterDockList li .tuile_img.is_checkbox i.fa-asterisk {position:absolute; top: 10px;left: 15px;color: darkorange;font-size:16px; padding:0;  }
-ul#MasterDockList li .tuile_img.is_checkbox p.dockname {margin-top: 0px;font-weight: 700;margin-bottom: 0;font-size: 14px;}
+#MasterDockList .MasterDockItem {position:relative}
+#MasterDockList .MasterDockItem i.fa-asterisk {position:absolute; top: 10px;left: 15px;color: darkorange;font-size:16px; padding:0;  }
+#MasterDockList .MasterDockItem p.dockname {margin-top: 0px;font-weight: 700;margin-bottom: 0;font-size: 14px;}
 
 .password_format{margin: 0;text-align: right;font-size: 12px;font-style: italic;margin-bottom: 10px;}
 .password_format ~ div.form-group{margin-bottom:0;}
@@ -1137,6 +1141,49 @@ ul#MasterDockList li .tuile_img.is_checkbox p.dockname {margin-top: 0px;font-wei
 .nopymy:after{margin-top:0;margin-bottom:0;padding-top:0;padding-bottom:0;}
 
 /* CSS FIXES */
+.bTuile{
+	text-align: center;
+    display: inline-flex;
+    flex-direction: column;
+    border: 1px solid;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-color: #666666;
+	min-width:100px;
+    min-height: 100px;
+    align-items: center;
+    justify-content: center;
+	color:#343434;
+	white-space: unset;
+}
+.bTuile.disabled{
+	background: #dcdcdc;
+}
+.bTuile.center{
+	margin-left: 50%;
+    transform: translateX(-50%);
+}
+.bTuile i{
+	padding-top: 5px;
+    font-size: 27px;
+    margin-bottom: 10px;
+}
+.bTuile h5{
+	margin-top: 0px;
+    font-weight: 700;
+    font-size: 14px;
+}
+.bTuile h4{
+	margin-top: 0px;
+    font-weight: 700;
+    font-size: 16px;
+}
+.bTuile:hover,.bTuile:active,bTuile:focus{
+	text-decoration:none;
+}
+
 .input-group[class*='col-']{
 	padding-left:15px;
 	padding-right:15px;
@@ -1189,7 +1236,10 @@ span.error_details span{
 	display:none!important;
 }
 
-
+/* MODAL CONFIRM DELETE */
+.btn_confirm_delete{
+	display:none;
+}
 
 /* WYCA PAGES */
 .fakeScreen:before{
@@ -1226,3 +1276,10 @@ span.error_details span{
 }
 
 .form-group.sep { border-top:1px solid #EFEFEF; padding-top:15px; }
+
+
+
+.row.row-eq-height{
+	display: flex;
+    flex-wrap: wrap;
+}
