@@ -76,7 +76,10 @@
         
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/init_map.js?v=<?php echo $lastUpdate;?>"></script>
         <?php if ($_SESSION['id_groupe_user'] == 1) {?>
-		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/wyca_wyca.js?v=<?php echo $lastUpdate;?>"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/wyca_app.js?v=<?php echo $lastUpdate;?>"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/wyca_map.js?v=<?php echo $lastUpdate;?>"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/wyca_map_actions.js?v=<?php echo $lastUpdate;?>"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/wyca_map_svg.js?v=<?php echo $lastUpdate;?>"></script>
 		<?php } if ($_SESSION['id_groupe_user'] == 2) {?>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/bystep_wyca.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/bystep_map.js?v=<?php echo $lastUpdate;?>"></script>
