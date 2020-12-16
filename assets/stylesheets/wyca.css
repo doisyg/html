@@ -1141,6 +1141,9 @@ div.icon_menu .iconForbiddenArea .fa-minus-circle{
 .nopymy:after{margin-top:0;margin-bottom:0;padding-top:0;padding-bottom:0;}
 
 /* CSS FIXES */
+.ifDocked,.ifUndocked{display:none;}
+/* TO AVOID DUAL DISPLAY UNDOCK / JOYSTICK */
+
 .bTuile{
 	text-align: center;
     display: inline-flex;
