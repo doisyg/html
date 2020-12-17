@@ -1695,6 +1695,228 @@
             </footer>
         </section>
         
+        <section id="wyca_wyca" class="page with_footer">
+	        <a href="#" class="bBackButton button_goto" data-goto="wyca_accounts"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Wycas');?></h2>
+            </header>
+            <div class="content">
+                
+                <div class="wyca_wyca_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
+                
+                <div class="loaded col-md-12" style="padding-top:30px;">
+					<div class="btn bTuile bAddWyca bAddWycaTuile center">
+						<i class="fas fa-user-astronaut iconMenuGreen"></i>
+						<h4 class="iconMenuGreen"><?php echo __('Create wyca');?></h4>
+					</div>
+					
+					<a href="#" class="bAddWyca btn btn-primary" style="margin-left:50%;transform:translateX(-50%);"><?= ('Add an account') ?></a>
+					<ul class="list_wycas list_elem">
+					</ul>
+					
+                    <div class="modal fade modalWyca" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+                                        <div class="h100vh_160" style="overflow:auto">
+                                            <form>
+												<input type="hidden" name="i_id_wyca" id="wyca_wyca_i_id_wyca" value="-1" />
+                                                <div class="form-group" style="display:none">
+                                                    <label class="col-xs-12 col-md-3 control-label" for="societe"><?php echo __('Company');?></label>
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <input id="wyca_wyca_i_wyca_societe" value="company" name="societe" type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style="display:none">
+                                                    <label class="col-xs-12 col-md-3 control-label" for="prenom"><?php echo __('Firstname');?></label>
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <input id="wyca_wyca_i_wyca_prenom" value="fname" name="prenom" type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style="display:none">
+                                                    <label class="col-xs-12 col-md-3 control-label" for="nom"><?php echo __('Lastname');?></label>
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <input id="wyca_wyca_i_wyca_nom" value="lname" name="nom" type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group nopymy">
+                                                    <label class="col-xs-12 col-md-3 control-label" for="email"><?php echo __('Login');?></label>
+                                                    <div class="col-xs-12 col-md-6 input-group input-group-icon">
+                                                        <input id="wyca_wyca_i_wyca_email" name="email" type="email" required="required" pattern="[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,}" class="form-control">
+														<span class="input-group-addon">
+															<span class="icon icon-lg">
+																<i class="fas fa-at"></i>
+															</span>
+														</span>
+													</div>
+													
+                                                </div>
+												<p class="password_format" style="margin-bottom:0"><?=__('A valid mail adress.')?> </p>
+                                                <div class="form-group nopymy">
+                                                    <label class="col-xs-12 col-md-3 control-label" for="password"><?php echo __('Password');?></label>
+                                                    <div class="col-xs-12 col-md-6 input-group input-group-icon">
+                                                        <input id="wyca_wyca_i_wyca_password" name="password" type="password" required="required" class="form-control" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|0-9]).{8,}"> 
+														<span class="input-group-addon">
+															<span class="icon icon-lg">
+																<i class="fa fa-lock"></i>
+															</span>
+														</span>
+                                                    </div>
+                                                </div>
+												<p class="password_format"><?=__('8 characters, lower and uppercase, digit or special char.')?> </p>
+                                                <div class="form-group">
+                                                    <label class="col-xs-12 col-md-3 control-label" for="cpassword"><?php echo __('Confirm password');?></label>
+                                                    <div class="col-xs-12 col-md-6 input-group input-group-icon">
+                                                        <input id="wyca_wyca_i_wyca_cpassword" name="cpassword" type="password" required="required" class="form-control" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|0-9]).{8,}">
+														<span class="input-group-addon">
+															<span class="icon icon-lg">
+																<i class="fa fa-lock"></i>
+															</span>
+														</span>
+                                                    </div>
+                                                </div>
+												<p class="password_format"><?=__('8 characters, lower and uppercase, digit or special char.')?> </p>
+                                            </form>
+                                        </div>
+                                        
+                                        <div style="clear:both;"></div>
+                                       
+                                        <a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal"><?php echo __('Cancel');?></a>
+										<a href="#" id="wyca_wyca_bWycaSave" class="btn btn-primary btn_footer_right btn_50"><?php echo __('Save');?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content sm-content text-left">
+						<p class=""><?= __('This page allows you to manage wyca accounts.')?></p>
+						<p class=""><?= __('You can edit, add or delete wyca accounts.')?></p>
+						<p class=""><?= __('Wyca accounts can mainly :')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
+			</div>
+            <footer>
+                <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="wyca_accounts"><?php echo __('Back');?></a>
+            </footer>
+        </section>
+        
+        <section id="wyca_installer" class="page with_footer">
+	        <a href="#" class="bBackButton button_goto" data-goto="wyca_accounts"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Installers');?></h2>
+            </header>
+            <div class="content">
+                
+                <div class="wyca_installer_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
+                
+                <div class="loaded col-md-12" style="padding-top:30px;">
+					<div class="btn bTuile bAddInstaller bAddInstallerTuile center">
+						<i class="fas fa-user-tie iconMenuGreen"></i>
+						<h4 class="iconMenuGreen"><?php echo __('Create installer');?></h4>
+					</div>
+					
+					<a href="#" class="bAddInstaller btn btn-primary" style="margin-left:50%;transform:translateX(-50%);"><?= ('Add an account') ?></a>
+					<ul class="list_installers list_elem">
+					</ul>
+					
+                    <div class="modal fade modalInstaller" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+                                        <div class="h100vh_160" style="overflow:auto">
+                                            <form>
+												<input type="hidden" name="i_id_installer" id="wyca_installer_i_id_installer" value="-1" />
+                                                <div class="form-group" style="display:none">
+                                                    <label class="col-xs-12 col-md-3 control-label" for="societe"><?php echo __('Company');?></label>
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <input id="wyca_installer_i_installer_societe" value="company" name="societe" type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style="display:none">
+                                                    <label class="col-xs-12 col-md-3 control-label" for="prenom"><?php echo __('Firstname');?></label>
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <input id="wyca_installer_i_installer_prenom" value="fname" name="prenom" type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style="display:none">
+                                                    <label class="col-xs-12 col-md-3 control-label" for="nom"><?php echo __('Lastname');?></label>
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <input id="wyca_installer_i_installer_nom" value="lname" name="nom" type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group nopymy">
+                                                    <label class="col-xs-12 col-md-3 control-label" for="email"><?php echo __('Login');?></label>
+                                                    <div class="col-xs-12 col-md-6 input-group input-group-icon">
+                                                        <input id="wyca_installer_i_installer_email" name="email" type="email" required="required" pattern="[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,}" class="form-control">
+														<span class="input-group-addon">
+															<span class="icon icon-lg">
+																<i class="fas fa-at"></i>
+															</span>
+														</span>
+													</div>
+													
+                                                </div>
+												<p class="password_format" style="margin-bottom:0"><?=__('A valid mail adress.')?> </p>
+                                                <div class="form-group nopymy">
+                                                    <label class="col-xs-12 col-md-3 control-label" for="password"><?php echo __('Password');?></label>
+                                                    <div class="col-xs-12 col-md-6 input-group input-group-icon">
+                                                        <input id="wyca_installer_i_installer_password" name="password" type="password" required="required" class="form-control" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|0-9]).{8,}"> 
+														<span class="input-group-addon">
+															<span class="icon icon-lg">
+																<i class="fa fa-lock"></i>
+															</span>
+														</span>
+                                                    </div>
+                                                </div>
+												<p class="password_format"><?=__('8 characters, lower and uppercase, digit or special char.')?> </p>
+                                                <div class="form-group">
+                                                    <label class="col-xs-12 col-md-3 control-label" for="cpassword"><?php echo __('Confirm password');?></label>
+                                                    <div class="col-xs-12 col-md-6 input-group input-group-icon">
+                                                        <input id="wyca_installer_i_installer_cpassword" name="cpassword" type="password" required="required" class="form-control" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|0-9]).{8,}">
+														<span class="input-group-addon">
+															<span class="icon icon-lg">
+																<i class="fa fa-lock"></i>
+															</span>
+														</span>
+                                                    </div>
+                                                </div>
+												<p class="password_format"><?=__('8 characters, lower and uppercase, digit or special char.')?> </p>
+                                            </form>
+                                        </div>
+                                        
+                                        <div style="clear:both;"></div>
+                                       
+                                        <a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal"><?php echo __('Cancel');?></a>
+										<a href="#" id="wyca_installer_bInstallerSave" class="btn btn-primary btn_footer_right btn_50"><?php echo __('Save');?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content sm-content text-left">
+						<p class=""><?= __('This page allows you to manage installer accounts.')?></p>
+						<p class=""><?= __('You can edit, add or delete installer accounts.')?></p>
+						<p class=""><?= __('Installer accounts can mainly :')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
+			</div>
+            <footer>
+                <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="wyca_accounts"><?php echo __('Back');?></a>
+            </footer>
+        </section>
+        
         <section id="wyca_user" class="page with_footer">
 	        <a href="#" class="bBackButton button_goto" data-goto="wyca_accounts"></a>
             <header>

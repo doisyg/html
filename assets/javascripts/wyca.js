@@ -346,6 +346,8 @@ $(document).ready(function(e) {
 				$('#bHeaderInfo').attr('onClick',"$('#wyca_manager .modalHelpManager').modal('show')");
 			}
 			if (next == 'wyca_user') GetUsersWyca();
+			if (next == 'wyca_wyca') GetWycasWyca();
+			if (next == 'wyca_installer') GetInstallersWyca();
 			if (next == 'wyca_service_book') GetServiceBooksWyca();
 			if (next == 'wyca_edit_map') GetInfosCurrentMapWyca();
 			if (next == 'wyca_setup_trinary') WycaInitTrinary();
@@ -1076,6 +1078,82 @@ function GetServiceBooksByStep()
 		setTimeout(GetServiceBooksByStep, 500);
 	}
 }
+
+// WYCA USER
+
+function GetWycasWyca()
+{
+	$('.wyca_wyca_loading').show();
+	$('#wyca_wyca .loaded').hide();
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetUsersList(function(data) {
+			console.log(data);
+			$('#wyca_wyca .list_wycas').html('');
+			
+			if (data.D != undefined)
+			$.each(data.D,function(index, value){
+				if (value.id_group_user  == wycaApi.GroupUser.WYCA)
+				{
+					$('#wyca_wyca .list_wycas').append('' +
+						'<li id="wyca_wyca_list_wyca_elem_'+value.id_user+'" data-id_wyca="'+value.id_user+'">'+
+						'	<span class="email">'+value.email+'</span>'+
+						'	<a href="#" class="bWycaDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="bWycaEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pen"></i></a>'+
+						'</li>'
+						);
+				}
+			});
+			
+			$('.wyca_wyca_loading').hide();
+			$('#wyca_wyca .loaded').show();
+			RefreshDisplayWycaWyca();
+		});
+	}
+	else
+	{
+		setTimeout(GetWycasWyca, 500);
+	}
+}
+
+// INSTALLERS
+
+function GetInstallersWyca()
+{
+	$('.wyca_installer_loading').show();
+	$('#wyca_installer .loaded').hide();
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetUsersList(function(data) {
+			$('#wyca_installer .list_installers').html('');
+			
+			if (data.D != undefined)
+			$.each(data.D,function(index, value){
+				if (value.id_group_user  == wycaApi.GroupUser.DISTRIBUTOR)
+				{
+					$('#wyca_installer .list_installers').append('' +
+						'<li id="wyca_installer_list_installer_elem_'+value.id_user+'" data-id_installer="'+value.id_user+'">'+
+						'	<span class="email">'+value.email+'</span>'+
+						'	<a href="#" class="bInstallerDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="bInstallerEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pen"></i></a>'+
+						'</li>'
+						);
+				}
+			});
+			
+			$('.wyca_installer_loading').hide();
+			$('#wyca_installer .loaded').show();
+			RefreshDisplayInstallerWyca();
+		});
+	}
+	else
+	{
+		setTimeout(GetInstallersWyca, 500);
+	}
+}
+
 
 // USER
 

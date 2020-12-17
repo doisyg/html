@@ -1157,6 +1157,292 @@ $(document).ready(function(e) {
 		}
 	})
 	
+	//WYCA
+	
+	$('#wyca_wyca .bAddWyca').click(function(e) {
+	
+		$('#wyca_wyca .modalWyca #wyca_wyca_i_id_wyca').val(-1);
+		$('#wyca_wyca .modalWyca #wyca_wyca_i_wyca_email').val('').removeClass('success').removeClass('error');
+		$('#wyca_wyca .modalWyca #wyca_wyca_i_wyca_societe').val('');
+		$('#wyca_wyca .modalWyca #wyca_wyca_i_wyca_prenom').val('');
+		$('#wyca_wyca .modalWyca #wyca_wyca_i_wyca_nom').val('');
+		$('#wyca_wyca .modalWyca #wyca_wyca_i_wyca_password').val('').removeClass('success').removeClass('error');
+		$('#wyca_wyca .modalWyca #wyca_wyca_i_wyca_cpassword').val('').removeClass('success').removeClass('error');
+		
+		$('#wyca_wyca .modalWyca').modal('show');
+	});
+	
+	$('#wyca_wyca .modalWyca #wyca_wyca_bWycaSave').click(function(e) {
+        e.preventDefault();
+	
+		let pass = $('#wyca_wyca .modalWyca #wyca_wyca_i_wyca_password');
+		let cpass = $('#wyca_wyca .modalWyca #wyca_wyca_i_wyca_cpassword');
+		
+		if (pass.val() == '' || cpass.val() == ''){
+			alert_wyca(textPasswordRequired);
+		}else if(pass.val() != cpass.val()){
+			alert_wyca(textPasswordMatching);
+		}else if(!pass[0].checkValidity() || !cpass[0].checkValidity()){
+			alert_wyca(textPasswordPattern);
+		}else if (!$('#wyca_wyca_i_wyca_email')[0].checkValidity()){
+			alert_wyca(textLoginPattern);
+		}
+		else
+		{
+			json_wyca = {
+				"id_wyca": parseInt($('#wyca_wyca .modalWyca #wyca_wyca_i_id_wyca').val()),
+				"company": $('#wyca_wyca .modalWyca #wyca_wyca_i_wyca_societe').val(),
+				"lastname": $('#wyca_wyca .modalWyca #wyca_wyca_i_wyca_nom').val(),
+				"firstname": $('#wyca_wyca .modalWyca #wyca_wyca_i_wyca_prenom').val(),
+				"email": $('#wyca_wyca .modalWyca #wyca_wyca_i_wyca_email').val(),
+				"pass": $('#wyca_wyca .modalWyca #wyca_wyca_i_wyca_password').val(),
+				"id_group_user": wycaApi.GroupUser.WYCA,
+			};
+			
+			wycaApi.SetUser(json_wyca, function(data) {
+				if (data.A == wycaApi.AnswerCode.NO_ERROR)
+				{
+					// On ajoute le li
+					id_wyca = data.D;
+					if ($('#wyca_wyca_list_wyca_elem_'+id_wyca).length > 0)
+					{
+						$('#wyca_wyca_list_wyca_elem_'+id_wyca+' span.email').html(json_wyca.email);
+						/*
+						$('#wyca_wyca_list_wyca_elem_'+id_wyca+' span.societe').html(json_wyca.company);
+						$('#wyca_wyca_list_wyca_elem_'+id_wyca+' span.prenom').html(json_wyca.firstname);
+						$('#wyca_wyca_list_wyca_elem_'+id_wyca+' span.nom').html(json_wyca.lastname);
+						*/
+					}
+					else
+					{
+						$('#wyca_wyca .list_wycas').append('' +
+							'<li id="wyca_wyca_list_wyca_elem_'+id_wyca+'" data-id_wyca="'+id_wyca+'">'+
+							'	<span class="email">'+json_wyca.email+'</span>'+
+							'	<a href="#" class="bWycaDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>'+
+							'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>'+
+							'	<a href="#" class="bWycaEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
+							'</li>'
+							);
+						RefreshDisplayWycaWyca();
+					}
+					
+					$('#wyca_wyca .modalWyca').modal('hide');
+				}
+				else
+				{
+					ParseAPIAnswerError(data);
+				}
+			});
+		}
+    });
+	
+	$(document).on('click', '#wyca_wyca .bWycaDeleteElem', function(e) {
+		e.preventDefault();
+		
+		id_wyca_to_delete = parseInt($(this).closest('li').data('id_wyca'));
+		
+		wycaApi.DeleteUser(id_wyca_to_delete, function(data) {
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$('#wyca_wyca_list_wyca_elem_'+id_wyca_to_delete).remove();
+				RefreshDisplayWycaWyca();
+			}
+			else
+			{
+				ParseAPIAnswerError(data);
+			}
+		});
+	});
+	
+	$(document).on('click', '#wyca_wyca .bWycaEditElem', function(e) {
+		e.preventDefault();
+		
+		id_wyca = $(this).closest('li').data('id_wyca');
+		$('#wyca_wyca .modalWyca #wyca_wyca_i_id_wyca').val(id_wyca);
+		$('#wyca_wyca .modalWyca #wyca_wyca_i_wyca_email').val($('#wyca_wyca_list_wyca_elem_'+id_wyca+' span.email').html());
+		$('#wyca_wyca .modalWyca #wyca_wyca_i_wyca_societe').val($('#wyca_wyca_list_wyca_elem_'+id_wyca+' span.societe').html());
+		$('#wyca_wyca .modalWyca #wyca_wyca_i_wyca_prenom').val($('#wyca_wyca_list_wyca_elem_'+id_wyca+' span.prenom').html());
+		$('#wyca_wyca .modalWyca #wyca_wyca_i_wyca_nom').val($('#wyca_wyca_list_wyca_elem_'+id_wyca+' span.nom').html());
+		$('#wyca_wyca .modalWyca #wyca_wyca_i_wyca_password').val('');
+		$('#wyca_wyca .modalWyca #wyca_wyca_i_wyca_cpassword').val('');
+		
+		$('#wyca_wyca .modalWyca #wyca_wyca_i_wyca_email').removeClass('success').removeClass('error');
+		$('#wyca_wyca .modalWyca #wyca_wyca_i_wyca_password').removeClass('success').removeClass('error');
+		$('#wyca_wyca .modalWyca #wyca_wyca_i_wyca_cpassword').removeClass('success').removeClass('error');
+		
+		$('#wyca_wyca .modalWyca').modal('show');
+	});
+	
+	$('#wyca_wyca input#wyca_wyca_i_wyca_email').change(function(e){
+		if($(this)[0].checkValidity())
+			$(this).removeClass('error').addClass('success');
+		else
+			$(this).removeClass('success').addClass('error');
+	})
+	
+	$('#wyca_wyca input#wyca_wyca_i_wyca_password').change(function(e){
+		if($(this)[0].checkValidity())
+			$(this).removeClass('error').addClass('success');
+		else
+			$(this).removeClass('success').addClass('error');
+	})
+	
+	$('#wyca_wyca input#wyca_wyca_i_wyca_cpassword').change(function(e){
+		if($(this)[0].checkValidity())
+			$(this).removeClass('error').addClass('success');
+		else
+			$(this).removeClass('success').addClass('error');
+		if($('#wyca_wyca input#wyca_wyca_i_wyca_password').val() != ''){
+			if($(this).val() == $('#wyca_wyca input#wyca_wyca_i_wyca_password').val())
+				$(this).removeClass('error').addClass('success');
+			else
+				$(this).removeClass('success').addClass('error');
+		}
+	})
+	
+	//INSTALLERS
+	
+	$('#wyca_installer .bAddInstaller').click(function(e) {
+	
+		$('#wyca_installer .modalInstaller #wyca_installer_i_id_installer').val(-1);
+		$('#wyca_installer .modalInstaller #wyca_installer_i_installer_email').val('').removeClass('success').removeClass('error');
+		$('#wyca_installer .modalInstaller #wyca_installer_i_installer_societe').val('');
+		$('#wyca_installer .modalInstaller #wyca_installer_i_installer_prenom').val('');
+		$('#wyca_installer .modalInstaller #wyca_installer_i_installer_nom').val('');
+		$('#wyca_installer .modalInstaller #wyca_installer_i_installer_password').val('').removeClass('success').removeClass('error');
+		$('#wyca_installer .modalInstaller #wyca_installer_i_installer_cpassword').val('').removeClass('success').removeClass('error');
+		
+		$('#wyca_installer .modalInstaller').modal('show');
+	});
+	
+	$('#wyca_installer .modalInstaller #wyca_installer_bInstallerSave').click(function(e) {
+        e.preventDefault();
+	
+		let pass = $('#wyca_installer .modalInstaller #wyca_installer_i_installer_password');
+		let cpass = $('#wyca_installer .modalInstaller #wyca_installer_i_installer_cpassword');
+		
+		if (pass.val() == '' || cpass.val() == ''){
+			alert_wyca(textPasswordRequired);
+		}else if(pass.val() != cpass.val()){
+			alert_wyca(textPasswordMatching);
+		}else if(!pass[0].checkValidity() || !cpass[0].checkValidity()){
+			alert_wyca(textPasswordPattern);
+		}else if (!$('#wyca_installer_i_installer_email')[0].checkValidity()){
+			alert_wyca(textLoginPattern);
+		}
+		else
+		{
+			json_installer = {
+				"id_installer": parseInt($('#wyca_installer .modalInstaller #wyca_installer_i_id_installer').val()),
+				"company": $('#wyca_installer .modalInstaller #wyca_installer_i_installer_societe').val(),
+				"lastname": $('#wyca_installer .modalInstaller #wyca_installer_i_installer_nom').val(),
+				"firstname": $('#wyca_installer .modalInstaller #wyca_installer_i_installer_prenom').val(),
+				"email": $('#wyca_installer .modalInstaller #wyca_installer_i_installer_email').val(),
+				"pass": $('#wyca_installer .modalInstaller #wyca_installer_i_installer_password').val(),
+				"id_group_user": wycaApi.GroupUser.DISTRIBUTOR,
+			};
+			
+			wycaApi.SetUser(json_installer, function(data) {
+				if (data.A == wycaApi.AnswerCode.NO_ERROR)
+				{
+					// On ajoute le li
+					id_installer = data.D;
+					if ($('#wyca_installer_list_installer_elem_'+id_installer).length > 0)
+					{
+						$('#wyca_installer_list_installer_elem_'+id_installer+' span.email').html(json_installer.email);
+						/*
+						$('#wyca_installer_list_installer_elem_'+id_installer+' span.societe').html(json_installer.company);
+						$('#wyca_installer_list_installer_elem_'+id_installer+' span.prenom').html(json_installer.firstname);
+						$('#wyca_installer_list_installer_elem_'+id_installer+' span.nom').html(json_installer.lastname);
+						*/
+					}
+					else
+					{
+						$('#wyca_installer .list_installers').append('' +
+							'<li id="wyca_installer_list_installer_elem_'+id_installer+'" data-id_installer="'+id_installer+'">'+
+							'	<span class="email">'+json_installer.email+'</span>'+
+							'	<a href="#" class="bInstallerDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>'+
+							'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>'+
+							'	<a href="#" class="bInstallerEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
+							'</li>'
+							);
+						RefreshDisplayInstallerWyca();
+					}
+					
+					$('#wyca_installer .modalInstaller').modal('hide');
+				}
+				else
+				{
+					ParseAPIAnswerError(data);
+				}
+			});
+		}
+    });
+	
+	$(document).on('click', '#wyca_installer .bInstallerDeleteElem', function(e) {
+		e.preventDefault();
+		
+		id_installer_to_delete = parseInt($(this).closest('li').data('id_installer'));
+		
+		wycaApi.DeleteUser(id_installer_to_delete, function(data) {
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$('#wyca_installer_list_installer_elem_'+id_installer_to_delete).remove();
+				RefreshDisplayInstallerWyca();
+			}
+			else
+			{
+				ParseAPIAnswerError(data);
+			}
+		});
+	});
+	
+	$(document).on('click', '#wyca_installer .bInstallerEditElem', function(e) {
+		e.preventDefault();
+		
+		id_installer = $(this).closest('li').data('id_installer');
+		$('#wyca_installer .modalInstaller #wyca_installer_i_id_installer').val(id_installer);
+		$('#wyca_installer .modalInstaller #wyca_installer_i_installer_email').val($('#wyca_installer_list_installer_elem_'+id_installer+' span.email').html());
+		$('#wyca_installer .modalInstaller #wyca_installer_i_installer_societe').val($('#wyca_installer_list_installer_elem_'+id_installer+' span.societe').html());
+		$('#wyca_installer .modalInstaller #wyca_installer_i_installer_prenom').val($('#wyca_installer_list_installer_elem_'+id_installer+' span.prenom').html());
+		$('#wyca_installer .modalInstaller #wyca_installer_i_installer_nom').val($('#wyca_installer_list_installer_elem_'+id_installer+' span.nom').html());
+		$('#wyca_installer .modalInstaller #wyca_installer_i_installer_password').val('');
+		$('#wyca_installer .modalInstaller #wyca_installer_i_installer_cpassword').val('');
+		
+		$('#wyca_installer .modalInstaller #wyca_installer_i_installer_email').removeClass('success').removeClass('error');
+		$('#wyca_installer .modalInstaller #wyca_installer_i_installer_password').removeClass('success').removeClass('error');
+		$('#wyca_installer .modalInstaller #wyca_installer_i_installer_cpassword').removeClass('success').removeClass('error');
+		
+		$('#wyca_installer .modalInstaller').modal('show');
+	});
+	
+	$('#wyca_installer input#wyca_installer_i_installer_email').change(function(e){
+		if($(this)[0].checkValidity())
+			$(this).removeClass('error').addClass('success');
+		else
+			$(this).removeClass('success').addClass('error');
+	})
+	
+	$('#wyca_installer input#wyca_installer_i_installer_password').change(function(e){
+		if($(this)[0].checkValidity())
+			$(this).removeClass('error').addClass('success');
+		else
+			$(this).removeClass('success').addClass('error');
+	})
+	
+	$('#wyca_installer input#wyca_installer_i_installer_cpassword').change(function(e){
+		if($(this)[0].checkValidity())
+			$(this).removeClass('error').addClass('success');
+		else
+			$(this).removeClass('success').addClass('error');
+		if($('#wyca_installer input#wyca_installer_i_installer_password').val() != ''){
+			if($(this).val() == $('#wyca_installer input#wyca_installer_i_installer_password').val())
+				$(this).removeClass('error').addClass('success');
+			else
+				$(this).removeClass('success').addClass('error');
+		}
+	})
+	
 	//----------------------- WIFI ----------------------------
 	
 	$('#wyca_setup_wifi .refresh_wifi').click(function(e) {
@@ -1842,3 +2128,34 @@ function RefreshDisplayUserWyca(){
 	}
 	
 }
+
+//------------------- INSTALLATEUR ------------------------	
+
+function RefreshDisplayInstallerWyca(){
+	if($('#wyca_installer ul.list_installers li').length > 0){
+		//HIDE TUILE et AFF NEXT
+		$('#wyca_installer a.bAddInstaller').show();
+		$('#wyca_installer .bAddInstallerTuile').hide();
+	}else{
+		//AFF TUILE ET SKIP
+		$('#wyca_installer a.bAddInstaller').hide();
+		$('#wyca_installer .bAddInstallerTuile').show();
+	}
+	
+}
+
+//------------------- WYCA ------------------------	
+
+function RefreshDisplayWycaWyca(){
+	if($('#wyca_wyca ul.list_wycas li').length > 0){
+		//HIDE TUILE et AFF NEXT
+		$('#wyca_wyca a.bAddWyca').show();
+		$('#wyca_wyca .bAddWycaTuile').hide();
+	}else{
+		//AFF TUILE ET SKIP
+		$('#wyca_wyca a.bAddWyca').hide();
+		$('#wyca_wyca .bAddWycaTuile').show();
+	}
+	
+}
+
