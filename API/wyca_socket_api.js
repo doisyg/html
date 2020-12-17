@@ -96,6 +96,8 @@ function WycaAPI(options){
 		INSTALL_NEW_TOP_WITHOUT_KEY			: 0x1106,
 		SET_USE_SEGMENTED_MESSAGE			: 0x110F,
 		DO_BROWSER_RESTART			: 0x1110,
+		
+		GET_CURRENT_AREA_ID			: 0x012B,
 	 
 		CANCEL_CURRENT_ACTION			: 0x1103,
 	 
@@ -276,6 +278,7 @@ function WycaAPI(options){
 		MOVE_IN_PROGRESS			: 0x0015,
 		LIDAR_DATA			: 0x3007,
 		MAP_UPDATED			: 0x0018,
+		CURRENT_AREA_ID			: 0x001F,
 	 
 	// Actions
 		MAPPING_START_FEEDBACK			: 0x4004,
@@ -1199,6 +1202,9 @@ function WycaAPI(options){
 						case this.EventCode.NAVIGATION_ROBOT_POSE:
 							if (_this.options.onNavigationRobotPose != undefined) { _this.options.onNavigationRobotPose(msg.D.D); }
 							break;
+						case this.EventCode.CURRENT_AREA_ID:
+							if (_this.options.onCurrentAreaId != undefined) { _this.options.onCurrentAreaId(msg.D.D); }
+							break;
 						case this.EventCode.IS_FREEWHEEL:
 							if (_this.options.onIsFreewheel != undefined) { _this.options.onIsFreewheel(msg.D.D); }
 							break;
@@ -1367,6 +1373,9 @@ function WycaAPI(options){
 					break;
 				case this.EventCode.NAVIGATION_ROBOT_POSE:
 					if (_this.options.onNavigationRobotPose != undefined) { _this.options.onNavigationRobotPose(msg.D); }
+					break;
+				case this.EventCode.CURRENT_AREA_ID:
+					if (_this.options.onCurrentAreaId != undefined) { _this.options.onCurrentAreaId(msg.D); }
 					break;
 				case this.EventCode.IS_FREEWHEEL:
 					if (_this.options.onIsFreewheel != undefined) { _this.options.onIsFreewheel(msg.D); }
@@ -1603,6 +1612,7 @@ function WycaAPI(options){
 		if (_this.options.onMappingRobotPoseInBuildingMap != undefined) { var n=_this.EventCode.MAPPING_ROBOT_POSE_CURRENT_MAP; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onNavigationIsStarted != undefined) { var n=_this.EventCode.NAVIGATION_IS_STARTED; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onNavigationRobotPose != undefined) { var n=_this.EventCode.NAVIGATION_ROBOT_POSE; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
+		if (_this.options.onCurrentAreaId != undefined) { var n=_this.EventCode.CURRENT_AREA_ID; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onIsFreewheel != undefined) { var n=_this.EventCode.IS_FREEWHEEL; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onIsSafetyStop != undefined) { var n=_this.EventCode.IS_SAFETY_STOP; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onLidarData != undefined) { var n=_this.EventCode.LIDAR_DATA; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
@@ -1640,6 +1650,7 @@ function WycaAPI(options){
 			case 'onMappingRobotPoseInBuildingMap': ev_code = _this.EventCode.MAPPING_ROBOT_POSE_CURRENT_MAP; break;
 			case 'onNavigationIsStarted': ev_code = _this.EventCode.NAVIGATION_IS_STARTED; break;
 			case 'onNavigationRobotPose': ev_code = _this.EventCode.NAVIGATION_ROBOT_POSE; break;
+			case 'onCurrentAreaId': ev_code = _this.EventCode.CURRENT_AREA_ID; break;
 			case 'onIsFreewheel': ev_code = _this.EventCode.IS_FREEWHEEL; break;
 			case 'onIsSafetyStop': ev_code = _this.EventCode.IS_SAFETY_STOP; break;
 			case 'onLidarData': ev_code = _this.EventCode.LIDAR_DATA; break;
@@ -1715,6 +1726,7 @@ function WycaAPI(options){
 			case 'onMappingRobotPoseInBuildingMap': ev_code = _this.CommandCode.MAPPING_ROBOT_POSE_CURRENT_MAP; break;
 			case 'onNavigationIsStarted': ev_code = _this.CommandCode.NAVIGATION_IS_STARTED; break;
 			case 'onNavigationRobotPose': ev_code = _this.CommandCode.NAVIGATION_ROBOT_POSE; break;
+			case 'onCurrentAreaId': ev_code = _this.CommandCode.CURRENT_AREA_ID; break;
 			case 'onIsFreewheel': ev_code = _this.CommandCode.IS_FREEWHEEL; break;
 			case 'onIsSafetyStop': ev_code = _this.CommandCode.IS_SAFETY_STOP; break;
 			case 'onLidarData': ev_code = _this.CommandCode.LIDAR_DATA; break;
@@ -1837,6 +1849,14 @@ function WycaAPI(options){
 		var action = {
 			"O": _this.CommandCode.DO_BROWSER_RESTART,
 			"P": in_kiosk_mode
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	this.GetCurrentAreaId  = function(callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.GET_CURRENT_AREA_ID] = callback;
+		var action = {
+			"O": _this.CommandCode.GET_CURRENT_AREA_ID
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
