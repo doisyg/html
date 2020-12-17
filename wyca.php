@@ -14,11 +14,11 @@
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="wyca_setup" href="#"><i class="fa fa-gears"></i><?php echo __('Setup');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5" data-goto="wyca_accounts" href="#"><i class="fas fa-users"></i><?php echo __('Accounts');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" data-goto="wyca_service_book" href="#"><i class="fa fa-book"></i><?php echo __('Service book');?></a></li>
-                    
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile9" data-goto="wyca_browser_restart" href="#"><i class="fab fa-chrome"></i><?php echo __('Restart Browser');?></a></li>
 					<?php endif;?>
 					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7" data-goto="wyca_demo_mode_start_stop" href="#"><i class="fa fa-recycle"></i><?php echo __('Demo mode');?><br /><?php echo __('Start / Stop');?></a></li>
 					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8" data-goto="wyca_demo_mode_config" href="#"><i class="fa fa-gears"></i><?php echo __('Demo mode');?><br /><?php echo __('Config');?></a></li>
-					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile9" data-goto="wyca_browser_restart" href="#"><i class="fab fa-chrome"></i><?php echo __('Restart Browser');?></a></li>
+					
 					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile10" href="logout.php"><i class="fas fa-power-off"></i><?php echo __('Logout');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile11 todo" data-goto="wyca_help" href="#"><i class="fa fa-question"></i><?php echo __('Help');?></a></li>
                 </ul>
@@ -2276,9 +2276,11 @@
                 <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="wyca_dashboard"><?php echo __('Back');?></a>
             </footer>
         </section>
-	<?php endif;?>
+		
+		<section id="wyca_browser_restart" class="page hmi_tuile with_footer">
+		<?php endif;?>
 	
-	<!--- DEMO MODE -->
+		<!--- DEMO MODE -->
 		<section id="wyca_demo_mode_start_stop" class="page hmi_tuile ">
 			<a href="#" class="bBackButton button_goto" data-goto="wyca_dashboard"></a>
 			<header>
@@ -2384,7 +2386,7 @@
 			</footer>
 		</section>
 		
-		<section id="wyca_browser_restart" class="page hmi_tuile with_footer">
+		
 			<a href="#" class="bBackButton button_goto" data-goto="wyca_dashboard"></a>
 			<header>
 				<div class="pull-left"><img src="assets/images/logo.png" /></div>
