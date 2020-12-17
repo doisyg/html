@@ -1,4 +1,5 @@
-	<div id="pages_wyca" class="global_sub_page <?php echo $INSTALL_STEP >= 100?'active':'';?>">
+	<div id="pages_wyca" class="global_sub_page active">
+	
         <section id="wyca_dashboard" class="page hmi_tuile active">
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
@@ -6,14 +7,15 @@
             </header>
             <div class="content">
                 <ul class="tuiles row">
+					<?php if($_SESSION['id_user'] == 1 ):?>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile1" data-goto="wyca_edit_map" href="#"><i class="far fa-map"></i><?php echo __('Map');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="wyca_move" href="#"><i class="fa fa-gamepad"></i><?php echo __('Control robot');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="wyca_recovery" href="#"><i class="fa fa-search"></i><?php echo __('Recovery');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="wyca_setup" href="#"><i class="fa fa-gears"></i><?php echo __('Setup');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5" data-goto="wyca_accounts" href="#"><i class="fas fa-users"></i><?php echo __('Accounts');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" data-goto="wyca_service_book" href="#"><i class="fa fa-book"></i><?php echo __('Service book');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7" href="logout.php"><i class="fas fa-power-off"></i><?php echo __('Logout');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8 todo" data-goto="wyca_help" href="#"><i class="fa fa-question"></i><?php echo __('Help');?></a></li>
+                    
+					<?php endif;?>
                 </ul>
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
@@ -25,7 +27,7 @@
 				</div>
             </div>
         </section>
-        
+        <?php if($_SESSION['id_user'] == 1 ):?>
         <section id="wyca_edit_map" class="page with_footer">
 	        <a href="#" class="bBackButton button_goto" data-goto="wyca_dashboard"></a>
             <header>
@@ -2032,7 +2034,7 @@
             </footer>
         </section>
         
-        <section id="wyca_help" class="page with_footer">
+		<section id="wyca_help" class="page with_footer">
 	        <a href="#" class="bBackButton button_goto" data-goto="wyca_dashboard"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
@@ -2045,4 +2047,5 @@
                 <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="wyca_dashboard"><?php echo __('Back');?></a>
             </footer>
         </section>
+	<?php endif;?>
     </div>
