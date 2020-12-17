@@ -1160,6 +1160,9 @@ div.icon_menu .iconForbiddenArea .fa-minus-circle{
 .nopymy:after{margin-top:0;margin-bottom:0;padding-top:0;padding-bottom:0;}
 
 /* CSS FIXES */
+.tuile_demo{
+	background:#C674B5!important;
+}
 .bTuile{
 	text-align: center;
     display: inline-flex;
