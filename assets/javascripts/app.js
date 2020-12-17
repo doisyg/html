@@ -565,11 +565,15 @@ $(document).ready(function(e) {
 	//CONFIRM DELETE
 	$(document).on('click', '.confirm_delete', function(e) {
 		e.preventDefault();
-		$(this).data('confirmed_delete',false);
 		if($(this)[0].nodeName == 'A'){
 			currentDeleteId = $(this).parent().attr('id');
+			console.log(currentDeleteId);
+			if(currentDeleteId.split('_elem_')[1] == user_id)
+				$('#modalConfirmDeleteCurrentAccount').modal('show');
+			else
+				$('#modalConfirmDelete').modal('show');
 		}
-		$('#modalConfirmDelete').modal('show');
+		
 	})
 	
 	$('#bModalConfirmDeleteOk').click(function(e){
@@ -577,6 +581,15 @@ $(document).ready(function(e) {
 			$('#'+currentDeleteId).find('.btn_confirm_delete').click();
 			currentDeleteId = '';
 		}
+	})
+	
+	$('#bModalConfirmDeleteCurrentAccountOk').click(function(e){
+		if(currentDeleteId !=''){
+			$('#'+currentDeleteId).find('.btn_confirm_delete').click();
+			currentDeleteId = '';
+			
+		}
+		location.href = 'logout.php';
 	})
 	
 });

@@ -46,6 +46,7 @@
 		var app_url = '<?php echo $server_request_scheme;?>://wyca.run';
 
 		var user_api_key = '<?php echo $_SESSION["api_key"];?>';
+		var user_id = '<?php echo $_SESSION["id_user"];?>';
 		// TODO var id_map_last = <?php // echo $currentIdMap;?>;
 
 		</script>
