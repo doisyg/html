@@ -272,6 +272,8 @@ $(document).ready(function(e) {
 			
 			console.log('next ',next);
 			
+			//BYSTEP
+			
 			if (next == 'install_by_step_tops') InitTopsByStep();
 			if (next == 'install_by_step_top') InitTopsActiveByStep();
 			if (next == 'install_by_step_check') InitCheckByStep();		
@@ -352,6 +354,9 @@ $(document).ready(function(e) {
 			if (next == 'wyca_edit_map') GetInfosCurrentMapWyca();
 			if (next == 'wyca_setup_trinary') WycaInitTrinary();
 			
+			if (next == 'wyca_demo_mode_config') InitWycaDemo();
+			if (next == 'wyca_demo_mode_start_stop') InitWycaDemoState();
+			
 			// MANAGER
 			
 			if (next == 'manager_edit_map') GetInfosCurrentMapManager();
@@ -362,8 +367,6 @@ $(document).ready(function(e) {
 			
 			if (next == 'user_edit_map') GetInfosCurrentMapUser();
 			
-			if (next == 'wyca_demo_mode_config') InitWycaDemo();
-			if (next == 'wyca_demo_mode_start_stop') InitWycaDemoState();
 			
 			if(anim_show){
 				// Anim HIDE

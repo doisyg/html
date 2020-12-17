@@ -14,10 +14,10 @@
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="wyca_setup" href="#"><i class="fa fa-gears"></i><?php echo __('Setup');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5" data-goto="wyca_accounts" href="#"><i class="fas fa-users"></i><?php echo __('Accounts');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" data-goto="wyca_service_book" href="#"><i class="fa fa-book"></i><?php echo __('Service book');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile9" data-goto="wyca_browser_restart" href="#"><i class="fab fa-chrome"></i><?php echo __('Restart Browser');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7" data-goto="wyca_browser_restart" href="#"><i class="fab fa-chrome"></i><?php echo __('Restart Browser');?></a></li>
 					<?php endif;?>
-					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7 <?=$_SESSION['id_user'] == 1? 'tuile_demo':'' ?>" data-goto="wyca_demo_mode_start_stop" href="#"><i class="fa fa-recycle"></i><?php echo __('Demo mode');?><br /><?php echo __('Start / Stop');?></a></li>
-					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8 <?=$_SESSION['id_user'] == 1? 'tuile_demo':'' ?>" data-goto="wyca_demo_mode_config" href="#"><i class="fa fa-gears"></i><?php echo __('Demo mode');?><br /><?php echo __('Config');?></a></li>
+					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8 <?=$_SESSION['id_user'] == 1? 'tuile_demo':'' ?>" data-goto="wyca_demo_mode_start_stop" href="#"><i class="fa fa-recycle"></i><?php echo __('Demo mode');?><br /><?php echo __('Start / Stop');?></a></li>
+					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile9 <?=$_SESSION['id_user'] == 1? 'tuile_demo':'' ?>" data-goto="wyca_demo_mode_config" href="#"><i class="fa fa-gears"></i><?php echo __('Demo mode');?><br /><?php echo __('Config');?></a></li>
 					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile10" href="logout.php"><i class="fas fa-power-off"></i><?php echo __('Logout');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile11 todo" data-goto="wyca_help" href="#"><i class="fa fa-question"></i><?php echo __('Help');?></a></li>
                 </ul>
@@ -1011,13 +1011,13 @@
                 <ul class="tuiles row">
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile1" data-goto="wyca_setup_sites" href="#"><i class="fa fa-building"></i><?php echo __('Sites');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="wyca_setup_trinary" href="#"><i class="far fa-map"></i><?php echo __('Map trinary');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="wyca_setup_language" href="#"><i class="fa fa-language"></i><?php echo __('Language');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="wyca_setup_wifi" href="#"><i class="fas fa-wifi"></i><?php echo __('Wifi');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="wyca_setup_config" href="#"><i class="fas fa-battery-three-quarters"></i><?php echo __('Battery settings');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5" data-goto="wyca_setup_tops" href="#"><i class="fa fa-cube"></i><?php echo __('Tops');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" data-goto="wyca_setup_export" href="#"><i class="fa fa-upload"></i><?php echo __('Export site');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7" data-goto="wyca_setup_import" href="#"><i class="fa fa-download"></i><?php echo __('Import site');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8" data-goto="wyca_setup_reset" href="#"><i class="fa fa-eraser"></i><?php echo __('Factory data reset');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="wyca_setup_language" href="#"><i class="fa fa-language"></i><?php echo __('Language');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="wyca_setup_wifi" href="#"><i class="fas fa-wifi"></i><?php echo __('Wifi');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5" data-goto="wyca_setup_config" href="#"><i class="fas fa-battery-three-quarters"></i><?php echo __('Battery settings');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" data-goto="wyca_setup_tops" href="#"><i class="fa fa-cube"></i><?php echo __('Tops');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7" data-goto="wyca_setup_export" href="#"><i class="fa fa-upload"></i><?php echo __('Export site');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8" data-goto="wyca_setup_import" href="#"><i class="fa fa-download"></i><?php echo __('Import site');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile9" data-goto="wyca_setup_reset" href="#"><i class="fa fa-eraser"></i><?php echo __('Factory data reset');?></a></li>
 				</ul>
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
@@ -2178,8 +2178,8 @@
 				<ul class="tuiles row">
 					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile1" data-goto="wyca_manager" href="#"><i class="fas fa-users-cog" style="transform:scaleX(-1)"></i><?php echo __('Managers');?></a></li>
 					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="wyca_user" href="#"><i class="fas fa-user-friends"></i><?php echo __('Users');?></a></li>
-					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="wyca_installer" href="#"><i class="fas fa-user-tie"></i><?php echo __('Installers');?></a></li>
-					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="wyca_wyca" href="#"><i class="fas fa-user-astronaut"></i><?php echo __('Wycas');?></a></li>
+					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="wyca_installer" href="#"><i class="fas fa-user-tie"></i><?php echo __('Installers');?></a></li>
+					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="wyca_wyca" href="#"><i class="fas fa-user-astronaut"></i><?php echo __('Wycas');?></a></li>
 				</ul>
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
@@ -2276,7 +2276,25 @@
             </footer>
         </section>
 		
+		
 		<section id="wyca_browser_restart" class="page hmi_tuile with_footer">
+			<a href="#" class="bBackButton button_goto" data-goto="wyca_dashboard"></a>
+			<header>
+				<div class="pull-left"><img src="assets/images/logo.png" /></div>
+				<h2><?php echo __('Restart Browser');?></h2>
+			</header>
+			<div class="content">
+				<div class="loaded">
+					<ul class="tuiles row">
+						<li class="col-xs-4 col-md-3 col-lg-2"><a id="wyca_bRestartBrowerTrue" class="anim_tuiles tuile1" href="#"><i class="fas fa-expand-arrows-alt fakeScreen"></i><?php echo __('Fullscreen');?></a></li>
+						<li class="col-xs-4 col-md-3 col-lg-2"><a id="wyca_bRestartBrowerFalse" class="anim_tuiles tuile2" href="#"><i class="fas fa-compress-arrows-alt fakeScreen"></i><?php echo __('Windowed');?></a></li>
+					</ul>
+				</div>
+			</div>
+			<footer>
+				<a href="#" class="btn btn-default button_goto" data-goto="wyca_dashboard" style="position:absolute; width:100%; left:0; bottom:0px; font-size:30px;"><?php echo __('Back');?></a>
+			</footer>
+		</section>
 		<?php endif;?>
 	
 		<!--- DEMO MODE -->
@@ -2293,7 +2311,7 @@
 				<div class="loaded">
 					<ul class="tuiles row">
 						<li class="col-xs-4 col-md-3 col-lg-2"><a id="wyca_demo_mode_start_stop_bStart" class="anim_tuiles tuile1" href="#"><i class="fa fa-play"></i><?php echo __('Start');?></a></li>
-						<li class="col-xs-4 col-md-3 col-lg-2"><a id="wyca_demo_mode_start_stop_bStop" class="anim_tuiles tuile1 todo" href="#"><i class="fa fa-stop"></i><?php echo __('Stop');?></a></li>
+						<li class="col-xs-4 col-md-3 col-lg-2"><a id="wyca_demo_mode_start_stop_bStop" class="anim_tuiles tuile2 todo" href="#"><i class="fa fa-stop"></i><?php echo __('Stop');?></a></li>
 					</ul>
 				</div>
 			</div>
@@ -2385,23 +2403,5 @@
 			</footer>
 		</section>
 		
-		
-			<a href="#" class="bBackButton button_goto" data-goto="wyca_dashboard"></a>
-			<header>
-				<div class="pull-left"><img src="assets/images/logo.png" /></div>
-				<h2><?php echo __('Restart Browser');?></h2>
-			</header>
-			<div class="content">
-				<div class="loaded">
-					<ul class="tuiles row">
-						<li class="col-xs-4 col-md-3 col-lg-2"><a id="wyca_bRestartBrowerTrue" class="anim_tuiles tuile1" href="#"><i class="fas fa-expand-arrows-alt fakeScreen"></i><?php echo __('Fullscreen');?></a></li>
-						<li class="col-xs-4 col-md-3 col-lg-2"><a id="wyca_bRestartBrowerFalse" class="anim_tuiles tuile1" href="#"><i class="fas fa-compress-arrows-alt fakeScreen"></i><?php echo __('Windowed');?></a></li>
-					</ul>
-				</div>
-			</div>
-			<footer>
-				<a href="#" class="btn btn-default button_goto" data-goto="wyca_dashboard" style="position:absolute; width:100%; left:0; bottom:0px; font-size:30px;"><?php echo __('Back');?></a>
-			</footer>
-		</section>
 		<!--- DEMO MODE -->
 	</div>
