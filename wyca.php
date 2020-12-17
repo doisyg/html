@@ -16,6 +16,11 @@
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" data-goto="wyca_service_book" href="#"><i class="fa fa-book"></i><?php echo __('Service book');?></a></li>
                     
 					<?php endif;?>
+					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7" data-goto="wyca_demo_mode_start_stop" href="#"><i class="fa fa-recycle"></i><?php echo __('Demo mode');?><br /><?php echo __('Start / Stop');?></a></li>
+					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8" data-goto="wyca_demo_mode_config" href="#"><i class="fa fa-gears"></i><?php echo __('Demo mode');?><br /><?php echo __('Config');?></a></li>
+					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile9" data-goto="wyca_browser_restart" href="#"><i class="fab fa-chrome"></i><?php echo __('Restart Browser');?></a></li>
+					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile10" href="logout.php"><i class="fas fa-power-off"></i><?php echo __('Logout');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile11 todo" data-goto="wyca_help" href="#"><i class="fa fa-question"></i><?php echo __('Help');?></a></li>
                 </ul>
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
@@ -2174,6 +2179,8 @@
 				<ul class="tuiles row">
 					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile1" data-goto="wyca_manager" href="#"><i class="fas fa-users-cog" style="transform:scaleX(-1)"></i><?php echo __('Managers');?></a></li>
 					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="wyca_user" href="#"><i class="fas fa-user-friends"></i><?php echo __('Users');?></a></li>
+					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="wyca_installer" href="#"><i class="fas fa-user-tie"></i><?php echo __('Installers');?></a></li>
+					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="wyca_wyca" href="#"><i class="fas fa-user-astronaut"></i><?php echo __('Wycas');?></a></li>
 				</ul>
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
@@ -2270,4 +2277,130 @@
             </footer>
         </section>
 	<?php endif;?>
-    </div>
+	
+	<!--- DEMO MODE -->
+		<section id="wyca_demo_mode_start_stop" class="page hmi_tuile ">
+			<a href="#" class="bBackButton button_goto" data-goto="wyca_dashboard"></a>
+			<header>
+				<div class="pull-left"><img src="assets/images/logo.png" /></div>
+				<h2><?php echo __('Demo mode Start / Stop');?></h2>
+			</header>
+			<div class="content">
+				<a href="#" class="wyca_demo_mode_start_stop_back button_goto" data-goto="wyca_dashboard" style="display:none;"></a>
+				<div class="wyca_demo_mode_start_stop_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
+					
+				<div class="loaded">
+					<ul class="tuiles row">
+						<li class="col-xs-4 col-md-3 col-lg-2"><a id="wyca_demo_mode_start_stop_bStart" class="anim_tuiles tuile1" href="#"><i class="fa fa-play"></i><?php echo __('Start');?></a></li>
+						<li class="col-xs-4 col-md-3 col-lg-2"><a id="wyca_demo_mode_start_stop_bStop" class="anim_tuiles tuile1 todo" href="#"><i class="fa fa-stop"></i><?php echo __('Stop');?></a></li>
+					</ul>
+				</div>
+			</div>
+			<footer>           
+				<a href="#" class="btn btn-default button_goto btn_footer_left" data-goto="wyca_dashboard"><?php echo __('Back');?></a>
+			</footer>
+		</section>
+		
+		<section id="wyca_demo_mode_config" class="page with_footer">
+			<a href="#" class="bBackButton button_goto" data-goto="wyca_dashboard"></a>
+			<header>
+				<div class="pull-left"><img src="assets/images/logo.png" /></div>
+				<h2><?php echo __('Demo mode configuration');?></h2>
+			</header>
+			<div class="content">
+				
+				<div class="wyca_demo_mode_config_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
+				
+				<div class="loaded">
+					<h4><?= __('Battery level config')?></h4>
+					 <form>
+						<div class="form-group col-xs-6">
+							<label class="col-xs-12 control-label"><?= __('Min battery level')?><br />=> <?= __('Start demo')?></label>
+							<div class="col-xs-12 input-group mb-md">
+								<input type="text" id="wyca_demo_mode_config_min_goto_demo" name="min_goto_demo" value="" class="form-control input-sm mb-md" />
+								<span class="input-group-addon ">%</span>
+							</div>
+						</div>
+						<div class="form-group col-xs-6">
+							<label class="col-xs-12 control-label"><?= __('Min battery level')?><br />=> <?= __('Go to charge')?></label>
+							<div class="col-xs-12 input-group mb-md">
+								<input type="text" id="wyca_demo_mode_config_min_goto_charge" name="min_goto_charge" value="" class="form-control input-sm mb-md" />
+								<span class="input-group-addon ">%</span>
+							</div>
+						</div>
+					</form>
+					
+					<h4><?= __('Actions list')?></h4>
+					<ul class="list_actions list_elem">
+					</ul>
+
+					<h4 style="margin-top:20px;"><?= __('POI list')?></h4>
+					<ul class="list_all_poi list_elem">
+					</ul>
+
+					<h4 style="margin-top:20px;"><?= __('Docking stations list')?></h4>
+					<ul class="list_all_dock list_elem">
+					</ul>
+				
+					<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#wyca_demo_mode_config_modalWaitOptions" style="margin-bottom:50px;"><?php echo __('Add wait step');?></a>
+					
+					<div style="clear:both;"></div>
+					
+					<div id="wyca_demo_mode_config_modalWaitOptions" class="modal fade modalWaitOptions" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+						<div class="modal-dialog" role="dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<div class="actions mh100vh_55">
+										<div class="h100vh_160" style="overflow:auto; text-align:center">
+										
+											<form>
+												<input type="hidden" id="wyca_demo_mode_config_id_li_wait" value="-1" />
+												<div class="form-group">
+													<label class="col-xs-4 control-label"><?= __('Duration')?></label>
+													<div class="col-xs-8 input-group mb-md">
+														<input type="text" id="wyca_demo_mode_config_duration" name="duration" value="" class="form-control input-sm mb-md" />
+														<span class="input-group-addon "><?= __('secondes')?></span>
+													</div>
+												</div>
+											</form>
+											
+										</div>
+										
+										<div style="clear:both;"></div>
+								
+										<a href="#" id="wyca_demo_mode_config_bCancelWait" class="btn btn-default" data-dismiss="modal" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Cancel');?></a>       
+										<a href="#" id="wyca_demo_mode_config_bSaveWait" class="btn btn-primary" data-dismiss="modal" style="width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<footer>
+				<a href="#" class="btn btn-default button_goto" data-goto="wyca_dashboard" style="position:absolute; width:50%; left:0; bottom:0px; font-size:30px;"><?php echo __('Back');?></a>
+			
+				<a href="#" class="btn btn-primary button_goto bSaveDemoMode" data-goto="wyca_demo_mode_config" style="position:absolute; width:50%; right:0; left:auto; bottom:0px; font-size:30px;"><?php echo __('Save');?></a>
+			</footer>
+		</section>
+		
+		<section id="wyca_browser_restart" class="page hmi_tuile with_footer">
+			<a href="#" class="bBackButton button_goto" data-goto="wyca_dashboard"></a>
+			<header>
+				<div class="pull-left"><img src="assets/images/logo.png" /></div>
+				<h2><?php echo __('Restart Browser');?></h2>
+			</header>
+			<div class="content">
+				<div class="loaded">
+					<ul class="tuiles row">
+						<li class="col-xs-4 col-md-3 col-lg-2"><a id="wyca_bRestartBrowerTrue" class="anim_tuiles tuile1" href="#"><i class="fas fa-expand-arrows-alt fakeScreen"></i><?php echo __('Fullscreen');?></a></li>
+						<li class="col-xs-4 col-md-3 col-lg-2"><a id="wyca_bRestartBrowerFalse" class="anim_tuiles tuile1" href="#"><i class="fas fa-compress-arrows-alt fakeScreen"></i><?php echo __('Windowed');?></a></li>
+					</ul>
+				</div>
+			</div>
+			<footer>
+				<a href="#" class="btn btn-default button_goto" data-goto="wyca_dashboard" style="position:absolute; width:100%; left:0; bottom:0px; font-size:30px;"><?php echo __('Back');?></a>
+			</footer>
+		</section>
+		<!--- DEMO MODE -->
+	</div>
