@@ -1029,40 +1029,12 @@ $(document).ready(function() {
 			//WycaHideMenus();
 			wycaApi.on('onGoToPoiResult', function (data){
 				$('#wyca_edit_map_bStop').hide();
-				if (data.A == wycaApi.AnswerCode.NO_ERROR)
-				{
-					$('#wyca_edit_map .modalFinTest section.panel-success').show();
-					$('#wyca_edit_map .modalFinTest section.panel-danger').hide();
-					$('#wyca_edit_map .modalFinTest section.panel-warning').hide();
-				}
-				else
-				{
-					if(data.A == wycaApi.AnswerCode.CANCELED){
-						$('#wyca_edit_map .modalFinTest section.panel-success').hide();
-						$('#wyca_edit_map .modalFinTest section.panel-danger').hide();
-						$('#wyca_edit_map .modalFinTest section.panel-warning').show();
-						
-						$('#wyca_edit_map .modalFinTest section.panel-warning .error_details').html(wycaApi.AnswerCodeToString(data.A));
-					}else{
-						
-						$('#wyca_edit_map .modalFinTest section.panel-success').hide();
-						$('#wyca_edit_map .modalFinTest section.panel-danger').show();
-						$('#wyca_edit_map .modalFinTest section.panel-warning').hide();
-						
-						if (data.M != '')
-							if(data.M.length > 50)
-								$('#wyca_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br><span>' +data.M+ '</span>');
-							else
-								$('#wyca_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
-						else
-							$('#wyca_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
-					}
-				}
+				
+				WycaDisplayApiMessageGoTo(data)
 				
 				// On rebranche l'ancienne fonction
 				wycaApi.on('onGoToPoiResult', onGoToPoiResult);
 			
-				$('#wyca_edit_map .modalFinTest').modal('show');
 			});
 			
 			wycaApi.GoToPoi(currentPoiWycaLongTouch.data('id_poi'), function (data){
@@ -1073,19 +1045,7 @@ $(document).ready(function() {
 				}
 				else
 				{
-					$('#wyca_edit_map .modalFinTest section.panel-success').hide();
-					$('#wyca_edit_map .modalFinTest section.panel-danger').show();
-					$('#wyca_edit_map .modalFinTest section.panel-warning').hide();
-					
-					if (data.M != '')
-						$('#wyca_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A) + '<br>' +data.M);
-					else
-						$('#wyca_edit_map .modalFinTest section.panel-danger .error_details').html(wycaApi.AnswerCodeToString(data.A));
-				
-					// On rebranche l'ancienne fonction
-					wycaApi.on('onGoToPoiResult', onGoToPoiResult);
-					
-					$('#wyca_edit_map .modalFinTest').modal('show');
+					WycaDisplayApiErrorGoTo(data);
 				}
 			});
 		}
@@ -5020,8 +4980,60 @@ function WycaDeleteForbidden(indexInArray)
 	WycaSetModeSelect();
 }
 
-
 // OTHER FUNCS
+
+function WycaDisplayApiMessageGoTo(data){
+
+	if (data.A == wycaApi.AnswerCode.NO_ERROR)
+	{
+		//SI SUCCESS
+		$('#wyca_edit_map .modalFinTest section.panel-success').show();
+		$('#wyca_edit_map .modalFinTest section.panel-danger').hide();
+		$('#wyca_edit_map .modalFinTest section.panel-warning').hide();
+		
+		$('#wyca_edit_map .modalFinTest').modal('show');
+	}
+	else
+	{	
+		WycaDisplayApiErrorGoTo(data)
+	}
+	
+}
+function WycaDisplayApiErrorGoTo(data){
+	
+	let html,target;
+	if(data.A == wycaApi.AnswerCode.CANCELED){
+		$('#wyca_edit_map .modalFinTest section.panel-success').hide();
+		$('#wyca_edit_map .modalFinTest section.panel-danger').hide();
+		$('#wyca_edit_map .modalFinTest section.panel-warning').show();
+		
+		html = typeof(textActionCanceled) != 'undefined' ? textActionCanceled : wycaApi.AnswerCodeToString(data.A);
+		target = $('#wyca_edit_map .modalFinTest section.panel-warning span.error_details');
+	}else{
+		
+		$('#wyca_edit_map .modalFinTest section.panel-success').hide();
+		$('#wyca_edit_map .modalFinTest section.panel-danger').show();
+		$('#wyca_edit_map .modalFinTest section.panel-warning').hide();
+		
+		if(data.A == wycaApi.AnswerCode.DETAILS_IN_MESSAGE){
+			html  = typeof(textDetailsInMessage) != 'undefined' ? textDetailsInMessage : wycaApi.AnswerCodeToString(data.A);
+			html += '<span class="toggle_details" onClick="$(\'span.error_details span.details\').toggle();"><i class="fas fa-plus-circle"></i> ';
+			html += typeof(textSeeMoreDetails) != 'undefined' ? textSeeMoreDetails : 'See more details' ;
+			html += '</span>' ;
+		}
+		
+		if (data.M != ''){
+			if( data.A == wycaApi.AnswerCode.DETAILS_IN_MESSAGE )
+				html += '<span class="details">'+data.M+'</span>';
+			else
+				html += '<span>'+data.M+'</span>';
+		}
+		target = $('#wyca_edit_map .modalFinTest section.panel-danger span.error_details');
+	}
+	
+	target.html(html);
+	$('#wyca_edit_map .modalFinTest').modal('show');
+}
 
 function WycaRefreshAllPath()
 {

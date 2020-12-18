@@ -1160,6 +1160,23 @@ div.icon_menu .iconForbiddenArea .fa-minus-circle{
 .nopymy:after{margin-top:0;margin-bottom:0;padding-top:0;padding-bottom:0;}
 
 /* CSS FIXES */
+#alert_wyca p.content span.toggle_details,#warning_wyca p.content span.toggle_details,#success_wyca p.content span.toggle_details,#success_info_wyca p.content span.toggle_details{
+	font-size: 18px;
+    line-height: 20px;
+    display: block;
+    margin-top: 5px;
+    font-style: italic;
+}
+#alert_wyca p.content span.error_details,#warning_wyca p.content span.error_details,#success_wyca p.content span.error_details,#success_info_wyca p.content span.error_details{
+	font-size: 14px;
+    line-height: 26px;
+    display: block;
+    margin-top: 10px;
+    font-style: italic;
+	display:none;
+}
+
+
 .tuile_demo{
 	background:#C674B5!important;
 }
