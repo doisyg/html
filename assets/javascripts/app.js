@@ -118,6 +118,9 @@ $(document).ready(function(e) {
         e.preventDefault();
 		$('#warning_wyca p').html('');
 		$('#warning_wyca').hide();
+		
+		if($('#wyca_demo_mode_start_stop').css('display') == 'block')
+			$('#wyca_demo_mode_start_stop').css('display','none');
     });
 	
 	$('#bCloseSuccessWyca').click(function(e) {
@@ -367,60 +370,57 @@ $(document).ready(function(e) {
 			
 			if (next == 'user_edit_map') GetInfosCurrentMapUser();
 			
-			
-			if(anim_show){
-				// Anim HIDE
-				var startShowAfter = 0;
-				if ($(this).closest('section').hasClass('hmi_tuile'))
+			// Anim HIDE current page
+			var startShowAfter = 0;
+			if ($(this).closest('section').hasClass('hmi_tuile') && anim_show )
+			{
+				nbTuiles = $(this).closest('section').find('.anim_tuiles').length;
+				delay = 70;
+				for (i=1; i <= nbTuiles; i++)
 				{
-					nbTuiles = $(this).closest('section').find('.anim_tuiles').length;
-					delay = 70;
-					for (i=1; i <= nbTuiles; i++)
-					{
-						setTimeout(HideTuile, delay * (i - 1), $(this).closest('section').find('.tuile' + (nbTuiles - i + 1)));
-					}
-					
-					startShowAfter = nbTuiles * 70;
-					$(this).closest('section').delay(startShowAfter+250).fadeOut(500, function() {
-					   $(this).removeClass('active');
-					});
-				}
-				else
-				{
-					$(this).closest('section').fadeOut(500);
+					setTimeout(HideTuile, delay * (i - 1), $(this).closest('section').find('.tuile' + (nbTuiles - i + 1)));
 				}
 				
-				// Anim SHOW
-				next = $(this).data('goto');
-				if ($('#'+next).hasClass('hmi_tuile'))
-				{
-					nbTuiles = $('#'+next).find('.anim_tuiles').length;
-					delay = 70;
-					for (i=1; i <= nbTuiles; i++)
-					{
-						setTimeout(ShowTuile, 700 + delay * (i - 1), $('#'+next).find('.tuile' + i));
-					}
-					
-					$('#'+next).delay(startShowAfter+250).fadeIn(500, function() {
-						$(this).addClass('active');
-					});
-				}
-				else
-				{
-					$('#'+next).delay(startShowAfter).fadeIn(500, function() {
-						$(this).addClass('active');
-					});
-				}
-				
-				// ADD TITLE CHANGE 
-					
-				$('.title_section').html($('#'+next+' > header > h2').text());
-				
-				//
-				InitJoystick();
-
-				}
+				startShowAfter = nbTuiles * 70;
+				$(this).closest('section').delay(startShowAfter+250).fadeOut(500, function() {
+				   $(this).removeClass('active');
+				});
 			}
+			else
+			{
+				$(this).closest('section').fadeOut(500);
+			}
+				
+			// Anim SHOW next page
+			next = $(this).data('goto');
+			if ($('#'+next).hasClass('hmi_tuile') && anim_show)
+			{
+				nbTuiles = $('#'+next).find('.anim_tuiles').length;
+				delay = 70;
+				for (i=1; i <= nbTuiles; i++)
+				{
+					setTimeout(ShowTuile, 700 + delay * (i - 1), $('#'+next).find('.tuile' + i));
+				}
+				
+				$('#'+next).delay(startShowAfter+250).fadeIn(500, function() {					
+					$(this).addClass('active');
+				});
+			}
+			else
+			{
+				$('#'+next).delay(startShowAfter).fadeIn(500, function() {
+					$(this).addClass('active');
+				});
+			}
+			
+			// ADD TITLE CHANGE 
+				
+			$('.title_section').html($('#'+next+' > header > h2').text());
+			
+			//
+			InitJoystick();
+		}
+
     });
 	/* ------------------------- GESTION BTN GOTO -----------------------*/
 	

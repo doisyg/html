@@ -2171,17 +2171,18 @@ function InitWycaDemoState()
 {
 	$('#wyca_demo_mode_start_stop .wyca_demo_mode_start_stop_loading').show();
 	$('#wyca_demo_mode_start_stop .loaded').hide();
-	
+	let need_redirect_demo = false ;
 	if (wycaApi.websocketAuthed)
 	{
 		wycaApi.GetGlobalVehiculePersistanteDataStorage(function(data){
-			
 			if (data.D == '')
 			{
 				dataStorage = {};
-				
-				$('#wyca_demo_mode_start_stop .wyca_demo_mode_start_stop_back').click();
-				alert_wyca('No configuration detected for demo mode');
+				need_redirect_demo = true;
+			}
+			else if(!JSON.parse(data.D).wycaDemo.length > 0)
+			{
+				need_redirect_demo = true;				
 			}
 			else
 			{
@@ -2199,6 +2200,11 @@ function InitWycaDemoState()
 				
 				$('#wyca_demo_mode_start_stop .wyca_demo_mode_start_stop_loading').hide();
 				$('#wyca_demo_mode_start_stop .loaded').show();
+			}
+			if(need_redirect_demo){
+				
+				warning_wyca('You need to setup actions before launch Demo');
+				$('#wyca_demo_mode_start_stop .wyca_demo_mode_start_stop_config').click();
 			}
 		});
 	}
@@ -2218,8 +2224,7 @@ function InitWycaDemo()
 	if (wycaApi.websocketAuthed)
 	{
 		wycaApi.GetGlobalVehiculePersistanteDataStorage(function(data){
-			console.log('GetGlobalVehiculePersistanteDataStorage');
-			console.log(data.D);
+			
 			if (data.D == '')
 				dataStorage = {};
 			else
@@ -2344,7 +2349,7 @@ function InitWycaDemo()
 					{
 						$.each(docks, function(indexInArray, dock){
 							indexLi++;
-							$('#wyca_demo_mode_config .list_all_poi').append('' +
+							$('#wyca_demo_mode_config .list_all_dock').append('' +
 								'<li id="list_all_poi_'+indexLi+'" data-index_li="'+indexLi+'" data-type="Dock" data-id="' + dock.id_docking_station + '">'+
 								'	<a href="#" class="bAddToAction btn btn-sm btn-circle btn-primary pull-right"><i class="fa fa-plus"></i></a>'+
 								'	<span>' + dock.name + '</span>'+
@@ -2460,6 +2465,7 @@ $(document).ready(function(e) {
 		li.after(li.prev().clone());
 	    li.prev().remove();
 	});
+	
 	$('#wyca_demo_mode_config').on( 'click', '.bDownToAction', function(e) {
         e.preventDefault();
 		
@@ -2511,8 +2517,6 @@ $(document).ready(function(e) {
 		}
     });
 	
-	
-	
 	// RESTART BROWSER
 	
 	$('#wyca_bRestartBrowerTrue').click(function(e) {
@@ -2525,6 +2529,7 @@ $(document).ready(function(e) {
 			}
 		})
     });
+	
 	$('#wyca_bRestartBrowerFalse').click(function(e) {
         e.preventDefault();
 		wycaApi.DoBrowserRestart(false,function(data){

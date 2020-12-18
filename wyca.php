@@ -21,6 +21,7 @@
 					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile10" href="logout.php"><i class="fas fa-power-off"></i><?php echo __('Logout');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile11 todo" data-goto="wyca_help" href="#"><i class="fa fa-question"></i><?php echo __('Help');?></a></li>
                 </ul>
+				<?php if($_SESSION['id_user'] == 1 ):?>
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
 					<div class="content sm-content text-left">
@@ -29,6 +30,16 @@
 					</div>
 					<p class="legende"><?=__('Click to hide')?></p>
 				</div>
+				<?php else:?>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content sm-content text-left">
+						<p class=""><?= __('This dashboard allow you to access all features and settings of the vehicle')?></p>
+						<p class=""><?= __('Use Logout button to log out of the app')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
+				<?php endif;?>
             </div>
         </section>
         <?php if($_SESSION['id_user'] == 1 ):?>
@@ -2276,7 +2287,6 @@
             </footer>
         </section>
 		
-		
 		<section id="wyca_browser_restart" class="page hmi_tuile with_footer">
 			<a href="#" class="bBackButton button_goto" data-goto="wyca_dashboard"></a>
 			<header>
@@ -2298,14 +2308,14 @@
 		<?php endif;?>
 	
 		<!--- DEMO MODE -->
-		<section id="wyca_demo_mode_start_stop" class="page hmi_tuile ">
+		<section id="wyca_demo_mode_start_stop" class="page hmi_tuile with_footer">
 			<a href="#" class="bBackButton button_goto" data-goto="wyca_dashboard"></a>
 			<header>
 				<div class="pull-left"><img src="assets/images/logo.png" /></div>
 				<h2><?php echo __('Demo mode Start / Stop');?></h2>
 			</header>
 			<div class="content">
-				<a href="#" class="wyca_demo_mode_start_stop_back button_goto" data-goto="wyca_dashboard" style="display:none;"></a>
+				<a href="#" class="wyca_demo_mode_start_stop_config button_goto" data-goto="wyca_demo_mode_config" style="display:none;"></a>
 				<div class="wyca_demo_mode_start_stop_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
 					
 				<div class="loaded">
@@ -2332,7 +2342,7 @@
 				
 				<div class="loaded">
 					<h4><?= __('Battery level config')?></h4>
-					 <form>
+					<form>
 						<div class="form-group col-xs-6">
 							<label class="col-xs-12 control-label"><?= __('Min battery level')?><br />=> <?= __('Start demo')?></label>
 							<div class="col-xs-12 input-group mb-md">
@@ -2361,7 +2371,7 @@
 					<ul class="list_all_dock list_elem">
 					</ul>
 				
-					<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#wyca_demo_mode_config_modalWaitOptions" style="margin-bottom:50px;"><?php echo __('Add wait step');?></a>
+					<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#wyca_demo_mode_config_modalWaitOptions" style="margin-bottom:50px;"><i class="fas fa-stopwatch"></i> <?php echo __('Add wait step');?></a>
 					
 					<div style="clear:both;"></div>
 					

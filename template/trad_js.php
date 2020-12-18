@@ -12,6 +12,7 @@ else
 }
 ?>
 
+var textActionCanceled = "<?php echo __js('Action canceled');?>";
 var textNeedReconnect = "<?php echo __js('Reconnection is required');?>";
 var textAccountDeleted = "<?php echo __js('Account deleted');?>";
 
