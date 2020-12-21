@@ -482,5 +482,8 @@ $_LANG['5c50d7e636381460c2dfae881c6974a4'] = 'Vous êtes sur le point de supprim
 $_LANG['868e1daafcda0d0e5ae7f68a2b403e77'] = 'Êtes-vous sûr ?';
 $_LANG['9ecaa9076ada1d0e4431cab9116c5592'] = 'Vous êtes sur le point de supprimer le compte auquel vous vous êtes connecté, ce qui vous déconnectera et supprimera le compte.';
 $_LANG['fea273faf3f6d2f71d6091bb5041d8fe'] = 'Êtes-vous sûr de continuer ?';
+$_LANG['426b62ac9a3668f6e1e15eeb256da6ae'] = 'Voir le détail';
+$_LANG['a8d7ea9a5ef3488213f840b861a43421'] = 'Aller au POI ?';
+$_LANG['c5617a1349f064e19293818c4b8ad263'] = 'Voulez-vous envoyer le véhicule à ce POI ?';
 
 ?>
