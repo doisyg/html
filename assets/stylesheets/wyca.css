@@ -609,16 +609,18 @@ ul.list_test li.done { color:#006600; border-color:#006600; }
 	left:0; 
 	right:unset; 
 	bottom:0px; 
-	font-size:30px;
+	font-size:26px;
 	border-radius:0px;
+	line-height:42px;
 }
 .btn.btn_footer_right{
 	position:absolute; 
 	left:unset; 
 	right:0; 
 	bottom:0px; 
-	font-size:30px;
+	font-size:26px;
 	border-radius:0px;
+	line-height:42px;
 }
 .shake{
   animation: shake 0.82s cubic-bezier(.36, .07, .19, .97) both infinite;
