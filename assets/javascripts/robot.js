@@ -435,6 +435,7 @@ function InitRobotPose(pose)
 	if ($('#install_normal_edit_map').length > 0 && ($('#install_normal_edit_map').is(':visible') || firstInitRobotPose)) NormalTraceRobot(pose.X, pose.Y, pose.T);
 	if ($('#manager_edit_map').length > 0 && ($('#manager_edit_map').is(':visible') || firstInitRobotPose)) ManagerTraceRobot(pose.X, pose.Y, pose.T);
 	if ($('#user_edit_map').length > 0 && ($('#user_edit_map').is(':visible') || firstInitRobotPose)) UserTraceRobot(pose.X, pose.Y, pose.T);
+	if ($('#wyca_edit_map').length > 0 && ($('#wyca_edit_map').is(':visible') || firstInitRobotPose)) WycaTraceRobot(pose.X, pose.Y, pose.T);
 	
 	firstInitRobotPose = false
 }

@@ -12,8 +12,11 @@ else
 }
 ?>
 
+var textActionCanceled = "<?php echo __js('Action canceled');?>";
 var textNeedReconnect = "<?php echo __js('Reconnection is required');?>";
 var textAccountDeleted = "<?php echo __js('Account deleted');?>";
+var textDetailsInMessage = "<?php echo __js('Details in message');?>";
+var textSeeMoreDetails = "<?php echo __js('See more details');?>";
 
 var textInvalidPositionRobot = "<?php echo __js('Invalid position, please move the vehicule to another place');?>";
 var textInvalidPositionDock = "<?php echo __js('Invalid position, please move the dock in an open environment around it.');?>";

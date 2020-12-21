@@ -168,6 +168,11 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 	#install_normal_setup_trinary_divOptionTrinary { position:absolute; bottom:30px; left:5%; width:90%; z-index:300; color:#0088cc; text-align:left; }
 	#install_normal_setup_trinary_divOptionTrinary .panel-body { background-color:rgba(255,255,255,0.5); }
 	#install_normal_setup_trinary_divOptionTrinary h3 { display:none; }
+	
+	#wyca_setup_trinary_divResultTrinary { z-index:200; }
+	#wyca_setup_trinary_divOptionTrinary { position:absolute; bottom:30px; left:5%; width:90%; z-index:300; color:#0088cc; text-align:left; }
+	#wyca_setup_trinary_divOptionTrinary .panel-body { background-color:rgba(255,255,255,0.5); }
+	#wyca_setup_trinary_divOptionTrinary h3 { display:none; }
 }
 
 .table_wifi img { width:25px; }
@@ -194,6 +199,15 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 #install_normal_edit_map_zoom_carte { position:relative; width:100px; border:1px solid #000; }
 
 
+#wyca_edit_map_container_all { position:relative; margin:-20px; height:calc(100vh - 110px); height: calc(var(--vh, 1vh) * 100 - 110px); }
+#wyca_edit_map_all { height:100%; }
+#wyca_edit_map_map_navigation { height:100%; }
+
+#wyca_edit_map_zoom_carte_container { z-index:1000; background-color:#FFF; position:absolute; top:10px; right:20px; }
+#main_row.hide_element #wyca_edit_map_zoom_carte_container { right:50px; }
+#wyca_edit_map_zoom_carte { position:relative; width:100px; border:1px solid #000; }
+
+
 #manager_edit_map_container_all { position:relative; margin:-20px; height:calc(100vh - 110px); height: calc(var(--vh, 1vh) * 100 - 110px); }
 #manager_edit_map_all { height:100%; }
 #manager_edit_map_map_navigation { height:100%; }
@@ -211,7 +225,7 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 #main_row.hide_element #user_edit_map_zoom_carte_container { right:50px; }
 #user_edit_map_zoom_carte { position:relative; width:100px; border:1px solid #000; }
 
-#manager_edit_map_zone_zoom,#install_by_step_edit_map_zone_zoom,#install_normal_edit_map_zone_zoom,#user_edit_map_zone_zoom{border-color:rgb(88 159 178)!important;}
+#manager_edit_map_zone_zoom,#install_by_step_edit_map_zone_zoom,#install_normal_edit_map_zone_zoom,#wyca_edit_map_zone_zoom,#user_edit_map_zone_zoom{border-color:rgb(88 159 178)!important;}
 
 .menu_icon_touch { position:absolute; display:none; z-index:1100; }
 .menu_icon_touch ul { list-style:none; padding:0; margin:0; overflow-y: scroll;}
@@ -228,6 +242,7 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 
 #install_by_step_edit_map_zoom_carte { overflow:hidden; }
 #install_normal_edit_map_zoom_carte { overflow:hidden; }
+#wyca_edit_map_zoom_carte { overflow:hidden; }
 #manager_edit_map_zoom_carte { overflow:hidden; }
 #user_edit_map_zoom_carte { overflow:hidden; }
 
@@ -255,6 +270,10 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 #install_normal_edit_map_bEndGomme, #install_normal_edit_map_bSaveCurrentElem{ position:absolute; top:15px; left:70px;display:none; z-index:4;border-color:transparent;}
 #install_normal_edit_map_bStop { position:absolute; bottom:15px; right:15px;display:none; z-index:4;border-color:transparent;}
 #install_normal_edit_map_bCancelCurrentElem ,#install_normal_edit_map_bCancelGomme{ position:absolute; top:15px; left:115px; display:none; z-index:4;border-color:transparent;}
+
+#wyca_edit_map_bEndGomme, #wyca_edit_map_bSaveCurrentElem{ position:absolute; top:15px; left:70px;display:none; z-index:4;border-color:transparent;}
+#wyca_edit_map_bStop { position:absolute; bottom:15px; right:15px;display:none; z-index:4;border-color:transparent;}
+#wyca_edit_map_bCancelCurrentElem ,#wyca_edit_map_bCancelGomme{ position:absolute; top:15px; left:115px; display:none; z-index:4;border-color:transparent;}
 
 #manager_edit_map_bEndGomme, #manager_edit_map_bSaveCurrentElem{ position:absolute; top:15px; left:70px;display:none; z-index:4;border-color:transparent;}
 #manager_edit_map_bStop { position:absolute; bottom:15px; right:15px;display:none; z-index:4;border-color:transparent;}
@@ -1144,6 +1163,27 @@ div.icon_menu .iconForbiddenArea .fa-minus-circle{
 .ifDocked,.ifUndocked{display:none;}
 /* TO AVOID DUAL DISPLAY UNDOCK / JOYSTICK */
 
+
+#alert_wyca p.content span.toggle_details,#warning_wyca p.content span.toggle_details,#success_wyca p.content span.toggle_details,#success_info_wyca p.content span.toggle_details{
+	font-size: 18px;
+    line-height: 20px;
+    display: block;
+    margin-top: 5px;
+    font-style: italic;
+}
+#alert_wyca p.content span.error_details,#warning_wyca p.content span.error_details,#success_wyca p.content span.error_details,#success_info_wyca p.content span.error_details{
+	font-size: 14px;
+    line-height: 26px;
+    display: block;
+    margin-top: 10px;
+    font-style: italic;
+	display:none;
+}
+
+
+.tuile_demo{
+	background:#C674B5!important;
+}
 .bTuile{
 	text-align: center;
     display: inline-flex;
@@ -1201,6 +1241,9 @@ span.error_details span{
     display: block;
     margin-top: 10px;
     font-style: italic;
+}
+span.toggle_details{
+	font-size:18px!important;
 }
 .fa-pencil:before{
 	content:"\f304";

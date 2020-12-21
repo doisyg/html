@@ -1983,7 +1983,7 @@ $(document).ready(function(e) {
 						default: break;
 					}
 					// On ajoute le li
-					$('#install_by_step_service_book .list_service_books').append('' +
+					$('#install_by_step_service_book .list_service_books').prepend('' +
 						'<li>'+
 						'	<div class="date">'+d_txt+'</div>'+
 						'	<div class="title">'+json_service_book.title+'</div>'+

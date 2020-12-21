@@ -844,9 +844,17 @@ $(document).ready(function(e) {
 			wycaApi.SetServiceBook(json_service_book, function(data) {
 				if (data.A == wycaApi.AnswerCode.NO_ERROR)
 				{
+					let d = new Date(Date.now());
+					let d_txt="";
+					switch(lang){
+						case 'fr': d_txt = d.getDate() + '/' + (d.getMonth()+1) + '/' +  d.getFullYear() ; break;
+						case 'en': d_txt = (d.getMonth()+1) + '/' + d.getDate() + '/' +  d.getFullYear() ; break;
+						default: break;
+					}
 					// On ajoute le li
 					$('#install_normal_service_book .list_service_books').prepend('' +
 						'<li>'+
+						'	<div class="date">'+d_txt+'</div>'+
 						'	<div class="title">'+json_service_book.title+'</div>'+
 						'	<div class="comment">'+json_service_book.comment+'</div>'+
 						'</li>'
