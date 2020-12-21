@@ -1268,15 +1268,11 @@ span.toggle_details{
     transition: width 0.2s ease!important;
 }
 /* COLOR PICKER IRO */
-.col-xs-8 .iro-colorpicker{
-	transform: scale(0.75)translateX(-40%);
-}
 .iro-colorpicker{
 	width: 100%;
     display: none;
     justify-content: center;
     align-items: center;
-    transform: scale(0.75);
 }
 .IroSlider{
 	display:none!important;

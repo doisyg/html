@@ -57,6 +57,8 @@ $(document).ready(function(e) {
 		var colorPicker = new iro.ColorPicker(this, {
 			wheelLightness:false,
 			color: color_init,
+			width: window.outerWidth - 75,
+
 		});
 		preview.on('click',function(){
 			$('.iro-colorpicker').not(div).hide();
