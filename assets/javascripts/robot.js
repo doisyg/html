@@ -194,7 +194,8 @@ $(document).ready(function(e) {
 		}
 	});
 	
-	
+	$('.ifDocked').css('display','none');
+	$('.ifUndocked').css('display','none');
 	
 	wycaApi.init();	
 	/*
@@ -281,21 +282,27 @@ function GetMappingInConstruction()
 function onGoToPoseResult(data)
 {
 }
+
 function onGoToChargeResult(data)
 {
 }
+
 function onGoToPoiResult(data)
 {
 }
+
 function onGoToAugmentedPoseResult(data)
 {
 }
+
 function onDockResult(data)
 {
 }
+
 function onUndockResult(data)
 {
 }
+
 function onUndockFeedback(data)
 {
 }
@@ -414,6 +421,7 @@ function initBatteryState(data)
 }
 
 var robotCurrentState = '';
+
 function initStateRobot(etat)
 {
 	robotCurrentState = etat;
