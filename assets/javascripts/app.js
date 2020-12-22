@@ -54,10 +54,12 @@ $(document).ready(function(e) {
 		let input = $(this).parent().find('input[type="text"]');
 		let div = $(this);
 		let color_init = $(this).data('color_init');
+		let w = window.outerWidth - 75;
+		w = w > 350 ? 350 : w;
 		var colorPicker = new iro.ColorPicker(this, {
 			wheelLightness:false,
 			color: color_init,
-			width: window.outerWidth - 75,
+			width: w,
 
 		});
 		preview.on('click',function(){

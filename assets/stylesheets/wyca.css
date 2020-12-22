@@ -1273,9 +1273,11 @@ span.toggle_details{
 .iro-colorpicker{
 	width: 100%;
     display: none;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
+	margin-top: 5px;
 }
+
 .IroSlider{
 	display:none!important;
 }
