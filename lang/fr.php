@@ -485,5 +485,6 @@ $_LANG['fea273faf3f6d2f71d6091bb5041d8fe'] = 'Êtes-vous sûr de continuer ?';
 $_LANG['426b62ac9a3668f6e1e15eeb256da6ae'] = 'Voir le détail';
 $_LANG['a8d7ea9a5ef3488213f840b861a43421'] = 'Aller au POI ?';
 $_LANG['c5617a1349f064e19293818c4b8ad263'] = 'Voulez-vous envoyer le véhicule à ce POI ?';
+$_LANG['ad7ea6b5adb51feb82485365b6f098c2'] = 'Fiducial ID';
 
 ?>

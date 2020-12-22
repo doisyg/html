@@ -474,7 +474,7 @@
                                                     <img id="wyca_edit_map_modalAddDock_dock3" class="dock" src="assets/images/reflector.png" width="25" />
                                                     <img id="wyca_edit_map_modalAddDock_dock4" class="dock" src="assets/images/reflector.png" width="25" />
                                                     <img id="wyca_edit_map_modalAddDock_dock5" class="dock" src="assets/images/reflector.png" width="25" />
-                                                    
+                                                    <div class="fiducial_number_wrapper"></div>
                                                 </div>
                                             
                                             	<div class ="modal-advice">
@@ -527,6 +527,13 @@
                                                 </div>
                                                 -->
                                                 <input type="hidden" id="wyca_edit_map_dock_number" name="dock_number" value="1" />
+                                                
+                                                <div class="form-group">
+                                                    <label class="col-xs-4 control-label">Fiducial ID</label>
+                                                    <div class="col-xs-8">
+                                                        <input type="number" id="wyca_edit_map_dock_fiducial_number" name="dock_fiducial_number" readonly value="1" class="form-control input-sm mb-md" />
+                                                    </div>
+                                                </div>
                                                 
                                                 <div class="form-group">
                                                     <label for="dock_is_master" class="col-xs-10 control-label">Is default docking station for this robot</label>
@@ -720,7 +727,7 @@
                                                     <img id="wyca_edit_map_modalAddAugmentedPose_augmented_pose3" class="augmented_pose" src="assets/images/reflector.png" width="25" />
                                                     <img id="wyca_edit_map_modalAddAugmentedPose_augmented_pose4" class="augmented_pose" src="assets/images/reflector.png" width="25" />
                                                     <img id="wyca_edit_map_modalAddAugmentedPose_augmented_pose5" class="augmented_pose" src="assets/images/reflector.png" width="25" />
-                                                    
+                                                    <div class="fiducial_number_wrapper"></div>
                                                 </div>
                                             
                                             	<div class ="modal-advice">
@@ -764,6 +771,14 @@
                                                         <input type="text" id="wyca_edit_map_augmented_pose_name" name="augmented_pose_name" value="" class="form-control input-sm mb-md" />
                                                     </div>
                                                 </div>
+												
+                                                <div class="form-group">
+                                                    <label class="col-xs-4 control-label">Fiducial ID</label>
+                                                    <div class="col-xs-8">
+                                                        <input type="number" id="wyca_edit_map_augmented_pose_fiducial_number" name="augmented_pose_fiducial_number" readonly value="1" class="form-control input-sm mb-md" />
+                                                    </div>
+                                                </div>
+                                                
                                                 <div class="form-group">
                                                     <label class="col-xs-4 control-label">Comment</label>
                                                     <div class="col-xs-8">

@@ -580,6 +580,7 @@ $(document).ready(function() {
 		currentDockIndex = GetDockIndexFromID(currentDockByStepLongTouch.data('id_docking_station'));
 		dock = docks[currentDockIndex];
 		$('#install_by_step_edit_map_dock_is_master').prop('checked', dock.is_master);
+		$('#install_by_step_edit_map_dock_fiducial_number').val(dock.id_fiducial);
 		$('#install_by_step_edit_map_dock_number').val(dock.num);
 		$('#install_by_step_edit_map_dock_name').val(dock.name);
 		$('#install_by_step_edit_map_dock_comment').val(dock.comment);
@@ -1078,6 +1079,7 @@ $(document).ready(function() {
 		augmented_pose = augmented_poses[currentAugmentedPoseIndex];
 		
 		$('#install_by_step_edit_map_augmented_pose_name').val(augmented_pose.name);
+		$('#install_by_step_edit_map_augmented_pose_fiducial_number').val(augmented_pose.id_fiducial);
 		$('#install_by_step_edit_map_augmented_pose_comment').val(augmented_pose.comment);
 		
 		$('#install_by_step_edit_map_container_all .modalAugmentedPoseOptions .list_undock_procedure_augmented_pose li').remove();
@@ -2186,7 +2188,10 @@ $(document).ready(function() {
 	});
 	
 	$('#install_by_step_edit_map_container_all .modalAddDock .joystickDiv .curseur').on('touchstart', function(e) {
+		
 		$('#install_by_step_edit_map_container_all .modalAddDock .dock').hide();
+		$('#install_by_step_edit_map_container_all .modalAddDock .fiducial_number_wrapper ').html('')
+
 	});
 	
 	$('#install_by_step_edit_map_container_all .modalAddDock .bScanAddDock').click(function(e) {
@@ -2214,10 +2219,12 @@ $(document).ready(function() {
 					$('#install_by_step_edit_map_container_all .text_set_dock').show();
 				else
 					$('#install_by_step_edit_map_container_all .text_prepare_robot').show();
+					
+				$('#install_by_step_edit_map_container_all .modalAddDock .fiducial_number_wrapper ').html('');
 				
 				for (i=0; i< data.D.length; i++)
 				{
-					if (data.D[i].TY == 'Dock')
+					if (data.D[i].TY == 'Dock' && data.D[i].ID != -1)
 					{
 						/*
 						distance = Math.sqrt((data.D[i].P.X - lastRobotPose.X)*(data.D[i].P.X - lastRobotPose.X) + (data.D[i].P.Y - lastRobotPose.Y)*(data.D[i].P.Y - lastRobotPose.Y));
@@ -2229,21 +2236,34 @@ $(document).ready(function() {
 						x_from_robot = new_point.X - lastRobotPose.X;
 						y_from_robot = new_point.Y - lastRobotPose.Y;
 						
-						// 1px / cm
+						let x =  posRobot.left + x_from_robot * 100;
+						let y =  posRobot.top - y_from_robot * 100;
+						let xx = x + 10*Math.sin(0 - (data.D[i].P.T - lastRobotPose.T));
+						let yy = y - 10*Math.cos(0 - (data.D[i].P.T - lastRobotPose.T));
 						
+						angle = 0 - (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
+						
+						// 1px / cm
+						//FIDUCIAL
 						$('#install_by_step_edit_map_container_all .modalAddDock #install_by_step_edit_map_modalAddDock_dock'+i).show();
 						$('#install_by_step_edit_map_container_all .modalAddDock #install_by_step_edit_map_modalAddDock_dock'+i).css('left', posRobot.left + x_from_robot * 100); // lidar : y * -1
 						$('#install_by_step_edit_map_container_all .modalAddDock #install_by_step_edit_map_modalAddDock_dock'+i).css('top', posRobot.top - y_from_robot * 100); // +20 position lidar, - 12.5 pour le centre
 						//angle = (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
-						
-						angle = 0 - (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
 						
 						$('#install_by_step_edit_map_container_all .modalAddDock #install_by_step_edit_map_modalAddDock_dock'+i).css({'-webkit-transform' : 'rotate('+ angle +'deg)',
 																	 '-moz-transform' : 'rotate('+ angle +'deg)',
 																	 '-ms-transform' : 'rotate('+ angle +'deg)',
 																	 'transform' : 'rotate('+ angle +'deg)'});
 						
+						$('#install_by_step_edit_map_container_all .modalAddDock .fiducial_number_wrapper ').append('<span class="fiducial_number" id="fiducial_number'+i+'" data-id="'+data.D[i].ID+'">'+data.D[i].ID+'</span>');
 						
+						$('#install_by_step_edit_map_container_all .modalAddDock #fiducial_number'+i).css('left',xx); // lidar : y * -1
+						$('#install_by_step_edit_map_container_all .modalAddDock #fiducial_number'+i).css('top',yy); // 
+						$('#install_by_step_edit_map_container_all .modalAddDock #fiducial_number'+i).css({'-webkit-transform' : 'rotate('+ angle +'deg)',
+																	 '-moz-transform' : 'rotate('+ (angle-180) +'deg)',
+																	 '-ms-transform' : 'rotate('+ (angle-180) +'deg)',
+																	 'transform' : 'rotate('+ (angle-180) +'deg)'});
+						//angle = (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
 						$('#install_by_step_edit_map_container_all .modalAddDock #install_by_step_edit_map_modalAddDock_dock'+i).data('id_fiducial', data.D[i].ID);
 						$('#install_by_step_edit_map_container_all .modalAddDock #install_by_step_edit_map_modalAddDock_dock'+i).data('x', data.D[i].P.X);
 						$('#install_by_step_edit_map_container_all .modalAddDock #install_by_step_edit_map_modalAddDock_dock'+i).data('y', data.D[i].P.Y);
@@ -2309,6 +2329,7 @@ $(document).ready(function() {
 				$('#install_by_step_edit_map_dock_name').val(dock.name);
 				$('#install_by_step_edit_map_dock_comment').val(dock.comment);
 				$('#install_by_step_edit_map_dock_number').val(dock.num);
+				$('#install_by_step_edit_map_dock_fiducial_number').val(dock.id_fiducial);
 				$('#install_by_step_edit_map_dock_is_master').prop('checked', dock.is_master);
 				
 				
@@ -2837,6 +2858,7 @@ $(document).ready(function() {
 	
 	$('#install_by_step_edit_map_container_all .modalAddAugmentedPose .joystickDiv .curseur').on('touchstart', function(e) {
 		$('#install_by_step_edit_map_container_all .modalAddAugmentedPose .augmented_pose').hide();
+		$('#install_by_step_edit_map_container_all .modalAddAugmentedPose .fiducial_number_wrapper ').html('')
 	});
 	
 	$('#install_by_step_edit_map_container_all .modalAddAugmentedPose .bScanAddAugmentedPose').click(function(e) {
@@ -2867,10 +2889,10 @@ $(document).ready(function() {
 					else
 						$('#install_by_step_edit_map_container_all .text_set_final').show();
 				}
-				
+				$('#install_by_step_edit_map_container_all .modalAddAugmentedPose .fiducial_number_wrapper ').html('')
 				for (i=0; i< data.D.length; i++)
 				{
-					if (data.D[i].TY != 'Dock')
+					if (data.D[i].TY != 'Dock' && data.D[i].ID != -1)
 					{
 						if (currentStepAddAugmentedPose == 'set_approch' || augmented_pose_temp_add.id_fiducial == data.D[i].ID)
 						{
@@ -2878,19 +2900,34 @@ $(document).ready(function() {
 							x_from_robot = new_point.X - lastRobotPose.X;
 							y_from_robot = new_point.Y - lastRobotPose.Y;
 							
-							// 1px / cm
+							let x =  posRobot.left + x_from_robot * 100;
+							let y =  posRobot.top - y_from_robot * 100;
+							let xx = x + 10*Math.sin(0 - (data.D[i].P.T - lastRobotPose.T));
+							let yy = y - 10*Math.cos(0 - (data.D[i].P.T - lastRobotPose.T));
 							
+							angle = 0 - (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
+							
+							// 1px / cm
+							//FIDUCIAL
 							$('#install_by_step_edit_map_container_all .modalAddAugmentedPose #install_by_step_edit_map_modalAddAugmentedPose_augmented_pose'+i).show();
 							$('#install_by_step_edit_map_container_all .modalAddAugmentedPose #install_by_step_edit_map_modalAddAugmentedPose_augmented_pose'+i).css('left', posRobot.left + x_from_robot * 100); // lidar : y * -1
 							$('#install_by_step_edit_map_container_all .modalAddAugmentedPose #install_by_step_edit_map_modalAddAugmentedPose_augmented_pose'+i).css('top', posRobot.top - y_from_robot * 100); // +20 position lidar, - 12.5 pour le centre
 							//angle = (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
-							
-							angle = 0 - (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
-							
+														
 							$('#install_by_step_edit_map_container_all .modalAddAugmentedPose #install_by_step_edit_map_modalAddAugmentedPose_augmented_pose'+i).css({'-webkit-transform' : 'rotate('+ angle +'deg)',
 																	 '-moz-transform' : 'rotate('+ angle +'deg)',
 																	 '-ms-transform' : 'rotate('+ angle +'deg)',
 																	 'transform' : 'rotate('+ angle +'deg)'});
+							
+							
+							$('#install_by_step_edit_map_container_all .modalAddAugmentedPose .fiducial_number_wrapper ').append('<span class="fiducial_number" id="fiducial_number'+i+'" data-id="'+data.D[i].ID+'">'+data.D[i].ID+'</span>');
+							
+							$('#install_by_step_edit_map_container_all .modalAddAugmentedPose #fiducial_number'+i).css('left',xx); // lidar : y * -1
+							$('#install_by_step_edit_map_container_all .modalAddAugmentedPose #fiducial_number'+i).css('top',yy); // 
+							$('#install_by_step_edit_map_container_all .modalAddAugmentedPose #fiducial_number'+i).css({'-webkit-transform' : 'rotate('+ angle +'deg)',
+																	 '-moz-transform' : 'rotate('+ (angle-180) +'deg)',
+																	 '-ms-transform' : 'rotate('+ (angle-180) +'deg)',
+																	 'transform' : 'rotate('+ (angle-180) +'deg)'});
 							
 							
 							$('#install_by_step_edit_map_container_all .modalAddAugmentedPose #install_by_step_edit_map_modalAddAugmentedPose_augmented_pose'+i).data('id_fiducial', data.D[i].ID);
@@ -2910,7 +2947,7 @@ $(document).ready(function() {
 	
 	$('#install_by_step_edit_map_container_all .modalAddAugmentedPose .augmented_pose').click(function(e) {
         e.preventDefault();
-		
+		$('#install_by_step_edit_map_container_all .modalAddAugmentedPose .fiducial_number_wrapper ').html('')
 		if (currentStepAddAugmentedPose == 'set_approch')
 		{
 			that = $(this);
@@ -2960,6 +2997,7 @@ $(document).ready(function() {
 			$('#install_by_step_edit_map_container_all .modalAugmentedPoseOptions .list_undock_procedure_augmented_pose li').remove();
 			
 			$('#install_by_step_edit_map_augmented_pose_name').val(augmented_pose.name);
+			$('#install_by_step_edit_map_augmented_pose_fiducial_number').val(augmented_pose.id_fiducial);
 			$('#install_by_step_edit_map_augmented_pose_comment').val(augmented_pose.comment);
 			
 			

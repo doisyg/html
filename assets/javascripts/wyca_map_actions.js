@@ -576,6 +576,7 @@ $(document).ready(function() {
 		currentDockIndex = GetDockIndexFromID(currentDockWycaLongTouch.data('id_docking_station'));
 		dock = docks[currentDockIndex];
 		$('#wyca_edit_map_dock_is_master').prop('checked', dock.is_master);
+		$('#wyca_edit_map_dock_fiducial_number').val(dock.id_fiducial);
 		$('#wyca_edit_map_dock_number').val(dock.num);
 		$('#wyca_edit_map_dock_name').val(dock.name);
 		$('#wyca_edit_map_dock_comment').val(dock.comment);
@@ -1030,6 +1031,7 @@ $(document).ready(function() {
 		augmented_pose = augmented_poses[currentAugmentedPoseIndex];
 		
 		$('#wyca_edit_map_augmented_pose_name').val(augmented_pose.name);
+		$('#wyca_edit_map_augmented_pose_fiducial_number').val(augmented_pose.id_fiducial);
 		$('#wyca_edit_map_augmented_pose_comment').val(augmented_pose.comment);
 		
 		$('#wyca_edit_map_container_all .modalAugmentedPoseOptions .list_undock_procedure_augmented_pose li').remove();
@@ -2145,6 +2147,7 @@ $(document).ready(function() {
 	
 	$('#wyca_edit_map_container_all .modalAddDock .joystickDiv .curseur').on('touchstart', function(e) {
 		$('#wyca_edit_map_container_all .modalAddDock .dock').hide();
+		$('#wyca_edit_map_container_all .modalAddDock .fiducial_number_wrapper ').html('');
 	});
 	
 	$('#wyca_edit_map_container_all .modalAddDock .bScanAddDock').click(function(e) {
@@ -2173,9 +2176,11 @@ $(document).ready(function() {
 				else
 					$('#wyca_edit_map_container_all .text_prepare_robot').show();
 				
+				$('#wyca_edit_map_container_all .modalAddDock .fiducial_number_wrapper ').html('');
+				
 				for (i=0; i< data.D.length; i++)
 				{
-					if (data.D[i].TY == 'Dock')
+					if (data.D[i].TY == 'Dock' && data.D[i].ID != -1)
 					{
 						/*
 						distance = Math.sqrt((data.D[i].P.X - lastRobotPose.X)*(data.D[i].P.X - lastRobotPose.X) + (data.D[i].P.Y - lastRobotPose.Y)*(data.D[i].P.Y - lastRobotPose.Y));
@@ -2187,21 +2192,35 @@ $(document).ready(function() {
 						x_from_robot = new_point.X - lastRobotPose.X;
 						y_from_robot = new_point.Y - lastRobotPose.Y;
 						
+						
+						let x =  posRobot.left + x_from_robot * 100;
+						let y =  posRobot.top - y_from_robot * 100;
+						let xx = x + 10*Math.sin(0 - (data.D[i].P.T - lastRobotPose.T));
+						let yy = y - 10*Math.cos(0 - (data.D[i].P.T - lastRobotPose.T));
+						
+						angle = 0 - (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
+						
 						// 1px / cm
 						
 						$('#wyca_edit_map_container_all .modalAddDock #wyca_edit_map_modalAddDock_dock'+i).show();
 						$('#wyca_edit_map_container_all .modalAddDock #wyca_edit_map_modalAddDock_dock'+i).css('left', posRobot.left + x_from_robot * 100); // lidar : y * -1
 						$('#wyca_edit_map_container_all .modalAddDock #wyca_edit_map_modalAddDock_dock'+i).css('top', posRobot.top - y_from_robot * 100); // +20 position lidar, - 12.5 pour le centre
 						//angle = (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
-						
-						angle = 0 - (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
-						
+												
 						$('#wyca_edit_map_container_all .modalAddDock #wyca_edit_map_modalAddDock_dock'+i).css({'-webkit-transform' : 'rotate('+ angle +'deg)',
 																	 '-moz-transform' : 'rotate('+ angle +'deg)',
 																	 '-ms-transform' : 'rotate('+ angle +'deg)',
 																	 'transform' : 'rotate('+ angle +'deg)'});
 						
+						$('#wyca_edit_map_container_all .modalAddDock .fiducial_number_wrapper ').append('<span class="fiducial_number" id="fiducial_number'+i+'" data-id="'+data.D[i].ID+'">'+data.D[i].ID+'</span>');
 						
+						$('#wyca_edit_map_container_all .modalAddDock #fiducial_number'+i).css('left',xx); // lidar : y * -1
+						$('#wyca_edit_map_container_all .modalAddDock #fiducial_number'+i).css('top',yy); // 
+						$('#wyca_edit_map_container_all .modalAddDock #fiducial_number'+i).css({'-webkit-transform' : 'rotate('+ angle +'deg)',
+																	 '-moz-transform' : 'rotate('+ (angle-180) +'deg)',
+																	 '-ms-transform' : 'rotate('+ (angle-180) +'deg)',
+																	 'transform' : 'rotate('+ (angle-180) +'deg)'});
+																	 
 						$('#wyca_edit_map_container_all .modalAddDock #wyca_edit_map_modalAddDock_dock'+i).data('id_fiducial', data.D[i].ID);
 						$('#wyca_edit_map_container_all .modalAddDock #wyca_edit_map_modalAddDock_dock'+i).data('x', data.D[i].P.X);
 						$('#wyca_edit_map_container_all .modalAddDock #wyca_edit_map_modalAddDock_dock'+i).data('y', data.D[i].P.Y);
@@ -2264,6 +2283,7 @@ $(document).ready(function() {
 				dock = docks[currentDockIndex];
 				
 				$('#wyca_edit_map_dock_name').val(dock.name);
+				$('#wyca_edit_map_dock_fiducial_number').val(dock.id_fiducial);
 				$('#wyca_edit_map_dock_comment').val(dock.comment);
 				$('#wyca_edit_map_dock_number').val(dock.num);
 				$('#wyca_edit_map_dock_is_master').prop('checked', dock.is_master);
@@ -2796,6 +2816,7 @@ $(document).ready(function() {
 	
 	$('#wyca_edit_map_container_all .modalAddAugmentedPose .joystickDiv .curseur').on('touchstart', function(e) {
 		$('#wyca_edit_map_container_all .modalAddAugmentedPose .augmented_pose').hide();
+		$('#wyca_edit_map_container_all .modalAddAugmentedPose .fiducial_number_wrapper ').html('');
 	});
 	
 	$('#wyca_edit_map_container_all .modalAddAugmentedPose .bScanAddAugmentedPose').click(function(e) {
@@ -2826,10 +2847,10 @@ $(document).ready(function() {
 					else
 						$('#wyca_edit_map_container_all .text_set_final').show();
 				}
-				
+				$('#wyca_edit_map_container_all .modalAddAugmentedPose .fiducial_number_wrapper ').html('');
 				for (i=0; i< data.D.length; i++)
 				{
-					if (data.D[i].TY != 'Dock')
+					if (data.D[i].TY != 'Dock' && data.D[i].ID != -1)
 					{
 						if (currentStepAddAugmentedPose == 'set_approch' || augmented_pose_temp_add.id_fiducial == data.D[i].ID)
 						{
@@ -2837,20 +2858,34 @@ $(document).ready(function() {
 							x_from_robot = new_point.X - lastRobotPose.X;
 							y_from_robot = new_point.Y - lastRobotPose.Y;
 							
+							let x =  posRobot.left + x_from_robot * 100;
+							let y =  posRobot.top - y_from_robot * 100;
+							let xx = x + 10*Math.sin(0 - (data.D[i].P.T - lastRobotPose.T));
+							let yy = y - 10*Math.cos(0 - (data.D[i].P.T - lastRobotPose.T));
+							
+							angle = 0 - (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
+							
 							// 1px / cm
 							
+							//FIDUCIAL
 							$('#wyca_edit_map_container_all .modalAddAugmentedPose #wyca_edit_map_modalAddAugmentedPose_augmented_pose'+i).show();
 							$('#wyca_edit_map_container_all .modalAddAugmentedPose #wyca_edit_map_modalAddAugmentedPose_augmented_pose'+i).css('left', posRobot.left + x_from_robot * 100); // lidar : y * -1
 							$('#wyca_edit_map_container_all .modalAddAugmentedPose #wyca_edit_map_modalAddAugmentedPose_augmented_pose'+i).css('top', posRobot.top - y_from_robot * 100); // +20 position lidar, - 12.5 pour le centre
 							//angle = (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
-							
-							angle = 0 - (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
-							
+														
 							$('#wyca_edit_map_container_all .modalAddAugmentedPose #wyca_edit_map_modalAddAugmentedPose_augmented_pose'+i).css({'-webkit-transform' : 'rotate('+ angle +'deg)',
 																	 '-moz-transform' : 'rotate('+ angle +'deg)',
 																	 '-ms-transform' : 'rotate('+ angle +'deg)',
 																	 'transform' : 'rotate('+ angle +'deg)'});
 							
+							$('#wyca_edit_map_container_all .modalAddAugmentedPose .fiducial_number_wrapper ').append('<span class="fiducial_number" id="fiducial_number'+i+'" data-id="'+data.D[i].ID+'">'+data.D[i].ID+'</span>');
+							
+							$('#wyca_edit_map_container_all .modalAddAugmentedPose #fiducial_number'+i).css('left',xx); // lidar : y * -1
+							$('#wyca_edit_map_container_all .modalAddAugmentedPose #fiducial_number'+i).css('top',yy); // 
+							$('#wyca_edit_map_container_all .modalAddAugmentedPose #fiducial_number'+i).css({'-webkit-transform' : 'rotate('+ angle +'deg)',
+																	 '-moz-transform' : 'rotate('+ (angle-180) +'deg)',
+																	 '-ms-transform' : 'rotate('+ (angle-180) +'deg)',
+																	 'transform' : 'rotate('+ (angle-180) +'deg)'});
 							
 							$('#wyca_edit_map_container_all .modalAddAugmentedPose #wyca_edit_map_modalAddAugmentedPose_augmented_pose'+i).data('id_fiducial', data.D[i].ID);
 							$('#wyca_edit_map_container_all .modalAddAugmentedPose #wyca_edit_map_modalAddAugmentedPose_augmented_pose'+i).data('x', data.D[i].P.X);
@@ -2869,7 +2904,7 @@ $(document).ready(function() {
 	
 	$('#wyca_edit_map_container_all .modalAddAugmentedPose .augmented_pose').click(function(e) {
         e.preventDefault();
-		
+		$('#wyca_edit_map_container_all .modalAddAugmentedPose .fiducial_number_wrapper ').html('');
 		
 		if (currentStepAddAugmentedPose == 'set_approch')
 		{
@@ -2921,6 +2956,7 @@ $(document).ready(function() {
 			$('#wyca_edit_map_container_all .modalAugmentedPoseOptions .list_undock_procedure_augmented_pose li').remove();
 			
 			$('#wyca_edit_map_augmented_pose_name').val(augmented_pose.name);
+			$('#wyca_edit_map_augmented_pose_fiducial_number').val(augmented_pose.id_fiducial);
 			$('#wyca_edit_map_augmented_pose_comment').val(augmented_pose.comment);
 			
 			
