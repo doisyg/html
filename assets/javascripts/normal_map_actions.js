@@ -2185,16 +2185,17 @@ $(document).ready(function() {
 						x_from_robot = Math.cos(lastRobotPose.T) * distance;
 						y_from_robot = Math.sin(lastRobotPose.T) * distance;
 						*/
+						
+						new_point = RotatePoint (data.D[i].P, lastRobotPose, lastRobotPose.T - Math.PI/2);
+						x_from_robot = new_point.X - lastRobotPose.X;
+						y_from_robot = new_point.Y - lastRobotPose.Y;
+						
 						let x =  posRobot.left + x_from_robot * 100;
 						let y =  posRobot.top - y_from_robot * 100;
 						let xx = x + 10*Math.sin(0 - (data.D[i].P.T - lastRobotPose.T));
 						let yy = y - 10*Math.cos(0 - (data.D[i].P.T - lastRobotPose.T));
 						
 						angle = 0 - (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
-						
-						new_point = RotatePoint (data.D[i].P, lastRobotPose, lastRobotPose.T - Math.PI/2);
-						x_from_robot = new_point.X - lastRobotPose.X;
-						y_from_robot = new_point.Y - lastRobotPose.Y;
 						
 						// 1px / cm
 						
