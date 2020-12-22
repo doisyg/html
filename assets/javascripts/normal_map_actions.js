@@ -11,7 +11,7 @@ var normalSavedCanClose = true;
 
 var xGotoPose = 0 ;
 var yGotoPose = 0 ;
-                                                        
+ 
 function NormalAvertCantChange()
 {
 	$('#install_normal_edit_map_bModalCancelEdit').click();
@@ -474,14 +474,19 @@ $(document).ready(function() {
 		if (normalCurrentAction == 'editForbiddenArea' || normalCurrentAction == 'addForbiddenArea')
 		{
 			forbiddens[currentForbiddenIndex].points.splice(currentPointNormalLongTouch.data('index_point'), 1);
+			currentPointNormalLongTouch = null;
 			NormalTraceForbidden(currentForbiddenIndex);
-			NormalDisplayMenu('install_by_step_edit_map_menu_forbidden');
+			NormalSaveElementNeeded(false);
+			NormalDisplayMenu('install_normal_edit_map_menu_forbidden');
 		}
 		else if (normalCurrentAction == 'editArea' || normalCurrentAction == 'addArea')
 		{
+			
 			areas[currentAreaIndex].points.splice(currentPointNormalLongTouch.data('index_point'), 1);
+			currentPointNormalLongTouch = null;
 			NormalTraceArea(currentAreaIndex);
-			NormalDisplayMenu('install_by_step_edit_map_menu_area');
+			NormalSaveElementNeeded(false);
+			NormalDisplayMenu('install_normal_edit_map_menu_area');
 		}
     });
 	
@@ -2169,15 +2174,23 @@ $(document).ready(function() {
 				else
 					$('#install_normal_edit_map_container_all .text_prepare_robot').show();
 				
+				$('#install_normal_edit_map_container_all .modalAddDock .fiducial_number_wrapper ').html('');
+				
 				for (i=0; i< data.D.length; i++)
 				{
-					if (data.D[i].TY == 'Dock')
+					if (data.D[i].TY == 'Dock' && data.D[i].ID != -1)
 					{
 						/*
 						distance = Math.sqrt((data.D[i].P.X - lastRobotPose.X)*(data.D[i].P.X - lastRobotPose.X) + (data.D[i].P.Y - lastRobotPose.Y)*(data.D[i].P.Y - lastRobotPose.Y));
 						x_from_robot = Math.cos(lastRobotPose.T) * distance;
 						y_from_robot = Math.sin(lastRobotPose.T) * distance;
 						*/
+						let x =  posRobot.left + x_from_robot * 100;
+						let y =  posRobot.top - y_from_robot * 100;
+						let xx = x + 10*Math.sin(0 - (data.D[i].P.T - lastRobotPose.T));
+						let yy = y - 10*Math.cos(0 - (data.D[i].P.T - lastRobotPose.T));
+						
+						angle = 0 - (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
 						
 						new_point = RotatePoint (data.D[i].P, lastRobotPose, lastRobotPose.T - Math.PI/2);
 						x_from_robot = new_point.X - lastRobotPose.X;
@@ -2185,19 +2198,26 @@ $(document).ready(function() {
 						
 						// 1px / cm
 						
+						//FIDUCIAL
 						$('#install_normal_edit_map_container_all .modalAddDock #install_normal_edit_map_modalAddDock_dock'+i).show();
-						$('#install_normal_edit_map_container_all .modalAddDock #install_normal_edit_map_modalAddDock_dock'+i).css('left', posRobot.left + x_from_robot * 100); // lidar : y * -1
-						$('#install_normal_edit_map_container_all .modalAddDock #install_normal_edit_map_modalAddDock_dock'+i).css('top', posRobot.top - y_from_robot * 100); // +20 position lidar, - 12.5 pour le centre
+						$('#install_normal_edit_map_container_all .modalAddDock #install_normal_edit_map_modalAddDock_dock'+i).css('left',x); // lidar : y * -1
+						$('#install_normal_edit_map_container_all .modalAddDock #install_normal_edit_map_modalAddDock_dock'+i).css('top',y); // +20 position lidar, - 12.5 pour le centre
 						//angle = (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
-						
-						angle = 0 - (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
 						
 						$('#install_normal_edit_map_container_all .modalAddDock #install_normal_edit_map_modalAddDock_dock'+i).css({'-webkit-transform' : 'rotate('+ angle +'deg)',
 																	 '-moz-transform' : 'rotate('+ angle +'deg)',
 																	 '-ms-transform' : 'rotate('+ angle +'deg)',
 																	 'transform' : 'rotate('+ angle +'deg)'});
 						
+						$('#install_normal_edit_map_container_all .modalAddDock .fiducial_number_wrapper ').append('<span class="fiducial_number" id="fiducial_number'+i+'" data-id="'+data.D[i].ID+'">'+data.D[i].ID+'</span>');
 						
+						$('#install_normal_edit_map_container_all .modalAddDock #fiducial_number'+i).css('left',xx); // lidar : y * -1
+						$('#install_normal_edit_map_container_all .modalAddDock #fiducial_number'+i).css('top',yy); // 
+						$('#install_normal_edit_map_container_all .modalAddDock #fiducial_number'+i).css({'-webkit-transform' : 'rotate('+ angle +'deg)',
+																	 '-moz-transform' : 'rotate('+ (angle-180) +'deg)',
+																	 '-ms-transform' : 'rotate('+ (angle-180) +'deg)',
+																	 'transform' : 'rotate('+ (angle-180) +'deg)'});
+						//angle = (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
 						$('#install_normal_edit_map_container_all .modalAddDock #install_normal_edit_map_modalAddDock_dock'+i).data('id_fiducial', data.D[i].ID);
 						$('#install_normal_edit_map_container_all .modalAddDock #install_normal_edit_map_modalAddDock_dock'+i).data('x', data.D[i].P.X);
 						$('#install_normal_edit_map_container_all .modalAddDock #install_normal_edit_map_modalAddDock_dock'+i).data('y', data.D[i].P.Y);
@@ -4653,6 +4673,10 @@ function NormalAreaSave()
 		NormalAddHistorique({'action':'edit_area', 'data':{'index':currentAreaIndex, 'old':saveCurrentArea, 'new':JSON.stringify(areas[currentAreaIndex])}});
 		
 		saveCurrentArea = JSON.stringify(areas[currentAreaIndex]);
+		
+		normalCurrentAction = 'editArea';
+		RemoveClass('#install_normal_edit_map_svg .point_active ', 'point_active ');
+		NormalDisplayMenu('install_normal_edit_map_menu_area');
 		/*
 		RemoveClass('#install_normal_edit_map_svg .active', 'active');
 		
@@ -4691,6 +4715,7 @@ function NormalAreaCancel()
 	}
 	else if (normalCurrentAction == 'editArea')
 	{
+		
 		areas[currentAreaIndex] = JSON.parse(saveCurrentArea);
 		NormalTraceArea(currentAreaIndex);
 		normalCurrentAction = 'editArea';
@@ -4773,6 +4798,9 @@ function NormalForbiddenSave()
 		
 		saveCurrentForbidden = JSON.stringify(forbiddens[currentForbiddenIndex]);
 		
+		normalCurrentAction = 'editForbiddenArea';
+		RemoveClass('#install_normal_edit_map_svg .point_active ', 'point_active ');
+		NormalDisplayMenu('install_normal_edit_map_menu_forbidden');
 		/*
 		RemoveClass('#install_normal_edit_map_svg .active', 'active');
 		RemoveClass('#install_normal_edit_map_svg .activ_select', 'activ_select'); 

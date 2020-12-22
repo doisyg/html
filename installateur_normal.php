@@ -457,7 +457,7 @@
                                                     <img id="install_normal_edit_map_modalAddDock_dock3" class="dock" src="assets/images/reflector.png" width="25" />
                                                     <img id="install_normal_edit_map_modalAddDock_dock4" class="dock" src="assets/images/reflector.png" width="25" />
                                                     <img id="install_normal_edit_map_modalAddDock_dock5" class="dock" src="assets/images/reflector.png" width="25" />
-                                                    
+                                                    <div class="fiducial_number_wrapper"></div>
                                                 </div>
                                             
                                             	<div class ="modal-advice">

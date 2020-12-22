@@ -8,6 +8,7 @@ var bystepDownOnSVG_x_scroll = 0;
 var bystepDownOnSVG_y_scroll = 0;
 var bystepCanChangeMenu = true;
 var bystepSavedCanClose = true;
+
 var xGotoPose = 0 ;
 var yGotoPose = 0 ;
 

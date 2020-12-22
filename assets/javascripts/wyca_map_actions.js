@@ -11,7 +11,7 @@ var wycaSavedCanClose = true;
 
 var xGotoPose = 0 ;
 var yGotoPose = 0 ;
-                                                        
+
 function WycaAvertCantChange()
 {
 	$('#wyca_edit_map_bModalCancelEdit').click();
@@ -475,13 +475,13 @@ $(document).ready(function() {
 		{
 			forbiddens[currentForbiddenIndex].points.splice(currentPointWycaLongTouch.data('index_point'), 1);
 			WycaTraceForbidden(currentForbiddenIndex);
-			WycaDisplayMenu('install_by_step_edit_map_menu_forbidden');
+			WycaDisplayMenu('wyca_edit_map_menu_forbidden');
 		}
 		else if (wycaCurrentAction == 'editArea' || wycaCurrentAction == 'addArea')
 		{
 			areas[currentAreaIndex].points.splice(currentPointWycaLongTouch.data('index_point'), 1);
 			WycaTraceArea(currentAreaIndex);
-			WycaDisplayMenu('install_by_step_edit_map_menu_area');
+			WycaDisplayMenu('wyca_edit_map_menu_area');
 		}
     });
 	
