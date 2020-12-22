@@ -474,13 +474,17 @@ $(document).ready(function() {
 		if (wycaCurrentAction == 'editForbiddenArea' || wycaCurrentAction == 'addForbiddenArea')
 		{
 			forbiddens[currentForbiddenIndex].points.splice(currentPointWycaLongTouch.data('index_point'), 1);
+			currentPointWycaLongTouch = null;
 			WycaTraceForbidden(currentForbiddenIndex);
+			WycaSaveElementNeeded(false);
 			WycaDisplayMenu('wyca_edit_map_menu_forbidden');
 		}
 		else if (wycaCurrentAction == 'editArea' || wycaCurrentAction == 'addArea')
 		{
 			areas[currentAreaIndex].points.splice(currentPointWycaLongTouch.data('index_point'), 1);
+			currentPointWycaLongTouch = null;
 			WycaTraceArea(currentAreaIndex);
+			WycaSaveElementNeeded(false);
 			WycaDisplayMenu('wyca_edit_map_menu_area');
 		}
     });
@@ -4686,6 +4690,8 @@ function WycaAreaSave()
 		*/
 		currentAreaWycaLongTouch = $('#wyca_edit_map_area_'+areas[currentAreaIndex].id_area);
 		wycaCurrentAction = 'editArea';
+		RemoveClass('#wyca_edit_map_svg .point_active ', 'point_active ');
+		WycaDisplayMenu('wyca_edit_map_menu_area');
 	}
 	else if (wycaCurrentAction == 'editArea')
 	{
@@ -4694,6 +4700,10 @@ function WycaAreaSave()
 		WycaAddHistorique({'action':'edit_area', 'data':{'index':currentAreaIndex, 'old':saveCurrentArea, 'new':JSON.stringify(areas[currentAreaIndex])}});
 		
 		saveCurrentArea = JSON.stringify(areas[currentAreaIndex]);
+		
+		wycaCurrentAction = 'editArea';
+		RemoveClass('#wyca_edit_map_svg .point_active ', 'point_active ');
+		WycaDisplayMenu('wyca_edit_map_menu_area');
 		/*
 		RemoveClass('#wyca_edit_map_svg .active', 'active');
 		
@@ -4805,6 +4815,8 @@ function WycaForbiddenSave()
 		*/
 		currentForbiddenWycaLongTouch = $('#wyca_edit_map_forbidden_'+forbiddens[currentForbiddenIndex].id_area);
 		wycaCurrentAction = 'editForbiddenArea';
+		RemoveClass('#wyca_edit_map_svg .point_active ', 'point_active ');
+		ByStepDisplayMenu('wyca_edit_map_menu_forbidden');
 	}
 	else if (wycaCurrentAction == 'editForbiddenArea')
 	{	
@@ -4814,6 +4826,9 @@ function WycaForbiddenSave()
 		
 		saveCurrentForbidden = JSON.stringify(forbiddens[currentForbiddenIndex]);
 		
+		wycaCurrentAction = 'editForbiddenArea';
+		RemoveClass('#wyca_edit_map_svg .point_active ', 'point_active ');
+		ByStepDisplayMenu('wyca_edit_map_menu_forbidden');
 		/*
 		RemoveClass('#wyca_edit_map_svg .active', 'active');
 		RemoveClass('#wyca_edit_map_svg .activ_select', 'activ_select'); 

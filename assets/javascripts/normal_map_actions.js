@@ -4687,6 +4687,8 @@ function NormalAreaSave()
 		*/
 		currentAreaNormalLongTouch = $('#install_normal_edit_map_area_'+areas[currentAreaIndex].id_area);
 		normalCurrentAction = 'editArea';
+		RemoveClass('#install_normal_edit_map_svg .point_active ', 'point_active ');
+		NormalDisplayMenu('install_normal_edit_map_menu_area');
 	}
 	else if (normalCurrentAction == 'editArea')
 	{
@@ -4811,6 +4813,8 @@ function NormalForbiddenSave()
 		*/
 		currentForbiddenNormalLongTouch = $('#install_normal_edit_map_forbidden_'+forbiddens[currentForbiddenIndex].id_area);
 		normalCurrentAction = 'editForbiddenArea';
+		RemoveClass('#install_normal_edit_map_svg .point_active ', 'point_active ');
+		NormalDisplayMenu('install_normal_edit_map_menu_forbidden');
 	}
 	else if (normalCurrentAction == 'editForbiddenArea')
 	{	
