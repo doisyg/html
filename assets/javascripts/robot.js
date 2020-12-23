@@ -133,7 +133,7 @@ $(document).ready(function(e) {
             InitMappingByStep();
 		},
 		onNavigationStartResult: function(data){
-            if (data.A != wycaApi.AnswerCode.NO_ERROR) { alert_wyca('Error navigation start ; ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M);}
+            if (data.A != wycaApi.AnswerCode.NO_ERROR) { alert_wyca((typeof(textErrorStartNavigation) != 'undefined'? textErrorStartNavigation : 'Error start navigation') + wycaApi.AnswerCodeToString(data.A)+ " " + data.M);}
 		},
 		onDockingState: function(data){
             if (dockingStateLast != data)

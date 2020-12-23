@@ -223,7 +223,7 @@ $(document).ready(function(e) {
 					success: function(data) {
 					},
 					error: function(e) {
-						alert_wyca('Error step site ; ' + e.responseText);
+						alert_wyca((typeof(textErrorSaveSite) != 'undefined'? textErrorSaveSite : 'Error save site') + e.responseText);
 					}
 				});
 			}
@@ -239,7 +239,7 @@ $(document).ready(function(e) {
 						success: function(data) {
 						},
 						error: function(e) {
-							alert_wyca('Error step site ; ' + e.responseText);
+							alert_wyca((typeof(textErrorSaveSite) != 'undefined'? textErrorSaveSite : 'Error save site') + e.responseText);
 						}
 					});
 					$('#modalBack').modal('hide');
@@ -1882,7 +1882,7 @@ function GetLastMappingByStep()
 			{
 				$('#install_by_step_mapping_fin .loading_fin_create_map').hide();
 				
-				alert_wyca('Recovery mapping error ; ' + data.M);
+				alert_wyca((typeof(textErrorRecovery) != 'undefined'? textErrorRecovery : 'Error in recovery') + data.M);
 			}
 		});
 		

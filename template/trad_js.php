@@ -70,6 +70,7 @@ var textErrorInitMap = "<?php echo __js('Error init map');?>";
 var textErrorGetMap = "<?php echo __js('Error get map');?>";
 var textErrorSetMap = "<?php echo __js('Error set map');?>";
 var textErrorCheckPosition = "<?php echo __js('Error check position');?>";
+var textErrorStartNavigation = "<?php echo __js('Error start navigation');?>";
 
 
 //UNDOCK PATH
