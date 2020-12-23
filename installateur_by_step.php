@@ -1157,32 +1157,32 @@
                                         
                                         	<form>
                                                 <div class="form-group">
-                                                    <label class="col-xs-12 control-label">Action</label>
+                                                    <label class="col-xs-12 control-label"><?= __('Action')?></label>
                                                     <div class="col-xs-6">
                                                         <input type="radio" id="install_by_step_edit_map_up_elem_action_move" name="up_elem_action" value="move" class="form-control" />
-                                                    	<label for="up_elem_action_move" class="control-label">Move</label>    
+                                                    	<label for="up_elem_action_move" class="control-label"><?= __('Move')?></label>    
                                                     </div>
                                                     <div class="col-xs-6">
                                                         <input type="radio" id="install_by_step_edit_map_up_elem_action_rotate" name="up_elem_action" value="rotate" class="form-control" />
-                                                    	<label for="up_elem_action_rotate" class="control-label">Rotate</label>
+                                                    	<label for="up_elem_action_rotate" class="control-label"><?= __('Rotate')?></label>
                                                     </div>
                                                 </div>
                                                 
                                                 <div class="up_elem_action_move">
                                                     <div class="form-group">
-                                                        <label class="col-xs-12 control-label">Direction</label>
+                                                        <label class="col-xs-12 control-label"><?= __('Direction')?></label>
                                                         <div class="col-xs-6">
                                                             <input type="radio" id="install_by_step_edit_map_up_elem_direction_front" name="up_elem_direction" value="front" class="form-control" />
-                                                            <label for="up_elem_direction_front" class="control-label">Front</label>    
+                                                            <label for="up_elem_direction_front" class="control-label"><?= __('Front')?></label>    
                                                         </div>
                                                         <div class="col-xs-6">
                                                             <input type="radio" id="install_by_step_edit_map_up_elem_direction_back" name="up_elem_direction" value="back" class="form-control" />
-                                                            <label for="up_elem_direction_back" class="control-label">Back</label>
+                                                            <label for="up_elem_direction_back" class="control-label"><?= __('Back')?></label>
                                                         </div>
                                                     </div>
                                                     
                                                     <div class="form-group">
-                                                        <label class="col-xs-12 control-label">Distance</label>
+                                                        <label class="col-xs-12 control-label"><?= __('Distance')?></label>
                                                         <div class="col-md-6 input-group mb-md">
                                                             <input type="text" value="0" class="form-control" name="up_elem_move_distance" id="install_by_step_edit_map_up_elem_move_distance" />
                                                             <span class="input-group-addon">m</span>
@@ -1193,7 +1193,7 @@
                                                 
                                                 <div class="up_elem_action_rotate">
                                                     <div class="form-group">
-                                                        <label class="col-xs-12 control-label">Angle</label>
+                                                        <label class="col-xs-12 control-label"><?= __('Angle')?></label>
                                                         <div class="col-md-6 input-group mb-md">
                                                             <input type="text" value="0" class="form-control" name="up_elem_rotate_angle" id="install_by_step_edit_map_up_elem_rotate_angle" />
                                                             <span class="input-group-addon ">°</span>
@@ -1258,13 +1258,13 @@
                                         
                                         	<form>
                                                 <div class="form-group">
-                                                    <label class="col-xs-4 control-label">Name</label>
+                                                    <label class="col-xs-4 control-label"><?= __('Name')?></label>
                                                     <div class="col-xs-8">
                                                         <input type="text" id="install_by_step_edit_map_poi_name" name="poi_name" value="" class="form-control input-sm mb-md" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="col-xs-4 control-label">Comment</label>
+                                                    <label class="col-xs-4 control-label"><?= __('Comment')?></label>
                                                     <div class="col-xs-8">
                                                         <textarea id="install_by_step_edit_map_poi_comment" name="poi_comment" class="form-control input-sm mb-md"></textarea>
                                                     </div>
@@ -1343,27 +1343,27 @@
                                         
                                         	<form>
                                                 <div class="form-group">
-                                                    <label class="col-xs-4 control-label">Name</label>
+                                                    <label class="col-xs-4 control-label"><?= __('Name')?></label>
                                                     <div class="col-xs-8">
                                                         <input type="text" id="install_by_step_edit_map_augmented_pose_name" name="augmented_pose_name" value="" class="form-control input-sm mb-md" />
                                                     </div>
                                                 </div>
 												
                                                 <div class="form-group">
-                                                    <label class="col-xs-4 control-label">Fiducial ID</label>
+                                                    <label class="col-xs-4 control-label"><?= __('Fiducial ID')?></label>
                                                     <div class="col-xs-8">	
                                                         <input type="number" id="install_by_step_edit_map_augmented_pose_fiducial_number" name="augmented_pose_fiducial_number" readonly value="1" class="form-control input-sm mb-md" />
                                                     </div>
                                                 </div>
                                                 
                                                 <div class="form-group">
-                                                    <label class="col-xs-4 control-label">Comment</label>
+                                                    <label class="col-xs-4 control-label"><?= __('Comment')?></label>
                                                     <div class="col-xs-8">
                                                         <textarea id="install_by_step_edit_map_augmented_pose_comment" name="augmented_pose_comment" class="form-control input-sm mb-md"></textarea>
                                                     </div>
                                                 </div>
                                                 <fieldset>
-                                                	<legend>Undock procedure</legend>
+                                                	<legend><?= __('Undock procedure')?></legend>
                                                     <div style="text-align:left;">
                                                         <a href="#" class="bByStepUndockProcedureAugmentedPoseAddElem btn btn-circle btn-default"><i class="fa fa-plus"></i></a>
                                                         <ul class="list_undock_procedure_augmented_pose list_elem">
@@ -1393,32 +1393,32 @@
                                         
                                         	<form>
                                                 <div class="form-group">
-                                                    <label class="col-xs-12 control-label">Action</label>
+                                                    <label class="col-xs-12 control-label"><?= __('Action')?></label>
                                                     <div class="col-xs-6">
                                                         <input type="radio" id="install_by_step_edit_map_up_augmented_pose_elem_action_move" name="up_augmented_pose_elem_action" value="move" class="form-control" />
-                                                    	<label for="up_augmented_pose_elem_action_move" class="control-label">Move</label>    
+                                                    	<label for="up_augmented_pose_elem_action_move" class="control-label"><?= __('Move')?></label>    
                                                     </div>
                                                     <div class="col-xs-6">
                                                         <input type="radio" id="install_by_step_edit_map_up_augmented_pose_elem_action_rotate" name="up_augmented_pose_elem_action" value="rotate" class="form-control" />
-                                                    	<label for="up_augmented_pose_elem_action_rotate" class="control-label">Rotate</label>
+                                                    	<label for="up_augmented_pose_elem_action_rotate" class="control-label"><?= __('Rotate')?></label>
                                                     </div>
                                                 </div>
                                                 
                                                 <div class="up_augmented_pose_elem_action_move">
                                                     <div class="form-group">
-                                                        <label class="col-xs-12 control-label">Direction</label>
+                                                        <label class="col-xs-12 control-label"><?= __('Direction')?></label>
                                                         <div class="col-xs-6">
                                                             <input type="radio" id="install_by_step_edit_map_up_augmented_pose_elem_direction_front" name="up_augmented_pose_elem_direction" value="front" class="form-control" />
-                                                            <label for="up_augmented_pose_elem_direction_front" class="control-label">Front</label>    
+                                                            <label for="up_augmented_pose_elem_direction_front" class="control-label"><?= __('Front')?></label>    
                                                         </div>
                                                         <div class="col-xs-6">
                                                             <input type="radio" id="install_by_step_edit_map_up_augmented_pose_elem_direction_back" name="up_augmented_pose_elem_direction" value="back" class="form-control" />
-                                                            <label for="up_augmented_pose_elem_direction_back" class="control-label">Back</label>
+                                                            <label for="up_augmented_pose_elem_direction_back" class="control-label"><?= __('Back')?></label>
                                                         </div>
                                                     </div>
                                                     
                                                     <div class="form-group">
-                                                        <label class="col-xs-12 control-label">Distance</label>
+                                                        <label class="col-xs-12 control-label"><?= __('Distance')?></label>
                                                         <div class="col-md-6 input-group mb-md">
                                                             <input type="text" value="0" class="form-control" name="up_augmented_pose_elem_move_distance" id="install_by_step_edit_map_up_augmented_pose_elem_move_distance" />
                                                             <span class="input-group-addon">m</span>
@@ -1429,7 +1429,7 @@
                                                 
                                                 <div class="up_augmented_pose_elem_action_rotate">
                                                     <div class="form-group">
-                                                        <label class="col-xs-12 control-label">Angle</label>
+                                                        <label class="col-xs-12 control-label"><?= __('Angle')?></label>
                                                         <div class="col-md-6 input-group mb-md">
                                                             <input type="text" value="0" class="form-control" name="up_augmented_pose_elem_rotate_angle" id="install_by_step_edit_map_up_augmented_pose_elem_rotate_angle" />
                                                             <span class="input-group-addon ">°</span>
@@ -2138,7 +2138,7 @@
                 
                 <section class="panel panel-success" style="border: 0;box-shadow: unset;">
                     <header class="panel-heading" style="background: unset;padding: 0;border: 0;">
-                        <img src="assets/images/Robot.gif" class="img-responsive" style="width: 100%;height: auto;"/>
+                        <img src="assets/images/Robot.gif" class="img-responsive" style="margin: 0 auto;height: auto;"/>
                     </header>
                     <div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;    border: 0;">
                         <strong><?= __('Congratulations !')?></strong><br />

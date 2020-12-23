@@ -113,7 +113,7 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 @media (min-width: 1200px) { 
 	ul.tuiles li { padding-top:15%; position:relative; } 
 	ul.tuiles.heightauto li { padding-top:0; position:relative; }
-	ul.tuiles li a, ul.tuiles li div { font-size:28px;}
+	ul.tuiles li a, ul.tuiles li div { font-size:28px;    line-height: 32px;}
 	ul.tuiles li i { font-size:80px; padding-top:10%; display:block; padding-bottom:50px; }
 }
 
@@ -1165,7 +1165,7 @@ div.icon_menu .iconForbiddenArea .fa-minus-circle{
 .ifDocked,.ifUndocked{}
 /* TO AVOID DUAL DISPLAY UNDOCK / JOYSTICK */
 
-
+.preview_color{cursor:pointer}
 #alert_wyca p.content span.toggle_details,#warning_wyca p.content span.toggle_details,#success_wyca p.content span.toggle_details,#success_info_wyca p.content span.toggle_details{
 	font-size: 18px;
     line-height: 20px;

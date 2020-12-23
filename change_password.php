@@ -3,7 +3,7 @@ header("Access-Control-Allow-Origin: *");
 include_once('./config/initSite.php');
 
 if(isset($_GET['ns'])){
-	$message=_("New passwords don't match");
+	$message=__("New passwords don't match");
 	$erreur=true;
 }
 ?>
