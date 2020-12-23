@@ -9,7 +9,7 @@ $(document).ready(function(e) {
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
 				$('#user_recovery .bRecovery').removeClass('disabled');
-				success_wyca('Recovery done !');
+				success_wyca(textRecoveryDone);
 			}
 			else
 			{
@@ -35,7 +35,7 @@ $(document).ready(function(e) {
         
 		if (!userCanChangeMenu)
 		{
-			alert_wyca('You must confirm the active element');
+			alert_wyca(textConfirmActiveElement);
 		}
 		else
 		{
@@ -56,7 +56,7 @@ $(document).ready(function(e) {
 			wycaApi.SetCurrentMapData(data, function(data){
 				if (data.A == wycaApi.AnswerCode.NO_ERROR)
 				{
-					success_wyca("Map saved !");
+					success_wyca(textMapSaved);
 					
 					// On reload la carte pour mettre à jours les ids
 					GetInfosCurrentMapUser();
@@ -69,7 +69,7 @@ $(document).ready(function(e) {
 				}
 				else
 				{
-					alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' + data.M);
+					ParseAPIAnswerError(data);
 				}
 			});
 		}

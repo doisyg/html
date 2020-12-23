@@ -340,14 +340,13 @@ $(document).ready(function() {
 							else
 							{
 								$('#manager_edit_map_modalDoSaveBeforeTestPoi').modal('hide')
-								alert_wyca('Init map error : ' + wycaApi.AnswerCodeToString(data.A));
+								ParseAPIAnswerError(data,textErrorGetMap);
 							}
 						});
 					}else{
 						// SI GOMMES TO SAVE
 						wycaApi.GetCurrentMapComplete(function(data) {
 							if (data.A == wycaApi.AnswerCode.NO_ERROR){
-								console.log('Map Complete Saved');
 								statusSavingMapBeforeTestPoi=2; //STOP ANIM PROGRESS BAR
 								
 								id_map = data.D.id_map;
@@ -405,13 +404,13 @@ $(document).ready(function() {
 							else
 							{
 								$('#manager_edit_map_modalDoSaveBeforeTestPoi').modal('hide')
-								alert_wyca('Init map error : ' + wycaApi.AnswerCodeToString(data.A));
+								ParseAPIAnswerError(data,textErrorGetMap);
 							}
 						});
 					}
 				}else{
 					$('#manager_edit_map_modalDoSaveBeforeTestPoi').modal('hide');
-					alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' + data.M);
+					ParseAPIAnswerError(data,textErrorSetMap);
 				}
 			});
 

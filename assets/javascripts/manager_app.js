@@ -8,7 +8,7 @@ $(document).ready(function(e) {
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
 				$('#manager_recovery .bRecovery').removeClass('disabled');
-				success_wyca('Recovery done !');
+				success_wyca(textRecoveryDone);
 			}
 			else
 			{
@@ -111,7 +111,7 @@ $(document).ready(function(e) {
 					}
 					else
 					{
-						alert_wyca('Init map error : ' + wycaApi.AnswerCodeToString(data.A));
+						ParseAPIAnswerError(data,textErrorGetMap);
 					}
 				});
 				
@@ -121,7 +121,7 @@ $(document).ready(function(e) {
 			{
 				$('#manager_edit_map .bSaveMapTestPoi i').removeClass('fa-check fa-spinner fa-pulse fa-remove');
 				$('#manager_edit_map .bSaveMapTestPoi i').addClass('fa-remove');
-				alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' + data.M);
+				ParseAPIAnswerError(data,textErrorSetMap);
 			}
 		});
     });
@@ -205,7 +205,7 @@ $(document).ready(function(e) {
 					}
 					else
 					{
-						alert_wyca('Init map error : ' + wycaApi.AnswerCodeToString(data.A));
+						ParseAPIAnswerError(data,textErrorGetMap);
 					}
 				});
 				
@@ -215,7 +215,7 @@ $(document).ready(function(e) {
 			{
 				$('#manager_edit_map .bSaveMapTestDock i').removeClass('fa-check fa-spinner fa-pulse fa-remove');
 				$('#manager_edit_map .bSaveMapTestDock i').addClass('fa-remove');
-				alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' + data.M);
+				ParseAPIAnswerError(data,textErrorSetMap);
 			}
 		});
     });
@@ -225,7 +225,7 @@ $(document).ready(function(e) {
         
 		if (!managerCanChangeMenu)
 		{
-			alert_wyca('You must confirm the active element');
+			alert_wyca(textConfirmActiveElement);
 		}
 		else
 		{
@@ -246,7 +246,7 @@ $(document).ready(function(e) {
 			wycaApi.SetCurrentMapData(data, function(data){
 				if (data.A == wycaApi.AnswerCode.NO_ERROR)
 				{
-					success_wyca("Map saved !");
+					success_wyca(textMapSaved);
 					
 					// On reload la carte pour mettre à jours les ids
 					GetInfosCurrentMapManager();
@@ -259,7 +259,7 @@ $(document).ready(function(e) {
 				}
 				else
 				{
-					alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' + data.M);
+					ParseAPIAnswerError(data);
 				}
 			});
 		}
