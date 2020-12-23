@@ -124,7 +124,7 @@ function GetInfosCurrentMapDoByStep()
 		}
 		else
 		{
-			alert_wyca('Init map error : ' + wycaApi.AnswerCodeToString(data.A));
+			ParseAPIAnswerError(data,textErrorInitMap);
 		}
 	});
 }
