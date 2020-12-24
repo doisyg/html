@@ -2038,7 +2038,7 @@ $(document).ready(function() {
 
 			boolHelpArea = getCookie('boolHelpAreaI') != '' ? JSON.parse(getCookie('boolHelpAreaI')) : true; // TRICK JSON.parse STR TO BOOL
 			
-			if(boolHelpForbidden){
+			if(boolHelpArea){
 				$('#install_normal_edit_map .modalHelpClickArea').modal('show');
 			}
 			
