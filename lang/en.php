@@ -477,5 +477,14 @@ $_LANG['3cae8783aeea7adb53950fd9be930bae'] = 'secondes';
 $_LANG['8d2de5368588552fbae54044ac5c7b3d'] = 'Rotate';
 $_LANG['469bba0a564235dfceede42db14f17b0'] = 'back';
 $_LANG['e6ec529ba185279aa0adcf93e645c7cd'] = 'front';
+$_LANG['9ecaa9076ada1d0e4431cab9116c5592'] = 'You are about to delete the account you logged in to, this will log you out and delete the account.';
+$_LANG['fea273faf3f6d2f71d6091bb5041d8fe'] = 'Are you sure to continue ?';
+$_LANG['ad7ea6b5adb51feb82485365b6f098c2'] = 'Fiducial ID';
+$_LANG['004bf6c9a40003140292e97330236c53'] = 'Action';
+$_LANG['02674a4ef33e11c879283629996c8ff8'] = 'Direction';
+$_LANG['5835bab1ade0060909e31a06af2e2cde'] = 'Front';
+$_LANG['0aa6f4210bf373c95eda00232e93cd98'] = 'Distance';
+$_LANG['45f4ce6c3306644b1efe333f4f8d6929'] = 'Angle';
+$_LANG['78c96aa64afd88831f01462151a9f424'] = 'Add new site';
 
 ?>
