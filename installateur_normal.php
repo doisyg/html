@@ -431,6 +431,16 @@
                                                        
                                                     </div>
                                                 </div>
+												<div class="form-group sep">
+                                                    <label class="col-xs-4 control-label"><?php echo __('Area Sound');?></label>
+                                                    <div class="col-xs-8">
+                                                    	<div class="col-xs-12" style="padding:0; margin-bottom:5px;">
+                                                        <select id="install_normal_edit_map_area_sound" name="area_sound" class="form-control input-sm mb-md select_area_sound">
+                                                            <option value="-1"><?php echo __('No sound');?></option>
+                                                        </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </form>
                                         </div>
                                         
