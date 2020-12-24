@@ -486,5 +486,8 @@ $_LANG['5835bab1ade0060909e31a06af2e2cde'] = 'Front';
 $_LANG['0aa6f4210bf373c95eda00232e93cd98'] = 'Distance';
 $_LANG['45f4ce6c3306644b1efe333f4f8d6929'] = 'Angle';
 $_LANG['78c96aa64afd88831f01462151a9f424'] = 'Add new site';
+$_LANG['8e982e27cd7da37d151fe0bbfe7ae9e3'] = 'You can download the application user manual.';
+$_LANG['801ab24683a4a8c433c6eb40c48bcd9d'] = 'Download';
+$_LANG['3c78b35502b2693fefdfc51cba3a53a5'] = 'manual';
 
 ?>

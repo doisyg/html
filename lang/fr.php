@@ -532,5 +532,8 @@ $_LANG['140b3676a4db855f1420008da144bed5'] = 'Navigateur relancé mode plein éc
 $_LANG['68d58eb9e2c230033da649a02a594f1f'] = 'Navigateur relancé mode fenêtré';
 $_LANG['103c3fbb6d26da3060e6e3eafe0665df'] = 'Vous devez mettre en place des actions avant de lancer la démo';
 $_LANG['0f68101772bd5397ef8eb1b632798652'] = 'Attente';
+$_LANG['8e982e27cd7da37d151fe0bbfe7ae9e3'] = 'Vous pouvez télécharger le manuel d\'utilisation de l\'application.';
+$_LANG['801ab24683a4a8c433c6eb40c48bcd9d'] = 'Télécharger';
+$_LANG['3c78b35502b2693fefdfc51cba3a53a5'] = 'manuel';
 
 ?>

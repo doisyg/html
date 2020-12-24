@@ -6,6 +6,21 @@ var currentNameSiteExport = '';
 var NormalBufferMapSaveElemName = '';
 
 $(document).ready(function(e) {
+	// ----------------------- USER MANUAL DOWNLOAD ------------------------
+		
+	$(document).on('click', '#install_normal_dashboard .bDownloadUserManual', function(e) {
+        $('#install_normal_dashboard .bDownloadUserManual').addClass('disabled');
+		
+		var a = document.createElement("a");
+		document.body.appendChild(a);
+		a.style = "display: none";
+	
+		a.href = 'assets/pdfs/user_manual_'+lang+'.pdf';
+		a.download = 'user_manual_'+lang+'.pdf';
+		a.click();		
+		
+		$('#install_normal_dashboard .bDownloadUserManual').removeClass('disabled');
+    });
 	// ----------------------- SITE EXPORT ------------------------
 		
 	$(document).on('click', '#install_normal_setup_export .bSiteExportElem', function(e) {

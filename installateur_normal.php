@@ -19,6 +19,13 @@
 					<h2><?=__('Help')?></h2>
 					<div class="content sm-content text-left">
 						<p class=""><?= __('This dashboard allow you to access all features and settings of the vehicle')?></p>
+						<?php if(file_exists('assets/pdfs/user_manual_'.$currentLang->iso.'.pdf')):?>
+							<p class=""><?= __('You can download the application user manual.')?></p>
+							<a class="bDownloadUserManual bTuile center btn">
+								<i class="fas fa-download iconMenuGreen"></i>
+								<h4 class="iconMenuGreen"><?php echo __('Download').'<br>'.__('manual');?></h4>
+							</a>
+						<?php endif;?>
 						<p class=""><?= __('Use Logout button to log out of the app')?></p>
 					</div>
 					<p class="legende"><?=__('Click to hide')?></p>
