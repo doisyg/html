@@ -98,17 +98,17 @@ $(document).ready(function(e) {
 						wycaApi.SetMap(map, function(data){
 							if (data.A == wycaApi.AnswerCode.NO_ERROR)
 							{	
-								success_wyca('Map saved')
+								success_wyca(textMapSaved)
 							}
 							else
 							{
-								alert_wyca('Save map error : ' + wycaApi.AnswerCodeToString(data.A) + '<br>'+ data.M);
+								ParseAPIAnswerError(data,textErrorSaveMap);
 							}							
 						});
 					}
 					else
 					{
-						alert_wyca('Error save image trinary');
+						alert_wyca(textErrorTrinary);
 					}
 									
 					
@@ -118,7 +118,7 @@ $(document).ready(function(e) {
 					var img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
         			img.src = "assets/images/vide.png";
 					
-					alert_wyca('Error get map trinary ; ' + e.responseText);
+					alert_wyca(textErrorTrinary + e.responseText);
 				}
 			});
 		
@@ -208,17 +208,15 @@ $(document).ready(function(e) {
 					}
 					else
 					{
-						alert_wyca('Init map error : ' + wycaApi.AnswerCodeToString(data.A));
+						ParseAPIAnswerError(data,textErrorGetMap);
 					}
 				});
-				
-				
 			}
 			else
 			{
 				$('#install_normal_edit_map .bSaveMapTestPoi i').removeClass('fa-check fa-spinner fa-pulse fa-remove');
 				$('#install_normal_edit_map .bSaveMapTestPoi i').addClass('fa-remove');
-				alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' + data.M);
+				ParseAPIAnswerError(data,textErrorSetMap)
 			}
 		});
     });
@@ -305,7 +303,7 @@ $(document).ready(function(e) {
 					}
 					else
 					{
-						alert_wyca('Init map error : ' + wycaApi.AnswerCodeToString(data.A));
+						ParseAPIAnswerError(data,textErrorGetMap);
 					}
 				});
 				
@@ -315,7 +313,7 @@ $(document).ready(function(e) {
 			{
 				$('#install_normal_edit_map .bSaveMapTestAugmentedPose i').removeClass('fa-check fa-spinner fa-pulse fa-remove');
 				$('#install_normal_edit_map .bSaveMapTestAugmentedPose i').addClass('fa-remove');
-				alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' + data.M);
+				ParseAPIAnswerError(data,textErrorSetMap);
 			}
 		});
     });
@@ -400,7 +398,7 @@ $(document).ready(function(e) {
 					}
 					else
 					{
-						alert_wyca('Init map error : ' + wycaApi.AnswerCodeToString(data.A));
+						ParseAPIAnswerError(data,textErrorGetMap);
 					}
 				});
 				
@@ -410,7 +408,7 @@ $(document).ready(function(e) {
 			{
 				$('#install_normal_edit_map .bSaveMapTestDock i').removeClass('fa-check fa-spinner fa-pulse fa-remove');
 				$('#install_normal_edit_map .bSaveMapTestDock i').addClass('fa-remove');
-				alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' + data.M);
+				ParseAPIAnswerError(data,textErrorSetMap);
 			}
 		});
     });
@@ -420,8 +418,7 @@ $(document).ready(function(e) {
         
 		if (!normalCanChangeMenu)
 		{
-			alert_wyca('You must confirm the active element');
-			console.log(normalCurrentAction);
+			alert_wyca(textConfirmActiveElement);
 			$('#bCloseAlertWyca').click(NormalShakeActiveElement());
 		}
 		else
@@ -467,7 +464,7 @@ $(document).ready(function(e) {
 			wycaApi.SetCurrentMapData(data, function(data){
 				if (data.A == wycaApi.AnswerCode.NO_ERROR)
 				{
-					success_wyca("Map saved !");
+					success_wyca(textMapSaved);
 					
 					// On reload la carte pour mettre à jours les ids
 					GetInfosCurrentMapNormal();
@@ -480,7 +477,7 @@ $(document).ready(function(e) {
 				}
 				else
 				{
-					alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' + data.M);
+					ParseAPIAnswerError(data);
 				}
 			});
 		}
@@ -512,7 +509,7 @@ $(document).ready(function(e) {
 		}
 		else
 		{
-			alert_wyca('You must confirm by checking the checkbox');
+			alert_wyca(textConfirmCheckbox);
 		}
 		
     });	
@@ -580,7 +577,7 @@ function NormalInitTrinaryDo()
 		}
 		else
 		{
-			alert_wyca('Init map error : ' + wycaApi.AnswerCodeToString(data.A));
+			ParseAPIAnswerError(data,textErrorGetMap);
 		}
 	});
 }
@@ -787,7 +784,7 @@ $(document).ready(function(e) {
 		
 		wycaApi.SetSiteAsCurrent(id_site, function(data) {
 			if (data.A != wycaApi.AnswerCode.NO_ERROR) 
-				alert_wyca('Error navigation stop ; ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M);
+				ParseAPIAnswerError(data,textErrorNavigationStop);
 			else
 			{
 				GetSitesNormal();
@@ -827,11 +824,11 @@ $(document).ready(function(e) {
 		
 		if ($('#install_normal_service_book .modalServiceBook #install_normal_service_book_i_service_book_title').val() == "" )
 		{
-			alert_wyca('Title is required');
+			alert_wyca(textTitleRequired);
 		}
 		else if ($('#install_normal_service_book .modalServiceBook #install_normal_service_book_i_service_book_comment').val() == "" )
 		{
-			alert_wyca('Comment is required');
+			alert_wyca(textCommentRequired);
 		}
 		else
 		{
@@ -1296,7 +1293,7 @@ $(document).ready(function(e) {
 		wycaApi.SetEnergyConfiguration(EBL,MBL, function(data) {
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
-				success_wyca('Saved');
+				success_wyca(textBatteryConfigSaved);
 				GetConfigurationsNormal();
 			}
 			else
@@ -1317,7 +1314,7 @@ $(document).ready(function(e) {
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
 				$('#install_normal_recovery .bRecovery').removeClass('disabled');
-				success_wyca('Recovery done !');
+				success_wyca(textRecoveryDone);
 			}
 			else
 			{
@@ -1354,7 +1351,12 @@ $(document).ready(function(e) {
 					window.location.href = app_url; // equivalent window.location.reload()
 			},
 			error: function(e) {
-				alert_wyca('Error set lang ; ' + e.responseText);
+				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+					alert_wyca((typeof(textErrorLang) != 'undefined'? textErrorLang : 'Error lang') + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					setTimeout(function(){window.location.href = 'logout.php'},3000);
+				}else{
+					alert_wyca((typeof(textErrorLang) != 'undefined'? textErrorLang : 'Error lang') + e.responseText );
+				}
 			}
 		});
     });

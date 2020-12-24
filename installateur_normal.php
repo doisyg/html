@@ -601,7 +601,7 @@
                                                     <div class="form-group">
                                                         <label class="col-xs-12 control-label"><?= __('Angle')?></label>
                                                         <div class="col-md-6 input-group mb-md">
-                                                            <input type="text" value="0" class="form-cont rol" name="up_elem_rotate_angle" id="install_normal_edit_map_up_elem_rotate_angle" />
+                                                            <input type="text" value="0" class="form-control" name="up_elem_rotate_angle" id="install_normal_edit_map_up_elem_rotate_angle" />
                                                             <span class="input-group-addon ">°</span>
                                                         </div>
                                                     </div>

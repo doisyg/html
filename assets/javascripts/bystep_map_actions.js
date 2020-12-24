@@ -2498,7 +2498,7 @@ $(document).ready(function() {
 				
 				li.data('action', 'move');
 				li.data('distance', ((direction == 'back')?distance*-1:distance));
-				span.html('Move ' + ((direction == 'back')?'back':'front') + ' ' + distance + 'm');
+				span.html((typeof(textUndockPathMove) != 'undefined' ? textUndockPathMove : 'Move') + ' ' + ((direction == 'back')?(typeof(textUndockPathback) != 'undefined' ? textUndockPathback : 'back'):(typeof(textUndockPathfront) != 'undefined' ? textUndockPathfront : 'front')) + ' ' + distance + 'm');
 			}
 			else if (action == 'rotate') {
 				
@@ -3129,7 +3129,7 @@ $(document).ready(function() {
 				
 				li.data('action', 'move');
 				li.data('distance', ((direction == 'back')?distance*-1:distance));
-				span.html('Move ' + ((direction == 'back')?'back':'front') + ' ' + distance + 'm');
+				span.html((typeof(textUndockPathMove) != 'undefined' ? textUndockPathMove : 'Move') + ' ' + ((direction == 'back')?(typeof(textUndockPathback) != 'undefined' ? textUndockPathback : 'back'):(typeof(textUndockPathfront) != 'undefined' ? textUndockPathfront : 'front')) + ' ' + distance + 'm');
 			}
 			else if (action == 'rotate') {
 				

@@ -47,6 +47,10 @@ var textConfirmActiveElement = "<?php echo __js('You must confirm the active ele
 var textRecoveryDone = "<?php echo __js('Recovery done !');?>";
 var textNoStartMovingFoward = "<?php echo __js('You cannot start with moving forward');?>";
 var textNoStartRotation = "<?php echo __js('You cannot start with a rotation');?>";
+var textConfirmCheckbox = "<?php echo __js('You must confirm by checking the checkbox');?>";
+var textBatteryConfigSaved = "<?php echo __js('Battery config saved');?>";
+var textBrowserRestartedFullscreen = "<?php echo __js('Browser restarted fullscreen');?>";
+var textBrowserRestartedWindowed = "<?php echo __js('Browser restarted windowed');?>";
 
 var textErrorLang = "<?php echo __js('Error lang');?>";
 var textErrorSaveTops = "<?php echo __js('Error save tops');?>";
@@ -69,8 +73,15 @@ var textErrorFinish = "<?php echo __js('Error in finish');?>";
 var textErrorInitMap = "<?php echo __js('Error init map');?>";
 var textErrorGetMap = "<?php echo __js('Error get map');?>";
 var textErrorSetMap = "<?php echo __js('Error set map');?>";
+var textErrorSaveMap = "<?php echo __js('Error save map');?>";
 var textErrorCheckPosition = "<?php echo __js('Error check position');?>";
 var textErrorStartNavigation = "<?php echo __js('Error start navigation');?>";
+var textErrorNavigationStop = "<?php echo __js('Error navigation stop');?>";
+
+//DEMO MODE
+var textDemoNeedActions = "<?php echo __js('You need to setup actions before launch Demo');?>";
+var textDemoWait = "<?php echo __js('Wait');?>";
+var textDemosecondes = "<?php echo __js('secondes');?>";
 
 
 //UNDOCK PATH

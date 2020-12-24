@@ -523,5 +523,14 @@ $_LANG['5378249d8498a7a37759aecbb1997889'] = 'Erreur sauvegarde carte';
 $_LANG['44a65c3fc7f266093f078815307a6ea3'] = 'Erreur test position';
 $_LANG['469bba0a564235dfceede42db14f17b0'] = 'arrière';
 $_LANG['e6ec529ba185279aa0adcf93e645c7cd'] = 'avant';
+$_LANG['f2c8091b2d8e00ef5c138cd8387e2ad9'] = 'Vous devez confirmer en cochant la case';
+$_LANG['111d3311c13f66c492f7d9aeceef614a'] = 'Configuration batterie sauvegardée';
+$_LANG['4e22f27ef0fc8b7e08ecdfea76f028d9'] = 'Erreur sauvegarde carte';
+$_LANG['03b8180f2716be161d0e814707144c8e'] = 'Erreur lancement navigation';
+$_LANG['b14527e57063f10032b90fa9c2c00b84'] = 'Erreur arrêt navigation';
+$_LANG['140b3676a4db855f1420008da144bed5'] = 'Navigateur relancé mode plein écran';
+$_LANG['68d58eb9e2c230033da649a02a594f1f'] = 'Navigateur relancé mode fenêtré';
+$_LANG['103c3fbb6d26da3060e6e3eafe0665df'] = 'Vous devez mettre en place des actions avant de lancer la démo';
+$_LANG['0f68101772bd5397ef8eb1b632798652'] = 'Attente';
 
 ?>

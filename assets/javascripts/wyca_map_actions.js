@@ -601,7 +601,7 @@ $(document).ready(function() {
 					
 					$('#wyca_edit_map_container_all .modalDockOptions .list_undock_procedure').append('' +
 						'<li id="wyca_edit_map_list_undock_procedure_elem_'+indexDockElem+'" data-index_dock_procedure="'+indexDockElem+'" data-action="move" data-distance="' + distance + '">'+
-						'	<span>Move ' + ((direction == 'back')?'back':'front') + ' ' + ((direction == 'back')?distance*-1:distance) + 'm</span>'+
+						'	<span>' + (typeof(textUndockPathMove) != 'undefined' ? textUndockPathMove : 'Move') +' '+ ((direction == 'back')?(typeof(textUndockPathback) != 'undefined' ? textUndockPathback : 'back'):(typeof(textUndockPathfront) != 'undefined' ? textUndockPathfront : 'front')) + ' ' + ((direction == 'back')?distance*-1:distance) + 'm</span>'+
 						'	<a href="#" class="bWycaUndockProcedureDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
 						'	<a href="#" class="bWycaUndockProcedureEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
 						'</li>'
@@ -614,7 +614,7 @@ $(document).ready(function() {
 					
 					$('#wyca_edit_map_container_all .modalDockOptions .list_undock_procedure').append('' +
 						'<li id="wyca_edit_map_list_undock_procedure_elem_'+indexDockElem+'" data-index_dock_procedure="'+indexDockElem+'" data-action="rotate" data-angle="'+angle+'">'+
-						'	<span>Rotate '+angle+'°</span>'+
+						'	<span>' + (typeof(textUndockPathRotate) != 'undefined' ? textUndockPathRotate : 'Rotate') +' '+angle+'°</span>'+
 						'	<a href="#" class="bWycaUndockProcedureDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
 						'	<a href="#" class="bWycaUndockProcedureEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
 						'</li>'
@@ -708,7 +708,7 @@ $(document).ready(function() {
 							else
 							{
 								$('#wyca_edit_map_modalDoSaveBeforeTestDock').modal('hide')
-								alert_wyca('Init map error : ' + wycaApi.AnswerCodeToString(data.A));
+								ParseAPIAnswerError(data,textErrorGetMap);
 							}
 						});
 					}else{ 
@@ -772,13 +772,13 @@ $(document).ready(function() {
 							else
 							{
 								$('#wyca_edit_map_modalDoSaveBeforeTestDock').modal('hide')
-								alert_wyca('Init map error : ' + wycaApi.AnswerCodeToString(data.A));
+								ParseAPIAnswerError(data,textErrorGetMap);
 							}
 						});
 					}
 				}else{
 					$('#wyca_edit_map_modalDoSaveBeforeTestDock').modal('hide');
-					alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' + data.M);
+					ParseAPIAnswerError(data,textErrorSetMap);
 				}
 			});
 		}
@@ -913,7 +913,7 @@ $(document).ready(function() {
 							else
 							{
 								$('#wyca_edit_map_modalDoSaveBeforeTestPoi').modal('hide')
-								alert_wyca('Init map error : ' + wycaApi.AnswerCodeToString(data.A));
+								ParseAPIAnswerError(data,textErrorGetMap);
 							}
 						});
 					}else{
@@ -978,13 +978,13 @@ $(document).ready(function() {
 							else
 							{
 								$('#wyca_edit_map_modalDoSaveBeforeTestPoi').modal('hide')
-								alert_wyca('Init map error : ' + wycaApi.AnswerCodeToString(data.A));
+								ParseAPIAnswerError(data,textErrorGetMap);
 							}
 						});
 					}
 				}else{
 					$('#wyca_edit_map_modalDoSaveBeforeTestPoi').modal('hide');
-					alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' + data.M);
+					ParseAPIAnswerError(data,textErrorSetMap);
 				}
 			});
 		}
@@ -1054,7 +1054,7 @@ $(document).ready(function() {
 					
 					$('#wyca_edit_map_container_all .modalAugmentedPoseOptions .list_undock_procedure_augmented_pose').append('' +
 						'<li id="wyca_edit_map_list_undock_procedure_augmented_pose_elem_'+indexAugmentedPoseElem+'" data-index_augmented_pose_procedure="'+indexAugmentedPoseElem+'" data-action="move" data-distance="' + distance + '">'+
-						'	<span>Move ' + ((direction == 'back')?'back':'front') + ' ' + ((direction == 'back')?distance*-1:distance) + 'm</span>'+
+						'	<span>' + (typeof(textUndockPathMove) != 'undefined' ? textUndockPathMove : 'Move') +' '+ ((direction == 'back')?(typeof(textUndockPathback) != 'undefined' ? textUndockPathback : 'back'):(typeof(textUndockPathfront) != 'undefined' ? textUndockPathfront : 'front')) + ' ' + ((direction == 'back')?distance*-1:distance) + 'm</span>'+
 						'	<a href="#" class="bWycaUndockProcedureAugmentedPoseDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
 						'	<a href="#" class="bWycaUndockProcedureAugmentedPoseEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
 						'</li>'
@@ -1067,7 +1067,7 @@ $(document).ready(function() {
 					
 					$('#wyca_edit_map_container_all .modalAugmentedPoseOptions .list_undock_procedure_augmented_pose').append('' +
 						'<li id="wyca_edit_map_list_undock_procedure_augmented_pose_elem_'+indexAugmentedPoseElem+'" data-index_augmented_pose_procedure="'+indexAugmentedPoseElem+'" data-action="rotate" data-angle="'+angle+'">'+
-						'	<span>Rotate '+angle+'°</span>'+
+						'	<span>' + (typeof(textUndockPathRotate) != 'undefined' ? textUndockPathRotate : 'Rotate') +' '+angle+'°</span>'+
 						'	<a href="#" class="bWycaUndockProcedureAugmentedPoseDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
 						'	<a href="#" class="bWycaUndockProcedureAugmentedPoseEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
 						'</li>'
@@ -1163,7 +1163,7 @@ $(document).ready(function() {
 							else
 							{
 								$('#wyca_edit_map_modalDoSaveBeforeTestAugmentedPose').modal('hide')
-								alert_wyca('Init map error : ' + wycaApi.AnswerCodeToString(data.A));
+								ParseAPIAnswerError(data,textErrorGetMap);
 							}
 						});
 					}else{
@@ -1227,13 +1227,13 @@ $(document).ready(function() {
 							else
 							{
 								$('#wyca_edit_map_modalDoSaveBeforeTestAugmentedPose').modal('hide')
-								alert_wyca('Init map error : ' + wycaApi.AnswerCodeToString(data.A));
+								ParseAPIAnswerError(data,textErrorGetMap);
 							}
 						});
 					}		
 				}else{
 					$('#wyca_edit_map_modalDoSaveBeforeTestAugmentedPose').modal('hide');
-					alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' + data.M);
+					ParseAPIAnswerError(data,textErrorSetMap);
 				}
 			});
 		}
@@ -2327,12 +2327,12 @@ $(document).ready(function() {
 			if (firstAction.data('action') == 'rotate')
 			{
 				e.preventDefault();
-				alert_wyca('You cannot start with a rotation');
+				alert_wyca(textNoStartRotation);
 			}
 			else if (firstAction.data('action') != 'rotate' && firstAction.data('distance') > 0)
 			{
 				e.preventDefault();
-				alert_wyca('You cannot start with moving forward');
+				alert_wyca(textNoStartMovingFoward);
 			}
 			else
 			{
@@ -2422,7 +2422,7 @@ $(document).ready(function() {
 							
 				$('#wyca_edit_map_container_all .modalDockOptions .list_undock_procedure').append('' +
 					'<li id="wyca_edit_map_list_undock_procedure_elem_'+indexDockElem+'" data-index_dock_procedure="'+indexDockElem+'" data-action="move" data-distance="' + ((direction == 'back')?distance*-1:distance) + '">'+
-					'	<span>Move ' + ((direction == 'back')?'back':'front') + ' ' + distance + 'm</span>'+
+					'	<span>' + (typeof(textUndockPathMove) != 'undefined' ? textUndockPathMove : 'Move') +' '+ ((direction == 'back')?(typeof(textUndockPathback) != 'undefined' ? textUndockPathback : 'back'):(typeof(textUndockPathfront) != 'undefined' ? textUndockPathfront : 'front')) + ' ' + distance + 'm</span>'+
 					'	<a href="#" class="bWycaUndockProcedureDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
 					'	<a href="#" class="bWycaUndockProcedureEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
 					'</li>'
@@ -2434,7 +2434,7 @@ $(document).ready(function() {
 				
 				$('#wyca_edit_map_container_all .modalDockOptions .list_undock_procedure').append('' +
 					'<li id="wyca_edit_map_list_undock_procedure_elem_'+indexDockElem+'" data-index_dock_procedure="'+indexDockElem+'" data-action="rotate" data-angle="'+angle+'">'+
-					'	<span>Rotate '+angle+'°</span>'+
+					'	<span>' + (typeof(textUndockPathRotate) != 'undefined' ? textUndockPathRotate : 'Rotate') +' '+angle+'°</span>'+
 					'	<a href="#" class="bWycaUndockProcedureDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
 					'	<a href="#" class="bWycaUndockProcedureEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
 					'</li>'
@@ -2454,7 +2454,7 @@ $(document).ready(function() {
 				
 				li.data('action', 'move');
 				li.data('distance', ((direction == 'back')?distance*-1:distance));
-				span.html('Move ' + ((direction == 'back')?'back':'front') + ' ' + distance + 'm');
+				span.html((typeof(textUndockPathMove) != 'undefined' ? textUndockPathMove : 'Move') + ' ' + ((direction == 'back')?(typeof(textUndockPathback) != 'undefined' ? textUndockPathback : 'back'):(typeof(textUndockPathfront) != 'undefined' ? textUndockPathfront : 'front')) + ' ' + distance + 'm');
 			}
 			else if (action == 'rotate') {
 				
@@ -2465,7 +2465,7 @@ $(document).ready(function() {
 				
 				li.data('action', 'rotate');
 				li.data('angle', angle);
-				span.html('Rotate '+angle+'°');
+				span.html((typeof(textUndockPathRotate) != 'undefined' ? textUndockPathRotate : 'Rotate') +' '+angle+'°');
 			}
 		}
     });
@@ -3056,7 +3056,7 @@ $(document).ready(function() {
 							
 				$('#wyca_edit_map_container_all .modalAugmentedPoseOptions .list_undock_procedure_augmented_pose').append('' +
 					'<li id="wyca_edit_map_list_undock_procedure_augmented_pose_elem_'+indexAugmentedPoseElem+'" data-index_augmented_pose_procedure="'+indexAugmentedPoseElem+'" data-action="move" data-distance="' + ((direction == 'back')?distance*-1:distance) + '">'+
-					'	<span>Move ' + ((direction == 'back')?'back':'front') + ' ' + distance + 'm</span>'+
+					'	<span>' + (typeof(textUndockPathMove) != 'undefined' ? textUndockPathMove : 'Move') +' '+ ((direction == 'back')?(typeof(textUndockPathback) != 'undefined' ? textUndockPathback : 'back'):(typeof(textUndockPathfront) != 'undefined' ? textUndockPathfront : 'front')) + ' ' + distance + 'm</span>'+
 					'	<a href="#" class="bWycaUndockProcedureAugmentedPoseDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
 					'	<a href="#" class="bWycaUndockProcedureAugmentedPoseEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
 					'</li>'
@@ -3068,7 +3068,7 @@ $(document).ready(function() {
 				
 				$('#wyca_edit_map_container_all .modalAugmentedPoseOptions .list_undock_procedure_augmented_pose').append('' +
 					'<li id="wyca_edit_map_list_undock_procedure_augmented_pose_elem_'+indexAugmentedPoseElem+'" data-index_augmented_pose_procedure="'+indexAugmentedPoseElem+'" data-action="rotate" data-angle="'+angle+'">'+
-					'	<span>Rotate '+angle+'°</span>'+
+					'	<span>' + (typeof(textUndockPathRotate) != 'undefined' ? textUndockPathRotate : 'Rotate') +' '+angle+'°</span>'+
 					'	<a href="#" class="bWycaUndockProcedureAugmentedPoseDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
 					'	<a href="#" class="bWycaUndockProcedureAugmentedPoseEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
 					'</li>'
@@ -3088,7 +3088,7 @@ $(document).ready(function() {
 				
 				li.data('action', 'move');
 				li.data('distance', ((direction == 'back')?distance*-1:distance));
-				span.html('Move ' + ((direction == 'back')?'back':'front') + ' ' + distance + 'm');
+				span.html((typeof(textUndockPathMove) != 'undefined' ? textUndockPathMove : 'Move') + ' ' + ((direction == 'back')?(typeof(textUndockPathback) != 'undefined' ? textUndockPathback : 'back'):(typeof(textUndockPathfront) != 'undefined' ? textUndockPathfront : 'front')) + ' ' + distance + 'm');
 			}
 			else if (action == 'rotate') {
 				
@@ -3099,7 +3099,7 @@ $(document).ready(function() {
 				
 				li.data('action', 'rotate');
 				li.data('angle', angle);
-				span.html('Rotate '+angle+'°');
+				span.html((typeof(textUndockPathRotate) != 'undefined' ? textUndockPathRotate : 'Rotate') +' '+angle+'°');
 			}
 		}
     });

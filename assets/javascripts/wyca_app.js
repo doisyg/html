@@ -98,17 +98,17 @@ $(document).ready(function(e) {
 						wycaApi.SetMap(map, function(data){
 							if (data.A == wycaApi.AnswerCode.NO_ERROR)
 							{	
-								success_wyca('Map saved')
+								success_wyca(textMapSaved);
 							}
 							else
 							{
-								alert_wyca('Save map error : ' + wycaApi.AnswerCodeToString(data.A) + '<br>'+ data.M);
+								ParseAPIAnswerError(data,textErrorSaveMap);
 							}							
 						});
 					}
 					else
 					{
-						alert_wyca('Error save image trinary');
+						alert_wyca(textErrorTrinary);
 					}
 									
 					
@@ -118,7 +118,7 @@ $(document).ready(function(e) {
 					var img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
         			img.src = "assets/images/vide.png";
 					
-					alert_wyca('Error get map trinary ; ' + e.responseText);
+					alert_wyca(textErrorTrinary + e.responseText);
 				}
 			});
 		
@@ -208,7 +208,7 @@ $(document).ready(function(e) {
 					}
 					else
 					{
-						alert_wyca('Init map error : ' + wycaApi.AnswerCodeToString(data.A));
+						ParseAPIAnswerError(data,textErrorGetMap);
 					}
 				});
 				
@@ -218,7 +218,7 @@ $(document).ready(function(e) {
 			{
 				$('#wyca_edit_map .bSaveMapTestPoi i').removeClass('fa-check fa-spinner fa-pulse fa-remove');
 				$('#wyca_edit_map .bSaveMapTestPoi i').addClass('fa-remove');
-				alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' + data.M);
+				ParseAPIAnswerError(data,textErrorSetMap);
 			}
 		});
     });
@@ -305,7 +305,7 @@ $(document).ready(function(e) {
 					}
 					else
 					{
-						alert_wyca('Init map error : ' + wycaApi.AnswerCodeToString(data.A));
+						ParseAPIAnswerError(data,textErrorGetMap);
 					}
 				});
 				
@@ -315,7 +315,7 @@ $(document).ready(function(e) {
 			{
 				$('#wyca_edit_map .bSaveMapTestAugmentedPose i').removeClass('fa-check fa-spinner fa-pulse fa-remove');
 				$('#wyca_edit_map .bSaveMapTestAugmentedPose i').addClass('fa-remove');
-				alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' + data.M);
+				ParseAPIAnswerError(data,textErrorSetMap);
 			}
 		});
     });
@@ -400,7 +400,7 @@ $(document).ready(function(e) {
 					}
 					else
 					{
-						alert_wyca('Init map error : ' + wycaApi.AnswerCodeToString(data.A));
+						ParseAPIAnswerError(data,textErrorGetMap);
 					}
 				});
 				
@@ -410,7 +410,7 @@ $(document).ready(function(e) {
 			{
 				$('#wyca_edit_map .bSaveMapTestDock i').removeClass('fa-check fa-spinner fa-pulse fa-remove');
 				$('#wyca_edit_map .bSaveMapTestDock i').addClass('fa-remove');
-				alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' + data.M);
+				ParseAPIAnswerError(data,textErrorSetMap);
 			}
 		});
     });
@@ -420,8 +420,7 @@ $(document).ready(function(e) {
         
 		if (!wycaCanChangeMenu)
 		{
-			alert_wyca('You must confirm the active element');
-			console.log(wycaCurrentAction);
+			alert_wyca(textConfirmActiveElement);
 			$('#bCloseAlertWyca').click(WycaShakeActiveElement());
 		}
 		else
@@ -467,7 +466,7 @@ $(document).ready(function(e) {
 			wycaApi.SetCurrentMapData(data, function(data){
 				if (data.A == wycaApi.AnswerCode.NO_ERROR)
 				{
-					success_wyca("Map saved !");
+					success_wyca(textMapSaved);
 					
 					// On reload la carte pour mettre à jours les ids
 					GetInfosCurrentMapWyca();
@@ -480,7 +479,7 @@ $(document).ready(function(e) {
 				}
 				else
 				{
-					alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' + data.M);
+					ParseAPIAnswerError(data,textErrorSetMap);
 				}
 			});
 		}
@@ -512,7 +511,7 @@ $(document).ready(function(e) {
 		}
 		else
 		{
-			alert_wyca('You must confirm by checking the checkbox');
+			alert_wyca(textConfirmCheckbox);
 		}
 		
     });	
@@ -580,7 +579,7 @@ function WycaInitTrinaryDo()
 		}
 		else
 		{
-			alert_wyca('Init map error : ' + wycaApi.AnswerCodeToString(data.A));
+			ParseAPIAnswerError(data,textErrorGetMap);
 		}
 	});
 }
@@ -787,7 +786,7 @@ $(document).ready(function(e) {
 		
 		wycaApi.SetSiteAsCurrent(id_site, function(data) {
 			if (data.A != wycaApi.AnswerCode.NO_ERROR) 
-				alert_wyca('Error navigation stop ; ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M);
+				ParseAPIAnswerError(data,textErrorNavigationStop);
 			else
 			{
 				GetSitesWyca();
@@ -827,11 +826,11 @@ $(document).ready(function(e) {
 		
 		if ($('#wyca_service_book .modalServiceBook #wyca_service_book_i_service_book_title').val() == "" )
 		{
-			alert_wyca('Title is required');
+			alert_wyca(textTitleRequired);
 		}
 		else if ($('#wyca_service_book .modalServiceBook #wyca_service_book_i_service_book_comment').val() == "" )
 		{
-			alert_wyca('Comment is required');
+			alert_wyca(textCommentRequired);
 		}
 		else
 		{
@@ -1582,7 +1581,7 @@ $(document).ready(function(e) {
 		wycaApi.SetEnergyConfiguration(EBL,MBL, function(data) {
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
-				success_wyca('Saved');
+				success_wyca(textBatteryConfigSaved);
 				GetConfigurationsWyca();
 			}
 			else
@@ -1603,7 +1602,7 @@ $(document).ready(function(e) {
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
 				$('#wyca_recovery .bRecovery').removeClass('disabled');
-				success_wyca('Recovery done !');
+				success_wyca(textRecoveryDone);
 			}
 			else
 			{
@@ -1640,7 +1639,7 @@ $(document).ready(function(e) {
 					window.location.href = app_url; // equivalent window.location.reload()
 			},
 			error: function(e) {
-				alert_wyca('Error set lang ; ' + e.responseText);
+				alert_wyca(textErrorLang + e.responseText);
 			}
 		});
     });
@@ -2203,7 +2202,7 @@ function InitWycaDemoState()
 			}
 			if(need_redirect_demo){
 				
-				warning_wyca('You need to setup actions before launch Demo');
+				warning_wyca(textDemoNeedActions);
 				$('#wyca_demo_mode_start_stop .wyca_demo_mode_start_stop_config').click();
 			}
 		});
@@ -2317,7 +2316,7 @@ function InitWycaDemo()
 							{
 								$('#wyca_demo_mode_config .list_actions').append('' +
 									'<li id="list_all_poi_'+indexLiActions+'" data-index_li="'+indexLiActions+'" data-type="Wait" data-duration="' + element.duration + '">'+
-									'	<span>Wait ' + element.duration + ' secondes</span>'+
+									'	<span>'+(typeof(textDemoWait) != 'undefined' ? textDemoWait : 'Wait' )+' '+ element.duration + ' ' +(typeof(textDemosecondes) != 'undefined' ? textDemosecondes : 'secondes') +'</span>'+
 									'	<a href="#" class="bDeleteToAction btn btn-sm btn-circle btn-warning pull-right" style="margin-left:5px;"><i class="fa fa-times"></i></a>'+
 									'	<a href="#" class="bUpToAction btn btn-sm btn-circle btn-default pull-right" style="margin-left:5px;"><i class="fa fa-chevron-up"></i></a>'+
 									'	<a href="#" class="bDownToAction btn btn-sm btn-circle btn-default pull-right" style="margin-left:5px;"><i class="fa fa-chevron-down"></i></a>'+
@@ -2364,7 +2363,7 @@ function InitWycaDemo()
 				}
 				else
 				{
-					alert_wyca('Init map error : ' + wycaApi.AnswerCodeToString(data.A));
+					ParseAPIAnswerError(data,textErrorGetMap);
 				}
 			});
 		});
@@ -2432,7 +2431,7 @@ $(document).ready(function(e) {
 		{
 			$('#wyca_demo_mode_config .list_actions').append('' +
 					'<li id="list_all_poi_'+indexLiActions+'" data-index_li="'+indexLiActions+'" data-type="Wait" data-duration="' + $('#wyca_demo_mode_config_duration').val() + '">'+
-					'	<span>Wait ' + $('#wyca_demo_mode_config_duration').val() + ' secondes</span>'+
+					'	<span>'+(typeof(textDemoWait) != 'undefined' ? textDemoWait : 'Wait' )+' '+$('#wyca_demo_mode_config_duration').val() + ' ' +(typeof(textDemosecondes) != 'undefined' ? textDemosecondes : 'secondes') +'</span>'+
 					'	<a href="#" class="bDeleteToAction btn btn-sm btn-circle btn-warning pull-right" style="margin-left:5px;"><i class="fa fa-times"></i></a>'+
 					'	<a href="#" class="bUpToAction btn btn-sm btn-circle btn-default pull-right" style="margin-left:5px;"><i class="fa fa-chevron-up"></i></a>'+
 					'	<a href="#" class="bDownToAction btn btn-sm btn-circle btn-default pull-right" style="margin-left:5px;"><i class="fa fa-chevron-down"></i></a>'+
@@ -2523,7 +2522,7 @@ $(document).ready(function(e) {
         e.preventDefault();
 		wycaApi.DoBrowserRestart(true,function(data){
 			if (data.A == wycaApi.AnswerCode.NO_ERROR){
-				success_wyca('Browser Restarted Fullscreen');			
+				success_wyca(textBrowserRestartedFullscreen);			
 			}else{
 				ParseAPIAnswerError(data);
 			}
@@ -2534,7 +2533,7 @@ $(document).ready(function(e) {
         e.preventDefault();
 		wycaApi.DoBrowserRestart(false,function(data){
 			if (data.A == wycaApi.AnswerCode.NO_ERROR){
-				success_wyca('Browser Restarted Windowed');			
+				success_wyca(textBrowserRestartedWindowed);			
 			}else{
 				ParseAPIAnswerError(data);
 			}

@@ -2382,7 +2382,7 @@
 					<h4 style="margin-top:20px;"><?= __('POI list')?></h4>
 					<ul class="list_all_poi list_elem">
 					</ul>
-
+					
 					<h4 style="margin-top:20px;"><?= __('Docking stations list')?></h4>
 					<ul class="list_all_dock list_elem">
 					</ul>
