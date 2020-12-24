@@ -10,12 +10,12 @@ $(document).ready(function(e) {
 		
 	$(document).on('click', '#install_normal_dashboard .bDownloadUserManual', function(e) {
         $('#install_normal_dashboard .bDownloadUserManual').addClass('disabled');
-		
+		//GROUP USER INSTALLATEUR => 2
 		var a = document.createElement("a");
 		document.body.appendChild(a);
 		a.style = "display: none";
 	
-		a.href = 'assets/pdfs/user_manual_'+lang+'.pdf';
+		a.href = 'assets/pdfs/user_manual_2_'+lang+'.pdf';
 		a.download = 'user_manual_'+lang+'.pdf';
 		a.click();		
 		
