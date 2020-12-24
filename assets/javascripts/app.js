@@ -223,7 +223,7 @@ $(document).ready(function(e) {
 					success: function(data) {
 					},
 					error: function(e) {
-						alert_wyca((typeof(textErrorSaveSite) != 'undefined'? textErrorSaveSite : 'Error save site') + e.responseText);
+						alert_wyca((typeof(textErrorSaveSite) != 'undefined'? textErrorSaveSite : 'Error save site') + ' ' + e.responseText);
 					}
 				});
 			}
@@ -239,7 +239,7 @@ $(document).ready(function(e) {
 						success: function(data) {
 						},
 						error: function(e) {
-							alert_wyca((typeof(textErrorSaveSite) != 'undefined'? textErrorSaveSite : 'Error save site') + e.responseText);
+							alert_wyca((typeof(textErrorSaveSite) != 'undefined'? textErrorSaveSite : 'Error save site') + ' ' + e.responseText);
 						}
 					});
 					$('#modalBack').modal('hide');
@@ -2211,9 +2211,9 @@ function ParseAPIAnswerError(data,pre_txt = '' ,post_txt = '')
 		}else{
 			txt = wycaApi.AnswerCodeToString(data.A);
 		}
-		pre_txt = pre_txt == '' ? '' : pre_txt+'<br>';
-		post_txt = post_txt == '' ? '' : '<br>'+post_txt;
-		txt = pre_txt+txt+post_txt;
+		pre_txt  = pre_txt  == '' ? '' : pre_txt + ' <br>';
+		post_txt = post_txt == '' ? '' : '<br> ' + post_txt;
+		txt = pre_txt + txt + post_txt;
 		warning_wyca(txt);
 	}else{
 		if (data.M != ''){
@@ -2224,8 +2224,8 @@ function ParseAPIAnswerError(data,pre_txt = '' ,post_txt = '')
 		}else{
 			txt = wycaApi.AnswerCodeToString(data.A);
 		}
-		pre_txt  = pre_txt == ''  ? '' : pre_txt + '<br>';
-		post_txt = post_txt == '' ? '' : '<br>' + post_txt;
+		pre_txt  = pre_txt  == '' ? '' : pre_txt + ' <br>';
+		post_txt = post_txt == '' ? '' : '<br> ' + post_txt;
 		txt = pre_txt + txt + post_txt;
 		alert_wyca(txt);
 	}

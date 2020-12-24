@@ -933,7 +933,7 @@ $(document).ready(function() {
 			{
 				if (data.A != wycaApi.AnswerCode.NO_ERROR)
 				{
-					ParseAPIAnswerError(data,'Check position error : ');
+					ParseAPIAnswerError(data,textErrorCheckPosition);
 				}
 				else
 				{

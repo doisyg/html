@@ -489,5 +489,11 @@ $_LANG['78c96aa64afd88831f01462151a9f424'] = 'Add new site';
 $_LANG['8e982e27cd7da37d151fe0bbfe7ae9e3'] = 'You can download the application user manual.';
 $_LANG['801ab24683a4a8c433c6eb40c48bcd9d'] = 'Download';
 $_LANG['3c78b35502b2693fefdfc51cba3a53a5'] = 'manual';
+$_LANG['59402770b6f5fb0815cca0db00ae860f'] = 'Error get site';
+$_LANG['cf820f6902419d29decd9f47787e8c3f'] = 'Error set site';
+$_LANG['1a926c0ed85fd9e3ec8bc011aa07436d'] = 'Error stop navigation';
+$_LANG['a98d71965f38b3447b57879dea27e518'] = 'Error get fiducials';
+$_LANG['340a32cd200e0ec9fb7f2871896d3a12'] = 'Error start mapping';
+$_LANG['b662755a87f64ac1e0f7cb8b8c4f9bff'] = 'Error stop mapping';
 
 ?>

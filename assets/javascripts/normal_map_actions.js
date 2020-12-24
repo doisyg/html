@@ -2231,7 +2231,7 @@ $(document).ready(function() {
 			}
 			else
 			{
-				DisplayError(wycaApi.AnswerCodeToString(data.A) + "<br/>" + data.M);
+				ParseAPIAnswerError(data,textErrorGetFiducials);
 			}
 		});
     });
@@ -2308,7 +2308,7 @@ $(document).ready(function() {
 			{
 				if (data.A != wycaApi.AnswerCode.NO_ERROR)
 				{
-					ParseAPIAnswerError(data,'Check position error : ');
+					ParseAPIAnswerError(data,textErrorCheckPosition);
 				}
 				else
 				{
@@ -2614,7 +2614,7 @@ $(document).ready(function() {
 			{
 				if (data.A != wycaApi.AnswerCode.NO_ERROR)
 				{
-					ParseAPIAnswerError(data,'Check position error : ');
+					ParseAPIAnswerError(data,textErrorCheckPosition);
 				}
 				else
 				{
@@ -2898,7 +2898,7 @@ $(document).ready(function() {
 			}
 			else
 			{
-				DisplayError(wycaApi.AnswerCodeToString(data.A) + "<br/>" + data.M);
+				ParseAPIAnswerError(data,textErrorGetFiducials);
 			}
 		});
     });
@@ -2930,7 +2930,7 @@ $(document).ready(function() {
 				{
 					if (data.A != wycaApi.AnswerCode.NO_ERROR)
 					{
-						ParseAPIAnswerError(data,'Check position error : ');
+						ParseAPIAnswerError(data,textErrorCheckPosition);
 					}
 					else
 					{

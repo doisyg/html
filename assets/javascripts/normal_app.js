@@ -46,7 +46,7 @@ $(document).ready(function(e) {
 			else
 			{
 				$('#install_normal_setup_export .bSiteExportElem').removeClass('disabled');
-				ParseAPIAnswerError(data,'Exporting site : ');
+				ParseAPIAnswerError(data,textErrorExportSite);
 			}							
 		});
 		
@@ -133,7 +133,7 @@ $(document).ready(function(e) {
 					var img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
         			img.src = "assets/images/vide.png";
 					
-					alert_wyca(textErrorTrinary + e.responseText);
+					alert_wyca(textErrorTrinary + ' ' + e.responseText);
 				}
 			});
 		
@@ -799,7 +799,7 @@ $(document).ready(function(e) {
 		
 		wycaApi.SetSiteAsCurrent(id_site, function(data) {
 			if (data.A != wycaApi.AnswerCode.NO_ERROR) 
-				ParseAPIAnswerError(data,textErrorNavigationStop);
+				ParseAPIAnswerError(data,textErrorStopNavigation);
 			else
 			{
 				GetSitesNormal();
@@ -1367,10 +1367,10 @@ $(document).ready(function(e) {
 			},
 			error: function(e) {
 				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-					alert_wyca((typeof(textErrorLang) != 'undefined'? textErrorLang : 'Error lang') + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					alert_wyca((typeof(textErrorLang) != 'undefined'? textErrorLang : 'Error lang') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
 					setTimeout(function(){window.location.href = 'logout.php'},3000);
 				}else{
-					alert_wyca((typeof(textErrorLang) != 'undefined'? textErrorLang : 'Error lang') + e.responseText );
+					alert_wyca((typeof(textErrorLang) != 'undefined'? textErrorLang : 'Error lang') + ' ' + e.responseText );
 				}
 			}
 		});

@@ -61,6 +61,8 @@ var textErrorTrinary = "<?php echo __js('Error get map trinary');?>";
 var textErrorImportSite = "<?php echo __js('Error import site');?>";
 var textErrorExportSite = "<?php echo __js('Error export site');?>";
 var textErrorSaveSite = "<?php echo __js('Error save site');?>";
+var textErrorGetSite = "<?php echo __js('Error get site');?>";
+var textErrorSetSite = "<?php echo __js('Error set site');?>";
 var textErrorIDSite = "<?php echo __js('Error in ID site');?>";
 var textErrorMasterDock = "<?php echo __js('Error master dock');?>";
 var textErrorRecovery = "<?php echo __js('Error in recovery');?>";
@@ -76,7 +78,10 @@ var textErrorSetMap = "<?php echo __js('Error set map');?>";
 var textErrorSaveMap = "<?php echo __js('Error save map');?>";
 var textErrorCheckPosition = "<?php echo __js('Error check position');?>";
 var textErrorStartNavigation = "<?php echo __js('Error start navigation');?>";
-var textErrorNavigationStop = "<?php echo __js('Error navigation stop');?>";
+var textErrorStopNavigation = "<?php echo __js('Error stop navigation');?>";
+var textErrorGetFiducials = "<?php echo __js('Error get fiducials');?>";
+var textErrorStartMapping = "<?php echo __js('Error start mapping');?>";
+var textErrorStopMapping = "<?php echo __js('Error stop mapping');?>";
 
 //DEMO MODE
 var textDemoNeedActions = "<?php echo __js('You need to setup actions before launch Demo');?>";

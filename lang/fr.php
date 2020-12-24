@@ -535,5 +535,11 @@ $_LANG['0f68101772bd5397ef8eb1b632798652'] = 'Attente';
 $_LANG['8e982e27cd7da37d151fe0bbfe7ae9e3'] = 'Vous pouvez télécharger le manuel d\'utilisation de l\'application.';
 $_LANG['801ab24683a4a8c433c6eb40c48bcd9d'] = 'Télécharger';
 $_LANG['3c78b35502b2693fefdfc51cba3a53a5'] = 'manuel';
+$_LANG['59402770b6f5fb0815cca0db00ae860f'] = 'Erreur recupération site';
+$_LANG['cf820f6902419d29decd9f47787e8c3f'] = 'Erreur sauvegarde site';
+$_LANG['1a926c0ed85fd9e3ec8bc011aa07436d'] = 'Erreur arrêt navigation';
+$_LANG['a98d71965f38b3447b57879dea27e518'] = 'Erreur recupération réflecteurs';
+$_LANG['340a32cd200e0ec9fb7f2871896d3a12'] = 'Erreur lancement cartographie';
+$_LANG['b662755a87f64ac1e0f7cb8b8c4f9bff'] = 'Erreur arrêt cartographie';
 
 ?>

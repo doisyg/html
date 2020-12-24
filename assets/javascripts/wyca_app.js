@@ -31,7 +31,7 @@ $(document).ready(function(e) {
 			else
 			{
 				$('#wyca_setup_export .bSiteExportElem').removeClass('disabled');
-				ParseAPIAnswerError(data,'Exporting site : ');
+				ParseAPIAnswerError(data,textErrorExportSite);
 			}							
 		});
 		
@@ -118,7 +118,7 @@ $(document).ready(function(e) {
 					var img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
         			img.src = "assets/images/vide.png";
 					
-					alert_wyca(textErrorTrinary + e.responseText);
+					alert_wyca(textErrorTrinary + ' ' + e.responseText);
 				}
 			});
 		
@@ -786,7 +786,7 @@ $(document).ready(function(e) {
 		
 		wycaApi.SetSiteAsCurrent(id_site, function(data) {
 			if (data.A != wycaApi.AnswerCode.NO_ERROR) 
-				ParseAPIAnswerError(data,textErrorNavigationStop);
+				ParseAPIAnswerError(data,textErrorStopNavigation);
 			else
 			{
 				GetSitesWyca();
@@ -1639,7 +1639,7 @@ $(document).ready(function(e) {
 					window.location.href = app_url; // equivalent window.location.reload()
 			},
 			error: function(e) {
-				alert_wyca(textErrorLang + e.responseText);
+				alert_wyca(textErrorLang + ' ' + e.responseText);
 			}
 		});
     });
