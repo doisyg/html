@@ -495,5 +495,7 @@ $_LANG['1a926c0ed85fd9e3ec8bc011aa07436d'] = 'Error stop navigation';
 $_LANG['a98d71965f38b3447b57879dea27e518'] = 'Error get fiducials';
 $_LANG['340a32cd200e0ec9fb7f2871896d3a12'] = 'Error start mapping';
 $_LANG['b662755a87f64ac1e0f7cb8b8c4f9bff'] = 'Error stop mapping';
+$_LANG['c79dcfaf062af43c8eac8d8c67f14830'] = 'Area Sound';
+$_LANG['f0cdd208a20feeff586c3d10be4abf0b'] = 'No sound';
 
 ?>
