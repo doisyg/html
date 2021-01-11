@@ -245,7 +245,7 @@ function ByStepTraceForbidden(indexForbidden)
 				
 				let	pointActiveClass = '';
 				if(typeof(currentPointByStepLongTouch) != 'undefined' && currentPointByStepLongTouch != null){
-					pointActiveClass = indexPoint == currentPointByStepLongTouch.data('index_point') ? ' point_active' : '' ;
+					pointActiveClass = indexPoint == currentPointByStepLongTouch.data('index_point') ? ' editing_point' : '' ;
 				}
 				
 
@@ -425,7 +425,7 @@ function ByStepTraceArea(indexArea)
 				
 				let	pointActiveClass = '';
 				if(typeof(currentPointByStepLongTouch) != 'undefined' && currentPointByStepLongTouch != null){
-					pointActiveClass = indexPoint == currentPointByStepLongTouch.data('index_point') ? ' point_active' : '' ;
+					pointActiveClass = indexPoint == currentPointByStepLongTouch.data('index_point') ? ' editing_point' : '' ;
 				}
 				
 				path = makeSVGElement('rect', { x: x-5, y:y-5, height:10, width:10,
