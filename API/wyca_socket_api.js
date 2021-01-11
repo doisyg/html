@@ -53,7 +53,27 @@ function WycaAPI(options){
 		WRONG_GOAL					: 0x149,
 		CLOSE_FAILURE				: 0x14A,
 		MOVE_BASIC_FAILED           : 0x14B,
-    	GOTOPOSE_FAILED             : 0x14C
+    	GOTOPOSE_FAILED             : 0x14C,
+	
+		ROBOT_TOO_FAR               : 0x14D,
+		UNDOCK_FAIL                 : 0x14E,
+		NO_VALID_CMD                : 0x14F,
+		PAT_EXCEEDED                : 0x150,
+		COLLISION                   : 0x151,
+		OSCILLATION                 : 0x152,
+		ROBOT_STUCK                 : 0x153,
+		MISSED_GOAL                 : 0x154,
+		MISSED_PATH                 : 0x155,
+		BLOCKED_PATH                : 0x156,
+		INVALID_PATH                : 0x157,
+		TF_ERROR                    : 0x158,
+		NOT_INITIALIZED             : 0x159,
+		INVALID_PLUGIN              : 0x15A,
+		INTERNAL_ERROR              : 0x15B,
+		OUT_OF_MAP                  : 0x15C,  // The start and / or the goal are outside the map
+		MAP_ERROR                   : 0x15D,  // The map is not running properly
+		STOPPED                     : 0x15E,  // The controller execution has been stopped rigorously.
+		TARGET_TOO_CLOSE            : 0x15F
 	};
 	
 	// API Commands list
@@ -76,6 +96,8 @@ function WycaAPI(options){
 		INSTALL_NEW_TOP_WITHOUT_KEY			: 0x1106,
 		SET_USE_SEGMENTED_MESSAGE			: 0x110F,
 		DO_BROWSER_RESTART			: 0x1110,
+		
+		GET_CURRENT_AREA_ID			: 0x012B,
 	 
 		CANCEL_CURRENT_ACTION			: 0x1103,
 	 
@@ -122,6 +144,9 @@ function WycaAPI(options){
 		GET_PATH			: 0x0115,
 		GET_PATH_FROM_CURRENT_POSE			: 0x0116,
 		GET_MOVE_IN_PROGRESS			: 0x011F,
+		
+		SOUND_PLAY		: 0x8101,
+		SOUND_STOP		: 0x8102,
 	 
 	// Services DB
 		CHECK_USER_KEY			: 0x6109,
@@ -253,6 +278,7 @@ function WycaAPI(options){
 		MOVE_IN_PROGRESS			: 0x0015,
 		LIDAR_DATA			: 0x3007,
 		MAP_UPDATED			: 0x0018,
+		CURRENT_AREA_ID			: 0x001F,
 	 
 	// Actions
 		MAPPING_START_FEEDBACK			: 0x4004,
@@ -284,6 +310,13 @@ function WycaAPI(options){
 		GO_TO_AUGMENTED_POSE_FEEDBACK	: 0x001D,
 		GO_TO_AUGMENTED_POSE_RESULT		: 0x001E
 	 
+	};
+
+	this.SOUND = {
+		ALERT 		: 1,
+		HORN		: 2,
+		REVERSE 	: 3,
+		SUCCESS 	: 4
 	};
 
 	this.ROBOT_STATE = {
@@ -1169,6 +1202,9 @@ function WycaAPI(options){
 						case this.EventCode.NAVIGATION_ROBOT_POSE:
 							if (_this.options.onNavigationRobotPose != undefined) { _this.options.onNavigationRobotPose(msg.D.D); }
 							break;
+						case this.EventCode.CURRENT_AREA_ID:
+							if (_this.options.onCurrentAreaId != undefined) { _this.options.onCurrentAreaId(msg.D.D); }
+							break;
 						case this.EventCode.IS_FREEWHEEL:
 							if (_this.options.onIsFreewheel != undefined) { _this.options.onIsFreewheel(msg.D.D); }
 							break;
@@ -1338,6 +1374,9 @@ function WycaAPI(options){
 				case this.EventCode.NAVIGATION_ROBOT_POSE:
 					if (_this.options.onNavigationRobotPose != undefined) { _this.options.onNavigationRobotPose(msg.D); }
 					break;
+				case this.EventCode.CURRENT_AREA_ID:
+					if (_this.options.onCurrentAreaId != undefined) { _this.options.onCurrentAreaId(msg.D); }
+					break;
 				case this.EventCode.IS_FREEWHEEL:
 					if (_this.options.onIsFreewheel != undefined) { _this.options.onIsFreewheel(msg.D); }
 					break;
@@ -1423,48 +1462,69 @@ function WycaAPI(options){
 			{
 				case _this.AnswerCode.NO_ERROR : return typeof(textAPIAnswerCode.NO_ERROR) != 'undefined' ? textAPIAnswerCodeNO_ERROR : 'No error'; break;
 				case _this.AnswerCode.FORMAT_ERROR_MISSING_DATA : return typeof(textAPIAnswerCode.FORMAT_ERROR_MISSING_DATA) != 'undefined' ? textAPIAnswerCode.FORMAT_ERROR_MISSING_DATA : 'Format error ; missing data'; break;
-				case _this.AnswerCode.FORMAT_ERROR_INVALID_DATA : return typeof(textAPIAnswerCode.FORMAT_ERROR_INVALID_DATA) != 'undefined' ? textAPIAnswerCode.FORMAT_ERROR_INVALID_DATA : 'Format error ; invalid data' ; break; 
-				case _this.AnswerCode.NOT_ALLOW : return typeof(textAPIAnswerCode.NOT_ALLOW) != 'undefined' ? textAPIAnswerCode.NOT_ALLOW : 'Not allow' ; break;
-				case _this.AnswerCode.COULD_NOT_PARSE_JSON : return typeof(textAPIAnswerCode.COULD_NOT_PARSE_JSON) != 'undefined' ? textAPIAnswerCode.COULD_NOT_PARSE_JSON : 'Could not parse JSON' ; break; 
-				case _this.AnswerCode.UNKNOW_API_OPERATION : return typeof(textAPIAnswerCode.UNKNOW_API_OPERATION) != 'undefined' ? textAPIAnswerCode.UNKNOW_API_OPERATION : 'Unknow API operation' ; break;
-				case _this.AnswerCode.NOT_IMPLEMENTED : return typeof(textAPIAnswerCode.NOT_IMPLEMENTED) != 'undefined' ? textAPIAnswerCode.NOT_IMPLEMENTED : 'Not implemented' ; break;
-				case _this.AnswerCode.INVALID_ID : return typeof(textAPIAnswerCode.INVALID_ID) != 'undefined' ? textAPIAnswerCode.INVALID_ID : 'Invalid ID' ; break;
-				case _this.AnswerCode.INVALID_FILE : return typeof(textAPIAnswerCode.INVALID_FILE) != 'undefined' ? textAPIAnswerCode.INVALID_FILE : 'Invalid file' ; break;
-				case _this.AnswerCode.INVALID_KEY : return typeof(textAPIAnswerCode.INVALID_KEY) != 'undefined' ? textAPIAnswerCode.INVALID_KEY : 'Invalid key' ; break;
-				case _this.AnswerCode.EMAIL_ALREADY_USED : return typeof(textAPIAnswerCode.EMAIL_ALREADY_USED) != 'undefined' ? textAPIAnswerCode.EMAIL_ALREADY_USED : 'Email already used' ; break;
-				case _this.AnswerCode.DETAILS_IN_MESSAGE : return typeof(textAPIAnswerCode.DETAILS_IN_MESSAGE) != 'undefined' ? textAPIAnswerCode.DETAILS_IN_MESSAGE : 'Details in message' ; break;
-				case _this.AnswerCode.AUTH_KO : return typeof(textAPIAnswerCode.AUTH_KO) != 'undefined' ? textAPIAnswerCode.AUTH_KO : 'Auth KO' ; break;
-				case _this.AnswerCode.AUTH_NEEDED : return typeof(textAPIAnswerCode.AUTH_NEEDED) != 'undefined' ? textAPIAnswerCode.AUTH_NEEDED : 'Auth needed' ; break;
-				case _this.AnswerCode.NO_ACTION_IN_PROGRESS : return typeof(textAPIAnswerCode.NO_ACTION_IN_PROGRESS) != 'undefined' ? textAPIAnswerCode.NO_ACTION_IN_PROGRESS : 'No action in progress' ; break;
-				case _this.AnswerCode.ACTION_ALREADY_STARTED : return typeof(textAPIAnswerCode.ACTION_ALREADY_STARTED) != 'undefined' ? textAPIAnswerCode.ACTION_ALREADY_STARTED : 'Action already started' ; break;
+				case _this.AnswerCode.FORMAT_ERROR_INVALID_DATA : return typeof(textAPIAnswerCode.FORMAT_ERROR_INVALID_DATA) != 'undefined' ? textAPIAnswerCode.FORMAT_ERROR_INVALID_DATA : 'Format error ; invalid data'; break; 
+				case _this.AnswerCode.NOT_ALLOW : return typeof(textAPIAnswerCode.NOT_ALLOW) != 'undefined' ? textAPIAnswerCode.NOT_ALLOW : 'Not allow'; break;
+				case _this.AnswerCode.COULD_NOT_PARSE_JSON : return typeof(textAPIAnswerCode.COULD_NOT_PARSE_JSON) != 'undefined' ? textAPIAnswerCode.COULD_NOT_PARSE_JSON : 'Could not parse JSON'; break; 
+				case _this.AnswerCode.UNKNOW_API_OPERATION : return typeof(textAPIAnswerCode.UNKNOW_API_OPERATION) != 'undefined' ? textAPIAnswerCode.UNKNOW_API_OPERATION : 'Unknow API operation'; break;
+				case _this.AnswerCode.NOT_IMPLEMENTED : return typeof(textAPIAnswerCode.NOT_IMPLEMENTED) != 'undefined' ? textAPIAnswerCode.NOT_IMPLEMENTED : 'Not implemented'; break;
+				case _this.AnswerCode.INVALID_ID : return typeof(textAPIAnswerCode.INVALID_ID) != 'undefined' ? textAPIAnswerCode.INVALID_ID : 'Invalid ID'; break;
+				case _this.AnswerCode.INVALID_FILE : return typeof(textAPIAnswerCode.INVALID_FILE) != 'undefined' ? textAPIAnswerCode.INVALID_FILE : 'Invalid file'; break;
+				case _this.AnswerCode.INVALID_KEY : return typeof(textAPIAnswerCode.INVALID_KEY) != 'undefined' ? textAPIAnswerCode.INVALID_KEY : 'Invalid key'; break;
+				case _this.AnswerCode.EMAIL_ALREADY_USED : return typeof(textAPIAnswerCode.EMAIL_ALREADY_USED) != 'undefined' ? textAPIAnswerCode.EMAIL_ALREADY_USED : 'Email already used'; break;
+				case _this.AnswerCode.DETAILS_IN_MESSAGE : return typeof(textAPIAnswerCode.DETAILS_IN_MESSAGE) != 'undefined' ? textAPIAnswerCode.DETAILS_IN_MESSAGE : 'Details in message'; break;
+				case _this.AnswerCode.AUTH_KO : return typeof(textAPIAnswerCode.AUTH_KO) != 'undefined' ? textAPIAnswerCode.AUTH_KO : 'Auth KO'; break;
+				case _this.AnswerCode.AUTH_NEEDED : return typeof(textAPIAnswerCode.AUTH_NEEDED) != 'undefined' ? textAPIAnswerCode.AUTH_NEEDED : 'Auth needed'; break;
+				case _this.AnswerCode.NO_ACTION_IN_PROGRESS : return typeof(textAPIAnswerCode.NO_ACTION_IN_PROGRESS) != 'undefined' ? textAPIAnswerCode.NO_ACTION_IN_PROGRESS : 'No action in progress'; break;
+				case _this.AnswerCode.ACTION_ALREADY_STARTED : return typeof(textAPIAnswerCode.ACTION_ALREADY_STARTED) != 'undefined' ? textAPIAnswerCode.ACTION_ALREADY_STARTED : 'Action already started'; break;
 				case _this.AnswerCode.CANCELED : return typeof(textAPIAnswerCodeCANCELED) != 'undefined' ? textAPIAnswerCodeCANCELED : 'Action canceled'; break;
-				case _this.AnswerCode.SERVICE_UNAVAILABLE : return typeof(textAPIAnswerCode.SERVICE_UNAVAILABLE) != 'undefined' ? textAPIAnswerCode.SERVICE_UNAVAILABLE : 'Service unvailable' ; break;
-				case _this.AnswerCode.BATTERY_TOO_LOW : return typeof(textAPIAnswerCode.BATTERY_TOO_LOW) != 'undefined' ? textAPIAnswerCode.BATTERY_TOO_LOW : 'Battery too low' ; break;	
-				case _this.AnswerCode.NAVIGATION_IS_NOT_STARTED : return typeof(textAPIAnswerCode.NAVIGATION_IS_NOT_STARTED) != 'undefined' ? textAPIAnswerCode.NAVIGATION_IS_NOT_STARTED : 'Navigation is not started' ; break;
-				case _this.AnswerCode.NAVIGATION_IS_ACTIVE : return typeof(textAPIAnswerCode.NAVIGATION_IS_ACTIVE) != 'undefined' ? textAPIAnswerCode.NAVIGATION_IS_ACTIVE : 'Navigation is active and block current operation' ; break;
-				case _this.AnswerCode.MAPPING_IS_NOT_STARTED : return typeof(textAPIAnswerCode.MAPPING_IS_NOT_STARTED) != 'undefined' ? textAPIAnswerCode.MAPPING_IS_NOT_STARTED : 'Mapping is not started' ; break;
-				case _this.AnswerCode.MAPPING_IS_ACTIVE : return typeof(textAPIAnswerCode.MAPPING_IS_ACTIVE) != 'undefined' ? textAPIAnswerCode.MAPPING_IS_ACTIVE : 'Mapping is active and block current operation' ; break;
-				case _this.AnswerCode.MAP_NOT_IN_SITE : return typeof(textAPIAnswerCode.MAP_NOT_IN_SITE) != 'undefined' ? textAPIAnswerCode.MAP_NOT_IN_SITE	 : 'Map not in current site' ; break;
-				case _this.AnswerCode.UNDOCKING : return typeof(textAPIAnswerCode.UNDOCKING) != 'undefined' ? textAPIAnswerCode.UNDOCKING : 'Robot trying to undock' ; break; // Robot trying to undock
-				case _this.AnswerCode.DOCKED : return typeof(textAPIAnswerCode.DOCKED) != 'undefined' ? textAPIAnswerCode.DOCKED : 'Robot is docked' ; break; // Robot is docked
-				case _this.AnswerCode.NO_DOCK : return typeof(textAPIAnswerCode.NO_DOCK) != 'undefined' ? textAPIAnswerCode.NO_DOCK : 'No dock detected' ; break; // No dock detected
-				case _this.AnswerCode.NOT_DOCKABLE : return typeof(textAPIAnswerCode.NOT_DOCKABLE) != 'undefined' ? textAPIAnswerCode.NOT_DOCKABLE : 'The robot is not dockable (bad position)' ; break; // The robot is not dockable (bad position)
-				case _this.AnswerCode.MOVE_FAILED : return typeof(textAPIAnswerCode.MOVE_FAILED) != 'undefined' ? textAPIAnswerCode.MOVE_FAILED : 'Moving step failed' ; break; // Moving step failed
-				case _this.AnswerCode.NO_DOCKING_STATION : return typeof(textAPIAnswerCode.NO_DOCKING_STATION) != 'undefined' ? textAPIAnswerCode.NO_DOCKING_STATION : 'No docking station' ; break; 
-				case _this.AnswerCode.INVALID_START_POSE : return typeof(textAPIAnswerCode.INVALID_START_POSE) != 'undefined' ? textAPIAnswerCode.INVALID_START_POSE : 'Invalid start position' ; break;
-				case _this.AnswerCode.NO_VALID_GLOBAL_PATH : return typeof(textAPIAnswerCode.NO_VALID_GLOBAL_PATH) != 'undefined' ? textAPIAnswerCode.NO_VALID_GLOBAL_PATH : 'No valid global path' ; break;
-				case _this.AnswerCode.INVALID_TARGET_POSE : return typeof(textAPIAnswerCode.INVALID_TARGET_POSE) != 'undefined' ? textAPIAnswerCode.INVALID_TARGET_POSE : 'Invalid target position' ; break;
-				case _this.AnswerCode.OBSTACLE_FAIL : return typeof(textAPIAnswerCode.OBSTACLE_FAIL) != 'undefined' ? textAPIAnswerCode.OBSTACLE_FAIL : 'Obstacle fail' ; break;
-				case _this.AnswerCode.WRONG_UNDOCK_PATH : return typeof(textAPIAnswerCode.WRONG_UNDOCK_PATH) != 'undefined' ? textAPIAnswerCode.WRONG_UNDOCK_PATH : 'Wrong undock path' ; break; 
-				case _this.AnswerCode.UNKNOW_REFLECTOR : return typeof(textAPIAnswerCode.UNKNOW_REFLECTOR) != 'undefined' ? textAPIAnswerCode.UNKNOW_REFLECTOR : 'Unknow reflector for the current map' ; break;
-				case _this.AnswerCode.NO_REFLECTOR_DETECTED : return typeof(textAPIAnswerCode.UNKNOW_REFLECTOR) != 'undefined' ? textAPIAnswerCode.UNKNOW_REFLECTOR : 'No reflector detected around the robot' ; break;
-				case _this.AnswerCode.DOCKING : return typeof(textAPIAnswerCode.DOCKING) != 'undefined' ? textAPIAnswerCode.DOCKING : 'Robot trying to dock' ; break;// Robot trying to dock
-				case _this.AnswerCode.UNDOCKED : return typeof(textAPIAnswerCode.UNDOCKED) != 'undefined' ? textAPIAnswerCode.UNDOCKED : 'Robot is undocked' ; break; // Robot is undocked
-				case _this.AnswerCode.WRONG_GOAL : return typeof(textAPIAnswerCode.WRONG_GOAL) != 'undefined' ? textAPIAnswerCode.WRONG_GOAL : 'Wrong goal: Fiducial type and id must be defined' ; break;
-				case _this.AnswerCode.CLOSE_FAILURE : return typeof(textAPIAnswerCode.CLOSE_FAILURE) != 'undefined' ? textAPIAnswerCode.CLOSE_FAILURE : 'Dock fail too close to dock' ; break;
-				case _this.AnswerCode.MOVE_BASIC_FAILED : return typeof(textAPIAnswerCode.MOVE_BASIC_FAILED) != 'undefined' ? textAPIAnswerCode.MOVE_BASIC_FAILED : 'Move basic action failed' ; break;
-				case _this.AnswerCode.GOTOPOSE_FAILED : return typeof(textAPIAnswerCode.GOTOPOSE_FAILED) != 'undefined' ? textAPIAnswerCode.GOTOPOSE_FAILED : 'Go to pose action failed' ; break; 
-				default: return typeof(textAPIAnswerCode.DEFAULT) != 'undefined' ? textAPIAnswerCode.DEFAULT  : 'Unknown error code' ; 
+				case _this.AnswerCode.SERVICE_UNAVAILABLE : return typeof(textAPIAnswerCode.SERVICE_UNAVAILABLE) != 'undefined' ? textAPIAnswerCode.SERVICE_UNAVAILABLE : 'Service unvailable'; break;
+				case _this.AnswerCode.BATTERY_TOO_LOW : return typeof(textAPIAnswerCode.BATTERY_TOO_LOW) != 'undefined' ? textAPIAnswerCode.BATTERY_TOO_LOW : 'Battery too low'; break;	
+				case _this.AnswerCode.NAVIGATION_IS_NOT_STARTED : return typeof(textAPIAnswerCode.NAVIGATION_IS_NOT_STARTED) != 'undefined' ? textAPIAnswerCode.NAVIGATION_IS_NOT_STARTED : 'Navigation is not started'; break;
+				case _this.AnswerCode.NAVIGATION_IS_ACTIVE : return typeof(textAPIAnswerCode.NAVIGATION_IS_ACTIVE) != 'undefined' ? textAPIAnswerCode.NAVIGATION_IS_ACTIVE : 'Navigation is active and block current operation'; break;
+				case _this.AnswerCode.MAPPING_IS_NOT_STARTED : return typeof(textAPIAnswerCode.MAPPING_IS_NOT_STARTED) != 'undefined' ? textAPIAnswerCode.MAPPING_IS_NOT_STARTED : 'Mapping is not started'; break;
+				case _this.AnswerCode.MAPPING_IS_ACTIVE : return typeof(textAPIAnswerCode.MAPPING_IS_ACTIVE) != 'undefined' ? textAPIAnswerCode.MAPPING_IS_ACTIVE : 'Mapping is active and block current operation'; break;
+				case _this.AnswerCode.MAP_NOT_IN_SITE : return typeof(textAPIAnswerCode.MAP_NOT_IN_SITE) != 'undefined' ? textAPIAnswerCode.MAP_NOT_IN_SITE	 : 'Map not in current site'; break;
+				case _this.AnswerCode.UNDOCKING : return typeof(textAPIAnswerCode.UNDOCKING) != 'undefined' ? textAPIAnswerCode.UNDOCKING : 'Robot trying to undock'; break; // Robot trying to undock
+				case _this.AnswerCode.DOCKED : return typeof(textAPIAnswerCode.DOCKED) != 'undefined' ? textAPIAnswerCode.DOCKED : 'Robot is docked'; break; // Robot is docked
+				case _this.AnswerCode.NO_DOCK : return typeof(textAPIAnswerCode.NO_DOCK) != 'undefined' ? textAPIAnswerCode.NO_DOCK : 'No dock detected'; break; // No dock detected
+				case _this.AnswerCode.NOT_DOCKABLE : return typeof(textAPIAnswerCode.NOT_DOCKABLE) != 'undefined' ? textAPIAnswerCode.NOT_DOCKABLE : 'The robot is not dockable (bad position)'; break; // The robot is not dockable (bad position)
+				case _this.AnswerCode.MOVE_FAILED : return typeof(textAPIAnswerCode.MOVE_FAILED) != 'undefined' ? textAPIAnswerCode.MOVE_FAILED : 'Moving step failed'; break; // Moving step failed
+				case _this.AnswerCode.NO_DOCKING_STATION : return typeof(textAPIAnswerCode.NO_DOCKING_STATION) != 'undefined' ? textAPIAnswerCode.NO_DOCKING_STATION : 'No docking station'; break; 
+				case _this.AnswerCode.INVALID_START_POSE : return typeof(textAPIAnswerCode.INVALID_START_POSE) != 'undefined' ? textAPIAnswerCode.INVALID_START_POSE : 'Invalid start position'; break;
+				case _this.AnswerCode.NO_VALID_GLOBAL_PATH : return typeof(textAPIAnswerCode.NO_VALID_GLOBAL_PATH) != 'undefined' ? textAPIAnswerCode.NO_VALID_GLOBAL_PATH : 'No valid global path'; break;
+				case _this.AnswerCode.INVALID_TARGET_POSE : return typeof(textAPIAnswerCode.INVALID_TARGET_POSE) != 'undefined' ? textAPIAnswerCode.INVALID_TARGET_POSE : 'Invalid target position'; break;
+				case _this.AnswerCode.OBSTACLE_FAIL : return typeof(textAPIAnswerCode.OBSTACLE_FAIL) != 'undefined' ? textAPIAnswerCode.OBSTACLE_FAIL : 'Obstacle fail'; break;
+				case _this.AnswerCode.WRONG_UNDOCK_PATH : return typeof(textAPIAnswerCode.WRONG_UNDOCK_PATH) != 'undefined' ? textAPIAnswerCode.WRONG_UNDOCK_PATH : 'Wrong undock path'; break; 
+				case _this.AnswerCode.UNKNOW_REFLECTOR : return typeof(textAPIAnswerCode.UNKNOW_REFLECTOR) != 'undefined' ? textAPIAnswerCode.UNKNOW_REFLECTOR : 'Unknow reflector for the current map'; break;
+				case _this.AnswerCode.NO_REFLECTOR_DETECTED : return typeof(textAPIAnswerCode.UNKNOW_REFLECTOR) != 'undefined' ? textAPIAnswerCode.UNKNOW_REFLECTOR : 'No reflector detected around the robot'; break;
+				case _this.AnswerCode.DOCKING : return typeof(textAPIAnswerCode.DOCKING) != 'undefined' ? textAPIAnswerCode.DOCKING : 'Robot trying to dock'; break;// Robot trying to dock
+				case _this.AnswerCode.UNDOCKED : return typeof(textAPIAnswerCode.UNDOCKED) != 'undefined' ? textAPIAnswerCode.UNDOCKED : 'Robot is undocked'; break; // Robot is undocked
+				case _this.AnswerCode.WRONG_GOAL : return typeof(textAPIAnswerCode.WRONG_GOAL) != 'undefined' ? textAPIAnswerCode.WRONG_GOAL : 'Wrong goal: Fiducial type and id must be defined'; break;
+				case _this.AnswerCode.CLOSE_FAILURE : return typeof(textAPIAnswerCode.CLOSE_FAILURE) != 'undefined' ? textAPIAnswerCode.CLOSE_FAILURE : 'Dock fail too close to dock'; break;
+				case _this.AnswerCode.MOVE_BASIC_FAILED : return typeof(textAPIAnswerCode.MOVE_BASIC_FAILED) != 'undefined' ? textAPIAnswerCode.MOVE_BASIC_FAILED : 'Move basic action failed'; break;
+				case _this.AnswerCode.GOTOPOSE_FAILED : return typeof(textAPIAnswerCode.GOTOPOSE_FAILED) != 'undefined' ? textAPIAnswerCode.GOTOPOSE_FAILED : 'Go to pose action failed'; break; 
+				
+				case _this.AnswerCode.ROBOT_TOO_FAR : return typeof(textAPIAnswerCode.ROBOT_TOO_FAR) != 'undefined' ? textAPIAnswerCode.ROBOT_TOO_FAR : 'Robot too far'; break; 
+				case _this.AnswerCode.UNDOCK_FAIL : return typeof(textAPIAnswerCode.UNDOCK_FAIL) != 'undefined' ? textAPIAnswerCode.UNDOCK_FAIL : 'Undock failed'; break; 
+				case _this.AnswerCode.NO_VALID_CMD : return typeof(textAPIAnswerCode.NO_VALID_CMD) != 'undefined' ? textAPIAnswerCode.NO_VALID_CMD : 'No valid command'; break; 
+				case _this.AnswerCode.PAT_EXCEEDED : return typeof(textAPIAnswerCode.PAT_EXCEEDED) != 'undefined' ? textAPIAnswerCode.PAT_EXCEEDED : 'PAT Exceeded'; break; 
+				case _this.AnswerCode.COLLISION : return typeof(textAPIAnswerCode.COLLISION) != 'undefined' ? textAPIAnswerCode.COLLISION : 'Collision'; break; 
+				case _this.AnswerCode.OSCILLATION : return typeof(textAPIAnswerCode.OSCILLATION) != 'undefined' ? textAPIAnswerCode.OSCILLATION : 'Oscillation'; break; 
+				case _this.AnswerCode.ROBOT_STUCK : return typeof(textAPIAnswerCode.ROBOT_STUCK) != 'undefined' ? textAPIAnswerCode.ROBOT_STUCK : 'Robot stuck'; break; 
+				case _this.AnswerCode.MISSED_GOAL : return typeof(textAPIAnswerCode.MISSED_GOAL) != 'undefined' ? textAPIAnswerCode.MISSED_GOAL : 'Missed goal'; break; 
+				case _this.AnswerCode.MISSED_PATH : return typeof(textAPIAnswerCode.MISSED_PATH) != 'undefined' ? textAPIAnswerCode.MISSED_PATH : 'Missed path'; break; 
+				case _this.AnswerCode.BLOCKED_PATH : return typeof(textAPIAnswerCode.BLOCKED_PATH) != 'undefined' ? textAPIAnswerCode.BLOCKED_PATH : 'Blocked path'; break; 
+				case _this.AnswerCode.INVALID_PATH : return typeof(textAPIAnswerCode.INVALID_PATH) != 'undefined' ? textAPIAnswerCode.INVALID_PATH : 'Invalid path'; break; 
+				case _this.AnswerCode.TF_ERROR : return typeof(textAPIAnswerCode.TF_ERROR) != 'undefined' ? textAPIAnswerCode.TF_ERROR : 'TF error'; break; 
+				case _this.AnswerCode.NOT_INITIALIZED : return typeof(textAPIAnswerCode.NOT_INITIALIZED) != 'undefined' ? textAPIAnswerCode.NOT_INITIALIZED : 'Not initialized'; break; 
+				case _this.AnswerCode.INVALID_PLUGIN : return typeof(textAPIAnswerCode.INVALID_PLUGIN) != 'undefined' ? textAPIAnswerCode.INVALID_PLUGIN : 'Invalid plugin'; break; 
+				case _this.AnswerCode.INTERNAL_ERROR : return typeof(textAPIAnswerCode.INTERNAL_ERROR) != 'undefined' ? textAPIAnswerCode.INTERNAL_ERROR : 'Internal error'; break; 
+				case _this.AnswerCode.OUT_OF_MAP : return typeof(textAPIAnswerCode.OUT_OF_MAP) != 'undefined' ? textAPIAnswerCode.OUT_OF_MAP : 'The start and / or the goal are outside the map'; break; 
+				case _this.AnswerCode.MAP_ERROR : return typeof(textAPIAnswerCode.MAP_ERROR) != 'undefined' ? textAPIAnswerCode.MAP_ERROR : 'The map is not running properly'; break;
+				case _this.AnswerCode.STOPPED : return typeof(textAPIAnswerCode.STOPPED) != 'undefined' ? textAPIAnswerCode.STOPPED : 'The controller execution has been stopped rigorously.'; break;
+				case _this.AnswerCode.TARGET_TOO_CLOSE : return typeof(textAPIAnswerCode.TARGET_TOO_CLOSE) != 'undefined' ? textAPIAnswerCode.TARGET_TOO_CLOSE : 'Target too close'; break;
+				
+				default: return typeof(textAPIAnswerCode.DEFAULT) != 'undefined' ? textAPIAnswerCode.DEFAULT  : 'Unknown error code'; 
 			}
 		}else{
 			switch(ac)
@@ -1512,6 +1572,26 @@ function WycaAPI(options){
 				case _this.AnswerCode.CLOSE_FAILURE : return 'Dock fail too close to dock'; break;
 				case _this.AnswerCode.MOVE_BASIC_FAILED : return 'Move basic action failed'; break;
 				case _this.AnswerCode.GOTOPOSE_FAILED : return 'Go to pose action failed'; break;
+				
+				case _this.AnswerCode.ROBOT_TOO_FAR : return 'Robot too far'; break; 
+				case _this.AnswerCode.UNDOCK_FAIL : return 'Undock failed'; break; 
+				case _this.AnswerCode.NO_VALID_CMD : return  'No valid command'; break; 
+				case _this.AnswerCode.PAT_EXCEEDED : return 'PAT Exceeded'; break; 
+				case _this.AnswerCode.COLLISION : return 'Collision'; break; 
+				case _this.AnswerCode.OSCILLATION : return 'Oscillation'; break; 
+				case _this.AnswerCode.ROBOT_STUCK : return 'Robot stuck'; break; 
+				case _this.AnswerCode.MISSED_GOAL : return 'Missed goal'; break; 
+				case _this.AnswerCode.MISSED_PATH : return 'Missed path'; break; 
+				case _this.AnswerCode.BLOCKED_PATH : return 'Blocked path'; break; 
+				case _this.AnswerCode.INVALID_PATH : return 'Invalid path'; break; 
+				case _this.AnswerCode.TF_ERROR : return 'TF error'; break; 
+				case _this.AnswerCode.NOT_INITIALIZED : return 'Not initialized'; break; 
+				case _this.AnswerCode.INVALID_PLUGIN : return  'Invalid plugin'; break; 
+				case _this.AnswerCode.INTERNAL_ERROR : return 'Internal error'; break; 
+				case _this.AnswerCode.OUT_OF_MAP : return 'The start and / or the goal are outside the map'; break; 
+				case _this.AnswerCode.MAP_ERROR : return 'The map is not running properly'; break;
+				case _this.AnswerCode.STOPPED : return 'The controller execution has been stopped rigorously.'; break;
+				case _this.AnswerCode.TARGET_TOO_CLOSE : return 'Target too close'; break;
 				default: return 'Unknow error code';
 			}
 		}
@@ -1532,6 +1612,7 @@ function WycaAPI(options){
 		if (_this.options.onMappingRobotPoseInBuildingMap != undefined) { var n=_this.EventCode.MAPPING_ROBOT_POSE_CURRENT_MAP; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onNavigationIsStarted != undefined) { var n=_this.EventCode.NAVIGATION_IS_STARTED; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onNavigationRobotPose != undefined) { var n=_this.EventCode.NAVIGATION_ROBOT_POSE; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
+		if (_this.options.onCurrentAreaId != undefined) { var n=_this.EventCode.CURRENT_AREA_ID; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onIsFreewheel != undefined) { var n=_this.EventCode.IS_FREEWHEEL; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onIsSafetyStop != undefined) { var n=_this.EventCode.IS_SAFETY_STOP; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onLidarData != undefined) { var n=_this.EventCode.LIDAR_DATA; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
@@ -1569,6 +1650,7 @@ function WycaAPI(options){
 			case 'onMappingRobotPoseInBuildingMap': ev_code = _this.EventCode.MAPPING_ROBOT_POSE_CURRENT_MAP; break;
 			case 'onNavigationIsStarted': ev_code = _this.EventCode.NAVIGATION_IS_STARTED; break;
 			case 'onNavigationRobotPose': ev_code = _this.EventCode.NAVIGATION_ROBOT_POSE; break;
+			case 'onCurrentAreaId': ev_code = _this.EventCode.CURRENT_AREA_ID; break;
 			case 'onIsFreewheel': ev_code = _this.EventCode.IS_FREEWHEEL; break;
 			case 'onIsSafetyStop': ev_code = _this.EventCode.IS_SAFETY_STOP; break;
 			case 'onLidarData': ev_code = _this.EventCode.LIDAR_DATA; break;
@@ -1644,6 +1726,7 @@ function WycaAPI(options){
 			case 'onMappingRobotPoseInBuildingMap': ev_code = _this.CommandCode.MAPPING_ROBOT_POSE_CURRENT_MAP; break;
 			case 'onNavigationIsStarted': ev_code = _this.CommandCode.NAVIGATION_IS_STARTED; break;
 			case 'onNavigationRobotPose': ev_code = _this.CommandCode.NAVIGATION_ROBOT_POSE; break;
+			case 'onCurrentAreaId': ev_code = _this.CommandCode.CURRENT_AREA_ID; break;
 			case 'onIsFreewheel': ev_code = _this.CommandCode.IS_FREEWHEEL; break;
 			case 'onIsSafetyStop': ev_code = _this.CommandCode.IS_SAFETY_STOP; break;
 			case 'onLidarData': ev_code = _this.CommandCode.LIDAR_DATA; break;
@@ -1766,6 +1849,14 @@ function WycaAPI(options){
 		var action = {
 			"O": _this.CommandCode.DO_BROWSER_RESTART,
 			"P": in_kiosk_mode
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	this.GetCurrentAreaId  = function(callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.GET_CURRENT_AREA_ID] = callback;
+		var action = {
+			"O": _this.CommandCode.GET_CURRENT_AREA_ID
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
@@ -1983,6 +2074,28 @@ function WycaAPI(options){
 			this.callbacks[_this.CommandCode.GET_MOVE_IN_PROGRESS] = callback;
 		var action = {
 			"O": _this.CommandCode.GET_MOVE_IN_PROGRESS
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	
+	
+	this.PlaySound  = function(sound, nb_loops, callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.SOUND_PLAY] = callback;
+		var action = {
+			"O": _this.CommandCode.SOUND_PLAY,
+			"P":{
+				"S":sound,
+				"N":nb_loops
+			}
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	this.StopSound  = function(callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.SOUND_STOP] = callback;
+		var action = {
+			"O": _this.CommandCode.SOUND_STOP
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
