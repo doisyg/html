@@ -67,3 +67,10 @@ svg#user_edit_map_svg_clone .movable.active { display:none !important; }
 .augmented_pose_elem_circle.active{
     stroke: #CC0000;
 }
+.go_to_pose_elem{
+    stroke: orangered;
+    fill: transparent;
+    stroke-width: 1.5px;
+}
+.go_to_pose_elem_line{
+}

@@ -11,10 +11,19 @@
                 <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="manager_move" href="#"><i class="fa fa-gamepad"></i><?php echo __('Control robot');?></a></li>
                 <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="manager_recovery" href="#"><i class="fa fa-search"></i><?php echo __('Recovery');?></a></li>
                 <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="manager_top" href="#"><i class="fa fa-refresh"></i><?php echo __('Change top');?></a></li>
-                <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5" data-goto="manager_users" href="#"><i class="fa fa-group"></i><?php echo __('Users');?></a></li>
-                <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" href="logout.php"><i class="fas fa-power-off"></i><?php echo __('Logout');?></a></li>
-				<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7 todo" data-goto="manager_help" href="#"><i class="fa fa-question"></i><?php echo __('Help');?></a></li>
+				<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5" data-goto="manager_setup_sites" href="#"><i class="fa fa-building"></i><?php echo __('Sites');?></a></li>
+                <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" data-goto="manager_users" href="#"><i class="fa fa-group"></i><?php echo __('Users');?></a></li>
+                <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7" href="logout.php"><i class="fas fa-power-off"></i><?php echo __('Logout');?></a></li>
+				<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8 todo" data-goto="manager_help" href="#"><i class="fa fa-question"></i><?php echo __('Help');?></a></li>
             </ul>
+			<div class="popupHelp">
+				<h2><?=__('Help')?></h2>
+				<div class="content sm-content text-left">
+					<p class=""><?= __('This dashboard display all available functionalities for a manager.')?></p>
+					<p class=""><?= __('Use Logout button to log out of the app')?></p>
+				</div>
+				<p class="legende"><?=__('Click to hide')?></p>
+			</div>
         </div>
     </section>
         
@@ -295,7 +304,7 @@
 									<div style="clear:both;"></div>
 								   
 									<a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal"><?php echo __('Cancel');?></a>
-									<a href="#" id="manager_edit_map_bModalAddPoiSave" class="btn btn-primary btn_footer_right btn_50 ifDocked_disabled" data-dismiss="modal"><?php echo __('Add POI');?></a>
+									<a href="#" id="manager_edit_map_bModalAddPoiSave" class="btn btn-primary btn_footer_right btn_50 ifDocked_disabled"><?php echo __('Add POI');?></a>
 								</div>
 							</div>
 						</div>
@@ -368,29 +377,30 @@
 					</div>
 				</div>
 				
-				<div class="popupHelp">
-					<h2><?=__('Help')?></h2>
-					<ul style="color:#000;">
-						<li><i class="fa fa-map-marker-alt iconMenuBlue"></i><span class="description"><?=__('Add POI')?></span></li>
-						<li><i class="fa fa-crosshairs iconMenuBlue"></i><span class="description"><?=__('Move the robot to this point')?></span></li>
-						<li><i class="fa fa-gamepad iconMenuPurple"></i><span class="description"><?=__('Teleop the robot')?></span></li>
-						<li style="position:relative;font-size:16px"><img class="route" src="assets/images/route_green.svg"/><span class="description" style="margin-left: 40px;position: relative;top: 3px;"><?=__('Test go to POI, dock or augmented pose')?></span></li>
-						<li style="position:relative;">
-						<svg class="svg_popupHelp_robot" xmlns="http://www.w3.org/2000/svg">
-							<circle cx="20" cy="20" r="12" class="robot_elem robot_elem_fond"></circle>
-							<polyline points="16 16 24 20 16 24" stroke="#FFFFFF" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round" class="robot_elem" transform="rotate(-90,20,20)"></polyline>
-						</svg>
-						<span class="description" style="margin-left: 40px;"><?=__('Robot position')?></span></li>
-					</ul>
-					<p class="legende"><?=__('Click to hide')?></p>
-				</div>
-				
 				<div class="manager_edit_map_loading loading_big loading_map"><i class="fa fa fa-spinner fa-pulse fa-3x"></i></div>
 			</div>
 			<div id="manager_edit_map_zoom_popup" style="position:absolute; top:20px; left:20px; width:101px; height:101px; border:1px solid #000; overflow:hidden; display:none; z-index:8000;">
 				<div id="manager_edit_map_zoom_popup_content" style="position:absolute; top:0; height:0;"></div>
 				<div id="manager_edit_map_zoom_popup_mire" style="position:absolute; width:101px; height:101px; top:0; left:0; background-image:url(assets/images/mire.png);"></div>
 			</div>
+			
+			<div class="popupHelp">
+				<h2><?=__('Help')?></h2>
+				<ul style="color:#000;">
+					<li><i class="fa fa-map-marker-alt iconMenuBlue"></i><span class="description"><?=__('Add POI')?></span></li>
+					<li><i class="fa fa-crosshairs iconMenuBlue"></i><span class="description"><?=__('Move the robot to this point')?></span></li>
+					<li><i class="fa fa-gamepad iconMenuPurple"></i><span class="description"><?=__('Teleop the robot')?></span></li>
+					<li style="position:relative;font-size:16px"><img class="route" src="assets/images/route_green.svg"/><span class="description" style="margin-left: 40px;position: relative;top: 3px;"><?=__('Test go to POI, dock or augmented pose')?></span></li>
+					<li style="position:relative;">
+					<svg class="svg_popupHelp_robot" xmlns="http://www.w3.org/2000/svg">
+						<circle cx="20" cy="20" r="12" class="robot_elem robot_elem_fond"></circle>
+						<polyline points="16 16 24 20 16 24" stroke="#FFFFFF" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round" class="robot_elem" transform="rotate(-90,20,20)"></polyline>
+					</svg>
+					<span class="description" style="margin-left: 40px;"><?=__('Robot position')?></span></li>
+				</ul>
+				<p class="legende"><?=__('Click to hide')?></p>
+			</div>
+			
 		</div>
         <footer>
             <a href="#" class="btn btn-default button_goto btn_footer_left btn_50" data-goto="manager_dashboard"><?php echo __('Back');?></a>
@@ -416,6 +426,14 @@
 					</div>
 				</div>
 			</div>
+			<div class="popupHelp">
+				<h2><?=__('Help')?></h2>
+				<div class="content sm-content text-left">
+					<p><?= __('This page allows you to control the robot using the virtual joystick.')?></p>
+					<p><?= __('If the robot is docked on a docking station or on an augmented position, the joystick will be hidden and an Undock button will be present to allow you to undock the robot.')?></p>	
+				</div>
+				<p class="legende"><?=__('Click to hide')?></p>
+			</div>
 		</div>
         <footer>
             <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="manager_dashboard"><?php echo __('Back');?></a>
@@ -428,43 +446,80 @@
             <h2><?php echo __('Select active top');?></h2>
         </header>
         <div class="content">
-            	<div class="manager_top_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
-				<h5 class="text-center" style="margin-bottom:30px;"><?=__('Please select the active top for the vehicle.') ?></h5>
-                <ul class="tuiles row">
-                </ul>
-                
-                <div style="clear:both; height:20px;"></div>
-                
-                <div class="modal fade modalSetActiveTop" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
-                    <div class="modal-dialog" role="dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <div class="actions mh100vh_55">
-                                    
-                                    <div class="h100vh_160" style="overflow:auto">
-                                        <div class="progressSetActiveTop">
-                                            <h4 style="text-align:center;margin-bottom:20px"><?php echo __('Setting new active top');?></h4>
-                                            <div class="setActiveTopProgress progress progress-striped light active m-md">
-                                                <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;">
-                                                </div>
-                                            </div>
-                                        </div>
-			                                    
-            	                        <div style="clear:both;"></div>
-                					</div>                   
-                                    <a href="#" class="btn btn-primary" data-dismiss="modal" style="width:100%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Close');?></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
+			<div class="manager_top_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
+			<h5 class="text-center" style="margin-bottom:30px;"><?=__('Please select the active top for the vehicle.') ?></h5>
+			<ul class="tuiles row">
+			</ul>
+			
+			<div style="clear:both; height:20px;"></div>
+			
+			<div class="modal fade modalSetActiveTop" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+				<div class="modal-dialog" role="dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<div class="actions mh100vh_55">
+								
+								<div class="h100vh_160" style="overflow:auto">
+									<div class="progressSetActiveTop">
+										<h4 style="text-align:center;margin-bottom:20px"><?php echo __('Setting new active top');?></h4>
+										<div class="setActiveTopProgress progress progress-striped light active m-md">
+											<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;">
+											</div>
+										</div>
+									</div>
+											
+									<div style="clear:both;"></div>
+								</div>                   
+								<a href="#" class="btn btn-primary" data-dismiss="modal" style="width:100%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Close');?></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="popupHelp">
+				<h2><?=__('Help')?></h2>
+				<div class="content text-left">
+					<p><?= __('Please select active top by clicking on it. That will indicate to the vehicle that its current top on it is the one you picked.')?></p>
+					
+				</div>
+				<p class="legende"><?=__('Click to hide')?></p>
+			</div>
+		</div>
         <footer>
             <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="manager_dashboard"><?php echo __('Back');?></a>
         </footer>
     </section>
-        
+    
+	<section id="manager_setup_sites" class="page with_footer">
+		<a href="#" class="bBackButton button_goto" data-goto="manager_dashboard"></a>
+		<header>
+			<div class="pull-left"><img src="assets/images/logo.png" /></div>
+			<h2><?php echo __('Sites');?></h2>
+		</header>
+		<div class="content">
+			
+			<div class="manager_setup_sites_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
+			
+			<div class="loaded col-md-12" style="padding-top:30px;">
+				<ul class="list_sites list_elem">
+				</ul>
+			</div>
+			<div class="popupHelp">
+				<h2><?=__('Help')?></h2>
+				<div class="content sm-content text-left">
+					<p class=""><?= __('This page allow you to manage sites')?></p>
+					<p class=""><?= __('You can delete a site by clicking on the red cross icon.')?></p>
+					<p class=""><?= __('A confimation will be asked for each site you want to delete.')?></p>
+					<p class=""><?= __('You can switch site by clicking on the blue check icon of the site you want to load.')?></p>
+				</div>
+				<p class="legende"><?=__('Click to hide')?></p>
+			</div>
+		</div>
+		<footer>
+			<a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="manager_dashboard"><?php echo __('Back');?></a>
+		</footer>
+	</section>
+	
     <section id="manager_recovery" class="page with_footer">
         <header>
             <div class="pull-left"><img src="assets/images/logo.png" /></div>
@@ -487,6 +542,16 @@
 						<div class="curseur"></div>
 					</div>
 				</div>
+			</div>
+			<div class="popupHelp">
+				<h2><?=__('Help')?></h2>
+				<div class="content sm-content text-left">
+					<p><?= __('If you start the robot undocked to a docking station or if the robot is lost, this page will allow you to relocate the robot correctly.')?></p>
+					<p><?= __('If the robot has just been started, a success message will be displayed.')?></p>
+					<p><?= __('If the robot was lost, it will rotate 360° to clean the obstacles it could have wrongly spotted due to its bad location.')?></p>
+					<p><?= __('A feedback popup will indicate the success or failure of the recovery.')?></p>	
+				</div>
+				<p class="legende"><?=__('Click to hide')?></p>
 			</div>
 		</div>
         <footer>
@@ -592,6 +657,16 @@
 						</div>
 					</div>
 				</div>
+			</div>
+			<div class="popupHelp">
+				<h2><?=__('Help')?></h2>
+				<div class="content sm-content text-left">
+					<p class=""><?= __('This page allows you to manage user accounts.')?></p>
+					<p class=""><?= __('You can edit, add or delete user accounts.')?></p>
+					<p class=""><?= __('User accounts can mainly :')?></p>
+					<p class="">&nbsp;&nbsp;&nbsp;<?= __('- Move the robot through map.')?></p>
+				</div>
+				<p class="legende"><?=__('Click to hide')?></p>
 			</div>
 		</div>
         <footer>

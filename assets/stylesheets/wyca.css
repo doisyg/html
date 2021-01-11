@@ -113,7 +113,7 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 @media (min-width: 1200px) { 
 	ul.tuiles li { padding-top:15%; position:relative; } 
 	ul.tuiles.heightauto li { padding-top:0; position:relative; }
-	ul.tuiles li a, ul.tuiles li div { font-size:28px;}
+	ul.tuiles li a, ul.tuiles li div { font-size:28px;    line-height: 32px;}
 	ul.tuiles li i { font-size:80px; padding-top:10%; display:block; padding-bottom:50px; }
 }
 
@@ -168,6 +168,11 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 	#install_normal_setup_trinary_divOptionTrinary { position:absolute; bottom:30px; left:5%; width:90%; z-index:300; color:#0088cc; text-align:left; }
 	#install_normal_setup_trinary_divOptionTrinary .panel-body { background-color:rgba(255,255,255,0.5); }
 	#install_normal_setup_trinary_divOptionTrinary h3 { display:none; }
+	
+	#wyca_setup_trinary_divResultTrinary { z-index:200; }
+	#wyca_setup_trinary_divOptionTrinary { position:absolute; bottom:30px; left:5%; width:90%; z-index:300; color:#0088cc; text-align:left; }
+	#wyca_setup_trinary_divOptionTrinary .panel-body { background-color:rgba(255,255,255,0.5); }
+	#wyca_setup_trinary_divOptionTrinary h3 { display:none; }
 }
 
 .table_wifi img { width:25px; }
@@ -194,6 +199,15 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 #install_normal_edit_map_zoom_carte { position:relative; width:100px; border:1px solid #000; }
 
 
+#wyca_edit_map_container_all { position:relative; margin:-20px; height:calc(100vh - 110px); height: calc(var(--vh, 1vh) * 100 - 110px); }
+#wyca_edit_map_all { height:100%; }
+#wyca_edit_map_map_navigation { height:100%; }
+
+#wyca_edit_map_zoom_carte_container { z-index:1000; background-color:#FFF; position:absolute; top:10px; right:20px; }
+#main_row.hide_element #wyca_edit_map_zoom_carte_container { right:50px; }
+#wyca_edit_map_zoom_carte { position:relative; width:100px; border:1px solid #000; }
+
+
 #manager_edit_map_container_all { position:relative; margin:-20px; height:calc(100vh - 110px); height: calc(var(--vh, 1vh) * 100 - 110px); }
 #manager_edit_map_all { height:100%; }
 #manager_edit_map_map_navigation { height:100%; }
@@ -211,7 +225,7 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 #main_row.hide_element #user_edit_map_zoom_carte_container { right:50px; }
 #user_edit_map_zoom_carte { position:relative; width:100px; border:1px solid #000; }
 
-#manager_edit_map_zone_zoom,#install_by_step_edit_map_zone_zoom,#install_normal_edit_map_zone_zoom,#user_edit_map_zone_zoom{border-color:rgb(88 159 178)!important;}
+#manager_edit_map_zone_zoom,#install_by_step_edit_map_zone_zoom,#install_normal_edit_map_zone_zoom,#wyca_edit_map_zone_zoom,#user_edit_map_zone_zoom{border-color:rgb(88 159 178)!important;}
 
 .menu_icon_touch { position:absolute; display:none; z-index:1100; }
 .menu_icon_touch ul { list-style:none; padding:0; margin:0; overflow-y: scroll;}
@@ -228,13 +242,19 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 
 #install_by_step_edit_map_zoom_carte { overflow:hidden; }
 #install_normal_edit_map_zoom_carte { overflow:hidden; }
+#wyca_edit_map_zoom_carte { overflow:hidden; }
 #manager_edit_map_zoom_carte { overflow:hidden; }
 #user_edit_map_zoom_carte { overflow:hidden; }
 
-.popupHelp { position:absolute; z-index:20000; background-color:rgba(255,255,255,0.95); top:0; left:0; right:0; bottom:0; display:none; padding:10px; }
-.popupHelp h2{ margin-top: 5px; margin-bottom: 15px;}
+.popupHelp { position:absolute; z-index:20000; background-color:rgba(255,255,255,0.99); top:0; left:0; right:0; bottom:0; display:none; padding:10px; }
+.popupHelp h2{ margin:20px 0;text-align:center}
+.popupHelp .content { display:flex;justify-content:space-between;flex-direction:column;min-height:80%;height: unset!important;}
+.popupHelp .content.sm-content {justify-content:start;}
+.popupHelp .content.sm-content > p {margin:20px 0}
+.popupHelp .content.sm-content-text > p {font-size:14px}
+.popupHelp .content p { font-size:16px}
 .popupHelp .svg_popupHelp_robot{height: 40px;width: 40px; position: absolute; left:-5px;top:0; }
-.popupHelp p.legende{  float:right;font-style: italic; }
+.popupHelp p.legende{    position: fixed; right: 5px;bottom: 0px;background: #ffffff; padding: 2px 10px; border-radius: 10px; border: 1px solid #f7f7f7;  font-style: italic;}
 .popupHelp ul { list-style:none; margin:0; padding:0px 0px; }
 .popupHelp ul li { font-size:18px; padding:10px 0; border-bottom:1px solid #CCC;height:46px;}
 .popupHelp ul li;first-child { border-top:1px solid #EEEEEE; }
@@ -250,6 +270,10 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 #install_normal_edit_map_bEndGomme, #install_normal_edit_map_bSaveCurrentElem{ position:absolute; top:15px; left:70px;display:none; z-index:4;border-color:transparent;}
 #install_normal_edit_map_bStop { position:absolute; bottom:15px; right:15px;display:none; z-index:4;border-color:transparent;}
 #install_normal_edit_map_bCancelCurrentElem ,#install_normal_edit_map_bCancelGomme{ position:absolute; top:15px; left:115px; display:none; z-index:4;border-color:transparent;}
+
+#wyca_edit_map_bEndGomme, #wyca_edit_map_bSaveCurrentElem{ position:absolute; top:15px; left:70px;display:none; z-index:4;border-color:transparent;}
+#wyca_edit_map_bStop { position:absolute; bottom:15px; right:15px;display:none; z-index:4;border-color:transparent;}
+#wyca_edit_map_bCancelCurrentElem ,#wyca_edit_map_bCancelGomme{ position:absolute; top:15px; left:115px; display:none; z-index:4;border-color:transparent;}
 
 #manager_edit_map_bEndGomme, #manager_edit_map_bSaveCurrentElem{ position:absolute; top:15px; left:70px;display:none; z-index:4;border-color:transparent;}
 #manager_edit_map_bStop { position:absolute; bottom:15px; right:15px;display:none; z-index:4;border-color:transparent;}
@@ -585,16 +609,18 @@ ul.list_test li.done { color:#006600; border-color:#006600; }
 	left:0; 
 	right:unset; 
 	bottom:0px; 
-	font-size:30px;
+	font-size:26px;
 	border-radius:0px;
+	line-height:42px;
 }
 .btn.btn_footer_right{
 	position:absolute; 
 	left:unset; 
 	right:0; 
 	bottom:0px; 
-	font-size:30px;
+	font-size:26px;
 	border-radius:0px;
+	line-height:42px;
 }
 .shake{
   animation: shake 0.82s cubic-bezier(.36, .07, .19, .97) both infinite;
@@ -1106,7 +1132,7 @@ div.icon_menu .iconForbiddenArea .fa-minus-circle{
     top: 11px;
     left: 11px;
 }
-.point_deletable.point_active{
+.point_deletable.editing_point{
 	fill: darkorange;
     stroke-width: 2px;
     stroke: black;
@@ -1136,6 +1162,30 @@ div.icon_menu .iconForbiddenArea .fa-minus-circle{
 .nopymy:after{margin-top:0;margin-bottom:0;padding-top:0;padding-bottom:0;}
 
 /* CSS FIXES */
+.ifDocked,.ifUndocked{}
+/* TO AVOID DUAL DISPLAY UNDOCK / JOYSTICK */
+
+.preview_color{cursor:pointer}
+#alert_wyca p.content span.toggle_details,#warning_wyca p.content span.toggle_details,#success_wyca p.content span.toggle_details,#success_info_wyca p.content span.toggle_details{
+	font-size: 18px;
+    line-height: 20px;
+    display: block;
+    margin-top: 5px;
+    font-style: italic;
+}
+#alert_wyca p.content span.error_details,#warning_wyca p.content span.error_details,#success_wyca p.content span.error_details,#success_info_wyca p.content span.error_details{
+	font-size: 14px;
+    line-height: 26px;
+    display: block;
+    margin-top: 10px;
+    font-style: italic;
+	display:none;
+}
+
+
+.tuile_demo{
+	background:#C674B5!important;
+}
 .bTuile{
 	text-align: center;
     display: inline-flex;
@@ -1194,6 +1244,9 @@ span.error_details span{
     margin-top: 10px;
     font-style: italic;
 }
+span.toggle_details{
+	font-size:18px!important;
+}
 .fa-pencil:before{
 	content:"\f304";
 }
@@ -1217,21 +1270,22 @@ span.error_details span{
     transition: width 0.2s ease!important;
 }
 /* COLOR PICKER IRO */
-.col-xs-8 .iro-colorpicker{
-	transform: scale(0.75)translateX(-40%);
-}
 .iro-colorpicker{
 	width: 100%;
     display: none;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
-    transform: scale(0.75);
+	margin-top: 5px;
 }
+
 .IroSlider{
 	display:none!important;
 }
 
-
+/* MODAL CONFIRM DELETE */
+.btn_confirm_delete{
+	display:none;
+}
 
 /* WYCA PAGES */
 .fakeScreen:before{
@@ -1268,3 +1322,30 @@ span.error_details span{
 }
 
 .form-group.sep { border-top:1px solid #EFEFEF; padding-top:15px; }
+
+
+
+.row.row-eq-height{
+	display: flex;
+    flex-wrap: wrap;
+}
+
+/* FIDUCIAL */
+.fiducial_number_wrapper{
+	width:100%;
+	height:100%;
+}
+
+.fiducial_number_wrapper > span.fiducial_number{
+	position:absolute;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;    
+	margin-left: -12.5px;
+}/*
+	width:100%;
+	height:100%;
+}*/
+

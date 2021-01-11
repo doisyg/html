@@ -124,7 +124,7 @@ function GetInfosCurrentMapDoByStep()
 		}
 		else
 		{
-			alert_wyca('Init map error : ' + wycaApi.AnswerCodeToString(data.A));
+			ParseAPIAnswerError(data,textErrorInitMap);
 		}
 	});
 }
@@ -715,12 +715,12 @@ $(document).ready(function(e) {
 			{
 				if (bystepCurrentAction == 'editForbiddenArea' || bystepCurrentAction == 'addbiddenArea')
 				{
-					RemoveClass('#install_by_step_edit_map_svg .point_deletable', 'point_active');
+					RemoveClass('#install_by_step_edit_map_svg .point_deletable', 'editing_point');
 					ByStepDisplayMenu('install_by_step_edit_map_menu_forbidden');
 				}
 				else if (bystepCurrentAction == 'editArea' || bystepCurrentAction == 'addArea')
 				{
-					RemoveClass('#install_by_step_edit_map_svg .point_deletable', 'point_active');
+					RemoveClass('#install_by_step_edit_map_svg .point_deletable', 'editing_point');
 					ByStepDisplayMenu('install_by_step_edit_map_menu_area');
 				}
 			}
@@ -783,7 +783,7 @@ function ByStepDisplayMenu(id_menu)
 			}
 		}
 		if(id_menu != 'install_by_step_edit_map_menu_point')
-			RemoveClass('#install_by_step_edit_map_svg .point_deletable', 'point_active');
+			RemoveClass('#install_by_step_edit_map_svg .point_deletable', 'editing_point');
 		if(id_menu != 'install_by_step_edit_map_menu_area' && id_menu != 'install_by_step_edit_map_menu_forbidden')
 			RemoveClass('#install_by_step_edit_map_svg .point_deletable', 'active');
 		

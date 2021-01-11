@@ -8,7 +8,7 @@ $(document).ready(function(e) {
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
 				$('#manager_recovery .bRecovery').removeClass('disabled');
-				success_wyca('Recovery done !');
+				success_wyca(textRecoveryDone);
 			}
 			else
 			{
@@ -111,7 +111,7 @@ $(document).ready(function(e) {
 					}
 					else
 					{
-						alert_wyca('Init map error : ' + wycaApi.AnswerCodeToString(data.A));
+						ParseAPIAnswerError(data,textErrorGetMap);
 					}
 				});
 				
@@ -121,7 +121,7 @@ $(document).ready(function(e) {
 			{
 				$('#manager_edit_map .bSaveMapTestPoi i').removeClass('fa-check fa-spinner fa-pulse fa-remove');
 				$('#manager_edit_map .bSaveMapTestPoi i').addClass('fa-remove');
-				alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' + data.M);
+				ParseAPIAnswerError(data,textErrorSetMap);
 			}
 		});
     });
@@ -205,7 +205,7 @@ $(document).ready(function(e) {
 					}
 					else
 					{
-						alert_wyca('Init map error : ' + wycaApi.AnswerCodeToString(data.A));
+						ParseAPIAnswerError(data,textErrorGetMap);
 					}
 				});
 				
@@ -215,7 +215,7 @@ $(document).ready(function(e) {
 			{
 				$('#manager_edit_map .bSaveMapTestDock i').removeClass('fa-check fa-spinner fa-pulse fa-remove');
 				$('#manager_edit_map .bSaveMapTestDock i').addClass('fa-remove');
-				alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' + data.M);
+				ParseAPIAnswerError(data,textErrorSetMap);
 			}
 		});
     });
@@ -225,7 +225,7 @@ $(document).ready(function(e) {
         
 		if (!managerCanChangeMenu)
 		{
-			alert_wyca('You must confirm the active element');
+			alert_wyca(textConfirmActiveElement);
 		}
 		else
 		{
@@ -246,7 +246,7 @@ $(document).ready(function(e) {
 			wycaApi.SetCurrentMapData(data, function(data){
 				if (data.A == wycaApi.AnswerCode.NO_ERROR)
 				{
-					success_wyca("Map saved !");
+					success_wyca(textMapSaved);
 					
 					// On reload la carte pour mettre à jours les ids
 					GetInfosCurrentMapManager();
@@ -259,7 +259,7 @@ $(document).ready(function(e) {
 				}
 				else
 				{
-					alert_wyca(wycaApi.AnswerCodeToString(data.A) + '<br>' + data.M);
+					ParseAPIAnswerError(data);
 				}
 			});
 		}
@@ -298,7 +298,7 @@ $(document).ready(function(e) {
 				statusSetActiveTop = 1;
 				timerSetActiveTop = 0;
 
-				//$('#pages_install_normal .progressSetActiveTop').show();
+				//$('#pages_manager .progressSetActiveTop').show();
 				TimerActiveTopNormal();
 			}
 			else
@@ -366,7 +366,8 @@ $(document).ready(function(e) {
 						$('#manager_users .list_users').append('' +
 							'<li id="manager_users_list_user_elem_'+id_user+'" data-id_user="'+id_user+'">'+
 							'	<span class="email">'+json_user.email+'</span>'+
-							'	<a href="#" class="bUserDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
+							'	<a href="#" class="bUserDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>'+
+							'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>'+
 							'	<a href="#" class="bUserEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
 							'</li>'
 							);
@@ -446,6 +447,40 @@ $(document).ready(function(e) {
 				$(this).removeClass('success').addClass('error');
 		}
 	})
+	
+	$(document).on('click', '#manager_setup_sites .bSiteSetCurrentElem', function(e) {
+		e.preventDefault();
+		
+		id_site = parseInt($(this).closest('li').data('id_site'));
+		
+		wycaApi.SetSiteAsCurrent(id_site, function(data) {
+			if (data.A != wycaApi.AnswerCode.NO_ERROR) 
+				ParseAPIAnswerError(data,textErrorStopNavigation);
+			else
+			{
+				GetSitesManager();
+				warning_wyca(textBeSureSelectedSite);
+			}
+		});
+	});
+	
+	$(document).on('click', '#manager_setup_sites .bSiteDeleteElem', function(e) {
+		e.preventDefault();
+		
+		id_site_to_delete = parseInt($(this).closest('li').data('id_site'));
+		
+		wycaApi.DeleteSite(id_site_to_delete, function(data) {
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$('#manager_setup_sites_list_site_elem_'+id_site_to_delete).remove();
+			}
+			else
+			{
+				ParseAPIAnswerError(data);
+			}
+		});
+	});
+	
 });
 
 
