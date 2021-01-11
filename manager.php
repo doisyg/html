@@ -11,9 +11,10 @@
                 <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="manager_move" href="#"><i class="fa fa-gamepad"></i><?php echo __('Control robot');?></a></li>
                 <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="manager_recovery" href="#"><i class="fa fa-search"></i><?php echo __('Recovery');?></a></li>
                 <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="manager_top" href="#"><i class="fa fa-refresh"></i><?php echo __('Change top');?></a></li>
-                <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5" data-goto="manager_users" href="#"><i class="fa fa-group"></i><?php echo __('Users');?></a></li>
-                <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" href="logout.php"><i class="fas fa-power-off"></i><?php echo __('Logout');?></a></li>
-				<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7 todo" data-goto="manager_help" href="#"><i class="fa fa-question"></i><?php echo __('Help');?></a></li>
+				<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5" data-goto="manager_setup_sites" href="#"><i class="fa fa-building"></i><?php echo __('Sites');?></a></li>
+                <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" data-goto="manager_users" href="#"><i class="fa fa-group"></i><?php echo __('Users');?></a></li>
+                <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7" href="logout.php"><i class="fas fa-power-off"></i><?php echo __('Logout');?></a></li>
+				<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8 todo" data-goto="manager_help" href="#"><i class="fa fa-question"></i><?php echo __('Help');?></a></li>
             </ul>
 			<div class="popupHelp">
 				<h2><?=__('Help')?></h2>
@@ -488,7 +489,37 @@
             <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="manager_dashboard"><?php echo __('Back');?></a>
         </footer>
     </section>
-        
+    
+	<section id="manager_setup_sites" class="page with_footer">
+		<a href="#" class="bBackButton button_goto" data-goto="manager_dashboard"></a>
+		<header>
+			<div class="pull-left"><img src="assets/images/logo.png" /></div>
+			<h2><?php echo __('Sites');?></h2>
+		</header>
+		<div class="content">
+			
+			<div class="manager_setup_sites_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
+			
+			<div class="loaded col-md-12" style="padding-top:30px;">
+				<ul class="list_sites list_elem">
+				</ul>
+			</div>
+			<div class="popupHelp">
+				<h2><?=__('Help')?></h2>
+				<div class="content sm-content text-left">
+					<p class=""><?= __('This page allow you to manage sites')?></p>
+					<p class=""><?= __('You can delete a site by clicking on the red cross icon.')?></p>
+					<p class=""><?= __('A confimation will be asked for each site you want to delete.')?></p>
+					<p class=""><?= __('You can switch site by clicking on the blue check icon of the site you want to load.')?></p>
+				</div>
+				<p class="legende"><?=__('Click to hide')?></p>
+			</div>
+		</div>
+		<footer>
+			<a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="manager_dashboard"><?php echo __('Back');?></a>
+		</footer>
+	</section>
+	
     <section id="manager_recovery" class="page with_footer">
         <header>
             <div class="pull-left"><img src="assets/images/logo.png" /></div>

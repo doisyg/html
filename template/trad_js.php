@@ -11,6 +11,7 @@ else
 <?php
 }
 ?>
+var textBeSureSelectedSite = "<?php echo __js('Be sure that selected site is the one where is the vehicle, if not robot could be damaged or broken.');?>"; 
 
 var textActionCanceled = "<?php echo __js('Action canceled');?>";
 var textNeedReconnect = "<?php echo __js('Reconnection is required');?>";

@@ -298,7 +298,7 @@ $(document).ready(function(e) {
 				statusSetActiveTop = 1;
 				timerSetActiveTop = 0;
 
-				//$('#pages_install_normal .progressSetActiveTop').show();
+				//$('#pages_manager .progressSetActiveTop').show();
 				TimerActiveTopNormal();
 			}
 			else
@@ -447,6 +447,40 @@ $(document).ready(function(e) {
 				$(this).removeClass('success').addClass('error');
 		}
 	})
+	
+	$(document).on('click', '#manager_setup_sites .bSiteSetCurrentElem', function(e) {
+		e.preventDefault();
+		
+		id_site = parseInt($(this).closest('li').data('id_site'));
+		
+		wycaApi.SetSiteAsCurrent(id_site, function(data) {
+			if (data.A != wycaApi.AnswerCode.NO_ERROR) 
+				ParseAPIAnswerError(data,textErrorStopNavigation);
+			else
+			{
+				GetSitesManager();
+				warning_wyca(textBeSureSelectedSite);
+			}
+		});
+	});
+	
+	$(document).on('click', '#manager_setup_sites .bSiteDeleteElem', function(e) {
+		e.preventDefault();
+		
+		id_site_to_delete = parseInt($(this).closest('li').data('id_site'));
+		
+		wycaApi.DeleteSite(id_site_to_delete, function(data) {
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$('#manager_setup_sites_list_site_elem_'+id_site_to_delete).remove();
+			}
+			else
+			{
+				ParseAPIAnswerError(data);
+			}
+		});
+	});
+	
 });
 
 

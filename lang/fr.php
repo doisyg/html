@@ -541,5 +541,6 @@ $_LANG['1a926c0ed85fd9e3ec8bc011aa07436d'] = 'Erreur arrêt navigation';
 $_LANG['a98d71965f38b3447b57879dea27e518'] = 'Erreur recupération réflecteurs';
 $_LANG['340a32cd200e0ec9fb7f2871896d3a12'] = 'Erreur lancement cartographie';
 $_LANG['b662755a87f64ac1e0f7cb8b8c4f9bff'] = 'Erreur arrêt cartographie';
+$_LANG['8b488e961abe0004c5665ff8519d6891'] = 'Assurez-vous que le site sélectionné est bien celui où se trouve le véhicule, sinon le robot pourrait être endommagé ou cassé.';
 
 ?>

@@ -250,6 +250,7 @@ $(document).ready(function(e) {
 		ManagerHideMenus();
 		
 	});
+	
 	$(document).on('touchmove', '#manager_edit_map_svg .dock_elem', function(e) {
     	ManagerHideMenus();
 		if (timerManagerLongPress != null)
