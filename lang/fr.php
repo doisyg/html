@@ -543,5 +543,6 @@ $_LANG['340a32cd200e0ec9fb7f2871896d3a12'] = 'Erreur lancement cartographie';
 $_LANG['b662755a87f64ac1e0f7cb8b8c4f9bff'] = 'Erreur arrêt cartographie';
 $_LANG['c79dcfaf062af43c8eac8d8c67f14830'] = 'Son Area';
 $_LANG['f0cdd208a20feeff586c3d10be4abf0b'] = 'Aucun son';
+$_LANG['8b488e961abe0004c5665ff8519d6891'] = 'Assurez-vous que le site sélectionné est bien celui où se trouve le véhicule, sinon le robot pourrait être endommagé ou cassé.';
 
 ?>

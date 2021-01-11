@@ -3981,8 +3981,8 @@ $(document).ready(function() {
 					movableDown.attr('y', ros_hauteur - (forbidden.points[movableDown.data('index_point')].y * 100 / ros_resolution) - 5); 
 					
 					tempClass = movableDown.attr("class");
-					if(!tempClass.includes('point_active'))
-						movableDown.attr("class",tempClass+' point_active');
+					if(!tempClass.includes('editing_point'))
+						movableDown.attr("class",tempClass+' editing_point');
 					
 					ByStepTraceForbidden(GetForbiddenIndexFromID(movableDown.data('id_area')));
 
@@ -4007,8 +4007,8 @@ $(document).ready(function() {
 					movableDown.attr('y', ros_hauteur - (area.points[movableDown.data('index_point')].y * 100 / ros_resolution) - 5); 
 					
 					tempClass = movableDown.attr("class");
-					if(!tempClass.includes('point_active'))
-						movableDown.attr("class",tempClass+' point_active');
+					if(!tempClass.includes('editing_point'))
+						movableDown.attr("class",tempClass+' editing_point');
 						
 					ByStepTraceArea(GetAreaIndexFromID(movableDown.data('id_area')));
 				    
@@ -4750,7 +4750,7 @@ function AreaSave()
 		*/
 		currentAreaByStepLongTouch = $('#install_by_step_edit_map_area_'+areas[currentAreaIndex].id_area);
 		bystepCurrentAction = 'editArea';
-		RemoveClass('#install_by_step_edit_map_svg .point_active ', 'point_active ');
+		RemoveClass('#install_by_step_edit_map_svg .editing_point ', 'editing_point ');
 		ByStepDisplayMenu('install_by_step_edit_map_menu_area');
 	}
 	else if (bystepCurrentAction == 'editArea')
@@ -4762,7 +4762,7 @@ function AreaSave()
 		saveCurrentArea = JSON.stringify(areas[currentAreaIndex]);
 		
 		bystepCurrentAction = 'editArea';
-		RemoveClass('#install_by_step_edit_map_svg .point_active ', 'point_active ');
+		RemoveClass('#install_by_step_edit_map_svg .editing_point ', 'editing_point ');
 		ByStepDisplayMenu('install_by_step_edit_map_menu_area');
 		/*
 		RemoveClass('#install_by_step_edit_map_svg .active', 'active');
@@ -4876,7 +4876,7 @@ function ForbiddenSave()
 		currentForbiddenByStepLongTouch = $('#install_by_step_edit_map_forbidden_'+forbiddens[currentForbiddenIndex].id_area);
 		
 		bystepCurrentAction = 'editForbiddenArea';
-		RemoveClass('#install_by_step_edit_map_svg .point_active ', 'point_active ');
+		RemoveClass('#install_by_step_edit_map_svg .editing_point ', 'editing_point ');
 		ByStepDisplayMenu('install_by_step_edit_map_menu_forbidden');
 	}
 	else if (bystepCurrentAction == 'editForbiddenArea')
@@ -4888,7 +4888,7 @@ function ForbiddenSave()
 		saveCurrentForbidden = JSON.stringify(forbiddens[currentForbiddenIndex]);
 		
 		bystepCurrentAction = 'editForbiddenArea';
-		RemoveClass('#install_by_step_edit_map_svg .point_active ', 'point_active ');
+		RemoveClass('#install_by_step_edit_map_svg .editing_point ', 'editing_point ');
 		ByStepDisplayMenu('install_by_step_edit_map_menu_forbidden');
 		/*
 		RemoveClass('#install_by_step_edit_map_svg .active', 'active');

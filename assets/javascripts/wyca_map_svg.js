@@ -170,7 +170,7 @@ function WycaTraceForbidden(indexForbidden)
 				
 				let	pointActiveClass = '';
 				if(typeof(currentPointWycaLongTouch) != 'undefined' && currentPointWycaLongTouch != null){
-					pointActiveClass = indexPoint == currentPointWycaLongTouch.data('index_point') ? ' point_active' : '' ;
+					pointActiveClass = indexPoint == currentPointWycaLongTouch.data('index_point') ? ' editing_point' : '' ;
 				}
 				
 				path = makeSVGElement('rect', { x: x-5, y:y-5, height:10, width:10,
@@ -281,7 +281,7 @@ function WycaTraceArea(indexArea)
 				
 				let	pointActiveClass = '';
 				if(typeof(currentPointWycaLongTouch) != 'undefined' && currentPointWycaLongTouch != null){
-					pointActiveClass = indexPoint == currentPointWycaLongTouch.data('index_point') ? ' point_active' : '' ;
+					pointActiveClass = indexPoint == currentPointWycaLongTouch.data('index_point') ? ' editing_point' : '' ;
 				}
 				
 				

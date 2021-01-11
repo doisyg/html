@@ -169,8 +169,8 @@ function NormalTraceForbidden(indexForbidden)
 				y = ros_hauteur - (point.y * 100 / ros_resolution);
 				
 				let	pointActiveClass = '';
-				if(typeof(currentPointNormalLongTouch) != 'undefined' && currentPointNormalLongTouch != null){
-					pointActiveClass = indexPoint == currentPointNormalLongTouch.data('index_point') ? ' point_active' : '' ;
+				if(typeof(currentPointNormalLongTouch) != 'undefined' && currentPointNormalLongTouch != null && is_active){
+					pointActiveClass = indexPoint == currentPointNormalLongTouch.data('index_point') ? ' editing_point' : '' ;
 				}
 				
 				path = makeSVGElement('rect', { x: x-5, y:y-5, height:10, width:10,
@@ -281,7 +281,7 @@ function NormalTraceArea(indexArea)
 				
 				let	pointActiveClass = '';
 				if(typeof(currentPointNormalLongTouch) != 'undefined' && currentPointNormalLongTouch != null){
-					pointActiveClass = indexPoint == currentPointNormalLongTouch.data('index_point') ? ' point_active' : '' ;
+					pointActiveClass = indexPoint == currentPointNormalLongTouch.data('index_point') ? ' editing_point' : '' ;
 				}
 				
 				

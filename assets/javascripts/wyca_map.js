@@ -664,12 +664,12 @@ $(document).ready(function(e) {
 			{
 				if (wycaCurrentAction == 'editForbiddenArea' || wycaCurrentAction == 'addbiddenArea')
 				{
-					RemoveClass('#wyca_edit_map_svg .point_deletable', 'point_active');
+					RemoveClass('#wyca_edit_map_svg .point_deletable', 'editing_point');
 					WycaDisplayMenu('wyca_edit_map_menu_forbidden');
 				}
 				else if (wycaCurrentAction == 'editArea' || wycaCurrentAction == 'addArea')
 				{
-					RemoveClass('#wyca_edit_map_svg .point_deletable', 'point_active');
+					RemoveClass('#wyca_edit_map_svg .point_deletable', 'editing_point');
 					WycaDisplayMenu('wyca_edit_map_menu_area');
 				}
 			}

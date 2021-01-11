@@ -173,7 +173,7 @@ function SendCommande()
 				nbCall0++;
 				wycaApi.Teleop(lastValueX * -0.7, lastValueY * -1.2);
 				if(JoystickDebug){
-					console.log('Wyca Teleop 0/0');
+					console.log('Wyca Teleop X Z');
 					console.log(Date.now(),lastValueX * -0.7, lastValueY * -1.2);
 				}
 			}
@@ -188,7 +188,7 @@ function SendCommande()
 			nbCall0 = 0;
 			wycaApi.Teleop(lastValueX * -0.7, lastValueY * -1.2);
 			if(JoystickDebug){
-				console.log('Wyca Teleop linear speed/angular speed');
+				console.log('Wyca Teleop X Z');
 				console.log(Date.now(),lastValueX * -0.7, lastValueY * -1.2);
 			}
 		}

@@ -2047,7 +2047,7 @@ $(document).ready(function() {
 
 			boolHelpArea = getCookie('boolHelpAreaI') != '' ? JSON.parse(getCookie('boolHelpAreaI')) : true; // TRICK JSON.parse STR TO BOOL
 			
-			if(boolHelpForbidden){
+			if(boolHelpArea){
 				$('#install_normal_edit_map .modalHelpClickArea').modal('show');
 			}
 			
@@ -4698,7 +4698,7 @@ function NormalAreaSave()
 		*/
 		currentAreaNormalLongTouch = $('#install_normal_edit_map_area_'+areas[currentAreaIndex].id_area);
 		normalCurrentAction = 'editArea';
-		RemoveClass('#install_normal_edit_map_svg .point_active ', 'point_active ');
+		RemoveClass('#install_normal_edit_map_svg .editing_point ', 'editing_point ');
 		NormalDisplayMenu('install_normal_edit_map_menu_area');
 	}
 	else if (normalCurrentAction == 'editArea')
@@ -4710,7 +4710,7 @@ function NormalAreaSave()
 		saveCurrentArea = JSON.stringify(areas[currentAreaIndex]);
 		
 		normalCurrentAction = 'editArea';
-		RemoveClass('#install_normal_edit_map_svg .point_active ', 'point_active ');
+		RemoveClass('#install_normal_edit_map_svg .editing_point ', 'editing_point ');
 		NormalDisplayMenu('install_normal_edit_map_menu_area');
 		/*
 		RemoveClass('#install_normal_edit_map_svg .active', 'active');
@@ -4824,7 +4824,7 @@ function NormalForbiddenSave()
 		*/
 		currentForbiddenNormalLongTouch = $('#install_normal_edit_map_forbidden_'+forbiddens[currentForbiddenIndex].id_area);
 		normalCurrentAction = 'editForbiddenArea';
-		RemoveClass('#install_normal_edit_map_svg .point_active ', 'point_active ');
+		RemoveClass('#install_normal_edit_map_svg .editing_point ', 'editing_point ');
 		NormalDisplayMenu('install_normal_edit_map_menu_forbidden');
 	}
 	else if (normalCurrentAction == 'editForbiddenArea')
@@ -4836,7 +4836,7 @@ function NormalForbiddenSave()
 		saveCurrentForbidden = JSON.stringify(forbiddens[currentForbiddenIndex]);
 		
 		normalCurrentAction = 'editForbiddenArea';
-		RemoveClass('#install_normal_edit_map_svg .point_active ', 'point_active ');
+		RemoveClass('#install_normal_edit_map_svg .editing_point ', 'editing_point ');
 		NormalDisplayMenu('install_normal_edit_map_menu_forbidden');
 		/*
 		RemoveClass('#install_normal_edit_map_svg .active', 'active');
@@ -4863,7 +4863,7 @@ function NormalForbiddenCancel()
 	
 	$('#install_normal_edit_map_svg .forbidden_elem_current').remove();
 	//RemoveClass('#install_normal_edit_map_svg .active', 'active');
-	
+	RemoveClass('#install_normal_edit_map_svg .editing_point ', 'editing_point ');
 	$('body').addClass('no_current');
 
 	if(currentPointNormalLongTouch != null)

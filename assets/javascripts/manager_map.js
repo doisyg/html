@@ -250,6 +250,7 @@ $(document).ready(function(e) {
 		ManagerHideMenus();
 		
 	});
+	
 	$(document).on('touchmove', '#manager_edit_map_svg .dock_elem', function(e) {
     	ManagerHideMenus();
 		if (timerManagerLongPress != null)
@@ -466,7 +467,7 @@ function ManagerDisplayMenu(id_menu)
 			}
 		}
 		if(id_menu != 'manager_edit_map_menu_point')
-			RemoveClass('#manager_edit_map_svg .point_deletable', 'point_active');
+			RemoveClass('#manager_edit_map_svg .point_deletable', 'editing_point');
 		if(id_menu != 'manager_edit_map_menu_area' && id_menu != 'manager_edit_map_menu_forbidden')
 			RemoveClass('#manager_edit_map_svg .point_deletable', 'active');
 		

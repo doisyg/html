@@ -365,7 +365,7 @@ $(document).ready(function(e) {
 			if (next == 'wyca_demo_mode_start_stop') InitWycaDemoState();
 			
 			// MANAGER
-			
+			if (next == 'manager_setup_sites') GetSitesManager();
 			if (next == 'manager_edit_map') GetInfosCurrentMapManager();
 			if (next == 'manager_top') InitTopsActiveManager();
 			if (next == 'manager_users') GetUsersManager();
@@ -709,6 +709,43 @@ function GetSitesForExportWyca()
 	else
 	{
 		setTimeout(GetSitesWyca, 500);
+	}
+}
+
+function GetSitesManager()
+{
+	$('.manager_setup_sites_loading').show();
+	$('#manager_setup_sites .loaded').hide();
+	if (wycaApi.websocketAuthed)
+	{
+		
+		wycaApi.GetCurrentSite(function(data) {
+			current_site = data.D;
+			//console.log(current_site);
+			wycaApi.GetSitesList(function(data) {
+				
+				$('#manager_setup_sites .list_sites').html('');
+				
+				if (data.D != undefined)
+				$.each(data.D,function(index, value){
+					$('#manager_setup_sites .list_sites').append('' +
+						'<li id="manager_setup_sites_list_site_elem_'+value.id_site+'" data-id_site="'+value.id_site+'">'+
+						'	<span class="societe">'+value.name+'</span>'+
+						(current_site.id_site != value.id_site?'	<a href="#" class="bSiteDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>':'')+
+						(current_site.id_site != value.id_site?'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>':'')+
+						(current_site.id_site != value.id_site?'	<a href="#" class="bSiteSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-check"></i></a>':'')+
+						'</li>'
+						);
+				});
+				
+				$('.manager_setup_sites_loading').hide();
+				$('#manager_setup_sites .loaded').show();
+			});
+		});
+	}
+	else
+	{
+		setTimeout(GetSitesNormal, 500);
 	}
 }
 

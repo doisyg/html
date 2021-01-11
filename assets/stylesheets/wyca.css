@@ -1132,7 +1132,7 @@ div.icon_menu .iconForbiddenArea .fa-minus-circle{
     top: 11px;
     left: 11px;
 }
-.point_deletable.point_active{
+.point_deletable.editing_point{
 	fill: darkorange;
     stroke-width: 2px;
     stroke: black;
