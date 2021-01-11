@@ -284,7 +284,13 @@ function NormalSaveElementNeeded(need)
 }
 
 $(document).ready(function() {
-
+	
+	if($('#install_normal_edit_map .select_area_sound').length > 0 && typeof(wycaApi) != 'undefined' && typeof(wycaApi.SOUND) != 'undefined' ){
+		for (const [key, value] of Object.entries(wycaApi.SOUND)) {
+			$('#install_normal_edit_map .select_area_sound').append('<option value="'+value+'">'+key+'</option>')
+		}
+	}
+	
 	window.addEventListener('beforeunload', function(e){
 		if (!normalSavedCanClose)
 		{
@@ -528,6 +534,7 @@ $(document).ready(function() {
 				$('#install_normal_edit_map_led_animation_mode').val('Automatic');
 				$('#install_normal_edit_map_min_distance_obstacle_mode').val('Automatic');
 				$('#install_normal_edit_map_max_speed_mode').val('Automatic');
+				$('#install_normal_edit_map_area_sound').val(-1)
 				
 				$.each(area.configs, function( indexConfig, config ) {
 					switch(config.name)
@@ -540,6 +547,7 @@ $(document).ready(function() {
 						case 'max_speed': $('#install_normal_edit_map_max_speed').val(config.value); break;
 						case 'min_distance_obstacle_mode': $('#install_normal_edit_map_min_distance_obstacle_mode').val(config.value); break;
 						case 'min_distance_obstacle': $('#install_normal_edit_map_min_distance_obstacle').val(config.value*100); break;
+						case 'sound': $('#install_normal_edit_map_area_sound').val(config.value); break;
 					}
 				});
 			}
@@ -549,6 +557,7 @@ $(document).ready(function() {
 				$('#install_normal_edit_map_led_animation_mode').val('Automatic');
 				$('#install_normal_edit_map_min_distance_obstacle_mode').val('Automatic');
 				$('#install_normal_edit_map_max_speed_mode').val('Automatic');
+				$('#install_normal_edit_map_area_sound').val(-1);
 			}
 			
 			$('#install_normal_edit_map_area_color').val('rgb('+area.color_r+','+area.color_g+','+area.color_b+')'); $('#install_normal_edit_map_area_color').keyup();
@@ -2077,6 +2086,7 @@ $(document).ready(function() {
 				case 'max_speed': $('#install_normal_edit_map_max_speed').val(config.value); break;
 				case 'min_distance_obstacle_mode': $('#install_normal_edit_map_min_distance_obstacle_mode').val(config.value); break;
 				case 'min_distance_obstacle': $('#install_normal_edit_map_min_distance_obstacle').val(config.value*100); break;
+				case 'sound': $('#install_normal_edit_map_area_sound').val(config.value); break;
 			}
 		});
 		
@@ -2106,6 +2116,7 @@ $(document).ready(function() {
 		area.configs.push({'name':'max_speed' , 'value':$('#install_normal_edit_map_max_speed').val()});
 		area.configs.push({'name':'min_distance_obstacle_mode' , 'value':$('#install_normal_edit_map_min_distance_obstacle_mode').val()});
 		area.configs.push({'name':'min_distance_obstacle' , 'value':$('#install_normal_edit_map_min_distance_obstacle').val()/100});
+		area.configs.push({'name':'sound' , 'value':$('#install_normal_edit_map_area_sound').val()});
 		
 		var c = '';
 		if( $('#install_normal_edit_map_area_color').val().includes('rgb') ){
