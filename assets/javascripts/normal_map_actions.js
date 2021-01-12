@@ -388,25 +388,25 @@ $(document).ready(function() {
 		if (!$('#install_normal_edit_map_bUndo').hasClass('disabled'))
 			NormalUndo();
 	});
-	
+	/*
 	$('#install_normal_edit_map_bUndo').on('touchstart', function(e) { 
 		e.preventDefault();
 		if (!$('#install_normal_edit_map_bUndo').hasClass('disabled'))
 			NormalUndo();
 	});
-	
+	*/
 	$('#install_normal_edit_map_bRedo').click(function(e) {
         e.preventDefault();
 		if (!$('#install_normal_edit_map_bRedo').hasClass('disabled'))
 			NormalRedo();
     });
-	
+	/*
 	$('#install_normal_edit_map_bRedo').on('touchstart', function(e) { 
 		e.preventDefault();
 		if (!$('#install_normal_edit_map_bRedo').hasClass('disabled'))
 			NormalRedo();
 	});
-	
+	*/
 	$(document).on('touchstart', '#install_normal_edit_map_svg .movable', function(e) {
 		if (normalCurrentAction != 'gomme')
 		{
