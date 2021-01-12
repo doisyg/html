@@ -308,9 +308,9 @@ $(document).ready(function(e) {
 				if(create_new_site){
 					anim_show = false;
 					if($(this).attr('id') == 'bModalBackOk')
-						$('#install_by_step_maintenance .bBackButton').click();
+						setTimeout(function(){$('#install_by_step_maintenance .bBackButton').click()},100);
 					else
-						$('#install_by_step_maintenance .install_by_step_maintenance_next').click();
+						setTimeout(function(){$('#install_by_step_maintenance .install_by_step_maintenance_next').click()},100);
 				}
 			}
 			

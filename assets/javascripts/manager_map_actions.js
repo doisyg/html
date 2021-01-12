@@ -213,25 +213,25 @@ $(document).ready(function() {
 		if (!$('#manager_edit_map_bUndo').hasClass('disabled'))
 			ManagerUndo();
 	});
-	
+	/*
 	$('#manager_edit_map_bUndo').on('touchstart', function(e) { 
 		e.preventDefault();
 		if (!$('#manager_edit_map_bUndo').hasClass('disabled'))
 			ManagerUndo();
 	});
-	
+	*/
 	$('#manager_edit_map_bRedo').click(function(e) {
         e.preventDefault();
 		if (!$('#manager_edit_map_bRedo').hasClass('disabled'))
 			ManagerRedo();
     });
-	
+	/*
 	$('#manager_edit_map_bRedo').on('touchstart', function(e) { 
 		e.preventDefault();
 		if (!$('#manager_edit_map_bRedo').hasClass('disabled'))
 			ManagerRedo();
 	});
-	
+	*/
 	
 	/* MENU POI */
 	

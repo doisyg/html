@@ -382,25 +382,25 @@ $(document).ready(function() {
 		if (!$('#wyca_edit_map_bUndo').hasClass('disabled'))
 			WycaUndo();
 	});
-	
+	/*
 	$('#wyca_edit_map_bUndo').on('touchstart', function(e) { 
 		e.preventDefault();
 		if (!$('#wyca_edit_map_bUndo').hasClass('disabled'))
 			WycaUndo();
 	});
-	
+	*/
 	$('#wyca_edit_map_bRedo').click(function(e) {
         e.preventDefault();
 		if (!$('#wyca_edit_map_bRedo').hasClass('disabled'))
 			WycaRedo();
     });
-	
+	/*
 	$('#wyca_edit_map_bRedo').on('touchstart', function(e) { 
 		e.preventDefault();
 		if (!$('#wyca_edit_map_bRedo').hasClass('disabled'))
 			WycaRedo();
 	});
-	
+	*/
 	$(document).on('touchstart', '#wyca_edit_map_svg .movable', function(e) {
 		if (wycaCurrentAction != 'gomme')
 		{

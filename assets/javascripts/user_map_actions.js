@@ -216,25 +216,25 @@ $(document).ready(function() {
 		if (!$('#user_edit_map_bUserUndo').hasClass('disabled'))
 			UserUndo();
 	});
-	
+	/*
 	$('#user_edit_map_bUserUndo').on('touchstart', function(e) { 
 		e.preventDefault();
 		if (!$('#user_edit_map_bUserUndo').hasClass('disabled'))
 			UserUndo();
 	});
-	
+	*/
 	$('#user_edit_map_bUserRedo').click(function(e) {
         e.preventDefault();
 		if (!$('#user_edit_map_bUserRedo').hasClass('disabled'))
 			UserRedo();
     });
-	
+	/*
 	$('#user_edit_map_bUserRedo').on('touchstart', function(e) { 
 		e.preventDefault();
 		if (!$('#user_edit_map_bUserRedo').hasClass('disabled'))
 			UserRedo();
 	});
-	
+	*/
 	/* AUGMENTED POSE */
 	
 	$('#user_edit_map .bTestAugmentedPose').click(function(e) {

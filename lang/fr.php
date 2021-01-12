@@ -544,5 +544,12 @@ $_LANG['b662755a87f64ac1e0f7cb8b8c4f9bff'] = 'Erreur arrêt cartographie';
 $_LANG['c79dcfaf062af43c8eac8d8c67f14830'] = 'Son Area';
 $_LANG['f0cdd208a20feeff586c3d10be4abf0b'] = 'Aucun son';
 $_LANG['8b488e961abe0004c5665ff8519d6891'] = 'Assurez-vous que le site sélectionné est bien celui où se trouve le véhicule, sinon le robot pourrait être endommagé ou cassé.';
+$_LANG['01b3b4b4169f582a30f6851796f65ff8'] = 'Je confirme vouloir supprimer le compte de maintenance WYCA.';
+$_LANG['b8e4565400914c49cee7f0de902bad30'] = 'Supprimer le compte maintenance Wyca';
+$_LANG['0ae18f4c61c4ded84c8fc8b80128250e'] = 'Wyca peut avoir besoin de ce compte pour effectuer des travaux d\'entretien sur le véhicule';
+$_LANG['600d80a194f1426edd39dcf4609392dc'] = 'Wyca peut avoir besoin d\'accéder à ce compte pour effectuer des opérations de maintenance sur le robot.';
+$_LANG['43494ab367ab7c5bbad46d8da20578a6'] = 'Si vous supprimez ce compte. Wyca ne pourra plus accéder au robot.';
+$_LANG['02313e81c8bedb90c71f3320385edee8'] = 'En cas de perte du mot de passe, vous devrez peut-être renvoyer le robot à Wyca.';
+$_LANG['9796b858a34598c790d066fa08340a53'] = 'En cas de perte du mot de passe, vous devrez peut-être renvoyer le robot à Wyca.';
 
 ?>

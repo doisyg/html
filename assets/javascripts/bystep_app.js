@@ -1649,6 +1649,13 @@ $(document).ready(function(e) {
 		});
 	})
 	//------------------- STEP MAINTENANCE ACCOUNT ------------------------
+	$('#install_by_step_maintenance #bModalDeleteMaintenanceAccount').click(function(e){
+		$('#install_by_step_maintenance .modalConfirmDeleteMaintenanceAccount').modal('show');
+	})
+	
+	$('#install_by_step_maintenance #install_by_step_delete_maintenance_account').change(function(e){
+		$('#install_by_step_maintenance #bDeleteMaintenanceAccount').toggleClass('disabled');
+	})
 	
 	//AJAX INSTALL STEP CALL
 	$('#install_by_step_maintenance #bDeleteMaintenanceAccount').click(function(e){
@@ -1664,6 +1671,7 @@ $(document).ready(function(e) {
 					success: function(data) {
 						success_info_wyca(textAccountDeleted);
 						$('#install_by_step_maintenance .install_by_step_maintenance_next').click();
+						$('#install_by_step_maintenance .modalConfirmDeleteMaintenanceAccount').modal('hide');
 					},
 					error: function(e) {
 						if(e.responseText == 'no_auth' || e.responseText == 'no_right'){

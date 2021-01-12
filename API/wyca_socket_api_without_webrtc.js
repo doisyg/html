@@ -36,7 +36,7 @@ function WycaAPI(options){
 		INVALID_TARGET_POSE         : 0x142,
 		OBSTACLE_FAIL               : 0x143,
 		WRONG_UNDOCK_PATH           : 0x144,
-		UNKNOW_REFLECTOR            : 0x145,
+		UNKNOWN_REFLECTOR            : 0x145,
 		NO_REFLECTOR_DETECTED       : 0x146,
 		DOCKING   				    : 0x147,
 		UNDOCKED			        : 0x148,
@@ -730,7 +730,7 @@ function WycaAPI(options){
 			case _this.AnswerCode.INVALID_TARGET_POSE : return 'Invalid target position'; break;
 			case _this.AnswerCode.OBSTACLE_FAIL : return 'Obstacle fail'; break;
 			case _this.AnswerCode.WRONG_UNDOCK_PATH : return 'Wrong undock path'; break;
-			case _this.AnswerCode.UNKNOW_REFLECTOR : return 'Unknow reflector for the current map'; break;
+			case _this.AnswerCode.UNKNOWN_REFLECTOR : return 'Unknow reflector for the current map'; break;
 			case _this.AnswerCode.NO_REFLECTOR_DETECTED : return 'No reflector detected around the robot'; break;
 			case _this.AnswerCode.DOCKING : return 'Robot trying to dock'; break; // Robot trying to dock
 			case _this.AnswerCode.UNDOCKED : return 'Robot is undocked'; break; // Robot is undocked

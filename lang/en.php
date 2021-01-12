@@ -498,5 +498,11 @@ $_LANG['b662755a87f64ac1e0f7cb8b8c4f9bff'] = 'Error stop mapping';
 $_LANG['c79dcfaf062af43c8eac8d8c67f14830'] = 'Area Sound';
 $_LANG['f0cdd208a20feeff586c3d10be4abf0b'] = 'No sound';
 $_LANG['8b488e961abe0004c5665ff8519d6891'] = 'Be sure that selected site is the one where is the vehicle, if not robot could be damaged or broken.';
+$_LANG['b8e4565400914c49cee7f0de902bad30'] = 'Delete Wyca maintenance account';
+$_LANG['600d80a194f1426edd39dcf4609392dc'] = 'Wyca may need access to this account to operate maintenance operations on the robot.';
+$_LANG['43494ab367ab7c5bbad46d8da20578a6'] = 'If you delete this account. Wyca will not be able to access the robot.';
+$_LANG['9796b858a34598c790d066fa08340a53'] = 'In case of lost password, you may need to sent back the robot to Wyca.';
+$_LANG['01b3b4b4169f582a30f6851796f65ff8'] = 'I confirm that I want to delete WYCA maintenance account.';
+$_LANG['0ae18f4c61c4ded84c8fc8b80128250e'] = 'Wyca may need this account to perfom maintenance stuff on the vehicle';
 
 ?>

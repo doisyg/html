@@ -1823,7 +1823,7 @@
 				<h4 style="text-align:center;margin:30px 0"><?= __('Keep Wyca maintenance account ?') ?></h4>
 				<div class="tuiles row">
                     <div class="col-xs-6 text-center">
-                    	<a class="bTuile btn" id="bDeleteMaintenanceAccount">
+                    	<a class="bTuile btn" id="bModalDeleteMaintenanceAccount">
                     		<i class="fas fa-user-times iconMenuRed"></i>
 							<h4 class="iconMenuRed"><?php echo __('Delete');?></h4>
                         </a>
@@ -1917,11 +1917,39 @@
 						</div>
 					</div>
 				</div>
+				
+				<div class="modal fade modalConfirmDeleteMaintenanceAccount" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+					<div class="modal-dialog" role="dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<div class="actions mh100vh_55">
+									<div class="h100vh_160" style="overflow:auto">
+										<h4 style="text-align:center;margin-bottom:20px"><i class="fas fa-user-times iconMenuRed"></i> <?=__('Delete Wyca maintenance account') ?></h4>
+										<p><?=__('Wyca may need access to this account to operate maintenance operations on the robot.')?></p>
+										<p><?=__('If you delete this account. Wyca will not be able to access the robot.')?></p>
+										<p><?=__('In case of lost password, you may need to sent back the robot to Wyca.')?></p>
+										<div style="display:flex;align-items: center;    position: absolute;bottom: 70px;">
+											<input type="checkbox" class="cb_confirm" id="install_by_step_delete_maintenance_account" name="" />  
+											<label for="install_by_step_delete_maintenance_account" style="margin-left:10px;font-size:16px; color:#000000;"><?php echo __('I confirm that I want to delete WYCA maintenance account.');?></label>
+										</div>
+										
+									</div>
+									
+									<div style="clear:both;"></div>
+									<a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Cancel');?></a>
+									<a href="#" id="bDeleteMaintenanceAccount" class="btn btn-danger btn_footer_right btn_50 disabled"><?php echo __('Delete');?></a>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
 					<div class="content text-left sm-content">
 						<p class=""><?= __('A maintenance account for Wyca is by default enabled, however it can be removed to suit your security requirement.')?></p>
-						<p class=""><?= __('Wyca can need this account to perfom maintenance stuff on the vehicle')?></p>
+						<p class=""><?= __('Wyca may need this account to perfom maintenance stuff on the vehicle')?></p>
 						<p class=""><?= __('If you keep this account, you could change the default password or keep it too.')?></p>
 						<p class=""><?= __('This password will be communicated to the Wyca team if necessary.')?></p>
 						<p class=""><?= __('If you choose to change it, keep it safe beacuse if you lose the password, there will be no way to retrieve or reset it without returning the robot to Wyca\'s location.')?></p>
