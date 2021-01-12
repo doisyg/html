@@ -46,7 +46,7 @@ function WycaAPI(options){
 		INVALID_TARGET_POSE         : 0x142,
 		OBSTACLE_FAIL               : 0x143,
 		WRONG_UNDOCK_PATH           : 0x144,
-		UNKNOW_REFLECTOR            : 0x145,
+		UNKNOWN_REFLECTOR            : 0x145,
 		NO_REFLECTOR_DETECTED       : 0x146,
 		DOCKING   				    : 0x147,
 		UNDOCKED			        : 0x148,
@@ -1489,8 +1489,8 @@ function WycaAPI(options){
 				case _this.AnswerCode.INVALID_TARGET_POSE : return typeof(textAPIAnswerCode.INVALID_TARGET_POSE) != 'undefined' ? textAPIAnswerCode.INVALID_TARGET_POSE : 'Invalid target position'; break;
 				case _this.AnswerCode.OBSTACLE_FAIL : return typeof(textAPIAnswerCode.OBSTACLE_FAIL) != 'undefined' ? textAPIAnswerCode.OBSTACLE_FAIL : 'Obstacle fail'; break;
 				case _this.AnswerCode.WRONG_UNDOCK_PATH : return typeof(textAPIAnswerCode.WRONG_UNDOCK_PATH) != 'undefined' ? textAPIAnswerCode.WRONG_UNDOCK_PATH : 'Wrong undock path'; break; 
-				case _this.AnswerCode.UNKNOW_REFLECTOR : return typeof(textAPIAnswerCode.UNKNOW_REFLECTOR) != 'undefined' ? textAPIAnswerCode.UNKNOW_REFLECTOR : 'Unknow reflector for the current map'; break;
-				case _this.AnswerCode.NO_REFLECTOR_DETECTED : return typeof(textAPIAnswerCode.UNKNOW_REFLECTOR) != 'undefined' ? textAPIAnswerCode.UNKNOW_REFLECTOR : 'No reflector detected around the robot'; break;
+				case _this.AnswerCode.UNKNOWN_REFLECTOR : return typeof(textAPIAnswerCode.UNKNOWN_REFLECTOR) != 'undefined' ? textAPIAnswerCode.UNKNOWN_REFLECTOR : 'Unknow reflector for the current map'; break;
+				case _this.AnswerCode.NO_REFLECTOR_DETECTED : return typeof(textAPIAnswerCode.NO_REFLECTOR_DETECTED) != 'undefined' ? textAPIAnswerCode.NO_REFLECTOR_DETECTED : 'No reflector detected around the robot'; break;
 				case _this.AnswerCode.DOCKING : return typeof(textAPIAnswerCode.DOCKING) != 'undefined' ? textAPIAnswerCode.DOCKING : 'Robot trying to dock'; break;// Robot trying to dock
 				case _this.AnswerCode.UNDOCKED : return typeof(textAPIAnswerCode.UNDOCKED) != 'undefined' ? textAPIAnswerCode.UNDOCKED : 'Robot is undocked'; break; // Robot is undocked
 				case _this.AnswerCode.WRONG_GOAL : return typeof(textAPIAnswerCode.WRONG_GOAL) != 'undefined' ? textAPIAnswerCode.WRONG_GOAL : 'Wrong goal: Fiducial type and id must be defined'; break;
@@ -1558,7 +1558,7 @@ function WycaAPI(options){
 				case _this.AnswerCode.INVALID_TARGET_POSE : return 'Invalid target position'; break;
 				case _this.AnswerCode.OBSTACLE_FAIL : return 'Obstacle fail'; break;
 				case _this.AnswerCode.WRONG_UNDOCK_PATH : return 'Wrong undock path'; break;
-				case _this.AnswerCode.UNKNOW_REFLECTOR : return 'Unknow reflector for the current map'; break;
+				case _this.AnswerCode.UNKNOWN_REFLECTOR : return 'Unknow reflector for the current map'; break;
 				case _this.AnswerCode.NO_REFLECTOR_DETECTED : return 'No reflector detected around the robot'; break;
 				case _this.AnswerCode.DOCKING : return 'Robot trying to dock'; break; // Robot trying to dock
 				case _this.AnswerCode.UNDOCKED : return 'Robot is undocked'; break; // Robot is undocked
@@ -1566,7 +1566,6 @@ function WycaAPI(options){
 				case _this.AnswerCode.CLOSE_FAILURE : return 'Dock fail too close to dock'; break;
 				case _this.AnswerCode.MOVE_BASIC_FAILED : return 'Move basic action failed'; break;
 				case _this.AnswerCode.GOTOPOSE_FAILED : return 'Go to pose action failed'; break;
-				
 				case _this.AnswerCode.ROBOT_TOO_FAR : return 'Robot too far'; break; 
 				case _this.AnswerCode.UNDOCK_FAIL : return 'Undock failed'; break; 
 				case _this.AnswerCode.NO_VALID_CMD : return  'No valid command'; break; 
