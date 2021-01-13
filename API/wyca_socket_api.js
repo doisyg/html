@@ -150,6 +150,7 @@ function WycaAPI(options){
 		
 		SOUND_PLAY		: 0x8101,
 		SOUND_STOP		: 0x8102,
+		SET_SOUND_IS_ON : 0x7105,
 	 
 	// Services DB
 		CHECK_USER_KEY			: 0x6109,
@@ -384,7 +385,8 @@ function WycaAPI(options){
 		on_error_webcam_try_without : true,
 		host : 'wyca.run:9095',
 		api_key:'',
-		use_ssl:true
+		use_ssl:true,
+		sound_is_on: true
     };
     this.options = $.extend({}, defaults, options || {});
    	
@@ -398,7 +400,6 @@ function WycaAPI(options){
 		else
 			this.options.nick = 'server';
 	}
-	
 	
 	this.websocketStarted = false;
 	this.websocketAuthed = false;
@@ -2082,22 +2083,47 @@ function WycaAPI(options){
 	
 	
 	this.PlaySound  = function(sound, nb_loops, callback){
-		if (callback != undefined)
-			this.callbacks[_this.CommandCode.SOUND_PLAY] = callback;
-		var action = {
-			"O": _this.CommandCode.SOUND_PLAY,
-			"P":{
-				"S":sound,
-				"N":nb_loops
-			}
-		};
-		_this.wycaSend(JSON.stringify(action));
+		if (_this.options.sound_is_on)
+		{
+			if (callback != undefined)
+				this.callbacks[_this.CommandCode.SOUND_PLAY] = callback;
+			var action = {
+				"O": _this.CommandCode.SOUND_PLAY,
+				"P":{
+					"S":sound,
+					"N":nb_loops
+				}
+			};
+			_this.wycaSend(JSON.stringify(action));
+		}
+		else
+		{
+			if (callback != undefined)
+				callback({"A":_this.AnswerCode.DETAILS_IN_MESSAGE, "M":"Sound is disabled"})
+		}
 	}
 	this.StopSound  = function(callback){
+		if (_this.options.sound_is_on)
+		{
+			if (callback != undefined)
+				this.callbacks[_this.CommandCode.SOUND_STOP] = callback;
+			var action = {
+				"O": _this.CommandCode.SOUND_STOP
+			};
+			_this.wycaSend(JSON.stringify(action));
+		}
+		else
+		{
+			if (callback != undefined)
+				callback({"A":_this.AnswerCode.DETAILS_IN_MESSAGE, "M":"Sound is disabled"})
+		}
+	}
+	this.SetSoundIsOn  = function(is_on, callback){
 		if (callback != undefined)
-			this.callbacks[_this.CommandCode.SOUND_STOP] = callback;
+			this.callbacks[_this.CommandCode.SET_SOUND_IS_ON] = callback;
 		var action = {
-			"O": _this.CommandCode.SOUND_STOP
+			"O": _this.CommandCode.SET_SOUND_IS_ON,
+			"P":is_on
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}

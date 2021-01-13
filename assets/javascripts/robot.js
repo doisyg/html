@@ -65,6 +65,7 @@ $(document).ready(function(e) {
 		use_ssl: use_ssl,
 		api_key:user_api_key,
 		nick:'robot',
+		sound_is_on:true,
 		
 		onRobotConnexionError: function(data){
 			connectedToTheRobot = false;
