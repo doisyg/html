@@ -47,6 +47,7 @@
 
 		var user_api_key = '<?php echo $_SESSION["api_key"];?>';
 		var user_id = '<?php echo $_SESSION["id_user"];?>';
+		var bool_app_sound = JSON.parse('<?php echo $app_sound;?>');
 		// TODO var id_map_last = <?php // echo $currentIdMap;?>;
 
 		</script>
@@ -117,6 +118,9 @@
 			<?php }?>
 			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 5) {?>
 			InitInstallWifiPageByStep();
+			<?php }?>
+            <?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 6) {?>
+			InitSoundByStep();
 			<?php }?>
             <?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 61) {?>
 			InitMasterDockByStep();

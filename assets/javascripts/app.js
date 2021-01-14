@@ -199,6 +199,7 @@ $(document).ready(function(e) {
     });
 	
 	/* ------------------------- GESTION BTN GOTO -----------------------*/
+	
 	$( 'body' ).on( 'click', '.button_goto', function(e) {
 		if(isDown)SetCurseurV2(xCentre, yCentre); // REINIT JOYSTICK TO MIDDLE
 		let anim_show = true; // TRIGGER ANIM ? 
@@ -227,7 +228,7 @@ $(document).ready(function(e) {
 					}
 				});
 			}
-			if(target == 'install_by_step_wifi'){ //UPDATE INSTALL STEP ON BACK FROM CREATE NEW SITE PROCESS NORMAL
+			if(target == 'install_by_step_sound'){ //UPDATE INSTALL STEP ON BACK FROM CREATE NEW SITE PROCESS NORMAL
 				if(getCookie('create_new_site') || create_new_site){
 					setCookie('create_new_site',false);
 					$.ajax({
@@ -239,7 +240,7 @@ $(document).ready(function(e) {
 						success: function(data) {
 						},
 						error: function(e) {
-							alert_wyca((typeof(textErrorSaveSite) != 'undefined'? textErrorSaveSite : 'Error save site') + ' ' + e.responseText);
+							alert_wyca((typeof(textErrorFinish) != 'undefined'? textErrorFinish : 'Error in finish') + ' ' + e.responseText);
 						}
 					});
 					$('#modalBack').modal('hide');
@@ -284,6 +285,7 @@ $(document).ready(function(e) {
 			if (next == 'install_by_step_tops') InitTopsByStep();
 			if (next == 'install_by_step_top') InitTopsActiveByStep();
 			if (next == 'install_by_step_check') InitCheckByStep();		
+			if (next == 'install_by_step_sound') InitSoundByStep();		
 			if (next == 'install_by_step_wifi') InitInstallWifiPageByStep();
 			if (next == 'install_by_step_config') GetConfigurationsByStep();
 			if (next == 'install_by_step_mapping') InitMappingByStep();
@@ -331,6 +333,7 @@ $(document).ready(function(e) {
 			if (next == 'install_normal_setup_tops') InitTopsNormal();
 			if (next == 'install_normal_setup_top') InitTopsActiveNormal();
 			if (next == 'install_normal_setup_config') GetConfigurationsNormal();
+			if (next == 'install_normal_setup_sound') InitSoundNormal();
 			if (next == 'install_normal_setup_wifi') InitInstallWifiPageNormal();
 			if (next == 'install_normal_manager') {
 				GetManagersNormal();
@@ -426,6 +429,7 @@ $(document).ready(function(e) {
 		}
 
     });
+	
 	/* ------------------------- GESTION BTN GOTO -----------------------*/
 	
 	$(document).on('touchstart', '.ui-slider-handle', function(event) {
@@ -1211,7 +1215,6 @@ function GetInstallersWyca()
 	}
 }
 
-
 // USER
 
 function GetUsersManager()
@@ -1691,6 +1694,33 @@ function InitTopsActiveByStep()
 	}
 }
 
+//SOUND
+
+function InitSoundNormal()
+{
+	let bool = bool_app_sound;
+	if(bool){
+		$('#install_normal_setup_sound #sound_switch_app').parent().find('.ios-switch').removeClass('off').addClass('on');
+		$('#install_normal_setup_sound #sound_switch_app').prop('checked',true);
+	}else{
+		$('#install_normal_setup_sound #sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
+		$('#install_normal_setup_sound #sound_switch_app').prop('checked',false);
+	}
+}
+
+function InitSoundByStep()
+{
+	let bool = bool_app_sound;
+	if(bool){
+		$('#install_by_step_sound #sound_switch_app').parent().find('.ios-switch').removeClass('off').addClass('on');
+		$('#install_by_step_sound #sound_switch_app').prop('checked',true);
+	}else{
+		$('#install_by_step_sound #sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
+		$('#install_by_step_sound #sound_switch_app').prop('checked',false);
+	}
+}
+
+
 // WIFI
 
 function InitInstallWifiPageWyca()
@@ -1820,6 +1850,7 @@ function InitInstallWifiPageByStep()
 }
 
 // BYSTEP RELATED FUNCS
+
 function InitMappingByStep()
 {
 	imgMappingLoaded = true;
@@ -2318,6 +2349,7 @@ function TogglePopupHelp()
 }
 
 /* GESTION COOKIES */
+
 function setCookie(cname, cvalue, exdays = 90)
 {
 	var d = new Date();
@@ -2353,7 +2385,7 @@ function deleteCookie(cname)
 
 function resetCookies()
 {
-	let tab =['create_new_site','boolHelpManagerI','boolHelpAreaI','boolHelpForbiddenI','boolHelpGotoPoseI','boolHelpGotoPoseM','boolHelpGotoPoseU'];
+	let tab =['create_new_site','boolHelpManagerI','boolHelpAreaI','boolHelpForbiddenI','boolHelpGotoPoseI','boolHelpGotoPoseM','boolHelpGotoPoseU','APP_SOUND'];
 	tab.forEach(cookie => deleteCookie(cookie))
 }
 

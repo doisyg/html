@@ -63,6 +63,10 @@ if ($currentIdLang == '') $currentIdLang = 2;
 $currentLang = new Lang($currentIdLang);
 $translate = new Translate($currentLang->iso);
 
+$app_sound = Configuration::GetValue('APP_SOUND');
+if($app_sound == '')
+	$app_sound = 'false';
+
 if (!isset($notCloseSession)) session_write_close();
 
 

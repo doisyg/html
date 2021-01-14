@@ -504,5 +504,16 @@ $_LANG['43494ab367ab7c5bbad46d8da20578a6'] = 'If you delete this account. Wyca w
 $_LANG['9796b858a34598c790d066fa08340a53'] = 'In case of lost password, you may need to sent back the robot to Wyca.';
 $_LANG['01b3b4b4169f582a30f6851796f65ff8'] = 'I confirm that I want to delete WYCA maintenance account.';
 $_LANG['0ae18f4c61c4ded84c8fc8b80128250e'] = 'Wyca may need this account to perfom maintenance stuff on the vehicle';
+$_LANG['a5d4d43a7f7f2a0032e0bb4f1352d967'] = 'Sound management';
+$_LANG['c5c5e761e3011a9186a0ab68e53199c5'] = 'You have the possibility to enable or disable Elodie sounds.';
+$_LANG['86e5b85500193ad5997f3b0ba661d269'] = 'You have the possibility to enable or disable sounds of this application.';
+$_LANG['43e16587f98fd9aa164d9691c1179ef9'] = 'Error save sound config';
+$_LANG['81ac907f60223d51c1bb86870dde2583'] = 'audible warning when reversing';
+$_LANG['c1f0aef8be9cc220624f68490a6616e9'] = 'Allow this app to play sound through the vehicle';
+$_LANG['28f6cb4bff96df410db9894fdc2fbf05'] = 'audible success on goto operation';
+$_LANG['9de107b91e8780421f7a30930fc8d9e7'] = 'audible error on goto operation';
+$_LANG['740f79d3975b35c9d5f95c4f3a5bf469'] = 'Error sound';
+$_LANG['9d07e0e08af7f96cf45be0112b9ccfbe'] = 'Sound';
+$_LANG['de7327221851637265fbbf004c93809f'] = 'Allow vehicle basics sounds';
 
 ?>

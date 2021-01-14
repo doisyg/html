@@ -1040,12 +1040,13 @@
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile1" data-goto="install_normal_setup_sites" href="#"><i class="fa fa-building"></i><?php echo __('Sites');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="install_normal_setup_trinary" href="#"><i class="far fa-map"></i><?php echo __('Map trinary');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="install_normal_setup_language" href="#"><i class="fa fa-language"></i><?php echo __('Language');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="install_normal_setup_wifi" href="#"><i class="fas fa-wifi"></i><?php echo __('Wifi');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="install_normal_setup_config" href="#"><i class="fas fa-battery-three-quarters"></i><?php echo __('Battery settings');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5" data-goto="install_normal_setup_tops" href="#"><i class="fa fa-cube"></i><?php echo __('Tops');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" data-goto="install_normal_setup_export" href="#"><i class="fa fa-upload"></i><?php echo __('Export site');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7" data-goto="install_normal_setup_import" href="#"><i class="fa fa-download"></i><?php echo __('Import site');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8" data-goto="install_normal_setup_reset" href="#"><i class="fa fa-eraser"></i><?php echo __('Factory data reset');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="install_normal_setup_sound" href="#"><i class="fas fa-volume-up"></i><?php echo __('Sound');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="install_normal_setup_wifi" href="#"><i class="fas fa-wifi"></i><?php echo __('Wifi');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5" data-goto="install_normal_setup_config" href="#"><i class="fas fa-battery-three-quarters"></i><?php echo __('Battery settings');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" data-goto="install_normal_setup_tops" href="#"><i class="fa fa-cube"></i><?php echo __('Tops');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7" data-goto="install_normal_setup_export" href="#"><i class="fa fa-upload"></i><?php echo __('Export site');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8" data-goto="install_normal_setup_import" href="#"><i class="fa fa-download"></i><?php echo __('Import site');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile9" data-goto="install_normal_setup_reset" href="#"><i class="fa fa-eraser"></i><?php echo __('Factory data reset');?></a></li>
 				</ul>
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
@@ -1338,6 +1339,47 @@
             </div>
             <footer>
                 <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>
+            </footer>
+        </section>
+        
+		<section id="install_normal_setup_sound" class="page <?php echo $INSTALL_STEP == 6?'active':'';?> with_footer">
+        	<a href="#" class="bBackButton button_goto" data-goto="install_normal_wifi"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Sound management');?></h2>
+            </header>
+            <div class="content">
+				<div class="row">
+					<h4 class="col-xs-9" style="margin: 6px 0;"><?=__('Allow vehicle basics sounds')?></h4>
+					<div class="col-xs-3 switch switch-sm switch-primary">
+                        <input type="checkbox" name="switch" id="sound_switch_ROS" data-plugin-ios-switch checked="checked" />
+                    </div>
+				</div>
+				<ul class="sound_list">
+					<li><?= __('audible warning when reversing')?></li>
+				</ul>
+				<div class="row" style="margin-top:20px;">
+					<h4 class="col-xs-9" style="margin:0;"><?=__('Allow this app to play sound through the vehicle')?></h4>
+					<div class="col-xs-3 switch switch-sm switch-primary">
+                        <input type="checkbox" name="switch" id="sound_switch_app"  data-plugin-ios-switch checked="checked" />
+                    </div>
+				</div>
+				<ul class="sound_list">
+					<li><?= __('audible success on goto operation')?></li>
+					<li><?= __('audible error on goto operation')?></li>
+				</ul>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left">
+						<p><?= __('You have the possibility to enable or disable vehicle sounds.')?></p>
+						<p><?= __('You have the possibility to enable or disable sounds of this application.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
+            </div>
+			<footer>
+				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50" data-goto="install_normal_setup" ><?= __('Back')?></a>
+				<a href="#" class="bSaveSound button_goto btn btn-primary btn_footer_right btn_50" data-goto="install_normal_setup"><?= __('Save')?></a>
             </footer>
         </section>
         
