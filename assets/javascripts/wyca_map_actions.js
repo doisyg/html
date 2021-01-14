@@ -4816,7 +4816,7 @@ function WycaForbiddenSave()
 		currentForbiddenWycaLongTouch = $('#wyca_edit_map_forbidden_'+forbiddens[currentForbiddenIndex].id_area);
 		wycaCurrentAction = 'editForbiddenArea';
 		RemoveClass('#wyca_edit_map_svg .editing_point ', 'editing_point ');
-		ByStepDisplayMenu('wyca_edit_map_menu_forbidden');
+		WycaDisplayMenu('wyca_edit_map_menu_forbidden');
 	}
 	else if (wycaCurrentAction == 'editForbiddenArea')
 	{	
@@ -4828,7 +4828,7 @@ function WycaForbiddenSave()
 		
 		wycaCurrentAction = 'editForbiddenArea';
 		RemoveClass('#wyca_edit_map_svg .editing_point ', 'editing_point ');
-		ByStepDisplayMenu('wyca_edit_map_menu_forbidden');
+		WycaDisplayMenu('wyca_edit_map_menu_forbidden');
 		/*
 		RemoveClass('#wyca_edit_map_svg .active', 'active');
 		RemoveClass('#wyca_edit_map_svg .activ_select', 'activ_select'); 
