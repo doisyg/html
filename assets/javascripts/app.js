@@ -2420,7 +2420,7 @@ function GetDataMapToSave()
 			data.augmented_poses[indexInArray].id_augmented_pose = -1;
 		}
 	});
-	
+	data.id_map = id_map;
 	return data;
 }
 
