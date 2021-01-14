@@ -1442,6 +1442,73 @@ $(document).ready(function(e) {
 		}
 	})
 	
+	//------------------- SOUND ------------------------
+	$('#wyca_setup_sound .sound_switch_ROS').change(function(){
+		if(!$(this).prop('checked')){
+			$('#wyca_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off').addClass('disabled');
+			$('#wyca_setup_sound .sound_switch_app').prop('checked',false);
+		}else{
+			$('#wyca_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('disabled');
+		}
+	});
+	
+	$('#wyca_setup_sound .bSaveSound').click(function(e) {
+		console.log('here');
+		//SOUND
+		if($('#wyca_setup_sound .sound_switch_ROS').prop('checked')){
+			//SOUND ON
+			wycaApi.SetSoundIsOn(true,function(data){})
+			
+		}else{
+			//SOUND OFF
+			wycaApi.SetSoundIsOn(false,function(data){})
+			
+		}
+		
+		//APP SOUND
+		if($('#wyca_setup_sound .sound_switch_app').prop('checked')){
+			//APP SOUND ON
+			$.ajax({
+				type: "POST",
+				url: 'ajax/app_sound_on.php',
+				data: { },
+				dataType: 'json',
+				success: function(data) {
+					wycaApi.options.sound_is_on = true;
+				},
+				error: function(e) {
+					if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+						alert_wyca((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+						setTimeout(function(){window.location.href = 'logout.php'},3000);
+					}else{
+						alert_wyca((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText );
+					}
+				}
+			});
+		}else{
+			//APP SOUND OFF
+			$.ajax({
+				type: "POST",
+				url: 'ajax/app_sound_off.php',
+				data: { },
+				dataType: 'json',
+				success: function(data) {
+					wycaApi.options.sound_is_on = false;
+				},
+				error: function(e) {
+					if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+						alert_wyca((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+						setTimeout(function(){window.location.href = 'logout.php'},3000);
+					}else{
+						alert_wyca((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText );
+					}
+				}
+			});
+			
+		}
+	});
+	
+	
 	//----------------------- WIFI ----------------------------
 	
 	$('#wyca_setup_wifi .refresh_wifi').click(function(e) {

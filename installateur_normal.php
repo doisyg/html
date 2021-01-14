@@ -1038,15 +1038,17 @@
             <div class="content">
                 <ul class="tuiles row">
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile1" data-goto="install_normal_setup_sites" href="#"><i class="fa fa-building"></i><?php echo __('Sites');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="install_normal_setup_trinary" href="#"><i class="far fa-map"></i><?php echo __('Map trinary');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="install_normal_setup_language" href="#"><i class="fa fa-language"></i><?php echo __('Language');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="install_normal_setup_sound" href="#"><i class="fas fa-volume-up"></i><?php echo __('Sound');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="install_normal_setup_wifi" href="#"><i class="fas fa-wifi"></i><?php echo __('Wifi');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5" data-goto="install_normal_setup_config" href="#"><i class="fas fa-battery-three-quarters"></i><?php echo __('Battery settings');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" data-goto="install_normal_setup_tops" href="#"><i class="fa fa-cube"></i><?php echo __('Tops');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="install_normal_setup_tops" href="#"><i class="fa fa-cube"></i><?php echo __('Tops');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="install_normal_setup_config" href="#"><i class="fas fa-battery-three-quarters"></i><?php echo __('Battery settings');?></a></li>
+                    
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="install_normal_setup_sound" href="#"><i class="fas fa-volume-up"></i><?php echo __('Sound');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5" data-goto="install_normal_setup_wifi" href="#"><i class="fas fa-wifi"></i><?php echo __('Wifi');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" data-goto="install_normal_setup_language" href="#"><i class="fa fa-language"></i><?php echo __('Language');?></a></li>
+					
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7" data-goto="install_normal_setup_export" href="#"><i class="fa fa-upload"></i><?php echo __('Export site');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8" data-goto="install_normal_setup_import" href="#"><i class="fa fa-download"></i><?php echo __('Import site');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile9" data-goto="install_normal_setup_reset" href="#"><i class="fa fa-eraser"></i><?php echo __('Factory data reset');?></a></li>
+					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile9" data-goto="install_normal_setup_trinary" href="#"><i class="far fa-map"></i><?php echo __('Map trinary');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile10" data-goto="install_normal_setup_reset" href="#"><i class="fa fa-eraser"></i><?php echo __('Factory data reset');?></a></li>
 				</ul>
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
@@ -1062,214 +1064,6 @@
             </footer>
         </section>
        
-        <section id="install_normal_setup_reset" class="page hide_photo_back with_footer">
-	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
-            <header>
-                <div class="pull-left"><img src="assets/images/logo.png" /></div>
-                <h2><?php echo __('Factory data reset');?></h2>
-            </header>
-            <div class="content">
-                
-                <div style="text-align:center;">
-                
-                    <h2 style="color:#C00"><?php echo __('This action will delete all data from the robot!');?></h2>
-                    
-                    <div style="margin-top:50px;"><input type="checkbox" class="cb_confirm" id="install_normal_setup_reset_cbConfirm" name="cb_confirm" />  <label for="install_normal_setup_reset_cbConfirm" style="font-size:16px; color:#000000;"><?php echo __('I confirm that I want to delete all data.');?></label></div>
-                    
-                </div>
-				<div class="popupHelp">
-					<h2><?=__('Help')?></h2>
-					<div class="content sm-content text-left">
-						<p class=""><?= __('This page allows you to reset all robot data to the factory default settings.')?></p>
-						<p class=""><?= __('All data will be permanently deleted including maps and user and manager accounts.')?></p>
-						<p class=""><?= __('Once the data is reset, you will be redirected to the login page.')?></p>
-						<p class=""><?= __('You will need to use the default login and password for your first login.')?></p>
-					</div>
-					<p class="legende"><?=__('Click to hide')?></p>
-				</div>
-			</div>
-            <footer>
-            	<a href="#" class="btn btn-default button_goto btn_footer_left btn_50" data-goto="install_normal_setup" ><?php echo __('Cancel');?></a>
-                <a href="#" class="btn btn-danger bReset btn_footer_right btn_50"><?php echo __('Reset');?></a>
-                <a href="#" class="button_goto bGotoReset" data-goto="install_normal_setup_reset_do" style="display:none;"></a>
-            </footer>
-        </section>
-        
-        <section id="install_normal_setup_reset_do" class="page hide_photo_back">
-	        <header>
-                <div class="pull-left"><img src="assets/images/logo.png" /></div>
-                <h2><?php echo __('Factory data reset');?></h2>
-            </header>
-            <div class="content">
-                
-                <div style="text-align:center;">
-                
-                	<i style="font-size:100px; margin-top:50px;" class="fa fa-spinner fa-pulse"></i>
-                    
-                </div>         
-            </div>
-        </section>
-        
-        <section id="install_normal_setup_export" class="page with_footer">
-	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
-            <header>
-                <div class="pull-left"><img src="assets/images/logo.png" /></div>
-                <h2><?php echo __('Sites');?></h2>
-            </header>
-            <div class="content">
-                
-                <div class="install_normal_setup_export_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
-                <h4 style="text-align:center;margin:30px 0"><?= __('Export sites by clicking on the icon') ?></h4>
-										
-                <div class="loaded col-md-12" style="padding-top:30px;">
-                	<ul class="list_sites list_elem">
-                    </ul>
-                </div>
-				<div class="popupHelp">
-					<h2><?=__('Help')?></h2>
-					<div class="content text-left sm-content">
-						<p class=""><?= __('Ths page allow you to export a site by clicking on the correspondant icon.')?></p>
-						<p class=""><?= __('The export of a site is a backup of all the configuration linked to a site (map, charging stations, areas...).')?></p>
-						<p class=""><?= __('You can also use the .wyca generated file to import this site on another vehicle.')?></p>
-						<p class=""><?= __('Keep this copy as it will allow you to reload your site in case of factory reset.')?></p>
-					</div>
-					<p class="legende"><?=__('Click to hide')?></p>
-				</div>
-			</div>
-            <footer>
-                <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="install_normal_setup"><?php echo __('Back');?></a>
-            </footer>
-        </section>
-             
-        <section id="install_normal_setup_import" class="page with_footer">
-	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
-            <header>
-                <div class="pull-left"><img src="assets/images/logo.png" /></div>
-                <h2><?php echo __('Sites');?></h2>
-            </header>
-            <div class="content">
-                
-                <div class="install_normal_setup_import_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
-                <div class="install_normal_setup_import_content">
-					<div class="file_import_site_wrapper">
-						<input class="file_import_site" type="file" class="form-control" accept=".wyca"/>
-						<p><i class="fas fa-2x fa-file-import"></i><br><?= __('Import your site')?></p>
-						<span class="filename_import_site" style="display:none">Test</span>
-					</div>
-    			</div>
-				<div class="modal fade modalMasterDock" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
-                    <div class="modal-dialog" role="dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <div class="actions mh100vh_55">
-									<div class="h100vh_160" style="overflow:auto; text-align:center">
-										<h4 style="text-align:center;margin:30px 0"><?= __('Pick the default docking station') ?></h4>
-										
-										<div class="MasterDock_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
-										<div class="row" id="MasterDockList">
-										</div>
-										<p style="padding-left:5px;margin-top:10px"><i class="fas fa-asterisk" style="color: darkorange;"></i> <?=__('Actual default dock') ?></p>
-										
-                                    </div>
-                                    
-                                    <div style="clear:both;"></div>
-									
-                                    
-                                    <a href="#" class="btn btn-default btn_50 bCloseMasterDock" style="display:none;" data-dismiss="modal"></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-				<div class="popupHelp">
-					<h2><?=__('Help')?></h2>
-					<div class="content text-left sm-content">
-						<p class=""><?= __('Ths page allow you to import a site by uploading the .wyca file associated.')?></p>
-						<p class=""><?= __('You recover all the configuration linked to a site (map, charging stations, areas...).')?></p>
-						<p class=""><?= __('Whitout having to map again the same site.')?></p>
-					</div>
-				</div>
-            </div>
-            <footer>
-                <a href="#" class="btn btn-default button_goto bImportSiteBack" data-goto="install_normal_setup" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><i class="fa fa-chevron-left"></i> <?php echo __('Back');?></a>
-                <a href="#" class="btn btn-primary bImportSiteDo" style="left:auto; width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Import');?></a>
-            </footer>
-        </section>
-        
-        <section id="install_normal_setup_trinary" class="page hide_photo_back with_footer">
-	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
-            <header>
-                <div class="pull-left"><img src="assets/images/logo.png" /></div>
-                <h2><?php echo __('Trinary');?></h2>
-            </header>
-            <div class="content">
-                
-                <div style="text-align:center;">
-                
-                    <form id="install_normal_setup_trinary_form" method="post">
-                        <input type="hidden" name="todo" value="saveMapping" />
-                        <input type="hidden" id="install_normal_setup_trinary_from_image" name="image" value="" />
-                        <input type="hidden" id="install_normal_setup_trinary_from_image_tri" name="image_tri" value="" />
-                        <input type="hidden" id="install_normal_setup_trinary_from_ros_hauteur" name="ros_hauteur" value="" />
-                        <input type="hidden" id="install_normal_setup_trinary_from_ros_largeur" name="ros_largeur" value="" />
-                        <input type="hidden" id="install_normal_setup_trinary_from_threshold_free" name="threshold_free" value="" />
-                        <input type="hidden" id="install_normal_setup_trinary_from_threshold_occupied" name="threshold_occupied" value="" />
-                    </form>
-                
-                    <div class="fin_mapping_view" style="height:65vh; width:100%; margin:10px 0; border:1px solid #EFEFEF; position:relative; background-color:#F0F0F0;">
-                        <img id="install_normal_setup_trinary_img_map_saved_fin" src="" style="z-index:200; display:none; max-width:100%;" />
-                        <div id="install_normal_setup_trinary_divOptionTrinary">
-                            <div class="threshold_wrapper">
-								<div class="slider_wrapper">
-									<span class="btn btn_slider_minus"><i class="fas fa-minus-square"></i></span>
-									<div id="install_normal_setup_trinary_threshold_free_slider_elem" class="mt-lg mb-lg slider-primary" data-plugin-slider data-plugin-options='{ "value": 25, "range": "min", "max": 100 }' data-plugin-slider-output="#install_normal_setup_trinary_threshold_free_slider">
-										<input id="install_normal_setup_trinary_threshold_free_slider" type="hidden" value="25" />
-									</div>
-									<span class="btn btn_slider_plus"><i class="fas fa-plus-square"></i></span>
-								</div>
-								<p id="install_normal_setup_trinary_threshold_free_output"><?php echo __('Empty area threshold');?> : <b>25</b></p>
-                            </div>
-							
-                            <div class="threshold_wrapper">
-								<div class="slider_wrapper">
-									<span class="btn btn_slider_minus"><i class="fas fa-minus-square"></i></span>
-									 <div id="install_normal_setup_trinary_threshold_occupied_slider_elem" class="mt-lg mb-lg slider-primary" data-plugin-slider data-plugin-options='{ "value": 65, "range": "min", "max": 100 }' data-plugin-slider-output="#install_normal_setup_trinary_threshold_occupied_slider">
-										<input id="install_normal_setup_trinary_threshold_occupied_slider" type="hidden" value="65" />
-									</div>
-									<span class="btn btn_slider_plus"><i class="fas fa-plus-square"></i></span>
-								</div>
-								<p id="install_normal_setup_trinary_threshold_occupied_output"><?php echo __('Object detection threshold');?> : <b>65</b></p>
-                            </div>
-                            <a href="#" class="btn btn-sm btn-primary bResetValueThreshold"><?php echo __('Reset values');?></a>
-                        </div>
-                        <div id="install_normal_setup_trinary_divResultTrinary">
-                            <div style="height:80vh; overflow:auto;">
-                                <i style="font-size:60px;" class="fa fa-spinner fa-pulse loading_fin_create_map"></i>
-                                <canvas id="install_normal_setup_trinary_canvas_result_trinary" width="" height="" style="max-width:100%; max-height:65vh;"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div style="clear:both; height:10px;"></div>
-                    
-                </div>         
-				<div class="popupHelp">
-					<h2><?=__('Help')?></h2>
-					<div class="content text-left sm-content">
-						<p class=""><?= __('You have the possibility to optimize the final result by playing on two values.')?></p>
-						<p class=""><?= __('The default values are judicious in 95% of the cases.')?></p>
-						<p class=""><?= __('It might be necessary to play with these values to correct navigation problems in particular cases.')?></p>
-						<p class=""><?= __(' The goal is to make sure that all the walls are shown in black on the map and that all the areas where the robot has to move are shown in white on the map.')?></p>
-					</div>
-					<p class="legende"><?=__('Click to hide')?></p>
-				</div>
-			</div>
-            <footer>
-            	<a href="#" class="btn btn-default btn_footer_left btn_50 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>           
-                <a href="#" class="btn btn-primary bSaveTrinaryMap btn_footer_right btn_50"><?php echo __('Save');?></a>
-            </footer>
-        </section>
-        
         <section id="install_normal_setup_sites" class="page with_footer">
 	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
             <header>
@@ -1303,143 +1097,124 @@
             </footer>
         </section>
         
-		<section id="install_normal_setup_language" class="page hmi_tuile with_footer">
+        <section id="install_normal_setup_tops" class="page hmi_tuile with_footer">
 	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
-                <h2><?php echo __('Language');?></h2>
+                <h2><?php echo __('Tops');?></h2>
             </header>
             <div class="content">
-            
-            	<ul class="tuiles heightauto row">
-                	<li class="col-xs-6 col-md-6 col-lg-6">
-                        <a href="#" class="select_langue anim_tuiles tuile_img tuile1" data-id_lang="1">
-                            <img src="assets/images/lang/fr_big.jpg" />
-                        </a>
-                    </li>
-					<li class="col-xs-6 col-md-6 col-lg-6">
-                        <h2 style="margin-top:35px"><?=__('Français') ?></h2>
-                    </li>
-                	<li class="col-xs-6 col-md-6 col-lg-6" style="clear:both; margin-top:20px">
-                        <a href="#" class="select_langue anim_tuiles tuile_img tuile2" data-id_lang="2">
-                            <img src="assets/images/lang/en_big.jpg" />
-                        </a>
-                    </li>
-					<li class="col-xs-6 col-md-6 col-lg-6" style="margin-top:20px">
-                        <h2 style="margin-top:35px"><?=__('English') ?></h2>
-                    </li>
+				<div class="install_normal_setup_tops_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
+				<h5 class="text-center" style="margin-bottom:5px;"><?=__('Please select available tops for the vehicle.') ?></h5>
+				<p class="text-center" style="margin-bottom:30px;"><i class="fas fa-exclamation-triangle"></i> <?=__('This is not the active top selection.') ?></p>
+            	
+                <ul class="tuiles row">
                 </ul>
+                
+                
+                <div style="clear:both; height:20px;"></div>
+                <div style="display:flex;justify-content:space-around">
+					<a href="#" class="import_top btn btn-success"><?=__('Import new top')?></a>
+					<a href="#" class="button_goto btn btn-info" data-goto="install_normal_setup_top"><?=__('Select active Top')?></a>
+				</div>
+                <div class="modal fade modalImportTop" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                    <div class="modal-dialog" role="dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="actions mh100vh_55">
+                                     <div class="h100vh_160" style="overflow:auto; text-align:center">
+                                    
+                                        <div class="modalImportTop_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
+                                        <div class="modalImportTop_content">
+	                                        <div class="file_import_top_wrapper">
+												<input class="file_import_top" type="file" class="form-control" accept=".wyca"/>
+												<p><i class="fas fa-2x fa-file-import"></i><br><?= __('Import')?><br><?= __('your')?><br><?= __('Top')?></p>
+												<span class="filename_import_top" style="display:none">Test</span>
+											</div>
+											<img class="img-responsive" id="elodie_import_top" src="assets/images/elodie_form.png">
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                    <div style="clear:both;"></div>
+                                   
+                                    
+                                    <a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal"><?php echo __('Cancel');?></a>
+									<a href="#" class="btn btn-primary bImportTopDo btn_footer_right btn_50" ><?php echo __('Import');?></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
-					<div class="content sm-content">
-						<p><?= __('Please select the language displayed on the app by clicking on the correspondant flag.')?></p>					
+					<div class="content text-left">
+						<p><?= __('Please select available tops by checkboxing its. These tops will then be available to indicate the active top on the robot.')?></p>
+						
+						<p><?= __('If you select only one top, the next step of choosing the active top will be ignored (the active top being the only available top).')?></p>					
+						<p><?= __('You can also import a .wyca top config file.')?><br><div class="text-center"><a href="#" class="import_top btn btn-lg btn-success"><?= __('Import new top')?></a></div></p>			
+						   
+                
 					</div>
 					<p class="legende"><?=__('Click to hide')?></p>
 				</div>
             </div>
             <footer>
-                <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>
+				
+                <a href="#" class="btn btn-default btn_footer_left btn_50 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>
+				<a href="#" class="save_tops btn btn-primary btn_footer_right btn_50"><?=__('Save')?></a> 
             </footer>
         </section>
         
-		<section id="install_normal_setup_sound" class="page <?php echo $INSTALL_STEP == 6?'active':'';?> with_footer">
-        	<a href="#" class="bBackButton button_goto" data-goto="install_normal_wifi"></a>
+		<section id="install_normal_setup_top" class="page hmi_tuile with_footer">
+	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup_tops"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
-                <h2><?php echo __('Sound management');?></h2>
+                <h2><?php echo __('Select active top');?></h2>
             </header>
             <div class="content">
-				<div class="row">
-					<h4 class="col-xs-9" style="margin: 6px 0;"><?=__('Allow vehicle basics sounds')?></h4>
-					<div class="col-xs-3 switch switch-sm switch-primary">
-                        <input type="checkbox" name="switch" class="sound_switch_ROS" data-plugin-ios-switch checked="checked" />
+            	<div class="install_by_step_top_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
+				<h5 class="text-center" style="margin-bottom:30px;"><?=__('Please select the active top for the vehicle.') ?></h5>
+                <ul class="tuiles row">
+                </ul>
+                
+                <div style="clear:both; height:20px;"></div>
+                
+                <div class="modal fade modalSetActiveTop" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                    <div class="modal-dialog" role="dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="actions mh100vh_55">
+                                    
+                                    <div class="h100vh_160" style="overflow:auto">
+                                        <div class="progressSetActiveTop">
+                                            <h4 style="text-align:center;margin-bottom:20px"><?php echo __('Setting new active top');?></h4>
+                                            <div class="setActiveTopProgress progress progress-striped light active m-md">
+                                                <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;">
+                                                </div>
+                                            </div>
+                                        </div>
+			                                    
+            	                        <div style="clear:both;"></div>
+                					</div>                   
+                                    <a href="#" class="btn btn-primary" data-dismiss="modal" style="width:100%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Close');?></a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-				</div>
-				<ul class="sound_list">
-					<li><?= __('audible warning when reversing')?></li>
-				</ul>
-				<div class="row" style="margin-top:20px;">
-					<h4 class="col-xs-9" style="margin:0;"><?=__('Allow this app to play sound through the vehicle')?></h4>
-					<div class="col-xs-3 switch switch-sm switch-primary">
-                        <input type="checkbox" name="switch" class="sound_switch_app"  data-plugin-ios-switch checked="checked" />
-                    </div>
-				</div>
-				<ul class="sound_list">
-					<li><?= __('audible success on goto operation')?></li>
-					<li><?= __('audible error on goto operation')?></li>
-				</ul>
-				<div class="popupHelp">
+                </div>
+                <div class="popupHelp">
 					<h2><?=__('Help')?></h2>
 					<div class="content text-left">
-						<p><?= __('You have the possibility to enable or disable vehicle sounds.')?></p>
-						<p><?= __('You have the possibility to enable or disable sounds of this application.')?></p>
-					</div>
-					<p class="legende"><?=__('Click to hide')?></p>
-				</div>
-            </div>
-			<footer>
-				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50" data-goto="install_normal_setup" ><?= __('Back')?></a>
-				<a href="#" class="bSaveSound button_goto btn btn-primary btn_footer_right btn_50" data-goto="install_normal_setup"><?= __('Save')?></a>
-            </footer>
-        </section>
-        
-		<section id="install_normal_setup_wifi" class="page with_footer">
-	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
-            <header>
-                <div class="pull-left"><img src="assets/images/logo.png" /></div>
-                <h2><?php echo __('Wifi');?></h2>
-            </header>
-            <div class="content">
-            
-            	<h3><?php echo __('Configure Wifi');?></h3>
-                <div class="install_normal_setup_wifi_loading loading_big" style="display:block"><i class="fa fa fa-spinner fa-pulse"></i></div>
-                <table class="table table_wifi">
-                	<tbody class="tbody_wifi">
-                    </tbody>
-                </table>
-                <a href="#" class="refresh_wifi btn btn-default pull-left"><i class="fa fa-refresh"></i></a>
-				<div class="popupHelp">
-					<h2><?=__('Help')?></h2>
-					<div class="content text-left">
-						<p><?= __('You have the possibility to connect the robot to a Wifi network to give it Internet access.')?></p>
-						<p><?= __('This Internet access can be useful to allow Wyca to take control of the robot remotely and thus make updates or specific settings.')?></p>
-						<p><?= __('If you do not want to connect the robot to a Wifi network, you can skip this step by clicking on the Skip button.')?></p>
-						<p><?= __('This page will present the list of detected wifi networks.')?></p>
-						<p><?= __('If the robot is currently connected to a Wifi network, it will appear in bold on a gray background.')?></p>
-						<p><?= __('To connect the robot to a network, click on it, a popup will then allow you to enter the password of the network.')?></p>
+						<p><?= __('Please select active top by clicking on it. That will indicate to the vehicle that its current top on it is the one you picked.')?></p>
+						
 					</div>
 					<p class="legende"><?=__('Click to hide')?></p>
 				</div>
             </div>
             <footer>
-                <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>
-				<a href="#" class="set_passwd_wifi button_goto" data-goto="install_normal_setup_wifi_password" style="display:none;"></a>
+                <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="install_normal_setup_tops"><?php echo __('Back');?></a>
             </footer>
-        </section>
-       
-		<section id="install_normal_setup_wifi_password" class="page with_footer">
-        	<a href="#" class="bBackButton button_goto" data-goto="install_normal_setup_wifi"></a>
-            <header>
-                <div class="pull-left"><img src="assets/images/logo.png" /></div>
-                <h2><?php echo __('Wifi');?></h2>
-            </header>
-            <div class="content">
-            
-            	<h3><?php echo __('Set password');?></h3>
-                
-                <form class="form_site" action="" method="post" style="margin-bottom:20px;">
-	                <input type="password" class="form-control i_wifi_passwd_name" value="" />
-                </form>
-                
-                <div class="wifi_connexion_error"></div>
-                
-                <div class="wifi_connexion_progress"><i class="fa fa fa-spinner fa-pulse"></i></div>
-                
-            </div>
-			<footer>
-				<a href="#" class="install_normal_setup_wifi_password_back button_goto btn btn-default btn_footer_left btn_50" data-goto="install_normal_setup_wifi"><?= __('Back')?></a>
-				<a href="#" class="install_normal_setup_wifi_password_save btn btn-primary btn_footer_right btn_50"><?= __('Connect')?></a>
-			</footer>
         </section>
         
 		<section id="install_normal_setup_config" class="page with_footer">
@@ -1577,50 +1352,211 @@
             </footer>
         </section>
         
-        <section id="install_normal_setup_tops" class="page hmi_tuile with_footer">
+		<section id="install_normal_setup_sound" class="page with_footer">
+        	<a href="#" class="bBackButton button_goto" data-goto="install_normal_wifi"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Sound management');?></h2>
+            </header>
+            <div class="content">
+				<div class="row">
+					<h4 class="col-xs-9" style="margin: 6px 0;"><?=__('Allow vehicle basics sounds')?></h4>
+					<div class="col-xs-3 switch switch-sm switch-primary">
+                        <input type="checkbox" name="switch" class="sound_switch_ROS" data-plugin-ios-switch checked="checked" />
+                    </div>
+				</div>
+				<ul class="sound_list">
+					<li><?= __('audible warning when reversing')?></li>
+				</ul>
+				<div class="row" style="margin-top:20px;">
+					<h4 class="col-xs-9" style="margin:0;"><?=__('Allow this app to play sound through the vehicle')?></h4>
+					<div class="col-xs-3 switch switch-sm switch-primary">
+                        <input type="checkbox" name="switch" class="sound_switch_app"  data-plugin-ios-switch checked="checked" />
+                    </div>
+				</div>
+				<ul class="sound_list">
+					<li><?= __('audible success on goto operation')?></li>
+					<li><?= __('audible error on goto operation')?></li>
+				</ul>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left">
+						<p><?= __('You have the possibility to enable or disable vehicle sounds.')?></p>
+						<p><?= __('You have the possibility to enable or disable sounds of this application.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
+            </div>
+			<footer>
+				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50" data-goto="install_normal_setup" ><?= __('Back')?></a>
+				<a href="#" class="bSaveSound button_goto btn btn-primary btn_footer_right btn_50" data-goto="install_normal_setup"><?= __('Save')?></a>
+            </footer>
+        </section>
+        
+		<section id="install_normal_setup_wifi" class="page with_footer">
 	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
-                <h2><?php echo __('Tops');?></h2>
+                <h2><?php echo __('Wifi');?></h2>
             </header>
             <div class="content">
-				<div class="install_normal_setup_tops_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
-				<h5 class="text-center" style="margin-bottom:5px;"><?=__('Please select available tops for the vehicle.') ?></h5>
-				<p class="text-center" style="margin-bottom:30px;"><i class="fas fa-exclamation-triangle"></i> <?=__('This is not the active top selection.') ?></p>
-            	
-                <ul class="tuiles row">
-                </ul>
-                
-                
-                <div style="clear:both; height:20px;"></div>
-                <div style="display:flex;justify-content:space-around">
-					<a href="#" class="import_top btn btn-success"><?=__('Import new top')?></a>
-					<a href="#" class="button_goto btn btn-info" data-goto="install_normal_setup_top"><?=__('Select active Top')?></a>
+            
+            	<h3><?php echo __('Configure Wifi');?></h3>
+                <div class="install_normal_setup_wifi_loading loading_big" style="display:block"><i class="fa fa fa-spinner fa-pulse"></i></div>
+                <table class="table table_wifi">
+                	<tbody class="tbody_wifi">
+                    </tbody>
+                </table>
+                <a href="#" class="refresh_wifi btn btn-default pull-left"><i class="fa fa-refresh"></i></a>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left">
+						<p><?= __('You have the possibility to connect the robot to a Wifi network to give it Internet access.')?></p>
+						<p><?= __('This Internet access can be useful to allow Wyca to take control of the robot remotely and thus make updates or specific settings.')?></p>
+						<p><?= __('If you do not want to connect the robot to a Wifi network, you can skip this step by clicking on the Skip button.')?></p>
+						<p><?= __('This page will present the list of detected wifi networks.')?></p>
+						<p><?= __('If the robot is currently connected to a Wifi network, it will appear in bold on a gray background.')?></p>
+						<p><?= __('To connect the robot to a network, click on it, a popup will then allow you to enter the password of the network.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
 				</div>
-                <div class="modal fade modalImportTop" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+            </div>
+            <footer>
+                <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>
+				<a href="#" class="set_passwd_wifi button_goto" data-goto="install_normal_setup_wifi_password" style="display:none;"></a>
+            </footer>
+        </section>
+       
+		<section id="install_normal_setup_wifi_password" class="page with_footer">
+        	<a href="#" class="bBackButton button_goto" data-goto="install_normal_setup_wifi"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Wifi');?></h2>
+            </header>
+            <div class="content">
+            
+            	<h3><?php echo __('Set password');?></h3>
+                
+                <form class="form_site" action="" method="post" style="margin-bottom:20px;">
+	                <input type="password" class="form-control i_wifi_passwd_name" value="" />
+                </form>
+                
+                <div class="wifi_connexion_error"></div>
+                
+                <div class="wifi_connexion_progress"><i class="fa fa fa-spinner fa-pulse"></i></div>
+                
+            </div>
+			<footer>
+				<a href="#" class="install_normal_setup_wifi_password_back button_goto btn btn-default btn_footer_left btn_50" data-goto="install_normal_setup_wifi"><?= __('Back')?></a>
+				<a href="#" class="install_normal_setup_wifi_password_save btn btn-primary btn_footer_right btn_50"><?= __('Connect')?></a>
+			</footer>
+        </section>
+        
+		<section id="install_normal_setup_language" class="page hmi_tuile with_footer">
+	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Language');?></h2>
+            </header>
+            <div class="content">
+            
+            	<ul class="tuiles heightauto row">
+                	<li class="col-xs-6 col-md-6 col-lg-6">
+                        <a href="#" class="select_langue anim_tuiles tuile_img tuile1" data-id_lang="1">
+                            <img src="assets/images/lang/fr_big.jpg" />
+                        </a>
+                    </li>
+					<li class="col-xs-6 col-md-6 col-lg-6">
+                        <h2 style="margin-top:35px"><?=__('Français') ?></h2>
+                    </li>
+                	<li class="col-xs-6 col-md-6 col-lg-6" style="clear:both; margin-top:20px">
+                        <a href="#" class="select_langue anim_tuiles tuile_img tuile2" data-id_lang="2">
+                            <img src="assets/images/lang/en_big.jpg" />
+                        </a>
+                    </li>
+					<li class="col-xs-6 col-md-6 col-lg-6" style="margin-top:20px">
+                        <h2 style="margin-top:35px"><?=__('English') ?></h2>
+                    </li>
+                </ul>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content sm-content">
+						<p><?= __('Please select the language displayed on the app by clicking on the correspondant flag.')?></p>					
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
+            </div>
+            <footer>
+                <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>
+            </footer>
+        </section>
+        
+        <section id="install_normal_setup_export" class="page with_footer">
+	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Sites');?></h2>
+            </header>
+            <div class="content">
+                
+                <div class="install_normal_setup_export_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
+                <h4 style="text-align:center;margin:30px 0"><?= __('Export sites by clicking on the icon') ?></h4>
+										
+                <div class="loaded col-md-12" style="padding-top:30px;">
+                	<ul class="list_sites list_elem">
+                    </ul>
+                </div>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left sm-content">
+						<p class=""><?= __('Ths page allow you to export a site by clicking on the correspondant icon.')?></p>
+						<p class=""><?= __('The export of a site is a backup of all the configuration linked to a site (map, charging stations, areas...).')?></p>
+						<p class=""><?= __('You can also use the .wyca generated file to import this site on another vehicle.')?></p>
+						<p class=""><?= __('Keep this copy as it will allow you to reload your site in case of factory reset.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
+			</div>
+            <footer>
+                <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="install_normal_setup"><?php echo __('Back');?></a>
+            </footer>
+        </section>
+		
+        <section id="install_normal_setup_import" class="page with_footer">
+	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Sites');?></h2>
+            </header>
+            <div class="content">
+                
+                <div class="install_normal_setup_import_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
+                <div class="install_normal_setup_import_content">
+					<div class="file_import_site_wrapper">
+						<input class="file_import_site" type="file" class="form-control" accept=".wyca"/>
+						<p><i class="fas fa-2x fa-file-import"></i><br><?= __('Import your site')?></p>
+						<span class="filename_import_site" style="display:none">Test</span>
+					</div>
+    			</div>
+				<div class="modal fade modalMasterDock" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
                     <div class="modal-dialog" role="dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <div class="actions mh100vh_55">
-                                     <div class="h100vh_160" style="overflow:auto; text-align:center">
-                                    
-                                        <div class="modalImportTop_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
-                                        <div class="modalImportTop_content">
-	                                        <div class="file_import_top_wrapper">
-												<input class="file_import_top" type="file" class="form-control" accept=".wyca"/>
-												<p><i class="fas fa-2x fa-file-import"></i><br><?= __('Import')?><br><?= __('your')?><br><?= __('Top')?></p>
-												<span class="filename_import_top" style="display:none">Test</span>
-											</div>
-											<img class="img-responsive" id="elodie_import_top" src="assets/images/elodie_form.png">
-                                        </div>
-                                        
+									<div class="h100vh_160" style="overflow:auto; text-align:center">
+										<h4 style="text-align:center;margin:30px 0"><?= __('Pick the default docking station') ?></h4>
+										
+										<div class="MasterDock_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
+										<div class="row" id="MasterDockList">
+										</div>
+										<p style="padding-left:5px;margin-top:10px"><i class="fas fa-asterisk" style="color: darkorange;"></i> <?=__('Actual default dock') ?></p>
+										
                                     </div>
                                     
                                     <div style="clear:both;"></div>
-                                   
+									
                                     
-                                    <a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal"><?php echo __('Cancel');?></a>
-									<a href="#" class="btn btn-primary bImportTopDo btn_footer_right btn_50" ><?php echo __('Import');?></a>
+                                    <a href="#" class="btn btn-default btn_50 bCloseMasterDock" style="display:none;" data-dismiss="modal"></a>
                                 </div>
                             </div>
                         </div>
@@ -1628,73 +1564,139 @@
                 </div>
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
-					<div class="content text-left">
-						<p><?= __('Please select available tops by checkboxing its. These tops will then be available to indicate the active top on the robot.')?></p>
-						
-						<p><?= __('If you select only one top, the next step of choosing the active top will be ignored (the active top being the only available top).')?></p>					
-						<p><?= __('You can also import a .wyca top config file.')?><br><div class="text-center"><a href="#" class="import_top btn btn-lg btn-success"><?= __('Import new top')?></a></div></p>			
-						   
-                
+					<div class="content text-left sm-content">
+						<p class=""><?= __('Ths page allow you to import a site by uploading the .wyca file associated.')?></p>
+						<p class=""><?= __('You recover all the configuration linked to a site (map, charging stations, areas...).')?></p>
+						<p class=""><?= __('Whitout having to map again the same site.')?></p>
 					</div>
-					<p class="legende"><?=__('Click to hide')?></p>
 				</div>
             </div>
             <footer>
-				
-                <a href="#" class="btn btn-default btn_footer_left btn_50 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>
-				<a href="#" class="save_tops btn btn-primary btn_footer_right btn_50"><?=__('Save')?></a> 
+                <a href="#" class="btn btn-default button_goto bImportSiteBack" data-goto="install_normal_setup" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><i class="fa fa-chevron-left"></i> <?php echo __('Back');?></a>
+                <a href="#" class="btn btn-primary bImportSiteDo" style="left:auto; width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Import');?></a>
             </footer>
         </section>
         
-		<section id="install_normal_setup_top" class="page hmi_tuile with_footer">
-	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup_tops"></a>
+        <section id="install_normal_setup_trinary" class="page hide_photo_back with_footer">
+	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
-                <h2><?php echo __('Select active top');?></h2>
+                <h2><?php echo __('Trinary');?></h2>
             </header>
             <div class="content">
-            	<div class="install_by_step_top_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
-				<h5 class="text-center" style="margin-bottom:30px;"><?=__('Please select the active top for the vehicle.') ?></h5>
-                <ul class="tuiles row">
-                </ul>
                 
-                <div style="clear:both; height:20px;"></div>
+                <div style="text-align:center;">
                 
-                <div class="modal fade modalSetActiveTop" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
-                    <div class="modal-dialog" role="dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <div class="actions mh100vh_55">
-                                    
-                                    <div class="h100vh_160" style="overflow:auto">
-                                        <div class="progressSetActiveTop">
-                                            <h4 style="text-align:center;margin-bottom:20px"><?php echo __('Setting new active top');?></h4>
-                                            <div class="setActiveTopProgress progress progress-striped light active m-md">
-                                                <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;">
-                                                </div>
-                                            </div>
-                                        </div>
-			                                    
-            	                        <div style="clear:both;"></div>
-                					</div>                   
-                                    <a href="#" class="btn btn-primary" data-dismiss="modal" style="width:100%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Close');?></a>
-                                </div>
+                    <form id="install_normal_setup_trinary_form" method="post">
+                        <input type="hidden" name="todo" value="saveMapping" />
+                        <input type="hidden" id="install_normal_setup_trinary_from_image" name="image" value="" />
+                        <input type="hidden" id="install_normal_setup_trinary_from_image_tri" name="image_tri" value="" />
+                        <input type="hidden" id="install_normal_setup_trinary_from_ros_hauteur" name="ros_hauteur" value="" />
+                        <input type="hidden" id="install_normal_setup_trinary_from_ros_largeur" name="ros_largeur" value="" />
+                        <input type="hidden" id="install_normal_setup_trinary_from_threshold_free" name="threshold_free" value="" />
+                        <input type="hidden" id="install_normal_setup_trinary_from_threshold_occupied" name="threshold_occupied" value="" />
+                    </form>
+                
+                    <div class="fin_mapping_view" style="height:65vh; width:100%; margin:10px 0; border:1px solid #EFEFEF; position:relative; background-color:#F0F0F0;">
+                        <img id="install_normal_setup_trinary_img_map_saved_fin" src="" style="z-index:200; display:none; max-width:100%;" />
+                        <div id="install_normal_setup_trinary_divOptionTrinary">
+                            <div class="threshold_wrapper">
+								<div class="slider_wrapper">
+									<span class="btn btn_slider_minus"><i class="fas fa-minus-square"></i></span>
+									<div id="install_normal_setup_trinary_threshold_free_slider_elem" class="mt-lg mb-lg slider-primary" data-plugin-slider data-plugin-options='{ "value": 25, "range": "min", "max": 100 }' data-plugin-slider-output="#install_normal_setup_trinary_threshold_free_slider">
+										<input id="install_normal_setup_trinary_threshold_free_slider" type="hidden" value="25" />
+									</div>
+									<span class="btn btn_slider_plus"><i class="fas fa-plus-square"></i></span>
+								</div>
+								<p id="install_normal_setup_trinary_threshold_free_output"><?php echo __('Empty area threshold');?> : <b>25</b></p>
+                            </div>
+							
+                            <div class="threshold_wrapper">
+								<div class="slider_wrapper">
+									<span class="btn btn_slider_minus"><i class="fas fa-minus-square"></i></span>
+									 <div id="install_normal_setup_trinary_threshold_occupied_slider_elem" class="mt-lg mb-lg slider-primary" data-plugin-slider data-plugin-options='{ "value": 65, "range": "min", "max": 100 }' data-plugin-slider-output="#install_normal_setup_trinary_threshold_occupied_slider">
+										<input id="install_normal_setup_trinary_threshold_occupied_slider" type="hidden" value="65" />
+									</div>
+									<span class="btn btn_slider_plus"><i class="fas fa-plus-square"></i></span>
+								</div>
+								<p id="install_normal_setup_trinary_threshold_occupied_output"><?php echo __('Object detection threshold');?> : <b>65</b></p>
+                            </div>
+                            <a href="#" class="btn btn-sm btn-primary bResetValueThreshold"><?php echo __('Reset values');?></a>
+                        </div>
+                        <div id="install_normal_setup_trinary_divResultTrinary">
+                            <div style="height:80vh; overflow:auto;">
+                                <i style="font-size:60px;" class="fa fa-spinner fa-pulse loading_fin_create_map"></i>
+                                <canvas id="install_normal_setup_trinary_canvas_result_trinary" width="" height="" style="max-width:100%; max-height:65vh;"></canvas>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="popupHelp">
+                    
+                    <div style="clear:both; height:10px;"></div>
+                    
+                </div>         
+				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
-					<div class="content text-left">
-						<p><?= __('Please select active top by clicking on it. That will indicate to the vehicle that its current top on it is the one you picked.')?></p>
-						
+					<div class="content text-left sm-content">
+						<p class=""><?= __('You have the possibility to optimize the final result by playing on two values.')?></p>
+						<p class=""><?= __('The default values are judicious in 95% of the cases.')?></p>
+						<p class=""><?= __('It might be necessary to play with these values to correct navigation problems in particular cases.')?></p>
+						<p class=""><?= __(' The goal is to make sure that all the walls are shown in black on the map and that all the areas where the robot has to move are shown in white on the map.')?></p>
 					</div>
 					<p class="legende"><?=__('Click to hide')?></p>
 				</div>
-            </div>
+			</div>
             <footer>
-                <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="install_normal_setup_tops"><?php echo __('Back');?></a>
+            	<a href="#" class="btn btn-default btn_footer_left btn_50 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>           
+                <a href="#" class="btn btn-primary bSaveTrinaryMap btn_footer_right btn_50"><?php echo __('Save');?></a>
             </footer>
+        </section>
+        
+        <section id="install_normal_setup_reset" class="page hide_photo_back with_footer">
+	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Factory data reset');?></h2>
+            </header>
+            <div class="content">
+                
+                <div style="text-align:center;">
+                
+                    <h2 style="color:#C00"><?php echo __('This action will delete all data from the robot!');?></h2>
+                    
+                    <div style="margin-top:50px;"><input type="checkbox" class="cb_confirm" id="install_normal_setup_reset_cbConfirm" name="cb_confirm" />  <label for="install_normal_setup_reset_cbConfirm" style="font-size:16px; color:#000000;"><?php echo __('I confirm that I want to delete all data.');?></label></div>
+                    
+                </div>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content sm-content text-left">
+						<p class=""><?= __('This page allows you to reset all robot data to the factory default settings.')?></p>
+						<p class=""><?= __('All data will be permanently deleted including maps and user and manager accounts.')?></p>
+						<p class=""><?= __('Once the data is reset, you will be redirected to the login page.')?></p>
+						<p class=""><?= __('You will need to use the default login and password for your first login.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
+			</div>
+            <footer>
+            	<a href="#" class="btn btn-default button_goto btn_footer_left btn_50" data-goto="install_normal_setup" ><?php echo __('Cancel');?></a>
+                <a href="#" class="btn btn-danger bReset btn_footer_right btn_50"><?php echo __('Reset');?></a>
+                <a href="#" class="button_goto bGotoReset" data-goto="install_normal_setup_reset_do" style="display:none;"></a>
+            </footer>
+        </section>
+        
+        <section id="install_normal_setup_reset_do" class="page hide_photo_back">
+	        <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Factory data reset');?></h2>
+            </header>
+            <div class="content">
+                
+                <div style="text-align:center;">
+                
+                	<i style="font-size:100px; margin-top:50px;" class="fa fa-spinner fa-pulse"></i>
+                    
+                </div>         
+            </div>
         </section>
         
         <section id="install_normal_move" class="page with_footer">

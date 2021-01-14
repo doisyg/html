@@ -1170,7 +1170,7 @@ $(document).ready(function(e) {
 		}
 	})
 	
-	//------------------- STEP SOUND ------------------------
+	//------------------- SOUND ------------------------
 	$('#install_normal_setup_sound .sound_switch_ROS').change(function(){
 		if(!$(this).prop('checked')){
 			$('#install_normal_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off').addClass('disabled');

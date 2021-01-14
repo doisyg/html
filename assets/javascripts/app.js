@@ -347,6 +347,7 @@ $(document).ready(function(e) {
 			// WYCA
 			
 			if (next == 'wyca_setup_sites') GetSitesWyca();
+			if (next == 'wyca_setup_sound') InitSoundWyca();
 			if (next == 'wyca_setup_export') GetSitesForExportWyca();
 			if (next == 'wyca_setup_import') InitSiteImportWyca();
 			if (next == 'wyca_setup_tops') InitTopsWyca();
@@ -1695,6 +1696,39 @@ function InitTopsActiveByStep()
 }
 
 //SOUND
+
+function InitSoundWyca()
+{
+	wycaApi.GetSoundIsOn(function(data){
+		if(data.D){
+			let sound_is_on = data.D
+			if(sound_is_on == 1){
+				//ROS SOUND TRUE
+				$('#wyca_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('off').addClass('on');
+				$('#wyca_setup_sound .sound_switch_ROS').prop('checked',true);
+					//APP SOUND
+				if(app_sound_is_on){
+					$('#wyca_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('off').addClass('on');
+					$('#wyca_setup_sound .sound_switch_app').prop('checked',true);
+				}else{
+					$('#wyca_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
+					$('#wyca_setup_sound .sound_switch_app').prop('checked',false);
+				}
+			}else{
+				$('#wyca_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('on').addClass('off');
+				$('#wyca_setup_sound .sound_switch_ROS').prop('checked',false);
+				$('#wyca_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
+				$('#wyca_setup_sound .sound_switch_app').prop('checked',false);
+			}
+		}else{
+			$('#wyca_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('on').addClass('off');
+			$('#wyca_setup_sound .sound_switch_ROS').prop('checked',false);
+			$('#wyca_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
+			$('#wyca_setup_sound .sound_switch_app').prop('checked',false);
+		}
+		$('#wyca_setup_sound .sound_switch_ROS').change();
+	})
+}
 
 function InitSoundNormal()
 {
