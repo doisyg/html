@@ -229,7 +229,7 @@ $(document).ready(function(e) {
 				});
 			}
 			if(target == 'install_by_step_sound'){ //UPDATE INSTALL STEP ON BACK FROM CREATE NEW SITE PROCESS NORMAL
-				if(getCookie('create_new_site') || create_new_site){
+				if(JSON.parse(getCookie('create_new_site')) || create_new_site){
 					setCookie('create_new_site',false);
 					$.ajax({
 						type: "POST",
