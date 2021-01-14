@@ -653,10 +653,10 @@ $(document).ready(function() {
 							if (data.A == wycaApi.AnswerCode.NO_ERROR){
 								console.log('Map Data Saved');
 								statusSavingMapBeforeTestDock=2; //STOP ANIM PROGRESS BAR
-								/*
+								
 								id_map = data.D.id_map;
 								id_map_last = data.D.id_map;
-								*/
+								
 								forbiddens = data.D.forbiddens;
 								areas = data.D.areas;
 								gommes = Array();
@@ -857,10 +857,10 @@ $(document).ready(function() {
 							if (data.A == wycaApi.AnswerCode.NO_ERROR){
 								console.log('Map Data Saved');
 								statusSavingMapBeforeTestPoi=2; //STOP ANIM PROGRESS BAR
-								/*
+								
 								id_map = data.D.id_map;
 								id_map_last = data.D.id_map;
-								*/
+								
 								forbiddens = data.D.forbiddens;
 								areas = data.D.areas;
 								gommes = Array();
@@ -1108,10 +1108,10 @@ $(document).ready(function() {
 							if (data.A == wycaApi.AnswerCode.NO_ERROR){
 								console.log('Map Data Saved');
 								statusSavingMapBeforeTestAugmentedPose=2; //STOP ANIM PROGRESS BAR
-								/*
+								
 								id_map = data.D.id_map;
 								id_map_last = data.D.id_map;
-								*/
+								
 								forbiddens = data.D.forbiddens;
 								areas = data.D.areas;
 								gommes = Array();

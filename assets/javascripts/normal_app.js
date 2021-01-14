@@ -711,6 +711,8 @@ $(document).ready(function(e) {
 											success_wyca(textSiteImported);
 											$('#pages_install_normal .bImportSiteBack').click();
 										}else{
+											id_map = data.D.id_map;
+											id_map_last = data.D.id_map;
 											forbiddens = data.D.forbiddens;
 											areas = data.D.areas;
 											docks = data.D.docks;
@@ -1312,6 +1314,9 @@ $(document).ready(function(e) {
 					$('#pages_install_normal select.real_test_end').append('<option value="augmented_pose_'+item.id_docking_station+'" data-type="augmented_pose" data-id="'+item.id_augmented_pose+'" >&#xf02a; - A. pose - '+item.name+'</option>' );
 					n++;
 				});
+				
+				id_map = data.D.id_map;
+				id_map_last = data.D.id_map;
 				
 				if(n < 2){
 					$('#pages_install_normal .modalRealTest').modal('hide');

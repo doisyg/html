@@ -854,6 +854,8 @@ function InitMasterDockWyca()
 					if(data.D.docks.length <= 1){
 						$('#pages_wyca #wyca_setup_import .bImportSiteBack').click();
 					}else{
+						id_map = data.D.id_map;
+						id_map_last = data.D.id_map;
 						forbiddens = data.D.forbiddens;
 						areas = data.D.areas;
 						docks = data.D.docks;
@@ -909,6 +911,8 @@ function InitMasterDockNormal()
 					if(data.D.docks.length <= 1){
 						$('#pages_install_normal #install_normal_setup_import .bImportSiteBack').click();
 					}else{
+						id_map = data.D.id_map;
+						id_map_last = data.D.id_map;
 						forbiddens = data.D.forbiddens;
 						areas = data.D.areas;
 						docks = data.D.docks;
@@ -966,6 +970,8 @@ function InitMasterDockByStep(back = false)
 						else
 							$('#install_by_step_site_master_dock .bBackButton').click();
 					}else{
+						id_map = data.D.id_map;
+						id_map_last = data.D.id_map;
 						forbiddens = data.D.forbiddens;
 						areas = data.D.areas;
 						docks = data.D.docks;
@@ -1795,7 +1801,6 @@ function InitSoundByStep()
 		$('#install_by_step_sound .sound_switch_ROS').change();
 	})
 }
-
 
 // WIFI
 

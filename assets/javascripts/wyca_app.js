@@ -698,6 +698,10 @@ $(document).ready(function(e) {
 											success_wyca(textSiteImported);
 											$('#pages_wyca .bImportSiteBack').click();
 										}else{
+											
+											id_map = data.D.id_map;
+											id_map_last = data.D.id_map;
+								
 											forbiddens = data.D.forbiddens;
 											areas = data.D.areas;
 											docks = data.D.docks;
@@ -1585,6 +1589,9 @@ $(document).ready(function(e) {
 					n++;
 				});
 				
+				id_map = data.D.id_map;
+				id_map_last = data.D.id_map;
+								
 				if(n < 2){
 					$('#pages_wyca .modalRealTest').modal('hide');
 					alert_wyca(textNoRealTest);
