@@ -47,7 +47,7 @@
 
 		var user_api_key = '<?php echo $_SESSION["api_key"];?>';
 		var user_id = '<?php echo $_SESSION["id_user"];?>';
-		var bool_app_sound = JSON.parse('<?php echo $app_sound;?>');
+		var app_sound_is_on = JSON.parse('<?php echo $app_sound;?>');
 		// TODO var id_map_last = <?php // echo $currentIdMap;?>;
 
 		</script>

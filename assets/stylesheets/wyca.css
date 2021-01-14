@@ -1345,6 +1345,20 @@ span.toggle_details{
     justify-content: center;    
 	margin-left: -12.5px;
 }
+.ios-switch{
+	opacity: 1;
+    pointer-events: unset;
+    transition: 0.5s all;
+    box-shadow: 0 0 0px 2px #f7f7f7;
+}
+.ios-switch.disabled{
+	opacity:0.5;
+	pointer-events:none;
+	box-shadow: 0 0 0px 0px #f7f7f7;
+}
+.ios-switch.on{
+	box-shadow: 0 0 0px 0px #f7f7f7;
+}
 .sound_list{
 	margin-top:10px;
 	list-style-type: none;

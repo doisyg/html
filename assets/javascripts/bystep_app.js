@@ -407,27 +407,29 @@ $(document).ready(function(e) {
     });
 	
 	//------------------- STEP SOUND ------------------------
-	$('#install_by_step_sound #sound_switch_ROS').change(function(){
+	$('#install_by_step_sound .sound_switch_ROS').change(function(){
 		if(!$(this).prop('checked')){
-			$('#install_by_step_sound #sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
-			$('#install_by_step_sound #sound_switch_app').prop('checked',false);
+			$('#install_by_step_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off').addClass('disabled');
+			$('#install_by_step_sound .sound_switch_app').prop('checked',false);
+		}else{
+			$('#install_by_step_sound .sound_switch_app').parent().find('.ios-switch').removeClass('disabled');;
 		}
 	});
 	
 	$('#install_by_step_sound .bNextSound').click(function(e) {
 		//SOUND
-		if($('#install_by_step_sound #sound_switch_ROS').prop('checked')){
+		if($('#install_by_step_sound .sound_switch_ROS').prop('checked')){
 			//SOUND ON
-			wycaApi.SetSoundIsOn(true,function(data){console.log(data)})
+			wycaApi.SetSoundIsOn(true,function(data){})
 			
 		}else{
 			//SOUND OFF
-			wycaApi.SetSoundIsOn(false,function(data){console.log(data)})
+			wycaApi.SetSoundIsOn(false,function(data){})
 			
 		}
 		
 		//APP SOUND
-		if($('#install_by_step_sound #sound_switch_app').prop('checked')){
+		if($('#install_by_step_sound .sound_switch_app').prop('checked')){
 			//APP SOUND ON
 			$.ajax({
 				type: "POST",

@@ -1228,6 +1228,7 @@ function ManagerDisplayApiMessageGoTo(data)
 	if (data.A == wycaApi.AnswerCode.NO_ERROR)
 	{
 		//SI SUCCESS
+		wycaApi.PlaySound(wycaApi.SOUND.SUCCESS, 1);
 		$('#manager_edit_map .modalFinTest section.panel-success').show();
 		$('#manager_edit_map .modalFinTest section.panel-danger').hide();
 		$('#manager_edit_map .modalFinTest section.panel-warning').hide();
@@ -1247,6 +1248,7 @@ function ManagerDisplayApiMessageGoTo(data)
 			target = $('#manager_edit_map .modalFinTest section.panel-warning span.error_details');
 		}else{
 			//SI ERROR
+			wycaApi.PlaySound(wycaApi.SOUND.ALERT, 1);
 			$('#manager_edit_map .modalFinTest section.panel-success').hide();
 			$('#manager_edit_map .modalFinTest section.panel-danger').show();
 			$('#manager_edit_map .modalFinTest section.panel-warning').hide();

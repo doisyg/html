@@ -5021,6 +5021,7 @@ function ByStepDisplayApiMessageGoTo(data)
 	if (data.A == wycaApi.AnswerCode.NO_ERROR)
 	{
 		//SI SUCCESS
+		wycaApi.PlaySound(wycaApi.SOUND.SUCCESS, 1);
 		$('#install_by_step_edit_map .modalFinTest section.panel-success').show();
 		$('#install_by_step_edit_map .modalFinTest section.panel-danger').hide();
 		$('#install_by_step_edit_map .modalFinTest section.panel-warning').hide();
@@ -5040,6 +5041,7 @@ function ByStepDisplayApiMessageGoTo(data)
 			target = $('#install_by_step_edit_map .modalFinTest section.panel-warning span.error_details');
 		}else{
 			//SI ERROR
+			wycaApi.PlaySound(wycaApi.SOUND.ALERT, 1);
 			$('#install_by_step_edit_map .modalFinTest section.panel-success').hide();
 			$('#install_by_step_edit_map .modalFinTest section.panel-danger').show();
 			$('#install_by_step_edit_map .modalFinTest section.panel-warning').hide();

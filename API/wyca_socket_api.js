@@ -2128,7 +2128,7 @@ function WycaAPI(options){
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
-	this.GetSoundIsOn  = function(is_on, callback){
+	this.GetSoundIsOn  = function(callback){
 		if (callback != undefined)
 			this.callbacks[_this.CommandCode.GET_SOUND_IS_ON] = callback;
 		var action = {

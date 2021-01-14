@@ -328,7 +328,7 @@
 				<div class="row">
 					<h4 class="col-xs-9" style="margin: 6px 0;"><?=__('Allow vehicle basics sounds')?></h4>
 					<div class="col-xs-3 switch switch-sm switch-primary">
-                        <input type="checkbox" name="switch" id="sound_switch_ROS" data-plugin-ios-switch checked="checked" />
+                        <input type="checkbox" name="switch" class="sound_switch_ROS" data-plugin-ios-switch checked="checked" />
                     </div>
 				</div>
 				<ul class="sound_list">
@@ -337,7 +337,7 @@
 				<div class="row" style="margin-top:20px;">
 					<h4 class="col-xs-9" style="margin:0;"><?=__('Allow this app to play sound through the vehicle')?></h4>
 					<div class="col-xs-3 switch switch-sm switch-primary">
-                        <input type="checkbox" name="switch" id="sound_switch_app"  data-plugin-ios-switch checked="checked" />
+                        <input type="checkbox" name="switch" class="sound_switch_app"  data-plugin-ios-switch checked="checked" />
                     </div>
 				</div>
 				<ul class="sound_list">

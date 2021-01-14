@@ -4920,6 +4920,7 @@ function WycaDisplayApiMessageGoTo(data)
 	if (data.A == wycaApi.AnswerCode.NO_ERROR)
 	{
 		//SI SUCCESS
+		wycaApi.PlaySound(wycaApi.SOUND.SUCCESS, 1);
 		$('#wyca_edit_map .modalFinTest section.panel-success').show();
 		$('#wyca_edit_map .modalFinTest section.panel-danger').hide();
 		$('#wyca_edit_map .modalFinTest section.panel-warning').hide();
@@ -4939,6 +4940,7 @@ function WycaDisplayApiMessageGoTo(data)
 			target = $('#wyca_edit_map .modalFinTest section.panel-warning span.error_details');
 		}else{
 			//SI ERROR
+			wycaApi.PlaySound(wycaApi.SOUND.ALERT, 1);
 			$('#wyca_edit_map .modalFinTest section.panel-success').hide();
 			$('#wyca_edit_map .modalFinTest section.panel-danger').show();
 			$('#wyca_edit_map .modalFinTest section.panel-warning').hide();
