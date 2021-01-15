@@ -73,7 +73,8 @@ function WycaAPI(options){
 		OUT_OF_MAP                  : 0x15C,  // The start and / or the goal are outside the map
 		MAP_ERROR                   : 0x15D,  // The map is not running properly
 		STOPPED                     : 0x15E,  // The controller execution has been stopped rigorously.
-		TARGET_TOO_CLOSE            : 0x15F
+		TARGET_TOO_CLOSE            : 0x15F,
+		NOT_CURRENT_MAP             : 0x160
 	};
 	
 	// API Commands list
@@ -1528,6 +1529,7 @@ function WycaAPI(options){
 				case _this.AnswerCode.MAP_ERROR : return typeof(textAPIAnswerCode.MAP_ERROR) != 'undefined' ? textAPIAnswerCode.MAP_ERROR : 'The map is not running properly'; break;
 				case _this.AnswerCode.STOPPED : return typeof(textAPIAnswerCode.STOPPED) != 'undefined' ? textAPIAnswerCode.STOPPED : 'The controller execution has been stopped rigorously.'; break;
 				case _this.AnswerCode.TARGET_TOO_CLOSE : return typeof(textAPIAnswerCode.TARGET_TOO_CLOSE) != 'undefined' ? textAPIAnswerCode.TARGET_TOO_CLOSE : 'Target too close'; break;
+				case _this.AnswerCode.NOT_CURRENT_MAP : return typeof(textAPIAnswerCode.NOT_CURRENT_MAP) != 'undefined' ? textAPIAnswerCode.NOT_CURRENT_MAP : 'Not current map'; break;
 				
 				default: return typeof(textAPIAnswerCode.DEFAULT) != 'undefined' ? textAPIAnswerCode.DEFAULT  : 'Unknown error code'; 
 			}
@@ -1596,6 +1598,7 @@ function WycaAPI(options){
 				case _this.AnswerCode.MAP_ERROR : return 'The map is not running properly'; break;
 				case _this.AnswerCode.STOPPED : return 'The controller execution has been stopped rigorously.'; break;
 				case _this.AnswerCode.TARGET_TOO_CLOSE : return 'Target too close'; break;
+				case _this.AnswerCode.NOT_CURRENT_MAP : return 'Not current map'; break;
 				default: return 'Unknow error code';
 			}
 		}

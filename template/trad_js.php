@@ -164,4 +164,5 @@ textAPIAnswerCode.OUT_OF_MAP = "<?php echo __js( 'The start and / or the goal ar
 textAPIAnswerCode.MAP_ERROR = "<?php echo __js( 'The map is not running properly');?>";
 textAPIAnswerCode.STOPPED = "<?php echo __js( 'The controller execution has been stopped rigorously.');?>";
 textAPIAnswerCode.TARGET_TOO_CLOSE = "<?php echo __js( 'Target too close');?>";
+textAPIAnswerCode.NOT_CURRENT_MAP = "<?php echo __js( 'Not current map');?>";
 textAPIAnswerCode.DEFAULT = "<?php echo __js('Unknown error code');?>";
