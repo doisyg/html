@@ -551,5 +551,17 @@ $_LANG['600d80a194f1426edd39dcf4609392dc'] = 'Wyca peut avoir besoin d\'accéder
 $_LANG['43494ab367ab7c5bbad46d8da20578a6'] = 'Si vous supprimez ce compte. Wyca ne pourra plus accéder au robot.';
 $_LANG['02313e81c8bedb90c71f3320385edee8'] = 'En cas de perte du mot de passe, vous devrez peut-être renvoyer le robot à Wyca.';
 $_LANG['9796b858a34598c790d066fa08340a53'] = 'En cas de perte du mot de passe, vous devrez peut-être renvoyer le robot à Wyca.';
+$_LANG['43e16587f98fd9aa164d9691c1179ef9'] = 'Erreur sauvegarde config son';
+$_LANG['740f79d3975b35c9d5f95c4f3a5bf469'] = 'Erreur son';
+$_LANG['a5d4d43a7f7f2a0032e0bb4f1352d967'] = 'Gestion sonore';
+$_LANG['de7327221851637265fbbf004c93809f'] = 'Autoriser les sons de base des véhicules';
+$_LANG['81ac907f60223d51c1bb86870dde2583'] = 'avertissement sonore marche arrière';
+$_LANG['c1f0aef8be9cc220624f68490a6616e9'] = 'Autoriser cette application à émettre des sons via le véhicule';
+$_LANG['28f6cb4bff96df410db9894fdc2fbf05'] = 'succès sonore sur une opération goto';
+$_LANG['9de107b91e8780421f7a30930fc8d9e7'] = 'erreur sonore sur une opération goto';
+$_LANG['c5c5e761e3011a9186a0ab68e53199c5'] = 'Vous avez la possibilité d\'activer ou de désactiver les sons du véhicule.';
+$_LANG['86e5b85500193ad5997f3b0ba661d269'] = 'Vous avez la possibilité d\'activer ou de désactiver les sons de cette application.';
+$_LANG['9d07e0e08af7f96cf45be0112b9ccfbe'] = 'Son';
+$_LANG['3ca332cf9cfdcd214dc6ed0274e12070'] = 'Vous avez la possibilité d\'activer ou de désactiver les sons du véhicule.';
 
 ?>

@@ -711,6 +711,8 @@ $(document).ready(function(e) {
 											success_wyca(textSiteImported);
 											$('#pages_install_normal .bImportSiteBack').click();
 										}else{
+											id_map = data.D.id_map;
+											id_map_last = data.D.id_map;
 											forbiddens = data.D.forbiddens;
 											areas = data.D.areas;
 											docks = data.D.docks;
@@ -884,6 +886,7 @@ $(document).ready(function(e) {
 	
 	//------------------- ACCOUNTS ------------------------
 	//MANAGERS
+	
 	$('#install_normal_manager .bHelpManagerOk').click(function(){boolHelpManager = !$('#install_normal_manager .checkboxHelpManager').prop('checked');setCookie('boolHelpManagerI',boolHelpManager);});//ADD SAVING BDD / COOKIES ?
 	
 	$('#install_normal_manager .bAddManager').click(function(e) {
@@ -1169,6 +1172,73 @@ $(document).ready(function(e) {
 		}
 	})
 	
+	//------------------- SOUND ------------------------
+	$('#install_normal_setup_sound .sound_switch_ROS').change(function(){
+		if(!$(this).prop('checked')){
+			$('#install_normal_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off').addClass('disabled');
+			$('#install_normal_setup_sound .sound_switch_app').prop('checked',false);
+		}else{
+			$('#install_normal_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('disabled');
+		}
+	});
+	
+	$('#install_normal_setup_sound .bSaveSound').click(function(e) {
+		console.log('here');
+		//SOUND
+		if($('#install_normal_setup_sound .sound_switch_ROS').prop('checked')){
+			//SOUND ON
+			wycaApi.SetSoundIsOn(true,function(data){})
+			
+		}else{
+			//SOUND OFF
+			wycaApi.SetSoundIsOn(false,function(data){})
+			
+		}
+		
+		//APP SOUND
+		if($('#install_normal_setup_sound .sound_switch_app').prop('checked')){
+			//APP SOUND ON
+			$.ajax({
+				type: "POST",
+				url: 'ajax/app_sound_on.php',
+				data: { },
+				dataType: 'json',
+				success: function(data) {
+					wycaApi.options.sound_is_on = true;
+				},
+				error: function(e) {
+					if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+						alert_wyca((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+						setTimeout(function(){window.location.href = 'logout.php'},3000);
+					}else{
+						alert_wyca((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText );
+					}
+				}
+			});
+		}else{
+			//APP SOUND OFF
+			$.ajax({
+				type: "POST",
+				url: 'ajax/app_sound_off.php',
+				data: { },
+				dataType: 'json',
+				success: function(data) {
+					wycaApi.options.sound_is_on = false;
+				},
+				error: function(e) {
+					if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+						alert_wyca((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+						setTimeout(function(){window.location.href = 'logout.php'},3000);
+					}else{
+						alert_wyca((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText );
+					}
+				}
+			});
+			
+		}
+	});
+	
+	
 	//----------------------- WIFI ----------------------------
 	
 	$('#install_normal_setup_wifi .refresh_wifi').click(function(e) {
@@ -1244,6 +1314,9 @@ $(document).ready(function(e) {
 					$('#pages_install_normal select.real_test_end').append('<option value="augmented_pose_'+item.id_docking_station+'" data-type="augmented_pose" data-id="'+item.id_augmented_pose+'" >&#xf02a; - A. pose - '+item.name+'</option>' );
 					n++;
 				});
+				
+				id_map = data.D.id_map;
+				id_map_last = data.D.id_map;
 				
 				if(n < 2){
 					$('#pages_install_normal .modalRealTest').modal('hide');

@@ -151,6 +151,7 @@ function WycaAPI(options){
 		SOUND_PLAY		: 0x8101,
 		SOUND_STOP		: 0x8102,
 		SET_SOUND_IS_ON : 0x7105,
+		GET_SOUND_IS_ON : 0x7106,
 	 
 	// Services DB
 		CHECK_USER_KEY			: 0x6109,
@@ -2124,6 +2125,14 @@ function WycaAPI(options){
 		var action = {
 			"O": _this.CommandCode.SET_SOUND_IS_ON,
 			"P":is_on
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	this.GetSoundIsOn  = function(callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.GET_SOUND_IS_ON] = callback;
+		var action = {
+			"O": _this.CommandCode.GET_SOUND_IS_ON
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}

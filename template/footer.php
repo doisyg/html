@@ -39,14 +39,15 @@
         <script>
 		var lang = '<?php echo $currentLang->iso;?>';
 
-		var robot_host = '<?php echo (file_exists('C:\\'))?((file_exists('C:\\Users\\F'))?'10.0.0.39:'.($server_request_scheme == 'http'?'9094':'9095'):'192.168.0.33:'.($server_request_scheme == 'http'?'9094':'9095')):'wyca.run:'.($server_request_scheme == 'http'?'9094':'9095');?>';
-		var robot_http = '<?php echo (file_exists('C:\\'))?((file_exists('C:\\Users\\F'))?$server_request_scheme.'://10.0.0.39':$server_request_scheme.'://192.168.0.33'):'';?>';
+		var robot_host = '<?php echo (file_exists('C:\\'))?((file_exists('C:\\Users\\F') || file_exists('C:\\Users\\Yvan'))?'10.0.0.39:'.($server_request_scheme == 'http'?'9094':'9095'):'192.168.0.33:'.($server_request_scheme == 'http'?'9094':'9095')):'wyca.run:'.($server_request_scheme == 'http'?'9094':'9095');?>';
+		var robot_http = '<?php echo (file_exists('C:\\'))?((file_exists('C:\\Users\\F') || file_exists('C:\\Users\\Yvan'))?$server_request_scheme.'://10.0.0.39':$server_request_scheme.'://192.168.0.33'):'';?>';
 		//var robot_host = '<?php echo (file_exists('C:\\'))?'10.0.0.44:'.($server_request_scheme == 'http'?'9094':'9095'):'wyca.run:'.($server_request_scheme == 'http'?'9094':'9095');?>';
 		var use_ssl = <?php echo $server_request_scheme == 'http'?'false':'true';?>;
 		var app_url = '<?php echo $server_request_scheme;?>://wyca.run';
 
 		var user_api_key = '<?php echo $_SESSION["api_key"];?>';
 		var user_id = '<?php echo $_SESSION["id_user"];?>';
+		var app_sound_is_on = JSON.parse('<?php echo $app_sound;?>');
 		// TODO var id_map_last = <?php // echo $currentIdMap;?>;
 
 		</script>
@@ -117,6 +118,9 @@
 			<?php }?>
 			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 5) {?>
 			InitInstallWifiPageByStep();
+			<?php }?>
+            <?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 6) {?>
+			InitSoundByStep();
 			<?php }?>
             <?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 61) {?>
 			InitMasterDockByStep();

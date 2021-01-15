@@ -345,7 +345,6 @@ $(document).ready(function(e) {
 	
 	//------------------- STEP WIFI ------------------------
 	
-		
 	$('#install_by_step_wifi .refresh_wifi').click(function(e) {
 		e.preventDefault();		
 	});
@@ -386,6 +385,7 @@ $(document).ready(function(e) {
     });
 	
 	//AJAX INSTALL STEP CALL
+
 	$('#pages_install_by_step a.skip_wifi').click(function(e) {
         e.preventDefault();
 		$.ajax({
@@ -405,6 +405,89 @@ $(document).ready(function(e) {
 			}
 		});
     });
+	
+	//------------------- STEP SOUND ------------------------
+	$('#install_by_step_sound .sound_switch_ROS').change(function(){
+		if(!$(this).prop('checked')){
+			$('#install_by_step_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off').addClass('disabled');
+			$('#install_by_step_sound .sound_switch_app').prop('checked',false);
+		}else{
+			$('#install_by_step_sound .sound_switch_app').parent().find('.ios-switch').removeClass('disabled');;
+		}
+	});
+	
+	$('#install_by_step_sound .bNextSound').click(function(e) {
+		//SOUND
+		if($('#install_by_step_sound .sound_switch_ROS').prop('checked')){
+			//SOUND ON
+			wycaApi.SetSoundIsOn(true,function(data){})
+			
+		}else{
+			//SOUND OFF
+			wycaApi.SetSoundIsOn(false,function(data){})
+			
+		}
+		
+		//APP SOUND
+		if($('#install_by_step_sound .sound_switch_app').prop('checked')){
+			//APP SOUND ON
+			$.ajax({
+				type: "POST",
+				url: 'ajax/app_sound_on.php',
+				data: { },
+				dataType: 'json',
+				success: function(data) {
+					wycaApi.options.sound_is_on = true;
+				},
+				error: function(e) {
+					if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+						alert_wyca((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+						setTimeout(function(){window.location.href = 'logout.php'},3000);
+					}else{
+						alert_wyca((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText );
+					}
+				}
+			});
+		}else{
+			//APP SOUND OFF
+			$.ajax({
+				type: "POST",
+				url: 'ajax/app_sound_off.php',
+				data: { },
+				dataType: 'json',
+				success: function(data) {
+					wycaApi.options.sound_is_on = false;
+				},
+				error: function(e) {
+					if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+						alert_wyca((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+						setTimeout(function(){window.location.href = 'logout.php'},3000);
+					}else{
+						alert_wyca((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText );
+					}
+				}
+			});
+			
+		}
+		//AJAX INSTALL STEP CALL
+		$.ajax({
+			type: "POST",
+			url: 'ajax/install_by_step_sound.php',
+			data: { },
+			dataType: 'json',
+			success: function(data) {
+			},
+			error: function(e) {
+				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+					alert_wyca((typeof(textErrorSound) != 'undefined'? textErrorSound : 'Error sound' ) + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					setTimeout(function(){window.location.href = 'logout.php'},3000);
+				}else{
+					alert_wyca((typeof(textErrorSound) != 'undefined'? textErrorSound : 'Error sound ') + ' ' + e.responseText );
+				}
+			}
+		});
+	});
+	
 	
 	//------------------- STEP SITE ------------------------
 
@@ -958,6 +1041,8 @@ $(document).ready(function(e) {
 													}
 												});
 											}else{
+												id_map = data.D.id_map;
+												id_map_last = data.D.id_map;
 												forbiddens = data.D.forbiddens;
 												areas = data.D.areas;
 												docks = data.D.docks;
@@ -1476,8 +1561,9 @@ $(document).ready(function(e) {
 					$('#pages_install_by_step select.real_test_end').append('<option value="augmented_pose_'+item.id_docking_station+'" data-type="augmented_pose" data-id="'+item.id_augmented_pose+'" >&#xf02a; - A. pose - '+item.name+'</option>' );
 					n++;
 				});
+				id_map = data.D.id_map;
+				id_map_last = data.D.id_map;
 				if(n < 2){
-					
 					$('#pages_install_by_step .modalRealTest').modal('hide');
 					alert_wyca(textNoRealTest);
 				}

@@ -317,9 +317,50 @@
 				<a href="#" class="install_by_step_wifi_password_save btn btn-primary btn_footer_right btn_50"><?= __('Connect')?></a>
 			</footer>
         </section>
-			
-		<section id="install_by_step_site" class="page <?php echo $INSTALL_STEP == 10?'active':'';?> with_footer">
+		
+		<section id="install_by_step_sound" class="page <?php echo $INSTALL_STEP == 6?'active':'';?> with_footer">
         	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_wifi"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Sound management');?></h2>
+            </header>
+            <div class="content">
+				<div class="row">
+					<h4 class="col-xs-9" style="margin: 6px 0;"><?=__('Allow vehicle basics sounds')?></h4>
+					<div class="col-xs-3 switch switch-sm switch-primary">
+                        <input type="checkbox" name="switch" class="sound_switch_ROS" data-plugin-ios-switch checked="checked" />
+                    </div>
+				</div>
+				<ul class="sound_list">
+					<li><?= __('audible warning when reversing')?></li>
+				</ul>
+				<div class="row" style="margin-top:20px;">
+					<h4 class="col-xs-9" style="margin:0;"><?=__('Allow this app to play sound through the vehicle')?></h4>
+					<div class="col-xs-3 switch switch-sm switch-primary">
+                        <input type="checkbox" name="switch" class="sound_switch_app"  data-plugin-ios-switch checked="checked" />
+                    </div>
+				</div>
+				<ul class="sound_list">
+					<li><?= __('audible success on goto operation')?></li>
+					<li><?= __('audible error on goto operation')?></li>
+				</ul>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left">
+						<p><?= __('You have the possibility to enable or disable vehicle sounds.')?></p>
+						<p><?= __('You have the possibility to enable or disable sounds of this application.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
+            </div>
+			<footer>
+				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50 btn_back" data-goto="install_by_step_wifi" ><?= __('Back')?></a>
+				<a href="#" class="bNextSound button_goto btn btn-primary btn_footer_right btn_50" data-goto="install_by_step_site"><?= __('Next')?></a>
+            </footer>
+        </section>
+        
+		<section id="install_by_step_site" class="page <?php echo $INSTALL_STEP == 10?'active':'';?> with_footer">
+        	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_sound"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
                 <h2><?php echo __('Site');?></h2>
@@ -351,7 +392,7 @@
 				</div>
             </div>
 			<footer>
-				<a href="#" class="button_goto btn btn-default btn_footer_left btn_100 btn_back" data-goto="install_by_step_wifi"><?= __('Back')?></a>
+				<a href="#" class="button_goto btn btn-default btn_footer_left btn_100 btn_back" data-goto="install_by_step_sound"><?= __('Back')?></a>
             </footer>
         </section>
 		

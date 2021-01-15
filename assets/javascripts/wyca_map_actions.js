@@ -653,10 +653,10 @@ $(document).ready(function() {
 							if (data.A == wycaApi.AnswerCode.NO_ERROR){
 								console.log('Map Data Saved');
 								statusSavingMapBeforeTestDock=2; //STOP ANIM PROGRESS BAR
-								/*
+								
 								id_map = data.D.id_map;
 								id_map_last = data.D.id_map;
-								*/
+								
 								forbiddens = data.D.forbiddens;
 								areas = data.D.areas;
 								gommes = Array();
@@ -857,10 +857,10 @@ $(document).ready(function() {
 							if (data.A == wycaApi.AnswerCode.NO_ERROR){
 								console.log('Map Data Saved');
 								statusSavingMapBeforeTestPoi=2; //STOP ANIM PROGRESS BAR
-								/*
+								
 								id_map = data.D.id_map;
 								id_map_last = data.D.id_map;
-								*/
+								
 								forbiddens = data.D.forbiddens;
 								areas = data.D.areas;
 								gommes = Array();
@@ -1108,10 +1108,10 @@ $(document).ready(function() {
 							if (data.A == wycaApi.AnswerCode.NO_ERROR){
 								console.log('Map Data Saved');
 								statusSavingMapBeforeTestAugmentedPose=2; //STOP ANIM PROGRESS BAR
-								/*
+								
 								id_map = data.D.id_map;
 								id_map_last = data.D.id_map;
-								*/
+								
 								forbiddens = data.D.forbiddens;
 								areas = data.D.areas;
 								gommes = Array();
@@ -4816,7 +4816,7 @@ function WycaForbiddenSave()
 		currentForbiddenWycaLongTouch = $('#wyca_edit_map_forbidden_'+forbiddens[currentForbiddenIndex].id_area);
 		wycaCurrentAction = 'editForbiddenArea';
 		RemoveClass('#wyca_edit_map_svg .editing_point ', 'editing_point ');
-		ByStepDisplayMenu('wyca_edit_map_menu_forbidden');
+		WycaDisplayMenu('wyca_edit_map_menu_forbidden');
 	}
 	else if (wycaCurrentAction == 'editForbiddenArea')
 	{	
@@ -4828,7 +4828,7 @@ function WycaForbiddenSave()
 		
 		wycaCurrentAction = 'editForbiddenArea';
 		RemoveClass('#wyca_edit_map_svg .editing_point ', 'editing_point ');
-		ByStepDisplayMenu('wyca_edit_map_menu_forbidden');
+		WycaDisplayMenu('wyca_edit_map_menu_forbidden');
 		/*
 		RemoveClass('#wyca_edit_map_svg .active', 'active');
 		RemoveClass('#wyca_edit_map_svg .activ_select', 'activ_select'); 
@@ -4920,6 +4920,7 @@ function WycaDisplayApiMessageGoTo(data)
 	if (data.A == wycaApi.AnswerCode.NO_ERROR)
 	{
 		//SI SUCCESS
+		wycaApi.PlaySound(wycaApi.SOUND.SUCCESS, 1);
 		$('#wyca_edit_map .modalFinTest section.panel-success').show();
 		$('#wyca_edit_map .modalFinTest section.panel-danger').hide();
 		$('#wyca_edit_map .modalFinTest section.panel-warning').hide();
@@ -4939,6 +4940,7 @@ function WycaDisplayApiMessageGoTo(data)
 			target = $('#wyca_edit_map .modalFinTest section.panel-warning span.error_details');
 		}else{
 			//SI ERROR
+			wycaApi.PlaySound(wycaApi.SOUND.ALERT, 1);
 			$('#wyca_edit_map .modalFinTest section.panel-success').hide();
 			$('#wyca_edit_map .modalFinTest section.panel-danger').show();
 			$('#wyca_edit_map .modalFinTest section.panel-warning').hide();

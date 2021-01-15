@@ -667,10 +667,10 @@ $(document).ready(function() {
 							if (data.A == wycaApi.AnswerCode.NO_ERROR){
 								console.log('Map Data Saved');
 								statusSavingMapBeforeTestDock=2; //STOP ANIM PROGRESS BAR
-								/*
+								
 								id_map = data.D.id_map;
 								id_map_last = data.D.id_map;
-								*/
+								
 								forbiddens = data.D.forbiddens;
 								areas = data.D.areas;
 								gommes = Array();
@@ -915,10 +915,10 @@ $(document).ready(function() {
 							if (data.A == wycaApi.AnswerCode.NO_ERROR){
 								console.log('Map Data Saved');
 								statusSavingMapBeforeTestPoi=2; //STOP ANIM PROGRESS BAR
-								/*
+								
 								id_map = data.D.id_map;
 								id_map_last = data.D.id_map;
-								*/
+								
 								forbiddens = data.D.forbiddens;
 								areas = data.D.areas;
 								gommes = Array();
@@ -1164,10 +1164,10 @@ $(document).ready(function() {
 							if (data.A == wycaApi.AnswerCode.NO_ERROR){
 								console.log('Map Data Saved');
 								statusSavingMapBeforeTestAugmentedPose=2; //STOP ANIM PROGRESS BAR
-								/*
+								
 								id_map = data.D.id_map;
 								id_map_last = data.D.id_map;
-								*/
+								
 								forbiddens = data.D.forbiddens;
 								areas = data.D.areas;
 								gommes = Array();
@@ -5021,6 +5021,7 @@ function ByStepDisplayApiMessageGoTo(data)
 	if (data.A == wycaApi.AnswerCode.NO_ERROR)
 	{
 		//SI SUCCESS
+		wycaApi.PlaySound(wycaApi.SOUND.SUCCESS, 1);
 		$('#install_by_step_edit_map .modalFinTest section.panel-success').show();
 		$('#install_by_step_edit_map .modalFinTest section.panel-danger').hide();
 		$('#install_by_step_edit_map .modalFinTest section.panel-warning').hide();
@@ -5040,6 +5041,7 @@ function ByStepDisplayApiMessageGoTo(data)
 			target = $('#install_by_step_edit_map .modalFinTest section.panel-warning span.error_details');
 		}else{
 			//SI ERROR
+			wycaApi.PlaySound(wycaApi.SOUND.ALERT, 1);
 			$('#install_by_step_edit_map .modalFinTest section.panel-success').hide();
 			$('#install_by_step_edit_map .modalFinTest section.panel-danger').show();
 			$('#install_by_step_edit_map .modalFinTest section.panel-warning').hide();

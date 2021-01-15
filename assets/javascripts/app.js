@@ -199,6 +199,7 @@ $(document).ready(function(e) {
     });
 	
 	/* ------------------------- GESTION BTN GOTO -----------------------*/
+	
 	$( 'body' ).on( 'click', '.button_goto', function(e) {
 		if(isDown)SetCurseurV2(xCentre, yCentre); // REINIT JOYSTICK TO MIDDLE
 		let anim_show = true; // TRIGGER ANIM ? 
@@ -227,8 +228,8 @@ $(document).ready(function(e) {
 					}
 				});
 			}
-			if(target == 'install_by_step_wifi'){ //UPDATE INSTALL STEP ON BACK FROM CREATE NEW SITE PROCESS NORMAL
-				if(getCookie('create_new_site') || create_new_site){
+			if(target == 'install_by_step_sound'){ //UPDATE INSTALL STEP ON BACK FROM CREATE NEW SITE PROCESS NORMAL
+				if(JSON.parse(getCookie('create_new_site')) || create_new_site){
 					setCookie('create_new_site',false);
 					$.ajax({
 						type: "POST",
@@ -239,7 +240,7 @@ $(document).ready(function(e) {
 						success: function(data) {
 						},
 						error: function(e) {
-							alert_wyca((typeof(textErrorSaveSite) != 'undefined'? textErrorSaveSite : 'Error save site') + ' ' + e.responseText);
+							alert_wyca((typeof(textErrorFinish) != 'undefined'? textErrorFinish : 'Error in finish') + ' ' + e.responseText);
 						}
 					});
 					$('#modalBack').modal('hide');
@@ -284,6 +285,7 @@ $(document).ready(function(e) {
 			if (next == 'install_by_step_tops') InitTopsByStep();
 			if (next == 'install_by_step_top') InitTopsActiveByStep();
 			if (next == 'install_by_step_check') InitCheckByStep();		
+			if (next == 'install_by_step_sound') InitSoundByStep();		
 			if (next == 'install_by_step_wifi') InitInstallWifiPageByStep();
 			if (next == 'install_by_step_config') GetConfigurationsByStep();
 			if (next == 'install_by_step_mapping') InitMappingByStep();
@@ -331,6 +333,7 @@ $(document).ready(function(e) {
 			if (next == 'install_normal_setup_tops') InitTopsNormal();
 			if (next == 'install_normal_setup_top') InitTopsActiveNormal();
 			if (next == 'install_normal_setup_config') GetConfigurationsNormal();
+			if (next == 'install_normal_setup_sound') InitSoundNormal();
 			if (next == 'install_normal_setup_wifi') InitInstallWifiPageNormal();
 			if (next == 'install_normal_manager') {
 				GetManagersNormal();
@@ -344,6 +347,7 @@ $(document).ready(function(e) {
 			// WYCA
 			
 			if (next == 'wyca_setup_sites') GetSitesWyca();
+			if (next == 'wyca_setup_sound') InitSoundWyca();
 			if (next == 'wyca_setup_export') GetSitesForExportWyca();
 			if (next == 'wyca_setup_import') InitSiteImportWyca();
 			if (next == 'wyca_setup_tops') InitTopsWyca();
@@ -426,6 +430,7 @@ $(document).ready(function(e) {
 		}
 
     });
+	
 	/* ------------------------- GESTION BTN GOTO -----------------------*/
 	
 	$(document).on('touchstart', '.ui-slider-handle', function(event) {
@@ -849,6 +854,8 @@ function InitMasterDockWyca()
 					if(data.D.docks.length <= 1){
 						$('#pages_wyca #wyca_setup_import .bImportSiteBack').click();
 					}else{
+						id_map = data.D.id_map;
+						id_map_last = data.D.id_map;
 						forbiddens = data.D.forbiddens;
 						areas = data.D.areas;
 						docks = data.D.docks;
@@ -904,6 +911,8 @@ function InitMasterDockNormal()
 					if(data.D.docks.length <= 1){
 						$('#pages_install_normal #install_normal_setup_import .bImportSiteBack').click();
 					}else{
+						id_map = data.D.id_map;
+						id_map_last = data.D.id_map;
 						forbiddens = data.D.forbiddens;
 						areas = data.D.areas;
 						docks = data.D.docks;
@@ -961,6 +970,8 @@ function InitMasterDockByStep(back = false)
 						else
 							$('#install_by_step_site_master_dock .bBackButton').click();
 					}else{
+						id_map = data.D.id_map;
+						id_map_last = data.D.id_map;
 						forbiddens = data.D.forbiddens;
 						areas = data.D.areas;
 						docks = data.D.docks;
@@ -1210,7 +1221,6 @@ function GetInstallersWyca()
 		setTimeout(GetInstallersWyca, 500);
 	}
 }
-
 
 // USER
 
@@ -1691,6 +1701,107 @@ function InitTopsActiveByStep()
 	}
 }
 
+//SOUND
+
+function InitSoundWyca()
+{
+	wycaApi.GetSoundIsOn(function(data){
+		if(data.D){
+			let sound_is_on = data.D
+			if(sound_is_on == 1){
+				//ROS SOUND TRUE
+				$('#wyca_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('off').addClass('on');
+				$('#wyca_setup_sound .sound_switch_ROS').prop('checked',true);
+					//APP SOUND
+				if(app_sound_is_on){
+					$('#wyca_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('off').addClass('on');
+					$('#wyca_setup_sound .sound_switch_app').prop('checked',true);
+				}else{
+					$('#wyca_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
+					$('#wyca_setup_sound .sound_switch_app').prop('checked',false);
+				}
+			}else{
+				$('#wyca_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('on').addClass('off');
+				$('#wyca_setup_sound .sound_switch_ROS').prop('checked',false);
+				$('#wyca_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
+				$('#wyca_setup_sound .sound_switch_app').prop('checked',false);
+			}
+		}else{
+			$('#wyca_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('on').addClass('off');
+			$('#wyca_setup_sound .sound_switch_ROS').prop('checked',false);
+			$('#wyca_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
+			$('#wyca_setup_sound .sound_switch_app').prop('checked',false);
+		}
+		$('#wyca_setup_sound .sound_switch_ROS').change();
+	})
+}
+
+function InitSoundNormal()
+{
+	wycaApi.GetSoundIsOn(function(data){
+		if(data.D){
+			let sound_is_on = data.D
+			if(sound_is_on == 1){
+				//ROS SOUND TRUE
+				$('#install_normal_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('off').addClass('on');
+				$('#install_normal_setup_sound .sound_switch_ROS').prop('checked',true);
+					//APP SOUND
+				if(app_sound_is_on){
+					$('#install_normal_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('off').addClass('on');
+					$('#install_normal_setup_sound .sound_switch_app').prop('checked',true);
+				}else{
+					$('#install_normal_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
+					$('#install_normal_setup_sound .sound_switch_app').prop('checked',false);
+				}
+			}else{
+				$('#install_normal_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('on').addClass('off');
+				$('#install_normal_setup_sound .sound_switch_ROS').prop('checked',false);
+				$('#install_normal_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
+				$('#install_normal_setup_sound .sound_switch_app').prop('checked',false);
+			}
+		}else{
+			$('#install_normal_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('on').addClass('off');
+			$('#install_normal_setup_sound .sound_switch_ROS').prop('checked',false);
+			$('#install_normal_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
+			$('#install_normal_setup_sound .sound_switch_app').prop('checked',false);
+		}
+		$('#install_normal_setup_sound .sound_switch_ROS').change();
+	})
+}
+
+function InitSoundByStep()
+{
+	wycaApi.GetSoundIsOn(function(data){
+		if(data.D){
+			let sound_is_on = data.D
+			if(sound_is_on == 1){
+				//ROS SOUND TRUE
+				$('#install_by_step_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('off').addClass('on');
+				$('#install_by_step_setup_sound .sound_switch_ROS').prop('checked',true);
+					//APP SOUND
+				if(app_sound_is_on){
+					$('#install_by_step_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('off').addClass('on');
+					$('#install_by_step_setup_sound .sound_switch_app').prop('checked',true);
+				}else{
+					$('#install_by_step_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
+					$('#install_by_step_setup_sound .sound_switch_app').prop('checked',false);
+				}
+			}else{
+				$('#install_by_step_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('on').addClass('off');
+				$('#install_by_step_setup_sound .sound_switch_ROS').prop('checked',false);
+				$('#install_by_step_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
+				$('#install_by_step_setup_sound .sound_switch_app').prop('checked',false);
+			}
+		}else{
+			$('#install_by_step_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('on').addClass('off');
+			$('#install_by_step_setup_sound .sound_switch_ROS').prop('checked',false);
+			$('#install_by_step_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
+			$('#install_by_step_setup_sound .sound_switch_app').prop('checked',false);
+		}
+		$('#install_by_step_sound .sound_switch_ROS').change();
+	})
+}
+
 // WIFI
 
 function InitInstallWifiPageWyca()
@@ -1820,6 +1931,7 @@ function InitInstallWifiPageByStep()
 }
 
 // BYSTEP RELATED FUNCS
+
 function InitMappingByStep()
 {
 	imgMappingLoaded = true;
@@ -2308,7 +2420,7 @@ function GetDataMapToSave()
 			data.augmented_poses[indexInArray].id_augmented_pose = -1;
 		}
 	});
-	
+	data.id_map = id_map;
 	return data;
 }
 
@@ -2318,6 +2430,7 @@ function TogglePopupHelp()
 }
 
 /* GESTION COOKIES */
+
 function setCookie(cname, cvalue, exdays = 90)
 {
 	var d = new Date();
@@ -2353,7 +2466,7 @@ function deleteCookie(cname)
 
 function resetCookies()
 {
-	let tab =['create_new_site','boolHelpManagerI','boolHelpAreaI','boolHelpForbiddenI','boolHelpGotoPoseI','boolHelpGotoPoseM','boolHelpGotoPoseU'];
+	let tab =['create_new_site','boolHelpManagerI','boolHelpAreaI','boolHelpForbiddenI','boolHelpGotoPoseI','boolHelpGotoPoseM','boolHelpGotoPoseU','APP_SOUND'];
 	tab.forEach(cookie => deleteCookie(cookie))
 }
 

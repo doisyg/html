@@ -663,10 +663,10 @@ $(document).ready(function() {
 							if (data.A == wycaApi.AnswerCode.NO_ERROR){
 								console.log('Map Data Saved');
 								statusSavingMapBeforeTestDock=2; //STOP ANIM PROGRESS BAR
-								/*
+								
 								id_map = data.D.id_map;
 								id_map_last = data.D.id_map;
-								*/
+								
 								forbiddens = data.D.forbiddens;
 								areas = data.D.areas;
 								gommes = Array();
@@ -868,10 +868,10 @@ $(document).ready(function() {
 							if (data.A == wycaApi.AnswerCode.NO_ERROR){
 								console.log('Map Data Saved');
 								statusSavingMapBeforeTestPoi=2; //STOP ANIM PROGRESS BAR
-								/*
+								
 								id_map = data.D.id_map;
 								id_map_last = data.D.id_map;
-								*/
+								
 								forbiddens = data.D.forbiddens;
 								areas = data.D.areas;
 								gommes = Array();
@@ -1116,10 +1116,10 @@ $(document).ready(function() {
 							if (data.A == wycaApi.AnswerCode.NO_ERROR){
 								console.log('Map Data Saved');
 								statusSavingMapBeforeTestAugmentedPose=2; //STOP ANIM PROGRESS BAR
-								/*
+								
 								id_map = data.D.id_map;
 								id_map_last = data.D.id_map;
-								*/
+								
 								forbiddens = data.D.forbiddens;
 								areas = data.D.areas;
 								gommes = Array();
@@ -4929,6 +4929,7 @@ function NormalDisplayApiMessageGoTo(data)
 	if (data.A == wycaApi.AnswerCode.NO_ERROR)
 	{
 		//SI SUCCESS
+		wycaApi.PlaySound(wycaApi.SOUND.SUCCESS, 1);
 		$('#install_normal_edit_map .modalFinTest section.panel-success').show();
 		$('#install_normal_edit_map .modalFinTest section.panel-danger').hide();
 		$('#install_normal_edit_map .modalFinTest section.panel-warning').hide();
@@ -4948,6 +4949,7 @@ function NormalDisplayApiMessageGoTo(data)
 			target = $('#install_normal_edit_map .modalFinTest section.panel-warning span.error_details');
 		}else{
 			//SI ERROR
+			wycaApi.PlaySound(wycaApi.SOUND.ALERT, 1);
 			$('#install_normal_edit_map .modalFinTest section.panel-success').hide();
 			$('#install_normal_edit_map .modalFinTest section.panel-danger').show();
 			$('#install_normal_edit_map .modalFinTest section.panel-warning').hide();

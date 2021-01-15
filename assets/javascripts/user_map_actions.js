@@ -794,6 +794,7 @@ function UserDisplayApiMessageGoTo(data)
 	if (data.A == wycaApi.AnswerCode.NO_ERROR)
 	{
 		//SI SUCCESS
+		wycaApi.PlaySound(wycaApi.SOUND.SUCCESS, 1);
 		$('#user_edit_map .modalFinTest section.panel-success').show();
 		$('#user_edit_map .modalFinTest section.panel-danger').hide();
 		$('#user_edit_map .modalFinTest section.panel-warning').hide();
@@ -813,6 +814,7 @@ function UserDisplayApiMessageGoTo(data)
 			target = $('#user_edit_map .modalFinTest section.panel-warning span.error_details');
 		}else{
 			//SI ERROR
+			wycaApi.PlaySound(wycaApi.SOUND.ALERT, 1);
 			$('#user_edit_map .modalFinTest section.panel-success').hide();
 			$('#user_edit_map .modalFinTest section.panel-danger').show();
 			$('#user_edit_map .modalFinTest section.panel-warning').hide();
