@@ -6,7 +6,10 @@ function mouseHandler(event)
 	if (event.target.tagName == 'SELECT') return;
 	if (event.target.tagName == 'INPUT') return;
 	if (event.target.tagName == 'TEXTAREA') return;
-		
+	
+	let cn = event.target.className.split(' ');
+    if(cn.includes('ui-slider-handle')) return;
+	
 	var touches = event.changedTouches,
 		eventType = "";
 	switch(event.type)
