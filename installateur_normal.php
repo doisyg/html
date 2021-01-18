@@ -15,6 +15,21 @@
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7" href="logout.php"><i class="fas fa-power-off"></i><?php echo __('Logout');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8 todo" data-goto="install_normal_help" href="#"><i class="fa fa-question"></i><?php echo __('Help');?></a></li>
                 </ul>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content sm-content text-left">
+						<p class=""><?= __('This dashboard allow you to access all features and settings of the vehicle')?></p>
+						<?php if(file_exists('assets/pdfs/user_manual_'.$_SESSION['id_groupe_user'].'_'.$currentLang->iso.'.pdf')):?>
+							<p class=""><?= __('You can download the application user manual.')?></p>
+							<a class="bDownloadUserManual bTuile center btn">
+								<i class="fas fa-download iconMenuGreen"></i>
+								<h4 class="iconMenuGreen"><?php echo __('Download').'<br>'.__('manual');?></h4>
+							</a>
+						<?php endif;?>
+						<p class=""><?= __('Use Logout button to log out of the app')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
             </div>
         </section>
         
@@ -416,6 +431,16 @@
                                                        
                                                     </div>
                                                 </div>
+												<div class="form-group sep">
+                                                    <label class="col-xs-4 control-label"><?php echo __('Area Sound');?></label>
+                                                    <div class="col-xs-8">
+                                                    	<div class="col-xs-12" style="padding:0; margin-bottom:5px;">
+                                                        <select id="install_normal_edit_map_area_sound" name="area_sound" class="form-control input-sm mb-md select_area_sound">
+                                                            <option value="-1"><?php echo __('No sound');?></option>
+                                                        </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </form>
                                         </div>
                                         
@@ -449,7 +474,7 @@
                                                     <img id="install_normal_edit_map_modalAddDock_dock3" class="dock" src="assets/images/reflector.png" width="25" />
                                                     <img id="install_normal_edit_map_modalAddDock_dock4" class="dock" src="assets/images/reflector.png" width="25" />
                                                     <img id="install_normal_edit_map_modalAddDock_dock5" class="dock" src="assets/images/reflector.png" width="25" />
-                                                    
+                                                    <div class="fiducial_number_wrapper"></div>
                                                 </div>
                                             
                                             	<div class ="modal-advice">
@@ -488,7 +513,7 @@
                                         
                                         	<form>
                                                 <div class="form-group">
-                                                    <label class="col-xs-4 control-label">Name</label>
+                                                    <label class="col-xs-4 control-label"><?= __('Name')?></label>
                                                     <div class="col-xs-8">
                                                         <input type="text" id="install_normal_edit_map_dock_name" name="dock_name" value="" class="form-control input-sm mb-md" />
                                                     </div>
@@ -501,22 +526,30 @@
                                                     </div>
                                                 </div>
                                                 -->
+                                                
+                                                <div class="form-group">
+                                                    <label class="col-xs-4 control-label"><?= __('Fiducial ID')?></label>
+                                                    <div class="col-xs-8">
+                                                        <input type="number" id="install_normal_edit_map_dock_fiducial_number" name="dock_fiducial_number" readonly value="1" class="form-control input-sm mb-md" />
+                                                    </div>
+                                                </div>
+                                                
                                                 <input type="hidden" id="install_normal_edit_map_dock_number" name="dock_number" value="1" />
                                                 
                                                 <div class="form-group">
-                                                    <label for="dock_is_master" class="col-xs-10 control-label">Is default docking station for this robot</label>
+                                                    <label for="dock_is_master" class="col-xs-10 control-label"><?= __('Is default docking station for this robot')?></label>
                                                     <div class="col-xs-2">
                                                         <input type="checkbox" id="install_normal_edit_map_dock_is_master" name="dock_is_master" class="input-sm mb-md" style="height:auto;" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="col-xs-4 control-label">Comment</label>
+                                                    <label class="col-xs-4 control-label"><?= __('Comment')?></label>
                                                     <div class="col-xs-8">
                                                         <textarea id="install_normal_edit_map_dock_comment" name="dock_comment" class="form-control input-sm mb-md"></textarea>
                                                     </div>
                                                 </div>
                                                 <fieldset>
-                                                	<legend>Undock procedure</legend>
+                                                	<legend><?= __('Undock procedure')?></legend>
                                                     <div style="text-align:left;">
                                                         <a href="#" class="bNormalUndockProcedureAddElem btn btn-circle btn-default"><i class="fa fa-plus"></i></a>
                                                         <ul class="list_undock_procedure list_elem">
@@ -547,32 +580,32 @@
                                         
                                         	<form>
                                                 <div class="form-group">
-                                                    <label class="col-xs-12 control-label">Action</label>
+                                                    <label class="col-xs-12 control-label"><?= __('Action')?></label>
                                                     <div class="col-xs-6">
                                                         <input type="radio" id="install_normal_edit_map_up_elem_action_move" name="up_elem_action" value="move" class="form-control" />
-                                                    	<label for="up_elem_action_move" class="control-label">Move</label>    
+                                                    	<label for="up_elem_action_move" class="control-label"><?= __('Move')?></label>    
                                                     </div>
                                                     <div class="col-xs-6">
                                                         <input type="radio" id="install_normal_edit_map_up_elem_action_rotate" name="up_elem_action" value="rotate" class="form-control" />
-                                                    	<label for="up_elem_action_rotate" class="control-label">Rotate</label>
+                                                    	<label for="up_elem_action_rotate" class="control-label"><?= __('Rotate')?></label>
                                                     </div>
                                                 </div>
                                                 
                                                 <div class="up_elem_action_move">
                                                     <div class="form-group">
-                                                        <label class="col-xs-12 control-label">Direction</label>
+                                                        <label class="col-xs-12 control-label"><?= __('Direction')?></label>
                                                         <div class="col-xs-6">
                                                             <input type="radio" id="install_normal_edit_map_up_elem_direction_front" name="up_elem_direction" value="front" class="form-control" />
-                                                            <label for="up_elem_direction_front" class="control-label">Front</label>    
+                                                            <label for="up_elem_direction_front" class="control-label"><?= __('Front')?></label>    
                                                         </div>
                                                         <div class="col-xs-6">
                                                             <input type="radio" id="install_normal_edit_map_up_elem_direction_back" name="up_elem_direction" value="back" class="form-control" />
-                                                            <label for="up_elem_direction_back" class="control-label">Back</label>
+                                                            <label for="up_elem_direction_back" class="control-label"><?= __('Back')?></label>
                                                         </div>
                                                     </div>
                                                     
                                                     <div class="form-group">
-                                                        <label class="col-xs-12 control-label">Distance</label>
+                                                        <label class="col-xs-12 control-label"><?= __('Distance')?></label>
                                                         <div class="col-md-6 input-group mb-md">
                                                             <input type="text" value="0" class="form-control" name="up_elem_move_distance" id="install_normal_edit_map_up_elem_move_distance" />
                                                             <span class="input-group-addon">m</span>
@@ -583,7 +616,7 @@
                                                 
                                                 <div class="up_elem_action_rotate">
                                                     <div class="form-group">
-                                                        <label class="col-xs-12 control-label">Angle</label>
+                                                        <label class="col-xs-12 control-label"><?= __('Angle')?></label>
                                                         <div class="col-md-6 input-group mb-md">
                                                             <input type="text" value="0" class="form-control" name="up_elem_rotate_angle" id="install_normal_edit_map_up_elem_rotate_angle" />
                                                             <span class="input-group-addon ">°</span>
@@ -633,7 +666,7 @@
                                         <div style="clear:both;"></div>
                                        
                                         <a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal"><?php echo __('Cancel');?></a>
-                                        <a href="#" id="install_normal_edit_map_bModalAddPoiSave" class="btn btn-primary  btn_footer_right btn_50 ifDocked_disabled" data-dismiss="modal"><?php echo __('Add POI');?></a>
+                                        <a href="#" id="install_normal_edit_map_bModalAddPoiSave" class="btn btn-primary  btn_footer_right btn_50 ifDocked_disabled"><?php echo __('Add POI');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -649,13 +682,13 @@
                                         
                                         	<form>
                                                 <div class="form-group">
-                                                    <label class="col-xs-4 control-label">Name</label>
+                                                    <label class="col-xs-4 control-label"><?= __('Name')?></label>
                                                     <div class="col-xs-8">
                                                         <input type="text" id="install_normal_edit_map_poi_name" name="poi_name" value="" class="form-control input-sm mb-md" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="col-xs-4 control-label">Comment</label>
+                                                    <label class="col-xs-4 control-label"><?= __('Comment')?></label>
                                                     <div class="col-xs-8">
                                                         <textarea id="install_normal_edit_map_poi_comment" name="poi_comment" class="form-control input-sm mb-md"></textarea>
                                                     </div>
@@ -695,7 +728,7 @@
                                                     <img id="install_normal_edit_map_modalAddAugmentedPose_augmented_pose3" class="augmented_pose" src="assets/images/reflector.png" width="25" />
                                                     <img id="install_normal_edit_map_modalAddAugmentedPose_augmented_pose4" class="augmented_pose" src="assets/images/reflector.png" width="25" />
                                                     <img id="install_normal_edit_map_modalAddAugmentedPose_augmented_pose5" class="augmented_pose" src="assets/images/reflector.png" width="25" />
-                                                    
+													<div class="fiducial_number_wrapper"></div>
                                                 </div>
                                             
                                             	<div class ="modal-advice">
@@ -734,19 +767,27 @@
                                         
                                         	<form>
                                                 <div class="form-group">
-                                                    <label class="col-xs-4 control-label">Name</label>
+                                                    <label class="col-xs-4 control-label"><?= __('Name')?></label>
                                                     <div class="col-xs-8">
                                                         <input type="text" id="install_normal_edit_map_augmented_pose_name" name="augmented_pose_name" value="" class="form-control input-sm mb-md" />
                                                     </div>
                                                 </div>
+                                                
                                                 <div class="form-group">
-                                                    <label class="col-xs-4 control-label">Comment</label>
+                                                    <label class="col-xs-4 control-label"><?= __('Fiducial ID')?></label>
+                                                    <div class="col-xs-8">
+                                                        <input type="number" id="install_normal_edit_map_augmented_pose_fiducial_number" name="augmented_pose_fiducial_number" readonly value="1" class="form-control input-sm mb-md" />
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="form-group">
+                                                    <label class="col-xs-4 control-label"><?= __('Comment')?></label>
                                                     <div class="col-xs-8">
                                                         <textarea id="install_normal_edit_map_augmented_pose_comment" name="augmented_pose_comment" class="form-control input-sm mb-md"></textarea>
                                                     </div>
                                                 </div>
                                                 <fieldset>
-                                                	<legend>Undock procedure</legend>
+                                                	<legend><?= __('Undock procedure')?></legend>
                                                     <div style="text-align:left;">
                                                         <a href="#" class="bNormalUndockProcedureAugmentedPoseAddElem btn btn-circle btn-default"><i class="fa fa-plus"></i></a>
                                                         <ul class="list_undock_procedure_augmented_pose list_elem">
@@ -777,32 +818,32 @@
                                         
                                         	<form>
                                                 <div class="form-group">
-                                                    <label class="col-xs-12 control-label">Action</label>
+                                                    <label class="col-xs-12 control-label"><?= __('Action')?></label>
                                                     <div class="col-xs-6">
                                                         <input type="radio" id="install_normal_edit_map_up_augmented_pose_elem_action_move" name="up_augmented_pose_elem_action" value="move" class="form-control" />
-                                                    	<label for="up_augmented_pose_elem_action_move" class="control-label">Move</label>    
+                                                    	<label for="up_augmented_pose_elem_action_move" class="control-label"><?= __('Move')?></label>    
                                                     </div>
                                                     <div class="col-xs-6">
                                                         <input type="radio" id="install_normal_edit_map_up_augmented_pose_elem_action_rotate" name="up_augmented_pose_elem_action" value="rotate" class="form-control" />
-                                                    	<label for="up_augmented_pose_elem_action_rotate" class="control-label">Rotate</label>
+                                                    	<label for="up_augmented_pose_elem_action_rotate" class="control-label"><?= __('Rotate')?></label>
                                                     </div>
                                                 </div>
                                                 
                                                 <div class="up_augmented_pose_elem_action_move">
                                                     <div class="form-group">
-                                                        <label class="col-xs-12 control-label">Direction</label>
+                                                        <label class="col-xs-12 control-label"><?= __('Direction')?></label>
                                                         <div class="col-xs-6">
                                                             <input type="radio" id="install_normal_edit_map_up_augmented_pose_elem_direction_front" name="up_augmented_pose_elem_direction" value="front" class="form-control" />
-                                                            <label for="up_augmented_pose_elem_direction_front" class="control-label">Front</label>    
+                                                            <label for="up_augmented_pose_elem_direction_front" class="control-label"><?= __('Front')?></label>    
                                                         </div>
                                                         <div class="col-xs-6">
                                                             <input type="radio" id="install_normal_edit_map_up_augmented_pose_elem_direction_back" name="up_augmented_pose_elem_direction" value="back" class="form-control" />
-                                                            <label for="up_augmented_pose_elem_direction_back" class="control-label">Back</label>
+                                                            <label for="up_augmented_pose_elem_direction_back" class="control-label"><?= __('Back')?></label>
                                                         </div>
                                                     </div>
                                                     
                                                     <div class="form-group">
-                                                        <label class="col-xs-12 control-label">Distance</label>
+                                                        <label class="col-xs-12 control-label"><?= __('Distance')?></label>
                                                         <div class="col-md-6 input-group mb-md">
                                                             <input type="text" value="0" class="form-control" name="up_augmented_pose_elem_move_distance" id="install_normal_edit_map_up_augmented_pose_elem_move_distance" />
                                                             <span class="input-group-addon">m</span>
@@ -813,7 +854,7 @@
                                                 
                                                 <div class="up_augmented_pose_elem_action_rotate">
                                                     <div class="form-group">
-                                                        <label class="col-xs-12 control-label">Angle</label>
+                                                        <label class="col-xs-12 control-label"><?= __('Angle')?></label>
                                                         <div class="col-md-6 input-group mb-md">
                                                             <input type="text" value="0" class="form-control" name="up_augmented_pose_elem_rotate_angle" id="install_normal_edit_map_up_augmented_pose_elem_rotate_angle" />
                                                             <span class="input-group-addon ">°</span>
@@ -951,27 +992,6 @@
                         </div>
                     </div>
 					
-                    <div class="popupHelp">
-                    	<h2><?=__('Help')?></h2>
-                    	<ul style="color:#000;">
-                        	<li><div class="iconForbiddenArea"><i class="fas fa-vector-square"></i><i class="fa fa-minus-circle iconMenuRed"></i></div><span class="description"><?=__('Add forbidden area')?></span></li>
-                        	<li><i class="fa fa-draw-polygon iconMenuGreen" style="font-size: 26px;"></i><span class="description"><?=__('Add custom area')?></span></li>
-                        	<li><i class="fa fa-map-marker-alt iconMenuBlue"></i><span class="description"><?=__('Add POI')?></span></li>
-                        	<li><div class="iconAugmentedPose"><i class="fas fa-map-marker-alt iconMenuPurple"></i><i class="fas fa-barcode"></i></div><span class="description"><?=__('Add Augmented pose')?></span></li>
-                        	<li><i class="fa fa-charging-station iconMenuGreen"></i><span class="description"><?=__('Add docking station')?></span></li>
-                        	<li><i class="fa fa-eraser"></i><span class="description"><?=__('Erase pixel')?></span></li>
-                        	<li><i class="fa fa-crosshairs iconMenuBlue"></i><span class="description"><?=__('Move the robot to this point')?></span></li>
-                        	<li><i class="fa fa-gamepad iconMenuPurple"></i><span class="description"><?=__('Teleop the robot')?></span></li>
-                        	<li style="position:relative;font-size:16px"><img class="route" src="assets/images/route_green.svg"/><span class="description" style="margin-left: 40px;position: relative;top: 3px;"><?=__('Test go to POI, dock or augmented pose')?></span></li>
-                        	<li style="position:relative;">
-							<svg class="svg_popupHelp_robot" xmlns="http://www.w3.org/2000/svg">
-								<circle cx="20" cy="20" r="12" class="robot_elem robot_elem_fond"></circle>
-								<polyline points="16 16 24 20 16 24" stroke="#FFFFFF" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round" class="robot_elem" transform="rotate(-90,20,20)"></polyline>
-							</svg>
-							<span class="description" style="margin-left: 40px;"><?=__('Robot position')?></span></li>
-                        </ul>
-                        <p class="legende"><?=__('Click to hide')?></p>
-                    </div>
                     
 					<div class="install_normal_edit_map_loading loading_big loading_map"><i class="fa fa fa-spinner fa-pulse fa-3x"></i></div>
                 </div>
@@ -980,7 +1000,29 @@
                     <div id="install_normal_edit_map_zoom_popup_content" style="position:absolute; top:0; height:0;"></div>
                     <div id="install_normal_edit_map_zoom_popup_mire" style="position:absolute; width:101px; height:101px; top:0; left:0; background-image:url(assets/images/mire.png);"></div>
                 </div>
-            </div>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<ul style="color:#000;">
+						<li><div class="iconForbiddenArea"><i class="fas fa-vector-square"></i><i class="fa fa-minus-circle iconMenuRed"></i></div><span class="description"><?=__('Add forbidden area')?></span></li>
+						<li><i class="fa fa-draw-polygon iconMenuGreen" style="font-size: 26px;"></i><span class="description"><?=__('Add custom area')?></span></li>
+						<li><i class="fa fa-map-marker-alt iconMenuBlue"></i><span class="description"><?=__('Add POI')?></span></li>
+						<li><div class="iconAugmentedPose"><i class="fas fa-map-marker-alt iconMenuPurple"></i><i class="fas fa-barcode"></i></div><span class="description"><?=__('Add Augmented pose')?></span></li>
+						<li><i class="fa fa-charging-station iconMenuGreen"></i><span class="description"><?=__('Add docking station')?></span></li>
+						<li><i class="fa fa-eraser"></i><span class="description"><?=__('Erase pixel')?></span></li>
+						<li><i class="fa fa-crosshairs iconMenuBlue"></i><span class="description"><?=__('Move the robot to this point')?></span></li>
+						<li><i class="fa fa-gamepad iconMenuPurple"></i><span class="description"><?=__('Teleop the robot')?></span></li>
+						<li style="position:relative;font-size:16px"><img class="route" src="assets/images/route_green.svg"/><span class="description" style="margin-left: 40px;position: relative;top: 3px;"><?=__('Test go to POI, dock or augmented pose')?></span></li>
+						<li style="position:relative;">
+						<svg class="svg_popupHelp_robot" xmlns="http://www.w3.org/2000/svg">
+							<circle cx="20" cy="20" r="12" class="robot_elem robot_elem_fond"></circle>
+							<polyline points="16 16 24 20 16 24" stroke="#FFFFFF" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round" class="robot_elem" transform="rotate(-90,20,20)"></polyline>
+						</svg>
+						<span class="description" style="margin-left: 40px;"><?=__('Robot position')?></span></li>
+					</ul>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
+				
+			</div>
             <footer>
             	<a href="#" class="btn btn-default btn_footer_left btn_50 button_goto" data-goto="install_normal_dashboard"><?php echo __('Back');?></a>
                 <a href="#" class="btn btn-success bSaveEditMap btn_footer_right btn_50"><?php echo __('Save map');?></a>
@@ -996,192 +1038,32 @@
             <div class="content">
                 <ul class="tuiles row">
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile1" data-goto="install_normal_setup_sites" href="#"><i class="fa fa-building"></i><?php echo __('Sites');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="install_normal_setup_trinary" href="#"><i class="far fa-map"></i><?php echo __('Map trinary');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="install_normal_setup_language" href="#"><i class="fa fa-language"></i><?php echo __('Language');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="install_normal_setup_wifi" href="#"><i class="fas fa-wifi"></i><?php echo __('Wifi');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="install_normal_setup_config" href="#"><i class="fas fa-battery-three-quarters"></i><?php echo __('Battery settings');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5" data-goto="install_normal_setup_tops" href="#"><i class="fa fa-cube"></i><?php echo __('Tops');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" data-goto="install_normal_setup_export" href="#"><i class="fa fa-upload"></i><?php echo __('Export site');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7" data-goto="install_normal_setup_import" href="#"><i class="fa fa-download"></i><?php echo __('Import site');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8" data-goto="install_normal_setup_reset" href="#"><i class="fa fa-eraser"></i><?php echo __('Factory data reset');?></a></li>
-                </ul>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="install_normal_setup_tops" href="#"><i class="fa fa-cube"></i><?php echo __('Tops');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="install_normal_setup_config" href="#"><i class="fas fa-battery-three-quarters"></i><?php echo __('Battery settings');?></a></li>
+                    
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="install_normal_setup_sound" href="#"><i class="fas fa-volume-up"></i><?php echo __('Sound');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5" data-goto="install_normal_setup_wifi" href="#"><i class="fas fa-wifi"></i><?php echo __('Wifi');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" data-goto="install_normal_setup_language" href="#"><i class="fa fa-language"></i><?php echo __('Language');?></a></li>
+					
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7" data-goto="install_normal_setup_export" href="#"><i class="fa fa-upload"></i><?php echo __('Export site');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8" data-goto="install_normal_setup_import" href="#"><i class="fa fa-download"></i><?php echo __('Import site');?></a></li>
+					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile9" data-goto="install_normal_setup_trinary" href="#"><i class="far fa-map"></i><?php echo __('Map trinary');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile10" data-goto="install_normal_setup_reset" href="#"><i class="fa fa-eraser"></i><?php echo __('Factory data reset');?></a></li>
+				</ul>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content sm-content text-left">
+						<p class=""><?= __('This dashboard allow you to access and edit vehicle configuration')?></p>
+						<p class=""><?= __('Use back button to go back to the main dashboard')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
             </div>
             <footer>
                 <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="install_normal_dashboard"><?php echo __('Back');?></a>
             </footer>
         </section>
        
-        <section id="install_normal_setup_reset" class="page hide_photo_back with_footer">
-	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
-            <header>
-                <div class="pull-left"><img src="assets/images/logo.png" /></div>
-                <h2><?php echo __('Factory data reset');?></h2>
-            </header>
-            <div class="content">
-                
-                <div style="text-align:center;">
-                
-                    <h2 style="color:#C00"><?php echo __('This action will delete all data from the robot!');?></h2>
-                    
-                    <div style="margin-top:50px;"><input type="checkbox" class="cb_confirm" id="install_normal_setup_reset_cbConfirm" name="cb_confirm" />  <label for="install_normal_setup_reset_cbConfirm" style="font-size:16px; color:#000000;"><?php echo __('I confirm that I want to delete all data.');?></label></div>
-                    
-                </div>         
-            </div>
-            <footer>
-            	<a href="#" class="btn btn-default button_goto btn_footer_left btn_50" data-goto="install_normal_setup" ><?php echo __('Cancel');?></a>
-                <a href="#" class="btn btn-danger bReset btn_footer_right btn_50"><?php echo __('Reset');?></a>
-                <a href="#" class="button_goto bGotoReset" data-goto="install_normal_setup_reset_do" style="display:none;"></a>
-            </footer>
-        </section>
-        
-        <section id="install_normal_setup_reset_do" class="page hide_photo_back">
-	        <header>
-                <div class="pull-left"><img src="assets/images/logo.png" /></div>
-                <h2><?php echo __('Factory data reset');?></h2>
-            </header>
-            <div class="content">
-                
-                <div style="text-align:center;">
-                
-                	<i style="font-size:100px; margin-top:50px;" class="fa fa-spinner fa-pulse"></i>
-                    
-                </div>         
-            </div>
-        </section>
-        
-        <section id="install_normal_setup_export" class="page with_footer">
-	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
-            <header>
-                <div class="pull-left"><img src="assets/images/logo.png" /></div>
-                <h2><?php echo __('Sites');?></h2>
-            </header>
-            <div class="content">
-                
-                <div class="install_normal_setup_export_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
-                <h4 style="text-align:center;margin:30px 0"><?= __('Export sites by clicking on the icon') ?></h4>
-										
-                <div class="loaded col-md-12" style="padding-top:30px;">
-                	<ul class="list_sites list_elem">
-                    </ul>
-                </div>
-            </div>
-            <footer>
-                <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="install_normal_setup"><?php echo __('Back');?></a>
-            </footer>
-        </section>
-             
-        <section id="install_normal_setup_import" class="page with_footer">
-	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
-            <header>
-                <div class="pull-left"><img src="assets/images/logo.png" /></div>
-                <h2><?php echo __('Sites');?></h2>
-            </header>
-            <div class="content">
-                
-                <div class="install_normal_setup_import_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
-                <div class="install_normal_setup_import_content">
-					<div class="file_import_site_wrapper">
-						<input class="file_import_site" type="file" class="form-control" accept=".wyca"/>
-						<p><i class="fas fa-2x fa-file-import"></i><br><?= __('Import your site')?></p>
-						<span class="filename_import_site" style="display:none">Test</span>
-					</div>
-    			</div>
-				<div class="modal fade modalMasterDock" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
-                    <div class="modal-dialog" role="dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <div class="actions mh100vh_55">
-									<div class="h100vh_160" style="overflow:auto; text-align:center">
-										<h4 style="text-align:center;margin:30px 0"><?= __('Pick the default docking station') ?></h4>
-										
-										<div class="MasterDock_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
-										<div class="row" id="MasterDockList">
-										</div>
-										<p style="padding-left:5px;margin-top:10px"><i class="fas fa-asterisk" style="color: darkorange;"></i> <?=__('Actual default dock') ?></p>
-										
-                                    </div>
-                                    
-                                    <div style="clear:both;"></div>
-									
-                                    
-                                    <a href="#" class="btn btn-default btn_50 bCloseMasterDock" style="display:none;" data-dismiss="modal"></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-            <footer>
-                <a href="#" class="btn btn-default button_goto bImportSiteBack" data-goto="install_normal_setup" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><i class="fa fa-chevron-left"></i> <?php echo __('Back');?></a>
-                <a href="#" class="btn btn-primary bImportSiteDo" style="left:auto; width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Import');?></a>
-            </footer>
-        </section>
-        
-        <section id="install_normal_setup_trinary" class="page hide_photo_back with_footer">
-	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
-            <header>
-                <div class="pull-left"><img src="assets/images/logo.png" /></div>
-                <h2><?php echo __('Trinary');?></h2>
-            </header>
-            <div class="content">
-                
-                <div style="text-align:center;">
-                
-                    <form id="install_normal_setup_trinary_form" method="post">
-                        <input type="hidden" name="todo" value="saveMapping" />
-                        <input type="hidden" id="install_normal_setup_trinary_from_image" name="image" value="" />
-                        <input type="hidden" id="install_normal_setup_trinary_from_image_tri" name="image_tri" value="" />
-                        <input type="hidden" id="install_normal_setup_trinary_from_ros_hauteur" name="ros_hauteur" value="" />
-                        <input type="hidden" id="install_normal_setup_trinary_from_ros_largeur" name="ros_largeur" value="" />
-                        <input type="hidden" id="install_normal_setup_trinary_from_threshold_free" name="threshold_free" value="" />
-                        <input type="hidden" id="install_normal_setup_trinary_from_threshold_occupied" name="threshold_occupied" value="" />
-                    </form>
-                
-                    <div class="fin_mapping_view" style="height:65vh; width:100%; margin:10px 0; border:1px solid #EFEFEF; position:relative; background-color:#F0F0F0;">
-                        <img id="install_normal_setup_trinary_img_map_saved_fin" src="" style="z-index:200; display:none; max-width:100%;" />
-                        <div id="install_normal_setup_trinary_divOptionTrinary">
-                            <div class="threshold_wrapper">
-								<div class="slider_wrapper">
-									<span class="btn btn_slider_minus"><i class="fas fa-minus-square"></i></span>
-									<div id="install_normal_setup_trinary_threshold_free_slider_elem" class="mt-lg mb-lg slider-primary" data-plugin-slider data-plugin-options='{ "value": 25, "range": "min", "max": 100 }' data-plugin-slider-output="#install_normal_setup_trinary_threshold_free_slider">
-										<input id="install_normal_setup_trinary_threshold_free_slider" type="hidden" value="25" />
-									</div>
-									<span class="btn btn_slider_plus"><i class="fas fa-plus-square"></i></span>
-								</div>
-								<p id="install_normal_setup_trinary_threshold_free_output"><?php echo __('Empty area threshold');?> : <b>25</b></p>
-                            </div>
-							
-                            <div class="threshold_wrapper">
-								<div class="slider_wrapper">
-									<span class="btn btn_slider_minus"><i class="fas fa-minus-square"></i></span>
-									 <div id="install_normal_setup_trinary_threshold_occupied_slider_elem" class="mt-lg mb-lg slider-primary" data-plugin-slider data-plugin-options='{ "value": 65, "range": "min", "max": 100 }' data-plugin-slider-output="#install_normal_setup_trinary_threshold_occupied_slider">
-										<input id="install_normal_setup_trinary_threshold_occupied_slider" type="hidden" value="65" />
-									</div>
-									<span class="btn btn_slider_plus"><i class="fas fa-plus-square"></i></span>
-								</div>
-								<p id="install_normal_setup_trinary_threshold_occupied_output"><?php echo __('Object detection threshold');?> : <b>65</b></p>
-                            </div>
-                            <a href="#" class="btn btn-sm btn-primary bResetValueThreshold"><?php echo __('Reset values');?></a>
-                        </div>
-                        <div id="install_normal_setup_trinary_divResultTrinary">
-                            <div style="height:80vh; overflow:auto;">
-                                <i style="font-size:60px;" class="fa fa-spinner fa-pulse loading_fin_create_map"></i>
-                                <canvas id="install_normal_setup_trinary_canvas_result_trinary" width="" height="" style="max-width:100%; max-height:65vh;"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div style="clear:both; height:10px;"></div>
-                    
-                </div>         
-            </div>
-            <footer>
-            	<a href="#" class="btn btn-default btn_footer_left btn_50 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>           
-                <a href="#" class="btn btn-primary bSaveTrinaryMap btn_footer_right btn_50"><?php echo __('Save');?></a>
-            </footer>
-        </section>
-        
         <section id="install_normal_setup_sites" class="page with_footer">
 	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
             <header>
@@ -1193,95 +1075,146 @@
                 <div class="install_normal_setup_sites_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
                 
                 <div class="loaded col-md-12" style="padding-top:30px;">
-                	<a href="#" class="bAddSite btn btn-primary">Add new site</a>
+                	<a href="#" class="bAddSite btn btn-primary"><?= __('Add new site')?></a>
                 
                     <ul class="list_sites list_elem">
                     </ul>
                 </div>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content sm-content text-left">
+						<p class=""><?= __('This page allow you to manage sites')?></p>
+						<p class=""><?= __('You can create a new site by clicking on the correspondant button.')?></p>
+						<p class=""><?= __('You can delete a site by clicking on the red cross icon.')?></p>
+						<p class=""><?= __('A confimation will be asked for each site you want to delete.')?></p>
+						<p class=""><?= __('You can switch site by clicking on the blue check icon of the site you want to load.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
             </div>
             <footer>
                 <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>
             </footer>
         </section>
         
-		<section id="install_normal_setup_language" class="page hmi_tuile with_footer">
+        <section id="install_normal_setup_tops" class="page hmi_tuile with_footer">
 	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
-                <h2><?php echo __('Language');?></h2>
+                <h2><?php echo __('Tops');?></h2>
             </header>
             <div class="content">
-            
-            	<ul class="tuiles heightauto row">
-                	<li class="col-xs-6 col-md-6 col-lg-6">
-                        <a href="#" class="select_langue anim_tuiles tuile_img tuile1" data-id_lang="1">
-                            <img src="assets/images/lang/fr_big.jpg" />
-                        </a>
-                    </li>
-					<li class="col-xs-6 col-md-6 col-lg-6">
-                        <h2 style="margin-top:35px"><?=__('Français') ?></h2>
-                    </li>
-                	<li class="col-xs-6 col-md-6 col-lg-6" style="clear:both; margin-top:20px">
-                        <a href="#" class="select_langue anim_tuiles tuile_img tuile2" data-id_lang="2">
-                            <img src="assets/images/lang/en_big.jpg" />
-                        </a>
-                    </li>
-					<li class="col-xs-6 col-md-6 col-lg-6" style="margin-top:20px">
-                        <h2 style="margin-top:35px"><?=__('English') ?></h2>
-                    </li>
+				<div class="install_normal_setup_tops_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
+				<h5 class="text-center" style="margin-bottom:5px;"><?=__('Please select available tops for the vehicle.') ?></h5>
+				<p class="text-center" style="margin-bottom:30px;"><i class="fas fa-exclamation-triangle"></i> <?=__('This is not the active top selection.') ?></p>
+            	
+                <ul class="tuiles row">
                 </ul>
                 
+                
+                <div style="clear:both; height:20px;"></div>
+                <div style="display:flex;justify-content:space-around">
+					<a href="#" class="import_top btn btn-success"><?=__('Import new top')?></a>
+					<a href="#" class="button_goto btn btn-info" data-goto="install_normal_setup_top"><?=__('Select active Top')?></a>
+				</div>
+                <div class="modal fade modalImportTop" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                    <div class="modal-dialog" role="dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="actions mh100vh_55">
+                                     <div class="h100vh_160" style="overflow:auto; text-align:center">
+                                    
+                                        <div class="modalImportTop_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
+                                        <div class="modalImportTop_content">
+	                                        <div class="file_import_top_wrapper">
+												<input class="file_import_top" type="file" class="form-control" accept=".wyca"/>
+												<p><i class="fas fa-2x fa-file-import"></i><br><?= __('Import')?><br><?= __('your')?><br><?= __('Top')?></p>
+												<span class="filename_import_top" style="display:none">Test</span>
+											</div>
+											<img class="img-responsive" id="elodie_import_top" src="assets/images/elodie_form.png">
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                    <div style="clear:both;"></div>
+                                   
+                                    
+                                    <a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal"><?php echo __('Cancel');?></a>
+									<a href="#" class="btn btn-primary bImportTopDo btn_footer_right btn_50" ><?php echo __('Import');?></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left">
+						<p><?= __('Please select available tops by checkboxing its. These tops will then be available to indicate the active top on the robot.')?></p>
+						
+						<p><?= __('If you select only one top, the next step of choosing the active top will be ignored (the active top being the only available top).')?></p>					
+						<p><?= __('You can also import a .wyca top config file.')?><br><div class="text-center"><a href="#" class="import_top btn btn-lg btn-success"><?= __('Import new top')?></a></div></p>			
+						   
+                
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
             </div>
             <footer>
-                <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>
+				
+                <a href="#" class="btn btn-default btn_footer_left btn_50 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>
+				<a href="#" class="save_tops btn btn-primary btn_footer_right btn_50"><?=__('Save')?></a> 
             </footer>
         </section>
         
-		<section id="install_normal_setup_wifi" class="page with_footer">
-	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
+		<section id="install_normal_setup_top" class="page hmi_tuile with_footer">
+	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup_tops"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
-                <h2><?php echo __('Wifi');?></h2>
+                <h2><?php echo __('Select active top');?></h2>
             </header>
             <div class="content">
-            
-            	<h3><?php echo __('Configure Wifi');?></h3>
-                <div class="install_normal_setup_wifi_loading loading_big" style="display:block"><i class="fa fa fa-spinner fa-pulse"></i></div>
-                <table class="table table_wifi">
-                	<tbody class="tbody_wifi">
-                    </tbody>
-                </table>
-                <a href="#" class="refresh_wifi btn btn-default pull-left"><i class="fa fa-refresh"></i></a>
+            	<div class="install_by_step_top_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
+				<h5 class="text-center" style="margin-bottom:30px;"><?=__('Please select the active top for the vehicle.') ?></h5>
+                <ul class="tuiles row">
+                </ul>
+                
+                <div style="clear:both; height:20px;"></div>
+                
+                <div class="modal fade modalSetActiveTop" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                    <div class="modal-dialog" role="dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="actions mh100vh_55">
+                                    
+                                    <div class="h100vh_160" style="overflow:auto">
+                                        <div class="progressSetActiveTop">
+                                            <h4 style="text-align:center;margin-bottom:20px"><?php echo __('Setting new active top');?></h4>
+                                            <div class="setActiveTopProgress progress progress-striped light active m-md">
+                                                <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;">
+                                                </div>
+                                            </div>
+                                        </div>
+			                                    
+            	                        <div style="clear:both;"></div>
+                					</div>                   
+                                    <a href="#" class="btn btn-primary" data-dismiss="modal" style="width:100%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Close');?></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left">
+						<p><?= __('Please select active top by clicking on it. That will indicate to the vehicle that its current top on it is the one you picked.')?></p>
+						
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
             </div>
             <footer>
-                <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>
-				<a href="#" class="set_passwd_wifi button_goto" data-goto="install_normal_setup_wifi_password" style="display:none;"></a>
+                <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="install_normal_setup_tops"><?php echo __('Back');?></a>
             </footer>
-        </section>
-       
-		<section id="install_normal_setup_wifi_password" class="page with_footer">
-        	<a href="#" class="bBackButton button_goto" data-goto="install_normal_setup_wifi"></a>
-            <header>
-                <div class="pull-left"><img src="assets/images/logo.png" /></div>
-                <h2><?php echo __('Wifi');?></h2>
-            </header>
-            <div class="content">
-            
-            	<h3><?php echo __('Set password');?></h3>
-                
-                <form class="form_site" action="" method="post" style="margin-bottom:20px;">
-	                <input type="password" class="form-control i_wifi_passwd_name" value="" />
-                </form>
-                
-                <div class="wifi_connexion_error"></div>
-                
-                <div class="wifi_connexion_progress"><i class="fa fa fa-spinner fa-pulse"></i></div>
-                
-            </div>
-			<footer>
-				<a href="#" class="install_normal_setup_wifi_password_back button_goto btn btn-default btn_footer_left btn_50" data-goto="install_normal_setup_wifi"><?= __('Back')?></a>
-				<a href="#" class="install_normal_setup_wifi_password_save btn btn-primary btn_footer_right btn_50"><?= __('Connect')?></a>
-			</footer>
         </section>
         
 		<section id="install_normal_setup_config" class="page with_footer">
@@ -1399,113 +1332,371 @@
 						</div>
 					</div>
 				</div>
-            </div>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left sm-content-text">
+						<p class=""><?= __('You can configure two battery levels to avoid the robot getting stuck in the middle of an area because of battery breakdown.')?></p>
+						<p class=""><?= __('Emergency battery level is the minimum level allowed on the robot. If the robot goes under it will automatically go to its default charging station')?></p>
+						<p class=""><?= __('The second threshold is the level below which the robot will refuse to perform a task when docked')?></p>
+						<p class=""><?= __('You can set these values manually or use the tool to evaluate the load consumption on a site in real conditions.')?></p>
+						<p class=""><?= __('The real test tool will ask for two points, a starting and a arrival. It will automatically calculate the level of battery used between these two points.')?></p>
+						<p class=""><?= __('You can then click on the Use button to let the tool fill yours battery levels. You can always change these values by hand.')?></p>
+						<p class=""><?= __('Try to use the farthest points in order to have the most relevant test possible.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
+			</div>
             <footer>
                 <a href="#" class="btn btn-default btn_footer_left btn_50 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>
                 <a href="#" class="btn btn-primary btn_footer_right btn_50 bConfigurationSave"><?php echo __('Save');?></a>
             </footer>
         </section>
         
-        <section id="install_normal_setup_tops" class="page hmi_tuile with_footer">
-	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
+		<section id="install_normal_setup_sound" class="page with_footer">
+        	<a href="#" class="bBackButton button_goto" data-goto="install_normal_wifi"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
-                <h2><?php echo __('Tops');?></h2>
+                <h2><?php echo __('Sound management');?></h2>
             </header>
             <div class="content">
-				<div class="install_normal_setup_tops_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
-				<h5 class="text-center" style="margin-bottom:5px;"><?=__('Please select available tops for the vehicle.') ?></h5>
-				<p class="text-center" style="margin-bottom:30px;"><i class="fas fa-exclamation-triangle"></i> <?=__('This is not the active top selection.') ?></p>
-            	
-                <ul class="tuiles row">
-                </ul>
-                
-                
-                <div style="clear:both; height:20px;"></div>
-                <div style="display:flex;justify-content:space-around">
-					<a href="#" class="import_top btn btn-success"><?=__('Import new top')?></a>
-					<a href="#" class="button_goto btn btn-info" data-goto="install_normal_setup_top"><?=__('Select active Top')?></a>
-				</div>
-                <div class="modal fade modalImportTop" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
-                    <div class="modal-dialog" role="dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <div class="actions mh100vh_55">
-                                     <div class="h100vh_160" style="overflow:auto; text-align:center">
-                                    
-                                        <div class="modalImportTop_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
-                                        <div class="modalImportTop_content">
-	                                        <div class="file_import_top_wrapper">
-												<input class="file_import_top" type="file" class="form-control" accept=".wyca"/>
-												<p><i class="fas fa-2x fa-file-import"></i><br><?= __('Import')?><br><?= __('your')?><br><?= __('Top')?></p>
-												<span class="filename_import_top" style="display:none">Test</span>
-											</div>
-											<img class="img-responsive" id="elodie_import_top" src="assets/images/elodie_form.png">
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    <div style="clear:both;"></div>
-                                   
-                                    
-                                    <a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal"><?php echo __('Cancel');?></a>
-									<a href="#" class="btn btn-primary bImportTopDo btn_footer_right btn_50" ><?php echo __('Import');?></a>
-                                </div>
-                            </div>
-                        </div>
+				<div class="row">
+					<h4 class="col-xs-9" style="margin: 6px 0;"><?=__('Allow vehicle basics sounds')?></h4>
+					<div class="col-xs-3 switch switch-sm switch-primary">
+                        <input type="checkbox" name="switch" class="sound_switch_ROS" data-plugin-ios-switch checked="checked" />
                     </div>
-                </div>
-                
+				</div>
+				<ul class="sound_list">
+					<li><?= __('audible warning when reversing')?></li>
+				</ul>
+				<div class="row" style="margin-top:20px;">
+					<h4 class="col-xs-9" style="margin:0;"><?=__('Allow this app to play sound through the vehicle')?></h4>
+					<div class="col-xs-3 switch switch-sm switch-primary">
+                        <input type="checkbox" name="switch" class="sound_switch_app"  data-plugin-ios-switch checked="checked" />
+                    </div>
+				</div>
+				<ul class="sound_list">
+					<li><?= __('audible success on goto operation')?></li>
+					<li><?= __('audible error on goto operation')?></li>
+				</ul>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left">
+						<p><?= __('You have the possibility to enable or disable vehicle sounds.')?></p>
+						<p><?= __('You have the possibility to enable or disable sounds of this application.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
             </div>
-            <footer>
-				
-                <a href="#" class="btn btn-default btn_footer_left btn_50 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>
-				<a href="#" class="save_tops btn btn-primary btn_footer_right btn_50"><?=__('Save')?></a> 
+			<footer>
+				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50" data-goto="install_normal_setup" ><?= __('Back')?></a>
+				<a href="#" class="bSaveSound button_goto btn btn-primary btn_footer_right btn_50" data-goto="install_normal_setup"><?= __('Save')?></a>
             </footer>
         </section>
         
-		<section id="install_normal_setup_top" class="page hmi_tuile with_footer">
-	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup_tops"></a>
+		<section id="install_normal_setup_wifi" class="page with_footer">
+	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
-                <h2><?php echo __('Select active top');?></h2>
+                <h2><?php echo __('Wifi');?></h2>
             </header>
             <div class="content">
-            	<div class="install_by_step_top_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
-				<h5 class="text-center" style="margin-bottom:30px;"><?=__('Please select the active top for the vehicle.') ?></h5>
-                <ul class="tuiles row">
+            
+            	<h3><?php echo __('Configure Wifi');?></h3>
+                <div class="install_normal_setup_wifi_loading loading_big" style="display:block"><i class="fa fa fa-spinner fa-pulse"></i></div>
+                <table class="table table_wifi">
+                	<tbody class="tbody_wifi">
+                    </tbody>
+                </table>
+                <a href="#" class="refresh_wifi btn btn-default pull-left"><i class="fa fa-refresh"></i></a>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left">
+						<p><?= __('You have the possibility to connect the robot to a Wifi network to give it Internet access.')?></p>
+						<p><?= __('This Internet access can be useful to allow Wyca to take control of the robot remotely and thus make updates or specific settings.')?></p>
+						<p><?= __('If you do not want to connect the robot to a Wifi network, you can skip this step by clicking on the Skip button.')?></p>
+						<p><?= __('This page will present the list of detected wifi networks.')?></p>
+						<p><?= __('If the robot is currently connected to a Wifi network, it will appear in bold on a gray background.')?></p>
+						<p><?= __('To connect the robot to a network, click on it, a popup will then allow you to enter the password of the network.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
+            </div>
+            <footer>
+                <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>
+				<a href="#" class="set_passwd_wifi button_goto" data-goto="install_normal_setup_wifi_password" style="display:none;"></a>
+            </footer>
+        </section>
+       
+		<section id="install_normal_setup_wifi_password" class="page with_footer">
+        	<a href="#" class="bBackButton button_goto" data-goto="install_normal_setup_wifi"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Wifi');?></h2>
+            </header>
+            <div class="content">
+            
+            	<h3><?php echo __('Set password');?></h3>
+                
+                <form class="form_site" action="" method="post" style="margin-bottom:20px;">
+	                <input type="password" class="form-control i_wifi_passwd_name" value="" />
+                </form>
+                
+                <div class="wifi_connexion_error"></div>
+                
+                <div class="wifi_connexion_progress"><i class="fa fa fa-spinner fa-pulse"></i></div>
+                
+            </div>
+			<footer>
+				<a href="#" class="install_normal_setup_wifi_password_back button_goto btn btn-default btn_footer_left btn_50" data-goto="install_normal_setup_wifi"><?= __('Back')?></a>
+				<a href="#" class="install_normal_setup_wifi_password_save btn btn-primary btn_footer_right btn_50"><?= __('Connect')?></a>
+			</footer>
+        </section>
+        
+		<section id="install_normal_setup_language" class="page hmi_tuile with_footer">
+	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Language');?></h2>
+            </header>
+            <div class="content">
+            
+            	<ul class="tuiles heightauto row">
+                	<li class="col-xs-6 col-md-6 col-lg-6">
+                        <a href="#" class="select_langue anim_tuiles tuile_img tuile1" data-id_lang="1">
+                            <img src="assets/images/lang/fr_big.jpg" />
+                        </a>
+                    </li>
+					<li class="col-xs-6 col-md-6 col-lg-6">
+                        <h2 style="margin-top:35px"><?=__('Français') ?></h2>
+                    </li>
+                	<li class="col-xs-6 col-md-6 col-lg-6" style="clear:both; margin-top:20px">
+                        <a href="#" class="select_langue anim_tuiles tuile_img tuile2" data-id_lang="2">
+                            <img src="assets/images/lang/en_big.jpg" />
+                        </a>
+                    </li>
+					<li class="col-xs-6 col-md-6 col-lg-6" style="margin-top:20px">
+                        <h2 style="margin-top:35px"><?=__('English') ?></h2>
+                    </li>
                 </ul>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content sm-content">
+						<p><?= __('Please select the language displayed on the app by clicking on the correspondant flag.')?></p>					
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
+            </div>
+            <footer>
+                <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>
+            </footer>
+        </section>
+        
+        <section id="install_normal_setup_export" class="page with_footer">
+	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Sites');?></h2>
+            </header>
+            <div class="content">
                 
-                <div style="clear:both; height:20px;"></div>
+                <div class="install_normal_setup_export_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
+                <h4 style="text-align:center;margin:30px 0"><?= __('Export sites by clicking on the icon') ?></h4>
+										
+                <div class="loaded col-md-12" style="padding-top:30px;">
+                	<ul class="list_sites list_elem">
+                    </ul>
+                </div>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left sm-content">
+						<p class=""><?= __('Ths page allow you to export a site by clicking on the correspondant icon.')?></p>
+						<p class=""><?= __('The export of a site is a backup of all the configuration linked to a site (map, charging stations, areas...).')?></p>
+						<p class=""><?= __('You can also use the .wyca generated file to import this site on another vehicle.')?></p>
+						<p class=""><?= __('Keep this copy as it will allow you to reload your site in case of factory reset.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
+			</div>
+            <footer>
+                <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="install_normal_setup"><?php echo __('Back');?></a>
+            </footer>
+        </section>
+		
+        <section id="install_normal_setup_import" class="page with_footer">
+	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Sites');?></h2>
+            </header>
+            <div class="content">
                 
-                <div class="modal fade modalSetActiveTop" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                <div class="install_normal_setup_import_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
+                <div class="install_normal_setup_import_content">
+					<div class="file_import_site_wrapper">
+						<input class="file_import_site" type="file" class="form-control" accept=".wyca"/>
+						<p><i class="fas fa-2x fa-file-import"></i><br><?= __('Import your site')?></p>
+						<span class="filename_import_site" style="display:none">Test</span>
+					</div>
+    			</div>
+				<div class="modal fade modalMasterDock" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
                     <div class="modal-dialog" role="dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <div class="actions mh100vh_55">
+									<div class="h100vh_160" style="overflow:auto; text-align:center">
+										<h4 style="text-align:center;margin:30px 0"><?= __('Pick the default docking station') ?></h4>
+										
+										<div class="MasterDock_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
+										<div class="row" id="MasterDockList">
+										</div>
+										<p style="padding-left:5px;margin-top:10px"><i class="fas fa-asterisk" style="color: darkorange;"></i> <?=__('Actual default dock') ?></p>
+										
+                                    </div>
                                     
-                                    <div class="h100vh_160" style="overflow:auto">
-                                        <div class="progressSetActiveTop">
-                                            <h4 style="text-align:center;margin-bottom:20px"><?php echo __('Setting new active top');?></h4>
-                                            <div class="setActiveTopProgress progress progress-striped light active m-md">
-                                                <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;">
-                                                </div>
-                                            </div>
-                                        </div>
-			                                    
-            	                        <div style="clear:both;"></div>
-                					</div>                   
-                                    <a href="#" class="btn btn-primary" data-dismiss="modal" style="width:100%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Close');?></a>
+                                    <div style="clear:both;"></div>
+									
+                                    
+                                    <a href="#" class="btn btn-default btn_50 bCloseMasterDock" style="display:none;" data-dismiss="modal"></a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left sm-content">
+						<p class=""><?= __('Ths page allow you to import a site by uploading the .wyca file associated.')?></p>
+						<p class=""><?= __('You recover all the configuration linked to a site (map, charging stations, areas...).')?></p>
+						<p class=""><?= __('Whitout having to map again the same site.')?></p>
+					</div>
+				</div>
             </div>
             <footer>
-                <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="install_normal_setup_tops"><?php echo __('Back');?></a>
+                <a href="#" class="btn btn-default button_goto bImportSiteBack" data-goto="install_normal_setup" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><i class="fa fa-chevron-left"></i> <?php echo __('Back');?></a>
+                <a href="#" class="btn btn-primary bImportSiteDo" style="left:auto; width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Import');?></a>
             </footer>
+        </section>
+        
+        <section id="install_normal_setup_trinary" class="page hide_photo_back with_footer">
+	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Trinary');?></h2>
+            </header>
+            <div class="content">
+                
+                <div style="text-align:center;">
+                
+                    <form id="install_normal_setup_trinary_form" method="post">
+                        <input type="hidden" name="todo" value="saveMapping" />
+                        <input type="hidden" id="install_normal_setup_trinary_from_image" name="image" value="" />
+                        <input type="hidden" id="install_normal_setup_trinary_from_image_tri" name="image_tri" value="" />
+                        <input type="hidden" id="install_normal_setup_trinary_from_ros_hauteur" name="ros_hauteur" value="" />
+                        <input type="hidden" id="install_normal_setup_trinary_from_ros_largeur" name="ros_largeur" value="" />
+                        <input type="hidden" id="install_normal_setup_trinary_from_threshold_free" name="threshold_free" value="" />
+                        <input type="hidden" id="install_normal_setup_trinary_from_threshold_occupied" name="threshold_occupied" value="" />
+                    </form>
+                
+                    <div class="fin_mapping_view" style="height:65vh; width:100%; margin:10px 0; border:1px solid #EFEFEF; position:relative; background-color:#F0F0F0;">
+                        <img id="install_normal_setup_trinary_img_map_saved_fin" src="" style="z-index:200; display:none; max-width:100%;" />
+                        <div id="install_normal_setup_trinary_divOptionTrinary">
+                            <div class="threshold_wrapper">
+								<div class="slider_wrapper">
+									<span class="btn btn_slider_minus"><i class="fas fa-minus-square"></i></span>
+									<div id="install_normal_setup_trinary_threshold_free_slider_elem" class="mt-lg mb-lg slider-primary" data-plugin-slider data-plugin-options='{ "value": 25, "range": "min", "max": 100 }' data-plugin-slider-output="#install_normal_setup_trinary_threshold_free_slider">
+										<input id="install_normal_setup_trinary_threshold_free_slider" type="hidden" value="25" />
+									</div>
+									<span class="btn btn_slider_plus"><i class="fas fa-plus-square"></i></span>
+								</div>
+								<p id="install_normal_setup_trinary_threshold_free_output"><?php echo __('Empty area threshold');?> : <b>25</b></p>
+                            </div>
+							
+                            <div class="threshold_wrapper">
+								<div class="slider_wrapper">
+									<span class="btn btn_slider_minus"><i class="fas fa-minus-square"></i></span>
+									 <div id="install_normal_setup_trinary_threshold_occupied_slider_elem" class="mt-lg mb-lg slider-primary" data-plugin-slider data-plugin-options='{ "value": 65, "range": "min", "max": 100 }' data-plugin-slider-output="#install_normal_setup_trinary_threshold_occupied_slider">
+										<input id="install_normal_setup_trinary_threshold_occupied_slider" type="hidden" value="65" />
+									</div>
+									<span class="btn btn_slider_plus"><i class="fas fa-plus-square"></i></span>
+								</div>
+								<p id="install_normal_setup_trinary_threshold_occupied_output"><?php echo __('Object detection threshold');?> : <b>65</b></p>
+                            </div>
+                            <a href="#" class="btn btn-sm btn-primary bResetValueThreshold"><?php echo __('Reset values');?></a>
+                        </div>
+                        <div id="install_normal_setup_trinary_divResultTrinary">
+                            <div style="height:80vh; overflow:auto;">
+                                <i style="font-size:60px;" class="fa fa-spinner fa-pulse loading_fin_create_map"></i>
+                                <canvas id="install_normal_setup_trinary_canvas_result_trinary" width="" height="" style="max-width:100%; max-height:65vh;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="clear:both; height:10px;"></div>
+                    
+                </div>         
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left sm-content">
+						<p class=""><?= __('You have the possibility to optimize the final result by playing on two values.')?></p>
+						<p class=""><?= __('The default values are judicious in 95% of the cases.')?></p>
+						<p class=""><?= __('It might be necessary to play with these values to correct navigation problems in particular cases.')?></p>
+						<p class=""><?= __(' The goal is to make sure that all the walls are shown in black on the map and that all the areas where the robot has to move are shown in white on the map.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
+			</div>
+            <footer>
+            	<a href="#" class="btn btn-default btn_footer_left btn_50 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>           
+                <a href="#" class="btn btn-primary bSaveTrinaryMap btn_footer_right btn_50"><?php echo __('Save');?></a>
+            </footer>
+        </section>
+        
+        <section id="install_normal_setup_reset" class="page hide_photo_back with_footer">
+	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Factory data reset');?></h2>
+            </header>
+            <div class="content">
+                
+                <div style="text-align:center;">
+                
+                    <h2 style="color:#C00"><?php echo __('This action will delete all data from the robot!');?></h2>
+                    
+                    <div style="margin-top:50px;"><input type="checkbox" class="cb_confirm" id="install_normal_setup_reset_cbConfirm" name="cb_confirm" />  <label for="install_normal_setup_reset_cbConfirm" style="font-size:16px; color:#000000;"><?php echo __('I confirm that I want to delete all data.');?></label></div>
+                    
+                </div>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content sm-content text-left">
+						<p class=""><?= __('This page allows you to reset all robot data to the factory default settings.')?></p>
+						<p class=""><?= __('All data will be permanently deleted including maps and user and manager accounts.')?></p>
+						<p class=""><?= __('Once the data is reset, you will be redirected to the login page.')?></p>
+						<p class=""><?= __('You will need to use the default login and password for your first login.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
+			</div>
+            <footer>
+            	<a href="#" class="btn btn-default button_goto btn_footer_left btn_50" data-goto="install_normal_setup" ><?php echo __('Cancel');?></a>
+                <a href="#" class="btn btn-danger bReset btn_footer_right btn_50"><?php echo __('Reset');?></a>
+                <a href="#" class="button_goto bGotoReset" data-goto="install_normal_setup_reset_do" style="display:none;"></a>
+            </footer>
+        </section>
+        
+        <section id="install_normal_setup_reset_do" class="page hide_photo_back">
+	        <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Factory data reset');?></h2>
+            </header>
+            <div class="content">
+                
+                <div style="text-align:center;">
+                
+                	<i style="font-size:100px; margin-top:50px;" class="fa fa-spinner fa-pulse"></i>
+                    
+                </div>         
+            </div>
         </section>
         
         <section id="install_normal_move" class="page with_footer">
@@ -1526,6 +1717,14 @@
                         </div>
                     </div>
                 </div>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content sm-content text-left">
+						<p><?= __('This page allows you to control the robot using the virtual joystick.')?></p>
+						<p><?= __('If the robot is docked on a docking station or on an augmented position, the joystick will be hidden and an Undock button will be present to allow you to undock the robot.')?></p>	
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
             </div>
             <footer>
                 <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="install_normal_dashboard"><?php echo __('Back');?></a>
@@ -1556,6 +1755,16 @@
                         </div>
                     </div>
                 </div>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content sm-content text-left">
+						<p><?= __('If you start the robot undocked to a docking station or if the robot is lost, this page will allow you to relocate the robot correctly.')?></p>
+						<p><?= __('If the robot has just been started, a success message will be displayed.')?></p>
+						<p><?= __('If the robot was lost, it will rotate 360° to clean the obstacles it could have wrongly spotted due to its bad location.')?></p>
+						<p><?= __('A feedback popup will indicate the success or failure of the recovery.')?></p>	
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
             </div>
             <footer>
                 <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_dashboard"><?php echo __('Back');?></a>
@@ -1658,7 +1867,17 @@
                         </div>
                     </div>
                 </div>
-            </div>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content sm-content text-left">
+						<p class=""><?= __('This page allows you to manage user accounts.')?></p>
+						<p class=""><?= __('You can edit, add or delete user accounts.')?></p>
+						<p class=""><?= __('User accounts can mainly :')?></p>
+						<p class="">&nbsp;&nbsp;&nbsp;<?= __('- Move the robot through map.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
+			</div>
             <footer>
                 <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_accounts"><?php echo __('Back');?></a>
             </footer>
@@ -1810,6 +2029,17 @@
 					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile1" data-goto="install_normal_manager" href="#"><i class="fas fa-users-cog" style="transform:scaleX(-1)"></i><?php echo __('Managers');?></a></li>
 					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="install_normal_user" href="#"><i class="fas fa-user-friends"></i><?php echo __('Users');?></a></li>
 				</ul>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content sm-content text-left">
+						<p class=""><?= __('This page allows you to manage manager and user accounts.')?></p>
+						<p class=""><?= __('Manager accounts can mainly be :')?></p>
+						<p class="">&nbsp;&nbsp;&nbsp;<?= __('- Move the robot through the map.')?><br><br>&nbsp;&nbsp;&nbsp;<?= __('- Add POI')?><br><br>&nbsp;&nbsp;&nbsp;<?= __('- Change active top on the robot among the preselected tops.')?></p>
+						<p class=""><?= __('User accounts can mainly :')?></p>
+						<p class="">&nbsp;&nbsp;&nbsp;<?= __('- Move the robot through map.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
             </div>
             <footer>
                 <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_dashboard"><?php echo __('Back');?></a>
@@ -1863,6 +2093,16 @@
                             </div>
                         </div>
                     </div>
+				</div>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left">
+						<p class=""><?= __('The robot\'s service book indicate all the important elements concerning the life and maintenance of the robot to facilitate future maintenance.')?></p>
+						<p class=""><?= __('To add an entry to the service log, click on the button in the center of the screen.')?></p>
+						<p class=""><?= __('A popup will open allowing you to enter a title and description.')?></p>
+						<p class=""><?= __('The various items in the service book are not removable or editable once created.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
 				</div>
             </div>
             <footer>

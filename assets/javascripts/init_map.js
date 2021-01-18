@@ -53,6 +53,7 @@ var areas = Array();
 var gommes = Array();
 var docks = Array();
 var pois = Array();
+var id_map = -1;
 var augmented_poses = Array();
 
 var blockZoom = false;

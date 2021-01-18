@@ -46,7 +46,7 @@ function WycaAPI(options){
 		INVALID_TARGET_POSE         : 0x142,
 		OBSTACLE_FAIL               : 0x143,
 		WRONG_UNDOCK_PATH           : 0x144,
-		UNKNOW_REFLECTOR            : 0x145,
+		UNKNOWN_REFLECTOR            : 0x145,
 		NO_REFLECTOR_DETECTED       : 0x146,
 		DOCKING   				    : 0x147,
 		UNDOCKED			        : 0x148,
@@ -58,7 +58,7 @@ function WycaAPI(options){
 		ROBOT_TOO_FAR               : 0x14D,
 		UNDOCK_FAIL                 : 0x14E,
 		NO_VALID_CMD                : 0x14F,
-		PAT_EXCEEDED                : 0x150,
+		TIMEOUT                : 0x150,
 		COLLISION                   : 0x151,
 		OSCILLATION                 : 0x152,
 		ROBOT_STUCK                 : 0x153,
@@ -143,10 +143,15 @@ function WycaAPI(options){
 	 
 		GET_PATH			: 0x0115,
 		GET_PATH_FROM_CURRENT_POSE			: 0x0116,
+		
+		CHECK_POSITION			: 0x012A,
+		
 		GET_MOVE_IN_PROGRESS			: 0x011F,
 		
 		SOUND_PLAY		: 0x8101,
 		SOUND_STOP		: 0x8102,
+		SET_SOUND_IS_ON : 0x7105,
+		GET_SOUND_IS_ON : 0x7106,
 	 
 	// Services DB
 		CHECK_USER_KEY			: 0x6109,
@@ -381,7 +386,8 @@ function WycaAPI(options){
 		on_error_webcam_try_without : true,
 		host : 'wyca.run:9095',
 		api_key:'',
-		use_ssl:true
+		use_ssl:true,
+		sound_is_on: true
     };
     this.options = $.extend({}, defaults, options || {});
    	
@@ -395,7 +401,6 @@ function WycaAPI(options){
 		else
 			this.options.nick = 'server';
 	}
-	
 	
 	this.websocketStarted = false;
 	this.websocketAuthed = false;
@@ -1495,8 +1500,8 @@ function WycaAPI(options){
 				case _this.AnswerCode.INVALID_TARGET_POSE : return typeof(textAPIAnswerCode.INVALID_TARGET_POSE) != 'undefined' ? textAPIAnswerCode.INVALID_TARGET_POSE : 'Invalid target position'; break;
 				case _this.AnswerCode.OBSTACLE_FAIL : return typeof(textAPIAnswerCode.OBSTACLE_FAIL) != 'undefined' ? textAPIAnswerCode.OBSTACLE_FAIL : 'Obstacle fail'; break;
 				case _this.AnswerCode.WRONG_UNDOCK_PATH : return typeof(textAPIAnswerCode.WRONG_UNDOCK_PATH) != 'undefined' ? textAPIAnswerCode.WRONG_UNDOCK_PATH : 'Wrong undock path'; break; 
-				case _this.AnswerCode.UNKNOW_REFLECTOR : return typeof(textAPIAnswerCode.UNKNOW_REFLECTOR) != 'undefined' ? textAPIAnswerCode.UNKNOW_REFLECTOR : 'Unknow reflector for the current map'; break;
-				case _this.AnswerCode.NO_REFLECTOR_DETECTED : return typeof(textAPIAnswerCode.UNKNOW_REFLECTOR) != 'undefined' ? textAPIAnswerCode.UNKNOW_REFLECTOR : 'No reflector detected around the robot'; break;
+				case _this.AnswerCode.UNKNOWN_REFLECTOR : return typeof(textAPIAnswerCode.UNKNOWN_REFLECTOR) != 'undefined' ? textAPIAnswerCode.UNKNOWN_REFLECTOR : 'Unknow reflector for the current map'; break;
+				case _this.AnswerCode.NO_REFLECTOR_DETECTED : return typeof(textAPIAnswerCode.NO_REFLECTOR_DETECTED) != 'undefined' ? textAPIAnswerCode.NO_REFLECTOR_DETECTED : 'No reflector detected around the robot'; break;
 				case _this.AnswerCode.DOCKING : return typeof(textAPIAnswerCode.DOCKING) != 'undefined' ? textAPIAnswerCode.DOCKING : 'Robot trying to dock'; break;// Robot trying to dock
 				case _this.AnswerCode.UNDOCKED : return typeof(textAPIAnswerCode.UNDOCKED) != 'undefined' ? textAPIAnswerCode.UNDOCKED : 'Robot is undocked'; break; // Robot is undocked
 				case _this.AnswerCode.WRONG_GOAL : return typeof(textAPIAnswerCode.WRONG_GOAL) != 'undefined' ? textAPIAnswerCode.WRONG_GOAL : 'Wrong goal: Fiducial type and id must be defined'; break;
@@ -1507,7 +1512,7 @@ function WycaAPI(options){
 				case _this.AnswerCode.ROBOT_TOO_FAR : return typeof(textAPIAnswerCode.ROBOT_TOO_FAR) != 'undefined' ? textAPIAnswerCode.ROBOT_TOO_FAR : 'Robot too far'; break; 
 				case _this.AnswerCode.UNDOCK_FAIL : return typeof(textAPIAnswerCode.UNDOCK_FAIL) != 'undefined' ? textAPIAnswerCode.UNDOCK_FAIL : 'Undock failed'; break; 
 				case _this.AnswerCode.NO_VALID_CMD : return typeof(textAPIAnswerCode.NO_VALID_CMD) != 'undefined' ? textAPIAnswerCode.NO_VALID_CMD : 'No valid command'; break; 
-				case _this.AnswerCode.PAT_EXCEEDED : return typeof(textAPIAnswerCode.PAT_EXCEEDED) != 'undefined' ? textAPIAnswerCode.PAT_EXCEEDED : 'PAT Exceeded'; break; 
+				case _this.AnswerCode.TIMEOUT : return typeof(textAPIAnswerCode.TIMEOUT) != 'undefined' ? textAPIAnswerCode.TIMEOUT : 'Timeout'; break; 
 				case _this.AnswerCode.COLLISION : return typeof(textAPIAnswerCode.COLLISION) != 'undefined' ? textAPIAnswerCode.COLLISION : 'Collision'; break; 
 				case _this.AnswerCode.OSCILLATION : return typeof(textAPIAnswerCode.OSCILLATION) != 'undefined' ? textAPIAnswerCode.OSCILLATION : 'Oscillation'; break; 
 				case _this.AnswerCode.ROBOT_STUCK : return typeof(textAPIAnswerCode.ROBOT_STUCK) != 'undefined' ? textAPIAnswerCode.ROBOT_STUCK : 'Robot stuck'; break; 
@@ -1564,7 +1569,7 @@ function WycaAPI(options){
 				case _this.AnswerCode.INVALID_TARGET_POSE : return 'Invalid target position'; break;
 				case _this.AnswerCode.OBSTACLE_FAIL : return 'Obstacle fail'; break;
 				case _this.AnswerCode.WRONG_UNDOCK_PATH : return 'Wrong undock path'; break;
-				case _this.AnswerCode.UNKNOW_REFLECTOR : return 'Unknow reflector for the current map'; break;
+				case _this.AnswerCode.UNKNOWN_REFLECTOR : return 'Unknow reflector for the current map'; break;
 				case _this.AnswerCode.NO_REFLECTOR_DETECTED : return 'No reflector detected around the robot'; break;
 				case _this.AnswerCode.DOCKING : return 'Robot trying to dock'; break; // Robot trying to dock
 				case _this.AnswerCode.UNDOCKED : return 'Robot is undocked'; break; // Robot is undocked
@@ -1572,11 +1577,10 @@ function WycaAPI(options){
 				case _this.AnswerCode.CLOSE_FAILURE : return 'Dock fail too close to dock'; break;
 				case _this.AnswerCode.MOVE_BASIC_FAILED : return 'Move basic action failed'; break;
 				case _this.AnswerCode.GOTOPOSE_FAILED : return 'Go to pose action failed'; break;
-				
 				case _this.AnswerCode.ROBOT_TOO_FAR : return 'Robot too far'; break; 
 				case _this.AnswerCode.UNDOCK_FAIL : return 'Undock failed'; break; 
 				case _this.AnswerCode.NO_VALID_CMD : return  'No valid command'; break; 
-				case _this.AnswerCode.PAT_EXCEEDED : return 'PAT Exceeded'; break; 
+				case _this.AnswerCode.TIMEOUT : return 'Timeout'; break; 
 				case _this.AnswerCode.COLLISION : return 'Collision'; break; 
 				case _this.AnswerCode.OSCILLATION : return 'Oscillation'; break; 
 				case _this.AnswerCode.ROBOT_STUCK : return 'Robot stuck'; break; 
@@ -2080,22 +2084,55 @@ function WycaAPI(options){
 	
 	
 	this.PlaySound  = function(sound, nb_loops, callback){
+		if (_this.options.sound_is_on)
+		{
+			if (callback != undefined)
+				this.callbacks[_this.CommandCode.SOUND_PLAY] = callback;
+			var action = {
+				"O": _this.CommandCode.SOUND_PLAY,
+				"P":{
+					"S":sound,
+					"N":nb_loops
+				}
+			};
+			_this.wycaSend(JSON.stringify(action));
+		}
+		else
+		{
+			if (callback != undefined)
+				callback({"A":_this.AnswerCode.DETAILS_IN_MESSAGE, "M":"Sound is disabled"})
+		}
+	}
+	this.StopSound  = function(callback){
+		if (_this.options.sound_is_on)
+		{
+			if (callback != undefined)
+				this.callbacks[_this.CommandCode.SOUND_STOP] = callback;
+			var action = {
+				"O": _this.CommandCode.SOUND_STOP
+			};
+			_this.wycaSend(JSON.stringify(action));
+		}
+		else
+		{
+			if (callback != undefined)
+				callback({"A":_this.AnswerCode.DETAILS_IN_MESSAGE, "M":"Sound is disabled"})
+		}
+	}
+	this.SetSoundIsOn  = function(is_on, callback){
 		if (callback != undefined)
-			this.callbacks[_this.CommandCode.SOUND_PLAY] = callback;
+			this.callbacks[_this.CommandCode.SET_SOUND_IS_ON] = callback;
 		var action = {
-			"O": _this.CommandCode.SOUND_PLAY,
-			"P":{
-				"S":sound,
-				"N":nb_loops
-			}
+			"O": _this.CommandCode.SET_SOUND_IS_ON,
+			"P":is_on
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
-	this.StopSound  = function(callback){
+	this.GetSoundIsOn  = function(callback){
 		if (callback != undefined)
-			this.callbacks[_this.CommandCode.SOUND_STOP] = callback;
+			this.callbacks[_this.CommandCode.GET_SOUND_IS_ON] = callback;
 		var action = {
-			"O": _this.CommandCode.SOUND_STOP
+			"O": _this.CommandCode.GET_SOUND_IS_ON
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
@@ -2338,6 +2375,20 @@ function WycaAPI(options){
 			this.callbacks[_this.CommandCode.NAVIGATION_START_CANCEL] = callback;
 		var action = {
 			"O": _this.CommandCode.NAVIGATION_START_CANCEL,
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	
+	
+	this.CheckPosition  = function(x, y, callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.CHECK_POSITION] = callback;
+		var action = {
+			"O": _this.CommandCode.CHECK_POSITION,
+			"P": {
+				"X": x,
+				"Y": y,
+			}
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}

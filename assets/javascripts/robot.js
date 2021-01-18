@@ -65,6 +65,7 @@ $(document).ready(function(e) {
 		use_ssl: use_ssl,
 		api_key:user_api_key,
 		nick:'robot',
+		sound_is_on:true,
 		
 		onRobotConnexionError: function(data){
 			connectedToTheRobot = false;
@@ -133,7 +134,7 @@ $(document).ready(function(e) {
             InitMappingByStep();
 		},
 		onNavigationStartResult: function(data){
-            if (data.A != wycaApi.AnswerCode.NO_ERROR) { alert_wyca('Error navigation start ; ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M);}
+            if (data.A != wycaApi.AnswerCode.NO_ERROR) { alert_wyca((typeof(textErrorStartNavigation) != 'undefined'? textErrorStartNavigation : 'Error start navigation') + wycaApi.AnswerCodeToString(data.A)+ " " + data.M);}
 		},
 		onDockingState: function(data){
             if (dockingStateLast != data)
@@ -194,7 +195,8 @@ $(document).ready(function(e) {
 		}
 	});
 	
-	
+	$('.ifDocked').css('display','none');
+	$('.ifUndocked').css('display','none');
 	
 	wycaApi.init();	
 	/*
@@ -281,21 +283,27 @@ function GetMappingInConstruction()
 function onGoToPoseResult(data)
 {
 }
+
 function onGoToChargeResult(data)
 {
 }
+
 function onGoToPoiResult(data)
 {
 }
+
 function onGoToAugmentedPoseResult(data)
 {
 }
+
 function onDockResult(data)
 {
 }
+
 function onUndockResult(data)
 {
 }
+
 function onUndockFeedback(data)
 {
 }
@@ -414,6 +422,7 @@ function initBatteryState(data)
 }
 
 var robotCurrentState = '';
+
 function initStateRobot(etat)
 {
 	robotCurrentState = etat;
@@ -435,6 +444,7 @@ function InitRobotPose(pose)
 	if ($('#install_normal_edit_map').length > 0 && ($('#install_normal_edit_map').is(':visible') || firstInitRobotPose)) NormalTraceRobot(pose.X, pose.Y, pose.T);
 	if ($('#manager_edit_map').length > 0 && ($('#manager_edit_map').is(':visible') || firstInitRobotPose)) ManagerTraceRobot(pose.X, pose.Y, pose.T);
 	if ($('#user_edit_map').length > 0 && ($('#user_edit_map').is(':visible') || firstInitRobotPose)) UserTraceRobot(pose.X, pose.Y, pose.T);
+	if ($('#wyca_edit_map').length > 0 && ($('#wyca_edit_map').is(':visible') || firstInitRobotPose)) WycaTraceRobot(pose.X, pose.Y, pose.T);
 	
 	firstInitRobotPose = false
 }

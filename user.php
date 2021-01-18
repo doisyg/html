@@ -280,22 +280,6 @@
 					</div>
 				</div>
 				
-				<div class="popupHelp">
-					<h2><?=__('Help')?></h2>
-					<ul style="color:#000;">
-						<li><i class="fa fa-crosshairs iconMenuBlue"></i><span class="description"><?=__('Move the robot to this point')?></span></li>
-						<li><i class="fa fa-gamepad iconMenuPurple"></i><span class="description"><?=__('Teleop the robot')?></span></li>
-						<li style="position:relative;font-size:16px"><img class="route" src="assets/images/route_green.svg"/><span class="description" style="margin-left: 40px;position: relative;top: 3px;"><?=__('Test go to POI, dock or augmented pose')?></span></li>
-						<li style="position:relative;">
-						<svg class="svg_popupHelp_robot" xmlns="http://www.w3.org/2000/svg">
-							<circle cx="20" cy="20" r="12" class="robot_elem robot_elem_fond"></circle>
-							<polyline points="16 16 24 20 16 24" stroke="#FFFFFF" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round" class="robot_elem" transform="rotate(-90,20,20)"></polyline>
-						</svg>
-						<span class="description" style="margin-left: 40px;"><?=__('Robot position')?></span></li>
-					</ul>
-					<p class="legende"><?=__('Click to hide')?></p>
-				</div>
-				
 				<div class="user_edit_map_loading loading_big loading_map"><i class="fa fa fa-spinner fa-pulse fa-3x"></i></div>
 			</div>
 			
@@ -303,6 +287,23 @@
 				<div id="user_edit_map_zoom_popup_content" style="position:absolute; top:0; height:0;"></div>
 				<div id="user_edit_map_zoom_popup_mire" style="position:absolute; width:101px; height:101px; top:0; left:0; background-image:url(assets/images/mire.png);"></div>
 			</div>
+			
+			<div class="popupHelp">
+				<h2><?=__('Help')?></h2>
+				<ul style="color:#000;">
+					<li><i class="fa fa-crosshairs iconMenuBlue"></i><span class="description"><?=__('Move the robot to this point')?></span></li>
+					<li><i class="fa fa-gamepad iconMenuPurple"></i><span class="description"><?=__('Teleop the robot')?></span></li>
+					<li style="position:relative;font-size:16px"><img class="route" src="assets/images/route_green.svg"/><span class="description" style="margin-left: 40px;position: relative;top: 3px;"><?=__('Test go to POI, dock or augmented pose')?></span></li>
+					<li style="position:relative;">
+					<svg class="svg_popupHelp_robot" xmlns="http://www.w3.org/2000/svg">
+						<circle cx="20" cy="20" r="12" class="robot_elem robot_elem_fond"></circle>
+						<polyline points="16 16 24 20 16 24" stroke="#FFFFFF" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round" class="robot_elem" transform="rotate(-90,20,20)"></polyline>
+					</svg>
+					<span class="description" style="margin-left: 40px;"><?=__('Robot position')?></span></li>
+				</ul>
+				<p class="legende"><?=__('Click to hide')?></p>
+			</div>
+			
 		</div>
         <footer>
             <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="user_dashboard"><?php echo __('Back');?></a>
@@ -327,6 +328,14 @@
 						<div class="curseur"></div>
 					</div>
 				</div>
+			</div>
+			<div class="popupHelp">
+				<h2><?=__('Help')?></h2>
+				<div class="content sm-content text-left">
+					<p><?= __('This page allows you to control the robot using the virtual joystick.')?></p>
+					<p><?= __('If the robot is docked on a docking station or on an augmented position, the joystick will be hidden and an Undock button will be present to allow you to undock the robot.')?></p>	
+				</div>
+				<p class="legende"><?=__('Click to hide')?></p>
 			</div>
 		</div>
         <footer>
@@ -356,6 +365,16 @@
 						<div class="curseur"></div>
 					</div>
 				</div>
+			</div>
+			<div class="popupHelp">
+				<h2><?=__('Help')?></h2>
+				<div class="content sm-content text-left">
+					<p><?= __('If you start the robot undocked to a docking station or if the robot is lost, this page will allow you to relocate the robot correctly.')?></p>
+					<p><?= __('If the robot has just been started, a success message will be displayed.')?></p>
+					<p><?= __('If the robot was lost, it will rotate 360° to clean the obstacles it could have wrongly spotted due to its bad location.')?></p>
+					<p><?= __('A feedback popup will indicate the success or failure of the recovery.')?></p>	
+				</div>
+				<p class="legende"><?=__('Click to hide')?></p>
 			</div>
 		</div>
         <footer>

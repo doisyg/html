@@ -16,7 +16,7 @@ if (isset($_SESSION["id_user"]) && $_SESSION["IP"] != $_SERVER["REMOTE_ADDR"] &&
 	@session_start();
 }
 
-require_once(dirname(__FILE__)."/config.php");
+require_once (dirname(__FILE__)."/config.php");
 
 // Check if http or https
 if ( (! empty($_SERVER['REQUEST_SCHEME']) && $_SERVER['REQUEST_SCHEME'] == 'https') ||
@@ -30,7 +30,7 @@ if ( (! empty($_SERVER['REQUEST_SCHEME']) && $_SERVER['REQUEST_SCHEME'] == 'http
 }
 $_CONFIG['URL_API'] = $_CONFIG['URL']."API/";
 
-require_once(dirname(__FILE__)."/../lib/lib.php");
+require_once (dirname(__FILE__)."/../lib/lib.php");
 require_once (dirname(__FILE__)."/../classes/includes.php");
 
 
@@ -62,6 +62,10 @@ if ($currentIdLang == '') $currentIdLang = 2;
 
 $currentLang = new Lang($currentIdLang);
 $translate = new Translate($currentLang->iso);
+
+$app_sound = Configuration::GetValue('APP_SOUND');
+if($app_sound == '')
+	$app_sound = 'false';
 
 if (!isset($notCloseSession)) session_write_close();
 

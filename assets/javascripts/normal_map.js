@@ -118,7 +118,7 @@ function GetInfosCurrentMapDoNormal()
 		}
 		else
 		{
-			alert_wyca('Init map error : ' + wycaApi.AnswerCodeToString(data.A));
+			ParseAPIAnswerError(data,textErrorGetMap);
 		}
 	});
 }
@@ -664,12 +664,12 @@ $(document).ready(function(e) {
 			{
 				if (normalCurrentAction == 'editForbiddenArea' || normalCurrentAction == 'addbiddenArea')
 				{
-					RemoveClass('#install_normal_edit_map_svg .point_deletable', 'point_active');
+					RemoveClass('#install_normal_edit_map_svg .point_deletable', 'editing_point');
 					NormalDisplayMenu('install_normal_edit_map_menu_forbidden');
 				}
 				else if (normalCurrentAction == 'editArea' || normalCurrentAction == 'addArea')
 				{
-					RemoveClass('#install_normal_edit_map_svg .point_deletable', 'point_active');
+					RemoveClass('#install_normal_edit_map_svg .point_deletable', 'editing_point');
 					NormalDisplayMenu('install_normal_edit_map_menu_area');
 				}
 			}
