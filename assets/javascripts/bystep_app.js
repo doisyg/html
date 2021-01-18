@@ -1889,9 +1889,9 @@ $(document).ready(function(e) {
 			alert_wyca(textPasswordMatching);
 		}else if(!pass[0].checkValidity() || !cpass[0].checkValidity()){
 			alert_wyca(textPasswordPattern);
-		}else if (!$('#install_by_step_manager_i_manager_email')[0].checkValidity()){
+		}/*else if (!$('#install_by_step_manager_i_manager_email')[0].checkValidity()){
 			alert_wyca(textLoginPattern);
-		}
+		}*/
 		/*
 		else if ($('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_societe').val() == "" )
 		{

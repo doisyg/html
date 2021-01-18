@@ -334,9 +334,9 @@ $(document).ready(function(e) {
 			alert_wyca(textPasswordMatching);
 		}else if(!pass[0].checkValidity() || !cpass[0].checkValidity()){
 			alert_wyca(textPasswordPattern);
-		}else if (!$('#manager_users .modalUser #manager_users_i_user_email')[0].checkValidity()){
+		}/*else if (!$('#manager_users .modalUser #manager_users_i_user_email')[0].checkValidity()){
 			alert_wyca(textLoginPattern);
-		}
+		}*/
 		else
 		{
 			json_user = {
