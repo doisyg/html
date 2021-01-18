@@ -224,7 +224,7 @@ $(document).ready(function(e) {
 					success: function(data) {
 					},
 					error: function(e) {
-						alert_wyca((typeof(textErrorSaveSite) != 'undefined'? textErrorSaveSite : 'Error save site') + ' ' + e.responseText);
+						alert_wyca((typeof(textErrorStartMapping) != 'undefined'? textErrorStartMapping : 'Error start mapping') + ' ' + e.responseText);
 					}
 				});
 			}
@@ -240,7 +240,7 @@ $(document).ready(function(e) {
 						success: function(data) {
 						},
 						error: function(e) {
-							alert_wyca((typeof(textErrorFinish) != 'undefined'? textErrorFinish : 'Error in finish') + ' ' + e.responseText);
+							alert_wyca((typeof(textErrorSound) != 'undefined'? textErrorSound : 'Error in sound') + ' ' + e.responseText);
 						}
 					});
 					$('#modalBack').modal('hide');
