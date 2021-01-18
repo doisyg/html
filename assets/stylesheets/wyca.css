@@ -1162,6 +1162,12 @@ div.icon_menu .iconForbiddenArea .fa-minus-circle{
 .nopymy:after{margin-top:0;margin-bottom:0;padding-top:0;padding-bottom:0;}
 
 /* CSS FIXES */
+.loading_fin_create_map{
+	margin-top: 25%;
+}
+.switchLiveMapping{
+	display:none!important;
+}
 .ifDocked,.ifUndocked{}
 /* TO AVOID DUAL DISPLAY UNDOCK / JOYSTICK */
 

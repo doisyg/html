@@ -1983,6 +1983,7 @@ function InitMappingByStep()
 
 function GetLastMappingByStep()
 {
+	$('#install_by_step_mapping_fin .bMappingSaveMap ').addClass('disabled');
 	$('#install_by_step_mapping_fin .loading_fin_create_map').show();
 	
 	img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
@@ -2016,6 +2017,7 @@ function GetLastMappingByStep()
 					
 					width = img.naturalWidth;
 					height = img.naturalHeight;
+					$('#install_by_step_mapping_fin .loading_fin_create_map').hide();
 					
 					$('#install_by_step_mapping_canvas_result_trinary').attr('width', img.naturalWidth);
 					$('#install_by_step_mapping_canvas_result_trinary').attr('height', img.naturalHeight);
@@ -2031,8 +2033,9 @@ function GetLastMappingByStep()
 			{
 				$('#install_by_step_mapping_fin .loading_fin_create_map').hide();
 				
-				alert_wyca((typeof(textErrorRecovery) != 'undefined'? textErrorRecovery : 'Error in recovery') + data.M);
+				ParseAPIAnswerError(data,textErrorGetMapping);
 			}
+			$('#install_by_step_mapping_fin .bMappingSaveMap').removeClass('disabled');
 		});
 		
 		mappingStarted = false;
