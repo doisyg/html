@@ -556,6 +556,7 @@ $(document).ready(function()
 				$('#wyca_edit_map_led_animation_mode').val('Automatic');
 				$('#wyca_edit_map_min_distance_obstacle_mode').val('Automatic');
 				$('#wyca_edit_map_max_speed_mode').val('Automatic');
+				$('#wyca_edit_map_area_sound').val(-1);
 				
 				$.each(area.configs, function( indexConfig, config ) {
 					switch(config.name)
@@ -568,6 +569,7 @@ $(document).ready(function()
 						case 'max_speed': $('#wyca_edit_map_max_speed').val(config.value); break;
 						case 'min_distance_obstacle_mode': $('#wyca_edit_map_min_distance_obstacle_mode').val(config.value); break;
 						case 'min_distance_obstacle': $('#wyca_edit_map_min_distance_obstacle').val(config.value*100); break;
+						case 'sound': $('#wyca_edit_map_area_sound').val(config.value); break;
 					}
 				});
 			}
@@ -577,6 +579,7 @@ $(document).ready(function()
 				$('#wyca_edit_map_led_animation_mode').val('Automatic');
 				$('#wyca_edit_map_min_distance_obstacle_mode').val('Automatic');
 				$('#wyca_edit_map_max_speed_mode').val('Automatic');
+				$('#wyca_edit_map_area_sound').val(-1);
 			}
 			
 			$('#wyca_edit_map_area_color').val('rgb('+area.color_r+','+area.color_g+','+area.color_b+')'); $('#wyca_edit_map_area_color').keyup();
@@ -2118,6 +2121,7 @@ $(document).ready(function()
 				case 'max_speed': $('#wyca_edit_map_max_speed').val(config.value); break;
 				case 'min_distance_obstacle_mode': $('#wyca_edit_map_min_distance_obstacle_mode').val(config.value); break;
 				case 'min_distance_obstacle': $('#wyca_edit_map_min_distance_obstacle').val(config.value*100); break;
+				case 'sound': $('#wyca_edit_map_area_sound').val(config.value); break;
 			}
 		});
 		
@@ -2147,6 +2151,7 @@ $(document).ready(function()
 		area.configs.push({'name':'max_speed' , 'value':$('#wyca_edit_map_max_speed').val()});
 		area.configs.push({'name':'min_distance_obstacle_mode' , 'value':$('#wyca_edit_map_min_distance_obstacle_mode').val()});
 		area.configs.push({'name':'min_distance_obstacle' , 'value':$('#wyca_edit_map_min_distance_obstacle').val()/100});
+		area.configs.push({'name':'sound' , 'value':$('#wyca_edit_map_area_sound').val()});		
 		
 		var c = '';
 		if( $('#wyca_edit_map_area_color').val().includes('rgb') ){
