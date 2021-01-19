@@ -16,6 +16,7 @@ function GetInfosCurrentMapDoManager()
 	wycaApi.GetCurrentMapComplete(function(data) {
 		if (data.A == wycaApi.AnswerCode.NO_ERROR)
 		{
+			updatingMap = false;
 			id_map = data.D.id_map;
 			id_map_last = data.D.id_map;
 			
@@ -55,10 +56,24 @@ function GetInfosCurrentMapDoManager()
 			ManagerRefreshHistorique();
 			setTimeout(function(){
 				ManagerInitMap();
-				ManagerResizeSVG();			
+				ManagerResizeSVG();
+				
+				$('#manager_edit_map .modalReloadMap').modal('hide');
+				$('#manager_edit_map .modalReloadMap .btn').removeClass('disabled');
+				$('#manager_edit_map .modalReloadMap .manager_edit_map_modalReloadMap_loading').hide();
+				
+				$('#manager_edit_map .modalConfirmNoReloadMap').modal('hide');
+				$('#manager_edit_map .modalConfirmNoReloadMap .btn').removeClass('disabled');
+				$('#manager_edit_map .modalConfirmNoReloadMap .manager_edit_map_modalReloadMap_loading').hide();
+				
+				RemoveClass('#manager_edit_map_svg .active', 'active');
+				RemoveClass('#manager_edit_map_svg .activ_select', 'activ_select'); 
+				RemoveClass('#manager_edit_map_svg .editing_point', 'editing_point'); 
+				
+				ManagerHideMenus();
 			},500);
+			$('#manager_edit_map .modal').not('.modalReloadMap').each(function(){$(this).modal('hide')});
 			$('#bHeaderInfo').attr('onClick',"TogglePopupHelp()");
-			$('#manager_edit_map .modal').each(function(){$(this).modal('hide')});
 		}
 		else
 		{
