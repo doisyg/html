@@ -147,6 +147,8 @@ $(document).ready(function(e) {
 		onGoToAugmentedPoseResult: onGoToAugmentedPoseResult,
 		onGoToChargeResult: onGoToChargeResult,
 		onGoToPoseResult: onGoToPoseResult,
+		onGoToPoseFlexibleResult: onGoToPoseFlexibleResult,
+		onGoToPoseAccurateResult: onGoToPoseAccurateResult,
 		onDockResult: onDockResult,
 		onUndockResult: onUndockResult,
 		onUndockFeedback: onUndockFeedback,
@@ -278,6 +280,14 @@ function GetMappingInConstruction()
 			}
 		});
 	}
+}
+
+function onGoToPoseAccurateResult(data)
+{
+}
+
+function onGoToPoseFlexibleResult(data)
+{
 }
 
 function onGoToPoseResult(data)

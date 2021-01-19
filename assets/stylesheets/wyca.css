@@ -1329,7 +1329,28 @@ span.toggle_details{
 
 .form-group.sep { border-top:1px solid #EFEFEF; padding-top:15px; }
 
+.optionGoToPose{
+	list-style: none;
+    margin: 0;
+    padding: 0;
+}
 
+.optionGoToPose > li {
+	display: flex;
+    padding: 15px;
+    background: #DCDCDC;
+    margin: 40px 0px;
+    justify-content: space-between;
+    font-size: 18px;
+    align-items: center;
+    color: #343434;
+	border-radius:10px;
+	transition:0.5s all;
+}
+
+.optionGoToPose > li > i:not(.fa-chevron-right){
+	font-size: 24px;
+}
 
 .row.row-eq-height{
 	display: flex;

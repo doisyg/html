@@ -86,6 +86,7 @@ var textErrorGetFiducials = "<?php echo __js('Error get fiducials');?>";
 var textErrorStartMapping = "<?php echo __js('Error start mapping');?>";
 var textErrorStopMapping = "<?php echo __js('Error stop mapping');?>";
 var textErrorGetMapping = "<?php echo __js('Error get mapping');?>";
+var textErrorInput = "<?php echo __js('Error on input');?>";
 
 //DEMO MODE
 var textDemoNeedActions = "<?php echo __js('You need to setup actions before launch Demo');?>";
