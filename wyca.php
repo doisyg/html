@@ -959,7 +959,7 @@
                             </div>
                         </div>
                     </div>
-                     
+					
                     <div class="modal fade modalHelpClickGotoPose" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
                         <div class="modal-dialog" role="dialog">
                             <div class="modal-content">

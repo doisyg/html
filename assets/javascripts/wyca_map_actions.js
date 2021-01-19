@@ -288,8 +288,32 @@ function WycaSaveElementNeeded(need)
 	}
 }
 
-$(document).ready(function() {
-
+$(document).ready(function()
+{
+	/* RELOAD MAP */
+	
+	$('#wyca_edit_map #wyca_edit_map_bAbortReloadMap').click(function(){
+		$('.modalConfirmNoReloadMap').modal('show');
+	})
+	
+	$('#wyca_edit_map .modalReloadMap .wyca_edit_map_bReloadMap').click(function(){
+		$('#wyca_edit_map .modalReloadMap .btn').addClass('disabled');
+		$('#wyca_edit_map .modalReloadMap .wyca_edit_map_modalReloadMap_loading').show();
+		GetInfosCurrentMapWyca();
+	})
+	
+	$('#wyca_edit_map .modalConfirmNoReloadMap .wyca_edit_map_bReloadMap').click(function(){
+		$('#wyca_edit_map .modalConfirmNoReloadMap .btn').addClass('disabled');
+		$('#wyca_edit_map .modalConfirmNoReloadMap .wyca_edit_map_modalReloadMap_loading').show();
+		GetInfosCurrentMapWyca();
+	})
+	
+	if($('#wyca_edit_map .select_area_sound').length > 0 && typeof(wycaApi) != 'undefined' && typeof(wycaApi.SOUND) != 'undefined' ){
+		for (const [key, value] of Object.entries(wycaApi.SOUND)) {
+			$('#wyca_edit_map .select_area_sound').append('<option value="'+value+'">'+key+'</option>')
+		}
+	}
+	
 	window.addEventListener('beforeunload', function(e){
 		if (!wycaSavedCanClose)
 		{
