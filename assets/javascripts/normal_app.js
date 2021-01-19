@@ -130,7 +130,7 @@ $(document).ready(function(e) {
 				},
 				error: function(e) {
 					
-					var img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
+					var img = document.getElementById("install_normal_setup_trinary_img_map_saved_fin");
         			img.src = "assets/images/vide.png";
 					
 					alert_wyca(textErrorTrinary + ' ' + e.responseText);

@@ -38,6 +38,7 @@ function WycaHideCurrentMenu()
 	$('body').attr('class', 'no_current');
 
 	wycaCurrentAction = '';
+	wycaCanChangeMenu = true;
 	currentStep = '';
 	WycaHideMenus();
 }
@@ -51,6 +52,7 @@ function WycaHideCurrentMenuNotSelect()
 	$('body').attr('class', 'no_current');
 	
 	wycaCurrentAction = '';
+	wycaCanChangeMenu = true;
 	currentStep = '';
 	WycaHideMenus();
 }

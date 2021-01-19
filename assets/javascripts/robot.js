@@ -6,7 +6,7 @@ var mappingLaunched = false;
 var mappingLastPose = null;
 var mappingStarted = false;
 var intervalMap = null;
-
+var updatingMap = false;
 var dockingStateLast = "not_init";
 
 var viewer;
@@ -141,6 +141,14 @@ $(document).ready(function(e) {
 			{
 				dockingStateLast = data;
             	InitDockingState();
+			}
+		},
+		onMapUpdated: function(data){
+			if(updatingMap){
+				updatingMap = false;
+			}else{
+				console.log('Map need update');
+				AskReloadMap();
 			}
 		},
 		onGoToPoiResult: onGoToPoiResult,
@@ -457,6 +465,15 @@ function InitRobotPose(pose)
 	if ($('#wyca_edit_map').length > 0 && ($('#wyca_edit_map').is(':visible') || firstInitRobotPose)) WycaTraceRobot(pose.X, pose.Y, pose.T);
 	
 	firstInitRobotPose = false
+}
+
+function AskReloadMap()
+{
+	if ($('#install_by_step_edit_map').length > 0 && ($('#install_by_step_edit_map').is(':visible'))) $('#install_by_step_edit_map .modalReloadMap').modal('show');
+	if ($('#install_normal_edit_map').length > 0 && ($('#install_normal_edit_map').is(':visible'))) $('#install_normal_edit_map .modalReloadMap').modal('show');
+	if ($('#manager_edit_map').length > 0 && ($('#manager_edit_map').is(':visible'))) $('#manager_edit_map .modalReloadMap').modal('show');
+	if ($('#user_edit_map').length > 0 && ($('#user_edit_map').is(':visible'))) $('#user_edit_map .modalReloadMap').modal('show');
+	if ($('#wyca_edit_map').length > 0 && ($('#wyca_edit_map').is(':visible'))) $('#wyca_edit_map .modalReloadMap').modal('show');
 }
 
 function InitPosCarteMapping()
