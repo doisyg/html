@@ -18,9 +18,9 @@
 		</style>
 	</head>
 	<body>
-	<form action="save_test_upload.php" method="POST" class="d-flex justify-content-center flex-column" style="max-width:400px;margin:0 auto">
+	<form action="save_test_upload.php" method="POST" class="d-flex justify-content-center flex-column" style="max-width:400px;margin:0 auto" enctype="multipart/form-data">
 		<input class="my-3" type="text" name="device" placeholder="Device">
-		<input class="my-3" type="file" name="img" accept="image/png, image/jpeg">
+		<input class="my-3" type="file" name="img" >
 		<input class="my-3" type="hidden" name="timestamp">
 		<input type="submit" value="GO">
 	</form>
