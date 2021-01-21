@@ -326,6 +326,14 @@ function onUndockFeedback(data)
 {
 }
 
+function onRecoveryFromFiducialResult(data)
+{
+}
+
+function onRecoveryFromFiducialFeedback(data)
+{
+}
+
 function InitDockingState()
 {
 	switch(dockingStateLast){

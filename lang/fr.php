@@ -563,5 +563,8 @@ $_LANG['c5c5e761e3011a9186a0ab68e53199c5'] = 'Vous avez la possibilité d\'activ
 $_LANG['86e5b85500193ad5997f3b0ba661d269'] = 'Vous avez la possibilité d\'activer ou de désactiver les sons de cette application.';
 $_LANG['9d07e0e08af7f96cf45be0112b9ccfbe'] = 'Son';
 $_LANG['3ca332cf9cfdcd214dc6ed0274e12070'] = 'Vous avez la possibilité d\'activer ou de désactiver les sons du véhicule.';
+$_LANG['4d1c8263ba1036754f8db14a98f9f006'] = 'Recharger';
+$_LANG['cdc446c5bf01aee3aa7f2424a446ca8b'] = 'La carte a été modifié extérieurement.';
+$_LANG['008a49c71038ceee8879c39d91a0e40f'] = 'Souhaitez-vous la recharger ?';
 
 ?>
