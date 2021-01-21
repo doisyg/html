@@ -76,8 +76,11 @@ $(document).ready(function(e) {
 	});
 	
 	$(document).mouseup(function(e) {
-		isDown = false;
-		SetCurseurV2(xCentre, yCentre);
+		if(isDown)
+		{
+			isDown = false;
+			SetCurseurV2(xCentre, yCentre);
+		}
 	});
 	
 	$(document).mousemove(function(e) {
@@ -100,8 +103,11 @@ $(document).ready(function(e) {
 	});
 	
 	$(document).on('touchend', function(e) {
-		isDown = false;
-		SetCurseurV2(xCentre, yCentre);
+		if(isDown)
+		{
+			isDown = false;
+			SetCurseurV2(xCentre, yCentre);
+		}
 	});
 	
 	$('.joystickDiv').on('touchmove', function(e) {
@@ -113,8 +119,11 @@ $(document).ready(function(e) {
 	});
 	
 	$(document).on('touchcancel', function(e) {
-		isDown = false;
-		SetCurseurV2(xCentre, yCentre);
+		if(isDown)
+		{
+			isDown = false;
+			SetCurseurV2(xCentre, yCentre);
+		}
 	});
 });	
 
