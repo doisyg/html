@@ -1,63 +1,92 @@
 var JoystickDebug = false;
-var marginLeft = 70;
-var marginTop = 70;
-
-var xCentre = 112 + marginLeft;
-var yCentre = 112 + marginTop; 
-
-var xCentreCurseur = 54;
-var yCentreCurseur = 49;
-
 var isManette = false;
+
+/* DYNAMICS VAR */
+var widthCurseurJoystick = 104;
+var heightCurseurJoystick = 104;
+var widthFondJoystick = 224;
+var heightFondJoystick = 224;
+var offset = null;
+var xCentre = (widthFondJoystick/2);
+var yCentre = (heightFondJoystick/2);
+
+var xCentreCurseur = 60;
+var yCentreCurseur = 60;
+
+var vitesseAngulaire = 0;
+var vitesseX = 0
 var vitesse = 0;
 var angle = 0;
 
 var nbCall = 0;
-
+var nbCall0 = 0;
+var lastValueX = 0;
+var lastValueY = 0;
 var isDown = false;
 
+var delayPublish = 200;
 var intervalSendCommande = null;
 
-$(document).ready(function(e) {
-    
+function initJoystick(){
+	
 	haveJoystick = false;
+	
 	if ($('.joystickDiv:visible').length > 0)
 	{
-		offset = $('.joystickDiv:visible').offset()
+		offset = $('.joystickDiv:visible').offset();
 		haveJoystick = true;
 	}
 	else if ($('.joystickDiv').length > 0)
 	{
-		offset = $('.joystickDiv').offset()
+		offset = $('.joystickDiv').offset();
 		haveJoystick = true;
 	}
 	
 	if (haveJoystick)
 	{
-		marginLeft = offset.left;
-		marginTop = offset.top;
-		xCentre = 112 + marginLeft;
-		yCentre = 112 + marginTop; 
+		widthCurseurJoystick = $('.joystickDiv > .curseur' ).css('width').substr(0,$('.joystickDiv > .curseur' ).css('width').length-2);
+		heightCurseurJoystick = $('.joystickDiv > .curseur' ).css('height').substr(0,$('.joystickDiv > .curseur' ).css('height').length-2);
+		
+		widthFondJoystick = $('.joystickDiv > .fond' ).css('width').substr(0,$('.joystickDiv > .fond' ).css('width').length-2);
+		heightFondJoystick = $('.joystickDiv > .fond' ).css('height').substr(0,$('.joystickDiv > .fond' ).css('height').length-2);
+		
+		xCentre = (widthFondJoystick/2) + offset.left;
+		yCentre = (heightFondJoystick/2) + offset.top;
+
+		xCentreCurseur = widthCurseurJoystick/2;
+		yCentreCurseur = heightCurseurJoystick/2;
 		
 		SetCurseurV2(xCentre, yCentre);
 	}
-		
+	
+	return haveJoystick;
+}
+
+window.onresize = initJoystick;
+
+$(document).ready(function(e) {
+	
+	/* INIT VARIABLES */
+	initJoystick();
+	
 	$('.joystickDiv .curseur').mousedown(function(e){
 		e.preventDefault();
 		isDown = true;
 		SetCurseurV2(e.pageX, e.pageY);
 	});
+	
 	$(document).mouseup(function(e) {
 		isDown = false;
 		SetCurseurV2(xCentre, yCentre);
 	});
+	
 	$(document).mousemove(function(e) {
 		if(isDown)
 		{
 			SetCurseurV2(e.pageX, e.pageY);
 		
 			if (intervalSendCommande == null)
-				intervalSendCommande = setInterval(SendCommande, 200);
+				intervalSendCommande = setInterval(SendCommande, delayPublish);
 		}
 	});
 	
@@ -66,13 +95,15 @@ $(document).ready(function(e) {
 		SetCurseurV2((event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX), (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY));
 		
 		if (intervalSendCommande == null)
-			intervalSendCommande = setInterval(SendCommande, 200);
+			intervalSendCommande = setInterval(SendCommande, delayPublish);
 		
 	});
+	
 	$(document).on('touchend', function(e) {
 		isDown = false;
 		SetCurseurV2(xCentre, yCentre);
 	});
+	
 	$('.joystickDiv').on('touchmove', function(e) {
 		if(isDown)
 		{
@@ -80,6 +111,7 @@ $(document).ready(function(e) {
 			SetCurseurV2((event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX), (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY));
 		}
 	});
+	
 	$(document).on('touchcancel', function(e) {
 		isDown = false;
 		SetCurseurV2(xCentre, yCentre);
@@ -96,71 +128,96 @@ function SetVitesse(v)
 	vitesse = v * 100;
 }
 
-var vitesseAngulaire = 0;
-var vitesseX = 0
-
 function SetCurseurV2(x, y)
 {	
+	d = distanceJoystick (x, y, xCentre, yCentre);
+	
 	if ($('.joystickDiv:visible').length > 0)
-		offset = $('.joystickDiv:visible').offset();
-	else
-		offset = $('.joystickDiv').offset();
-	
-	if(typeof(offset) != 'undefined')
 	{
-		marginLeft = offset.left;
-		marginTop = offset.top;
-		xCentre = 112 + marginLeft;
-		yCentre = 112 + marginTop; 
-	
-		d = distanceJoystick (x, y, xCentre, yCentre);
-		if (d <34)
-		{
-			$('.joystickDiv:visible .curseur').css({'left': (x-xCentreCurseur-marginLeft)+'px', 'top': (y-yCentreCurseur-marginTop)+'px'});
-			vitesseAngulaire = yCentre-y;
-			vitesseX = xCentre-x;
-		}
-		else
-		{
-			xt = x - xCentre;
-			yt = y - yCentre;
-			
-			xt2 = xt * 34 / d;
-			yt2 = yt * 34 / d;
-			
-			xt2 += xCentre;
-			yt2 += yCentre;
-			
-			x = xt2;
-			y = yt2;
-			
-		
-			vitesseAngulaire = yCentre-yt2;
-			vitesseX = xCentre-xt2;
-			
-			$('.joystickDiv:visible .curseur').css({'left': (xt2-xCentreCurseur-marginLeft)+'px', 'top': (yt2-yCentreCurseur-marginTop)+'px'});
-		}
-	
-		valueY = (x - xCentre) / 37;
-		valueX = (y - yCentre) / 37;
-		
-		lastValueX = valueX;
-		lastValueY = valueY;
-		
-		nbCall++;
-		if (nbCall % 5 == 0)
-		{
-			nbCall = 0;
-		}
-			
-		//wycaApi.Teleop(valueY * -0.5, valueX * -0.8);
+		offset = $('.joystickDiv:visible').offset();
 	}
+	else if ($('.joystickDiv').length > 0)
+	{
+		offset = $('.joystickDiv').offset();
+	}
+	
+	marginLeft = offset.left;
+	marginTop = offset.top;
+	xCentre = (widthFondJoystick/2) + marginLeft;
+	yCentre = (heightFondJoystick/2) + marginTop;
+	
+	if (d < 34)
+	{
+		
+		cssLeft = (x-xCentreCurseur-marginLeft)+'px';
+		cssTop  = (y-yCentreCurseur-marginTop) +'px';
+		$('.joystickDiv:visible .curseur').css({'left': cssLeft, 'top': cssTop });
+		vitesseAngulaire = yCentre-y;
+		vitesseX = xCentre-x;
+	}
+	else
+	{
+			
+		xCentre = widthFondJoystick/2 + marginLeft;
+		yCentre = heightFondJoystick/2 + marginTop; 
+		
+		//OLD 
+		xt = x - xCentre;
+		yt = y - yCentre;
+		
+		xt2 = xt * 34 / d;
+		yt2 = yt * 34 / d;
+		
+		xt2 += xCentre;
+		yt2 += yCentre;
+		
+		x = xt2;
+		y = yt2;
+		
+	
+		vitesseAngulaire = yCentre-yt2;
+		vitesseX = xCentre-xt2;
+		
+		$('.joystickDiv:visible .curseur').css({'left': (xt2-xCentreCurseur-marginLeft)+'px', 'top': (yt2-yCentreCurseur-marginTop)+'px'});
+	
+		/*
+		xt = x - xCentre;
+		yt = y - yCentre;
+		
+		xt2 = xt * 34 / d;
+		yt2 = yt * 34 / d;
+		
+		xt2 += xCentre;
+		yt2 += yCentre;
+		
+		x = xt2;
+		y = yt2;
+	
+		vitesseAngulaire = yCentre-yt2;
+		vitesseX = xCentre-xt2;
+		
+		cssLeft = (xt2-xCentreCurseur)+'px';
+		cssTop  = (yt2-yCentreCurseur) +'px';
+		
+		$('.joystickDiv:visible .curseur').css({'left': cssLeft , 'top': cssTop});
+		*/
+	}
+
+	valueY = (x - xCentre) / 37;
+	valueX = (y - yCentre) / 37;
+	
+	lastValueX = valueX;
+	lastValueY = valueY;
+	
+	nbCall++;
+	if (nbCall % 5 == 0)
+	{
+		nbCall = 0;
+	}
+		
+	//wycaApi.Teleop(valueY * -0.5, valueX * -0.8);
 }
 
-var lastValueX = 0;
-var lastValueY = 0;
-
-nbCall0 = 0;
 function SendCommande()
 {
 	//if (robotCurrentState != 'undocked' || (lastValueX == 0 && lastValueY == 0))

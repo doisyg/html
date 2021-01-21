@@ -151,7 +151,12 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 .joystickDiv { width:auto; margin:auto; display:inline-block; position:relative;}
 .joystickDiv .fond { background-image:url(../images/off.png); width:224px; height:224px; z-index:100; }
 .joystickDiv .curseur { background-image:url(../images/bouton.png); width:104px; height:104px; position:absolute; top:62px; left:58px; z-index:200; }
-
+@media only screen and (max-height:600px)
+{
+	.joystickDiv { width:auto; margin:auto; display:inline-block; position:relative;}
+	.joystickDiv .fond { background-image:url(../images/off.png);background-position: center center;background-size:contain; width:180px; height:180px; z-index:100;background-size: ; }
+	.joystickDiv .curseur { background-image:url(../images/bouton.png); background-position: center center;background-size:contain; width:84px; height:84px; position:absolute; top:50px; left:47px; z-index:200; }
+}
 #install_by_step_mapping { background-color:rgba(245,245,245,0.8); }
 #install_by_step_mapping header { background-color:#FFFFFF; z-index:200; }
 #install_by_step_mapping .content { z-index:100; position:relative; height:100vh; height: calc(var(--vh, 1vh) * 100); }
