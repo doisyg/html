@@ -2368,6 +2368,9 @@ function ParseAPIAnswerError(data,pre_txt = '' ,post_txt = '')
 		txt = pre_txt + txt + post_txt;
 		warning_wyca(txt);
 	}else{
+		if(data.A == wycaApi.AnswerCode.NOT_CURRENT_MAP){
+			setTimeout(AskReloadMap,500);
+		}
 		if (data.M != ''){
 			if(data.M.length > 50)
 				txt = wycaApi.AnswerCodeToString(data.A)+'<br><span>'+data.M+'</span>';
