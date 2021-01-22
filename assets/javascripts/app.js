@@ -580,7 +580,7 @@ $(document).ready(function(e) {
 		if($(this)[0].nodeName == 'A'){
 			currentDeleteId = $(this).parent().attr('id');
 			console.log(currentDeleteId);
-			if(currentDeleteId.split('_elem_')[1] == user_id)
+			if($(this).parent().parent().hasClass('list_wycas') && currentDeleteId.split('_elem_')[1] == user_id)
 				$('#modalConfirmDeleteCurrentAccount').modal('show');
 			else
 				$('#modalConfirmDelete').modal('show');
