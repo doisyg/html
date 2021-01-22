@@ -16,7 +16,7 @@ function GetInfosCurrentMapDoWyca()
 	wycaApi.GetCurrentMapComplete(function(data) {
 		if (data.A == wycaApi.AnswerCode.NO_ERROR)
 		{
-			updatingMap = false;
+			
 			console.log(data.D); 
 			id_map = data.D.id_map;
 			id_map_last = data.D.id_map;

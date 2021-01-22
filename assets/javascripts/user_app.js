@@ -50,7 +50,7 @@ $(document).ready(function(e) {
 			}
 			else
 				gotoTest = false;
-			updatingMap = true;
+			
 			console.log(data);
 			
 			wycaApi.SetCurrentMapData(data, function(data){

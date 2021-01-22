@@ -475,7 +475,7 @@ $(document).ready(function(e) {
 			}
 			else
 				gotoTest = false;
-			updatingMap = true;
+			
 			wycaApi.SetCurrentMapData(data, function(data){
 				if (data.A == wycaApi.AnswerCode.NO_ERROR)
 				{
