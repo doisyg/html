@@ -284,6 +284,23 @@ function NormalSaveElementNeeded(need)
 }
 
 $(document).ready(function() {
+	/* RELOAD MAP */
+	
+	$('#install_normal_edit_map #install_normal_edit_map_bAbortReloadMap').click(function(){
+		$('.modalConfirmNoReloadMap').modal('show');
+	})
+	
+	$('#install_normal_edit_map .modalReloadMap .install_normal_edit_map_bReloadMap').click(function(){
+		$('#install_normal_edit_map .modalReloadMap .btn').addClass('disabled');
+		$('#install_normal_edit_map .modalReloadMap .install_normal_edit_map_modalReloadMap_loading').show();
+		GetInfosCurrentMapNormal();
+	})
+	
+	$('#install_normal_edit_map .modalConfirmNoReloadMap .install_normal_edit_map_bReloadMap').click(function(){
+		$('#install_normal_edit_map .modalConfirmNoReloadMap .btn').addClass('disabled');
+		$('#install_normal_edit_map .modalConfirmNoReloadMap .install_normal_edit_map_modalReloadMap_loading').show();
+		GetInfosCurrentMapNormal();
+	})
 	
 	if($('#install_normal_edit_map .select_area_sound').length > 0 && typeof(wycaApi) != 'undefined' && typeof(wycaApi.SOUND) != 'undefined' ){
 		for (const [key, value] of Object.entries(wycaApi.SOUND)) {

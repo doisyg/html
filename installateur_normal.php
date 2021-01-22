@@ -992,6 +992,55 @@
                         </div>
                     </div>
 					
+                    <div class="modal fade modalReloadMap" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+                                        <div class="h100vh_160" style="overflow:auto; text-align:center">
+											<i class="far fa-map fa-5x" style="margin:20px 0;position:relative">
+												<!--<i class="fas fa-asterisk fa-2x" style="position: absolute;font-size: 16px;color: #343434;top:-8px;right: -9px;"></i>-->
+											</i>
+											<h4 style="margin:20px 0"><?= __('The map has been modified externally.')?></h4>
+											<h4 style="margin:20px 0"><?= __('Would you like to reload it?')?></h4>
+											<h4 style="margin:20px 0"><?= __('This will prevent you from losing changes that have been made.')?></h4>
+											<div class="install_normal_edit_map_modalReloadMap_loading loading_big" style="margin-top: 50px;"><i class="fa fa fa-spinner fa-pulse fa-2x"></i></div>
+                                        </div>
+                                        
+                                        <div style="clear:both;"></div>
+										
+                                        <a href="#" id="install_normal_edit_map_bAbortReloadMap" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('No');?></a> 
+										<a href="#" id="" class="btn btn-primary btn_footer_right btn_50 install_normal_edit_map_bReloadMap"><?php echo __('Reload Map');?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+					<div class="modal fade modalConfirmNoReloadMap" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+                                        <div class="h100vh_160" style="overflow:auto; text-align:center">
+											<i class="fas fa-sync-alt fa-5x" style="margin:20px 0;position:relative">
+												<!--<i class="fas fa-asterisk fa-2x" style="position: absolute;font-size: 16px;color: #343434;top:-8px;right: -9px;"></i>-->
+											</i>
+											<h4 style="margin:20px 0"><?= __('Are you sure ?')?></h4>
+											<h4 style="margin:20px 0"><?= __('If you choose to keep your map,')?></h4>
+											<h4 style="margin:20px 0"><?= __('You may loose some modifications perfomed on the map by overwriting changes that have been made.')?></h4>
+											<div class="install_normal_edit_map_modalReloadMap_loading loading_big" style="margin-top: 50px;"><i class="fa fa fa-spinner fa-pulse fa-2x"></i></div>
+                                        </div>
+                                        
+                                        <div style="clear:both;"></div>
+										
+                                        <a href="#" class="btn btn-warning btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Yes');?></a> 
+										<a href="#" class="btn btn-primary btn_footer_right btn_50 install_normal_edit_map_bReloadMap"><?php echo __('Reload Map');?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     
 					<div class="install_normal_edit_map_loading loading_big loading_map"><i class="fa fa fa-spinner fa-pulse fa-3x"></i></div>
                 </div>

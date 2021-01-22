@@ -224,7 +224,7 @@ $(document).ready(function(e) {
 					success: function(data) {
 					},
 					error: function(e) {
-						alert_wyca((typeof(textErrorSaveSite) != 'undefined'? textErrorSaveSite : 'Error save site') + ' ' + e.responseText);
+						alert_wyca((typeof(textErrorStartMapping) != 'undefined'? textErrorStartMapping : 'Error start mapping') + ' ' + e.responseText);
 					}
 				});
 			}
@@ -240,7 +240,7 @@ $(document).ready(function(e) {
 						success: function(data) {
 						},
 						error: function(e) {
-							alert_wyca((typeof(textErrorFinish) != 'undefined'? textErrorFinish : 'Error in finish') + ' ' + e.responseText);
+							alert_wyca((typeof(textErrorSound) != 'undefined'? textErrorSound : 'Error in sound') + ' ' + e.responseText);
 						}
 					});
 					$('#modalBack').modal('hide');
@@ -1983,6 +1983,7 @@ function InitMappingByStep()
 
 function GetLastMappingByStep()
 {
+	$('#install_by_step_mapping_fin .bMappingSaveMap ').addClass('disabled');
 	$('#install_by_step_mapping_fin .loading_fin_create_map').show();
 	
 	img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
@@ -2016,6 +2017,7 @@ function GetLastMappingByStep()
 					
 					width = img.naturalWidth;
 					height = img.naturalHeight;
+					$('#install_by_step_mapping_fin .loading_fin_create_map').hide();
 					
 					$('#install_by_step_mapping_canvas_result_trinary').attr('width', img.naturalWidth);
 					$('#install_by_step_mapping_canvas_result_trinary').attr('height', img.naturalHeight);
@@ -2031,8 +2033,9 @@ function GetLastMappingByStep()
 			{
 				$('#install_by_step_mapping_fin .loading_fin_create_map').hide();
 				
-				alert_wyca((typeof(textErrorRecovery) != 'undefined'? textErrorRecovery : 'Error in recovery') + data.M);
+				ParseAPIAnswerError(data,textErrorGetMapping);
 			}
+			$('#install_by_step_mapping_fin .bMappingSaveMap').removeClass('disabled');
 		});
 		
 		mappingStarted = false;
@@ -2365,6 +2368,9 @@ function ParseAPIAnswerError(data,pre_txt = '' ,post_txt = '')
 		txt = pre_txt + txt + post_txt;
 		warning_wyca(txt);
 	}else{
+		if(data.A == wycaApi.AnswerCode.NOT_CURRENT_MAP){
+			setTimeout(AskReloadMap,500);
+		}
 		if (data.M != ''){
 			if(data.M.length > 50)
 				txt = wycaApi.AnswerCodeToString(data.A)+'<br><span>'+data.M+'</span>';

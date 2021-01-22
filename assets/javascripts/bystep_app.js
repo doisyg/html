@@ -597,7 +597,7 @@ $(document).ready(function(e) {
 	
 	$('#install_by_step_mapping .bMappingStart').click(function(e) {
 		e.preventDefault();
-		
+		$('#install_by_step_mapping .joystickDiv').hide();
 		$('#install_by_step_mapping .bMappingBack').hide();
 		$('#install_by_step_mapping .bMappingStart').hide();
 		$('.ifMappingInit').show();
@@ -643,7 +643,7 @@ $(document).ready(function(e) {
 					clearInterval(intervalMap);
 					intervalMap = null;
 				}
-				
+				$('#install_by_step_mapping .joystickDiv').show();
 				GetMappingInConstruction();
 			}
 		}
@@ -666,7 +666,7 @@ $(document).ready(function(e) {
 					intervalMap = null;
 				}
 				//intervalMap = setInterval(GetMap, 1000);
-				
+				$('#install_by_step_mapping .joystickDiv').show();
 				GetMappingInConstruction();
 			}, 500);
 		}
@@ -717,8 +717,12 @@ $(document).ready(function(e) {
 	$('#install_by_step_mapping .bMappingStop').click(function(e) {
 		e.preventDefault();
 		
-		$('#install_by_step_mapping_fin .loading_fin_create_map').show();
+		var canvasDessin = document.getElementById('install_by_step_mapping_canvas_result_trinary'),
+		ctx = canvasDessin.getContext('2d');
+		ctx.clearRect(0, 0, canvasDessin.width, canvasDessin.height);
 		
+		$('#install_by_step_mapping_fin .loading_fin_create_map').show();
+		$('#install_by_step_mapping_fin .bMappingSaveMap ').addClass('disabled');
 		img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
         img.src = 'assets/images/vide.png';
 		
@@ -1326,7 +1330,7 @@ $(document).ready(function(e) {
 			}
 			else
 				gotoTest = false;
-			
+			updatingMap = true;
 			wycaApi.SetCurrentMapData(data, function(data){
 				if (data.A == wycaApi.AnswerCode.NO_ERROR)
 				{
@@ -1889,9 +1893,9 @@ $(document).ready(function(e) {
 			alert_wyca(textPasswordMatching);
 		}else if(!pass[0].checkValidity() || !cpass[0].checkValidity()){
 			alert_wyca(textPasswordPattern);
-		}else if (!$('#install_by_step_manager_i_manager_email')[0].checkValidity()){
+		}/*else if (!$('#install_by_step_manager_i_manager_email')[0].checkValidity()){
 			alert_wyca(textLoginPattern);
-		}
+		}*/
 		/*
 		else if ($('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_societe').val() == "" )
 		{
@@ -2461,6 +2465,7 @@ function CalculateMapTrinary()
 
 function CalculateMapTrinaryDo()
 {
+	
 	threshold_free_255 = 255 - threshold_free / 100 * 255;
 	threshold_occupied_255 = 255 - threshold_occupied / 100 * 255;
 	
@@ -2492,13 +2497,13 @@ function CalculateMapTrinaryDo()
 				buffer[pos+3] = 255;           // set alpha channel
 		}
 	}
-	
 	var canvasDessin = document.getElementById('install_by_step_mapping_canvas_result_trinary'),
 	ctx = canvasDessin.getContext('2d');
-	
+
 	var idata = ctx.createImageData(width, height);
 	idata.data.set(buffer);
 	ctx.putImageData(idata, 0, 0);
 	
 	$('#install_by_step_mapping_fin .loading_fin_create_map').hide();
+	$('#install_by_step_mapping_fin .bMappingSaveMap ').removeClass('disabled');
 }	

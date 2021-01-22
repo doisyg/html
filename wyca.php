@@ -443,6 +443,16 @@
                                                        
                                                     </div>
                                                 </div>
+												<div class="form-group sep">
+                                                    <label class="col-xs-4 control-label"><?php echo __('Area Sound');?></label>
+                                                    <div class="col-xs-8">
+                                                    	<div class="col-xs-12" style="padding:0; margin-bottom:5px;">
+                                                        <select id="wyca_edit_map_area_sound" name="area_sound" class="form-control input-sm mb-md select_area_sound">
+                                                            <option value="-1"><?php echo __('No sound');?></option>
+                                                        </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </form>
                                         </div>
                                         
@@ -959,7 +969,7 @@
                             </div>
                         </div>
                     </div>
-                     
+					
                     <div class="modal fade modalHelpClickGotoPose" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
                         <div class="modal-dialog" role="dialog">
                             <div class="modal-content">
@@ -993,6 +1003,116 @@
                         </div>
                     </div>
 					
+                    <div class="modal fade modalReloadMap" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+                                        <div class="h100vh_160" style="overflow:auto; text-align:center">
+											<i class="far fa-map fa-5x" style="margin:20px 0;position:relative">
+												<!--<i class="fas fa-asterisk fa-2x" style="position: absolute;font-size: 16px;color: #343434;top:-8px;right: -9px;"></i>-->
+											</i>
+											<h4 style="margin:20px 0"><?= __('The map has been modified externally.')?></h4>
+											<h4 style="margin:20px 0"><?= __('Would you like to reload it?')?></h4>
+											<h4 style="margin:20px 0"><?= __('This will prevent you from losing changes that have been made.')?></h4>
+											<div class="wyca_edit_map_modalReloadMap_loading loading_big" style="margin-top: 50px;"><i class="fa fa fa-spinner fa-pulse fa-2x"></i></div>
+                                        </div>
+                                        
+                                        <div style="clear:both;"></div>
+										
+                                        <a href="#" id="wyca_edit_map_bAbortReloadMap" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('No');?></a> 
+										<a href="#" id="" class="btn btn-primary btn_footer_right btn_50 wyca_edit_map_bReloadMap"><?php echo __('Reload Map');?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+					<div class="modal fade modalConfirmNoReloadMap" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+                                        <div class="h100vh_160" style="overflow:auto; text-align:center">
+											<i class="fas fa-sync-alt fa-5x" style="margin:20px 0;position:relative">
+												<!--<i class="fas fa-asterisk fa-2x" style="position: absolute;font-size: 16px;color: #343434;top:-8px;right: -9px;"></i>-->
+											</i>
+											<h4 style="margin:20px 0"><?= __('Are you sure ?')?></h4>
+											<h4 style="margin:20px 0"><?= __('If you choose to keep your map,')?></h4>
+											<h4 style="margin:20px 0"><?= __('You may loose some modifications perfomed on the map by overwriting changes that have been made.')?></h4>
+											<div class="wyca_edit_map_modalReloadMap_loading loading_big" style="margin-top: 50px;"><i class="fa fa fa-spinner fa-pulse fa-2x"></i></div>
+                                        </div>
+                                        
+                                        <div style="clear:both;"></div>
+										
+                                        <a href="#" class="btn btn-warning btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Yes');?></a> 
+										<a href="#" class="btn btn-primary btn_footer_right btn_50 wyca_edit_map_bReloadMap"><?php echo __('Reload Map');?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal fade modalGoToPose" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+                                        <div class="h100vh_160" style="overflow:auto; text-align:center">
+											<h2><?=__('Choose operation') ?></h2>
+											<ul class="optionGoToPose">
+												<li class="GoToPoseNormal"><i class="fas fa-crosshairs iconMenuBlue"></i><?= __('Go To Pose')?><i class="fas fa-chevron-right"></i></li>
+												<li class="GoToPoseAccurate"><i class="far fa-dot-circle iconMenuBlue"></i><?= __('Go To Pose Accurate')?><i class="fas fa-chevron-right"></i></li>
+												<li class="GoToPoseFlexible"><i class="fas fa-cogs iconMenuBlue"></i><?= __('Go To Pose Flexible')?><i class="fas fa-chevron-right"></i></li>
+											</ul>
+                                        </div>
+                                        
+                                        <div style="clear:both;"></div>
+										
+                                        <a href="#" class="btn btn-default btn_footer_left btn_100 GoToPoseAbort" data-dismiss="modal" ><?php echo __('Abort');?></a> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+					<div class="modal fade modalGoToPoseFlexible" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+                                        <div class="h100vh_160" style="overflow:auto; text-align:center">
+											<form>
+												<h4 style="margin-bottom:25px"><?= __('Go To Pose Flexible')?></h4>
+                                                <div class="form-group nopymy">
+                                                    <label class="col-xs-4 control-label"><?= __('Angular tolerance')?></label>
+                                                    <div class="col-xs-8 input-group">
+                                                        <input type="text" id="wyca_edit_map_angular_tolerance" name="go_to_pose_flexible_angular_tolerance" value="5" class="form-control input-sm mb-md" />
+														<span class="input-group-addon">°</span>
+                                                    </div>
+                                                </div>
+												<p class="password_format" style="margin-bottom: 25px;"><?=__('From 2 to 360')?>°</p>
+                                                <div class="form-group nopymy">
+                                                    <label class="col-xs-4 control-label"><?= __('Linear tolerance')?></label>
+                                                    <div class="col-xs-8 input-group">
+                                                        <input type="text" id="wyca_edit_map_linear_tolerance" name="go_to_pose_flexible_linear_tolerance" value="1" class="form-control input-sm mb-md" />
+														<span class="input-group-addon">m</span>
+                                                    </div>
+                                                </div>
+												<p class="password_format" style="margin-bottom: 25px;"><?=__('From 0.05 to 10')?>m</p>
+                                            </form>
+                                        </div>
+                                        
+                                        <div style="clear:both;"></div>
+										
+                                        <a href="#" class="btn btn-default btn_footer_left btn_50 GoToPoseAbort" data-dismiss="modal" ><?php echo __('Abort');?></a> 
+										<a href="#" class="btn btn-primary btn_footer_right btn_50 wyca_edit_map_bGoToPoseFlexible"><?php echo __('Go');?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
 					<div class="wyca_edit_map_loading loading_big loading_map"><i class="fa fa fa-spinner fa-pulse fa-3x"></i></div>
                 </div>
                 
@@ -1075,7 +1195,7 @@
                 <div class="wyca_setup_sites_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
                 
                 <div class="loaded col-md-12" style="padding-top:30px;">
-                	<a href="#" class="bAddSite btn btn-primary"><?= __('Add new site')?></a>
+                	<a href="#" class="bAddSite btn btn-primary disabled"><?= __('Add new site')?></a>
                 
                     <ul class="list_sites list_elem">
                     </ul>

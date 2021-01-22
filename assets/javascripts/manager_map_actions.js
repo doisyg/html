@@ -156,7 +156,24 @@ function ManagerSaveElementNeeded(need)
 }
 
 $(document).ready(function() {
-
+	/* RELOAD MAP */
+	
+	$('#manager_edit_map #manager_edit_map_bAbortReloadMap').click(function(){
+		$('#manager_edit_map .modalConfirmNoReloadMap').modal('show');
+	})
+	
+	$('#manager_edit_map .modalReloadMap .manager_edit_map_bReloadMap').click(function(){
+		$('#manager_edit_map .modalReloadMap .btn').addClass('disabled');
+		$('#manager_edit_map .modalReloadMap .manager_edit_map_modalReloadMap_loading').show();
+		GetInfosCurrentMapManager();
+	})
+	
+	$('#manager_edit_map .modalConfirmNoReloadMap .manager_edit_map_bReloadMap').click(function(){
+		$('#manager_edit_map .modalConfirmNoReloadMap .btn').addClass('disabled');
+		$('#manager_edit_map .modalConfirmNoReloadMap .manager_edit_map_modalReloadMap_loading').show();
+		GetInfosCurrentMapManager();
+	})
+	
 	window.addEventListener('beforeunload', function(e){
 		if (!managerSavedCanClose)
 		{

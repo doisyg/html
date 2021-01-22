@@ -286,6 +286,23 @@ function ByStepSaveElementNeeded(need)
 }
 
 $(document).ready(function() {
+	/* RELOAD MAP */
+	
+	$('#install_by_step_edit_map #install_by_step_edit_map_bAbortReloadMap').click(function(){
+		$('#install_by_step_edit_map .modalConfirmNoReloadMap').modal('show');
+	})
+	
+	$('#install_by_step_edit_map .modalReloadMap .install_by_step_edit_map_bReloadMap').click(function(){
+		$('#install_by_step_edit_map .modalReloadMap .btn').addClass('disabled');
+		$('#install_by_step_edit_map .modalReloadMap .install_by_step_edit_map_modalReloadMap_loading').show();
+		GetInfosCurrentMapByStep();
+	})
+	
+	$('#install_by_step_edit_map .modalConfirmNoReloadMap .install_by_step_edit_map_bReloadMap').click(function(){
+		$('#install_by_step_edit_map .modalConfirmNoReloadMap .btn').addClass('disabled');
+		$('#install_by_step_edit_map .modalConfirmNoReloadMap .install_by_step_edit_map_modalReloadMap_loading').show();
+		GetInfosCurrentMapByStep();
+	})
 	
 	if($('#install_by_step_edit_map .select_area_sound').length > 0 && typeof(wycaApi) != 'undefined' && typeof(wycaApi.SOUND) != 'undefined' ){
 		for (const [key, value] of Object.entries(wycaApi.SOUND)) {

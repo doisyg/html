@@ -16,6 +16,7 @@ function GetInfosCurrentMapDoWyca()
 	wycaApi.GetCurrentMapComplete(function(data) {
 		if (data.A == wycaApi.AnswerCode.NO_ERROR)
 		{
+			updatingMap = false;
 			console.log(data.D); 
 			id_map = data.D.id_map;
 			id_map_last = data.D.id_map;
@@ -112,8 +113,22 @@ function GetInfosCurrentMapDoWyca()
 						default: WycaBufferMapSaveElemName = ''; break;
 					}
 				}
+				$('#wyca_edit_map .modalReloadMap').modal('hide');
+				$('#wyca_edit_map .modalReloadMap .btn').removeClass('disabled');
+				$('#wyca_edit_map .modalReloadMap .wyca_edit_map_modalReloadMap_loading').hide();
+				
+				$('#wyca_edit_map .modalConfirmNoReloadMap').modal('hide');
+				$('#wyca_edit_map .modalConfirmNoReloadMap .btn').removeClass('disabled');
+				$('#wyca_edit_map .modalConfirmNoReloadMap .wyca_edit_map_modalReloadMap_loading').hide();
+				
+				RemoveClass('#wyca_edit_map_svg .active', 'active');
+				RemoveClass('#wyca_edit_map_svg .activ_select', 'activ_select'); 
+				RemoveClass('#wyca_edit_map_svg .editing_point', 'editing_point'); 
+				
+				WycaHideMenus();
+				
 			},500);
-			$('#wyca_edit_map .modal').each(function(){$(this).modal('hide')});
+			$('#wyca_edit_map .modal').not('.modalReloadMap').each(function(){$(this).modal('hide')});
 			$('#bHeaderInfo').attr('onClick',"TogglePopupHelp()");
 		}
 		else

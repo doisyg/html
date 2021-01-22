@@ -115,7 +115,7 @@ $(document).ready(function(e) {
 				},
 				error: function(e) {
 					
-					var img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
+					var img = document.getElementById("wyca_setup_trinary_img_map_saved_fin");
         			img.src = "assets/images/vide.png";
 					
 					alert_wyca(textErrorTrinary + ' ' + e.responseText);
@@ -462,7 +462,7 @@ $(document).ready(function(e) {
 			}
 			else
 				gotoTest = false;
-			
+			updatingMap = true;
 			wycaApi.SetCurrentMapData(data, function(data){
 				if (data.A == wycaApi.AnswerCode.NO_ERROR)
 				{
@@ -902,9 +902,9 @@ $(document).ready(function(e) {
 			alert_wyca(textPasswordMatching);
 		}else if(!pass[0].checkValidity() || !cpass[0].checkValidity()){
 			alert_wyca(textPasswordPattern);
-		}else if (!$('#wyca_manager_i_manager_email')[0].checkValidity()){
+		}/*else if (!$('#wyca_manager_i_manager_email')[0].checkValidity()){
 			alert_wyca(textLoginPattern);
-		}
+		}*/
 		else
 		{
 			json_user = {
@@ -1044,9 +1044,9 @@ $(document).ready(function(e) {
 			alert_wyca(textPasswordMatching);
 		}else if(!pass[0].checkValidity() || !cpass[0].checkValidity()){
 			alert_wyca(textPasswordPattern);
-		}else if (!$('#wyca_user_i_user_email')[0].checkValidity()){
+		}/*else if (!$('#wyca_user_i_user_email')[0].checkValidity()){
 			alert_wyca(textLoginPattern);
-		}
+		}*/
 		else
 		{
 			json_user = {
@@ -1187,13 +1187,13 @@ $(document).ready(function(e) {
 			alert_wyca(textPasswordMatching);
 		}else if(!pass[0].checkValidity() || !cpass[0].checkValidity()){
 			alert_wyca(textPasswordPattern);
-		}else if (!$('#wyca_wyca_i_wyca_email')[0].checkValidity()){
+		}/*else if (!$('#wyca_wyca_i_wyca_email')[0].checkValidity()){
 			alert_wyca(textLoginPattern);
-		}
+		}*/
 		else
 		{
-			json_wyca = {
-				"id_wyca": parseInt($('#wyca_wyca .modalWyca #wyca_wyca_i_id_wyca').val()),
+			json_user = {
+				"id_user": parseInt($('#wyca_wyca .modalWyca #wyca_wyca_i_id_wyca').val()),
 				"company": $('#wyca_wyca .modalWyca #wyca_wyca_i_wyca_societe').val(),
 				"lastname": $('#wyca_wyca .modalWyca #wyca_wyca_i_wyca_nom').val(),
 				"firstname": $('#wyca_wyca .modalWyca #wyca_wyca_i_wyca_prenom').val(),
@@ -1202,25 +1202,25 @@ $(document).ready(function(e) {
 				"id_group_user": wycaApi.GroupUser.WYCA,
 			};
 			
-			wycaApi.SetUser(json_wyca, function(data) {
+			wycaApi.SetUser(json_user, function(data) {
 				if (data.A == wycaApi.AnswerCode.NO_ERROR)
 				{
 					// On ajoute le li
 					id_wyca = data.D;
 					if ($('#wyca_wyca_list_wyca_elem_'+id_wyca).length > 0)
 					{
-						$('#wyca_wyca_list_wyca_elem_'+id_wyca+' span.email').html(json_wyca.email);
+						$('#wyca_wyca_list_wyca_elem_'+id_wyca+' span.email').html(json_user.email);
 						/*
-						$('#wyca_wyca_list_wyca_elem_'+id_wyca+' span.societe').html(json_wyca.company);
-						$('#wyca_wyca_list_wyca_elem_'+id_wyca+' span.prenom').html(json_wyca.firstname);
-						$('#wyca_wyca_list_wyca_elem_'+id_wyca+' span.nom').html(json_wyca.lastname);
+						$('#wyca_wyca_list_wyca_elem_'+id_wyca+' span.societe').html(json_user.company);
+						$('#wyca_wyca_list_wyca_elem_'+id_wyca+' span.prenom').html(json_user.firstname);
+						$('#wyca_wyca_list_wyca_elem_'+id_wyca+' span.nom').html(json_user.lastname);
 						*/
 					}
 					else
 					{
 						$('#wyca_wyca .list_wycas').append('' +
 							'<li id="wyca_wyca_list_wyca_elem_'+id_wyca+'" data-id_wyca="'+id_wyca+'">'+
-							'	<span class="email">'+json_wyca.email+'</span>'+
+							'	<span class="email">'+json_user.email+'</span>'+
 							'	<a href="#" class="bWycaDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>'+
 							'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>'+
 							'	<a href="#" class="bWycaEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
@@ -1330,13 +1330,13 @@ $(document).ready(function(e) {
 			alert_wyca(textPasswordMatching);
 		}else if(!pass[0].checkValidity() || !cpass[0].checkValidity()){
 			alert_wyca(textPasswordPattern);
-		}else if (!$('#wyca_installer_i_installer_email')[0].checkValidity()){
+		}/*else if (!$('#wyca_installer_i_installer_email')[0].checkValidity()){
 			alert_wyca(textLoginPattern);
-		}
+		}*/
 		else
 		{
-			json_installer = {
-				"id_installer": parseInt($('#wyca_installer .modalInstaller #wyca_installer_i_id_installer').val()),
+			json_user = {
+				"id_user": parseInt($('#wyca_installer .modalInstaller #wyca_installer_i_id_installer').val()),
 				"company": $('#wyca_installer .modalInstaller #wyca_installer_i_installer_societe').val(),
 				"lastname": $('#wyca_installer .modalInstaller #wyca_installer_i_installer_nom').val(),
 				"firstname": $('#wyca_installer .modalInstaller #wyca_installer_i_installer_prenom').val(),
@@ -1345,25 +1345,25 @@ $(document).ready(function(e) {
 				"id_group_user": wycaApi.GroupUser.DISTRIBUTOR,
 			};
 			
-			wycaApi.SetUser(json_installer, function(data) {
+			wycaApi.SetUser(json_user, function(data) {
 				if (data.A == wycaApi.AnswerCode.NO_ERROR)
 				{
 					// On ajoute le li
 					id_installer = data.D;
 					if ($('#wyca_installer_list_installer_elem_'+id_installer).length > 0)
 					{
-						$('#wyca_installer_list_installer_elem_'+id_installer+' span.email').html(json_installer.email);
+						$('#wyca_installer_list_installer_elem_'+id_installer+' span.email').html(json_user.email);
 						/*
-						$('#wyca_installer_list_installer_elem_'+id_installer+' span.societe').html(json_installer.company);
-						$('#wyca_installer_list_installer_elem_'+id_installer+' span.prenom').html(json_installer.firstname);
-						$('#wyca_installer_list_installer_elem_'+id_installer+' span.nom').html(json_installer.lastname);
+						$('#wyca_installer_list_installer_elem_'+id_installer+' span.societe').html(json_user.company);
+						$('#wyca_installer_list_installer_elem_'+id_installer+' span.prenom').html(json_user.firstname);
+						$('#wyca_installer_list_installer_elem_'+id_installer+' span.nom').html(json_user.lastname);
 						*/
 					}
 					else
 					{
 						$('#wyca_installer .list_installers').append('' +
 							'<li id="wyca_installer_list_installer_elem_'+id_installer+'" data-id_installer="'+id_installer+'">'+
-							'	<span class="email">'+json_installer.email+'</span>'+
+							'	<span class="email">'+json_user.email+'</span>'+
 							'	<a href="#" class="bInstallerDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>'+
 							'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>'+
 							'	<a href="#" class="bInstallerEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
