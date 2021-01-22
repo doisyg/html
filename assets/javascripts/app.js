@@ -2388,6 +2388,9 @@ function ParseAPIAnswerError(data,pre_txt = '' ,post_txt = '')
 
 function GetDataMapToSave()
 {
+	if(typeof(updatingMap) != 'undefined')
+		updatingMap = true;
+		
 	data = {};
 	
 	data.forbiddens = forbiddens;
