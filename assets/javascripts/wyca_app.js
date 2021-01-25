@@ -1671,33 +1671,86 @@ $(document).ready(function(e) {
 	
 	$('#wyca_recovery .bRecovery').click(function(e) {
         e.preventDefault();
-		
 		$('#wyca_recovery .bRecovery').addClass('disabled');
 		
+		/*INIT FEEDBACK DISPLAY*/
+		$('#wyca_recovery .recovery_feedback .recovery_step').css('opacity','0').hide();
+		$('#wyca_recovery .recovery_feedback .recovery_step .fa-check').hide();
+		$('#wyca_recovery .recovery_feedback .recovery_step .fa-pulse').show();
+		
+		wycaApi.on('onRecoveryFromFiducialFeedback', function(data) {
+			console.log(data);
+			if(data.A == wycaApi.AnswerCode.NO_ERROR){
+				target = '';
+				switch(data.M){
+					case 'Scan reflector': 				target = '#wyca_recovery .recovery_feedback .recovery_step.RecoveryScan';	break;
+					case 'Init pose': 					target = '#wyca_recovery .recovery_feedback .recovery_step.RecoveryPose';	break;
+					case 'Rotate to check obstacles': 	target = '#wyca_recovery .recovery_feedback .recovery_step.RecoveryRotate';	break;
+					case 'Start navigation': 			target = '#wyca_recovery .recovery_feedback .recovery_step.RecoveryNav';		break;
+				}
+				temp = $(target);
+				setTimeout(function(){
+					temp.find('.fa-check').show();
+					temp.find('.fa-pulse').hide();
+				},10000);
+				target = $(target);
+				if(target.prevAll('.recovery_step:visible').length > 0){
+					target.prevAll('.recovery_step:visible').find('.fa-check').show();
+					target.prevAll('.recovery_step:visible').find('.fa-pulse').hide();
+				}
+				target.css('opacity','1').show();
+			}
+		});
+		
 		wycaApi.on('onRecoveryFromFiducialResult', function(data) {
+			
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
-				$('#wyca_recovery .bRecovery').removeClass('disabled');
-				success_wyca(textRecoveryDone);
+				
+				$('#wyca_recovery .recovery_step:visible').find('.fa-check').show();
+				$('#wyca_recovery .recovery_step:visible').find('.fa-pulse').hide();
+				setTimeout(function(){
+					$('.ifRecovery').hide();
+					$('.ifNRecovery').show();
+					$('#wyca_recovery .bRecovery').removeClass('disabled');
+					success_wyca(textRecoveryDone);
+				},500)
 			}
 			else
 			{
+				$('.ifRecovery').hide();
+				$('.ifNRecovery').show();
 				$('#wyca_recovery .bRecovery').removeClass('disabled');
 				ParseAPIAnswerError(data);
 			}
+			// On rebranche l'ancienne fonction
+			wycaApi.on('onRecoveryFromFiducialResult', onRecoveryFromFiducialResult);
+			wycaApi.on('onRecoveryFromFiducialFeedback', onRecoveryFromFiducialFeedback);
 		});
 		
 		wycaApi.RecoveryFromFiducial(function(data) {
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
+				$('.ifRecovery').show();
+				$('.ifNRecovery').hide();
 			}
 			else
 			{
+				$('.ifRecovery').hide();
+				$('.ifNRecovery').show();
 				$('#wyca_recovery .bRecovery').removeClass('disabled');
 				ParseAPIAnswerError(data);
 			}
 		});
     });
+	
+	$('#wyca_recovery .bCancelRecovery').click(function(e) {
+		$('#wyca_recovery .bCancelRecovery').addClass('disabled');
+		wycaApi.RecoveryFromFiducialCancel(function(data) {
+			console.log(data);
+			$('#wyca_recovery .bCancelRecovery').removeClass('disabled');
+		})
+	})
 	
 	//----------------------- LANGUE ----------------------------
 	
