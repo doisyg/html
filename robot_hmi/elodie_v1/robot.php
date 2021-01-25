@@ -52,10 +52,10 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
     <div id="logo" style="margin-top:100px; width:100%; padding:50px; margin-bottom:100px;"><img src="images/wyca-robotics.png" width="1500" /></div>
     
     <div id="waitClick" style="font-size:68px; position:fixed; display:none; top:0; left:0; width:100%; height:100vh; background-color:rgba(255,255,255,0.5);">
-    	<a id="bNextWaitClick" href="#" class="btn btn-primary" style="font-size:100px; text-align:center; margin-top:32vh; border-radius:50px; padding:100px;"><i style="" class="fa fa-forward"></i> Next step</a>
+    	<a id="bNextWaitClick" href="#" class="btn btn-primary" style="font-size:100px; text-align:center; margin-top:32vh; border-radius:50px; padding:100px;"><i style="" class="fa fa-forward"></i> <?= __('Next step') ?></a>
     </div>
     <div style="display:none;">
-	    <div id="waitTime" style="font-size:68px; display:none; ">Wait <em></em> seconde<span class="pluriel">s</span></div>
+	    <div id="waitTime" style="font-size:68px; display:none; "><?= __('Wait') ?> <em></em><?= __('seconde') ?><span class="pluriel">s</span></div>
     </div>
     <a href="#" id="bHideBouton" style="position:absolute; bottom:0px; right:0px; width:150px; height:150px;"></a>
 	
@@ -107,8 +107,8 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
                 	<div class="flex">
                         <div style="max-width:500px; margin:auto; margin-top:50px">
                             
-                            <div class="col-md-6"><a href="#" class="btn btn-lg btn-primary" id="bRestartWindows" style="margin:10px; font-size:24px;">Restart in<br />windows mode</a></div>
-                            <div class="col-md-6"><a href="#" class="btn btn-lg btn-primary" id="bRestartKiosk" style="margin:10px; font-size:24px;">Restart in<br />kiosk mode</a></div>
+                            <div class="col-md-6"><a href="#" class="btn btn-lg btn-primary" id="bRestartWindows" style="margin:10px; font-size:24px;"><?= __('Restart in') ?><br /><?= __('windows mode') ?></a></div>
+                            <div class="col-md-6"><a href="#" class="btn btn-lg btn-primary" id="bRestartKiosk" style="margin:10px; font-size:24px;"><?= __('Restart in') ?><br /><?= __('kiosk mode') ?></a></div>
                             
                             <a href="#" class="btn btn-lg btn-default" style="margin:10px; font-size:50px; margin-top:50px;" data-dismiss="modal"><?php echo __('Close');?></a>
                             
