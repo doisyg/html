@@ -6,7 +6,10 @@ class Configuration
 	public static function Init()
 	{
 		//echo exec('whoami');
-		$file_path = dirname(__FILE__).'/../lang/c.conf';
+		if(isset($_CONFIG['CONF_PATH']))
+			$file_path = $_CONFIG['CONF_PATH'];
+		else
+			$file_path = dirname(__FILE__).'/../lang/c.conf';
 		try{
 			if (file_exists($file_path))
 			{
@@ -41,7 +44,10 @@ class Configuration
 	
 	public static function Save()
 	{
-		$file_path = dirname(__FILE__).'/../lang/c.conf';
+		if(isset($_CONFIG['CONF_PATH']))
+			$file_path = $_CONFIG['CONF_PATH'];
+		else
+			$file_path = dirname(__FILE__).'/../lang/c.conf';
 		if ($fd = fopen($file_path, 'w'))
 		{	
 			fwrite($fd, json_encode(self::$data));

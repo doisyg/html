@@ -70,5 +70,6 @@ if($app_sound == '')
 if (!isset($notCloseSession)) session_write_close();
 
 $_CONFIG['MODE'] = file_exists('C:\\')? 'DEV':'PROD';
+$_CONFIG['CONF_PATH'] = $_CONFIG['MODE'] == 'DEV' ? dirname(__FILE__).'/../lang/c.conf' : 'home/elodie/c.conf';
 
 ?>
