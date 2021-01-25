@@ -2293,7 +2293,6 @@ function InitWycaDemo()
 	$('#wyca_demo_mode_config .loaded').hide();
 	$('#wyca_demo_mode_config .list_actions li').remove();
 	$('#wyca_demo_mode_config .list_all_poi li').remove();
-	$('#wyca_demo_mode_config .list_all_dock li').remove();
 	
 	if (wycaApi.websocketAuthed)
 	{
