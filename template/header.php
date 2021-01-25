@@ -36,7 +36,7 @@
         
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
         
-		<?php $lastUpdate = '202012141457'; ?>
+		<?php $lastUpdate = '202101252'; ?>
 		<?php $lastUpdate = date('Ymd'); ?>
 
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>assets/stylesheets/skins/default.css" />
