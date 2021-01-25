@@ -760,8 +760,6 @@ $(document).ready(function(e) {
 
 function ByStepHideMenus()
 {
-	bystepCanChangeMenu = true;
-	bystepCurrentAction = '';
 	$('#install_by_step_edit_map .times_icon_menu').hide()
 	$('#install_by_step_edit_map_menu li').hide();
 	$('#install_by_step_edit_map_menu_point li').hide();
