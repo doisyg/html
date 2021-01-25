@@ -125,6 +125,9 @@ function GetInfosCurrentMapDoWyca()
 				RemoveClass('#wyca_edit_map_svg .activ_select', 'activ_select'); 
 				RemoveClass('#wyca_edit_map_svg .editing_point', 'editing_point'); 
 				
+				wycaCanChangeMenu = true;
+				wycaCurrentAction = '';
+				
 				WycaHideMenus();
 				
 			},500);
