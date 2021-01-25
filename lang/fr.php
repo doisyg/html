@@ -563,5 +563,23 @@ $_LANG['c5c5e761e3011a9186a0ab68e53199c5'] = 'Vous avez la possibilité d\'activ
 $_LANG['86e5b85500193ad5997f3b0ba661d269'] = 'Vous avez la possibilité d\'activer ou de désactiver les sons de cette application.';
 $_LANG['9d07e0e08af7f96cf45be0112b9ccfbe'] = 'Son';
 $_LANG['3ca332cf9cfdcd214dc6ed0274e12070'] = 'Vous avez la possibilité d\'activer ou de désactiver les sons du véhicule.';
+$_LANG['ce8cbd786b40e005c087c75516e1f1ff'] = 'Erreur récupération cartographie';
+$_LANG['85979222575fd874a5eee203d0ce3476'] = 'Erreur de saisie';
+$_LANG['a3990aca6550f7e305ef8374ea67b989'] = 'Pas la carte actuelle';
+$_LANG['fe68a8c4efc3b24436293be1b10dc99b'] = 'La carte a été modifiée extérieurement.';
+$_LANG['1dc5ac9ee6615745ae0da26b4b9f8fae'] = 'Voulez-vous la recharger?';
+$_LANG['075ccf602d50ccef351a1742400b64da'] = 'Cela vous évitera de perdre les modifications.';
+$_LANG['156b59abd99c7c47965cdac65db8f63e'] = 'Recharger carte';
+$_LANG['01da36bdc7136ee63b0c6ff9689576c6'] = 'Êtes-vous sur?';
+$_LANG['a8eb6e99e889dfc6a35c821a2b4ae5b9'] = 'Si vous choisissez de conserver votre carte,';
+$_LANG['36b40c4b11ab567c12dafd9572074e42'] = 'Vous pouvez perdre certaines modifications effectuées sur la carte en écrasant les changements qui ont été faits.';
+$_LANG['94f039075dea71629e2f54ec741fafcf'] = 'Choississez l\'action';
+$_LANG['a6d097b887ab480b21c1f2c5269337b0'] = 'Go To Pose';
+$_LANG['a3f58ef4b58392bc0d668006cbe9154a'] = 'Go To Pose Accurate';
+$_LANG['574bb2c8eaebbf068af3462947d2dd53'] = 'Go To Pose Flexible';
+$_LANG['09f3c0ec227bd134d31bc99ce7527691'] = 'Tolérance angulaire';
+$_LANG['a89c900d7eba035cc418e87f630eef48'] = 'de 2 à 360';
+$_LANG['7fe6faff3ca8a6517e1bb8f789ef7581'] = 'Tolérance linéaire';
+$_LANG['5811313d9d3deac59db4bdb3a836c66e'] = 'de 0.05 à 10';
 
 ?>

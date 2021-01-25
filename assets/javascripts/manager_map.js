@@ -70,6 +70,9 @@ function GetInfosCurrentMapDoManager()
 				RemoveClass('#manager_edit_map_svg .activ_select', 'activ_select'); 
 				RemoveClass('#manager_edit_map_svg .editing_point', 'editing_point'); 
 				
+				managerCanChangeMenu = true;
+				managerCurrentAction = '';
+				
 				ManagerHideMenus();
 			},500);
 			$('#manager_edit_map .modal').not('.modalReloadMap').each(function(){$(this).modal('hide')});

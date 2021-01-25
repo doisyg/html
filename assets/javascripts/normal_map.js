@@ -122,9 +122,13 @@ function GetInfosCurrentMapDoNormal()
 				$('#install_normal_edit_map .modalConfirmNoReloadMap .btn').removeClass('disabled');
 				$('#install_normal_edit_map .modalConfirmNoReloadMap .install_normal_edit_map_modalReloadMap_loading').hide();
 				
+				
 				RemoveClass('#install_normal_edit_map_svg .active', 'active');
 				RemoveClass('#install_normal_edit_map_svg .activ_select', 'activ_select'); 
 				RemoveClass('#install_normal_edit_map_svg .editing_point', 'editing_point'); 
+				
+				normalCanChangeMenu= true;
+				normalCurrentAction = '';
 				
 				NormalHideMenus();
 			},500);
