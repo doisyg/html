@@ -122,40 +122,44 @@ class Translate
 	public static function CreateFileLang($to_insert, $lang)
 	{
 		$file_path = dirname(__FILE__).'/../lang/'.$lang.'.php';
-		try{
-			if (file_exists($file_path))
-			{
-				if ($fd = fopen($file_path, 'w'))
-				{	
-					fwrite($fd, "<?php\n\nglobal \$_LANG;\n\$_LANG = array();\n");
-					foreach ($to_insert as $key => $value)
-						fwrite($fd, '$_LANG[\''.$key.'\'] = \''.addslashes(stripslashes($value)).'\';'."\n");
-					fwrite($fd, "\n?>");
-					fclose($fd);
-				}else{
-					throw new Exception('Error in Trad File open.');
+		if(isset($_CONFIG['MODE']) && $_CONFIG['MODE']=='DEV'){
+			try{
+				if (file_exists($file_path))
+				{
+					if ($fd = fopen($file_path, 'w'))
+					{	
+						fwrite($fd, "<?php\n\nglobal \$_LANG;\n\$_LANG = array();\n");
+						foreach ($to_insert as $key => $value)
+							fwrite($fd, '$_LANG[\''.$key.'\'] = \''.addslashes(stripslashes($value)).'\';'."\n");
+						fwrite($fd, "\n?>");
+						fclose($fd);
+					}else{
+						throw new Exception('Error in Trad File open.');
+					}
+				}
+				else{
+					throw new Exception('Trad not found.');
 				}
 			}
-			else{
-				throw new Exception('Trad not found.');
-			}
-		}
-		catch (Exception $e) {
-			//echo"<script>alert_wyca('Error on loading trad' + '".$e->getMessage()."')</script>";
-			//echo $e->getMessage();
+			catch (Exception $e) {
+				//echo"<script>alert_wyca('Error on loading trad' + '".$e->getMessage()."')</script>";
+				//echo $e->getMessage();
+			}		
 		}		
 	}
 	
 	public static function CreateFileLangMail($to_insert, $lang)
 	{
 		$file_path = dirname(__FILE__).'/../lang/mail/'.$lang.'.php';
-		if ($fd = fopen($file_path, 'w'))
-		{	
-			fwrite($fd, "<?php\n\n\$LANG_MAIL_T = array();\n");
-			foreach ($to_insert as $key => $value)
-				fwrite($fd, '$LANG_MAIL_T[\''.$key.'\'] = \''.addslashes(stripslashes($value)).'\';'."\n");
-			fwrite($fd, "\n?>");
-			fclose($fd);
+		if(isset($_CONFIG['MODE']) && $_CONFIG['MODE']=='DEV'){
+			if ($fd = fopen($file_path, 'w'))
+			{	
+				fwrite($fd, "<?php\n\n\$LANG_MAIL_T = array();\n");
+				foreach ($to_insert as $key => $value)
+					fwrite($fd, '$LANG_MAIL_T[\''.$key.'\'] = \''.addslashes(stripslashes($value)).'\';'."\n");
+				fwrite($fd, "\n?>");
+				fclose($fd);
+			}
 		}
 	}
 	

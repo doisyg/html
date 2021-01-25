@@ -69,5 +69,6 @@ if($app_sound == '')
 
 if (!isset($notCloseSession)) session_write_close();
 
+$_CONFIG['MODE'] = file_exists('C:\\')? 'DEV':'PROD';
 
 ?>
