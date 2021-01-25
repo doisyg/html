@@ -444,6 +444,8 @@ $(document).ready(function(e) {
 
 function ManagerHideMenus()
 {
+	managerCanChangeMenu = true;
+	managerCurrentAction = '';
 	$('#manager_edit_map .times_icon_menu').hide()
 	$('#manager_edit_map_menu li').hide();
 	$('#manager_edit_map_menu_point li').hide();

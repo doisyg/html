@@ -709,6 +709,8 @@ $(document).ready(function(e) {
 
 function NormalHideMenus()
 {
+	normalCanChangeMenu = true;
+	normalCurrentAction = '';
 	$('#install_normal_edit_map .times_icon_menu').hide()
 	$('#install_normal_edit_map_menu li').hide();
 	$('#install_normal_edit_map_menu_point li').hide();

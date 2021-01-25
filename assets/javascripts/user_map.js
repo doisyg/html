@@ -385,6 +385,8 @@ $(document).ready(function(e) {
 
 function UserHideMenus()
 {
+	userCanChangeMenu = true;
+	//userCurrentAction = '';
 	//$('#user_edit_map_menu li').hide();
 	$('#user_edit_map_menu_point li').hide();
 	$('#user_edit_map_menu_forbidden li').hide();

@@ -709,6 +709,8 @@ $(document).ready(function(e) {
 
 function WycaHideMenus()
 {
+	wycaCanChangeMenu = true;
+	wycaCurrentAction = '';
 	$('#wyca_edit_map .times_icon_menu').hide()
 	$('#wyca_edit_map_menu li').hide();
 	$('#wyca_edit_map_menu_point li').hide();
