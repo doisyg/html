@@ -1865,8 +1865,8 @@
             
                 <div style="text-align:center"><a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a></div>
                 <div style="text-align:center"><div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div></div>
-                                        
-                <div class="ifUndocked ifNRecovery">
+                
+				<div class="ifUndocked ifNRecovery">
                     <div style="text-align:center; width:100%; z-index:2000; margin-top:20px;">
                         <div class="joystickDiv" draggable="false" style="margin:auto;">
                             <div class="fond"></div>
@@ -1875,7 +1875,6 @@
                     </div>
                 </div>
 				
-				<h4 style="display:none"><?= __('The vehicle is currently recovering its position itself by scanning the surroundings and finding its knowns reflectors.') ?></h4>
 				<div class="ifRecovery" style="text-align:center; margin-top:20px;display:none;"><a href="#" class="btn btn-danger btn-lg bCancelRecovery"><?=__('Cancel Recovery') ?></a></div>
 				<div class="ifRecovery wyca_recovery_feedback recovery_feedback" style="display:none;">
 					<hr style="border-top: 1px solid #909090;">

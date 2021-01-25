@@ -1156,51 +1156,98 @@ $(document).ready(function(e) {
 	
 	//------------------- STEP RECOVERY ------------------------
 	
-	$('#pages_install_by_step #install_by_step_site_recovery .bRecovery').click(function(e) {
+	$('#install_by_step_site_recovery .bRecovery').click(function(e) {
         e.preventDefault();
+		$('#install_by_step_site_recovery .bRecovery').addClass('disabled');
 		
-		$('#pages_install_by_step #install_by_step_site_recovery .bRecovery').addClass('disabled');
+		/*INIT FEEDBACK DISPLAY*/
+		$('#install_by_step_site_recovery .recovery_feedback .recovery_step').css('opacity','0').hide();
+		$('#install_by_step_site_recovery .recovery_feedback .recovery_step .fa-check').hide();
+		$('#install_by_step_site_recovery .recovery_feedback .recovery_step .fa-pulse').show();
+		
+		wycaApi.on('onRecoveryFromFiducialFeedback', function(data) {
+			if(data.A == wycaApi.AnswerCode.NO_ERROR){
+				target = '';
+				switch(data.M){
+					case 'Scan reflector': 				target = '#install_by_step_site_recovery .recovery_feedback .recovery_step.RecoveryScan';	break;
+					case 'Init pose': 					target = '#install_by_step_site_recovery .recovery_feedback .recovery_step.RecoveryPose';	break;
+					case 'Rotate to check obstacles': 	target = '#install_by_step_site_recovery .recovery_feedback .recovery_step.RecoveryRotate';	break;
+					case 'Start navigation': 			target = '#install_by_step_site_recovery .recovery_feedback .recovery_step.RecoveryNav';		break;
+				}
+				
+				target = $(target);
+				if(target.prevAll('.recovery_step:visible').length > 0){
+					target.prevAll('.recovery_step:visible').find('.fa-check').show();
+					target.prevAll('.recovery_step:visible').find('.fa-pulse').hide();
+				}
+				target.css('opacity','1').show();
+			}
+		});
 		
 		wycaApi.on('onRecoveryFromFiducialResult', function(data) {
+			
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
-				$('#pages_install_by_step #install_by_step_site_recovery .bRecovery').removeClass('disabled');
-				success_wyca(textRecoveryDone);
-				$('#pages_install_by_step #install_by_step_site_recovery .install_by_step_site_recovery_next').click();
+				
+				$('#install_by_step_site_recovery .recovery_step:visible').find('.fa-check').show();
+				$('#install_by_step_site_recovery .recovery_step:visible').find('.fa-pulse').hide();
+				setTimeout(function(){
+					$('.ifRecovery').hide();
+					$('.ifNRecovery').show();
+					$('#install_by_step_site_recovery .bRecovery').removeClass('disabled');
+					success_wyca(textRecoveryDone);
+					$('#install_by_step_site_recovery .bRecovery').removeClass('disabled');
+					$('#install_by_step_site_recovery .install_by_step_site_recovery_next').click();
 
-				//AJAX INSTALL STEP CALL
-				$.ajax({
-					type: "POST",
-					url: 'ajax/install_by_step_import_site_recovery.php',
-					data: {
-					},
-					dataType: 'json',
-					success: function(data) {
-					},
-					error: function(e) {
-						alert_wyca((typeof(textErrorRecovery) != 'undefined'? textErrorRecovery : 'Error in recovery') + ' ' + e.responseText);
-					}
-				});
+					//AJAX INSTALL STEP CALL
+					$.ajax({
+						type: "POST",
+						url: 'ajax/install_by_step_import_site_recovery.php',
+						data: {
+						},
+						dataType: 'json',
+						success: function(data) {
+						},
+						error: function(e) {
+							alert_wyca((typeof(textErrorRecovery) != 'undefined'? textErrorRecovery : 'Error in recovery') + ' ' + e.responseText);
+						}
+					});
+				},500)
 			}
 			else
 			{
-				$('#pages_install_by_step #install_by_step_site_recovery .bRecovery').removeClass('disabled');
+				$('.ifRecovery').hide();
+				$('.ifNRecovery').show();
+				$('#install_by_step_site_recovery .bRecovery').removeClass('disabled');
 				ParseAPIAnswerError(data);
 			}
+			// On rebranche l'ancienne fonction
+			wycaApi.on('onRecoveryFromFiducialResult', onRecoveryFromFiducialResult);
+			wycaApi.on('onRecoveryFromFiducialFeedback', onRecoveryFromFiducialFeedback);
 		});
 		
 		wycaApi.RecoveryFromFiducial(function(data) {
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
+				$('.ifRecovery').show();
+				$('.ifNRecovery').hide();
 			}
 			else
 			{
-				$('#pages_install_by_step #install_by_step_site_recovery .bRecovery').removeClass('disabled');
+				$('.ifRecovery').hide();
+				$('.ifNRecovery').show();
+				$('#install_by_step_site_recovery .bRecovery').removeClass('disabled');
 				ParseAPIAnswerError(data);
 			}
 		});
     });
 	
+	$('#install_by_step_site_recovery .bCancelRecovery').click(function(e) {
+		$('#install_by_step_site_recovery .bCancelRecovery').addClass('disabled');
+		wycaApi.RecoveryFromFiducialCancel(function(data) {
+			$('#install_by_step_site_recovery .bCancelRecovery').removeClass('disabled');
+		})
+	})
 	
 	
 	/*

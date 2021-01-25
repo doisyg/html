@@ -1789,14 +1789,12 @@
             <div class="content">
             
             	<h4 style="text-align:center"><?= __('Move the robot near a reflector (dock or augmented pose) then click on the recovery button') ?></h4>
-                <div style="text-align:center; margin-top:20px;"><a href="#" class="bRecovery ifDocked_disabled btn btn-warning btn_big_popup "><?=__('Recovery') ?></a></div>
-                
-            
-                <div style="text-align:center"><a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a></div>
+				<div style="text-align:center; margin-top:20px;"><a href="#" class="bRecovery ifDocked_disabled btn btn-warning btn_big_popup" ><?=__('Recovery') ?></a></div>
+					
+				<div style="text-align:center"><a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a></div>
                 <div style="text-align:center"><div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div></div>
-                                        
-                <div class="ifUndocked">
-                    
+               
+				<div class="ifUndocked ifNRecovery">
                     <div style="text-align:center; width:100%; z-index:2000; margin-top:20px;">
                         <div class="joystickDiv" draggable="false" style="margin:auto;">
                             <div class="fond"></div>
@@ -1804,6 +1802,29 @@
                         </div>
                     </div>
                 </div>
+				
+				<div class="ifRecovery" style="text-align:center; margin-top:20px;display:none;"><a href="#" class="btn btn-danger btn-lg bCancelRecovery"><?=__('Cancel Recovery') ?></a></div>
+				<div class="ifRecovery install_normal_recovery_feedback recovery_feedback" style="display:none;">
+					<hr style="border-top: 1px solid #909090;">
+					<div class="row recovery_step RecoveryScan" id="">
+						<div class="col-xs-10"><h5><?= __('Scan reflectors')?></h5></div>
+						<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+					</div>
+					<div class="row recovery_step RecoveryPose" id="">
+						<div class="col-xs-10"><h5><?= __('Robot position initiated')?></h5></div>
+						<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+					</div>
+					<div class="row recovery_step RecoveryRotate" id="">
+						<div class="col-xs-10"><h5><?= __('Rotate to clean obstacles')?></h5></div>
+						<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+					</div>
+					<div class="row recovery_step RecoveryNav" id="">
+						<div class="col-xs-10"><h5><?= __('Navigation started')?></h5></div>
+						<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+					</div>
+					<hr style="border-top: 1px solid #909090;">
+				</div>
+				
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
 					<div class="content sm-content text-left">
