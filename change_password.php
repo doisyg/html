@@ -176,7 +176,7 @@ $(document).ready(function(e) {
 			DisplayError('Passwords not matching.');
 		}else if(!$('#password')[0].checkValidity() || !$('#confirm_password')[0].checkValidity()){
 			
-			DisplayError('Passwords needs to be 6 characters long with at least one character and one digit.');
+			DisplayError('Passwords needs to be 8 characters long with at least one character and one digit.');
 		}
 		else
 		{

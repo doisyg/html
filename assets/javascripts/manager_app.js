@@ -139,7 +139,7 @@ $(document).ready(function(e) {
 		id_fiducial_test = docks[i].id_fiducial;
 		
 		data = GetDataMapToSave();
-		gotoTest = false;f
+		gotoTest = false;
 		
 		wycaApi.SetCurrentMapData(data, function(data){
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
@@ -240,7 +240,7 @@ $(document).ready(function(e) {
 			}
 			else
 				gotoTest = false;
-				
+			
 			console.log(data);
 			
 			wycaApi.SetCurrentMapData(data, function(data){
@@ -334,9 +334,9 @@ $(document).ready(function(e) {
 			alert_wyca(textPasswordMatching);
 		}else if(!pass[0].checkValidity() || !cpass[0].checkValidity()){
 			alert_wyca(textPasswordPattern);
-		}else if (!$('#manager_users .modalUser #manager_users_i_user_email')[0].checkValidity()){
+		}/*else if (!$('#manager_users .modalUser #manager_users_i_user_email')[0].checkValidity()){
 			alert_wyca(textLoginPattern);
-		}
+		}*/
 		else
 		{
 			json_user = {

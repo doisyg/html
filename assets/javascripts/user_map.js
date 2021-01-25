@@ -16,6 +16,7 @@ function GetInfosCurrentMapDoUser()
 	wycaApi.GetCurrentMapComplete(function(data) {
 		if (data.A == wycaApi.AnswerCode.NO_ERROR)
 		{
+			
 			console.log(data.D); 
 			id_map = data.D.id_map;
 			id_map_last = data.D.id_map;
@@ -57,9 +58,22 @@ function GetInfosCurrentMapDoUser()
 			
 			setTimeout(function(){
 				UserInitMap();
-				UserResizeSVG();			
+				UserResizeSVG();
+				$('#user_edit_map .modalReloadMap').modal('hide');
+				$('#user_edit_map .modalReloadMap .btn').removeClass('disabled');
+				$('#user_edit_map .modalReloadMap .user_edit_map_modalReloadMap_loading').hide();
+				
+				$('#user_edit_map .modalConfirmNoReloadMap').modal('hide');
+				$('#user_edit_map .modalConfirmNoReloadMap .btn').removeClass('disabled');
+				$('#user_edit_map .modalConfirmNoReloadMap .user_edit_map_modalReloadMap_loading').hide();
+				
+				RemoveClass('#user_edit_map_svg .active', 'active');
+				RemoveClass('#user_edit_map_svg .activ_select', 'activ_select'); 
+				RemoveClass('#user_edit_map_svg .editing_point', 'editing_point'); 
+				
+				UserHideMenus();				
 			},500); 
-			$('#user_edit_map .modal').each(function(){$(this).modal('hide')});
+			$('#user_edit_map .modal').not('.modalReloadMap').each(function(){$(this).modal('hide')});
 			$('#bHeaderInfo').attr('onClick',"TogglePopupHelp()");
 		}
 		else

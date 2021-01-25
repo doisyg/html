@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Bootstrap 4 Example</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+		<style>
+			.btn{
+				margin:5px auto;
+			}
+			ul{
+				list-style: none;
+			}
+		</style>
+	</head>
+	<body>
+		
+		<div class="container-fluid d-inline-flex flex-column align-items-center justify-content-center">
+			<button class="btn btn-success" id="bStart">Start</button>
+			<button class="btn btn-success disabled" id="bBug">Bug</button>
+			<p>TIMER : <span id="timer">5:00</span></p>
+			<p><span id="cpt_bug">0</span> BUGS</p>
+			<ul id="bugs">
+				
+			</ul>
+		</div>
+
+	</body>
+	<script>
+		var time = 90000;
+		var current = time;
+		var bStart = $('#bStart');
+		var bBug = $('#bBug');
+		var bReset = $('#bReset');
+		var running = false;
+		var temp_ms = null;
+		var bugs = [];
+		
+		function clearBtn(tg){
+			let classes = ['btn-success','btn-info','btn-danger','btn-warning','btn-default','disabled']
+			classes.forEach(function(item){
+				tg.removeClass(item);
+			})
+		}
+
+		bStart.click(function(){
+			if(!running){
+				current = time;
+				running = true;
+				clearBtn(bStart);
+				bStart.addClass('btn-warning');
+				updateTimer();
+				clearBtn(bBug);
+				bBug.addClass('btn-info');
+				bugs = [];
+				$('#bugs').html('');
+			}
+		})
+		bStart.contextmenu(function(e){
+			e.preventDefault();
+			current = 10;
+		})
+		bBug.click(function(){
+			if(running){
+				if(temp_ms == null){
+					temp_ms = current;
+					clearBtn(bBug);
+					bBug.addClass('btn-success');
+				}else{
+					let duree = temp_ms - current ;
+					var d = new Date(time-temp_ms);
+					let cpt = bugs.length;
+					let m = d.getUTCMinutes() < 10 ? '0' + d.getUTCMinutes() : d.getUTCMinutes();
+					let s = d.getUTCSeconds() < 10 ? '0' + d.getUTCSeconds() : d.getUTCSeconds();
+					bug = new Object();
+					bug.duree = duree;
+					bug.timecode = m+ ':' +s;
+					bugs.push(bug);
+					
+					$('#bugs').append('<li>Bug '+(cpt+1)+' '+bug.timecode+' '+bug.duree+'ms</li>');
+					$('#cpt_bug').html(cpt+1);
+					temp_ms = null;
+					clearBtn(bBug);
+					bBug.addClass('btn-info');
+				}
+			}
+		})
+
+		function updateTimer(){
+			if(running){
+				current = current - 10 ;
+				let temp = 1000*Math.round(current/1000);
+				var d = new Date(time-temp);
+				let m = d.getUTCMinutes() < 10 ? '0' + d.getUTCMinutes() : d.getUTCMinutes();
+				let s = d.getUTCSeconds() < 10 ? '0' + d.getUTCSeconds() : d.getUTCSeconds();
+				$('#timer').html( m+ ':' +s );
+				if(current == 0){
+					running = false;
+					alert();
+				}else
+					setTimeout(updateTimer,10);
+				if(current < 30000 && !bStart.hasClass('btn-danger')){
+					clearBtn(bStart);
+					bStart.addClass('btn-danger');
+				}
+			}else{
+				
+			}
+		}
+
+		function moy(){
+			let m = 0;
+			bugs.forEach(function(item){
+				m = m + item.duree;
+			})
+			m = m / bugs.length
+			console.log(bugs.length+" bugs temps moyen "+m+" ms")
+
+		}
+	</script>
+</html>

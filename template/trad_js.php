@@ -85,6 +85,8 @@ var textErrorStopNavigation = "<?php echo __js('Error stop navigation');?>";
 var textErrorGetFiducials = "<?php echo __js('Error get fiducials');?>";
 var textErrorStartMapping = "<?php echo __js('Error start mapping');?>";
 var textErrorStopMapping = "<?php echo __js('Error stop mapping');?>";
+var textErrorGetMapping = "<?php echo __js('Error get mapping');?>";
+var textErrorInput = "<?php echo __js('Error on input');?>";
 
 //DEMO MODE
 var textDemoNeedActions = "<?php echo __js('You need to setup actions before launch Demo');?>";
@@ -164,4 +166,5 @@ textAPIAnswerCode.OUT_OF_MAP = "<?php echo __js( 'The start and / or the goal ar
 textAPIAnswerCode.MAP_ERROR = "<?php echo __js( 'The map is not running properly');?>";
 textAPIAnswerCode.STOPPED = "<?php echo __js( 'The controller execution has been stopped rigorously.');?>";
 textAPIAnswerCode.TARGET_TOO_CLOSE = "<?php echo __js( 'Target too close');?>";
+textAPIAnswerCode.NOT_CURRENT_MAP = "<?php echo __js( 'Not current map');?>";
 textAPIAnswerCode.DEFAULT = "<?php echo __js('Unknown error code');?>";

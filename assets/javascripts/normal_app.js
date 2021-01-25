@@ -130,7 +130,7 @@ $(document).ready(function(e) {
 				},
 				error: function(e) {
 					
-					var img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
+					var img = document.getElementById("install_normal_setup_trinary_img_map_saved_fin");
         			img.src = "assets/images/vide.png";
 					
 					alert_wyca(textErrorTrinary + ' ' + e.responseText);
@@ -914,9 +914,9 @@ $(document).ready(function(e) {
 			alert_wyca(textPasswordMatching);
 		}else if(!pass[0].checkValidity() || !cpass[0].checkValidity()){
 			alert_wyca(textPasswordPattern);
-		}else if (!$('#install_normal_manager_i_manager_email')[0].checkValidity()){
+		}/*else if (!$('#install_normal_manager_i_manager_email')[0].checkValidity()){
 			alert_wyca(textLoginPattern);
-		}
+		}*/
 		else
 		{
 			json_user = {
@@ -1056,9 +1056,9 @@ $(document).ready(function(e) {
 			alert_wyca(textPasswordMatching);
 		}else if(!pass[0].checkValidity() || !cpass[0].checkValidity()){
 			alert_wyca(textPasswordPattern);
-		}else if (!$('#install_normal_user_i_user_email')[0].checkValidity()){
+		}/*else if (!$('#install_normal_user_i_user_email')[0].checkValidity()){
 			alert_wyca(textLoginPattern);
-		}
+		}*/
 		else
 		{
 			json_user = {
