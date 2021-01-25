@@ -121,8 +121,10 @@ class Translate
 	
 	public static function CreateFileLang($to_insert, $lang)
 	{
+		global $_CONFIG;
 		$file_path = dirname(__FILE__).'/../lang/'.$lang.'.php';
 		if(isset($_CONFIG['MODE']) && $_CONFIG['MODE']=='DEV'){
+			echo "i'm here";
 			try{
 				if (file_exists($file_path))
 				{
@@ -150,6 +152,7 @@ class Translate
 	
 	public static function CreateFileLangMail($to_insert, $lang)
 	{
+		global $_CONFIG;
 		$file_path = dirname(__FILE__).'/../lang/mail/'.$lang.'.php';
 		if(isset($_CONFIG['MODE']) && $_CONFIG['MODE']=='DEV'){
 			if ($fd = fopen($file_path, 'w'))
