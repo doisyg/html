@@ -1197,6 +1197,7 @@ $(document).ready(function(e) {
 		
 		//APP SOUND
 		if($('#install_normal_setup_sound .sound_switch_app').prop('checked')){
+			
 			//APP SOUND ON
 			$.ajax({
 				type: "POST",
@@ -1205,6 +1206,7 @@ $(document).ready(function(e) {
 				dataType: 'json',
 				success: function(data) {
 					wycaApi.options.sound_is_on = true;
+					app_sound_is_on = true;
 				},
 				error: function(e) {
 					if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
@@ -1224,6 +1226,7 @@ $(document).ready(function(e) {
 				dataType: 'json',
 				success: function(data) {
 					wycaApi.options.sound_is_on = false;
+					app_sound_is_on = false;
 				},
 				error: function(e) {
 					if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
