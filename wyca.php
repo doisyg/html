@@ -1195,7 +1195,7 @@
                 <div class="wyca_setup_sites_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
                 
                 <div class="loaded col-md-12" style="padding-top:30px;">
-                	<a href="#" class="bAddSite btn btn-primary"><?= __('Add new site')?></a>
+                	<a href="#" class="bAddSite btn btn-primary disabled"><?= __('Add new site')?></a>
                 
                     <ul class="list_sites list_elem">
                     </ul>
