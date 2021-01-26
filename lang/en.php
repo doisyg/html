@@ -575,5 +575,7 @@ $_LANG['7e7123b0d269ad5d9ec8d12c52a8ed8a'] = 'Unlock';
 $_LANG['1fed770829104362a3ad249610f08f90'] = 'Restart in';
 $_LANG['3976c87a2e29c4c47f93ee6e89917fe2'] = 'windows mode';
 $_LANG['67e66935ad55c7fcc015e89eefeae8a7'] = 'kiosk mode';
+$_LANG['5b503aa265be30745b805785a83894c3'] = 'Removing current top';
+$_LANG['ec6630ca40af9c2beaed73898e684d23'] = 'Setting new top';
 
 ?>

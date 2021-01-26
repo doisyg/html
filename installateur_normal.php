@@ -1236,17 +1236,21 @@
                                 <div class="actions mh100vh_55">
                                     
                                     <div class="h100vh_160" style="overflow:auto">
-                                        <div class="progressSetActiveTop">
-                                            <h4 style="text-align:center;margin-bottom:20px"><?php echo __('Setting new active top');?></h4>
-                                            <div class="setActiveTopProgress progress progress-striped light active m-md">
-                                                <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;">
-                                                </div>
-                                            </div>
-                                        </div>
-			                                    
+										<h4 style="text-align:center;margin-bottom:20px"><?php echo __('Setting new active top');?></h4>
+			                            <div class="install_normal_set_active_top_feedback set_active_top_feedback" style="display:none;">
+											<hr style="border-top: 1px solid #909090;">
+											<div class="row set_active_top_step SetActiveTopRemoveCurrent" id="">
+												<div class="col-xs-10"><h5><?= __('Removing actual top')?></h5></div>
+												<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+											</div>
+											<div class="row set_active_top_step SetActiveTopSetNew" id="">
+												<div class="col-xs-10"><h5><?= __('Setting new top')?></h5></div>
+												<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+											</div>
+											<hr style="border-top: 1px solid #909090;">
+										</div>
             	                        <div style="clear:both;"></div>
                 					</div>                   
-                                    <a href="#" class="btn btn-primary" data-dismiss="modal" style="width:100%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Close');?></a>
                                 </div>
                             </div>
                         </div>

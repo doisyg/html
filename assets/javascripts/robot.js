@@ -334,6 +334,14 @@ function onRecoveryFromFiducialFeedback(data)
 {
 }
 
+function onSetActiveTopResult(data)
+{
+}
+
+function onSetActiveTopFeedback(data)
+{
+}
+
 function InitDockingState()
 {
 	switch(dockingStateLast){

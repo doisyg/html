@@ -1618,24 +1618,45 @@ $(document).ready(function(e) {
 	$( '#pages_install_normal' ).on( 'click', 'a.set_top', function(e) {
         e.preventDefault();
 		
+		/*INIT FEEDBACK DISPLAY*/
+		$('#install_normal_setup_top .set_active_top_feedback').hide();
+		$('#install_normal_setup_top .set_active_top_feedback .set_active_top_step').css('opacity','0').hide();
+		$('#install_normal_setup_top .set_active_top_feedback .set_active_top_step .fa-check').hide();
+		$('#install_normal_setup_top .set_active_top_feedback .set_active_top_step .fa-pulse').show();
+		
+		wycaApi.on('onSetActiveTopFeedback', function(data) {
+			if(data.A == wycaApi.AnswerCode.NO_ERROR){
+				target = '';
+				switch(data.M){
+					case '1/2': target = '#install_normal_setup_top .set_active_top_feedback .set_active_top_step.SetActiveTopRemoveCurrent';	break;
+					case '2/2': target = '#install_normal_setup_top .set_active_top_feedback .set_active_top_step.SetActiveTopSetNew';			break;
+				}
+				target = $(target);
+				if(target.prevAll('.set_active_top_step:visible').length > 0){
+					target.prevAll('.set_active_top_step:visible').find('.fa-check').show();
+					target.prevAll('.set_active_top_step:visible').find('.fa-pulse').hide();
+				}
+				target.css('opacity','1').show();
+			}
+		})
+		
 		wycaApi.on('onSetActiveTopResult', function(data) {
 			
 			InitTopsActiveNormal();
 			timerSetActiveTop = 90;
 			statusSetActiveTop = 2;
-			setTimeout(function(){
-				$('#install_normal_setup_top .modalSetActiveTop').modal('hide');
-				$('#install_normal_setup_top .modalSetActiveTop a').removeClass('disabled');
-				
-			},750);
+			$('#install_normal_setup_top .modalSetActiveTop').modal('hide');
+			
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
-				setTimeout(success_wyca,750,textTopNowActive);
+				success_wyca(textTopNowActive);
 			}
 			else
 			{
 				ParseAPIAnswerError(data);
 			}
+			wycaApi.on('onSetActiveTopResult', onSetActiveTopResult);
+			wycaApi.on('onSetActiveTopFeedback', onSetActiveTopFeedback);
 		});
 		
 		wycaApi.SetActiveTop($(this).data('id_top'), function(data){
@@ -1643,17 +1664,14 @@ $(document).ready(function(e) {
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
 				$('#install_normal_setup_top .modalSetActiveTop').modal('show');
-				$('#install_normal_setup_top .modalSetActiveTop a').addClass('disabled');
-				statusSetActiveTop = 1;
-				timerSetActiveTop = 0;
-
-				//$('#pages_install_normal .progressSetActiveTop').show();
-				TimerActiveTopNormal();
+				$('#install_normal_setup_top .set_active_top_feedback').show();
 			}
 			else
 			{
-				InitTopsActiveNormal();
+				wycaApi.on('onSetActiveTopResult', onSetActiveTopResult);
+				wycaApi.on('onSetActiveTopFeedback', onSetActiveTopFeedback);
 				ParseAPIAnswerError(data);
+				InitTopsActiveNormal();
 			}	
 		});		
 	});
@@ -1907,7 +1925,7 @@ function RealTestGotoEndNormal(end){
 }		
 
 //------------------- ACTIVE TOP ------------------------
-
+/*
 var statusSetActiveTop = 0;
 var timerSetActiveTop = 0;
 	
@@ -1954,7 +1972,7 @@ function NextTimerSetActiveTop()
 		setTimeout(NextTimerSetActiveTop, 100);
 	}
 }
-
+*/
 
 //------------------- MANAGERS ------------------------	
 

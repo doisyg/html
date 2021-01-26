@@ -593,5 +593,7 @@ $_LANG['7e7123b0d269ad5d9ec8d12c52a8ed8a'] = 'Débloquer';
 $_LANG['1fed770829104362a3ad249610f08f90'] = 'Relancer';
 $_LANG['3976c87a2e29c4c47f93ee6e89917fe2'] = 'mode fenêtré';
 $_LANG['67e66935ad55c7fcc015e89eefeae8a7'] = 'mode kiosque';
+$_LANG['5b503aa265be30745b805785a83894c3'] = 'Suppression top actuel';
+$_LANG['ec6630ca40af9c2beaed73898e684d23'] = 'Mise en place nouveau top';
 
 ?>
