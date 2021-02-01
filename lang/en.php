@@ -563,5 +563,19 @@ $_LANG['02101cdb5ae293643acf6c6ea0d3ba93'] = 'POI list';
 $_LANG['5f4d267a2b3d94ecb5739bf06ac64501'] = 'Docking stations list';
 $_LANG['9a7b768938a9e551fa88faf99acac139'] = 'Add wait step';
 $_LANG['e02d2ae03de9d493df2b6b2d2813d302'] = 'Duration';
+$_LANG['e02efed9a6e78f3cbbfbeefc906489a4'] = 'Cancel Recovery';
+$_LANG['190570595f1bb30d40e706226266ab60'] = 'Scanning reflectors';
+$_LANG['bd33769324dd66b5219ec7be790f6d6c'] = 'Updating robot position ';
+$_LANG['8c019ae6177e7d6986a0c7f38165d7ca'] = 'Rotating to clean obstacles';
+$_LANG['3be657531d498929caf79a27523c2400'] = 'Starting navigation';
+$_LANG['c290a5941ad6eb0d5fe8752c15c5fd78'] = 'Next step';
+$_LANG['e62799c208ad55d9b2de35c3a929e425'] = 'seconde';
+$_LANG['e4282a24d0473bcf155064341f71e92b'] = 'Invalid code';
+$_LANG['7e7123b0d269ad5d9ec8d12c52a8ed8a'] = 'Unlock';
+$_LANG['1fed770829104362a3ad249610f08f90'] = 'Restart in';
+$_LANG['3976c87a2e29c4c47f93ee6e89917fe2'] = 'windows mode';
+$_LANG['67e66935ad55c7fcc015e89eefeae8a7'] = 'kiosk mode';
+$_LANG['5b503aa265be30745b805785a83894c3'] = 'Removing current top';
+$_LANG['ec6630ca40af9c2beaed73898e684d23'] = 'Setting new top';
 
 ?>

@@ -2342,7 +2342,7 @@ $(document).ready(function()
 				
 				$('#wyca_edit_map_container_all .modalDockOptions .list_undock_procedure').append('' +
 					'<li id="wyca_edit_map_list_undock_procedure_elem_'+indexDockElem+'" data-index_dock_procedure="'+indexDockElem+'" data-action="move" data-distance="-0.4">'+
-					'	<span>Move back 0.4m</span>'+
+					'	<span>'+(typeof(textUndockPathMove) != 'undefined' ? textUndockPathMove : 'Move') + ' ' + (typeof(textUndockPathback) != 'undefined' ? textUndockPathback : 'back')+'</span>'+
 					'	<a href="#" class="bWycaUndockProcedureDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
 					'	<a href="#" class="bWycaUndockProcedureEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
 					'</li>'
@@ -3011,7 +3011,7 @@ $(document).ready(function()
 			
 			$('#wyca_edit_map_container_all .modalAugmentedPoseOptions .list_undock_procedure_augmented_pose').append('' +
 				'<li id="wyca_edit_map_list_undock_procedure_augmented_pose_elem_'+indexAugmentedPoseElem+'" data-index_augmented_pose_procedure="'+indexAugmentedPoseElem+'" data-action="move" data-distance="-0.4">'+
-				'	<span>Move back 0.4m</span>'+
+				'	<span>'+(typeof(textUndockPathMove) != 'undefined' ? textUndockPathMove : 'Move') + ' ' + (typeof(textUndockPathback) != 'undefined' ? textUndockPathback : 'back')+'</span>'+
 				'	<a href="#" class="bWycaUndockProcedureAugmentedPoseDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
 				'	<a href="#" class="bWycaUndockProcedureAugmentedPoseEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
 				'</li>'

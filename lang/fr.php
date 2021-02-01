@@ -581,5 +581,19 @@ $_LANG['09f3c0ec227bd134d31bc99ce7527691'] = 'Tolérance angulaire';
 $_LANG['a89c900d7eba035cc418e87f630eef48'] = 'de 2 à 360';
 $_LANG['7fe6faff3ca8a6517e1bb8f789ef7581'] = 'Tolérance linéaire';
 $_LANG['5811313d9d3deac59db4bdb3a836c66e'] = 'de 0.05 à 10';
+$_LANG['e02efed9a6e78f3cbbfbeefc906489a4'] = 'Arrêter relocalisation';
+$_LANG['190570595f1bb30d40e706226266ab60'] = 'Scan des réflecteurs';
+$_LANG['bd33769324dd66b5219ec7be790f6d6c'] = 'Actualisation position robot ';
+$_LANG['8c019ae6177e7d6986a0c7f38165d7ca'] = 'Rotation pour enlever obstacles';
+$_LANG['3be657531d498929caf79a27523c2400'] = 'Lancement navigation';
+$_LANG['c290a5941ad6eb0d5fe8752c15c5fd78'] = 'Prochaine étape';
+$_LANG['e62799c208ad55d9b2de35c3a929e425'] = 'seconde';
+$_LANG['e4282a24d0473bcf155064341f71e92b'] = 'Code invalide';
+$_LANG['7e7123b0d269ad5d9ec8d12c52a8ed8a'] = 'Débloquer';
+$_LANG['1fed770829104362a3ad249610f08f90'] = 'Relancer';
+$_LANG['3976c87a2e29c4c47f93ee6e89917fe2'] = 'mode fenêtré';
+$_LANG['67e66935ad55c7fcc015e89eefeae8a7'] = 'mode kiosque';
+$_LANG['5b503aa265be30745b805785a83894c3'] = 'Suppression top actuel';
+$_LANG['ec6630ca40af9c2beaed73898e684d23'] = 'Mise en place nouveau top';
 
 ?>
