@@ -6,7 +6,7 @@
             </header>
             <div class="content">
                 <ul class="tuiles row">
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile1" data-goto="install_normal_edit_map" href="#"><i class="far fa-map"></i><?php echo __('Map');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile1" data-goto="install_normal_edit_map" href="#"><i class="fas fa-map-marked-alt"></i><?php echo __('Map');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="install_normal_move" href="#"><i class="fa fa-gamepad"></i><?php echo __('Control robot');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="install_normal_recovery" href="#"><i class="fa fa-search"></i><?php echo __('Recovery');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="install_normal_setup" href="#"><i class="fa fa-gears"></i><?php echo __('Setup');?></a></li>
@@ -998,7 +998,7 @@
                                 <div class="modal-header">
                                     <div class="actions mh100vh_55">
                                         <div class="h100vh_160" style="overflow:auto; text-align:center">
-											<i class="far fa-map fa-5x" style="margin:20px 0;position:relative">
+											<i class="fas fa-map-marked-alt fa-5x" style="margin:20px 0;position:relative">
 												<!--<i class="fas fa-asterisk fa-2x" style="position: absolute;font-size: 16px;color: #343434;top:-8px;right: -9px;"></i>-->
 											</i>
 											<h4 style="margin:20px 0"><?= __('The map has been modified externally.')?></h4>
@@ -1088,16 +1088,17 @@
                 <ul class="tuiles row">
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile1" data-goto="install_normal_setup_sites" href="#"><i class="fa fa-building"></i><?php echo __('Sites');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="install_normal_setup_tops" href="#"><i class="fa fa-cube"></i><?php echo __('Tops');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="install_normal_setup_config" href="#"><i class="fas fa-battery-three-quarters"></i><?php echo __('Battery settings');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="install_normal_setup_maps" href="#"><i class="fas fa-layer-group"></i><?php echo __('Maps');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="install_normal_setup_config" href="#"><i class="fas fa-battery-three-quarters"></i><?php echo __('Battery settings');?></a></li>
                     
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="install_normal_setup_sound" href="#"><i class="fas fa-volume-up"></i><?php echo __('Sound');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5" data-goto="install_normal_setup_wifi" href="#"><i class="fas fa-wifi"></i><?php echo __('Wifi');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" data-goto="install_normal_setup_language" href="#"><i class="fa fa-language"></i><?php echo __('Language');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5" data-goto="install_normal_setup_sound" href="#"><i class="fas fa-volume-up"></i><?php echo __('Sound');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" data-goto="install_normal_setup_wifi" href="#"><i class="fas fa-wifi"></i><?php echo __('Wifi');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7" data-goto="install_normal_setup_language" href="#"><i class="fa fa-language"></i><?php echo __('Language');?></a></li>
 					
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7" data-goto="install_normal_setup_export" href="#"><i class="fa fa-upload"></i><?php echo __('Export site');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8" data-goto="install_normal_setup_import" href="#"><i class="fa fa-download"></i><?php echo __('Import site');?></a></li>
-					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile9" data-goto="install_normal_setup_trinary" href="#"><i class="far fa-map"></i><?php echo __('Map trinary');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile10" data-goto="install_normal_setup_reset" href="#"><i class="fa fa-eraser"></i><?php echo __('Factory data reset');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8" data-goto="install_normal_setup_export" href="#"><i class="fa fa-upload"></i><?php echo __('Export site');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile9" data-goto="install_normal_setup_import" href="#"><i class="fa fa-download"></i><?php echo __('Import site');?></a></li>
+					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile10" data-goto="install_normal_setup_trinary" href="#"><i class="far fa-map"></i><?php echo __('Map trinary');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile11" data-goto="install_normal_setup_reset" href="#"><i class="fa fa-eraser"></i><?php echo __('Factory data reset');?></a></li>
 				</ul>
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
@@ -1269,7 +1270,60 @@
                 <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="install_normal_setup_tops"><?php echo __('Back');?></a>
             </footer>
         </section>
-        
+		
+        <section id="install_normal_setup_maps" class="page with_footer">
+	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Maps');?></h2>
+            </header>
+            <div class="content">
+                
+                <div class="install_normal_setup_maps_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
+                
+                <div class="loaded col-md-12" style="padding-top:30px;">
+                	<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#install_normal_setup_maps .modalAskNewMap"><?= __('Add new map')?></a>
+                
+                    <ul class="list_maps list_elem">
+                    </ul>
+                </div>
+				<div class="modal fade modalAskNewMap" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+					<div class="modal-dialog" role="dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<div class="actions mh100vh_55">
+									<div class="h100vh_160" style="overflow:auto; text-align:center">
+										<i class="fas fa-layer-group fa-5x" style="margin:20px 0;position:relative"></i>
+										<h4 style="margin:20px 0"><?= __('Add a new map to the current site ?')?></h4>
+										<h4 style="margin:20px 0"><?= __('You will be redirected to the mapping step.')?></h4>
+									</div>
+									
+									<div style="clear:both;"></div>
+									
+									<a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('No');?></a> 
+									<a href="#" class="btn btn-primary btn_footer_right btn_50 bAddMap" data-dismiss="modal"><?php echo __('Add Map');?></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content sm-content text-left">
+						<p class=""><?= __('This page allow you to manage maps')?></p>
+						<p class=""><?= __('You can create a new map by clicking on the correspondant button.')?></p>
+						<p class=""><?= __('You can delete a map by clicking on the red cross icon.')?></p>
+						<p class=""><?= __('A confimation will be asked for each map you want to delete.')?></p>
+						<p class=""><?= __('You can switch map by clicking on the blue check icon of the map you want to load.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
+            </div>
+            <footer>
+                <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>
+            </footer>
+        </section>
+		
 		<section id="install_normal_setup_config" class="page with_footer">
 	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
             <header>

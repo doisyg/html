@@ -259,7 +259,39 @@ $(document).ready(function(e) {
 				}
 			}
 			
+			if(target == 'install_by_step_new_site'){ //UPDATE INSTALL STEP ON BACK FROM CREATE NEW MAP PROCESS NORMAL
+				if(JSON.parse(getCookie('create_new_map')) || create_new_map){
+					setCookie('create_new_map',false);
+					create_new_map = false;
+					$.ajax({
+						type: "POST",
+						url: 'ajax/install_by_step_finish.php',
+						data: {
+						},
+						dataType: 'json',
+						success: function(data) {
+						},
+						error: function(e) {
+							alert_wyca((typeof(textErrorFinish) != 'undefined'? textErrorFinish : 'Error in sound') + ' ' + e.responseText);
+						}
+					});
+					$('#modalBack').modal('hide');
+					$('#pages_install_by_step').removeClass('active');
+					$('#pages_install_normal').addClass('active');
+					
+					//AFFICHER QQ CHOSE
+					$('section#install_normal_setup_maps').show('slow');
+					$('.title_section').html($('section#install_normal_setup_maps > header > h2').text());
+					if ($('#install_normal_setup_maps').is(':visible'))
+					{
+						GetMapsNormal();
+					}
+					
+		
+				}
+			}
 		}else{
+			let go_to_end = false ;
 			let fromBackBtn = false;
 			if($(this).data('goto').includes('fromBackBtn')){
 				let goTo =  $(this).data('goto').split('_fromBackBtn')[0];
@@ -287,7 +319,37 @@ $(document).ready(function(e) {
 			if (next == 'install_by_step_check') InitCheckByStep();		
 			if (next == 'install_by_step_sound') InitSoundByStep();		
 			if (next == 'install_by_step_wifi') InitInstallWifiPageByStep();
-			if (next == 'install_by_step_config') GetConfigurationsByStep();
+			if (next == 'install_by_step_config'){
+				if(JSON.parse(getCookie('create_new_map')) || create_new_map){
+					setCookie('create_new_map',false);
+					create_new_map = false;
+					$.ajax({
+						type: "POST",
+						url: 'ajax/install_by_step_finish.php',
+						data: {
+						},
+						dataType: 'json',
+						success: function(data) {
+						},
+						error: function(e) {
+							alert_wyca((typeof(textErrorFinish) != 'undefined'? textErrorFinish : 'Error in sound') + ' ' + e.responseText);
+						}
+					});
+					go_to_end = true;
+					$('#pages_install_by_step').removeClass('active');
+					$('#pages_install_normal').addClass('active');
+					
+					//AFFICHER QQ CHOSE
+					$('section#install_normal_setup_maps').show('slow');
+					$('.title_section').html($('section#install_normal_setup_maps > header > h2').text());
+					if ($('#install_normal_setup_maps').is(':visible'))
+					{
+						GetMapsNormal();
+					}
+					
+				}else
+					GetConfigurationsByStep();
+			}
 			if (next == 'install_by_step_mapping') InitMappingByStep();
 			if (next == 'install_by_step_import_site') InitSiteImportByStep();
 			
@@ -332,6 +394,7 @@ $(document).ready(function(e) {
 			if (next == 'install_normal_setup_import') InitSiteImportNormal();
 			if (next == 'install_normal_setup_tops') InitTopsNormal();
 			if (next == 'install_normal_setup_top') InitTopsActiveNormal();
+			if (next == 'install_normal_setup_maps') GetMapsNormal();
 			if (next == 'install_normal_setup_config') GetConfigurationsNormal();
 			if (next == 'install_normal_setup_sound') InitSoundNormal();
 			if (next == 'install_normal_setup_wifi') InitInstallWifiPageNormal();
@@ -378,53 +441,54 @@ $(document).ready(function(e) {
 			
 			if (next == 'user_edit_map') GetInfosCurrentMapUser();
 			
-			// Anim HIDE current page
-			var startShowAfter = 0;
-			if ($(this).closest('section').hasClass('hmi_tuile') && anim_show )
-			{
-				nbTuiles = $(this).closest('section').find('.anim_tuiles').length;
-				delay = 70;
-				for (i=1; i <= nbTuiles; i++)
+			if(!go_to_end){
+				// Anim HIDE current page
+				var startShowAfter = 0;
+				if ($(this).closest('section').hasClass('hmi_tuile') && anim_show )
 				{
-					setTimeout(HideTuile, delay * (i - 1), $(this).closest('section').find('.tuile' + (nbTuiles - i + 1)));
+					nbTuiles = $(this).closest('section').find('.anim_tuiles').length;
+					delay = 70;
+					for (i=1; i <= nbTuiles; i++)
+					{
+						setTimeout(HideTuile, delay * (i - 1), $(this).closest('section').find('.tuile' + (nbTuiles - i + 1)));
+					}
+					
+					startShowAfter = nbTuiles * 70;
+					$(this).closest('section').delay(startShowAfter+250).fadeOut(500, function() {
+					   $(this).removeClass('active');
+					});
+				}
+				else
+				{
+					$(this).closest('section').fadeOut(500);
+				}
+					
+				// Anim SHOW next page
+				next = $(this).data('goto');
+				if ($('#'+next).hasClass('hmi_tuile') && anim_show)
+				{
+					nbTuiles = $('#'+next).find('.anim_tuiles').length;
+					delay = 70;
+					for (i=1; i <= nbTuiles; i++)
+					{
+						setTimeout(ShowTuile, 700 + delay * (i - 1), $('#'+next).find('.tuile' + i));
+					}
+					
+					$('#'+next).delay(startShowAfter+250).fadeIn(500, function() {					
+						$(this).addClass('active');
+					});
+				}
+				else
+				{
+					$('#'+next).delay(startShowAfter).fadeIn(500, function() {
+						$(this).addClass('active');
+					});
 				}
 				
-				startShowAfter = nbTuiles * 70;
-				$(this).closest('section').delay(startShowAfter+250).fadeOut(500, function() {
-				   $(this).removeClass('active');
-				});
+				// ADD TITLE CHANGE 
+					
+				$('.title_section').html($('#'+next+' > header > h2').text());
 			}
-			else
-			{
-				$(this).closest('section').fadeOut(500);
-			}
-				
-			// Anim SHOW next page
-			next = $(this).data('goto');
-			if ($('#'+next).hasClass('hmi_tuile') && anim_show)
-			{
-				nbTuiles = $('#'+next).find('.anim_tuiles').length;
-				delay = 70;
-				for (i=1; i <= nbTuiles; i++)
-				{
-					setTimeout(ShowTuile, 700 + delay * (i - 1), $('#'+next).find('.tuile' + i));
-				}
-				
-				$('#'+next).delay(startShowAfter+250).fadeIn(500, function() {					
-					$(this).addClass('active');
-				});
-			}
-			else
-			{
-				$('#'+next).delay(startShowAfter).fadeIn(500, function() {
-					$(this).addClass('active');
-				});
-			}
-			
-			// ADD TITLE CHANGE 
-				
-			$('.title_section').html($('#'+next+' > header > h2').text());
-			
 			//
 			InitJoystick();
 		}
@@ -823,6 +887,44 @@ function GetSitesForExportNormal()
 	else
 	{
 		setTimeout(GetSitesNormal, 500);
+// MAPS
+
+function GetMapsNormal()
+{
+	$('.install_normal_setup_maps_loading').show();
+	$('#install_normal_setup_maps .loaded').hide();
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetCurrentMap(function(data) {
+			current_site = data.D.id_site;
+			wycaApi.GetCurrentMap(function(data) {
+				current_map = data.D;
+				//console.log(current_map);
+				wycaApi.GetMapsList(current_site,function(data) {
+					
+					$('#install_normal_setup_maps .list_maps').html('');
+					
+					if (data.D != undefined)
+					$.each(data.D,function(index, value){
+						$('#install_normal_setup_maps .list_maps').append('' +
+							'<li id="install_normal_setup_maps_list_map_elem_'+value.id_map+'" data-id_map="'+value.id_map+'">'+
+							'	<span class="societe">'+value.name+'</span>'+
+							(current_map.id_map != value.id_map?'	<a href="#" class="bMapDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>':'')+
+							(current_map.id_map != value.id_map?'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>':'')+
+							(current_map.id_map != value.id_map?'	<a href="#" class="bMapSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-check"></i></a>':'')+
+							'</li>'
+							);
+					});
+					
+					$('.install_normal_setup_maps_loading').hide();
+					$('#install_normal_setup_maps .loaded').show();
+				});
+			});
+		})
+	}
+	else
+	{
+		setTimeout(GetMapsNormal, 500);
 	}
 }
 

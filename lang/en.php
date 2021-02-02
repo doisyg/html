@@ -577,5 +577,15 @@ $_LANG['3976c87a2e29c4c47f93ee6e89917fe2'] = 'windows mode';
 $_LANG['67e66935ad55c7fcc015e89eefeae8a7'] = 'kiosk mode';
 $_LANG['5b503aa265be30745b805785a83894c3'] = 'Removing current top';
 $_LANG['ec6630ca40af9c2beaed73898e684d23'] = 'Setting new top';
+$_LANG['bf087df666715730e9ff3351282ae637'] = 'Add new map';
+$_LANG['8af4067658950f11584a482a39290104'] = 'This page allow you to manage maps';
+$_LANG['05c46f7e6388d3484ca7a0d07af92dd8'] = 'You can create a new map by clicking on the correspondant button.';
+$_LANG['639145429585f5cf40670e13936cabaf'] = 'You can delete a map by clicking on the red cross icon.';
+$_LANG['4a0d306983cf34ba40a55aab1fc673aa'] = 'A confimation will be asked for each map you want to delete.';
+$_LANG['f6a3a043e3b28d6f2f8c76b9dde095dd'] = 'You can switch map by clicking on the blue check icon of the map you want to load.';
+$_LANG['91550cc1cb3057c3da02beb9840feae2'] = 'Add a new map to the current site ?';
+$_LANG['f546cd32323401c2a84ef065f1ff25a6'] = 'You will be redirected to the mapping step. .';
+$_LANG['06301c457731ff1bfea05e1cf10a7dc7'] = 'Add Map';
+$_LANG['f3e74154c1575b0b35762744d10ff699'] = 'You will be redirected to the mapping step.';
 
 ?>

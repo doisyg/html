@@ -65,6 +65,7 @@ $(document).ready(function(e) {
 	$('#pages_install_by_step a.select_langue').click(function(e) {
 		resetCookies();
 		create_new_site = false;
+		create_new_map = false;
         e.preventDefault();
 		$.ajax({
 			type: "POST",
@@ -2154,6 +2155,10 @@ $(document).ready(function(e) {
 		if(create_new_site){
 			create_new_site = false;
 			setCookie('create_new_site',create_new_site);
+		}
+        if(create_new_map){
+			create_new_map = false;
+			setCookie('create_new_map',create_new_map);
 		}
         $.ajax({
 			type: "POST",

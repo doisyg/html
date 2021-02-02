@@ -1647,7 +1647,7 @@
                                 <div class="modal-header">
                                     <div class="actions mh100vh_55">
                                         <div class="h100vh_160" style="overflow:auto; text-align:center">
-											<i class="far fa-map fa-5x" style="margin:20px 0;position:relative">
+											<i class="fas fa-map-marked-alt fa-5x" style="margin:20px 0;position:relative">
 												<!--<i class="fas fa-asterisk fa-2x" style="position: absolute;font-size: 16px;color: #343434;top:-8px;right: -9px;"></i>-->
 											</i>
 											<h4 style="margin:20px 0"><?= __('The map has been modified externally.')?></h4>
