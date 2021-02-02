@@ -124,7 +124,6 @@ class Translate
 		global $_CONFIG;
 		$file_path = dirname(__FILE__).'/../lang/'.$lang.'.php';
 		if(isset($_CONFIG['MODE']) && $_CONFIG['MODE']=='DEV'){
-			echo "i'm here";
 			try{
 				if (file_exists($file_path))
 				{
@@ -144,8 +143,6 @@ class Translate
 				}
 			}
 			catch (Exception $e) {
-				//echo"<script>alert_wyca('Error on loading trad' + '".$e->getMessage()."')</script>";
-				//echo $e->getMessage();
 			}		
 		}		
 	}
