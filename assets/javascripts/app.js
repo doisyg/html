@@ -887,6 +887,9 @@ function GetSitesForExportNormal()
 	else
 	{
 		setTimeout(GetSitesNormal, 500);
+	}
+}
+
 // MAPS
 
 function GetMapsNormal()
