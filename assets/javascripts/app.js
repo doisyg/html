@@ -228,9 +228,11 @@ $(document).ready(function(e) {
 					}
 				});
 			}
+			
 			if(target == 'install_by_step_sound'){ //UPDATE INSTALL STEP ON BACK FROM CREATE NEW SITE PROCESS NORMAL
 				if(JSON.parse(getCookie('create_new_site')) || create_new_site){
 					setCookie('create_new_site',false);
+					create_new_site = false;
 					$.ajax({
 						type: "POST",
 						url: 'ajax/install_by_step_finish.php',
@@ -240,7 +242,7 @@ $(document).ready(function(e) {
 						success: function(data) {
 						},
 						error: function(e) {
-							alert_wyca((typeof(textErrorSound) != 'undefined'? textErrorSound : 'Error in sound') + ' ' + e.responseText);
+							alert_wyca((typeof(textErrorFinish) != 'undefined'? textErrorFinish : 'Error in finish') + ' ' + e.responseText);
 						}
 					});
 					$('#modalBack').modal('hide');
@@ -249,7 +251,7 @@ $(document).ready(function(e) {
 					
 					//AFFICHER QQ CHOSE
 					$('section#install_normal_setup_sites').show('slow');
-					
+					$('.title_section').html($('section#install_normal_setup_sites > header > h2').text());
 					if ($('#install_normal_setup_sites').is(':visible'))
 					{
 						GetSitesNormal();
@@ -713,7 +715,7 @@ function GetSitesForExportWyca()
 	}
 	else
 	{
-		setTimeout(GetSitesWyca, 500);
+		setTimeout(GetSitesForExportWyca, 500);
 	}
 }
 
@@ -750,7 +752,7 @@ function GetSitesManager()
 	}
 	else
 	{
-		setTimeout(GetSitesNormal, 500);
+		setTimeout(GetSitesManager, 500);
 	}
 }
 
@@ -822,7 +824,9 @@ function GetSitesForExportNormal()
 	}
 	else
 	{
-		setTimeout(GetSitesNormal, 500);
+		setTimeout(GetSitesForExportNormal, 500);
+	}
+}
 	}
 }
 
@@ -2318,8 +2322,8 @@ function hexToRgb(hex)
 
 function DisplayError(text)
 {
-	 $('.popup_error .panel-body').html(text);
-	 $('.popup_error').show();
+	$('.popup_error .panel-body').html(text);
+	$('.popup_error').show();
 }
 
 function CheckName(tab, nom, index_ignore=-1)

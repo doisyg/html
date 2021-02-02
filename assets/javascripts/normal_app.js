@@ -789,6 +789,7 @@ $(document).ready(function(e) {
 		$('#pages_install_normal').removeClass('active');
 		$('#pages_install_by_step section.page').hide();
 		
+		$('.title_section').html($('#pages_install_by_step #install_by_step_site > header > h2').text())
 		$('#pages_install_by_step').addClass('active');
 		$('#install_by_step_site').show();
 	});

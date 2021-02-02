@@ -493,7 +493,7 @@
         </section>
 		
 		<section id="install_by_step_new_site" class="page <?php echo $INSTALL_STEP == 11?'active':'';?> with_footer">
-        	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_wifi"></a>
+        	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_site"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
                 <h2><?php echo __('New site');?></h2>
@@ -523,7 +523,7 @@
         </section>
 		
         <section id="install_by_step_mapping" class="page <?php echo $INSTALL_STEP == 12?'active':'';?> hide_photo_back with_footer">
-        	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_site"></a>
+        	<a href="#" class="bBackButton button_goto" data-goto="install_by_step_new_site"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
                 <h2><?php echo __('Mapping');?></h2>
