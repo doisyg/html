@@ -409,7 +409,9 @@ $(document).ready(function(e) {
 			
 			// WYCA
 			
+			if (next == 'wyca_switch_map_landmark') GetSwitchMapsWyca();
 			if (next == 'wyca_setup_sites') GetSitesWyca();
+			if (next == 'wyca_setup_maps') GetMapsWyca();
 			if (next == 'wyca_setup_sound') InitSoundWyca();
 			if (next == 'wyca_setup_export') GetSitesForExportWyca();
 			if (next == 'wyca_setup_import') InitSiteImportWyca();
@@ -931,6 +933,82 @@ function GetMapsNormal()
 	}
 }
 
+function GetMapsWyca()
+{
+	$('.wyca_setup_maps_loading').show();
+	$('#wyca_setup_maps .loaded').hide();
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetCurrentMap(function(data) {
+			current_site = data.D.id_site;
+			wycaApi.GetCurrentMap(function(data) {
+				current_map = data.D;
+				//console.log(current_map);
+				wycaApi.GetMapsList(current_site,function(data) {
+					
+					$('#wyca_setup_maps .list_maps').html('');
+					
+					if (data.D != undefined)
+					$.each(data.D,function(index, value){
+						$('#wyca_setup_maps .list_maps').append('' +
+							'<li id="wyca_setup_maps_list_map_elem_'+value.id_map+'" data-id_map="'+value.id_map+'">'+
+							'	<span class="societe">'+value.name+'</span>'+
+							(current_map.id_map != value.id_map?'	<a href="#" class="bMapDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>':'')+
+							(current_map.id_map != value.id_map?'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>':'')+
+							(current_map.id_map != value.id_map?'	<a href="#" class="bMapSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-check"></i></a>':'')+
+							'</li>'
+							);
+					});
+					
+					$('.wyca_setup_maps_loading').hide();
+					$('#wyca_setup_maps .loaded').show();
+				});
+			});
+		})
+	}
+	else
+	{
+		setTimeout(GetMapsWyca, 500);
+	}
+}
+
+function GetSwitchMapsWyca()
+{
+	$('.wyca_switch_map_landmark_loading').show();
+	$('#wyca_switch_map_landmark .loaded').hide();
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetCurrentMap(function(data) {
+			current_site = data.D.id_site;
+			wycaApi.GetCurrentMap(function(data) {
+				current_map = data.D;
+				//console.log(current_map);
+				wycaApi.GetMapsList(current_site,function(data) {
+					
+					$('#wyca_switch_map_landmark .list_switch_map_landmarks').html('');
+					
+					if (data.D != undefined)
+					$.each(data.D,function(index, value){
+						$('#wyca_switch_map_landmark .list_switch_map_landmarks').append('' +
+							'<li id="wyca_switch_map_landmark_list_map_elem_'+value.id_map+'" data-id_map="'+value.id_map+'">'+
+							'	<span class="societe">'+value.name+'</span>'+
+							(current_map.id_map != value.id_map?'	<a href="#" class="bMapSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fas fa-exchange-alt"></i></a>':'')+
+							'</li>'
+							);
+					});
+					
+					$('.wyca_switch_map_landmark_loading').hide();
+					$('#wyca_switch_map_landmark .loaded').show();
+				});
+			});
+		})
+	}
+	else
+	{
+		setTimeout(GetSwitchMapsWyca, 500);
+	}
+}
+
 // MASTER DOCK
 
 function InitMasterDockWyca()
@@ -965,6 +1043,7 @@ function InitMasterDockWyca()
 						areas = data.D.areas;
 						docks = data.D.docks;
 						pois = data.D.pois;
+						landmarks = data.D.landmarks;
 						augmented_poses = data.D.augmented_poses;
 						
 						$.each(docks,function(idx,item){
@@ -1022,6 +1101,7 @@ function InitMasterDockNormal()
 						areas = data.D.areas;
 						docks = data.D.docks;
 						pois = data.D.pois;
+						landmarks = data.D.landmarks;
 						augmented_poses = data.D.augmented_poses;
 						
 						$.each(docks,function(idx,item){
@@ -1081,6 +1161,7 @@ function InitMasterDockByStep(back = false)
 						areas = data.D.areas;
 						docks = data.D.docks;
 						pois = data.D.pois;
+						landmarks = data.D.landmarks;
 						augmented_poses = data.D.augmented_poses;
 						
 						$.each(docks,function(idx,item){
@@ -2532,6 +2613,13 @@ function GetDataMapToSave()
 		if (augmented_pose.id_augmented_pose >= 300000)
 		{
 			data.augmented_poses[indexInArray].id_augmented_pose = -1;
+		}
+	});
+	data.landmarks = landmarks;
+	$.each(data.landmarks, function(indexInArray, landmark){
+		if (landmark.id_landmark >= 300000)
+		{
+			data.landmarks[indexInArray].id_landmark = -1;
 		}
 	});
 	data.id_map = id_map;

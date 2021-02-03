@@ -689,6 +689,7 @@ $(document).ready(function() {
 								gommes = Array();
 								docks = data.D.docks;
 								pois = data.D.pois;
+								landmarks = data.D.landmarks;
 								augmented_poses = data.D.augmented_poses;
 								/*
 								$('#install_normal_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
@@ -753,6 +754,7 @@ $(document).ready(function() {
 								gommes = Array();
 								docks = data.D.docks;
 								pois = data.D.pois;
+								landmarks = data.D.landmarks;
 								augmented_poses = data.D.augmented_poses;
 								
 								$('#install_normal_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
@@ -836,6 +838,30 @@ $(document).ready(function() {
 		}
     });
 	
+	/* MENU DOCK */
+	
+	$('#install_normal_edit_map_menu_landmark .bDeleteLandmark').click(function(e) {
+        e.preventDefault();
+		NormalHideMenus();
+		i = GetLandmarkIndexFromID(currentLandmarkNormalLongTouch.data('id_landmark'));
+		NormalDeleteLandmark(i);
+    });
+	
+	$('#install_normal_edit_map_menu_landmark .bConfigLandmark').click(function(e) {
+        e.preventDefault();
+		//NormalHideMenus();
+		normalCurrentAction = 'editLandmark';
+	
+		currentLandmarkIndex = GetLandmarkIndexFromID(currentLandmarkNormalLongTouch.data('id_landmark'));
+		landmark = landmarks[currentLandmarkIndex];
+		$('#install_normal_edit_map_landmark_number').val(landmark.num);
+		$('#install_normal_edit_map_landmark_fiducial_number').val(landmark.id_fiducial);
+		$('#install_normal_edit_map_landmark_name').val(landmark.name);
+		$('#install_normal_edit_map_landmark_comment').val(landmark.comment);
+		
+		$('#install_normal_edit_map_container_all .modalLandmarkOptions').modal('show');
+    });
+	
 	/* MENU POI */
 	
 	$('#install_normal_edit_map_menu_poi .bDeletePoi').click(function(e) {
@@ -892,6 +918,7 @@ $(document).ready(function() {
 								forbiddens = data.D.forbiddens;
 								areas = data.D.areas;
 								gommes = Array();
+								landmarks = data.D.landmarks;
 								docks = data.D.docks;
 								pois = data.D.pois;
 								augmented_poses = data.D.augmented_poses;
@@ -959,6 +986,7 @@ $(document).ready(function() {
 								gommes = Array();
 								docks = data.D.docks;
 								pois = data.D.pois;
+								landmarks = data.D.landmarks;
 								augmented_poses = data.D.augmented_poses;
 								
 								$('#install_normal_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
@@ -1142,6 +1170,7 @@ $(document).ready(function() {
 								gommes = Array();
 								docks = data.D.docks;
 								pois = data.D.pois;
+								landmarks = data.D.landmarks;
 								augmented_poses = data.D.augmented_poses;
 								/*
 								$('#install_normal_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
@@ -1206,6 +1235,7 @@ $(document).ready(function() {
 								gommes = Array();
 								docks = data.D.docks;
 								pois = data.D.pois;
+								landmarks = data.D.landmarks;
 								augmented_poses = data.D.augmented_poses;
 								
 								$('#install_normal_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
@@ -1677,6 +1707,55 @@ $(document).ready(function() {
 			AddClass('#install_normal_edit_map_svg .augmented_pose_elem_'+augmented_pose.id_augmented_pose, 'active');
 			if (augmented_pose.id_fiducial < 1) // Movable que si il n'est pas lié à un reflecteur
 				AddClass('#install_normal_edit_map_svg .augmented_pose_elem_'+augmented_pose.id_augmented_pose, 'movable');
+		}
+		else
+			NormalAvertCantChange();
+	});
+	
+	$(document).on('click', '#install_normal_edit_map_svg .landmark_elem', function(e) {
+		e.preventDefault();
+		
+		if (normalCurrentAction == 'addLandmark')
+		{
+		}
+		else if (normalCurrentAction == 'gomme')
+		{
+		}
+		else if (normalCanChangeMenu)
+		{
+			RemoveClass('#install_normal_edit_map_svg .active', 'active');
+			RemoveClass('#install_normal_edit_map_svg .activ_select', 'activ_select'); 
+			RemoveClass('#install_normal_edit_map_svg .landmark_elem', 'movable');
+						
+			currentSelectedItem = Array();
+			currentSelectedItem.push({'type':'landmark', 'id':$(this).data('id_landmark')});	
+			
+			$('#install_normal_edit_map_boutonsLandmark').show();
+			
+            $('#install_normal_edit_map_boutonsStandard').hide();
+			
+			$('#install_normal_edit_map_boutonsLandmark a').show();
+			
+			$('body').removeClass('no_current select');
+			$('.select').css("strokeWidth", minStokeWidth);
+			currentLandmarkNormalLongTouch=$(this);
+			//MENU AUGMENTED POSE DISPLAY
+			if (normalCurrentAction != 'editLandmark' && normalCurrentAction != 'addLandmark')
+			{
+				NormalHideCurrentMenuNotSelect();
+				NormalDisplayMenu('install_normal_edit_map_menu_landmark');
+			}
+			
+			normalCurrentAction = 'editLandmark';	
+			currentStep = '';
+			
+			currentLandmarkIndex = GetLandmarkIndexFromID($(this).data('id_landmark'));
+			landmark = landmarks[currentLandmarkIndex];
+			saveCurrentLandmark = JSON.stringify(landmark);
+			
+			AddClass('#install_normal_edit_map_svg .landmark_elem_'+landmark.id_landmark, 'active');
+			if (landmark.id_fiducial < 1) // Movable que si il n'est pas lié à un reflecteur
+				AddClass('#install_normal_edit_map_svg .landmark_elem_'+landmark.id_landmark, 'movable');
 		}
 		else
 			NormalAvertCantChange();
@@ -2168,6 +2247,7 @@ $(document).ready(function() {
 			$('#install_normal_edit_map_container_all .text_prepare_robot').show();
 			
 			$('#install_normal_edit_map_container_all .modalAddDock .dock').hide();
+			$('#install_normal_edit_map_container_all .modalAddDock .fiducial_number_wrapper ').html('');
 			$('#install_normal_edit_map_container_all .modalAddDock').modal('show');
 		}
 		else
@@ -2599,6 +2679,197 @@ $(document).ready(function() {
 			$('#install_normal_edit_map_boutonsRotate').show();
 		}
 	});
+	
+	/* BTN MENU LANDMARK */
+	
+	$('#install_normal_edit_map_menu .bAddLandmark').click(function(e) {
+        e.preventDefault();
+		NormalHideMenus();
+		if (normalCanChangeMenu)
+		{
+			$('#install_normal_edit_map_container_all .texts_add_landmark').hide();
+			$('#install_normal_edit_map_container_all .text_prepare_robot').show();
+			
+			$('#install_normal_edit_map_container_all .modalAddLandmark .landmark').hide();
+			$('#install_normal_edit_map_container_all .modalAddLandmark .fiducial_number_wrapper ').html('');
+			$('#install_normal_edit_map_container_all .modalAddLandmark').modal('show');
+		}
+		else
+			NormalAvertCantChange();
+	});
+	
+	$('#install_normal_edit_map_container_all .modalAddLandmark .joystickDiv .curseur').on('touchstart', function(e) {
+		$('#install_normal_edit_map_container_all .modalAddLandmark .landmark').hide();
+		$('#install_normal_edit_map_container_all .modalAddLandmark .fiducial_number_wrapper ').html('');
+	});
+	
+	$('#install_normal_edit_map_container_all .modalAddLandmark .bScanAddLandmark').click(function(e) {
+		$('#install_normal_edit_map_container_all .modalAddLandmark .bScanAddLandmark').addClass('disabled');
+		
+		wycaApi.GetMapFiducialsVisible(function(data) {
+			
+			$('#install_normal_edit_map_container_all .modalAddLandmark .bScanAddLandmark').removeClass('disabled');	
+			
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				console.log(data);
+				
+				$('#install_normal_edit_map_container_all .modalAddLandmark .landmark').hide();
+				
+				posRobot = $('#install_normal_edit_map_container_all .modalAddLandmark #install_normal_edit_map_modalAddLandmark_robot').offset();
+				
+				let modalOffset = $('#install_normal_edit_map_container_all .modalAddLandmark .modal-content').offset();
+				
+				posRobot.left -= modalOffset.left; 
+				posRobot.top -= modalOffset.top; 
+				
+				$('#install_normal_edit_map_container_all .texts_add_landmark').hide();
+				if (data.D.length > 0)
+					$('#install_normal_edit_map_container_all .text_set_landmark').show();
+				else
+					$('#install_normal_edit_map_container_all .text_prepare_robot').show();
+				
+				$('#install_normal_edit_map_container_all .modalAddLandmark .fiducial_number_wrapper ').html('');
+				
+				for (i=0; i< data.D.length; i++)
+				{
+					if (data.D[i].TY != 'Dock' && data.D[i].ID != -1)
+					{
+						/*
+						distance = Math.sqrt((data.D[i].P.X - lastRobotPose.X)*(data.D[i].P.X - lastRobotPose.X) + (data.D[i].P.Y - lastRobotPose.Y)*(data.D[i].P.Y - lastRobotPose.Y));
+						x_from_robot = Math.cos(lastRobotPose.T) * distance;
+						y_from_robot = Math.sin(lastRobotPose.T) * distance;
+						*/
+						
+						new_point = RotatePoint (data.D[i].P, lastRobotPose, lastRobotPose.T - Math.PI/2);
+						x_from_robot = new_point.X - lastRobotPose.X;
+						y_from_robot = new_point.Y - lastRobotPose.Y;
+						
+						let x =  posRobot.left + x_from_robot * 100;
+						let y =  posRobot.top - y_from_robot * 100;
+						let xx = x + 10*Math.sin(0 - (data.D[i].P.T - lastRobotPose.T));
+						let yy = y - 10*Math.cos(0 - (data.D[i].P.T - lastRobotPose.T));
+						
+						angle = 0 - (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
+						
+						// 1px / cm
+						
+						//FIDUCIAL
+						$('#install_normal_edit_map_container_all .modalAddLandmark #install_normal_edit_map_modalAddLandmark_landmark'+i).show();
+						$('#install_normal_edit_map_container_all .modalAddLandmark #install_normal_edit_map_modalAddLandmark_landmark'+i).css('left',posRobot.left + x_from_robot * 100); // lidar : y * -1
+						$('#install_normal_edit_map_container_all .modalAddLandmark #install_normal_edit_map_modalAddLandmark_landmark'+i).css('top',posRobot.top - y_from_robot * 100); // +20 position lidar, - 12.5 pour le centre
+						//angle = (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
+						
+						$('#install_normal_edit_map_container_all .modalAddLandmark #install_normal_edit_map_modalAddLandmark_landmark'+i).css({'-webkit-transform' : 'rotate('+ angle +'deg)',
+																	 '-moz-transform' : 'rotate('+ angle +'deg)',
+																	 '-ms-transform' : 'rotate('+ angle +'deg)',
+																	 'transform' : 'rotate('+ angle +'deg)'});
+						
+						$('#install_normal_edit_map_container_all .modalAddLandmark .fiducial_number_wrapper ').append('<span class="fiducial_number" id="fiducial_number'+i+'" data-id="'+data.D[i].ID+'">'+data.D[i].ID+'</span>');
+						
+						$('#install_normal_edit_map_container_all .modalAddLandmark #fiducial_number'+i).css('left',xx); // lidar : y * -1
+						$('#install_normal_edit_map_container_all .modalAddLandmark #fiducial_number'+i).css('top',yy); // 
+						$('#install_normal_edit_map_container_all .modalAddLandmark #fiducial_number'+i).css({'-webkit-transform' : 'rotate('+ angle +'deg)',
+																	 '-moz-transform' : 'rotate('+ (angle-180) +'deg)',
+																	 '-ms-transform' : 'rotate('+ (angle-180) +'deg)',
+																	 'transform' : 'rotate('+ (angle-180) +'deg)'});
+						//angle = (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
+						$('#install_normal_edit_map_container_all .modalAddLandmark #install_normal_edit_map_modalAddLandmark_landmark'+i).data('id_fiducial', data.D[i].ID);
+						$('#install_normal_edit_map_container_all .modalAddLandmark #install_normal_edit_map_modalAddLandmark_landmark'+i).data('x', data.D[i].P.X);
+						$('#install_normal_edit_map_container_all .modalAddLandmark #install_normal_edit_map_modalAddLandmark_landmark'+i).data('y', data.D[i].P.Y);
+						$('#install_normal_edit_map_container_all .modalAddLandmark #install_normal_edit_map_modalAddLandmark_landmark'+i).data('theta', data.D[i].P.T);
+					}
+				}
+			}
+			else
+			{
+				ParseAPIAnswerError(data,textErrorGetFiducials);
+			}
+		});
+    });
+	
+	$('#install_normal_edit_map_container_all .modalAddLandmark .landmark').click(function(e) {
+        e.preventDefault();
+		that = $(this);
+		
+		nextIdLandmark++;
+
+		d = {'id_landmark':nextIdLandmark, 'id_map':id_map, 'id_fiducial':that.data('id_fiducial'), 'fiducial_pose_x':that.data('x'), 'fiducial_pose_y':that.data('y'), 'fiducial_pose_t':that.data('theta'), 'name':'Landmark', 'comment':'','active':true};
+		NormalAddHistorique({'action':'add_landmark', 'data':JSON.stringify(d)});
+		landmarks.push(d);
+		NormalTraceLandmark(landmarks.length-1);
+		
+		$('#install_normal_edit_map_container_all .modalAddLandmark').modal('hide');
+		
+		currentLandmarkIndex = landmarks.length-1;
+		landmark = landmarks[currentLandmarkIndex];
+		
+		$('#install_normal_edit_map_landmark_name').val(landmark.name);
+		$('#install_normal_edit_map_landmark_fiducial_number').val(landmark.id_fiducial);
+		$('#install_normal_edit_map_landmark_comment').val(landmark.comment);
+					
+		indexLandmarkElem++;
+		
+		$('#install_normal_edit_map_container_all .modalLandmarkOptions #install_normal_edit_map_bLandmarkCancelConfig').addClass('disabled');
+		$('#install_normal_edit_map_container_all .modalLandmarkOptions').modal('show');
+	
+    });
+	
+	$('#install_normal_edit_map_bLandmarkSaveConfig').click(function(e) {
+		if(!CheckName(landmarks, $('#install_normal_edit_map_landmark_name').val(), currentLandmarkIndex)){
+			
+			landmark = landmarks[currentLandmarkIndex];
+			saveCurrentLandmark = JSON.stringify(landmark);
+					
+			landmark.name = $('#install_normal_edit_map_landmark_name').val();
+			landmark.num = parseInt($('#install_normal_edit_map_landmark_number').val());
+			landmark.comment = $('#install_normal_edit_map_landmark_comment').val();
+			
+			landmarks[currentLandmarkIndex] = landmark;
+					
+			if (normalCurrentAction == 'editLandmark')
+				NormalAddHistorique({'action':'edit_landmark', 'data':{'index':currentLandmarkIndex, 'old':saveCurrentLandmark, 'new':JSON.stringify(landmarks[currentLandmarkIndex])}});
+			saveCurrentLandmark = JSON.stringify(landmarks[currentLandmarkIndex]);
+			NormalTraceLandmark(currentLandmarkIndex);
+			
+			$('#install_normal_edit_map_container_all .modalLandmarkOptions').modal('hide');
+			$('#install_normal_edit_map_container_all .modalLandmarkOptions #install_normal_edit_map_bLandmarkCancelConfig').removeClass('disabled');
+		}else{
+			alert_wyca(textNameUsed);
+		};
+	});
+	
+	$('#install_normal_edit_map_bLandmarkCreateFromMap').click(function(e) {
+        if (normalCanChangeMenu)
+		{
+			blockZoom = true;
+			
+			$('#install_normal_edit_map_boutonsLandmark').show();
+            $('#install_normal_edit_map_boutonsStandard').hide();
+			
+			$('#install_normal_edit_map_boutonsLandmark #install_normal_edit_map_bLandmarkSave').hide();
+			$('#install_normal_edit_map_boutonsLandmark #install_normal_edit_map_bLandmarkDelete').hide();
+			$('#install_normal_edit_map_boutonsLandmark #install_normal_edit_map_bLandmarkDirection').hide();
+			
+			normalCurrentAction = 'addLandmark';	
+			currentStep = 'setPose';
+			
+			$('body').removeClass('no_current');
+			$('body').addClass('addLandmark');
+			
+			$('#install_normal_edit_map_message_aide').html(textClickOnMapPose);
+			$('#install_normal_edit_map_message_aide').show();
+		}
+		else
+			NormalAvertCantChange();
+    });
+	
+	$('#install_normal_edit_map_bLandmarkDelete').click(function(e) {
+        if (confirm('Are you sure you want to delete this landmark?'))
+		{
+			NormalDeleteLandmark(currentLandmarkIndex);
+		}
+    });
 	
 	/* BTN MENU POI */
 	
@@ -4683,6 +4954,102 @@ function NormalDeleteDock(indexInArray)
 	NormalSetModeSelect();
 }
 
+// LANDMARK FUNCS
+
+function NormalLandmarkSave()
+{
+	if (normalCurrentAction == 'addLandmark')
+	{
+		$('#install_normal_edit_map_landmark_name').val('');
+		$('#install_normal_edit_map_modalLandmarkEditName').modal('show');
+	}
+	else if (normalCurrentAction == 'editLandmark')
+	{	
+		NormalSaveElementNeeded(false);
+		
+		landmark = landmarks[currentLandmarkIndex];
+		RemoveClass('#install_normal_edit_map_svg .landmark_elem_'+landmark.id_landmark, 'movable');
+		
+		NormalAddHistorique({'action':'edit_landmark', 'data':{'index':currentLandmarkIndex, 'old':saveCurrentLandmark, 'new':JSON.stringify(landmarks[currentLandmarkIndex])}});
+		saveCurrentLandmark = JSON.stringify(landmarks[currentLandmarkIndex]);
+		RemoveClass('#install_normal_edit_map_svg .active', 'active');
+		
+		normalCurrentAction = '';
+		currentStep = '';
+		
+		$('#install_normal_edit_map_boutonsRotate').hide();
+		
+		$('#install_normal_edit_map_boutonsLandmark').hide();
+		$('#install_normal_edit_map_boutonsStandard').show();
+		$('#install_normal_edit_map_message_aide').hide();
+		blockZoom = false;
+		
+		$('body').addClass('no_current');
+		
+		NormalSetModeSelect();
+	}
+}
+
+function NormalLandmarkCancel()
+{
+	NormalSaveElementNeeded(false);
+	
+	$('#install_normal_edit_map_svg .landmark_elem_current').remove();
+	RemoveClass('#install_normal_edit_map_svg .active', 'active');
+
+	$('body').addClass('no_current');
+	
+	if (normalCurrentAction == 'addLandmark')
+	{
+		$('#install_normal_edit_map_svg .landmark_elem_0').remove();
+		$('#install_normal_edit_map_svg .landmark_elem_current').remove();
+	}
+	else if (normalCurrentAction == 'editLandmark')
+	{
+		landmark = landmarks[currentLandmarkIndex];
+		RemoveClass('#install_normal_edit_map_svg .landmark_elem_'+landmark.id_landmark, 'movable');
+		
+		landmarks[currentLandmarkIndex] = JSON.parse(saveCurrentLandmark);
+		NormalTraceLandmark(currentLandmarkIndex);
+	}
+	normalCurrentAction = '';
+	currentStep = '';
+	
+	$('#install_normal_edit_map_boutonsRotate').hide();
+	
+	$('#install_normal_edit_map_boutonsLandmark').hide();
+	$('#install_normal_edit_map_boutonsStandard').show();
+	$('#install_normal_edit_map_message_aide').hide();
+	blockZoom = false;
+	
+	NormalSetModeSelect();
+}
+
+function NormalDeleteLandmark(indexInArray)
+{
+	if ($('.cancel:visible').length > 0) $('.cancel:visible').click();
+	
+	landmarks[indexInArray].deleted = true;
+	
+	NormalAddHistorique({'action':'delete_landmark', 'data':indexInArray});
+	
+	data = landmarks[indexInArray];
+	$('#install_normal_edit_map_svg .landmark_elem_'+data.id_landmark).remove();
+	
+	RemoveClass('#install_normal_edit_map_svg .active', 'active');
+	
+	normalCurrentAction = '';
+	currentStep = '';
+	
+	$('.btn-mode-gene').removeClass('btn-primary');
+	$('.btn-mode-gene').addClass('btn-default');
+	
+	$('#install_normal_edit_map_boutonsLandmark').hide();
+    $('#install_normal_edit_map_boutonsStandard').show();
+	blockZoom = false;
+	
+	NormalSetModeSelect();
+}
 
 // AREA FUNCS
 

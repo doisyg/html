@@ -303,6 +303,7 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 .modalAddDock .dock { position:absolute; top:130px; margin-left:-12.5px; z-index:300; display:none; }
 .modalAddPoi .poi { position:absolute; top:130px; margin-left:-12.5px; z-index:300; display:none; }
 .modalAddAugmentedPose .augmented_pose { position:absolute; top:130px; margin-left:-12.5px; z-index:300; display:none; }
+.modalAddLandmark .landmark { position:absolute; top:130px; margin-left:-12.5px; z-index:300; display:none; }
 
 .form-control.success{
 	border-color: #187f18a8;
@@ -965,6 +966,7 @@ img.fi-robot{
 .iconMenuGreen{color:#187f18}
 .iconMenuRed{color:#da3939}
 .iconMenuPurple{color:#5d24cb}
+.iconMenuMagenta{color:#ee29ee}
 
 img.fi-route {
     max-height: 59px!important;

@@ -587,5 +587,7 @@ $_LANG['91550cc1cb3057c3da02beb9840feae2'] = 'Add a new map to the current site 
 $_LANG['f546cd32323401c2a84ef065f1ff25a6'] = 'You will be redirected to the mapping step. .';
 $_LANG['06301c457731ff1bfea05e1cf10a7dc7'] = 'Add Map';
 $_LANG['f3e74154c1575b0b35762744d10ff699'] = 'You will be redirected to the mapping step.';
+$_LANG['6c6287b662380160f60f6f67b63b0195'] = 'Move the robot in front of the reflector and click on the \"Scan\" button';
+$_LANG['e8ac01eba7a2bdd603db316e32d22917'] = 'Click on the fiducial to create the landmark';
 
 ?>

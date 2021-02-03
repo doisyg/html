@@ -819,6 +819,51 @@ function ByStepTraceAugmentedPose(indexAugmentedPose)
 		AddClass('#install_by_step_edit_map_svg .augmented_pose_elem_'+augmented_pose.id_augmented_pose, 'active');
 }
 
+function ByStepTraceLandmark(indexLandmark)
+{
+	landmark = landmarks[indexLandmark];
+	if (landmark.deleted != undefined && landmark.deleted) { $('#install_by_step_edit_map_svg .landmark_elem_'+landmark.id_landmark).remove(); return; }
+	
+	is_active = false;
+	if ($('#install_by_step_edit_map_svg .landmark_elem_'+landmark.id_landmark).length > 0)
+	{
+		t = $('#install_by_step_edit_map_svg .landmark_elem_'+landmark.id_landmark);
+		if (t.attr('class') != t.attr('class').replace('active', ''))
+		{
+			is_active = true;
+		}
+	}
+	
+	if (downOnMovable && movableDown.data('element_type') == 'landmark')
+	{
+		index_point_movable = movableDown.data('index_point');
+	}
+	else
+		$('#install_by_step_edit_map_svg .landmark_elem_'+landmark.id_landmark).remove();
+	
+	x = landmark.fiducial_pose_x * 100 / ros_resolution;
+	y = ros_hauteur - (landmark.fiducial_pose_y * 100 / ros_resolution);	
+	
+	angle = 0 - landmark.fiducial_pose_t * 180 / Math.PI - 90;
+	
+	path = makeSVGElement('rect', { x: x-5, y:y-1, height:2, width:10,
+				   'stroke-width': minStokeWidth,
+				   'fill':'none',
+				   'transform':'rotate('+angle+', '+x+', '+y+')',
+				   
+				   
+				   'class':'landmark_elem landmark_elem_fond landmark_elem_'+landmark.id_landmark,
+				   'id': 'install_by_step_edit_map_landmark_'+landmark.id_landmark,
+				   'data-id_landmark': landmark.id_landmark,
+				   'data-element_type': 'landmark',
+				   'data-element': 'landmark'
+				  });
+	svgByStep.appendChild(path);
+	
+	if (is_active)
+		AddClass('#install_by_step_edit_map_svg .landmark_elem_'+landmark.id_landmark, 'active');
+}
+
 function ByStepTraceGoToPose(x,y)
 {
 	path = makeSVGElement('circle', { cx: x,
@@ -930,6 +975,10 @@ function ByStepResizeSVG()
 	$('#install_by_step_edit_map_svg .augmented_pose_elem').remove();
 	$.each(augmented_poses, function( index, augmented_pose ) {
 		ByStepTraceAugmentedPose(index);
+	});
+	$('#install_by_step_edit_map_svg .landmark_elem').remove();
+	$.each(landmarks, function( index, landmark ) {
+		ByStepTraceLandmark(index);
 	});
 }
 

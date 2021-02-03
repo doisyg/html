@@ -595,5 +595,16 @@ $_LANG['3976c87a2e29c4c47f93ee6e89917fe2'] = 'mode fenêtré';
 $_LANG['67e66935ad55c7fcc015e89eefeae8a7'] = 'mode kiosque';
 $_LANG['5b503aa265be30745b805785a83894c3'] = 'Suppression top actuel';
 $_LANG['ec6630ca40af9c2beaed73898e684d23'] = 'Mise en place nouveau top';
+$_LANG['6c6287b662380160f60f6f67b63b0195'] = 'Déplacer le robot devant le reflecteur et appuyer sur le bouton \"Scan\"';
+$_LANG['e8ac01eba7a2bdd603db316e32d22917'] = 'Click on the fiducial to create the landmark';
+$_LANG['bf087df666715730e9ff3351282ae637'] = 'Ajouter une carte';
+$_LANG['91550cc1cb3057c3da02beb9840feae2'] = 'Ajouter une nouvelle carte au site en cours ?';
+$_LANG['f3e74154c1575b0b35762744d10ff699'] = 'Vous allez être redirigé a l\'étape de cartographie.';
+$_LANG['06301c457731ff1bfea05e1cf10a7dc7'] = 'Ajouter carte';
+$_LANG['8af4067658950f11584a482a39290104'] = 'Cette page vous permet de gerer les cartes du site courant.';
+$_LANG['05c46f7e6388d3484ca7a0d07af92dd8'] = 'Vous pouvez créer une nouvelle carte en cliquant sur le bouton correspondant.';
+$_LANG['639145429585f5cf40670e13936cabaf'] = 'Vous pouvez supprimer une carte en cliquant sur la croix rouge.';
+$_LANG['4a0d306983cf34ba40a55aab1fc673aa'] = 'Une confimation sera demandée pour chaque carte que vous souhaitez supprimer.';
+$_LANG['f6a3a043e3b28d6f2f8c76b9dde095dd'] = 'Vous pouvez changer de carte en cliquant sur l\'icône bleue de la carte que vous voulez charger.';
 
 ?>

@@ -74,3 +74,6 @@ svg#user_edit_map_svg_clone .movable.active { display:none !important; }
 }
 .go_to_pose_elem_line{
 }
+.landmark_elem{
+	fill:#ee29ee
+}

@@ -173,6 +173,7 @@ $(document).ready(function(e) {
 						gommes = Array();
 						docks = data.D.docks;
 						pois = data.D.pois;
+						landmarks = data.D.landmarks;
 						augmented_poses = data.D.augmented_poses;
 						
 						$('#install_normal_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
@@ -268,6 +269,7 @@ $(document).ready(function(e) {
 						gommes = Array();
 						docks = data.D.docks;
 						pois = data.D.pois;
+						landmarks = data.D.landmarks;
 						augmented_poses = data.D.augmented_poses;
 						
 						$('#install_normal_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
@@ -363,6 +365,7 @@ $(document).ready(function(e) {
 						gommes = Array();
 						docks = data.D.docks;
 						pois = data.D.pois;
+						landmarks = data.D.landmarks;
 						augmented_poses = data.D.augmented_poses;
 						
 						$('#install_normal_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
@@ -716,6 +719,7 @@ $(document).ready(function(e) {
 											id_map = data.D.id_map;
 											id_map_last = data.D.id_map;
 											forbiddens = data.D.forbiddens;
+											landmarks = data.D.landmarks;
 											areas = data.D.areas;
 											docks = data.D.docks;
 											pois = data.D.pois;

@@ -26,6 +26,7 @@ function GetInfosCurrentMapDoByStep()
 			gommes = Array();
 			docks = data.D.docks;
 			pois = data.D.pois;
+			landmarks = data.D.landmarks;
 			augmented_poses = data.D.augmented_poses;
 			
 			$('#install_by_step_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
@@ -308,7 +309,8 @@ var currentPointByStepLongTouch = null;
 var currentForbiddenByStepLongTouch = null;
 var currentAreaByStepLongTouch = null;
 var currentDockByStepLongTouch = null;
-var currentPoiByStepLongTouch = null;
+var currentPoiBySteppLongTouch = null;
+var currentLandmarkByStepLongTouch = null;
 var currentAugmentedPoseByStepLongTouch = null;
 
 $(document).ready(function(e) {
@@ -594,6 +596,61 @@ $(document).ready(function(e) {
 		}
 		//ByStepDisplayBlockZoom();
 	});
+	$(document).on('touchend', '#install_by_step_edit_map_svg .landmark_elem', function(e) {
+		$('#install_by_step_edit_map_zoom_popup').hide();
+		if (timerNormalLongPress != null)
+		{
+			clearTimeout(timerNormalLongPress);
+			timerNormalLongPress = null;
+		}
+		if (timerNormalVeryLongPress != null)
+		{
+			clearTimeout(timerNormalVeryLongPress);
+			timerNormalVeryLongPress = null;
+		}
+	});
+	
+	/*
+	$(document).on('touchstart', '#install_by_step_edit_map_svg .landmark_elem', function(e) {
+		if (timerNormalLongPress != null)
+		{
+			clearTimeout(timerNormalLongPress);
+			timerNormalLongPress = null;
+		}
+		if (timerNormalVeryLongPress != null)
+		{
+			clearTimeout(timerNormalVeryLongPress);
+			timerNormalVeryLongPress = null;
+		}
+		
+		if (by_stepCanChangeMenu)
+		{
+			timerNormalLongPress = setTimeout(NormalLongPressDock, 500);
+			//timerNormalVeryLongPress = setTimeout(NormalLongVeryPressSVG, 1500);
+			eventTouchStart = e;
+			currentDockNormalLongTouch = $(this);
+		}
+		NormalDisplayBlockZoom();
+		
+		NormalHideMenus();
+		
+	});
+	*/
+	
+	$(document).on('touchmove', '#install_by_step_edit_map_svg .landmark_elem', function(e) {
+    	//NormalHideMenus();
+		if (timerNormalLongPress != null)
+		{
+			clearTimeout(timerNormalLongPress);
+			timerNormalLongPress = null;
+		}
+		if (timerNormalVeryLongPress != null)
+		{
+			clearTimeout(timerNormalVeryLongPress);
+			timerNormalVeryLongPress = null;
+		}
+		//NormalDisplayBlockZoom();
+	});
 	
 	$(document).on('touchend', '#install_by_step_edit_map_svg .poi_elem', function(e) {
 		$('#install_by_step_edit_map_zoom_popup').hide();
@@ -771,6 +828,7 @@ function ByStepHideMenus()
 	$('#install_by_step_edit_map_menu_dock li').hide();
 	$('#install_by_step_edit_map_menu_poi li').hide();
 	$('#install_by_step_edit_map_menu_augmented_pose li').hide();
+	$('#install_by_step_edit_map_menu_landmark li').hide();
 	$('#install_by_step_edit_map_menu_erase li').hide();
 	$('#install_by_step_edit_map .popupHelp').hide();
 	
@@ -879,6 +937,12 @@ function ByStepLongPressPoi()
 {
 	timerByStepLongPress = null;
 	ByStepDisplayMenu('install_by_step_edit_map_menu_poi');
+}
+
+function ByStepLongPressLandmark()
+{
+	timerByStepLongPress = null;
+	ByStepDisplayMenu('install_by_step_edit_map_menu_landmark');
 }
 
 function ByStepLongPressAugmentedPose()

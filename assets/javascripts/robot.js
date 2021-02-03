@@ -485,7 +485,7 @@ function InitRobotPose(pose)
 
 function AskReloadMap()
 {
-	let not_create_new_map = (create_new_map == false && JSON.parse(getCookie('create_new_map')) == false);
+	let not_create_new_map = typeof(create_new_map) == 'undefined' ? true : (create_new_map == false && JSON.parse(getCookie('create_new_map')) == false);
 	if ($('#install_by_step_edit_map').length > 0 && ($('#install_by_step_edit_map').is(':visible')) && not_create_new_map) $('#install_by_step_edit_map .modalReloadMap').modal('show');
 	if ($('#install_normal_edit_map').length > 0 && ($('#install_normal_edit_map').is(':visible'))) $('#install_normal_edit_map .modalReloadMap').modal('show');
 	if ($('#manager_edit_map').length > 0 && ($('#manager_edit_map').is(':visible'))) $('#manager_edit_map .modalReloadMap').modal('show');

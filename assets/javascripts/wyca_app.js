@@ -158,6 +158,7 @@ $(document).ready(function(e) {
 						gommes = Array();
 						docks = data.D.docks;
 						pois = data.D.pois;
+						landmarks = data.D.landmarks;
 						augmented_poses = data.D.augmented_poses;
 						
 						$('#wyca_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
@@ -255,6 +256,7 @@ $(document).ready(function(e) {
 						gommes = Array();
 						docks = data.D.docks;
 						pois = data.D.pois;
+						landmarks = data.D.landmarks;
 						augmented_poses = data.D.augmented_poses;
 						
 						$('#wyca_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
@@ -350,6 +352,7 @@ $(document).ready(function(e) {
 						gommes = Array();
 						docks = data.D.docks;
 						pois = data.D.pois;
+						landmarks = data.D.landmarks;
 						augmented_poses = data.D.augmented_poses;
 						
 						$('#wyca_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
@@ -703,6 +706,7 @@ $(document).ready(function(e) {
 											id_map_last = data.D.id_map;
 								
 											forbiddens = data.D.forbiddens;
+											landmarks = data.D.landmarks;
 											areas = data.D.areas;
 											docks = data.D.docks;
 											pois = data.D.pois;
@@ -813,6 +817,77 @@ $(document).ready(function(e) {
 				ParseAPIAnswerError(data);
 			}
 		});
+	});
+	
+	// --------------------- ADD MAP --------------------
+	
+	$('#wyca_setup_maps .bAddMap').click(function(e) {
+		e.preventDefault();
+		
+		create_new_map = true;
+		setCookie('create_new_map',create_new_map); // SET COOKIES
+		$('#pages_wyca').removeClass('active');
+		$('#pages_install_by_step section.page').hide();
+		
+		$('.title_section').html($('#pages_install_by_step #install_by_step_mapping > header > h2').text())
+		$('#pages_install_by_step').addClass('active');
+		$('#install_by_step_mapping').show();
+	});
+	
+	$(document).on('click', '#wyca_setup_maps .bMapSetCurrentElem', function(e) {
+		e.preventDefault();
+		
+		id_map = parseInt($(this).closest('li').data('id_map'));
+		
+		
+		wycaApi.SetMapAsCurrent(id_map, function(data) {
+			if (data.A != wycaApi.AnswerCode.NO_ERROR) 
+				ParseAPIAnswerError(data,textErrorStopNavigation);
+			else
+			{
+				GetMapsWyca();
+			}
+		});
+	});
+	
+	$(document).on('click', '#wyca_setup_maps .bMapDeleteElem', function(e) {
+		e.preventDefault();
+		
+		id_map_to_delete = parseInt($(this).closest('li').data('id_map'));
+		
+		wycaApi.DeleteMap(id_map_to_delete, function(data) {
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$('#wyca_setup_maps_list_map_elem_'+id_map_to_delete).remove();
+			}
+			else
+			{
+				ParseAPIAnswerError(data);
+			}
+		});
+	});
+	
+	//---------------------- SWITCH MAP -----------------------
+	
+	$(document).on('click', '#wyca_switch_map_landmark .bMapSetCurrentElem', function(e) {
+		e.preventDefault();
+		
+		id_map = parseInt($(this).closest('li').data('id_map'));
+		
+		console.log('SwitchMapWithLandmark ',id_map,' is commented // ');
+		/*
+		wycaApi.SwitchMapWithLandmark(id_map, function(data) {
+			if (data.A != wycaApi.AnswerCode.NO_ERROR) 
+				ParseAPIAnswerError(data,'NEED TRANSLATE');
+			else
+			{
+				GetMapsWyca();
+			}
+		});*/
+	});
+	
+	$('#wyca_switch_map_landmark .bTeleop').click(function() {
+		$('#wyca_switch_map_landmark_modalTeleop').modal('show');
 	});
 	
 	//------------------- SERVICE BOOK ------------------------
@@ -2365,6 +2440,7 @@ function InitWycaDemo()
 					gommes = Array();
 					docks = data.D.docks;
 					pois = data.D.pois;
+					landmarks = data.D.landmarks;
 					augmented_poses = data.D.augmented_poses;
 					
 					largeurSlam = data.D.ros_width;
