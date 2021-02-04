@@ -13,6 +13,7 @@ function GetInfosCurrentMapManager()
 
 function GetInfosCurrentMapDoManager()
 {
+	$('#manager_edit_map .burger_menu').addClass('updatingMap');
 	wycaApi.GetCurrentMapComplete(function(data) {
 		if (data.A == wycaApi.AnswerCode.NO_ERROR)
 		{
@@ -80,6 +81,7 @@ function GetInfosCurrentMapDoManager()
 		}
 		else
 		{
+			$('#manager_edit_map .burger_menu').removeClass('updatingMap');
 			ParseAPIAnswerError(data,textErrorGetMap);
 		}
 	});
