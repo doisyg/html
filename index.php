@@ -3,7 +3,7 @@ require_once ('./config/initSite.php');
 if (!isset($_SESSION["id_user"])) { header("location:login.php"); }
 if (isset($_SESSION["need_change_password"]) && $_SESSION["need_change_password"]) { header("location:change_password.php"); }
 
-if($_CONFIG['MODE'] == 'PROD' && !is_dir(dirname(__FILE__).'/../../conf/')) header('location:error_install.php');
+if($_CONFIG['MODE'] == 'PROD' && !is_dir(dirname(__FILE__).'/../conf/')) header('location:error_install.php');
 
 include ('template/header.php');
 

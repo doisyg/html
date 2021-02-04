@@ -2,16 +2,15 @@
 header("Access-Control-Allow-Origin: *");
 include_once('./config/initSite.php');
 $dir = false;
-$conf = false;
+$file = false;
 if($_CONFIG['MODE'] =='DEV')
 	header('location:index.php');
 if(is_dir(dirname(__FILE__).'/../conf/'))
 	$dir = true;
 if(file_exists(dirname(__FILE__).'/../conf/c.conf'))
-	$conf = true;
-if($dir && $conf)
+	$file = true;
+if($dir && $file)
 	header('location:index.php');
-	
 $message= 'Install process not finished';
 $erreur = true;
 
