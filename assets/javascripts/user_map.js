@@ -73,7 +73,7 @@ function GetInfosCurrentMapDoUser()
 				
 				userCanChangeMenu = true;
 				//userCurrentAction = ''; not needed for user
-				
+				$('#user_edit_map .burger_menu').removeClass('updatingMap');
 				UserHideMenus();
 			},500); 
 			$('#user_edit_map .modal').not('.modalReloadMap').each(function(){$(this).modal('hide')});

@@ -2576,6 +2576,8 @@ function GetDataMapToSave()
 {
 	if(typeof(updatingMap) != 'undefined')
 		updatingMap = true;
+	if($('.burger_menu:visible').length >0)
+		$('.burger_menu:visible').addClass('updatingMap');
 		
 	data = {};
 	

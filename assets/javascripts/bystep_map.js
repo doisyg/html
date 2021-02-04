@@ -132,7 +132,7 @@ function GetInfosCurrentMapDoByStep()
 				
 				bystepCanChangeMenu = true;
 				bystepCurrentAction = '';
-				
+				$('#install_by_step_edit_map .burger_menu ').removeClass('updatingMap');
 				ByStepHideMenus();
 				
 			},500); 

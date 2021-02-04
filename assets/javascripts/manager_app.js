@@ -280,6 +280,10 @@ $(document).ready(function(e) {
 		}
 		else
 		{
+			managerCanChangeMenu = true;
+			managerCurrentAction = '';
+			ManagerHideMenus();
+			
 			data = GetDataMapToSave();
 			
 			if ($(this).hasClass('button_goto'))

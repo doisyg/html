@@ -454,6 +454,10 @@ $(document).ready(function(e) {
 					default: WycaBufferMapSaveElemName = ''; break;
 				}
 			}
+			wycaCanChangeMenu = true;
+			wycaCurrentAction = '';
+			WycaHideMenus();
+			
 			data = GetDataMapToSave();
 			
 			if ($(this).hasClass('button_goto'))

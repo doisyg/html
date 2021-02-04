@@ -128,7 +128,7 @@ function GetInfosCurrentMapDoWyca()
 				
 				wycaCanChangeMenu = true;
 				wycaCurrentAction = '';
-				
+				$('#wyca_edit_map .burger_menu').removeClass('updatingMap');
 				WycaHideMenus();
 				
 			},500);

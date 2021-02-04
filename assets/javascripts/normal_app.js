@@ -467,6 +467,10 @@ $(document).ready(function(e) {
 					default: NormalBufferMapSaveElemName = ''; break;
 				}
 			}
+			normalCanChangeMenu = true;
+			normalCurrentAction = '';
+			NormalHideMenus();
+			
 			data = GetDataMapToSave();
 			
 			if ($(this).hasClass('button_goto'))

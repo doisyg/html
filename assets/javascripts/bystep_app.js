@@ -1370,7 +1370,10 @@ $(document).ready(function(e) {
 					default: ByStepBufferMapSaveElemName = ''; break;
 				}
 			}
-
+			bystepCanChangeMenu = true;
+			bystepCurrentAction = '';
+			ByStepHideMenus();
+			
 			data = GetDataMapToSave();
 			
 			if ($(this).hasClass('button_goto'))
@@ -1387,7 +1390,7 @@ $(document).ready(function(e) {
 				if (data.A == wycaApi.AnswerCode.NO_ERROR)
 				{
 					success_info_wyca((typeof(textMapSaved) != 'undefined'? textMapSaved : 'Map saved'));
-
+					$('#install_by_step_edit_map .burger_menu').addClass('updatingMap');
 					// On reload la carte pour mettre à jours les ids
 					GetInfosCurrentMapByStep();
 					/*

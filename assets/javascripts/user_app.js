@@ -90,6 +90,10 @@ $(document).ready(function(e) {
 		}
 		else
 		{
+			userCanChangeMenu = true;
+			userCurrentAction = '';
+			UserHideMenus();
+			
 			data = GetDataMapToSave();
 			
 			if ($(this).hasClass('button_goto'))

@@ -874,6 +874,8 @@ img.fi-robot{
 	left:10px;
 	z-index:3;
 	background:#589fb2;
+	cursor: pointer;
+	transition:0.5s all;
 }
 .burger_menu_open{
 	
@@ -895,6 +897,9 @@ img.fi-robot{
     background: #fff;
     transition: 0.5s all;
     border-radius: 15px;
+}
+.burger_menu.updatingMap{
+	pointer-events:none;cursor:not-allowed;background:#a4a4a4;
 }
 .btn-circle.btn-menu{
 	width: 40px;
