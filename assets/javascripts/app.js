@@ -230,7 +230,7 @@ $(document).ready(function(e) {
 			}
 			
 			if(target == 'install_by_step_sound'){ //UPDATE INSTALL STEP ON BACK FROM CREATE NEW SITE PROCESS NORMAL
-				if(JSON.parse(getCookie('create_new_site')) || create_new_site){
+				if((getCookie('create_new_site') != '' ? JSON.parse(getCookie('create_new_site')) : false ) || create_new_site){
 					setCookie('create_new_site',false);
 					create_new_site = false;
 					$.ajax({
@@ -262,7 +262,7 @@ $(document).ready(function(e) {
 			}
 			
 			if(target == 'install_by_step_new_site'){ //UPDATE INSTALL STEP ON BACK FROM CREATE NEW MAP PROCESS NORMAL
-				if(JSON.parse(getCookie('create_new_map')) || create_new_map){
+				if((getCookie('create_new_map') != '' ? JSON.parse(getCookie('create_new_map')) : false ) || create_new_map){
 					setCookie('create_new_map',false);
 					create_new_map = false;
 					$.ajax({
@@ -322,7 +322,7 @@ $(document).ready(function(e) {
 			if (next == 'install_by_step_sound') InitSoundByStep();		
 			if (next == 'install_by_step_wifi') InitInstallWifiPageByStep();
 			if (next == 'install_by_step_config'){
-				if(JSON.parse(getCookie('create_new_map')) || create_new_map){
+				if((getCookie('create_new_map') != '' ? JSON.parse(getCookie('create_new_map')) : false )|| create_new_map){
 					setCookie('create_new_map',false);
 					create_new_map = false;
 					$.ajax({
