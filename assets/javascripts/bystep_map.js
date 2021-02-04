@@ -13,6 +13,7 @@ function GetInfosCurrentMapByStep()
 
 function GetInfosCurrentMapDoByStep()
 {
+	$('#install_by_step_edit_map .burger_menu ').addClass('updatingMap');
 	wycaApi.GetCurrentMapComplete(function(data) {
 		if (data.A == wycaApi.AnswerCode.NO_ERROR)
 		{
@@ -143,6 +144,7 @@ function GetInfosCurrentMapDoByStep()
 		}
 		else
 		{
+			$('#install_by_step_edit_map .burger_menu ').removeClass('updatingMap');
 			ParseAPIAnswerError(data,textErrorInitMap);
 		}
 	});
