@@ -342,6 +342,14 @@ function onSetActiveTopFeedback(data)
 {
 }
 
+function onSwitchMapWithLandmarkResult(data)
+{
+}
+
+function onSwitchMapWithLandmarkFeedback(data)
+{
+}
+
 function InitDockingState()
 {
 	switch(dockingStateLast){

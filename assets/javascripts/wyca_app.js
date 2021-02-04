@@ -871,24 +871,77 @@ $(document).ready(function(e) {
 		});
 	});
 	
-	//---------------------- SWITCH MAP -----------------------
-	
-	$(document).on('click', '#wyca_switch_map_landmark .bMapSetCurrentElem', function(e) {
+	//---------------------- SWITCH MAP WITH LANDMARK -----------------------
+	$(document).on('click', '#wyca_switch_map_landmark .bMapSetCurrentElem',function(e) {
 		e.preventDefault();
-		
 		id_map = parseInt($(this).closest('li').data('id_map'));
 		
-		console.log('SwitchMapWithLandmark ',id_map,' is commented // ');
-		/*
-		wycaApi.SwitchMapWithLandmark(id_map, function(data) {
-			if (data.A != wycaApi.AnswerCode.NO_ERROR) 
-				ParseAPIAnswerError(data,'NEED TRANSLATE');
+		/*INIT FEEDBACK DISPLAY*/
+		$('#wyca_switch_map_landmark .switch_map_feedback .switch_map_step').css('opacity','0').hide();
+		$('#wyca_switch_map_landmark .switch_map_feedback .switch_map_step .fa-check').hide();
+		$('#wyca_switch_map_landmark .switch_map_feedback .switch_map_step .fa-pulse').show();
+		
+		wycaApi.on('onSwitchMapWithLandmarkFeedback', function(data) {
+			if(data.A == wycaApi.AnswerCode.NO_ERROR){
+				target = '';
+				switch(data.M){
+					case 'Scan reflector': 		target = '#wyca_switch_map_landmark .switch_map_feedback .switch_map_step.SwitchMapScan';			break;
+					case 'Init pose': 			target = '#wyca_switch_map_landmark .switch_map_feedback .switch_map_step.SwitchMapPose';			break;
+					case 'Switch map': 			target = '#wyca_switch_map_landmark .switch_map_feedback .switch_map_step.SwitchMapSwitchMap';		break;
+					case 'Stop navigation':		target = '#wyca_switch_map_landmark .switch_map_feedback .switch_map_step.SwitchMapStopNav';		break;
+					case 'Start navigation': 	target = '#wyca_switch_map_landmark .switch_map_feedback .switch_map_step.SwitchMapStartNav';		break;
+				}
+				
+				target = $(target);
+				if(target.prevAll('.switch_map_step:visible').length > 0){
+					target.prevAll('.switch_map_step:visible').find('.fa-check').show();
+					target.prevAll('.switch_map_step:visible').find('.fa-pulse').hide();
+				}
+				target.css('opacity','1').show();
+			}
+		});
+		
+		wycaApi.on('onSwitchMapWithLandmarkResult', function(data) {
+			
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				
+				$('#wyca_switch_map_landmark .switch_map_step:visible').find('.fa-check').show();
+				$('#wyca_switch_map_landmark .switch_map_step:visible').find('.fa-pulse').hide();
+				setTimeout(function(){
+					$('#wyca_switch_map_landmark #wyca_switch_map_landmark_modalFeedback').modal('hide');
+					success_wyca(textSwitchMapDone);
+				},500)
+			}
 			else
 			{
-				GetMapsWyca();
+				$('#wyca_switch_map_landmark #wyca_switch_map_landmark_modalFeedback').modal('show');
+				ParseAPIAnswerError(data);
 			}
-		});*/
+			GetSwitchMapsWyca();
+			// On rebranche l'ancienne fonction
+			wycaApi.on('onSwitchMapWithLandmarkResult', onSwitchMapWithLandmarkResult);
+			wycaApi.on('onSwitchMapWithLandmarkFeedback', onSwitchMapWithLandmarkFeedback);
+		});
+		
+		console.log('SwitchMapWithLandmark ',id_map,' is commented // ');
+		
+		wycaApi.SwitchMapWithLandmark(id_map, function(data) {
+			if (data.A != wycaApi.AnswerCode.NO_ERROR) 
+				ParseAPIAnswerError(data,textErrorSwitchMap);
+			else
+			{
+				$('#wyca_switch_map_landmark #wyca_switch_map_landmark_modalFeedback').modal('show');
+			}
+		});
 	});
+	
+	$('#wyca_switch_map_landmark .bCancelSwitchMap').click(function(e) {
+		$('#wyca_switch_map_landmark .bCancelSwitchMap').addClass('disabled');
+		wycaApi.SwitchMapWithLandmarkCancel(function(data) {
+			$('#wyca_switch_map_landmark .bCancelSwitchMap').removeClass('disabled');
+		})
+	})
 	
 	$('#wyca_switch_map_landmark .bTeleop').click(function() {
 		$('#wyca_switch_map_landmark_modalTeleop').modal('show');

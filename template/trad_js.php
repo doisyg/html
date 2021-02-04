@@ -46,6 +46,7 @@ var textNoRealTest = "<?php echo __js('You need at least 2 docks, POIs or augmen
 var textTopNowActive = "<?php echo __js('Top is now active !');?>";
 var textConfirmActiveElement = "<?php echo __js('You must confirm the active element');?>";
 var textRecoveryDone = "<?php echo __js('Recovery done !');?>";
+var textSwitchMapDone = "<?php echo __js('Switch map done !');?>";
 var textNoStartMovingFoward = "<?php echo __js('You cannot start with moving forward');?>";
 var textNoStartRotation = "<?php echo __js('You cannot start with a rotation');?>";
 var textConfirmCheckbox = "<?php echo __js('You must confirm by checking the checkbox');?>";
@@ -87,6 +88,7 @@ var textErrorStartMapping = "<?php echo __js('Error start mapping');?>";
 var textErrorStopMapping = "<?php echo __js('Error stop mapping');?>";
 var textErrorGetMapping = "<?php echo __js('Error get mapping');?>";
 var textErrorInput = "<?php echo __js('Error on input');?>";
+var textErrorSwitchMap = "<?php echo __js('Error on switch map');?>";
 
 //DEMO MODE
 var textDemoNeedActions = "<?php echo __js('You need to setup actions before launch Demo');?>";

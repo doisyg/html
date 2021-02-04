@@ -589,5 +589,7 @@ $_LANG['06301c457731ff1bfea05e1cf10a7dc7'] = 'Add Map';
 $_LANG['f3e74154c1575b0b35762744d10ff699'] = 'You will be redirected to the mapping step.';
 $_LANG['6c6287b662380160f60f6f67b63b0195'] = 'Move the robot in front of the reflector and click on the \"Scan\" button';
 $_LANG['e8ac01eba7a2bdd603db316e32d22917'] = 'Click on the fiducial to create the landmark';
+$_LANG['f7324dbd3a04b1ea084facfcaafa3f18'] = 'Switch map done !';
+$_LANG['ec93cb985a65caecae15493e523d244d'] = 'Error on switch map';
 
 ?>

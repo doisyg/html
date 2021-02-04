@@ -1426,6 +1426,26 @@ span.toggle_details{
     margin: 4px 0;
 }
 
+.switch_map_feedback{
+	text-align:center;
+	margin:30px 0;
+}
+.switch_map_feedback .switch_map_step{
+	margin:10px 0;
+	transition:0.5s all;
+	display:none;
+}
+.switch_map_feedback h5{
+	margin:5px 0;
+}
+.switch_map_feedback .col-xs-10 h5{
+	text-align:left;
+}
+.switch_map_feedback i{
+	font-size: 16px;
+    margin: 4px 0;
+}
+
 .set_active_top_feedback{
 	text-align:center;
 	margin:30px 0;

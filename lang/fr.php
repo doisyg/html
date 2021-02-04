@@ -606,5 +606,13 @@ $_LANG['05c46f7e6388d3484ca7a0d07af92dd8'] = 'Vous pouvez créer une nouvelle ca
 $_LANG['639145429585f5cf40670e13936cabaf'] = 'Vous pouvez supprimer une carte en cliquant sur la croix rouge.';
 $_LANG['4a0d306983cf34ba40a55aab1fc673aa'] = 'Une confimation sera demandée pour chaque carte que vous souhaitez supprimer.';
 $_LANG['f6a3a043e3b28d6f2f8c76b9dde095dd'] = 'Vous pouvez changer de carte en cliquant sur l\'icône bleue de la carte que vous voulez charger.';
+$_LANG['6e107d3765b03b1158bf0c56b2270056'] = 'Changement de carte';
+$_LANG['1cf76e4b6918e9fece5b8fcedeba2c8c'] = 'Changer de carte en placant le robot devant un repère partagé par plusieurs cartes.';
+$_LANG['99cad591e60ed88d1bf2ad7705f110fe'] = 'Teleop robot';
+$_LANG['f7324dbd3a04b1ea084facfcaafa3f18'] = 'Changement de carte effectué!';
+$_LANG['ec93cb985a65caecae15493e523d244d'] = 'Erreur changement carte';
+$_LANG['90c42d95a211636ced855891f6eff8a4'] = 'Annuler changement carte';
+$_LANG['a046fc49e64aaf67217c5444a0bbe700'] = 'Arrêt navigation';
+$_LANG['a1263f7712e8123096332b7c53fd35b7'] = 'Cette page vous permet de changer de carte en utilisant des repères.';
 
 ?>

@@ -2599,6 +2599,48 @@
                     
 				</div>
 			
+				<div id="wyca_switch_map_landmark_modalFeedback" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+					<div class="modal-dialog" role="dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<div class="actions mh100vh_55">
+									<div class="h100vh_160" style="overflow:auto; text-align:center;">
+										<div class="" style="text-align:center; margin-top:20px;"><a href="#" class="btn btn-danger btn-lg bCancelSwitchMap" style="display:none;"><?=__('Cancel Switch Map') ?></a></div>
+										<div class="wyca_switch_map_landmark_feedback switch_map_feedback">
+											<hr style="border-top: 1px solid #909090;">
+											<div class="row switch_map_step SwitchMapScan" id="">
+												<div class="col-xs-10"><h5><?= __('Scan reflectors')?></h5></div>
+												<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+											</div>
+											<div class="row switch_map_step SwitchMapPose" id="">
+												<div class="col-xs-10"><h5><?= __('Robot position initiated')?></h5></div>
+												<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+											</div>
+											<div class="row switch_map_step SwitchMapSwitchMap" id="">
+												<div class="col-xs-10"><h5><?= __('Switch map')?></h5></div>
+												<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+											</div>
+											<div class="row switch_map_step SwitchMapStopNav" id="">
+												<div class="col-xs-10"><h5><?= __('Navigation stopped')?></h5></div>
+												<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+											</div>
+											<div class="row switch_map_step SwitchMapStartNav" id="">
+												<div class="col-xs-10"><h5><?= __('Navigation started')?></h5></div>
+												<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+											</div>
+											<hr style="border-top: 1px solid #909090;">
+										</div>
+									</div>
+									
+									<div style="clear:both;"></div>
+								   
+									<!--<a href="#" class="btn btn-primary btn_footer_left btn_100" data-dismiss="modal"><?php echo __('Close');?></a>-->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
 				<div id="wyca_switch_map_landmark_modalTeleop" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
 					<div class="modal-dialog" role="dialog">
 						<div class="modal-content">
@@ -2634,7 +2676,7 @@
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
 					<div class="content text-left">
-						<p class=""><?= __('.')?></p>
+						<p class=""><?= __('This page allows you to manage switch between maps using landmarks.')?></p>
 					</div>
 					<p class="legende"><?=__('Click to hide')?></p>
 				</div>
