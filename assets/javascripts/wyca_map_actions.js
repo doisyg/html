@@ -2053,9 +2053,9 @@ $(document).ready(function()
 	});
 	
 	$('#wyca_edit_map .modalGoToPoseFlexible .wyca_edit_map_bGoToPoseFlexible').click(function(e) {
-		let aT = $('#wyca_edit_map #wyca_edit_map_angular_tolerance').val();
+		let aT = ($('#wyca_edit_map #wyca_edit_map_angular_tolerance').val())*1;
 		let lT = ($('#wyca_edit_map #wyca_edit_map_linear_tolerance').val())*1;
-		aT = aT * Math.PI/180;
+		
 		WycaGoToPose('F',lT,aT);
 	});
 	
@@ -4989,6 +4989,7 @@ function WycaGoToPose(option,linear_tol = null,angular_tol = null)
 		break;
 		case 'F':
 			if(typeof(linear_tol) != 'number' || linear_tol < 0.05 || linear_tol > 10 || typeof(angular_tol) != 'number' || angular_tol < 2 || angular_tol > 360){
+				
 				$('#wyca_edit_map_bStop').hide();
 				$('#wyca_edit_map_svg .go_to_pose_elem').remove();
 				wycaApi.on('onGoToPoseFlexibleResult', onGoToPoseFlexibleResult);
@@ -5001,7 +5002,7 @@ function WycaGoToPose(option,linear_tol = null,angular_tol = null)
 					// On rebranche l'ancienne fonction
 					wycaApi.on('onGoToPoseFlexibleResult', onGoToPoseFlexibleResult);
 				});
-				
+				angular_tol = angular_tol * Math.PI/180;
 				wycaApi.GoToPoseFlexible(xROSGotoPose, yROSGotoPose, 0, linear_tol,angular_tol, function (data){
 					if (data.A != wycaApi.AnswerCode.NO_ERROR){
 						$('#wyca_edit_map_bStop').hide();
