@@ -131,6 +131,19 @@ function NormalUndo()
 			augmented_poses[elem.data].deleted = false;
 			NormalTraceAugmentedPose(elem.data);
 			break;
+		case 'add_landmark':
+			landmarks.pop();
+			a = JSON.parse(elem.data);
+			$('#install_normal_edit_map_svg .landmark_elem_'+a.id_landmark).remove();
+			break;
+		case 'edit_landmark':
+			landmarks[elem.data.index] = JSON.parse(elem.data.old);
+			NormalTraceLandmark(elem.data.index);
+			break;
+		case 'delete_landmark':
+			landmarks[elem.data].deleted = false;
+			NormalTraceLandmark(elem.data);
+			break;	
 	}
 	normalHistoriqueIndex--;
 	
@@ -209,6 +222,18 @@ function NormalRedo()
 		case 'delete_augmented_pose':
 			augmented_poses[elem.data].deleted = true;
 			NormalTraceAugmentedPose(elem.data);
+			break;
+		case 'add_landmark':
+			landmarks.push(JSON.parse(elem.data));
+			NormalTraceLandmark(landmarks.length-1);
+			break;
+		case 'edit_landmark':
+			landmarks[elem.data.index] = JSON.parse(elem.data.new);
+			NormalTraceLandmark(elem.data.index);
+			break;
+		case 'delete_landmark':
+			landmarks[elem.data].deleted = true;
+			NormalTraceLandmark(elem.data);
 			break;
 	}
 	

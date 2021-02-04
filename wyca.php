@@ -83,7 +83,7 @@
 						<div class="iconAugmentedPose"><i class="fas fa-map-marker-alt iconMenuPurple"></i><i class="fas fa-barcode"></i></div>
 					</div>
 					<div class="btn-circle btn-lg icon_menu" data-menu="wyca_edit_map_menu_landmark">
-						<i class="fas fa-barcode fa-flip-horizontal iconMenuMagenta"></i>
+						<i class="fas fa-barcode fa-flip-horizontal iconMenuMagenta" style="position: relative;left: -6px;"></i>
 					</div>
 					<div class="btn-circle btn-lg icon_menu" data-menu="wyca_edit_map_menu_erase">
 						<i class="fa fa-eraser" style="left: -9px;color: #333333;"></i>

@@ -76,3 +76,6 @@ svg#user_edit_map_svg_clone .movable.active { display:none !important; }
 .landmark_elem{
 	fill:#ee29ee
 }
+.landmark_elem.active{
+    stroke: #CC0000;
+}

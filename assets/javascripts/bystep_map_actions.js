@@ -133,6 +133,19 @@ function ByStepUndo()
 			augmented_poses[elem.data].deleted = false;
 			ByStepTraceAugmentedPose(elem.data);
 			break;
+		case 'add_landmark':
+			landmarks.pop();
+			a = JSON.parse(elem.data);
+			$('#install_by_step_edit_map_svg .landmark_elem_'+a.id_landmark).remove();
+			break;
+		case 'edit_landmark':
+			landmarks[elem.data.index] = JSON.parse(elem.data.old);
+			ByStepTraceLandmark(elem.data.index);
+			break;
+		case 'delete_landmark':
+			landmarks[elem.data].deleted = false;
+			ByStepTraceLandmark(elem.data);
+			break;		
 	}
 	bystepHistoriqueIndex--;
 	
@@ -212,6 +225,18 @@ function ByStepRedo()
 			augmented_poses[elem.data].deleted = true;
 			ByStepTraceAugmentedPose(elem.data);
 			break;
+		case 'add_landmark':
+			landmarks.push(JSON.parse(elem.data));
+			ByStepTraceLandmark(landmarks.length-1);
+			break;
+		case 'edit_landmark':
+			landmarks[elem.data.index] = JSON.parse(elem.data.new);
+			ByStepTraceLandmark(elem.data.index);
+			break;
+		case 'delete_landmark':
+			landmarks[elem.data].deleted = true;
+			ByStepTraceLandmark(elem.data);
+			break;	
 	}
 	
 	ByStepRefreshHistorique();

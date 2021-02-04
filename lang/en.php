@@ -591,5 +591,11 @@ $_LANG['6c6287b662380160f60f6f67b63b0195'] = 'Move the robot in front of the ref
 $_LANG['e8ac01eba7a2bdd603db316e32d22917'] = 'Click on the fiducial to create the landmark';
 $_LANG['f7324dbd3a04b1ea084facfcaafa3f18'] = 'Switch map done !';
 $_LANG['ec93cb985a65caecae15493e523d244d'] = 'Error on switch map';
+$_LANG['6e107d3765b03b1158bf0c56b2270056'] = 'Switch map';
+$_LANG['1cf76e4b6918e9fece5b8fcedeba2c8c'] = 'Switch map by placing the robot in front of landmark shared by maps.';
+$_LANG['99cad591e60ed88d1bf2ad7705f110fe'] = 'Teleop robot';
+$_LANG['90c42d95a211636ced855891f6eff8a4'] = 'Cancel Switch Map';
+$_LANG['a046fc49e64aaf67217c5444a0bbe700'] = 'Navigation stopped';
+$_LANG['a1263f7712e8123096332b7c53fd35b7'] = 'This page allows you to manage switch between maps using landmarks.';
 
 ?>

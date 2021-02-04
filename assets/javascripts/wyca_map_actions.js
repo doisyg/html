@@ -136,6 +136,19 @@ function WycaUndo()
 			augmented_poses[elem.data].deleted = false;
 			WycaTraceAugmentedPose(elem.data);
 			break;
+		case 'add_landmark':
+			landmarks.pop();
+			a = JSON.parse(elem.data);
+			$('#wyca_edit_map_svg .landmark_elem_'+a.id_landmark).remove();
+			break;
+		case 'edit_landmark':
+			landmarks[elem.data.index] = JSON.parse(elem.data.old);
+			WycaTraceLandmark(elem.data.index);
+			break;
+		case 'delete_landmark':
+			landmarks[elem.data].deleted = false;
+			WycaTraceLandmark(elem.data);
+			break;
 	}
 	wycaHistoriqueIndex--;
 	
@@ -214,6 +227,18 @@ function WycaRedo()
 		case 'delete_augmented_pose':
 			augmented_poses[elem.data].deleted = true;
 			WycaTraceAugmentedPose(elem.data);
+			break;
+		case 'add_landmark':
+			landmarks.push(JSON.parse(elem.data));
+			WycaTraceLandmark(landmarks.length-1);
+			break;
+		case 'edit_landmark':
+			landmarks[elem.data.index] = JSON.parse(elem.data.new);
+			WycaTraceLandmark(elem.data.index);
+			break;
+		case 'delete_landmark':
+			landmarks[elem.data].deleted = true;
+			WycaTraceLandmark(elem.data);
 			break;
 	}
 	
@@ -4968,6 +4993,7 @@ function WycaDeleteDock(indexInArray)
 	
 	WycaSetModeSelect();
 }
+
 // LANDMARK FUNCS
 
 function WycaLandmarkSave()
