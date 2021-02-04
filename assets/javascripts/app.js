@@ -893,8 +893,6 @@ function GetSitesForExportNormal()
 		setTimeout(GetSitesForExportNormal, 500);
 	}
 }
-	}
-}
 
 // MAPS
 
