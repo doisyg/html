@@ -2246,6 +2246,18 @@ function WycaAPI(options){
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
+	this.GoToPoiForCharge = function(id_poi, callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.GO_TO_POI] = callback;
+		var action = {
+			"O": _this.CommandCode.GO_TO_POI,
+			"P": {
+				"ID" :id_poi,
+				"C" : true
+			}
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
 	this.GoToPoiCancel = function(callback){
 		if (callback != undefined)
 			this.callbacks[_this.CommandCode.GO_TO_POI_CANCEL] = callback;
@@ -2264,6 +2276,21 @@ function WycaAPI(options){
 				"Y":y,
 				"T":theta,
 				"PDT":pdt
+			}
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	this.GoToPoseForCharge = function(x, y, theta, pdt, callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.GO_TO_POSE] = callback;
+		var action = {
+			"O": _this.CommandCode.GO_TO_POSE,
+			"P": {
+				"X":x,
+				"Y":y,
+				"T":theta,
+				"PDT":pdt,
+				"C": true
 			}
 		};
 		_this.wycaSend(JSON.stringify(action));
@@ -2290,6 +2317,22 @@ function WycaAPI(options){
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
+	this.GoToPoseAccurateForCharge = function(x, y, theta, pdt, callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.GO_TO_POSE_ACCURATE] = callback;
+		var action = {
+			"O": _this.CommandCode.GO_TO_POSE_ACCURATE,
+			"P": {
+				"X":x,
+				"Y":y,
+				"T":theta,
+				"PDT":pdt,
+				"C":true,
+			}
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	
 	this.GoToPoseAccurateCancel = function(callback){
 		if (callback != undefined)
 			this.callbacks[_this.CommandCode.GO_TO_POSE_ACCURATE_CANCEL] = callback;
@@ -2310,6 +2353,23 @@ function WycaAPI(options){
 				"DT":distance_tolerance,
 				"AT":angle_tolerance,
 				"PDT":pdt
+			}
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	this.GoToPoseFlexibleForCharge = function(x, y, theta, distance_tolerance, angle_tolerance, pdt, callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.GO_TO_POSE_FLEXIBLE] = callback;
+		var action = {
+			"O": _this.CommandCode.GO_TO_POSE_FLEXIBLE,
+			"P": {
+				"X":x,
+				"Y":y,
+				"T":theta,
+				"DT":distance_tolerance,
+				"AT":angle_tolerance,
+				"PDT":pdt,
+				"C":true
 			}
 		};
 		_this.wycaSend(JSON.stringify(action));
