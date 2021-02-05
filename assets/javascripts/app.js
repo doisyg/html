@@ -228,9 +228,11 @@ $(document).ready(function(e) {
 					}
 				});
 			}
+			
 			if(target == 'install_by_step_sound'){ //UPDATE INSTALL STEP ON BACK FROM CREATE NEW SITE PROCESS NORMAL
-				if(JSON.parse(getCookie('create_new_site')) || create_new_site){
+				if((getCookie('create_new_site') != '' ? JSON.parse(getCookie('create_new_site')) : false ) || create_new_site){
 					setCookie('create_new_site',false);
+					create_new_site = false;
 					$.ajax({
 						type: "POST",
 						url: 'ajax/install_by_step_finish.php',
@@ -240,7 +242,7 @@ $(document).ready(function(e) {
 						success: function(data) {
 						},
 						error: function(e) {
-							alert_wyca((typeof(textErrorSound) != 'undefined'? textErrorSound : 'Error in sound') + ' ' + e.responseText);
+							alert_wyca((typeof(textErrorFinish) != 'undefined'? textErrorFinish : 'Error in finish') + ' ' + e.responseText);
 						}
 					});
 					$('#modalBack').modal('hide');
@@ -249,7 +251,7 @@ $(document).ready(function(e) {
 					
 					//AFFICHER QQ CHOSE
 					$('section#install_normal_setup_sites').show('slow');
-					
+					$('.title_section').html($('section#install_normal_setup_sites > header > h2').text());
 					if ($('#install_normal_setup_sites').is(':visible'))
 					{
 						GetSitesNormal();
@@ -713,7 +715,7 @@ function GetSitesForExportWyca()
 	}
 	else
 	{
-		setTimeout(GetSitesWyca, 500);
+		setTimeout(GetSitesForExportWyca, 500);
 	}
 }
 
@@ -750,7 +752,7 @@ function GetSitesManager()
 	}
 	else
 	{
-		setTimeout(GetSitesNormal, 500);
+		setTimeout(GetSitesManager, 500);
 	}
 }
 
@@ -822,7 +824,7 @@ function GetSitesForExportNormal()
 	}
 	else
 	{
-		setTimeout(GetSitesNormal, 500);
+		setTimeout(GetSitesForExportNormal, 500);
 	}
 }
 
@@ -1255,7 +1257,7 @@ function GetUsersManager()
 	}
 	else
 	{
-		setTimeout(GetUsers, 500);
+		setTimeout(GetUsersManager, 500);
 	}
 
 }
@@ -1705,18 +1707,26 @@ function InitTopsActiveByStep()
 
 function InitSoundWyca()
 {
-	wycaApi.GetSoundIsOn(function(data){
-		if(data.D){
-			let sound_is_on = data.D
-			if(sound_is_on == 1){
-				//ROS SOUND TRUE
-				$('#wyca_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('off').addClass('on');
-				$('#wyca_setup_sound .sound_switch_ROS').prop('checked',true);
-					//APP SOUND
-				if(app_sound_is_on){
-					$('#wyca_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('off').addClass('on');
-					$('#wyca_setup_sound .sound_switch_app').prop('checked',true);
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetSoundIsOn(function(data){
+			if(data.D){
+				let sound_is_on = data.D
+				if(sound_is_on == 1){
+					//ROS SOUND TRUE
+					$('#wyca_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('off').addClass('on');
+					$('#wyca_setup_sound .sound_switch_ROS').prop('checked',true);
+						//APP SOUND
+					if(app_sound_is_on){
+						$('#wyca_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('off').addClass('on');
+						$('#wyca_setup_sound .sound_switch_app').prop('checked',true);
+					}else{
+						$('#wyca_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
+						$('#wyca_setup_sound .sound_switch_app').prop('checked',false);
+					}
 				}else{
+					$('#wyca_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('on').addClass('off');
+					$('#wyca_setup_sound .sound_switch_ROS').prop('checked',false);
 					$('#wyca_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
 					$('#wyca_setup_sound .sound_switch_app').prop('checked',false);
 				}
@@ -1726,30 +1736,38 @@ function InitSoundWyca()
 				$('#wyca_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
 				$('#wyca_setup_sound .sound_switch_app').prop('checked',false);
 			}
-		}else{
-			$('#wyca_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('on').addClass('off');
-			$('#wyca_setup_sound .sound_switch_ROS').prop('checked',false);
-			$('#wyca_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
-			$('#wyca_setup_sound .sound_switch_app').prop('checked',false);
-		}
-		$('#wyca_setup_sound .sound_switch_ROS').change();
-	})
+			$('#wyca_setup_sound .sound_switch_ROS').change();
+		})
+	}
+	else
+	{
+		setTimeout(InitSoundWyca, 500);
+
+	}
 }
 
 function InitSoundNormal()
 {
-	wycaApi.GetSoundIsOn(function(data){
-		if(data.D){
-			let sound_is_on = data.D
-			if(sound_is_on == 1){
-				//ROS SOUND TRUE
-				$('#install_normal_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('off').addClass('on');
-				$('#install_normal_setup_sound .sound_switch_ROS').prop('checked',true);
-					//APP SOUND
-				if(app_sound_is_on){
-					$('#install_normal_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('off').addClass('on');
-					$('#install_normal_setup_sound .sound_switch_app').prop('checked',true);
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetSoundIsOn(function(data){
+			if(data.D){
+				let sound_is_on = data.D
+				if(sound_is_on == 1){
+					//ROS SOUND TRUE
+					$('#install_normal_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('off').addClass('on');
+					$('#install_normal_setup_sound .sound_switch_ROS').prop('checked',true);
+						//APP SOUND
+					if(app_sound_is_on){
+						$('#install_normal_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('off').addClass('on');
+						$('#install_normal_setup_sound .sound_switch_app').prop('checked',true);
+					}else{
+						$('#install_normal_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
+						$('#install_normal_setup_sound .sound_switch_app').prop('checked',false);
+					}
 				}else{
+					$('#install_normal_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('on').addClass('off');
+					$('#install_normal_setup_sound .sound_switch_ROS').prop('checked',false);
 					$('#install_normal_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
 					$('#install_normal_setup_sound .sound_switch_app').prop('checked',false);
 				}
@@ -1759,30 +1777,38 @@ function InitSoundNormal()
 				$('#install_normal_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
 				$('#install_normal_setup_sound .sound_switch_app').prop('checked',false);
 			}
-		}else{
-			$('#install_normal_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('on').addClass('off');
-			$('#install_normal_setup_sound .sound_switch_ROS').prop('checked',false);
-			$('#install_normal_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
-			$('#install_normal_setup_sound .sound_switch_app').prop('checked',false);
-		}
-		$('#install_normal_setup_sound .sound_switch_ROS').change();
-	})
+			$('#install_normal_setup_sound .sound_switch_ROS').change();
+		})
+	}
+	else
+	{
+		setTimeout(InitSoundNormal, 500);
+
+	}	
 }
 
 function InitSoundByStep()
 {
-	wycaApi.GetSoundIsOn(function(data){
-		if(data.D){
-			let sound_is_on = data.D
-			if(sound_is_on == 1){
-				//ROS SOUND TRUE
-				$('#install_by_step_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('off').addClass('on');
-				$('#install_by_step_setup_sound .sound_switch_ROS').prop('checked',true);
-					//APP SOUND
-				if(app_sound_is_on){
-					$('#install_by_step_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('off').addClass('on');
-					$('#install_by_step_setup_sound .sound_switch_app').prop('checked',true);
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetSoundIsOn(function(data){
+			if(data.D){
+				let sound_is_on = data.D
+				if(sound_is_on == 1){
+					//ROS SOUND TRUE
+					$('#install_by_step_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('off').addClass('on');
+					$('#install_by_step_setup_sound .sound_switch_ROS').prop('checked',true);
+						//APP SOUND
+					if(app_sound_is_on){
+						$('#install_by_step_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('off').addClass('on');
+						$('#install_by_step_setup_sound .sound_switch_app').prop('checked',true);
+					}else{
+						$('#install_by_step_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
+						$('#install_by_step_setup_sound .sound_switch_app').prop('checked',false);
+					}
 				}else{
+					$('#install_by_step_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('on').addClass('off');
+					$('#install_by_step_setup_sound .sound_switch_ROS').prop('checked',false);
 					$('#install_by_step_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
 					$('#install_by_step_setup_sound .sound_switch_app').prop('checked',false);
 				}
@@ -1792,14 +1818,14 @@ function InitSoundByStep()
 				$('#install_by_step_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
 				$('#install_by_step_setup_sound .sound_switch_app').prop('checked',false);
 			}
-		}else{
-			$('#install_by_step_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('on').addClass('off');
-			$('#install_by_step_setup_sound .sound_switch_ROS').prop('checked',false);
-			$('#install_by_step_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
-			$('#install_by_step_setup_sound .sound_switch_app').prop('checked',false);
-		}
-		$('#install_by_step_sound .sound_switch_ROS').change();
-	})
+			$('#install_by_step_sound .sound_switch_ROS').change();
+		})
+	}
+	else
+	{
+		setTimeout(InitSoundByStep, 500);
+
+	}	
 }
 
 // WIFI
@@ -2318,8 +2344,8 @@ function hexToRgb(hex)
 
 function DisplayError(text)
 {
-	 $('.popup_error .panel-body').html(text);
-	 $('.popup_error').show();
+	$('.popup_error .panel-body').html(text);
+	$('.popup_error').show();
 }
 
 function CheckName(tab, nom, index_ignore=-1)
@@ -2475,7 +2501,7 @@ function deleteCookie(cname)
 
 function resetCookies()
 {
-	let tab =['create_new_site','boolHelpManagerI','boolHelpAreaI','boolHelpForbiddenI','boolHelpGotoPoseI','boolHelpGotoPoseM','boolHelpGotoPoseU','APP_SOUND'];
+	let tab =['create_new_site','create_new_map','boolHelpManagerI','boolHelpAreaI','boolHelpForbiddenI','boolHelpGotoPoseI','boolHelpGotoPoseM','boolHelpGotoPoseU','APP_SOUND'];
 	tab.forEach(cookie => deleteCookie(cookie))
 }
 

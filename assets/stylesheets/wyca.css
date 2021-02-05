@@ -156,6 +156,10 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 	.joystickDiv { width:auto; margin:auto; display:inline-block; position:relative;}
 	.joystickDiv .fond { background-image:url(../images/off.png);background-position: center center;background-size:contain; width:180px; height:180px; z-index:100;background-size: ; }
 	.joystickDiv .curseur { background-image:url(../images/bouton.png); background-position: center center;background-size:contain; width:84px; height:84px; position:absolute; top:50px; left:47px; z-index:200; }
+	.modalHelpClickForbidden h4{margin:15px 0!important;}
+	.modalHelpClickArea h4{margin:15px 0!important;}
+	.modalHelpClickGotoPose h4{margin:15px 0!important;}
+	.optionGoToPose > li {padding: 10px!important;margin: 30px 0px!important;}
 }
 #install_by_step_mapping { background-color:rgba(245,245,245,0.8); }
 #install_by_step_mapping header { background-color:#FFFFFF; z-index:200; }
@@ -1355,6 +1359,15 @@ span.toggle_details{
 
 .optionGoToPose > li > i:not(.fa-chevron-right){
 	font-size: 24px;
+}
+
+.modalGoToPose h4{
+	text-align: left;
+    color: #589fb2;
+    font-weight: 700;
+}
+.modalGoToPose p.GetPathOutcome{
+	text-align:left;
 }
 
 .row.row-eq-height{

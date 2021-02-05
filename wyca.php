@@ -1065,6 +1065,15 @@
 												<li class="GoToPoseAccurate"><i class="far fa-dot-circle iconMenuBlue"></i><?= __('Go To Pose Accurate')?><i class="fas fa-chevron-right"></i></li>
 												<li class="GoToPoseFlexible"><i class="fas fa-cogs iconMenuBlue"></i><?= __('Go To Pose Flexible')?><i class="fas fa-chevron-right"></i></li>
 											</ul>
+											<h4><?= __('GetPath')?></h4>
+											<p class="GetPathOutcome">GetPath</p>
+											<div class="form-group nopymy">
+												<h4><?= __('Distance')?></h4>
+												<div class="input-group">
+													<input type="text" id="wyca_edit_map_modalGoToPose_distance" name="go_to_pose_get_path_distance" value="-" class="form-control input-sm mb-md" />
+													<span class="input-group-addon">m</span>
+												</div>
+											</div>
                                         </div>
                                         
                                         <div style="clear:both;"></div>
