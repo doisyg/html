@@ -143,8 +143,6 @@ class Translate
 				}
 			}
 			catch (Exception $e) {
-				//echo"<script>alert_wyca('Error on loading trad' + '".$e->getMessage()."')</script>";
-				//echo $e->getMessage();
 			}		
 		}		
 	}

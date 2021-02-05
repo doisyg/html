@@ -21,10 +21,15 @@ class Configuration
 					self::$data = array();
 					throw new Exception('File open failed.');
 				}else{
-					self::$data = json_decode($content, true);
-					if (json_last_error() != JSON_ERROR_NONE){
+					if ($content == '')
 						self::$data = array();
-						throw new Exception('Json decode failed.');
+					else
+					{
+						self::$data = json_decode($content, true);
+						if (json_last_error() != JSON_ERROR_NONE){
+							self::$data = array();
+							throw new Exception('Json decode failed.');
+						}
 					}
 				}
 			}
@@ -39,10 +44,15 @@ class Configuration
 						self::$data = array();
 						throw new Exception('File open failed.');
 					}else{
-						self::$data = json_decode($content, true);
-						if (json_last_error() != JSON_ERROR_NONE){
+						if ($content == '')
 							self::$data = array();
-							throw new Exception('Json decode failed.');
+						else
+						{
+							self::$data = json_decode($content, true);
+							if (json_last_error() != JSON_ERROR_NONE){
+								self::$data = array();
+								throw new Exception('Json decode failed.');
+							}
 						}
 					}
 				}
