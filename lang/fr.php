@@ -614,5 +614,6 @@ $_LANG['ec93cb985a65caecae15493e523d244d'] = 'Erreur changement carte';
 $_LANG['90c42d95a211636ced855891f6eff8a4'] = 'Annuler changement carte';
 $_LANG['a046fc49e64aaf67217c5444a0bbe700'] = 'Arrêt navigation';
 $_LANG['a1263f7712e8123096332b7c53fd35b7'] = 'Cette page vous permet de changer de carte en utilisant des repères.';
+$_LANG['902b0d55fddef6f8d651fe1035b7d4bd'] = 'Erreur';
 
 ?>
