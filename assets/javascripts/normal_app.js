@@ -514,7 +514,7 @@ $(document).ready(function(e) {
 		{
 			$('#install_normal_setup_reset .bGotoReset').click();
 			wycaApi.FactoryDataReset(function(){
-				
+				resetCookies();
 				$.ajax({
 					type: "POST",
 					url: 'ajax/reset.php',
