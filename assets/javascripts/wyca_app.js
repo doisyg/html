@@ -915,7 +915,7 @@ $(document).ready(function(e) {
 			}
 			else
 			{
-				$('#wyca_switch_map_landmark #wyca_switch_map_landmark_modalFeedback').modal('show');
+				$('#wyca_switch_map_landmark #wyca_switch_map_landmark_modalFeedback').modal('hide');
 				ParseAPIAnswerError(data);
 			}
 			GetSwitchMapsWyca();
@@ -924,7 +924,7 @@ $(document).ready(function(e) {
 			wycaApi.on('onSwitchMapWithLandmarkFeedback', onSwitchMapWithLandmarkFeedback);
 		});
 		
-		console.log('SwitchMapWithLandmark ',id_map,' is commented // ');
+		//console.log('SwitchMapWithLandmark ',id_map,' is commented // ');
 		
 		wycaApi.SwitchMapWithLandmark(id_map, function(data) {
 			if (data.A != wycaApi.AnswerCode.NO_ERROR) 
