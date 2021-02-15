@@ -621,6 +621,7 @@ $_LANG['9281dff768f67c06984bad579f388eb8'] = 'Cette page vous permet d\'importer
 $_LANG['53b47879e5406ac41e729856bbabcfa1'] = 'Cette page vous permet d\'importer un site en utilisant le fichier .wyca associé';
 $_LANG['1846f06a0ae617eed00fc5ef2281e610'] = 'Télécharger une carte';
 $_LANG['5c2a40a6776f7e0f3ee3210bbee07075'] = 'Télécharger vos cartes en cliquant sur l\'icône';
-$_LANG['666cbb24c2d5d4ec055108dff052d2d0'] = 'This page allow you to download a PNG file of your map by clicking on the correspondant icon.';
+$_LANG['666cbb24c2d5d4ec055108dff052d2d0'] = 'Cette page vous permet de télécharger un fichier PNG de votre carte en cliquant sur l\'icône correspondante.';
+$_LANG['5ff02c037fd5e680d2601accfceb5fd4'] = 'L\'objectif est de faire en sorte que tous les murs soient représentés en noir sur la carte et que toutes les zones où le robot peut se déplacer soient représentées en blanc sur la carte.';
 
 ?>
