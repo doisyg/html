@@ -577,5 +577,26 @@ $_LANG['3976c87a2e29c4c47f93ee6e89917fe2'] = 'windows mode';
 $_LANG['67e66935ad55c7fcc015e89eefeae8a7'] = 'kiosk mode';
 $_LANG['5b503aa265be30745b805785a83894c3'] = 'Removing current top';
 $_LANG['ec6630ca40af9c2beaed73898e684d23'] = 'Setting new top';
+$_LANG['bf087df666715730e9ff3351282ae637'] = 'Add new map';
+$_LANG['8af4067658950f11584a482a39290104'] = 'This page allow you to manage maps';
+$_LANG['05c46f7e6388d3484ca7a0d07af92dd8'] = 'You can create a new map by clicking on the correspondant button.';
+$_LANG['639145429585f5cf40670e13936cabaf'] = 'You can delete a map by clicking on the red cross icon.';
+$_LANG['4a0d306983cf34ba40a55aab1fc673aa'] = 'A confimation will be asked for each map you want to delete.';
+$_LANG['f6a3a043e3b28d6f2f8c76b9dde095dd'] = 'You can switch map by clicking on the blue check icon of the map you want to load.';
+$_LANG['91550cc1cb3057c3da02beb9840feae2'] = 'Add a new map to the current site ?';
+$_LANG['f546cd32323401c2a84ef065f1ff25a6'] = 'You will be redirected to the mapping step. .';
+$_LANG['06301c457731ff1bfea05e1cf10a7dc7'] = 'Add Map';
+$_LANG['f3e74154c1575b0b35762744d10ff699'] = 'You will be redirected to the mapping step.';
+$_LANG['6c6287b662380160f60f6f67b63b0195'] = 'Move the robot in front of the reflector and click on the \"Scan\" button';
+$_LANG['e8ac01eba7a2bdd603db316e32d22917'] = 'Click on the fiducial to create the landmark';
+$_LANG['f7324dbd3a04b1ea084facfcaafa3f18'] = 'Switch map done !';
+$_LANG['ec93cb985a65caecae15493e523d244d'] = 'Error on switch map';
+$_LANG['6e107d3765b03b1158bf0c56b2270056'] = 'Switch map';
+$_LANG['1cf76e4b6918e9fece5b8fcedeba2c8c'] = 'Switch map by placing the robot in front of landmark shared by maps.';
+$_LANG['99cad591e60ed88d1bf2ad7705f110fe'] = 'Teleop robot';
+$_LANG['90c42d95a211636ced855891f6eff8a4'] = 'Cancel Switch Map';
+$_LANG['a046fc49e64aaf67217c5444a0bbe700'] = 'Navigation stopped';
+$_LANG['a1263f7712e8123096332b7c53fd35b7'] = 'This page allows you to manage switch between maps using landmarks.';
+$_LANG['e5f60e42a15a40f386ba2ed019c30241'] = 'Error download map';
 
 ?>
