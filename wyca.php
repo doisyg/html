@@ -758,7 +758,8 @@
                                         <div style="clear:both;"></div>
                                        
                                        
-                                        <a href="#" id="wyca_edit_map_bLandmarkCancelConfig" class="btn btn-default btn_footer_left btn_100" data-dismiss="modal" ><?php echo __('Cancel');?></a> 
+                                        <a href="#" id="wyca_edit_map_bLandmarkCancelConfig" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Cancel');?></a> 
+										<a href="#" id="wyca_edit_map_bLandmarkSaveConfig" class="btn btn-primary btn_footer_right btn_50"><?php echo __('Save');?></a>
                                     </div>
                                 </div>
                             </div>
