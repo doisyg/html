@@ -1171,6 +1171,9 @@ div.icon_menu .iconForbiddenArea .fa-minus-circle{
 .nopymy:after{margin-top:0;margin-bottom:0;padding-top:0;padding-bottom:0;}
 
 /* CSS FIXES */
+li.disabled{
+	pointer-events:none;cursor:not-allowed;background:#a4a4a4;
+}
 .loading_fin_create_map{
 	margin-top: 25%;
 }

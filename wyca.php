@@ -1173,11 +1173,12 @@
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="wyca_setup_sound" href="#"><i class="fas fa-volume-up"></i><?php echo __('Sound');?></a></li>
 					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5" data-goto="wyca_setup_wifi" href="#"><i class="fas fa-wifi"></i><?php echo __('Wifi');?></a></li>
 
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" data-goto="wyca_setup_language" href="#"><i class="fa fa-language"></i><?php echo __('Language');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7" data-goto="wyca_setup_export" href="#"><i class="fa fa-upload"></i><?php echo __('Export site');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8" data-goto="wyca_setup_import" href="#"><i class="fa fa-download"></i><?php echo __('Import site');?></a></li>
-					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile9" data-goto="wyca_setup_trinary" href="#"><i class="far fa-map"></i><?php echo __('Map trinary');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile10" data-goto="wyca_setup_reset" href="#"><i class="fa fa-eraser"></i><?php echo __('Factory data reset');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7" data-goto="wyca_setup_language" href="#"><i class="fa fa-language"></i><?php echo __('Language');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8" data-goto="wyca_setup_export" href="#"><i class="fa fa-upload"></i><?php echo __('Export site');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile9" data-goto="wyca_setup_import" href="#"><i class="fa fa-download"></i><?php echo __('Import site');?></a></li>
+					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile10" data-goto="wyca_setup_trinary" href="#"><i class="far fa-map"></i><?php echo __('Map trinary');?></a></li>
+					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile11" data-goto="wyca_setup_download_map" href="#"><i class="fas fa-file-download"></i><?php echo __('Download map');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile12" data-goto="wyca_setup_reset" href="#"><i class="fa fa-eraser"></i><?php echo __('Factory data reset');?></a></li>
 				</ul>
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
@@ -1638,7 +1639,7 @@
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
 					<div class="content text-left sm-content">
-						<p class=""><?= __('Ths page allow you to export a site by clicking on the correspondant icon.')?></p>
+						<p class=""><?= __('This page allow you to export a site by clicking on the correspondant icon.')?></p>
 						<p class=""><?= __('The export of a site is a backup of all the configuration linked to a site (map, charging stations, areas...).')?></p>
 						<p class=""><?= __('You can also use the .wyca generated file to import this site on another vehicle.')?></p>
 						<p class=""><?= __('Keep this copy as it will allow you to reload your site in case of factory reset.')?></p>
@@ -1694,7 +1695,7 @@
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
 					<div class="content text-left sm-content">
-						<p class=""><?= __('Ths page allow you to import a site by uploading the .wyca file associated.')?></p>
+						<p class=""><?= __('This page allow you to import a site by uploading the .wyca file associated.')?></p>
 						<p class=""><?= __('You recover all the configuration linked to a site (map, charging stations, areas...).')?></p>
 						<p class=""><?= __('Whitout having to map again the same site.')?></p>
 					</div>
@@ -1780,6 +1781,33 @@
             </footer>
         </section>
         
+        <section id="wyca_setup_download_map" class="page with_footer">
+	        <a href="#" class="bBackButton button_goto" data-goto="wyca_setup"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Download Map');?></h2>
+            </header>
+            <div class="content">
+				<div class="wyca_setup_download_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
+                <h4 style="text-align:center;margin:30px 0"><?= __('Download maps by clicking on the icon') ?></h4>
+				
+                <div class="loaded col-md-12" style="padding-top:30px;">
+                	<ul class="list_maps list_elem">
+                    </ul>
+                </div>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left sm-content">
+						<p class=""><?= __('This page allow you to download a PNG file of your map by clicking on the correspondant icon.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
+			</div>
+            <footer>
+                <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="wyca_setup"><?php echo __('Back');?></a>
+            </footer>
+        </section>
+		
         <section id="wyca_setup_reset" class="page hide_photo_back with_footer">
 	        <a href="#" class="bBackButton button_goto" data-goto="wyca_setup"></a>
             <header>
