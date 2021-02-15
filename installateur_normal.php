@@ -675,8 +675,8 @@
                                                 </div>
                                             
                                             	<div class ="modal-advice">
-                                                    <p class="texts_add_reflector text_prepare_robot"><?php echo stripslashes(__('Move the robot in front of the reflector and click on the "Scan" button'));?></p>
-                                                    <p class="texts_add_reflector text_set_reflector"><?php echo stripslashes(__('Click on the fiducial to create the landmark'));?></p>
+                                                    <p class="texts_add_landmark text_prepare_robot"><?php echo stripslashes(__('Move the robot in front of the reflector and click on the "Scan" button'));?></p>
+                                                    <p class="texts_add_landmark text_set_landmark"><?php echo stripslashes(__('Click on the fiducial to create the landmark'));?></p>
                                                 </div>
                                                 <p><a href="#" class="btn btn-primary bScanAddLandmark">Scan</a></p>
                                                 
@@ -693,8 +693,7 @@
                                         <div style="clear:both;"></div>
                                                                                 
                                         
-                                        <a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Cancel');?></a>
-										<a href="#" id="install_normal_edit_map_bModalAddLandmarkSave" class="btn btn-primary btn_footer_right btn_50" data-dismiss="modal" ><?php echo __('Save');?></a>
+                                        <a href="#" class="btn btn-default btn_footer_left btn_100" data-dismiss="modal" ><?php echo __('Cancel');?></a>
                                     </div>
                                 </div>
                             </div>

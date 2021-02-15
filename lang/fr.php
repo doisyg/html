@@ -93,7 +93,7 @@ $_LANG['7a7ad1c5615171b6af66b87b2fe0deaa'] = 'Sauver';
 $_LANG['38192e4a5fd57454c4f118f2272fe1ce'] = 'Déplacer le robot à la position d\'approche désirée et appuyer sur le bouton \"Scan\"';
 $_LANG['354e942fcc16d5421833be4821613f69'] = 'Cliquer sur le réflecteur pour sauvegarder la position d\'approche';
 $_LANG['2b3a1d48e7b13bad458369317f1c0f10'] = 'Déplacer le robot à la position finale désirée et appuyer sur le bouton \"Scan\"';
-$_LANG['74d48468a9018f0daab47b3a9d3ddd46'] = 'Click on the fiducial to set the final position';
+$_LANG['74d48468a9018f0daab47b3a9d3ddd46'] = 'Cliquer sur le réflecteur pour sauvegarder la position finale';
 $_LANG['4a8b45c6fef195a18a894697f059ef36'] = 'Tester la carte';
 $_LANG['70d9be9b139893aa6c69b5e77e614311'] = 'Confirmer';
 $_LANG['254f642527b45bc260048e30704edb39'] = 'Configuration';
@@ -596,7 +596,7 @@ $_LANG['67e66935ad55c7fcc015e89eefeae8a7'] = 'mode kiosque';
 $_LANG['5b503aa265be30745b805785a83894c3'] = 'Suppression top actuel';
 $_LANG['ec6630ca40af9c2beaed73898e684d23'] = 'Mise en place nouveau top';
 $_LANG['6c6287b662380160f60f6f67b63b0195'] = 'Déplacer le robot devant le reflecteur et appuyer sur le bouton \"Scan\"';
-$_LANG['e8ac01eba7a2bdd603db316e32d22917'] = 'Click on the fiducial to create the landmark';
+$_LANG['e8ac01eba7a2bdd603db316e32d22917'] = 'Cliquer sur le réflecteur pour créer le répère';
 $_LANG['bf087df666715730e9ff3351282ae637'] = 'Ajouter une carte';
 $_LANG['91550cc1cb3057c3da02beb9840feae2'] = 'Ajouter une nouvelle carte au site en cours ?';
 $_LANG['f3e74154c1575b0b35762744d10ff699'] = 'Vous allez être redirigé a l\'étape de cartographie.';
@@ -623,5 +623,6 @@ $_LANG['1846f06a0ae617eed00fc5ef2281e610'] = 'Télécharger une carte';
 $_LANG['5c2a40a6776f7e0f3ee3210bbee07075'] = 'Télécharger vos cartes en cliquant sur l\'icône';
 $_LANG['666cbb24c2d5d4ec055108dff052d2d0'] = 'Cette page vous permet de télécharger un fichier PNG de votre carte en cliquant sur l\'icône correspondante.';
 $_LANG['5ff02c037fd5e680d2601accfceb5fd4'] = 'L\'objectif est de faire en sorte que tous les murs soient représentés en noir sur la carte et que toutes les zones où le robot peut se déplacer soient représentées en blanc sur la carte.';
+$_LANG['f3aa661b584021c1c8519d098fc807a8'] = 'GetPath';
 
 ?>
