@@ -394,6 +394,7 @@ $(document).ready(function(e) {
 			if (next == 'install_normal_setup_sites') GetSitesNormal();
 			if (next == 'install_normal_setup_export') GetSitesForExportNormal();
 			if (next == 'install_normal_setup_import') InitSiteImportNormal();
+			if (next == 'install_normal_setup_download_map') GetMapsForDownloadNormal();
 			if (next == 'install_normal_setup_tops') InitTopsNormal();
 			if (next == 'install_normal_setup_top') InitTopsActiveNormal();
 			if (next == 'install_normal_setup_maps') GetMapsNormal();
@@ -417,6 +418,7 @@ $(document).ready(function(e) {
 			if (next == 'wyca_setup_sound') InitSoundWyca();
 			if (next == 'wyca_setup_export') GetSitesForExportWyca();
 			if (next == 'wyca_setup_import') InitSiteImportWyca();
+			if (next == 'wyca_setup_download_map') GetMapsForDownloadWyca();
 			if (next == 'wyca_setup_tops') InitTopsWyca();
 			if (next == 'wyca_setup_top') InitTopsActiveWyca();
 			if (next == 'wyca_setup_config') GetConfigurationsWyca();
@@ -1008,6 +1010,70 @@ function GetSwitchMapsWyca()
 	else
 	{
 		setTimeout(GetSwitchMapsWyca, 500);
+	}
+}
+
+function GetMapsForDownloadNormal(){
+	$('.install_normal_setup_download_loading').show();
+	$('#install_normal_setup_download_map .loaded').hide();
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetCurrentSite(function(data) {
+			current_site = data.D.id_site;
+			wycaApi.GetMapsList(current_site,function(data) {
+				
+				$('#install_normal_setup_download_map .list_maps').html('');
+				
+				if (data.D != undefined)
+				$.each(data.D,function(index, value){
+					$('#install_normal_setup_download_map .list_maps').append('' +
+					'<li id="install_normal_setup_download_map_list_maps_elem_'+value.id_map+'" data-id_map="'+value.id_map+'" class="bMapDownloadElem">'+
+					'	<span class="societe">'+value.name+' &nbsp;</span>'+
+					'	<a href="#" class="btn btn-sm btn-circle btn-success pull-right"><i class="fas fa-file-download"></i></a>'+
+					'</li>'
+					);
+				});
+				
+				$('.install_normal_setup_download_loading').hide();
+				$('#install_normal_setup_download_map .loaded').show();
+			});
+		})
+	}
+	else
+	{
+		setTimeout(GetMapsForDownloadNormal, 500);
+	}
+}
+
+function GetMapsForDownloadWyca(){
+	$('.wyca_setup_download_loading').show();
+	$('#wyca_setup_download_map .loaded').hide();
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetCurrentSite(function(data) {
+			current_site = data.D.id_site;
+			wycaApi.GetMapsList(current_site,function(data) {
+				
+				$('#wyca_setup_download_map .list_maps').html('');
+				
+				if (data.D != undefined)
+				$.each(data.D,function(index, value){
+					$('#wyca_setup_download_map .list_maps').append('' +
+					'<li id="wyca_setup_download_map_list_maps_elem_'+value.id_map+'" data-id_map="'+value.id_map+'" class="bMapDownloadElem">'+
+					'	<span class="societe">'+value.name+' &nbsp;</span>'+
+					'	<a href="#" class="btn btn-sm btn-circle btn-success pull-right"><i class="fas fa-file-download"></i></a>'+
+					'</li>'
+					);
+				});
+				
+				$('.wyca_setup_download_loading').hide();
+				$('#wyca_setup_download_map .loaded').show();
+			});
+		})
+	}
+	else
+	{
+		setTimeout(GetMapsForDownloadNormal, 500);
 	}
 }
 

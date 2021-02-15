@@ -33,15 +33,15 @@ $(document).ready(function(e) {
 			{
 				$('#install_normal_setup_export .bSiteExportElem').removeClass('disabled');
 				var a = document.createElement("a");
-					document.body.appendChild(a);
-					a.style = "display: none";
-					
-					var blob = new Blob([data.D], {type: "octet/stream"}),
-					url = window.URL.createObjectURL(blob);
-					a.href = url;
-					a.download = 'export_site_'+currentNameSiteExport+'.wyca';
-					a.click();
-					window.URL.revokeObjectURL(url);
+				document.body.appendChild(a);
+				a.style = "display: none";
+				
+				var blob = new Blob([data.D], {type: "octet/stream"}),
+				url = window.URL.createObjectURL(blob);
+				a.href = url;
+				a.download = 'export_site_'+currentNameSiteExport+'.wyca';
+				a.click();
+				window.URL.revokeObjectURL(url);
 			}
 			else
 			{
@@ -535,6 +535,38 @@ $(document).ready(function(e) {
 		}
 		
     });	
+
+	// ----------------------- MAP DOWNLOAD PNG ------------------------
+	
+	$(document).on('click', '#install_normal_setup_download_map .bMapDownloadElem', function(e) {
+        $('#install_normal_setup_download_map .bMapDownloadElem').addClass('disabled');
+		
+		currentMapDownload = $(this).find('.societe').text();
+		id_map = $(this).data('id_map');
+		
+		wycaApi.GetMap($(this).data('id_map'), function(data){
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$('#install_normal_setup_download_map .bMapDownloadElem').removeClass('disabled');
+				var a = document.createElement("a");
+				document.body.appendChild(a);
+				a.style = "display: none";
+				
+				url = 'data:image/png;base64,' + data.D.image;
+				a.href = url;
+				a.download = 'map_'+currentMapDownload+'.png';
+				a.click();
+				window.URL.revokeObjectURL(url);
+			}
+			else
+			{
+				$('#install_normal_setup_download_map .bMapDownloadElem').removeClass('disabled');
+				ParseAPIAnswerError(data,textErrorDownloadMap);
+			}							
+		});
+		
+    });
+	
 });
 
 // ----------------------- MAPPING CONFIG ------------------------
@@ -1232,6 +1264,7 @@ $(document).ready(function(e) {
 	})
 	
 	//------------------- SOUND ------------------------
+	
 	$('#install_normal_setup_sound .sound_switch_ROS').change(function(){
 		if(!$(this).prop('checked')){
 			$('#install_normal_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off').addClass('disabled');

@@ -64,6 +64,7 @@ var textErrorSound = "<?php echo __js('Error sound');?>";
 var textErrorTrinary = "<?php echo __js('Error get map trinary');?>";
 var textErrorImportSite = "<?php echo __js('Error import site');?>";
 var textErrorExportSite = "<?php echo __js('Error export site');?>";
+var textErrorDownloadMap = "<?php echo __js('Error download map');?>";
 var textErrorSaveSite = "<?php echo __js('Error save site');?>";
 var textErrorGetSite = "<?php echo __js('Error get site');?>";
 var textErrorSetSite = "<?php echo __js('Error set site');?>";

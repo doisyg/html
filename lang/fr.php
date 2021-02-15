@@ -615,5 +615,12 @@ $_LANG['90c42d95a211636ced855891f6eff8a4'] = 'Annuler changement carte';
 $_LANG['a046fc49e64aaf67217c5444a0bbe700'] = 'Arrêt navigation';
 $_LANG['a1263f7712e8123096332b7c53fd35b7'] = 'Cette page vous permet de changer de carte en utilisant des repères.';
 $_LANG['902b0d55fddef6f8d651fe1035b7d4bd'] = 'Erreur';
+$_LANG['e5f60e42a15a40f386ba2ed019c30241'] = 'Erreur téléchargement carte';
+$_LANG['6cb096f0ee1f66f71cb1771271c9c3c4'] = 'Télécharger une carte';
+$_LANG['9281dff768f67c06984bad579f388eb8'] = 'Cette page vous permet d\'importer un site en utilisant le fichier .wyca associé';
+$_LANG['53b47879e5406ac41e729856bbabcfa1'] = 'Cette page vous permet d\'importer un site en utilisant le fichier .wyca associé';
+$_LANG['1846f06a0ae617eed00fc5ef2281e610'] = 'Télécharger une carte';
+$_LANG['5c2a40a6776f7e0f3ee3210bbee07075'] = 'Télécharger vos cartes en cliquant sur l\'icône';
+$_LANG['666cbb24c2d5d4ec055108dff052d2d0'] = 'This page allow you to download a PNG file of your map by clicking on the correspondant icon.';
 
 ?>

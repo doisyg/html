@@ -597,5 +597,6 @@ $_LANG['99cad591e60ed88d1bf2ad7705f110fe'] = 'Teleop robot';
 $_LANG['90c42d95a211636ced855891f6eff8a4'] = 'Cancel Switch Map';
 $_LANG['a046fc49e64aaf67217c5444a0bbe700'] = 'Navigation stopped';
 $_LANG['a1263f7712e8123096332b7c53fd35b7'] = 'This page allows you to manage switch between maps using landmarks.';
+$_LANG['e5f60e42a15a40f386ba2ed019c30241'] = 'Error download map';
 
 ?>

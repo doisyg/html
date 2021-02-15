@@ -159,6 +159,7 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 	.modalHelpClickForbidden h4{margin:15px 0!important;}
 	.modalHelpClickArea h4{margin:15px 0!important;}
 	.modalHelpClickGotoPose h4{margin:15px 0!important;}
+	.optionGoToPose > li {padding: 10px!important;margin: 30px 0px!important;}
 }
 #install_by_step_mapping { background-color:rgba(245,245,245,0.8); }
 #install_by_step_mapping header { background-color:#FFFFFF; z-index:200; }
@@ -1177,6 +1178,9 @@ div.icon_menu .iconForbiddenArea .fa-minus-circle{
 .nopymy:after{margin-top:0;margin-bottom:0;padding-top:0;padding-bottom:0;}
 
 /* CSS FIXES */
+li.disabled{
+	pointer-events:none;cursor:not-allowed;background:#a4a4a4;
+}
 .loading_fin_create_map{
 	margin-top: 25%;
 }
@@ -1365,6 +1369,15 @@ span.toggle_details{
 
 .optionGoToPose > li > i:not(.fa-chevron-right){
 	font-size: 24px;
+}
+
+.modalGoToPose h4{
+	text-align: left;
+    color: #589fb2;
+    font-weight: 700;
+}
+.modalGoToPose p.GetPathOutcome{
+	text-align:left;
 }
 
 .row.row-eq-height{

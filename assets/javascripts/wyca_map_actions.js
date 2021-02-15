@@ -2126,7 +2126,18 @@ $(document).ready(function(){
 					
 					xROSGotoPose = xRos;
 					yROSGotoPose = yRos;
-					
+					$('#wyca_edit_map .modalGoToPose .GetPathOutcome').html('-')
+					$('#wyca_edit_map_modalGoToPose_distance').val('-')
+					wycaApi.GetPathFromCurrentPose(xROSGotoPose, yROSGotoPose,0,0,function(data){
+						if (data.A == wycaApi.AnswerCode.NO_ERROR){
+							$('#wyca_edit_map .modalGoToPose .GetPathOutcome').html(data.D.M)
+							$('#wyca_edit_map_modalGoToPose_distance').val(data.D.D)
+						}else{
+							let text = wycaApi.AnswerCodeToString(data.A)+'<br>'+data.D.M;
+							$('#wyca_edit_map .modalGoToPose .GetPathOutcome').html(text)
+							$('#wyca_edit_map_modalGoToPose_distance').val('-')
+						}
+					})
 					$('#wyca_edit_map .modalGoToPose').modal('show');
 					
 				break;
