@@ -105,8 +105,15 @@
         
         <script>
 		$(document).ready(function(e) {
-			
-           
+			<?php if(isset($error_conf_release) && $error_conf_release) { ?>
+				<?php if($_CONFIG['MODE'] == 'PROD') { ?>
+					console.log('---------------------------------------------------------');
+					console.log('Invalid or missing version.conf file on release detected');
+					console.log('---------------------------------------------------------');
+				<?php }else{?>
+					DisplayError('Invalid or missing version.conf file on release detected');
+				<?php }?>
+			<?php }?>
             <?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 2) {?>
 			InitTopsByStep();
 			<?php }?>

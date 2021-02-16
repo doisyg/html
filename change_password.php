@@ -148,7 +148,15 @@ var robot_host = '<?php echo $_CONFIG["ROBOT_HOST"]?>';
 
 
 $(document).ready(function(e) {
-
+	<?php if(isset($error_conf_release) && $error_conf_release) { ?>
+		<?php if($_CONFIG['MODE'] == 'PROD') { ?>
+			console.log('---------------------------------------------------------');
+			console.log('Invalid or missing version.conf file on release detected');
+			console.log('---------------------------------------------------------');
+		<?php }else{?>
+			DisplayError('Invalid or missing version.conf file on release detected');
+		<?php }?>
+	<?php }?>
 
 	wycaApi = new WycaAPI({
 		host:robot_host, //192.168.1.32:9090', // host:'192.168.100.245:9090',

@@ -36,7 +36,6 @@ $_CONFIG['MODE'] = file_exists('C:\\')? 'DEV':'PROD';
 
 if(file_exists(__DIR__ .'/../.git/HEAD')){
 	$stringfromfile = file(__DIR__ .'/../.git/HEAD', FILE_USE_INCLUDE_PATH);
-
 	$firstLine = $stringfromfile[0]; //get the string from the array
 	$explodedstring = explode("/", $firstLine, 3); //seperate out by the "/" in the string
 	$branchname = $explodedstring[2]; //get the one that is always the branch name
@@ -52,7 +51,6 @@ if(file_exists(__DIR__ .'/../.git/HEAD')){
 		case 'html_stable': $bn = 'sta'; break;
 		case 'html_release': $bn = 'rel'; break;
 		case 'multimap': $bn = 'mum'; break;
-
 		default : 
 			$explode = explode('_',$branchname);
 			if(count($explode) > 1){
@@ -64,37 +62,42 @@ if(file_exists(__DIR__ .'/../.git/HEAD')){
 				$bn = substr($branchname,0,2);
 		break;
 	}
-	$version = date('Ymd').'_'.$bn;
 	if($bn == 'rel'){
-		// DO SMTHING SPECIAL ON RELEASE ?
-		// STOCK DATE WRITE IT ON CONF FILE ?
-	}
+		$file_version = __DIR__ .'/version.conf';
+		if(file_exists($file_version))
+			$json_version = json_decode(file_get_contents($file_version), true);
+		if(isset($json_version) && !is_null($json_version) && isset($json_version['release']) && $json_version['release'] != '')
+			$version = $json_version['release']; // GET RELEASE DATE FROM VERSION.CONF
+		else{
+			$version = date('Ymd'); // RELEASE NO VERSION.CONF OR INVALID
+			$error_conf_release = true; // FOR TEST IN FOOTER JS
+		}
+	}else
+		$version = date('Ymd').'_'.$bn;
 }else{
+	$bn = 'rel'; // NO GIT => RELEASE MODE
 	$_CONFIG['MODE'] = 'PROD';
 	$version = date('Ymd');
 }
 
 $_CONFIG['CONF_PATH'] = $_CONFIG['MODE'] == 'DEV' ? dirname(__FILE__).'/../lang/c.conf' : dirname(__FILE__).'/../../conf/c.conf';
 
-/* ROBOT HOST */
+/* ROBOT HOST HTTP*/
 $VM = true;
-$_CONFIG['ROBOT_HOST'] = '';
-$_CONFIG['ROBOT_HTTP'] = $server_request_scheme;
-$_CONFIG['ROBOT_HTTP'] .= '://';
-
-if($_CONFIG['MODE'] == 'PROD'){ 
-	$_CONFIG['ROBOT_HOST'] .= 'wyca.run/';
+if($_CONFIG['MODE'] == 'PROD'){
+	$_CONFIG['ROBOT_HOST'] = 'wyca.run';
 }else{
 	if(file_exists('C:\\Users\\Yvan') || file_exists('C:\\Users\\F')){
 		//F
-		$_CONFIG['ROBOT_HOST'] .= $VM ? '172.25.65.22:' : '10.0.0.51:';
+		$_CONFIG['ROBOT_HOST'] = $VM ? '172.25.65.22' : '10.0.0.51';
 	}else{
 		//SMORILLON
-		$_CONFIG['ROBOT_HOST'] .= '192.168.0.33:';
+		$_CONFIG['ROBOT_HOST'] = '192.168.0.33';
 	}
-	$_CONFIG['ROBOT_HOST'] .= $server_request_scheme == 'http' ? '9094' : '9095';
 }
-$_CONFIG['ROBOT_HTTP'] .= $_CONFIG['ROBOT_HOST'];
+
+$_CONFIG['ROBOT_HTTP'] = $server_request_scheme.'://'.$_CONFIG['ROBOT_HOST'];
+$_CONFIG['ROBOT_HOST'] .= $server_request_scheme == 'http' ? ':9094' : ':9095';
 
 require_once (dirname(__FILE__)."/../lib/lib.php");
 require_once (dirname(__FILE__)."/../classes/includes.php");
