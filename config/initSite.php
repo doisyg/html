@@ -33,8 +33,9 @@ $_CONFIG['URL_API'] = $_CONFIG['URL']."API/";
 $_CONFIG['MODE'] = file_exists('C:\\')? 'DEV':'PROD';
 
 // GET GIT BRANCH
-if(file_exists('.git/HEAD')){
-	$stringfromfile = file('.git/HEAD', FILE_USE_INCLUDE_PATH);
+
+if(file_exists(__DIR__ .'/../.git/HEAD')){
+	$stringfromfile = file(__DIR__ .'/../.git/HEAD', FILE_USE_INCLUDE_PATH);
 
 	$firstLine = $stringfromfile[0]; //get the string from the array
 	$explodedstring = explode("/", $firstLine, 3); //seperate out by the "/" in the string
@@ -72,7 +73,28 @@ if(file_exists('.git/HEAD')){
 	$_CONFIG['MODE'] = 'PROD';
 	$version = date('Ymd');
 }
+
 $_CONFIG['CONF_PATH'] = $_CONFIG['MODE'] == 'DEV' ? dirname(__FILE__).'/../lang/c.conf' : dirname(__FILE__).'/../../conf/c.conf';
+
+/* ROBOT HOST */
+$VM = true;
+$_CONFIG['ROBOT_HOST'] = '';
+$_CONFIG['ROBOT_HTTP'] = $server_request_scheme;
+$_CONFIG['ROBOT_HTTP'] .= '://';
+
+if($_CONFIG['MODE'] == 'PROD'){ 
+	$_CONFIG['ROBOT_HOST'] .= 'wyca.run/';
+}else{
+	if(file_exists('C:\\Users\\Yvan') || file_exists('C:\\Users\\F')){
+		//F
+		$_CONFIG['ROBOT_HOST'] .= $VM ? '172.25.65.22:' : '10.0.0.51:';
+	}else{
+		//SMORILLON
+		$_CONFIG['ROBOT_HOST'] .= '192.168.0.33:';
+	}
+	$_CONFIG['ROBOT_HOST'] .= $server_request_scheme == 'http' ? '9094' : '9095';
+}
+$_CONFIG['ROBOT_HTTP'] .= $_CONFIG['ROBOT_HOST'];
 
 require_once (dirname(__FILE__)."/../lib/lib.php");
 require_once (dirname(__FILE__)."/../classes/includes.php");
