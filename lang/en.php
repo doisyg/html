@@ -598,5 +598,21 @@ $_LANG['90c42d95a211636ced855891f6eff8a4'] = 'Cancel Switch Map';
 $_LANG['a046fc49e64aaf67217c5444a0bbe700'] = 'Navigation stopped';
 $_LANG['a1263f7712e8123096332b7c53fd35b7'] = 'This page allows you to manage switch between maps using landmarks.';
 $_LANG['e5f60e42a15a40f386ba2ed019c30241'] = 'Error download map';
+$_LANG['6cb096f0ee1f66f71cb1771271c9c3c4'] = 'Download map';
+$_LANG['9281dff768f67c06984bad579f388eb8'] = 'This page allow you to export a site by clicking on the correspondant icon.';
+$_LANG['53b47879e5406ac41e729856bbabcfa1'] = 'This page allow you to import a site by uploading the .wyca file associated.';
+$_LANG['5ff02c037fd5e680d2601accfceb5fd4'] = 'The goal is to make sure that all the walls are shown in black on the map and that all the areas where the robot has to move are shown in white on the map.';
+$_LANG['1846f06a0ae617eed00fc5ef2281e610'] = 'Download Map';
+$_LANG['5c2a40a6776f7e0f3ee3210bbee07075'] = 'Download maps by clicking on the icon';
+$_LANG['666cbb24c2d5d4ec055108dff052d2d0'] = 'This page allow you to download a PNG file of your map by clicking on the correspondant icon.';
+$_LANG['c14e4451c3a6e87fccd7a77cb924021e'] = 'You are connected using manager account.';
+$_LANG['c2863150fe3db643919c01bef521b31f'] = 'Keep in mind that :';
+$_LANG['17472d7a9e50501eb9824c0d9709be78'] = 'Safety is degraded.';
+$_LANG['33a1c41368c3de66f20101e65d431b39'] = 'Not to be used in production.';
+$_LANG['4cada3ac19ec0105e876ebd85603e9f5'] = 'Only for trained users.';
+$_LANG['43853c6c065e53dc51becfca53ae08fb'] = 'I know what I\'m doing';
+$_LANG['6a03d07c60c7ffd19860e6f518f2d8e4'] = 'Got it!';
+$_LANG['f3aa661b584021c1c8519d098fc807a8'] = 'GetPath';
+$_LANG['7376e0fa9b6382eee64aae2c6050bd80'] = 'I assume the responsibility';
 
 ?>

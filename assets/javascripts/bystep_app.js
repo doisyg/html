@@ -412,7 +412,7 @@ $(document).ready(function(e) {
 			$('#install_by_step_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off').addClass('disabled');
 			$('#install_by_step_sound .sound_switch_app').prop('checked',false);
 		}else{
-			$('#install_by_step_sound .sound_switch_app').parent().find('.ios-switch').removeClass('disabled');;
+			$('#install_by_step_sound .sound_switch_app').parent().find('.ios-switch').removeClass('disabled');
 		}
 	});
 	

@@ -1,4 +1,17 @@
 $(document).ready(function(e) {
+	// DISPLAY WARNING MODAL
+	$('.modal.modalWarningConnexion').modal('show','slow');
+	
+	$('#modalWarningConnexion_bOk').click(function(e){
+		if($('.checkboxWarningConnexion').prop('checked')){
+			$('.modal.modalWarningConnexion').modal('hide');
+		}else{
+			$('.checkboxWarningConnexion').parent().parent().addClass('shake');
+			setTimeout(function(){$('.checkboxWarningConnexion').parent().parent().removeClass('shake')},2000);
+		}
+	})
+		
+	
 	$('#manager_recovery .bRecovery').click(function(e) {
         e.preventDefault();
 		//----------------------- RECOVERY ----------------------------
