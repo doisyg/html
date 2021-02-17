@@ -935,23 +935,28 @@ function GetMapsForDownloadNormal(){
 	$('#install_normal_setup_download_map .loaded').hide();
 	if (wycaApi.websocketAuthed)
 	{
-	wycaApi.GetMapsList(current_site,function(data) {
+		wycaApi.GetCurrentMap(function(data) {
+			current_site = data.D.id_site;
+			current_map = data.D;
+			wycaApi.GetMapsList(current_site,function(data) {
+					
+				$('#install_normal_setup_download_map .list_maps').html('');
 				
-			$('#install_normal_setup_download_map .list_maps').html('');
-			
-			if (data.D != undefined)
-			$.each(data.D,function(index, value){
-				$('#install_normal_setup_download_map .list_maps').append('' +
-				'<li id="install_normal_setup_download_map_list_maps_elem_'+value.id_map+'" data-id_map="'+value.id_map+'" class="bMapDownloadElem">'+
-				'	<span class="societe">'+value.name+' &nbsp;</span>'+
-				'	<a href="#" class="btn btn-sm btn-circle btn-success pull-right"><i class="fas fa-file-download"></i></a>'+
-				'</li>'
-				);
-			});
-			
-			$('.install_normal_setup_download_loading').hide();
-			$('#install_normal_setup_download_map .loaded').show();
-		});
+				if (data.D != undefined)
+				$.each(data.D,function(index, value){
+					let active = current_map.id_map == value.id_map?'active':'';
+					$('#install_normal_setup_download_map .list_maps').append('' +
+					'<li id="install_normal_setup_download_map_list_maps_elem_'+value.id_map+'" data-id_map="'+value.id_map+'" class="bMapDownloadElem">'+
+					'	<span class="societe '+active+'">'+value.name+'</span>'+
+					'	<a href="#" class="btn btn-sm btn-circle btn-success pull-right"><i class="fas fa-file-download"></i></a>'+
+					'</li>'
+					);
+				});
+				
+				$('.install_normal_setup_download_loading').hide();
+				$('#install_normal_setup_download_map .loaded').show();
+			})
+		})
 	}
 	else
 	{
@@ -964,17 +969,19 @@ function GetMapsForDownloadWyca(){
 	$('#wyca_setup_download_map .loaded').hide();
 	if (wycaApi.websocketAuthed)
 	{
-		wycaApi.GetCurrentSite(function(data) {
+		wycaApi.GetCurrentMap(function(data) {
 			current_site = data.D.id_site;
+			current_map = data.D;
 			wycaApi.GetMapsList(current_site,function(data) {
 				
 				$('#wyca_setup_download_map .list_maps').html('');
 				
 				if (data.D != undefined)
 				$.each(data.D,function(index, value){
+					let active = current_map.id_map == value.id_map?'active':'';
 					$('#wyca_setup_download_map .list_maps').append('' +
 					'<li id="wyca_setup_download_map_list_maps_elem_'+value.id_map+'" data-id_map="'+value.id_map+'" class="bMapDownloadElem">'+
-					'	<span class="societe">'+value.name+' &nbsp;</span>'+
+					'	<span class="societe '+active+'">'+value.name+'</span>'+
 					'	<a href="#" class="btn btn-sm btn-circle btn-success pull-right"><i class="fas fa-file-download"></i></a>'+
 					'</li>'
 					);
@@ -982,7 +989,7 @@ function GetMapsForDownloadWyca(){
 				
 				$('.wyca_setup_download_loading').hide();
 				$('#wyca_setup_download_map .loaded').show();
-			});
+			})
 		})
 	}
 	else
