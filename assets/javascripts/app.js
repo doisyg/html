@@ -228,9 +228,11 @@ $(document).ready(function(e) {
 					}
 				});
 			}
+			
 			if(target == 'install_by_step_sound'){ //UPDATE INSTALL STEP ON BACK FROM CREATE NEW SITE PROCESS NORMAL
-				if(JSON.parse(getCookie('create_new_site')) || create_new_site){
+				if((getCookie('create_new_site') != '' ? JSON.parse(getCookie('create_new_site')) : false ) || create_new_site){
 					setCookie('create_new_site',false);
+					create_new_site = false;
 					$.ajax({
 						type: "POST",
 						url: 'ajax/install_by_step_finish.php',
@@ -240,7 +242,7 @@ $(document).ready(function(e) {
 						success: function(data) {
 						},
 						error: function(e) {
-							alert_wyca((typeof(textErrorSound) != 'undefined'? textErrorSound : 'Error in sound') + ' ' + e.responseText);
+							alert_wyca((typeof(textErrorFinish) != 'undefined'? textErrorFinish : 'Error in finish') + ' ' + e.responseText);
 						}
 					});
 					$('#modalBack').modal('hide');
@@ -249,7 +251,7 @@ $(document).ready(function(e) {
 					
 					//AFFICHER QQ CHOSE
 					$('section#install_normal_setup_sites').show('slow');
-					
+					$('.title_section').html($('section#install_normal_setup_sites > header > h2').text());
 					if ($('#install_normal_setup_sites').is(':visible'))
 					{
 						GetSitesNormal();
@@ -330,6 +332,7 @@ $(document).ready(function(e) {
 			if (next == 'install_normal_setup_sites') GetSitesNormal();
 			if (next == 'install_normal_setup_export') GetSitesForExportNormal();
 			if (next == 'install_normal_setup_import') InitSiteImportNormal();
+			if (next == 'install_normal_setup_download_map') GetMapsForDownloadNormal();
 			if (next == 'install_normal_setup_tops') InitTopsNormal();
 			if (next == 'install_normal_setup_top') InitTopsActiveNormal();
 			if (next == 'install_normal_setup_config') GetConfigurationsNormal();
@@ -350,6 +353,7 @@ $(document).ready(function(e) {
 			if (next == 'wyca_setup_sound') InitSoundWyca();
 			if (next == 'wyca_setup_export') GetSitesForExportWyca();
 			if (next == 'wyca_setup_import') InitSiteImportWyca();
+			if (next == 'wyca_setup_download_map') GetMapsForDownloadWyca();
 			if (next == 'wyca_setup_tops') InitTopsWyca();
 			if (next == 'wyca_setup_top') InitTopsActiveWyca();
 			if (next == 'wyca_setup_config') GetConfigurationsWyca();
@@ -713,7 +717,7 @@ function GetSitesForExportWyca()
 	}
 	else
 	{
-		setTimeout(GetSitesWyca, 500);
+		setTimeout(GetSitesForExportWyca, 500);
 	}
 }
 
@@ -750,7 +754,7 @@ function GetSitesManager()
 	}
 	else
 	{
-		setTimeout(GetSitesNormal, 500);
+		setTimeout(GetSitesManager, 500);
 	}
 }
 
@@ -822,7 +826,188 @@ function GetSitesForExportNormal()
 	}
 	else
 	{
-		setTimeout(GetSitesNormal, 500);
+		setTimeout(GetSitesForExportNormal, 500);
+	}
+}
+
+// MAPS
+
+function GetMapsNormal()
+{
+	$('.install_normal_setup_maps_loading').show();
+	$('#install_normal_setup_maps .loaded').hide();
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetCurrentMap(function(data) {
+			current_site = data.D.id_site;
+			wycaApi.GetCurrentMap(function(data) {
+				current_map = data.D;
+				//console.log(current_map);
+				wycaApi.GetMapsList(current_site,function(data) {
+					
+					$('#install_normal_setup_maps .list_maps').html('');
+					
+					if (data.D != undefined)
+					$.each(data.D,function(index, value){
+						$('#install_normal_setup_maps .list_maps').append('' +
+							'<li id="install_normal_setup_maps_list_map_elem_'+value.id_map+'" data-id_map="'+value.id_map+'">'+
+							'	<span class="societe">'+value.name+'</span>'+
+							(current_map.id_map != value.id_map?'	<a href="#" class="bMapDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>':'')+
+							(current_map.id_map != value.id_map?'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>':'')+
+							(current_map.id_map != value.id_map?'	<a href="#" class="bMapSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-check"></i></a>':'')+
+							'</li>'
+							);
+					});
+					
+					$('.install_normal_setup_maps_loading').hide();
+					$('#install_normal_setup_maps .loaded').show();
+				});
+			});
+		})
+	}
+	else
+	{
+		setTimeout(GetMapsNormal, 500);
+	}
+}
+
+function GetMapsWyca()
+{
+	$('.wyca_setup_maps_loading').show();
+	$('#wyca_setup_maps .loaded').hide();
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetCurrentMap(function(data) {
+			current_site = data.D.id_site;
+			wycaApi.GetCurrentMap(function(data) {
+				current_map = data.D;
+				//console.log(current_map);
+				wycaApi.GetMapsList(current_site,function(data) {
+					
+					$('#wyca_setup_maps .list_maps').html('');
+					
+					if (data.D != undefined)
+					$.each(data.D,function(index, value){
+						$('#wyca_setup_maps .list_maps').append('' +
+							'<li id="wyca_setup_maps_list_map_elem_'+value.id_map+'" data-id_map="'+value.id_map+'">'+
+							'	<span class="societe">'+value.name+'</span>'+
+							(current_map.id_map != value.id_map?'	<a href="#" class="bMapDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>':'')+
+							(current_map.id_map != value.id_map?'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>':'')+
+							(current_map.id_map != value.id_map?'	<a href="#" class="bMapSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-check"></i></a>':'')+
+							'</li>'
+							);
+					});
+					
+					$('.wyca_setup_maps_loading').hide();
+					$('#wyca_setup_maps .loaded').show();
+				});
+			});
+		})
+	}
+	else
+	{
+		setTimeout(GetMapsWyca, 500);
+	}
+}
+
+function GetSwitchMapsWyca()
+{
+	$('.wyca_switch_map_landmark_loading').show();
+	$('#wyca_switch_map_landmark .loaded').hide();
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetCurrentMap(function(data) {
+			current_site = data.D.id_site;
+			wycaApi.GetCurrentMap(function(data) {
+				current_map = data.D;
+				//console.log(current_map);
+				wycaApi.GetMapsList(current_site,function(data) {
+					
+					$('#wyca_switch_map_landmark .list_switch_map_landmarks').html('');
+					
+					if (data.D != undefined)
+					$.each(data.D,function(index, value){
+						$('#wyca_switch_map_landmark .list_switch_map_landmarks').append('' +
+							'<li id="wyca_switch_map_landmark_list_map_elem_'+value.id_map+'" data-id_map="'+value.id_map+'">'+
+							'	<span class="societe">'+value.name+'</span>'+
+							(current_map.id_map != value.id_map?'	<a href="#" class="bMapSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fas fa-exchange-alt"></i></a>':'')+
+							'</li>'
+							);
+					});
+					
+					$('.wyca_switch_map_landmark_loading').hide();
+					$('#wyca_switch_map_landmark .loaded').show();
+				});
+			});
+		})
+	}
+	else
+	{
+		setTimeout(GetSwitchMapsWyca, 500);
+	}
+}
+
+function GetMapsForDownloadNormal(){
+	$('.install_normal_setup_download_loading').show();
+	$('#install_normal_setup_download_map .loaded').hide();
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetCurrentSite(function(data) {
+			current_site = data.D.id_site;
+			wycaApi.GetMapsList(current_site,function(data) {
+				
+				$('#install_normal_setup_download_map .list_maps').html('');
+				
+				if (data.D != undefined)
+				$.each(data.D,function(index, value){
+					$('#install_normal_setup_download_map .list_maps').append('' +
+					'<li id="install_normal_setup_download_map_list_maps_elem_'+value.id_map+'" data-id_map="'+value.id_map+'" class="bMapDownloadElem">'+
+					'	<span class="societe">'+value.name+' &nbsp;</span>'+
+					'	<a href="#" class="btn btn-sm btn-circle btn-success pull-right"><i class="fas fa-file-download"></i></a>'+
+					'</li>'
+					);
+				});
+				
+				$('.install_normal_setup_download_loading').hide();
+				$('#install_normal_setup_download_map .loaded').show();
+			});
+		})
+	}
+	else
+	{
+		setTimeout(GetMapsForDownloadNormal, 500);
+	}
+}
+
+function GetMapsForDownloadWyca(){
+	$('.wyca_setup_download_loading').show();
+	$('#wyca_setup_download_map .loaded').hide();
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetCurrentSite(function(data) {
+			current_site = data.D.id_site;
+			wycaApi.GetMapsList(current_site,function(data) {
+				
+				$('#wyca_setup_download_map .list_maps').html('');
+				
+				if (data.D != undefined)
+				$.each(data.D,function(index, value){
+					$('#wyca_setup_download_map .list_maps').append('' +
+					'<li id="wyca_setup_download_map_list_maps_elem_'+value.id_map+'" data-id_map="'+value.id_map+'" class="bMapDownloadElem">'+
+					'	<span class="societe">'+value.name+' &nbsp;</span>'+
+					'	<a href="#" class="btn btn-sm btn-circle btn-success pull-right"><i class="fas fa-file-download"></i></a>'+
+					'</li>'
+					);
+				});
+				
+				$('.wyca_setup_download_loading').hide();
+				$('#wyca_setup_download_map .loaded').show();
+			});
+		})
+	}
+	else
+	{
+		setTimeout(GetMapsForDownloadNormal, 500);
 	}
 }
 
@@ -1255,7 +1440,7 @@ function GetUsersManager()
 	}
 	else
 	{
-		setTimeout(GetUsers, 500);
+		setTimeout(GetUsersManager, 500);
 	}
 
 }
@@ -1705,18 +1890,26 @@ function InitTopsActiveByStep()
 
 function InitSoundWyca()
 {
-	wycaApi.GetSoundIsOn(function(data){
-		if(data.D){
-			let sound_is_on = data.D
-			if(sound_is_on == 1){
-				//ROS SOUND TRUE
-				$('#wyca_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('off').addClass('on');
-				$('#wyca_setup_sound .sound_switch_ROS').prop('checked',true);
-					//APP SOUND
-				if(app_sound_is_on){
-					$('#wyca_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('off').addClass('on');
-					$('#wyca_setup_sound .sound_switch_app').prop('checked',true);
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetSoundIsOn(function(data){
+			if(data.D){
+				let sound_is_on = data.D
+				if(sound_is_on == 1){
+					//ROS SOUND TRUE
+					$('#wyca_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('off').addClass('on');
+					$('#wyca_setup_sound .sound_switch_ROS').prop('checked',true);
+						//APP SOUND
+					if(app_sound_is_on){
+						$('#wyca_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('off').addClass('on');
+						$('#wyca_setup_sound .sound_switch_app').prop('checked',true);
+					}else{
+						$('#wyca_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
+						$('#wyca_setup_sound .sound_switch_app').prop('checked',false);
+					}
 				}else{
+					$('#wyca_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('on').addClass('off');
+					$('#wyca_setup_sound .sound_switch_ROS').prop('checked',false);
 					$('#wyca_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
 					$('#wyca_setup_sound .sound_switch_app').prop('checked',false);
 				}
@@ -1726,30 +1919,38 @@ function InitSoundWyca()
 				$('#wyca_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
 				$('#wyca_setup_sound .sound_switch_app').prop('checked',false);
 			}
-		}else{
-			$('#wyca_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('on').addClass('off');
-			$('#wyca_setup_sound .sound_switch_ROS').prop('checked',false);
-			$('#wyca_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
-			$('#wyca_setup_sound .sound_switch_app').prop('checked',false);
-		}
-		$('#wyca_setup_sound .sound_switch_ROS').change();
-	})
+			$('#wyca_setup_sound .sound_switch_ROS').change();
+		})
+	}
+	else
+	{
+		setTimeout(InitSoundWyca, 500);
+
+	}
 }
 
 function InitSoundNormal()
 {
-	wycaApi.GetSoundIsOn(function(data){
-		if(data.D){
-			let sound_is_on = data.D
-			if(sound_is_on == 1){
-				//ROS SOUND TRUE
-				$('#install_normal_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('off').addClass('on');
-				$('#install_normal_setup_sound .sound_switch_ROS').prop('checked',true);
-					//APP SOUND
-				if(app_sound_is_on){
-					$('#install_normal_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('off').addClass('on');
-					$('#install_normal_setup_sound .sound_switch_app').prop('checked',true);
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetSoundIsOn(function(data){
+			if(data.D){
+				let sound_is_on = data.D
+				if(sound_is_on == 1){
+					//ROS SOUND TRUE
+					$('#install_normal_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('off').addClass('on');
+					$('#install_normal_setup_sound .sound_switch_ROS').prop('checked',true);
+						//APP SOUND
+					if(app_sound_is_on){
+						$('#install_normal_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('off').addClass('on');
+						$('#install_normal_setup_sound .sound_switch_app').prop('checked',true);
+					}else{
+						$('#install_normal_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
+						$('#install_normal_setup_sound .sound_switch_app').prop('checked',false);
+					}
 				}else{
+					$('#install_normal_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('on').addClass('off');
+					$('#install_normal_setup_sound .sound_switch_ROS').prop('checked',false);
 					$('#install_normal_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
 					$('#install_normal_setup_sound .sound_switch_app').prop('checked',false);
 				}
@@ -1759,30 +1960,38 @@ function InitSoundNormal()
 				$('#install_normal_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
 				$('#install_normal_setup_sound .sound_switch_app').prop('checked',false);
 			}
-		}else{
-			$('#install_normal_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('on').addClass('off');
-			$('#install_normal_setup_sound .sound_switch_ROS').prop('checked',false);
-			$('#install_normal_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
-			$('#install_normal_setup_sound .sound_switch_app').prop('checked',false);
-		}
-		$('#install_normal_setup_sound .sound_switch_ROS').change();
-	})
+			$('#install_normal_setup_sound .sound_switch_ROS').change();
+		})
+	}
+	else
+	{
+		setTimeout(InitSoundNormal, 500);
+
+	}	
 }
 
 function InitSoundByStep()
 {
-	wycaApi.GetSoundIsOn(function(data){
-		if(data.D){
-			let sound_is_on = data.D
-			if(sound_is_on == 1){
-				//ROS SOUND TRUE
-				$('#install_by_step_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('off').addClass('on');
-				$('#install_by_step_setup_sound .sound_switch_ROS').prop('checked',true);
-					//APP SOUND
-				if(app_sound_is_on){
-					$('#install_by_step_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('off').addClass('on');
-					$('#install_by_step_setup_sound .sound_switch_app').prop('checked',true);
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetSoundIsOn(function(data){
+			if(data.D){
+				let sound_is_on = data.D
+				if(sound_is_on == 1){
+					//ROS SOUND TRUE
+					$('#install_by_step_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('off').addClass('on');
+					$('#install_by_step_setup_sound .sound_switch_ROS').prop('checked',true);
+						//APP SOUND
+					if(app_sound_is_on){
+						$('#install_by_step_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('off').addClass('on');
+						$('#install_by_step_setup_sound .sound_switch_app').prop('checked',true);
+					}else{
+						$('#install_by_step_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
+						$('#install_by_step_setup_sound .sound_switch_app').prop('checked',false);
+					}
 				}else{
+					$('#install_by_step_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('on').addClass('off');
+					$('#install_by_step_setup_sound .sound_switch_ROS').prop('checked',false);
 					$('#install_by_step_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
 					$('#install_by_step_setup_sound .sound_switch_app').prop('checked',false);
 				}
@@ -1792,14 +2001,14 @@ function InitSoundByStep()
 				$('#install_by_step_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
 				$('#install_by_step_setup_sound .sound_switch_app').prop('checked',false);
 			}
-		}else{
-			$('#install_by_step_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('on').addClass('off');
-			$('#install_by_step_setup_sound .sound_switch_ROS').prop('checked',false);
-			$('#install_by_step_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
-			$('#install_by_step_setup_sound .sound_switch_app').prop('checked',false);
-		}
-		$('#install_by_step_sound .sound_switch_ROS').change();
-	})
+			$('#install_by_step_sound .sound_switch_ROS').change();
+		})
+	}
+	else
+	{
+		setTimeout(InitSoundByStep, 500);
+
+	}	
 }
 
 // WIFI
@@ -2318,8 +2527,8 @@ function hexToRgb(hex)
 
 function DisplayError(text)
 {
-	 $('.popup_error .panel-body').html(text);
-	 $('.popup_error').show();
+	$('.popup_error .panel-body').html(text);
+	$('.popup_error').show();
 }
 
 function CheckName(tab, nom, index_ignore=-1)
@@ -2475,7 +2684,7 @@ function deleteCookie(cname)
 
 function resetCookies()
 {
-	let tab =['create_new_site','boolHelpManagerI','boolHelpAreaI','boolHelpForbiddenI','boolHelpGotoPoseI','boolHelpGotoPoseM','boolHelpGotoPoseU','APP_SOUND'];
+	let tab =['create_new_site','create_new_map','boolHelpManagerI','boolHelpAreaI','boolHelpForbiddenI','boolHelpGotoPoseI','boolHelpGotoPoseM','boolHelpGotoPoseU','APP_SOUND'];
 	tab.forEach(cookie => deleteCookie(cookie))
 }
 

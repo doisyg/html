@@ -1720,27 +1720,27 @@ function WycaAPI(options){
 		ev_code = 0;
 		switch (event_name)
 		{
-			case 'onBatteryState': ev_code = _this.CommandCode.BATTERY_STATE; break;
-			case 'onTimeRemainingToEmptyMin': ev_code = _this.CommandCode.BMS_TIME_REMAINING_TO_EMPTY; break;
-			case 'onTimeRemainingToFullMin': ev_code = _this.CommandCode.BMS_TIME_REMAINING_TO_FULL; break;
-			case 'onDiagnosticAlert': ev_code = _this.CommandCode.DIAGNOSTIC_ALERT; break;
-			case 'onLedCurrentAnimationMode': ev_code = _this.CommandCode.LED_CURRENT_LED_ANIMATION_MODE; break;
-			case 'onLedCurrentRobotStateMode': ev_code = _this.CommandCode.LED_CURRENT_LED_ROBOT_STATE; break;
-			case 'onLedIsLightMode': ev_code = _this.CommandCode.LED_IS_LIGHT_MODE; break;
-			case 'onLedIsManualMode': ev_code = _this.CommandCode.LED_IS_MANUAL_MODE; break;
-			case 'onMappingIsStarted': ev_code = _this.CommandCode.MAPPING_IS_STARTED; break;
-			case 'onMappingMapInConstruction': ev_code = _this.CommandCode.MAPPING_MAP_IN_CONSTRUCTION; break;
-			case 'onMappingRobotPoseInBuildingMap': ev_code = _this.CommandCode.MAPPING_ROBOT_POSE_CURRENT_MAP; break;
-			case 'onNavigationIsStarted': ev_code = _this.CommandCode.NAVIGATION_IS_STARTED; break;
-			case 'onNavigationRobotPose': ev_code = _this.CommandCode.NAVIGATION_ROBOT_POSE; break;
-			case 'onCurrentAreaId': ev_code = _this.CommandCode.CURRENT_AREA_ID; break;
-			case 'onIsFreewheel': ev_code = _this.CommandCode.IS_FREEWHEEL; break;
-			case 'onIsSafetyStop': ev_code = _this.CommandCode.IS_SAFETY_STOP; break;
-			case 'onLidarData': ev_code = _this.CommandCode.LIDAR_DATA; break;
-			case 'onMapUpdated': ev_code = _this.CommandCode.MAP_UPDATED; break;
-			case 'onDockingState': ev_code = _this.CommandCode.DOCKING_STATE; break;
-			case 'onPOIsDetect': ev_code = _this.CommandCode.POI_POSES; break;
-			case 'onMoveInProgress': ev_code = _this.CommandCode.MOVE_IN_PROGRESS; break;
+			case 'onBatteryState': ev_code = _this.EventCode.BATTERY_STATE; break;
+			case 'onTimeRemainingToEmptyMin': ev_code = _this.EventCode.BMS_TIME_REMAINING_TO_EMPTY; break;
+			case 'onTimeRemainingToFullMin': ev_code = _this.EventCode.BMS_TIME_REMAINING_TO_FULL; break;
+			case 'onDiagnosticAlert': ev_code = _this.EventCode.DIAGNOSTIC_ALERT; break;
+			case 'onLedCurrentAnimationMode': ev_code = _this.EventCode.LED_CURRENT_LED_ANIMATION_MODE; break;
+			case 'onLedCurrentRobotStateMode': ev_code = _this.EventCode.LED_CURRENT_LED_ROBOT_STATE; break;
+			case 'onLedIsLightMode': ev_code = _this.EventCode.LED_IS_LIGHT_MODE; break;
+			case 'onLedIsManualMode': ev_code = _this.EventCode.LED_IS_MANUAL_MODE; break;
+			case 'onMappingIsStarted': ev_code = _this.EventCode.MAPPING_IS_STARTED; break;
+			case 'onMappingMapInConstruction': ev_code = _this.EventCode.MAPPING_MAP_IN_CONSTRUCTION; break;
+			case 'onMappingRobotPoseInBuildingMap': ev_code = _this.EventCode.MAPPING_ROBOT_POSE_CURRENT_MAP; break;
+			case 'onNavigationIsStarted': ev_code = _this.EventCode.NAVIGATION_IS_STARTED; break;
+			case 'onNavigationRobotPose': ev_code = _this.EventCode.NAVIGATION_ROBOT_POSE; break;
+			case 'onCurrentAreaId': ev_code = _this.EventCode.CURRENT_AREA_ID; break;
+			case 'onIsFreewheel': ev_code = _this.EventCode.IS_FREEWHEEL; break;
+			case 'onIsSafetyStop': ev_code = _this.EventCode.IS_SAFETY_STOP; break;
+			case 'onLidarData': ev_code = _this.EventCode.LIDAR_DATA; break;
+			case 'onMapUpdated': ev_code = _this.EventCode.MAP_UPDATED; break;
+			case 'onDockingState': ev_code = _this.EventCode.DOCKING_STATE; break;
+			case 'onPOIsDetect': ev_code = _this.EventCode.POI_POSES; break;
+			case 'onMoveInProgress': ev_code = _this.EventCode.MOVE_IN_PROGRESS; break;
 		}
 		
 		if (ev_code == 0 && _this.options.id_robot == 'not_robot')

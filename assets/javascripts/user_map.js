@@ -13,6 +13,7 @@ function GetInfosCurrentMapUser()
 
 function GetInfosCurrentMapDoUser()
 {
+	$('#user_edit_map .burger_menu ').addClass('updatingMap');
 	wycaApi.GetCurrentMapComplete(function(data) {
 		if (data.A == wycaApi.AnswerCode.NO_ERROR)
 		{
@@ -71,13 +72,17 @@ function GetInfosCurrentMapDoUser()
 				RemoveClass('#user_edit_map_svg .activ_select', 'activ_select'); 
 				RemoveClass('#user_edit_map_svg .editing_point', 'editing_point'); 
 				
-				UserHideMenus();				
+				userCanChangeMenu = true;
+				//userCurrentAction = ''; not needed for user
+				
+				UserHideMenus();
 			},500); 
 			$('#user_edit_map .modal').not('.modalReloadMap').each(function(){$(this).modal('hide')});
 			$('#bHeaderInfo').attr('onClick',"TogglePopupHelp()");
 		}
 		else
 		{
+			$('#user_edit_map .burger_menu ').removeClass('updatingMap');
 			ParseAPIAnswerError(data,textErrorGetMap);
 		}
 	});

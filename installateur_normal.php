@@ -1094,10 +1094,11 @@
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5" data-goto="install_normal_setup_wifi" href="#"><i class="fas fa-wifi"></i><?php echo __('Wifi');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" data-goto="install_normal_setup_language" href="#"><i class="fa fa-language"></i><?php echo __('Language');?></a></li>
 					
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7" data-goto="install_normal_setup_export" href="#"><i class="fa fa-upload"></i><?php echo __('Export site');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8" data-goto="install_normal_setup_import" href="#"><i class="fa fa-download"></i><?php echo __('Import site');?></a></li>
-					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile9" data-goto="install_normal_setup_trinary" href="#"><i class="far fa-map"></i><?php echo __('Map trinary');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile10" data-goto="install_normal_setup_reset" href="#"><i class="fa fa-eraser"></i><?php echo __('Factory data reset');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8" data-goto="install_normal_setup_export" href="#"><i class="fa fa-upload"></i><?php echo __('Export site');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile9" data-goto="install_normal_setup_import" href="#"><i class="fa fa-download"></i><?php echo __('Import site');?></a></li>
+					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile10" data-goto="install_normal_setup_trinary" href="#"><i class="far fa-map"></i><?php echo __('Map trinary');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile11" data-goto="install_normal_setup_download_map" href="#"><i class="fas fa-file-download"></i><?php echo __('Download map');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile12" data-goto="install_normal_setup_reset" href="#"><i class="fa fa-eraser"></i><?php echo __('Factory data reset');?></a></li>
 				</ul>
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
@@ -1236,17 +1237,21 @@
                                 <div class="actions mh100vh_55">
                                     
                                     <div class="h100vh_160" style="overflow:auto">
-                                        <div class="progressSetActiveTop">
-                                            <h4 style="text-align:center;margin-bottom:20px"><?php echo __('Setting new active top');?></h4>
-                                            <div class="setActiveTopProgress progress progress-striped light active m-md">
-                                                <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;">
-                                                </div>
-                                            </div>
-                                        </div>
-			                                    
+										<h4 style="text-align:center;margin-bottom:20px"><?php echo __('Setting new active top');?></h4>
+			                            <div class="install_normal_set_active_top_feedback set_active_top_feedback" style="display:none;">
+											<hr style="border-top: 1px solid #909090;">
+											<div class="row set_active_top_step SetActiveTopRemoveCurrent" id="">
+												<div class="col-xs-10"><h5><?= __('Removing actual top')?></h5></div>
+												<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+											</div>
+											<div class="row set_active_top_step SetActiveTopSetNew" id="">
+												<div class="col-xs-10"><h5><?= __('Setting new top')?></h5></div>
+												<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+											</div>
+											<hr style="border-top: 1px solid #909090;">
+										</div>
             	                        <div style="clear:both;"></div>
                 					</div>                   
-                                    <a href="#" class="btn btn-primary" data-dismiss="modal" style="width:100%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Close');?></a>
                                 </div>
                             </div>
                         </div>
@@ -1558,7 +1563,7 @@
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
 					<div class="content text-left sm-content">
-						<p class=""><?= __('Ths page allow you to export a site by clicking on the correspondant icon.')?></p>
+						<p class=""><?= __('This page allow you to export a site by clicking on the correspondant icon.')?></p>
 						<p class=""><?= __('The export of a site is a backup of all the configuration linked to a site (map, charging stations, areas...).')?></p>
 						<p class=""><?= __('You can also use the .wyca generated file to import this site on another vehicle.')?></p>
 						<p class=""><?= __('Keep this copy as it will allow you to reload your site in case of factory reset.')?></p>
@@ -1614,7 +1619,7 @@
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
 					<div class="content text-left sm-content">
-						<p class=""><?= __('Ths page allow you to import a site by uploading the .wyca file associated.')?></p>
+						<p class=""><?= __('This page allow you to import a site by uploading the .wyca file associated.')?></p>
 						<p class=""><?= __('You recover all the configuration linked to a site (map, charging stations, areas...).')?></p>
 						<p class=""><?= __('Whitout having to map again the same site.')?></p>
 					</div>
@@ -1689,7 +1694,7 @@
 						<p class=""><?= __('You have the possibility to optimize the final result by playing on two values.')?></p>
 						<p class=""><?= __('The default values are judicious in 95% of the cases.')?></p>
 						<p class=""><?= __('It might be necessary to play with these values to correct navigation problems in particular cases.')?></p>
-						<p class=""><?= __(' The goal is to make sure that all the walls are shown in black on the map and that all the areas where the robot has to move are shown in white on the map.')?></p>
+						<p class=""><?= __('The goal is to make sure that all the walls are shown in black on the map and that all the areas where the robot has to move are shown in white on the map.')?></p>
 					</div>
 					<p class="legende"><?=__('Click to hide')?></p>
 				</div>
@@ -1700,6 +1705,33 @@
             </footer>
         </section>
         
+        <section id="install_normal_setup_download_map" class="page with_footer">
+	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Download Map');?></h2>
+            </header>
+            <div class="content">
+				<div class="install_normal_setup_download_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
+                <h4 style="text-align:center;margin:30px 0"><?= __('Download maps by clicking on the icon') ?></h4>
+				
+                <div class="loaded col-md-12" style="padding-top:30px;">
+                	<ul class="list_maps list_elem">
+                    </ul>
+                </div>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left sm-content">
+						<p class=""><?= __('This page allow you to download a PNG file of your map by clicking on the correspondant icon.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
+			</div>
+            <footer>
+                <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="install_normal_setup"><?php echo __('Back');?></a>
+            </footer>
+        </section>
+		
         <section id="install_normal_setup_reset" class="page hide_photo_back with_footer">
 	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
             <header>
@@ -1789,14 +1821,12 @@
             <div class="content">
             
             	<h4 style="text-align:center"><?= __('Move the robot near a reflector (dock or augmented pose) then click on the recovery button') ?></h4>
-                <div style="text-align:center; margin-top:20px;"><a href="#" class="bRecovery ifDocked_disabled btn btn-warning btn_big_popup "><?=__('Recovery') ?></a></div>
-                
-            
-                <div style="text-align:center"><a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a></div>
+				<div style="text-align:center; margin-top:20px;"><a href="#" class="bRecovery ifDocked_disabled btn btn-warning btn_big_popup" ><?=__('Recovery') ?></a></div>
+					
+				<div style="text-align:center"><a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a></div>
                 <div style="text-align:center"><div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div></div>
-                                        
-                <div class="ifUndocked">
-                    
+               
+				<div class="ifUndocked ifNRecovery">
                     <div style="text-align:center; width:100%; z-index:2000; margin-top:20px;">
                         <div class="joystickDiv" draggable="false" style="margin:auto;">
                             <div class="fond"></div>
@@ -1804,6 +1834,29 @@
                         </div>
                     </div>
                 </div>
+				
+				<div class="ifRecovery" style="text-align:center; margin-top:20px;display:none;"><a href="#" class="btn btn-danger btn-lg bCancelRecovery"><?=__('Cancel Recovery') ?></a></div>
+				<div class="ifRecovery install_normal_recovery_feedback recovery_feedback" style="display:none;">
+					<hr style="border-top: 1px solid #909090;">
+					<div class="row recovery_step RecoveryScan" id="">
+						<div class="col-xs-10"><h5><?= __('Scan reflectors')?></h5></div>
+						<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+					</div>
+					<div class="row recovery_step RecoveryPose" id="">
+						<div class="col-xs-10"><h5><?= __('Robot position initiated')?></h5></div>
+						<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+					</div>
+					<div class="row recovery_step RecoveryRotate" id="">
+						<div class="col-xs-10"><h5><?= __('Rotate to clean obstacles')?></h5></div>
+						<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+					</div>
+					<div class="row recovery_step RecoveryNav" id="">
+						<div class="col-xs-10"><h5><?= __('Navigation started')?></h5></div>
+						<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+					</div>
+					<hr style="border-top: 1px solid #909090;">
+				</div>
+				
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
 					<div class="content sm-content text-left">

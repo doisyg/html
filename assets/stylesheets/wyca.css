@@ -156,6 +156,10 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 	.joystickDiv { width:auto; margin:auto; display:inline-block; position:relative;}
 	.joystickDiv .fond { background-image:url(../images/off.png);background-position: center center;background-size:contain; width:180px; height:180px; z-index:100;background-size: ; }
 	.joystickDiv .curseur { background-image:url(../images/bouton.png); background-position: center center;background-size:contain; width:84px; height:84px; position:absolute; top:50px; left:47px; z-index:200; }
+	.modalHelpClickForbidden h4{margin:15px 0!important;}
+	.modalHelpClickArea h4{margin:15px 0!important;}
+	.modalHelpClickGotoPose h4{margin:15px 0!important;}
+	.optionGoToPose > li {padding: 10px!important;margin: 30px 0px!important;}
 }
 #install_by_step_mapping { background-color:rgba(245,245,245,0.8); }
 #install_by_step_mapping header { background-color:#FFFFFF; z-index:200; }
@@ -1167,6 +1171,9 @@ div.icon_menu .iconForbiddenArea .fa-minus-circle{
 .nopymy:after{margin-top:0;margin-bottom:0;padding-top:0;padding-bottom:0;}
 
 /* CSS FIXES */
+li.disabled{
+	pointer-events:none;cursor:not-allowed;background:#a4a4a4;
+}
 .loading_fin_create_map{
 	margin-top: 25%;
 }
@@ -1357,6 +1364,15 @@ span.toggle_details{
 	font-size: 24px;
 }
 
+.modalGoToPose h4{
+	text-align: left;
+    color: #589fb2;
+    font-weight: 700;
+}
+.modalGoToPose p.GetPathOutcome{
+	text-align:left;
+}
+
 .row.row-eq-height{
 	display: flex;
     flex-wrap: wrap;
@@ -1397,4 +1413,44 @@ span.toggle_details{
 }
 .sound_list li{
 	
+}
+
+.recovery_feedback{
+	text-align:center;
+	margin:30px 0;
+}
+.recovery_feedback .recovery_step{
+	margin:10px 0;
+	transition:0.5s all;
+	display:none;
+}
+.recovery_feedback h5{
+	margin:5px 0;
+}
+.recovery_feedback .col-xs-10 h5{
+	text-align:left;
+}
+.recovery_feedback i{
+	font-size: 16px;
+    margin: 4px 0;
+}
+
+.set_active_top_feedback{
+	text-align:center;
+	margin:30px 0;
+}
+.set_active_top_feedback .set_active_top_step{
+	margin:10px 0;
+	transition:0.5s all;
+	display:none;
+}
+.set_active_top_feedback h5{
+	margin:5px 0;
+}
+.set_active_top_feedback .col-xs-10 h5{
+	text-align:left;
+}
+.set_active_top_feedback i{
+	font-size: 16px;
+    margin: 4px 0;
 }

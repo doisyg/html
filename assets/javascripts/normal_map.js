@@ -13,6 +13,7 @@ function GetInfosCurrentMapNormal()
 
 function GetInfosCurrentMapDoNormal()
 {
+	$('#install_normal_edit_map .burger_menu').addClass('updatingMap');
 	wycaApi.GetCurrentMapComplete(function(data) {
 		if (data.A == wycaApi.AnswerCode.NO_ERROR)
 		{
@@ -122,9 +123,13 @@ function GetInfosCurrentMapDoNormal()
 				$('#install_normal_edit_map .modalConfirmNoReloadMap .btn').removeClass('disabled');
 				$('#install_normal_edit_map .modalConfirmNoReloadMap .install_normal_edit_map_modalReloadMap_loading').hide();
 				
+				
 				RemoveClass('#install_normal_edit_map_svg .active', 'active');
 				RemoveClass('#install_normal_edit_map_svg .activ_select', 'activ_select'); 
 				RemoveClass('#install_normal_edit_map_svg .editing_point', 'editing_point'); 
+				
+				normalCanChangeMenu= true;
+				normalCurrentAction = '';
 				
 				NormalHideMenus();
 			},500);
@@ -133,6 +138,7 @@ function GetInfosCurrentMapDoNormal()
 		}
 		else
 		{
+			$('#install_normal_edit_map .burger_menu').removeClass('updatingMap');
 			ParseAPIAnswerError(data,textErrorGetMap);
 		}
 	});

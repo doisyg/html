@@ -18,15 +18,15 @@ $(document).ready(function(e) {
 			{
 				$('#wyca_setup_export .bSiteExportElem').removeClass('disabled');
 				var a = document.createElement("a");
-					document.body.appendChild(a);
-					a.style = "display: none";
-					
-					var blob = new Blob([data.D], {type: "octet/stream"}),
-					url = window.URL.createObjectURL(blob);
-					a.href = url;
-					a.download = 'export_site_'+currentNameSiteExport+'.wyca';
-					a.click();
-					window.URL.revokeObjectURL(url);
+				document.body.appendChild(a);
+				a.style = "display: none";
+				
+				var blob = new Blob([data.D], {type: "octet/stream"}),
+				url = window.URL.createObjectURL(blob);
+				a.href = url;
+				a.download = 'export_site_'+currentNameSiteExport+'.wyca';
+				a.click();
+				window.URL.revokeObjectURL(url);
 			}
 			else
 			{
@@ -494,7 +494,7 @@ $(document).ready(function(e) {
 		{
 			$('#wyca_setup_reset .bGotoReset').click();
 			wycaApi.FactoryDataReset(function(){
-				
+				resetCookies();
 				$.ajax({
 					type: "POST",
 					url: 'ajax/reset.php',
@@ -515,6 +515,37 @@ $(document).ready(function(e) {
 		}
 		
     });	
+	
+	// ----------------------- MAP DOWNLOAD PNG ------------------------
+		
+	$(document).on('click', '#wyca_setup_download_map .bMapDownloadElem', function(e) {
+        $('#wyca_setup_download_map .bMapDownloadElem').addClass('disabled');
+		
+		currentMapDownload = $(this).find('.societe').text();
+		id_map = $(this).data('id_map');
+		
+		wycaApi.GetMap($(this).data('id_map'), function(data){
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$('#wyca_setup_download_map .bMapDownloadElem').removeClass('disabled');
+				var a = document.createElement("a");
+				document.body.appendChild(a);
+				a.style = "display: none";
+				
+				url = 'data:image/png;base64,' + data.D.image;
+				a.href = url;
+				a.download = 'map_'+currentMapDownload+'.png';
+				a.click();
+				window.URL.revokeObjectURL(url);
+			}
+			else
+			{
+				$('#wyca_setup_download_map .bMapDownloadElem').removeClass('disabled');
+				ParseAPIAnswerError(data,textErrorDownloadMap);
+			}							
+		});
+		
+    });
 });
 
 // ----------------------- MAPPING CONFIG ------------------------
@@ -1479,6 +1510,7 @@ $(document).ready(function(e) {
 				dataType: 'json',
 				success: function(data) {
 					wycaApi.options.sound_is_on = true;
+					app_sound_is_on = true;
 				},
 				error: function(e) {
 					if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
@@ -1498,6 +1530,7 @@ $(document).ready(function(e) {
 				dataType: 'json',
 				success: function(data) {
 					wycaApi.options.sound_is_on = false;
+					app_sound_is_on = false;
 				},
 				error: function(e) {
 					if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
@@ -1669,33 +1702,80 @@ $(document).ready(function(e) {
 	
 	$('#wyca_recovery .bRecovery').click(function(e) {
         e.preventDefault();
-		
 		$('#wyca_recovery .bRecovery').addClass('disabled');
 		
+		/*INIT FEEDBACK DISPLAY*/
+		$('#wyca_recovery .recovery_feedback .recovery_step').css('opacity','0').hide();
+		$('#wyca_recovery .recovery_feedback .recovery_step .fa-check').hide();
+		$('#wyca_recovery .recovery_feedback .recovery_step .fa-pulse').show();
+		
+		wycaApi.on('onRecoveryFromFiducialFeedback', function(data) {
+			if(data.A == wycaApi.AnswerCode.NO_ERROR){
+				target = '';
+				switch(data.M){
+					case 'Scan reflector': 				target = '#wyca_recovery .recovery_feedback .recovery_step.RecoveryScan';	break;
+					case 'Init pose': 					target = '#wyca_recovery .recovery_feedback .recovery_step.RecoveryPose';	break;
+					case 'Rotate to check obstacles': 	target = '#wyca_recovery .recovery_feedback .recovery_step.RecoveryRotate';	break;
+					case 'Start navigation': 			target = '#wyca_recovery .recovery_feedback .recovery_step.RecoveryNav';		break;
+				}
+				
+				target = $(target);
+				if(target.prevAll('.recovery_step:visible').length > 0){
+					target.prevAll('.recovery_step:visible').find('.fa-check').show();
+					target.prevAll('.recovery_step:visible').find('.fa-pulse').hide();
+				}
+				target.css('opacity','1').show();
+			}
+		});
+		
 		wycaApi.on('onRecoveryFromFiducialResult', function(data) {
+			
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
-				$('#wyca_recovery .bRecovery').removeClass('disabled');
-				success_wyca(textRecoveryDone);
+				
+				$('#wyca_recovery .recovery_step:visible').find('.fa-check').show();
+				$('#wyca_recovery .recovery_step:visible').find('.fa-pulse').hide();
+				setTimeout(function(){
+					$('.ifRecovery').hide();
+					$('.ifNRecovery').show();
+					$('#wyca_recovery .bRecovery').removeClass('disabled');
+					success_wyca(textRecoveryDone);
+				},500)
 			}
 			else
 			{
+				$('.ifRecovery').hide();
+				$('.ifNRecovery').show();
 				$('#wyca_recovery .bRecovery').removeClass('disabled');
 				ParseAPIAnswerError(data);
 			}
+			// On rebranche l'ancienne fonction
+			wycaApi.on('onRecoveryFromFiducialResult', onRecoveryFromFiducialResult);
+			wycaApi.on('onRecoveryFromFiducialFeedback', onRecoveryFromFiducialFeedback);
 		});
 		
 		wycaApi.RecoveryFromFiducial(function(data) {
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
+				$('.ifRecovery').show();
+				$('.ifNRecovery').hide();
 			}
 			else
 			{
+				$('.ifRecovery').hide();
+				$('.ifNRecovery').show();
 				$('#wyca_recovery .bRecovery').removeClass('disabled');
 				ParseAPIAnswerError(data);
 			}
 		});
     });
+	
+	$('#wyca_recovery .bCancelRecovery').click(function(e) {
+		$('#wyca_recovery .bCancelRecovery').addClass('disabled');
+		wycaApi.RecoveryFromFiducialCancel(function(data) {
+			$('#wyca_recovery .bCancelRecovery').removeClass('disabled');
+		})
+	})
 	
 	//----------------------- LANGUE ----------------------------
 	
@@ -2293,6 +2373,7 @@ function InitWycaDemo()
 	$('#wyca_demo_mode_config .loaded').hide();
 	$('#wyca_demo_mode_config .list_actions li').remove();
 	$('#wyca_demo_mode_config .list_all_poi li').remove();
+	$('#wyca_demo_mode_config .list_all_dock li').remove();
 	
 	if (wycaApi.websocketAuthed)
 	{

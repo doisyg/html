@@ -33,15 +33,15 @@ $(document).ready(function(e) {
 			{
 				$('#install_normal_setup_export .bSiteExportElem').removeClass('disabled');
 				var a = document.createElement("a");
-					document.body.appendChild(a);
-					a.style = "display: none";
-					
-					var blob = new Blob([data.D], {type: "octet/stream"}),
-					url = window.URL.createObjectURL(blob);
-					a.href = url;
-					a.download = 'export_site_'+currentNameSiteExport+'.wyca';
-					a.click();
-					window.URL.revokeObjectURL(url);
+				document.body.appendChild(a);
+				a.style = "display: none";
+				
+				var blob = new Blob([data.D], {type: "octet/stream"}),
+				url = window.URL.createObjectURL(blob);
+				a.href = url;
+				a.download = 'export_site_'+currentNameSiteExport+'.wyca';
+				a.click();
+				window.URL.revokeObjectURL(url);
 			}
 			else
 			{
@@ -507,7 +507,7 @@ $(document).ready(function(e) {
 		{
 			$('#install_normal_setup_reset .bGotoReset').click();
 			wycaApi.FactoryDataReset(function(){
-				
+				resetCookies();
 				$.ajax({
 					type: "POST",
 					url: 'ajax/reset.php',
@@ -528,6 +528,38 @@ $(document).ready(function(e) {
 		}
 		
     });	
+
+	// ----------------------- MAP DOWNLOAD PNG ------------------------
+	
+	$(document).on('click', '#install_normal_setup_download_map .bMapDownloadElem', function(e) {
+        $('#install_normal_setup_download_map .bMapDownloadElem').addClass('disabled');
+		
+		currentMapDownload = $(this).find('.societe').text();
+		id_map = $(this).data('id_map');
+		
+		wycaApi.GetMap($(this).data('id_map'), function(data){
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$('#install_normal_setup_download_map .bMapDownloadElem').removeClass('disabled');
+				var a = document.createElement("a");
+				document.body.appendChild(a);
+				a.style = "display: none";
+				
+				url = 'data:image/png;base64,' + data.D.image;
+				a.href = url;
+				a.download = 'map_'+currentMapDownload+'.png';
+				a.click();
+				window.URL.revokeObjectURL(url);
+			}
+			else
+			{
+				$('#install_normal_setup_download_map .bMapDownloadElem').removeClass('disabled');
+				ParseAPIAnswerError(data,textErrorDownloadMap);
+			}							
+		});
+		
+    });
+	
 });
 
 // ----------------------- MAPPING CONFIG ------------------------
@@ -789,6 +821,7 @@ $(document).ready(function(e) {
 		$('#pages_install_normal').removeClass('active');
 		$('#pages_install_by_step section.page').hide();
 		
+		$('.title_section').html($('#pages_install_by_step #install_by_step_site > header > h2').text())
 		$('#pages_install_by_step').addClass('active');
 		$('#install_by_step_site').show();
 	});
@@ -1173,6 +1206,7 @@ $(document).ready(function(e) {
 	})
 	
 	//------------------- SOUND ------------------------
+	
 	$('#install_normal_setup_sound .sound_switch_ROS').change(function(){
 		if(!$(this).prop('checked')){
 			$('#install_normal_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off').addClass('disabled');
@@ -1197,6 +1231,7 @@ $(document).ready(function(e) {
 		
 		//APP SOUND
 		if($('#install_normal_setup_sound .sound_switch_app').prop('checked')){
+			
 			//APP SOUND ON
 			$.ajax({
 				type: "POST",
@@ -1205,6 +1240,7 @@ $(document).ready(function(e) {
 				dataType: 'json',
 				success: function(data) {
 					wycaApi.options.sound_is_on = true;
+					app_sound_is_on = true;
 				},
 				error: function(e) {
 					if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
@@ -1224,6 +1260,7 @@ $(document).ready(function(e) {
 				dataType: 'json',
 				success: function(data) {
 					wycaApi.options.sound_is_on = false;
+					app_sound_is_on = false;
 				},
 				error: function(e) {
 					if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
@@ -1395,33 +1432,83 @@ $(document).ready(function(e) {
 	
 	$('#install_normal_recovery .bRecovery').click(function(e) {
         e.preventDefault();
-		
 		$('#install_normal_recovery .bRecovery').addClass('disabled');
 		
+		/*INIT FEEDBACK DISPLAY*/
+		$('#install_normal_recovery .recovery_feedback .recovery_step').css('opacity','0').hide();
+		$('#install_normal_recovery .recovery_feedback .recovery_step .fa-check').hide();
+		$('#install_normal_recovery .recovery_feedback .recovery_step .fa-pulse').show();
+		
+		wycaApi.on('onRecoveryFromFiducialFeedback', function(data) {
+			if(data.A == wycaApi.AnswerCode.NO_ERROR){
+				target = '';
+				switch(data.M){
+					case 'Scan reflector': 				target = '#install_normal_recovery .recovery_feedback .recovery_step.RecoveryScan';	break;
+					case 'Init pose': 					target = '#install_normal_recovery .recovery_feedback .recovery_step.RecoveryPose';	break;
+					case 'Rotate to check obstacles': 	target = '#install_normal_recovery .recovery_feedback .recovery_step.RecoveryRotate';	break;
+					case 'Start navigation': 			target = '#install_normal_recovery .recovery_feedback .recovery_step.RecoveryNav';		break;
+				}
+				
+				target = $(target);
+				if(target.prevAll('.recovery_step:visible').length > 0){
+					target.prevAll('.recovery_step:visible').find('.fa-check').show();
+					target.prevAll('.recovery_step:visible').find('.fa-pulse').hide();
+				}
+				target.css('opacity','1').show();
+			}
+		});
+		
 		wycaApi.on('onRecoveryFromFiducialResult', function(data) {
+			
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
-				$('#install_normal_recovery .bRecovery').removeClass('disabled');
-				success_wyca(textRecoveryDone);
+				
+				$('#install_normal_recovery .recovery_step:visible').find('.fa-check').show();
+				$('#install_normal_recovery .recovery_step:visible').find('.fa-pulse').hide();
+				setTimeout(function(){
+					$('.ifRecovery').hide();
+					$('.ifNRecovery').show();
+					$('#install_normal_recovery .bRecovery').removeClass('disabled');
+					success_wyca(textRecoveryDone);
+					$('#install_normal_recovery .bRecovery').removeClass('disabled');
+					$('#install_normal_recovery .install_normal_recovery_next').click();
+				},500)
 			}
 			else
 			{
+				$('.ifRecovery').hide();
+				$('.ifNRecovery').show();
 				$('#install_normal_recovery .bRecovery').removeClass('disabled');
 				ParseAPIAnswerError(data);
 			}
+			// On rebranche l'ancienne fonction
+			wycaApi.on('onRecoveryFromFiducialResult', onRecoveryFromFiducialResult);
+			wycaApi.on('onRecoveryFromFiducialFeedback', onRecoveryFromFiducialFeedback);
 		});
 		
 		wycaApi.RecoveryFromFiducial(function(data) {
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
+				$('.ifRecovery').show();
+				$('.ifNRecovery').hide();
 			}
 			else
 			{
+				$('.ifRecovery').hide();
+				$('.ifNRecovery').show();
 				$('#install_normal_recovery .bRecovery').removeClass('disabled');
 				ParseAPIAnswerError(data);
 			}
 		});
     });
+	
+	$('#install_normal_recovery .bCancelRecovery').click(function(e) {
+		$('#install_normal_recovery .bCancelRecovery').addClass('disabled');
+		wycaApi.RecoveryFromFiducialCancel(function(data) {
+			$('#install_normal_recovery .bCancelRecovery').removeClass('disabled');
+		})
+	})
+	
 	
 	//----------------------- LANGUE ----------------------------
 	
@@ -1565,24 +1652,45 @@ $(document).ready(function(e) {
 	$( '#pages_install_normal' ).on( 'click', 'a.set_top', function(e) {
         e.preventDefault();
 		
+		/*INIT FEEDBACK DISPLAY*/
+		$('#install_normal_setup_top .set_active_top_feedback').hide();
+		$('#install_normal_setup_top .set_active_top_feedback .set_active_top_step').css('opacity','0').hide();
+		$('#install_normal_setup_top .set_active_top_feedback .set_active_top_step .fa-check').hide();
+		$('#install_normal_setup_top .set_active_top_feedback .set_active_top_step .fa-pulse').show();
+		
+		wycaApi.on('onSetActiveTopFeedback', function(data) {
+			if(data.A == wycaApi.AnswerCode.NO_ERROR){
+				target = '';
+				switch(data.M){
+					case '1/2': target = '#install_normal_setup_top .set_active_top_feedback .set_active_top_step.SetActiveTopRemoveCurrent';	break;
+					case '2/2': target = '#install_normal_setup_top .set_active_top_feedback .set_active_top_step.SetActiveTopSetNew';			break;
+				}
+				target = $(target);
+				if(target.prevAll('.set_active_top_step:visible').length > 0){
+					target.prevAll('.set_active_top_step:visible').find('.fa-check').show();
+					target.prevAll('.set_active_top_step:visible').find('.fa-pulse').hide();
+				}
+				target.css('opacity','1').show();
+			}
+		})
+		
 		wycaApi.on('onSetActiveTopResult', function(data) {
 			
 			InitTopsActiveNormal();
 			timerSetActiveTop = 90;
 			statusSetActiveTop = 2;
-			setTimeout(function(){
-				$('#install_normal_setup_top .modalSetActiveTop').modal('hide');
-				$('#install_normal_setup_top .modalSetActiveTop a').removeClass('disabled');
-				
-			},750);
+			$('#install_normal_setup_top .modalSetActiveTop').modal('hide');
+			
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
-				setTimeout(success_wyca,750,textTopNowActive);
+				success_wyca(textTopNowActive);
 			}
 			else
 			{
 				ParseAPIAnswerError(data);
 			}
+			wycaApi.on('onSetActiveTopResult', onSetActiveTopResult);
+			wycaApi.on('onSetActiveTopFeedback', onSetActiveTopFeedback);
 		});
 		
 		wycaApi.SetActiveTop($(this).data('id_top'), function(data){
@@ -1590,17 +1698,14 @@ $(document).ready(function(e) {
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
 				$('#install_normal_setup_top .modalSetActiveTop').modal('show');
-				$('#install_normal_setup_top .modalSetActiveTop a').addClass('disabled');
-				statusSetActiveTop = 1;
-				timerSetActiveTop = 0;
-
-				//$('#pages_install_normal .progressSetActiveTop').show();
-				TimerActiveTopNormal();
+				$('#install_normal_setup_top .set_active_top_feedback').show();
 			}
 			else
 			{
-				InitTopsActiveNormal();
+				wycaApi.on('onSetActiveTopResult', onSetActiveTopResult);
+				wycaApi.on('onSetActiveTopFeedback', onSetActiveTopFeedback);
 				ParseAPIAnswerError(data);
+				InitTopsActiveNormal();
 			}	
 		});		
 	});
@@ -1854,7 +1959,7 @@ function RealTestGotoEndNormal(end){
 }		
 
 //------------------- ACTIVE TOP ------------------------
-
+/*
 var statusSetActiveTop = 0;
 var timerSetActiveTop = 0;
 	
@@ -1901,7 +2006,7 @@ function NextTimerSetActiveTop()
 		setTimeout(NextTimerSetActiveTop, 100);
 	}
 }
-
+*/
 
 //------------------- MANAGERS ------------------------	
 

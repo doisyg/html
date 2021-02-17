@@ -1065,6 +1065,15 @@
 												<li class="GoToPoseAccurate"><i class="far fa-dot-circle iconMenuBlue"></i><?= __('Go To Pose Accurate')?><i class="fas fa-chevron-right"></i></li>
 												<li class="GoToPoseFlexible"><i class="fas fa-cogs iconMenuBlue"></i><?= __('Go To Pose Flexible')?><i class="fas fa-chevron-right"></i></li>
 											</ul>
+											<h4><?= __('GetPath')?></h4>
+											<p class="GetPathOutcome">GetPath</p>
+											<div class="form-group nopymy">
+												<h4><?= __('Distance')?></h4>
+												<div class="input-group">
+													<input type="text" id="wyca_edit_map_modalGoToPose_distance" name="go_to_pose_get_path_distance" value="-" class="form-control input-sm mb-md" />
+													<span class="input-group-addon">m</span>
+												</div>
+											</div>
                                         </div>
                                         
                                         <div style="clear:both;"></div>
@@ -1164,11 +1173,12 @@
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="wyca_setup_sound" href="#"><i class="fas fa-volume-up"></i><?php echo __('Sound');?></a></li>
 					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5" data-goto="wyca_setup_wifi" href="#"><i class="fas fa-wifi"></i><?php echo __('Wifi');?></a></li>
 
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" data-goto="wyca_setup_language" href="#"><i class="fa fa-language"></i><?php echo __('Language');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7" data-goto="wyca_setup_export" href="#"><i class="fa fa-upload"></i><?php echo __('Export site');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8" data-goto="wyca_setup_import" href="#"><i class="fa fa-download"></i><?php echo __('Import site');?></a></li>
-					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile9" data-goto="wyca_setup_trinary" href="#"><i class="far fa-map"></i><?php echo __('Map trinary');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile10" data-goto="wyca_setup_reset" href="#"><i class="fa fa-eraser"></i><?php echo __('Factory data reset');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7" data-goto="wyca_setup_language" href="#"><i class="fa fa-language"></i><?php echo __('Language');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8" data-goto="wyca_setup_export" href="#"><i class="fa fa-upload"></i><?php echo __('Export site');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile9" data-goto="wyca_setup_import" href="#"><i class="fa fa-download"></i><?php echo __('Import site');?></a></li>
+					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile10" data-goto="wyca_setup_trinary" href="#"><i class="far fa-map"></i><?php echo __('Map trinary');?></a></li>
+					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile11" data-goto="wyca_setup_download_map" href="#"><i class="fas fa-file-download"></i><?php echo __('Download map');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile12" data-goto="wyca_setup_reset" href="#"><i class="fa fa-eraser"></i><?php echo __('Factory data reset');?></a></li>
 				</ul>
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
@@ -1629,7 +1639,7 @@
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
 					<div class="content text-left sm-content">
-						<p class=""><?= __('Ths page allow you to export a site by clicking on the correspondant icon.')?></p>
+						<p class=""><?= __('This page allow you to export a site by clicking on the correspondant icon.')?></p>
 						<p class=""><?= __('The export of a site is a backup of all the configuration linked to a site (map, charging stations, areas...).')?></p>
 						<p class=""><?= __('You can also use the .wyca generated file to import this site on another vehicle.')?></p>
 						<p class=""><?= __('Keep this copy as it will allow you to reload your site in case of factory reset.')?></p>
@@ -1685,7 +1695,7 @@
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
 					<div class="content text-left sm-content">
-						<p class=""><?= __('Ths page allow you to import a site by uploading the .wyca file associated.')?></p>
+						<p class=""><?= __('This page allow you to import a site by uploading the .wyca file associated.')?></p>
 						<p class=""><?= __('You recover all the configuration linked to a site (map, charging stations, areas...).')?></p>
 						<p class=""><?= __('Whitout having to map again the same site.')?></p>
 					</div>
@@ -1771,6 +1781,33 @@
             </footer>
         </section>
         
+        <section id="wyca_setup_download_map" class="page with_footer">
+	        <a href="#" class="bBackButton button_goto" data-goto="wyca_setup"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Download Map');?></h2>
+            </header>
+            <div class="content">
+				<div class="wyca_setup_download_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
+                <h4 style="text-align:center;margin:30px 0"><?= __('Download maps by clicking on the icon') ?></h4>
+				
+                <div class="loaded col-md-12" style="padding-top:30px;">
+                	<ul class="list_maps list_elem">
+                    </ul>
+                </div>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left sm-content">
+						<p class=""><?= __('This page allow you to download a PNG file of your map by clicking on the correspondant icon.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
+			</div>
+            <footer>
+                <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="wyca_setup"><?php echo __('Back');?></a>
+            </footer>
+        </section>
+		
         <section id="wyca_setup_reset" class="page hide_photo_back with_footer">
 	        <a href="#" class="bBackButton button_goto" data-goto="wyca_setup"></a>
             <header>
@@ -1865,9 +1902,8 @@
             
                 <div style="text-align:center"><a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a></div>
                 <div style="text-align:center"><div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div></div>
-                                        
-                <div class="ifUndocked">
-                    
+                
+				<div class="ifUndocked ifNRecovery">
                     <div style="text-align:center; width:100%; z-index:2000; margin-top:20px;">
                         <div class="joystickDiv" draggable="false" style="margin:auto;">
                             <div class="fond"></div>
@@ -1875,6 +1911,29 @@
                         </div>
                     </div>
                 </div>
+				
+				<div class="ifRecovery" style="text-align:center; margin-top:20px;display:none;"><a href="#" class="btn btn-danger btn-lg bCancelRecovery"><?=__('Cancel Recovery') ?></a></div>
+				<div class="ifRecovery wyca_recovery_feedback recovery_feedback" style="display:none;">
+					<hr style="border-top: 1px solid #909090;">
+					<div class="row recovery_step RecoveryScan" id="">
+						<div class="col-xs-10"><h5><?= __('Scan reflectors')?></h5></div>
+						<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+					</div>
+					<div class="row recovery_step RecoveryPose" id="">
+						<div class="col-xs-10"><h5><?= __('Robot position initiated')?></h5></div>
+						<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+					</div>
+					<div class="row recovery_step RecoveryRotate" id="">
+						<div class="col-xs-10"><h5><?= __('Rotate to clean obstacles')?></h5></div>
+						<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+					</div>
+					<div class="row recovery_step RecoveryNav" id="">
+						<div class="col-xs-10"><h5><?= __('Navigation started')?></h5></div>
+						<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+					</div>
+					<hr style="border-top: 1px solid #909090;">
+				</div>
+				
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
 					<div class="content sm-content text-left">

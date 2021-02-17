@@ -30,6 +30,9 @@ if ( (! empty($_SERVER['REQUEST_SCHEME']) && $_SERVER['REQUEST_SCHEME'] == 'http
 }
 $_CONFIG['URL_API'] = $_CONFIG['URL']."API/";
 
+$_CONFIG['MODE'] = file_exists('C:\\')? 'DEV':'PROD';
+$_CONFIG['CONF_PATH'] = $_CONFIG['MODE'] == 'DEV' ? dirname(__FILE__).'/../lang/c.conf' : dirname(__FILE__).'/../../conf/c.conf';
+
 require_once (dirname(__FILE__)."/../lib/lib.php");
 require_once (dirname(__FILE__)."/../classes/includes.php");
 
@@ -68,6 +71,5 @@ if($app_sound == '')
 	$app_sound = 'false';
 
 if (!isset($notCloseSession)) session_write_close();
-
 
 ?>

@@ -2023,7 +2023,18 @@ $(document).ready(function()
 					
 					xROSGotoPose = xRos;
 					yROSGotoPose = yRos;
-					
+					$('#wyca_edit_map .modalGoToPose .GetPathOutcome').html('-')
+					$('#wyca_edit_map_modalGoToPose_distance').val('-')
+					wycaApi.GetPathFromCurrentPose(xROSGotoPose, yROSGotoPose,0,0,function(data){
+						if (data.A == wycaApi.AnswerCode.NO_ERROR){
+							$('#wyca_edit_map .modalGoToPose .GetPathOutcome').html(data.D.M)
+							$('#wyca_edit_map_modalGoToPose_distance').val(data.D.D)
+						}else{
+							let text = wycaApi.AnswerCodeToString(data.A)+'<br>'+data.D.M;
+							$('#wyca_edit_map .modalGoToPose .GetPathOutcome').html(text)
+							$('#wyca_edit_map_modalGoToPose_distance').val('-')
+						}
+					})
 					$('#wyca_edit_map .modalGoToPose').modal('show');
 					
 				break;
@@ -2053,9 +2064,9 @@ $(document).ready(function()
 	});
 	
 	$('#wyca_edit_map .modalGoToPoseFlexible .wyca_edit_map_bGoToPoseFlexible').click(function(e) {
-		let aT = $('#wyca_edit_map #wyca_edit_map_angular_tolerance').val();
+		let aT = ($('#wyca_edit_map #wyca_edit_map_angular_tolerance').val())*1;
 		let lT = ($('#wyca_edit_map #wyca_edit_map_linear_tolerance').val())*1;
-		aT = aT * Math.PI/180;
+		
 		WycaGoToPose('F',lT,aT);
 	});
 	
@@ -2342,7 +2353,7 @@ $(document).ready(function()
 				
 				$('#wyca_edit_map_container_all .modalDockOptions .list_undock_procedure').append('' +
 					'<li id="wyca_edit_map_list_undock_procedure_elem_'+indexDockElem+'" data-index_dock_procedure="'+indexDockElem+'" data-action="move" data-distance="-0.4">'+
-					'	<span>Move back 0.4m</span>'+
+					'	<span>'+(typeof(textUndockPathMove) != 'undefined' ? textUndockPathMove : 'Move') + ' ' + (typeof(textUndockPathback) != 'undefined' ? textUndockPathback : 'back')+'</span>'+
 					'	<a href="#" class="bWycaUndockProcedureDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
 					'	<a href="#" class="bWycaUndockProcedureEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
 					'</li>'
@@ -3011,7 +3022,7 @@ $(document).ready(function()
 			
 			$('#wyca_edit_map_container_all .modalAugmentedPoseOptions .list_undock_procedure_augmented_pose').append('' +
 				'<li id="wyca_edit_map_list_undock_procedure_augmented_pose_elem_'+indexAugmentedPoseElem+'" data-index_augmented_pose_procedure="'+indexAugmentedPoseElem+'" data-action="move" data-distance="-0.4">'+
-				'	<span>Move back 0.4m</span>'+
+				'	<span>'+(typeof(textUndockPathMove) != 'undefined' ? textUndockPathMove : 'Move') + ' ' + (typeof(textUndockPathback) != 'undefined' ? textUndockPathback : 'back')+'</span>'+
 				'	<a href="#" class="bWycaUndockProcedureAugmentedPoseDeleteElem btn btn-sm btn-circle btn-danger pull-right"><i class="fa fa-times"></i></a>'+
 				'	<a href="#" class="bWycaUndockProcedureAugmentedPoseEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pencil"></i></a>'+
 				'</li>'
@@ -4989,6 +5000,7 @@ function WycaGoToPose(option,linear_tol = null,angular_tol = null)
 		break;
 		case 'F':
 			if(typeof(linear_tol) != 'number' || linear_tol < 0.05 || linear_tol > 10 || typeof(angular_tol) != 'number' || angular_tol < 2 || angular_tol > 360){
+				
 				$('#wyca_edit_map_bStop').hide();
 				$('#wyca_edit_map_svg .go_to_pose_elem').remove();
 				wycaApi.on('onGoToPoseFlexibleResult', onGoToPoseFlexibleResult);
@@ -5001,7 +5013,7 @@ function WycaGoToPose(option,linear_tol = null,angular_tol = null)
 					// On rebranche l'ancienne fonction
 					wycaApi.on('onGoToPoseFlexibleResult', onGoToPoseFlexibleResult);
 				});
-				
+				angular_tol = angular_tol * Math.PI/180;
 				wycaApi.GoToPoseFlexible(xROSGotoPose, yROSGotoPose, 0, linear_tol,angular_tol, function (data){
 					if (data.A != wycaApi.AnswerCode.NO_ERROR){
 						$('#wyca_edit_map_bStop').hide();

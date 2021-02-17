@@ -13,6 +13,7 @@ function GetInfosCurrentMapWyca()
 
 function GetInfosCurrentMapDoWyca()
 {
+	$('#wyca_edit_map .burger_menu').addClass('updatingMap');
 	wycaApi.GetCurrentMapComplete(function(data) {
 		if (data.A == wycaApi.AnswerCode.NO_ERROR)
 		{
@@ -125,6 +126,9 @@ function GetInfosCurrentMapDoWyca()
 				RemoveClass('#wyca_edit_map_svg .activ_select', 'activ_select'); 
 				RemoveClass('#wyca_edit_map_svg .editing_point', 'editing_point'); 
 				
+				wycaCanChangeMenu = true;
+				wycaCurrentAction = '';
+				
 				WycaHideMenus();
 				
 			},500);
@@ -133,6 +137,7 @@ function GetInfosCurrentMapDoWyca()
 		}
 		else
 		{
+			$('#wyca_edit_map .burger_menu').removeClass('updatingMap');
 			ParseAPIAnswerError(data,textErrorGetMap);
 		}
 	});
