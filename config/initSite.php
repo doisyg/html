@@ -83,13 +83,13 @@ if(file_exists(__DIR__ .'/../.git/HEAD')){
 $_CONFIG['CONF_PATH'] = $_CONFIG['MODE'] == 'DEV' ? dirname(__FILE__).'/../lang/c.conf' : dirname(__FILE__).'/../../conf/c.conf';
 
 /* ROBOT HOST HTTP*/
-$VM = true;
+$VM = false;
 if($_CONFIG['MODE'] == 'PROD'){
 	$_CONFIG['ROBOT_HOST'] = 'wyca.run';
 }else{
 	if(file_exists('C:\\Users\\Yvan') || file_exists('C:\\Users\\F')){
 		//F
-		$_CONFIG['ROBOT_HOST'] = $VM ? '172.25.65.22' : '10.0.0.51';
+		$_CONFIG['ROBOT_HOST'] = $VM ? '172.25.65.22' : '10.0.0.72';
 	}else{
 		//SMORILLON
 		$_CONFIG['ROBOT_HOST'] = '192.168.0.33';
