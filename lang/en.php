@@ -614,5 +614,6 @@ $_LANG['43853c6c065e53dc51becfca53ae08fb'] = 'I know what I\'m doing';
 $_LANG['6a03d07c60c7ffd19860e6f518f2d8e4'] = 'Got it!';
 $_LANG['f3aa661b584021c1c8519d098fc807a8'] = 'GetPath';
 $_LANG['7376e0fa9b6382eee64aae2c6050bd80'] = 'I assume the responsibility';
+$_LANG['ebf46cb429e4e9d500fbc04f52618594'] = 'The robot is not localized';
 
 ?>
