@@ -723,7 +723,7 @@
 							<h4 class="text-danger" style="margin:20px 0;font-weight: 900;"><?= __('Safety is degraded.')?></h4>
 							<h4 class="text-danger" style="margin:20px 0;font-weight: 900;"><?= __('Not to be used in production.')?></h4>
 							<h4 class="text-danger" style="margin:20px 0;font-weight: 900;"><?= __('Only for trained users.')?></h4>
-							<div class="checkbox checkbox_wrapper" style="    position: unset;font-size: 18px;color: #343a40!important;margin-top: 35px;overflow: hidden;">
+							<div class="checkbox checkbox_wrapper" style="    position: unset;font-size: 18px;color: #343a40!important;margin-top: 35px;">
 								<label>
 									<input type="checkbox" value="" class="checkboxWarningConnexion" style="margin-top: 6px;">
 									<?=__("I assume the responsibility")?>
