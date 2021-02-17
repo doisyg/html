@@ -717,7 +717,7 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<div class="actions mh100vh_110">
-						<div class="h100vh_160 text-center" style="overflow:auto">
+						<div class="h100vh_160 text-center" style="overflow:auto;overflow-x: hidden;">
 							<i class="fas fa-exclamation-triangle text-danger" style="font-size:80px;position:relative;"></i>
 							<h3 style="margin:40px 0"><?= __('You are connected using manager account.')?></h3>
 							<h4 class="text-danger" style="margin:20px 0;font-weight: 900;"><?= __('Safety is degraded.')?></h4>
