@@ -997,7 +997,7 @@ function NormalInitMap()
 	  }
 	}
 	if(typeof(window.panZoomNormal) != 'undefined'){
-		console.log('destroy');
+		window.panZoomNormal.destroy();
 	}
 	// Expose to window namespace for testing purposes
 	
