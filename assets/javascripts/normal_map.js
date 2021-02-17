@@ -996,7 +996,9 @@ function NormalInitMap()
 		this.hammer.destroy()
 	  }
 	}
-
+	if(typeof(window.panZoomNormal) != 'undefined'){
+		console.log('destroy');
+	}
 	// Expose to window namespace for testing purposes
 	
 	window.panZoomNormal = svgPanZoom('#install_normal_edit_map_svg', {
@@ -1011,11 +1013,20 @@ function NormalInitMap()
 	
 	svgNormal = document.querySelector('#install_normal_edit_map_svg .svg-pan-zoom_viewport');
 	
-	//window.panZoomNormal = {};
-	//window.panZoomNormal.getZoom = function () { return 1; }
 	NormalRefreshZoomView();
 	
-	$('.install_normal_edit_map_loading').hide();
+	setTimeout(function(){
+		if(typeof(window.panZoomNormal) != 'undefined'){
+			
+			//WORKING ON CONSOLE 
+			window.panZoomNormal.resize();
+			window.panZoomNormal.updateBBox();
+			window.panZoomNormal.fit();
+			window.panZoomNormal.center();
+			console.log('Refresh Zoom');
+		}
+		setTimeout(function(){$('.install_normal_edit_map_loading').hide()},100);
+	},100);
 }
 
 function NormalShakeActiveElement()
