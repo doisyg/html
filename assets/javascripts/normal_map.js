@@ -27,6 +27,7 @@ function GetInfosCurrentMapDoNormal()
 			gommes = Array();
 			docks = data.D.docks;
 			pois = data.D.pois;
+			landmarks = data.D.landmarks;
 			augmented_poses = data.D.augmented_poses;
 			
 			$('#install_normal_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
@@ -130,7 +131,7 @@ function GetInfosCurrentMapDoNormal()
 				
 				normalCanChangeMenu= true;
 				normalCurrentAction = '';
-				
+				$('#install_normal_edit_map .burger_menu').removeClass('updatingMap');
 				NormalHideMenus();
 			},500);
 			$('#install_normal_edit_map .modal').not('.modalReloadMap').each(function(){$(this).modal('hide')});
@@ -260,6 +261,7 @@ var currentAreaNormalLongTouch = null;
 var currentDockNormalLongTouch = null;
 var currentPoiNormalLongTouch = null;
 var currentAugmentedPoseNormalLongTouch = null;
+var currentLandmarkNormalLongTouch = null;
 
 $(document).ready(function(e) {
 	
@@ -547,6 +549,62 @@ $(document).ready(function(e) {
 		//NormalDisplayBlockZoom();
 	});
 	
+	$(document).on('touchend', '#install_normal_edit_map_svg .landmark_elem', function(e) {
+		$('#install_normal_edit_map_zoom_popup').hide();
+		if (timerNormalLongPress != null)
+		{
+			clearTimeout(timerNormalLongPress);
+			timerNormalLongPress = null;
+		}
+		if (timerNormalVeryLongPress != null)
+		{
+			clearTimeout(timerNormalVeryLongPress);
+			timerNormalVeryLongPress = null;
+		}
+	});
+	
+	/*
+	$(document).on('touchstart', '#install_normal_edit_map_svg .landmark_elem', function(e) {
+		if (timerNormalLongPress != null)
+		{
+			clearTimeout(timerNormalLongPress);
+			timerNormalLongPress = null;
+		}
+		if (timerNormalVeryLongPress != null)
+		{
+			clearTimeout(timerNormalVeryLongPress);
+			timerNormalVeryLongPress = null;
+		}
+		
+		if (normalCanChangeMenu)
+		{
+			timerNormalLongPress = setTimeout(NormalLongPressDock, 500);
+			//timerNormalVeryLongPress = setTimeout(NormalLongVeryPressSVG, 1500);
+			eventTouchStart = e;
+			currentDockNormalLongTouch = $(this);
+		}
+		NormalDisplayBlockZoom();
+		
+		NormalHideMenus();
+		
+	});
+	*/
+	
+	$(document).on('touchmove', '#install_normal_edit_map_svg .landmark_elem', function(e) {
+    	//NormalHideMenus();
+		if (timerNormalLongPress != null)
+		{
+			clearTimeout(timerNormalLongPress);
+			timerNormalLongPress = null;
+		}
+		if (timerNormalVeryLongPress != null)
+		{
+			clearTimeout(timerNormalVeryLongPress);
+			timerNormalVeryLongPress = null;
+		}
+		//NormalDisplayBlockZoom();
+	});
+	
 	$(document).on('touchend', '#install_normal_edit_map_svg .poi_elem', function(e) {
 		$('#install_normal_edit_map_zoom_popup').hide();
 		if (timerNormalLongPress != null)
@@ -723,6 +781,7 @@ function NormalHideMenus()
 	$('#install_normal_edit_map_menu_dock li').hide();
 	$('#install_normal_edit_map_menu_poi li').hide();
 	$('#install_normal_edit_map_menu_augmented_pose li').hide();
+	$('#install_normal_edit_map_menu_landmark li').hide();
 	$('#install_normal_edit_map_menu_erase li').hide();
 	$('#install_normal_edit_map .popupHelp').hide();
 	
@@ -891,6 +950,12 @@ function NormalLongPressDock()
 {
 	timerNormalLongPress = null;
 	NormalDisplayMenu('install_normal_edit_map_menu_dock');
+}
+
+function NormalLongPressLandmark()
+{
+	timerNormalLongPress = null;
+	NormalDisplayMenu('install_normal_edit_map_menu_landmark');
 }
 
 function NormalLongPressPoi()

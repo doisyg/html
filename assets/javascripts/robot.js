@@ -342,6 +342,14 @@ function onSetActiveTopFeedback(data)
 {
 }
 
+function onSwitchMapWithLandmarkResult(data)
+{
+}
+
+function onSwitchMapWithLandmarkFeedback(data)
+{
+}
+
 function InitDockingState()
 {
 	switch(dockingStateLast){
@@ -485,7 +493,8 @@ function InitRobotPose(pose)
 
 function AskReloadMap()
 {
-	if ($('#install_by_step_edit_map').length > 0 && ($('#install_by_step_edit_map').is(':visible'))) $('#install_by_step_edit_map .modalReloadMap').modal('show');
+	let not_create_new_map = typeof(create_new_map) == 'undefined' ? true : (create_new_map == false && (getCookie('create_new_map') != '' ? JSON.parse(getCookie('create_new_map')) : false ) == false);
+	if ($('#install_by_step_edit_map').length > 0 && ($('#install_by_step_edit_map').is(':visible')) && not_create_new_map) $('#install_by_step_edit_map .modalReloadMap').modal('show');
 	if ($('#install_normal_edit_map').length > 0 && ($('#install_normal_edit_map').is(':visible'))) $('#install_normal_edit_map .modalReloadMap').modal('show');
 	if ($('#manager_edit_map').length > 0 && ($('#manager_edit_map').is(':visible'))) $('#manager_edit_map .modalReloadMap').modal('show');
 	if ($('#user_edit_map').length > 0 && ($('#user_edit_map').is(':visible'))) $('#user_edit_map .modalReloadMap').modal('show');

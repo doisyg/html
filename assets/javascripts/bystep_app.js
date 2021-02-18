@@ -65,6 +65,7 @@ $(document).ready(function(e) {
 	$('#pages_install_by_step a.select_langue').click(function(e) {
 		resetCookies();
 		create_new_site = false;
+		create_new_map = false;
         e.preventDefault();
 		$.ajax({
 			type: "POST",
@@ -867,6 +868,7 @@ $(document).ready(function(e) {
 																	gommes = Array();
 																	docks = data.D.docks;
 																	pois = data.D.pois;
+																	landmarks = data.D.landmarks;
 																	augmented_poses = data.D.augmented_poses;
 																	
 																	$('#install_by_step_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
@@ -1052,6 +1054,7 @@ $(document).ready(function(e) {
 												forbiddens = data.D.forbiddens;
 												areas = data.D.areas;
 												docks = data.D.docks;
+												landmarks = data.D.landmarks;
 												pois = data.D.pois;
 												augmented_poses = data.D.augmented_poses; 
 												
@@ -1367,7 +1370,10 @@ $(document).ready(function(e) {
 					default: ByStepBufferMapSaveElemName = ''; break;
 				}
 			}
-
+			bystepCanChangeMenu = true;
+			bystepCurrentAction = '';
+			ByStepHideMenus();
+			
 			data = GetDataMapToSave();
 			
 			if ($(this).hasClass('button_goto'))
@@ -1384,7 +1390,7 @@ $(document).ready(function(e) {
 				if (data.A == wycaApi.AnswerCode.NO_ERROR)
 				{
 					success_info_wyca((typeof(textMapSaved) != 'undefined'? textMapSaved : 'Map saved'));
-
+					$('#install_by_step_edit_map .burger_menu').addClass('updatingMap');
 					// On reload la carte pour mettre à jours les ids
 					GetInfosCurrentMapByStep();
 					/*
@@ -2154,6 +2160,10 @@ $(document).ready(function(e) {
 		if(create_new_site){
 			create_new_site = false;
 			setCookie('create_new_site',create_new_site);
+		}
+        if(create_new_map){
+			create_new_map = false;
+			setCookie('create_new_map',create_new_map);
 		}
         $.ajax({
 			type: "POST",

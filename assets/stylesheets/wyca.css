@@ -307,6 +307,7 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 .modalAddDock .dock { position:absolute; top:130px; margin-left:-12.5px; z-index:300; display:none; }
 .modalAddPoi .poi { position:absolute; top:130px; margin-left:-12.5px; z-index:300; display:none; }
 .modalAddAugmentedPose .augmented_pose { position:absolute; top:130px; margin-left:-12.5px; z-index:300; display:none; }
+.modalAddLandmark .landmark { position:absolute; top:130px; margin-left:-12.5px; z-index:300; display:none; }
 
 .form-control.success{
 	border-color: #187f18a8;
@@ -877,6 +878,8 @@ img.fi-robot{
 	left:10px;
 	z-index:3;
 	background:#589fb2;
+	cursor: pointer;
+	transition:0.5s all;
 }
 .burger_menu_open{
 	
@@ -898,6 +901,9 @@ img.fi-robot{
     background: #fff;
     transition: 0.5s all;
     border-radius: 15px;
+}
+.burger_menu.updatingMap{
+	pointer-events:none;cursor:not-allowed;background:#a4a4a4;
 }
 .btn-circle.btn-menu{
 	width: 40px;
@@ -969,6 +975,7 @@ img.fi-robot{
 .iconMenuGreen{color:#187f18}
 .iconMenuRed{color:#da3939}
 .iconMenuPurple{color:#5d24cb}
+.iconMenuMagenta{color:#ee29ee}
 
 img.fi-route {
     max-height: 59px!important;
@@ -1434,6 +1441,26 @@ span.toggle_details{
 	text-align:left;
 }
 .recovery_feedback i{
+	font-size: 16px;
+    margin: 4px 0;
+}
+
+.switch_map_feedback{
+	text-align:center;
+	margin:30px 0;
+}
+.switch_map_feedback .switch_map_step{
+	margin:10px 0;
+	transition:0.5s all;
+	display:none;
+}
+.switch_map_feedback h5{
+	margin:5px 0;
+}
+.switch_map_feedback .col-xs-10 h5{
+	text-align:left;
+}
+.switch_map_feedback i{
 	font-size: 16px;
     margin: 4px 0;
 }

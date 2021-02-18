@@ -615,5 +615,12 @@ $_LANG['6a03d07c60c7ffd19860e6f518f2d8e4'] = 'Got it!';
 $_LANG['f3aa661b584021c1c8519d098fc807a8'] = 'GetPath';
 $_LANG['7376e0fa9b6382eee64aae2c6050bd80'] = 'I assume the responsibility';
 $_LANG['ebf46cb429e4e9d500fbc04f52618594'] = 'The robot is not localized';
+$_LANG['f3aa661b584021c1c8519d098fc807a8'] = 'GetPath';
+$_LANG['6cb096f0ee1f66f71cb1771271c9c3c4'] = 'Download map';
+$_LANG['9281dff768f67c06984bad579f388eb8'] = 'This page allow you to export a site by clicking on the correspondant icon.';
+$_LANG['53b47879e5406ac41e729856bbabcfa1'] = 'This page allow you to import a site by uploading the .wyca file associated.';
+$_LANG['1846f06a0ae617eed00fc5ef2281e610'] = 'Download Map';
+$_LANG['5c2a40a6776f7e0f3ee3210bbee07075'] = 'Download maps by clicking on the icon';
+$_LANG['666cbb24c2d5d4ec055108dff052d2d0'] = 'This page allow you to download a PNG file of your map by clicking on the correspondant icon.';
 
 ?>

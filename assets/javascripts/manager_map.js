@@ -26,6 +26,7 @@ function GetInfosCurrentMapDoManager()
 			gommes = Array();
 			docks = data.D.docks;
 			pois = data.D.pois;
+			landmarks = data.D.landmarks;
 			augmented_poses = data.D.augmented_poses;
 			
 			$('#manager_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
@@ -73,7 +74,7 @@ function GetInfosCurrentMapDoManager()
 				
 				managerCanChangeMenu = true;
 				managerCurrentAction = '';
-				
+				$('#manager_edit_map .burger_menu').removeClass('updatingMap');
 				ManagerHideMenus();
 			},500);
 			$('#manager_edit_map .modal').not('.modalReloadMap').each(function(){$(this).modal('hide')});

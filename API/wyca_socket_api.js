@@ -252,6 +252,8 @@ function WycaAPI(options){
 		GO_TO_POSE_FLEXIBLE_CANCEL	: 0x0126,
 		GO_TO_AUGMENTED_POSE		: 0x0127,
 		GO_TO_AUGMENTED_POSE_CANCEL	: 0x0128,
+		SWITCH_MAP_WITH_LANDMARK 	: 0x012D,
+		SWITCH_MAP_WITH_LANDMARK_CANCEL : 0x012E,
 	 
 	// Wifi
 		GET_WIFI_LIST			: 0x7102,
@@ -314,7 +316,9 @@ function WycaAPI(options){
 		GO_TO_POSE_FLEXIBLE_FEEDBACK	: 0x001B,
 		GO_TO_POSE_FLEXIBLE_RESULT		: 0x001C,
 		GO_TO_AUGMENTED_POSE_FEEDBACK	: 0x001D,
-		GO_TO_AUGMENTED_POSE_RESULT		: 0x001E
+		GO_TO_AUGMENTED_POSE_RESULT		: 0x001E,
+		SWITCH_MAP_WITH_LANDMARK_FEEDBACK : 0x0020,
+		SWITCH_MAP_WITH_LANDMARK_RESULT : 0x0021
 	 
 	};
 
@@ -796,6 +800,8 @@ function WycaAPI(options){
 								case _this.EventCode.SET_ACTIVE_TOP_RESULT:
 								case _this.EventCode.INSTALL_NEW_TOP_FEEDBACK:
 								case _this.EventCode.INSTALL_NEW_TOP_RESULT:
+								case _this.EventCode.SWITCH_MAP_WITH_LANDMARK_FEEDBACK:
+								case _this.EventCode.SWITCH_MAP_WITH_LANDMARK_RESULT:
 									doTransfert = false;
 									break;
 							}
@@ -857,6 +863,11 @@ function WycaAPI(options){
 						{
 							_this.subscribeOnWebrtc[_this.EventCode.RECOVERY_FROM_FIDUCIAL_FEEDBACK] = 'subscribed';
 							_this.subscribeOnWebrtc[_this.EventCode.RECOVERY_FROM_FIDUCIAL_RESULT] = 'subscribed';
+						}
+						if (json.O == _this.CommandCode.SWITCH_MAP_WITH_LANDMARK)
+						{
+							_this.subscribeOnWebrtc[_this.EventCode.SWITCH_MAP_WITH_LANDMARK_FEEDBACK] = 'subscribed';
+							_this.subscribeOnWebrtc[_this.EventCode.SWITCH_MAP_WITH_LANDMARK_RESULT] = 'subscribed';
 						}
 						if (json.O == _this.CommandCode.SET_ACTIVE_TOP)
 						{
@@ -1340,6 +1351,12 @@ function WycaAPI(options){
 				case this.EventCode.RECOVERY_FROM_FIDUCIAL_RESULT:
 					if (_this.options.onRecoveryFromFiducialResult != undefined) { _this.options.onRecoveryFromFiducialResult(msg.D); }
 					break;
+				case this.EventCode.SWITCH_MAP_WITH_LANDMARK_FEEDBACK:
+					if (_this.options.onSwitchMapWithLandmarkFeedback != undefined) { _this.options.onSwitchMapWithLandmarkFeedback(msg.D); }
+					break;
+				case this.EventCode.SWITCH_MAP_WITH_LANDMARK_RESULT:
+					if (_this.options.onSwitchMapWithLandmarkResult != undefined) { _this.options.onSwitchMapWithLandmarkResult(msg.D); }
+					break;
 				/********** Topics *********/
 				case this.EventCode.BATTERY_STATE:
 					if (_this.options.onBatteryState != undefined) { _this.options.onBatteryState(msg.D); }
@@ -1697,6 +1714,8 @@ function WycaAPI(options){
 				case 'onDockRecoveryResult': ev_code = _this.EventCode.DOCK_RECOVERY_RESULT; break;
 				case 'onRecoveryFromFiducialFeedback': ev_code = _this.EventCode.RECOVERY_FROM_FIDUCIAL_FEEDBACK; break;
 				case 'onRecoveryFromFiducialResult': ev_code = _this.EventCode.RECOVERY_FROM_FIDUCIAL_RESULT; break;
+				case 'onSwitchMapWithLandmarkFeedback': ev_code = _this.EventCode.SWITCH_MAP_WITH_LANDMARK_FEEDBACK; break;
+				case 'onSwitchMapWithLandmarkResult': ev_code = _this.EventCode.SWITCH_MAP_WITH_LANDMARK_RESULT; break;
 				case 'onSetActiveTopFeedback': ev_code = _this.EventCode.SET_ACTIVE_TOP_FEEDBACK; break;
 				case 'onSetActiveTopResult': ev_code = _this.EventCode.SET_ACTIVE_TOP_RESULT; break;
 				case 'onInstallNewTopFeedback': ev_code = _this.EventCode.INSTALL_NEW_TOP_FEEDBACK; break;
@@ -1773,6 +1792,8 @@ function WycaAPI(options){
 				case 'onDockRecoveryResult': ev_code = _this.EventCode.DOCK_RECOVERY_RESULT; break;
 				case 'onRecoveryFromFiducialFeedback': ev_code = _this.EventCode.RECOVERY_FROM_FIDUCIAL_FEEDBACK; break;
 				case 'onRecoveryFromFiducialResult': ev_code = _this.EventCode.RECOVERY_FROM_FIDUCIAL_RESULT; break;
+				case 'onSwitchMapWithLandmarkFeedback': ev_code = _this.EventCode.SWITCH_MAP_WITH_LANDMARK_FEEDBACK; break;
+				case 'onSwitchMapWithLandmarkResult': ev_code = _this.EventCode.SWITCH_MAP_WITH_LANDMARK_RESULT; break;
 				case 'onSetActiveTopFeedback': ev_code = _this.EventCode.SET_ACTIVE_TOP_FEEDBACK; break;
 				case 'onSetActiveTopResult': ev_code = _this.EventCode.SET_ACTIVE_TOP_RESULT; break;
 				case 'onInstallNewTopFeedback': ev_code = _this.EventCode.INSTALL_NEW_TOP_FEEDBACK; break;
@@ -2182,6 +2203,23 @@ function WycaAPI(options){
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
+	this.SwitchMapWithLandmark = function(id_map, callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.SWITCH_MAP_WITH_LANDMARK] = callback;
+		var action = {
+			"O": _this.CommandCode.SWITCH_MAP_WITH_LANDMARK,
+			"P": id_map
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	this.SwitchMapWithLandmarkCancel = function(callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.SWITCH_MAP_WITH_LANDMARK_CANCEL] = callback;
+		var action = {
+			"O": _this.CommandCode.SWITCH_MAP_WITH_LANDMARK_CANCEL,
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
 	this.GoToCharge = function(id_dock, callback){
 		if (callback != undefined)
 			this.callbacks[_this.CommandCode.GO_TO_CHARGE] = callback;
@@ -2208,6 +2246,18 @@ function WycaAPI(options){
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
+	this.GoToPoiForCharge = function(id_poi, callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.GO_TO_POI] = callback;
+		var action = {
+			"O": _this.CommandCode.GO_TO_POI,
+			"P": {
+				"ID" :id_poi,
+				"C" : true
+			}
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
 	this.GoToPoiCancel = function(callback){
 		if (callback != undefined)
 			this.callbacks[_this.CommandCode.GO_TO_POI_CANCEL] = callback;
@@ -2226,6 +2276,21 @@ function WycaAPI(options){
 				"Y":y,
 				"T":theta,
 				"PDT":pdt
+			}
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	this.GoToPoseForCharge = function(x, y, theta, pdt, callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.GO_TO_POSE] = callback;
+		var action = {
+			"O": _this.CommandCode.GO_TO_POSE,
+			"P": {
+				"X":x,
+				"Y":y,
+				"T":theta,
+				"PDT":pdt,
+				"C": true
 			}
 		};
 		_this.wycaSend(JSON.stringify(action));
@@ -2252,6 +2317,22 @@ function WycaAPI(options){
 		};
 		_this.wycaSend(JSON.stringify(action));
 	}
+	this.GoToPoseAccurateForCharge = function(x, y, theta, pdt, callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.GO_TO_POSE_ACCURATE] = callback;
+		var action = {
+			"O": _this.CommandCode.GO_TO_POSE_ACCURATE,
+			"P": {
+				"X":x,
+				"Y":y,
+				"T":theta,
+				"PDT":pdt,
+				"C":true,
+			}
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	
 	this.GoToPoseAccurateCancel = function(callback){
 		if (callback != undefined)
 			this.callbacks[_this.CommandCode.GO_TO_POSE_ACCURATE_CANCEL] = callback;
@@ -2272,6 +2353,23 @@ function WycaAPI(options){
 				"DT":distance_tolerance,
 				"AT":angle_tolerance,
 				"PDT":pdt
+			}
+		};
+		_this.wycaSend(JSON.stringify(action));
+	}
+	this.GoToPoseFlexibleForCharge = function(x, y, theta, distance_tolerance, angle_tolerance, pdt, callback){
+		if (callback != undefined)
+			this.callbacks[_this.CommandCode.GO_TO_POSE_FLEXIBLE] = callback;
+		var action = {
+			"O": _this.CommandCode.GO_TO_POSE_FLEXIBLE,
+			"P": {
+				"X":x,
+				"Y":y,
+				"T":theta,
+				"DT":distance_tolerance,
+				"AT":angle_tolerance,
+				"PDT":pdt,
+				"C":true
 			}
 		};
 		_this.wycaSend(JSON.stringify(action));

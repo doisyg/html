@@ -7,7 +7,7 @@
         </header>
         <div class="content">
             <ul class="tuiles row">
-                <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile1" data-goto="manager_edit_map" href="#"><i class="far fa-map"></i><?php echo __('Map');?></a></li>
+                <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile1" data-goto="manager_edit_map" href="#"><i class="fas fa-map-marked-alt"></i><?php echo __('Map');?></a></li>
                 <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="manager_move" href="#"><i class="fa fa-gamepad"></i><?php echo __('Control robot');?></a></li>
                 <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="manager_recovery" href="#"><i class="fa fa-search"></i><?php echo __('Recovery');?></a></li>
                 <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="manager_top" href="#"><i class="fa fa-refresh"></i><?php echo __('Change top');?></a></li>
@@ -383,7 +383,7 @@
 							<div class="modal-header">
 								<div class="actions mh100vh_55">
 									<div class="h100vh_160" style="overflow:auto; text-align:center">
-										<i class="far fa-map fa-5x" style="margin:20px 0;position:relative">
+										<i class="fas fa-map-marked-alt fa-5x" style="margin:20px 0;position:relative">
 											<!--<i class="fas fa-asterisk fa-2x" style="position: absolute;font-size: 16px;color: #343434;top:-8px;right: -9px;"></i>-->
 										</i>
 										<h4 style="margin:20px 0"><?= __('The map has been modified externally.')?></h4>

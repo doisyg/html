@@ -12,7 +12,6 @@ svg .active { display:block !important; visibility:visible; }
 
 .activ_over { stroke: black !important; fill: rgba(0,0,0,0.5) !important; visibility:visible; }
 .activ_select { stroke: red !important; fill: rgba(255,0,0,0.5) !important; visibility:visible; }
-
 body .robot, .robot.active { fill:#009900; display:block; }
 
 .dock_elem_fond.active { fill:#CC0000; }
@@ -89,4 +88,10 @@ svg#user_edit_map_svg_clone .movable.active { display:none !important; }
 .tRobotNotLocalised > .fas{
 	color: orangered;
     margin-right: 5px;
+}
+.landmark_elem{
+	fill:#ee29ee
+}
+.landmark_elem.active{
+    stroke: #CC0000;
 }
