@@ -12,9 +12,9 @@
                 <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="manager_recovery" href="#"><i class="fa fa-search"></i><?php echo __('Recovery');?></a></li>
                 <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="manager_top" href="#"><i class="fa fa-refresh"></i><?php echo __('Change top');?></a></li>
 				<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5" data-goto="manager_setup_sites" href="#"><i class="fa fa-building"></i><?php echo __('Sites');?></a></li>
-                <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" data-goto="manager_users" href="#"><i class="fa fa-group"></i><?php echo __('Users');?></a></li>
-                <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7" href="logout.php"><i class="fas fa-power-off"></i><?php echo __('Logout');?></a></li>
-				<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8 todo" data-goto="manager_help" href="#"><i class="fa fa-question"></i><?php echo __('Help');?></a></li>
+                <!-- <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" data-goto="manager_users" href="#"><i class="fa fa-group"></i><?php echo __('Users');?></a></li> -->
+                <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" href="logout.php"><i class="fas fa-power-off"></i><?php echo __('Logout');?></a></li>
+				<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7 todo" data-goto="manager_help" href="#"><i class="fa fa-question"></i><?php echo __('Help');?></a></li>
             </ul>
 			<div class="popupHelp">
 				<h2><?=__('Help')?></h2>
@@ -629,7 +629,8 @@
             <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="manager_dashboard"><?php echo __('Back');?></a>
         </footer>
     </section>
-        
+    
+	<!--
     <section id="manager_users" class="page with_footer">
         <header>
             <div class="pull-left"><img src="assets/images/logo.png" /></div>
@@ -653,79 +654,7 @@
 				<ul class="list_users list_elem">
 				</ul>
 				
-				<div class="modal fade modalUser" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
-					<div class="modal-dialog" role="dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<div class="actions mh100vh_55">
-									<div class="h100vh_160" style="overflow:auto">
-										<form>
-											<input type="hidden" name="i_id_user" id="manager_users_i_id_user" value="-1" />
-											<div class="form-group">
-												<label class="col-xs-12 col-md-3 control-label" for="societe"><?php echo __('Company');?></label>
-												<div class="col-xs-12 col-md-6">
-													<input id="manager_users_i_user_societe" name="societe" type="text" class="form-control">
-												</div>
-											</div>
-											<div class="form-group">
-												<label class="col-xs-12 col-md-3 control-label" for="prenom"><?php echo __('Firstname');?></label>
-												<div class="col-xs-12 col-md-6">
-													<input id="manager_users_i_user_prenom" name="prenom" type="text" class="form-control">
-												</div>
-											</div>
-											<div class="form-group">
-												<label class="col-xs-12 col-md-3 control-label" for="nom"><?php echo __('Lastname');?></label>
-												<div class="col-xs-12 col-md-6">
-													<input id="manager_users_i_user_nom" name="nom" type="text" class="form-control">
-												</div>
-											</div>
-											<div class="form-group nopymy">
-												<label class="col-xs-12 col-md-3 control-label" for="email"><?php echo __('Email');?></label>
-												<div class="col-xs-12 col-md-6 input-group input-group-icon">
-													<input id="manager_users_i_user_email" name="email"  pattern="[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,}" type="text" class="form-control">
-													<span class="input-group-addon">
-														<span class="icon icon-lg">
-															<i class="fas fa-at"></i>
-														</span>
-													</span>
-												</div>
-											</div>
-											<p class="password_format" style="margin-bottom:0"><?=__('A valid mail adress.')?> </p>
-											<div class="form-group nopymy">
-												<label class="col-xs-12 col-md-3 control-label" for="password"><?php echo __('Password');?></label>
-												<div class="col-xs-12 col-md-6 input-group input-group-icon">
-													<input id="manager_users_i_user_password" name="password" type="password" class="form-control" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|0-9]).{8,}">
-													<span class="input-group-addon">
-														<span class="icon icon-lg">
-															<i class="fa fa-lock"></i>
-														</span>
-													</span>
-												</div>
-											</div>
-											<p class="password_format"><?=__('8 characters, lower and uppercase, digit or special char.')?> </p>
-											<div class="form-group">
-												<label class="col-xs-12 col-md-3 control-label" for="cpassword"><?php echo __('Confirm password');?></label>
-												<div class="col-xs-12 col-md-6 input-group input-group-icon">
-													<input id="manager_users_i_user_cpassword" name="cpassword" type="password" class="form-control" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[\]:;<>,.?\/~_+\-=|0-9]).{8,}">
-													<span class="input-group-addon">
-														<span class="icon icon-lg">
-															<i class="fa fa-lock"></i>
-														</span>
-													</span>
-												</div>
-											</div>
-											<p class="password_format"><?=__('8 characters, lower and uppercase, digit or special char.')?> </p>
-										</form>
-									</div>
-									
-									<div style="clear:both;"></div>
-								   
-								   
-									<a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Cancel');?></a>
-									<a href="#" id="manager_users_bUserSave" class="btn btn-primary btn_footer_right btn_50"><?php echo __('Save');?></a>
-								</div>
-							</div>
-						</div>
+				
 					</div>
 				</div>
 			</div>
@@ -744,7 +673,8 @@
             <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="manager_dashboard"><?php echo __('Back');?></a>
         </footer>
     </section>
-        
+    -->
+	
     <section id="manager_help" class="page with_footer">
         <header>
             <div class="pull-left"><img src="assets/images/logo.png" /></div>
@@ -757,5 +687,56 @@
             <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="manager_dashboard"><?php echo __('Back');?></a>
         </footer>
     </section>
+	
+	<div class="modal fade modalWarningTeleop" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+		<div class="modal-dialog" role="dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<div class="actions mh100vh_160">
+						<div class="h100vh_160" style="overflow:auto">
+							<i class="fas fa-sync-alt"></i>
+							<h4 style="margin:20px 0"><?= __('Are you sure ?')?></h4>
+							<h4 style="margin:20px 0"><?= __('If you choose to keep your map,')?></h4>
+							<h4 style="margin:20px 0"><?= __('You may loose some modifications perfomed on the map by overwriting changes that have been made.')?></h4>
+							<div class="manager_edit_map_modalReloadMap_loading loading_big" style="margin-top: 50px;"><i class="fa fa fa-spinner fa-pulse fa-2x"></i></div>
+						</div>
+						
+						<div style="clear:both;"></div>
+					   
+					   
+						<a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Cancel');?></a>
+						<a href="#" id="manager_users_bUserSave" class="btn btn-primary btn_footer_right btn_50"><?php echo __('Save');?></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade modalWarningConnexion" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+		<div class="modal-dialog" role="dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<div class="actions mh100vh_110">
+						<div class="h100vh_160 text-center" style="overflow:auto;overflow-x: hidden;">
+							<i class="fas fa-exclamation-triangle text-danger" style="font-size:80px;position:relative;"></i>
+							<h3 style="margin:40px 0"><?= __('You are connected using manager account.')?></h3>
+							<h4 class="text-danger" style="margin:20px 0;font-weight: 900;"><?= __('Safety is degraded.')?></h4>
+							<h4 class="text-danger" style="margin:20px 0;font-weight: 900;"><?= __('Not to be used in production.')?></h4>
+							<h4 class="text-danger" style="margin:20px 0;font-weight: 900;"><?= __('Only for trained users.')?></h4>
+							<div class="checkbox checkbox_wrapper" style="    position: unset;font-size: 18px;color: #343a40!important;margin-top: 35px;">
+								<label>
+									<input type="checkbox" value="" class="checkboxWarningConnexion" style="margin-top: 6px;">
+									<?=__("I assume the responsibility")?>
+								</label>
+							</div>
+						</div>
+						
+						<div style="clear:both;"></div>
+						<a href="#" id="modalWarningConnexion_bOk" class="btn btn-warning btn_footer_right btn_100"><?php echo __('Ok');?></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 

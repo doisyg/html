@@ -129,7 +129,16 @@ var use_ssl = <?php echo $server_request_scheme == 'http'?'false':'true';?>;
 var save_msg;
 
 $(document).ready(function(e) {
-
+	<?php if(isset($error_conf_release) && $error_conf_release) { ?>
+		<?php if($_CONFIG['MODE'] == 'PROD') { ?>
+			console.log('---------------------------------------------------------');
+			console.log('Invalid or missing version.conf file on release detected');
+			console.log('---------------------------------------------------------');
+		<?php }else{?>
+			DisplayError('Invalid or missing version.conf file on release detected');
+		<?php }?>
+	<?php }?>
+			
 	if(screen.height < 600)
 	{
 		DisplayError('The screen\'s height of your telephone is too small for the app. Some features can be impacted');
@@ -160,7 +169,7 @@ $(document).ready(function(e) {
 		?>
 		$.ajax({
 			type: "GET",
-			url: 'https://wyca.run:9095',
+			url: 'https://' + '<?php echo $_CONFIG["ROBOT_HOST"] ?>',
 			success: function(data) {
 				// HTTPS OK
 				
@@ -188,8 +197,7 @@ $(document).ready(function(e) {
 		}
 		else
 		{
-			var robot_host = '<?php echo (file_exists('C:\\'))?((file_exists('C:\\Users\\F') || file_exists('C:\\Users\\Yvan'))?'10.0.0.39:'.($server_request_scheme == 'http'?'9094':'9095'):'192.168.0.33:'.($server_request_scheme == 'http'?'9094':'9095')):'wyca.run:'.($server_request_scheme == 'http'?'9094':'9095');?>';
-			//var robot_host = '<?php echo (file_exists('C:\\'))?'10.0.0.44:'.($server_request_scheme == 'http'?'9094':'9095'):'wyca.run:'.($server_request_scheme == 'http'?'9094':'9095');?>';
+			var robot_host = '<?php echo $_CONFIG["ROBOT_HOST"]?>';
 			
 			if ("WebSocket" in window) {
 				ws = new WebSocket((use_ssl?'wss':'ws') + '://'+ robot_host);

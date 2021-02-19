@@ -165,7 +165,6 @@ function makeSVGElement(tag, attrs, texte='')
     return el;
 }
 
-
 function AppliquerZoom()
 {
 	//$('#all').width(saveWidth * zoom_carte);
