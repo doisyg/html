@@ -62,22 +62,33 @@ if(file_exists(__DIR__ .'/../.git/HEAD')){
 				$bn = substr($branchname,0,2);
 		break;
 	}
-	if($bn == 'rel'){
-		$file_version = __DIR__ .'/version.conf';
-		if(file_exists($file_version))
-			$json_version = json_decode(file_get_contents($file_version), true);
-		if(isset($json_version) && !is_null($json_version) && isset($json_version['release']) && $json_version['release'] != '')
-			$version = $json_version['release']; // GET RELEASE DATE FROM VERSION.CONF
-		else{
-			$version = date('Ymd'); // RELEASE NO VERSION.CONF OR INVALID
-			$error_conf_release = true; // FOR TEST IN FOOTER JS
-		}
-	}else
+	
+	if($bn != 'rel')
+	{
 		$version = date('Ymd').'_'.$bn;
+		// TODO if mode = DEV
+		// upcate version.conf, set content :
+//		{
+// 			"release^g":""
+//		}
+	}
 }else{
 	$bn = 'rel'; // NO GIT => RELEASE MODE
 	$_CONFIG['MODE'] = 'PROD';
 	$version = date('Ymd');
+}
+
+if($bn == 'rel')
+{
+	$file_version = __DIR__ .'/version.conf';
+	if(file_exists($file_version))
+		$json_version = json_decode(file_get_contents($file_version), true);
+	if(isset($json_version) && !is_null($json_version) && isset($json_version['release']) && $json_version['release'] != '')
+		$version = $json_version['release']; // GET RELEASE DATE FROM VERSION.CONF
+	else{
+		$version = date('Ymd'); // RELEASE NO VERSION.CONF OR INVALID
+		$error_conf_release = true; // FOR TEST IN FOOTER JS
+	}
 }
 
 $_CONFIG['CONF_PATH'] = $_CONFIG['MODE'] == 'DEV' ? dirname(__FILE__).'/../lang/c.conf' : dirname(__FILE__).'/../../conf/c.conf';
