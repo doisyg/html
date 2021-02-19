@@ -47,6 +47,7 @@ $(window).on("popstate", function(e) {
 })(history.pushState);
 
 $(document).ready(function(e) {
+	
 	$('#bHeaderInfo').attr('onClick',"$('.global_sub_page.active section.active .popupHelp').toggle('fast')");
 	
 	$('.iro-colorpicker').each(function(){
@@ -578,25 +579,37 @@ $(document).ready(function(e) {
 		slider.find('.ui-slider-range').css('width',temp+'%');
 		slider.find('.ui-slider-handle').css('left',temp+'%');
 	})	
+	
+	
 	//CONFIRM DELETE
 	$(document).on('click', '.confirm_delete', function(e) {
 		e.preventDefault();
 		if($(this)[0].nodeName == 'A'){
 			currentDeleteId = $(this).parent().attr('id');
-			console.log(currentDeleteId);
+			let txt_element = $(this).parent().find('.societe').text();
+			if(txt_element != ''){
+				tempConfirmDelete = $('#modalConfirmDelete').find('h3').text();
+				$('#modalConfirmDelete').find('h3').html(tempConfirmDelete + '<br><br><span> - ' + txt_element + ' -</span>');
+			}
 			if($(this).parent().parent().hasClass('list_wycas') && currentDeleteId.split('_elem_')[1] == user_id)
 				$('#modalConfirmDeleteCurrentAccount').modal('show');
 			else
 				$('#modalConfirmDelete').modal('show');
 		}
-		
 	})
 	
 	$('#bModalConfirmDeleteOk').click(function(e){
 		if(currentDeleteId !=''){
 			$('#'+currentDeleteId).find('.btn_confirm_delete').click();
 			currentDeleteId = '';
+			$('#modalConfirmDelete').find('h3').html(tempConfirmDelete);
+			tempConfirmDelete = '';
 		}
+	})
+	
+	$('#modalConfirmDelete .btn[data-dismiss="modal"]').click(function(e){
+		$('#modalConfirmDelete').find('h3').html(tempConfirmDelete);
+		tempConfirmDelete = '';
 	})
 	
 	$('#bModalConfirmDeleteCurrentAccountOk').click(function(e){
@@ -609,6 +622,8 @@ $(document).ready(function(e) {
 	})
 	
 });
+
+var tempConfirmDelete = "";
 
 /* USER GROUP FUNCTIONS */
 

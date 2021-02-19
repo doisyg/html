@@ -271,6 +271,7 @@ function WycaAPI(options){
 		LED_CURRENT_LED_ROBOT_STATE			: 0x5002,
 		LED_IS_LIGHT_MODE			: 0x5003,
 		LED_IS_MANUAL_MODE			: 0x5004,
+		LED_STATE_CONTROL			: 0x5005,
 		MAPPING_IS_STARTED			: 0x4001,
 		MAPPING_MAP_IN_CONSTRUCTION			: 0x4002,
 		MAPPING_ROBOT_POSE_CURRENT_MAP			: 0x4003,
@@ -1193,6 +1194,9 @@ function WycaAPI(options){
 						case this.EventCode.LED_IS_MANUAL_MODE:
 							if (_this.options.onLedIsManualMode != undefined) { _this.options.onLedIsManualMode(msg.D.D); }
 							break;
+						case this.EventCode.LED_STATE_CONTROL:
+							if (_this.options.onLedStateControl != undefined) { _this.options.onLedStateControl(msg.D.D); }
+							break;
 						case this.EventCode.MAPPING_IS_STARTED:
 							if (_this.options.onMappingIsStarted != undefined) { _this.options.onMappingIsStarted(msg.D.D); }
 							break;
@@ -1364,6 +1368,9 @@ function WycaAPI(options){
 					break;
 				case this.EventCode.LED_IS_MANUAL_MODE:
 					if (_this.options.onLedIsManualMode != undefined) { _this.options.onLedIsManualMode(msg.D); }
+					break;
+				case this.EventCode.LED_STATE_CONTROL:
+					if (_this.options.onLedStateControl != undefined) { _this.options.onLedStateControl(msg.D); }
 					break;
 				case this.EventCode.MAPPING_IS_STARTED:
 					if (_this.options.onMappingIsStarted != undefined) { _this.options.onMappingIsStarted(msg.D); }
@@ -1614,6 +1621,7 @@ function WycaAPI(options){
 		if (_this.options.onLedCurrentRobotStateMode != undefined) { var n=_this.EventCode.LED_CURRENT_LED_ROBOT_STATE; var subscribe = {	"O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onLedIsLightMode != undefined) { var n=_this.EventCode.LED_IS_LIGHT_MODE; var subscribe = {	"O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onLedIsManualMode != undefined) { var n=_this.EventCode.LED_IS_MANUAL_MODE; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
+		if (_this.options.onLedStateControl != undefined) { var n=_this.EventCode.LED_STATE_CONTROL; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onMappingIsStarted != undefined) { var n=_this.EventCode.MAPPING_IS_STARTED; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onMappingMapInConstruction != undefined) { var n=_this.EventCode.MAPPING_MAP_IN_CONSTRUCTION; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onMappingRobotPoseInBuildingMap != undefined) { var n=_this.EventCode.MAPPING_ROBOT_POSE_CURRENT_MAP; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
@@ -1652,6 +1660,7 @@ function WycaAPI(options){
 			case 'onLedCurrentRobotStateMode': ev_code = _this.EventCode.LED_CURRENT_LED_ROBOT_STATE; break;
 			case 'onLedIsLightMode': ev_code = _this.EventCode.LED_IS_LIGHT_MODE; break;
 			case 'onLedIsManualMode': ev_code = _this.EventCode.LED_IS_MANUAL_MODE; break;
+			case 'onLedStateControl': ev_code = _this.EventCode.LED_STATE_CONTROL; break;
 			case 'onMappingIsStarted': ev_code = _this.EventCode.MAPPING_IS_STARTED; break;
 			case 'onMappingMapInConstruction': ev_code = _this.EventCode.MAPPING_MAP_IN_CONSTRUCTION; break;
 			case 'onMappingRobotPoseInBuildingMap': ev_code = _this.EventCode.MAPPING_ROBOT_POSE_CURRENT_MAP; break;
@@ -1728,6 +1737,7 @@ function WycaAPI(options){
 			case 'onLedCurrentRobotStateMode': ev_code = _this.EventCode.LED_CURRENT_LED_ROBOT_STATE; break;
 			case 'onLedIsLightMode': ev_code = _this.EventCode.LED_IS_LIGHT_MODE; break;
 			case 'onLedIsManualMode': ev_code = _this.EventCode.LED_IS_MANUAL_MODE; break;
+			case 'onLedStateControl': ev_code = _this.EventCode.LED_STATE_CONTROL; break;
 			case 'onMappingIsStarted': ev_code = _this.EventCode.MAPPING_IS_STARTED; break;
 			case 'onMappingMapInConstruction': ev_code = _this.EventCode.MAPPING_MAP_IN_CONSTRUCTION; break;
 			case 'onMappingRobotPoseInBuildingMap': ev_code = _this.EventCode.MAPPING_ROBOT_POSE_CURRENT_MAP; break;
