@@ -7,7 +7,9 @@ require_once ('./config/config.php');
 $_SESSION['is_robot'] = 1;
 session_write_close();
 
+//IF MODE DEV 
 
+// 
 
 $_CONFIG['URL_ROOT'] = $server_request_scheme.'://wyca.run/';
 $_CONFIG['URL'] = $server_request_scheme.'://wyca.run/robot_hmi/elodie_v1/';
@@ -35,7 +37,8 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
     <script>
 	var nbDockAttemptMax = 3;
 	var delayBeforeRetryDock = 30000;
-	var robot_host = '<?php echo (file_exists('C:\\'))?'192.168.0.33:9095':'wyca.run:9095';?>';
+	var robot_host = '<?php echo (file_exists('C:\\'))?'10.0.0.72:9095':'wyca.run:9095';?>';
+	var api_key = '<?php echo (file_exists('C:\\'))?"5LGU.LaYMMncJaA0i42HwsX9ZX-RCNgj-9V17ROFXt71st":"4tEV6A6Bd8mVQtgHjUj85fGwYeJbsYkChHSRGP21HxaAIE";?>';
 	</script>
     
     <script src="<?php echo $_CONFIG['URL'];?>js/robot.js?v=202012141414"></script>

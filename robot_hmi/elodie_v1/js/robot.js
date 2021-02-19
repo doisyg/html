@@ -28,9 +28,10 @@ var actionListInProgress = false;
 var codeSaisie = "";
 
 $(document).ready(function(e) {
-	
+
 	wycaApi = new WycaAPI({
-		api_key:'4tEV6A6Bd8mVQtgHjUj85fGwYeJbsYkChHSRGP21HxaAIE',
+		
+		api_key:api_key,
 		host:robot_host,
 		
 		onRobotConnexionError: function(data){
