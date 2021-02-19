@@ -1171,6 +1171,11 @@ div.icon_menu .iconForbiddenArea .fa-minus-circle{
 .nopymy:after{margin-top:0;margin-bottom:0;padding-top:0;padding-bottom:0;}
 
 /* CSS FIXES */
+#modalConfirmDelete h3 span{
+	
+	color:#343a40;
+}
+
 .list_maps .societe.active{
 	font-weight:700;
 }
