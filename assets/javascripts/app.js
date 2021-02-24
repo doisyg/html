@@ -589,7 +589,7 @@ $(document).ready(function(e) {
 			let txt_element = $(this).parent().find('.societe').text();
 			if(txt_element != ''){
 				tempConfirmDelete = $('#modalConfirmDelete').find('h3').text();
-				$('#modalConfirmDelete').find('h3').html(tempConfirmDelete + '<br><br><span> - ' + txt_element + ' -</span>');
+				$('#modalConfirmDelete').find('h3').html(tempConfirmDelete + '<br><br><span>' + txt_element + '</span>');
 			}
 			if($(this).parent().parent().hasClass('list_wycas') && currentDeleteId.split('_elem_')[1] == user_id)
 				$('#modalConfirmDeleteCurrentAccount').modal('show');

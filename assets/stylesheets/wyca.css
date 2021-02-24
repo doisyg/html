@@ -1172,7 +1172,7 @@ div.icon_menu .iconForbiddenArea .fa-minus-circle{
 
 /* CSS FIXES */
 #modalConfirmDelete h3 span{
-	
+	font-style:italic;
 	color:#343a40;
 }
 
