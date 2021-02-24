@@ -40,6 +40,15 @@ h1,h2,h3,h5{
 }
 
 /* BATTERY WIDGET */
+#battery_widget .battery-charging{
+	color:var(--success)!important;
+}
+#battery_widget .fa-battery-empty{
+	color:var(--danger);
+}
+#battery_widget .fa-battery-quarter{
+	color:var(--warning);
+}
 
 #battery_widget{
 	position:relative;

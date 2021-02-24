@@ -104,15 +104,13 @@ $(document).ready(function(e) {
 				$('.only_navigation').hide();
 			}
 		}
+	
 	});
 	
 	wycaApi.init();	
 	
-	
-	
 	setInterval(RefreshConfigs, 1000); // Toutes les 1 secondes
 	RefreshConfigs();
-	
 	
 	$('#bNextWaitClick').click(function(e) {
         e.preventDefault();
@@ -273,7 +271,6 @@ function ResultSendToDock(data)
 
 var currentBatteryState = 0;
 
-
 function initPoweredState(data)
 {
     $('#icoBattery').removeClass('battery-ok battery-mid');
@@ -288,7 +285,6 @@ function initPoweredState(data)
         $('#icoBattery').addClass('battery-mid');
 	}
 }
-
 
 function initBatteryState(volt)
 {
@@ -399,7 +395,6 @@ function RefreshConfigs()
 		});
 	}
 }
-
 
 function NextAction()
 {
