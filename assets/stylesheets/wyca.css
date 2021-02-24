@@ -1176,7 +1176,16 @@ div.icon_menu .iconForbiddenArea .fa-minus-circle{
 	color:#343a40;
 }
 
-.list_maps .societe.active{
+.list_switch_map_landmarks .active{
+	font-weight:700;
+}
+.list_sites .active{
+	font-weight:700;
+}
+.list_maps .active{
+	font-weight:700;
+}
+.list_wycas .active{
 	font-weight:700;
 }
 li.disabled{

@@ -680,9 +680,10 @@ function GetSitesWyca()
 				
 				if (data.D != undefined)
 				$.each(data.D,function(index, value){
+					let active = current_site.id_site == value.id_site?'active':'';  //'+active+'
 					$('#wyca_setup_sites .list_sites').append('' +
 						'<li id="wyca_setup_sites_list_site_elem_'+value.id_site+'" data-id_site="'+value.id_site+'">'+
-						'	<span class="societe">'+value.name+'</span>'+
+						'	<span class="societe '+active+'">'+value.name+'</span>'+
 						(current_site.id_site != value.id_site?'	<a href="#" class="bSiteDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>':'')+
 						(current_site.id_site != value.id_site?'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>':'')+
 						(current_site.id_site != value.id_site?'	<a href="#" class="bSiteSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-check"></i></a>':'')+
@@ -707,22 +708,27 @@ function GetSitesForExportWyca()
 	$('#wyca_setup_export .loaded').hide();
 	if (wycaApi.websocketAuthed)
 	{
-		wycaApi.GetSitesList(function(data) {
-			
-			$('#wyca_setup_export .list_sites').html('');
-			
-			if (data.D != undefined)
-			$.each(data.D,function(index, value){
-				$('#wyca_setup_export .list_sites').append('' +
-					'<li id="wyca_setup_export_list_site_elem_'+value.id_site+'" data-id_site="'+value.id_site+'" class="bSiteExportElem">'+
-					'	<span class="societe">'+value.name+'</span>'+
-					'	<a href="#" class="btn btn-sm btn-circle btn-success pull-right"><i class="fa fa-upload"></i></a>'+
-					'</li>'
-					);
+		wycaApi.GetCurrentSite(function(data) {
+			current_site = data.D;
+				//console.log(current_site);
+			wycaApi.GetSitesList(function(data) {
+				
+				$('#wyca_setup_export .list_sites').html('');
+				
+				if (data.D != undefined)
+				$.each(data.D,function(index, value){
+					let active = current_site.id_site == value.id_site?'active':'';  // '+active+'
+					$('#wyca_setup_export .list_sites').append('' +
+						'<li id="wyca_setup_export_list_site_elem_'+value.id_site+'" data-id_site="'+value.id_site+'" class="bSiteExportElem">'+
+						'	<span class="societe '+active+'">'+value.name+'</span>'+
+						'	<a href="#" class="btn btn-sm btn-circle btn-success pull-right"><i class="fa fa-upload"></i></a>'+
+						'</li>'
+						);
+				});
+				
+				$('.wyca_setup_export_loading').hide();
+				$('#wyca_setup_export .loaded').show();
 			});
-			
-			$('.wyca_setup_export_loading').hide();
-			$('#wyca_setup_export .loaded').show();
 		});
 	}
 	else
@@ -747,9 +753,10 @@ function GetSitesManager()
 				
 				if (data.D != undefined)
 				$.each(data.D,function(index, value){
+					let active = current_site.id_site == value.id_site?'active':'';  // '+active+'
 					$('#manager_setup_sites .list_sites').append('' +
 						'<li id="manager_setup_sites_list_site_elem_'+value.id_site+'" data-id_site="'+value.id_site+'">'+
-						'	<span class="societe">'+value.name+'</span>'+
+						'	<span class="societe '+active+'">'+value.name+'</span>'+
 						(current_site.id_site != value.id_site?'	<a href="#" class="bSiteDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>':'')+
 						(current_site.id_site != value.id_site?'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>':'')+
 						(current_site.id_site != value.id_site?'	<a href="#" class="bSiteSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-check"></i></a>':'')+
@@ -784,9 +791,10 @@ function GetSitesNormal()
 				
 				if (data.D != undefined)
 				$.each(data.D,function(index, value){
+					let active = current_site.id_site == value.id_site?'active':'';  // '+active+'
 					$('#install_normal_setup_sites .list_sites').append('' +
 						'<li id="install_normal_setup_sites_list_site_elem_'+value.id_site+'" data-id_site="'+value.id_site+'">'+
-						'	<span class="societe">'+value.name+'</span>'+
+						'	<span class="societe  '+active+'">'+value.name+'</span>'+
 						(current_site.id_site != value.id_site?'	<a href="#" class="bSiteDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>':'')+
 						(current_site.id_site != value.id_site?'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>':'')+
 						(current_site.id_site != value.id_site?'	<a href="#" class="bSiteSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-check"></i></a>':'')+
@@ -811,22 +819,27 @@ function GetSitesForExportNormal()
 	$('#install_normal_setup_export .loaded').hide();
 	if (wycaApi.websocketAuthed)
 	{
-		wycaApi.GetSitesList(function(data) {
-			
-			$('#install_normal_setup_export .list_sites').html('');
-			
-			if (data.D != undefined)
-			$.each(data.D,function(index, value){
-				$('#install_normal_setup_export .list_sites').append('' +
-					'<li id="install_normal_setup_export_list_site_elem_'+value.id_site+'" data-id_site="'+value.id_site+'" class="bSiteExportElem">'+
-					'	<span class="societe">'+value.name+'</span>'+
-					'	<a href="#" class="btn btn-sm btn-circle btn-success pull-right"><i class="fa fa-upload"></i></a>'+
-					'</li>'
-					);
+		wycaApi.GetCurrentSite(function(data) {
+			current_site = data.D;
+			//console.log(current_site);
+			wycaApi.GetSitesList(function(data) {
+				
+				$('#install_normal_setup_export .list_sites').html('');
+				
+				if (data.D != undefined)
+				$.each(data.D,function(index, value){
+					let active = current_site.id_site == value.id_site?'active':'';  // '+active+'
+					$('#install_normal_setup_export .list_sites').append('' +
+						'<li id="install_normal_setup_export_list_site_elem_'+value.id_site+'" data-id_site="'+value.id_site+'" class="bSiteExportElem">'+
+						'	<span class="societe '+active+'">'+value.name+'</span>'+
+						'	<a href="#" class="btn btn-sm btn-circle btn-success pull-right"><i class="fa fa-upload"></i></a>'+
+						'</li>'
+						);
+				});
+				
+				$('.install_normal_setup_export_loading').hide();
+				$('#install_normal_setup_export .loaded').show();
 			});
-			
-			$('.install_normal_setup_export_loading').hide();
-			$('#install_normal_setup_export .loaded').show();
 		});
 	}
 	else
@@ -852,9 +865,10 @@ function GetMapsNormal()
 				
 				if (data.D != undefined)
 				$.each(data.D,function(index, value){
+					let active = current_map.id_map == value.id_map?'active':'';
 					$('#install_normal_setup_maps .list_maps').append('' +
 						'<li id="install_normal_setup_maps_list_map_elem_'+value.id_map+'" data-id_map="'+value.id_map+'">'+
-						'	<span class="societe">'+value.name+'</span>'+
+						'	<span class="societe '+active+'">'+value.name+'</span>'+
 						(current_map.id_map != value.id_map?'	<a href="#" class="bMapDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>':'')+
 						(current_map.id_map != value.id_map?'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>':'')+
 						(current_map.id_map != value.id_map?'	<a href="#" class="bMapSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-check"></i></a>':'')+
@@ -889,9 +903,10 @@ function GetMapsWyca()
 				
 				if (data.D != undefined)
 				$.each(data.D,function(index, value){
+					let active = current_map.id_map == value.id_map?'active':'';
 					$('#wyca_setup_maps .list_maps').append('' +
 						'<li id="wyca_setup_maps_list_map_elem_'+value.id_map+'" data-id_map="'+value.id_map+'">'+
-						'	<span class="societe">'+value.name+'</span>'+
+						'	<span class="societe  '+active+'">'+value.name+'</span>'+
 						(current_map.id_map != value.id_map?'	<a href="#" class="bMapDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>':'')+
 						(current_map.id_map != value.id_map?'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>':'')+
 						(current_map.id_map != value.id_map?'	<a href="#" class="bMapSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-check"></i></a>':'')+
@@ -926,9 +941,10 @@ function GetSwitchMapsWyca()
 				
 				if (data.D != undefined)
 				$.each(data.D,function(index, value){
+					let active = current_map.id_map == value.id_map?'active':'';
 					$('#wyca_switch_map_landmark .list_switch_map_landmarks').append('' +
 						'<li id="wyca_switch_map_landmark_list_map_elem_'+value.id_map+'" data-id_map="'+value.id_map+'">'+
-						'	<span class="societe">'+value.name+'</span>'+
+						'	<span class="societe  '+active+'">'+value.name+'</span>'+
 						(current_map.id_map != value.id_map?'	<a href="#" class="bMapSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fas fa-exchange-alt"></i></a>':'')+
 						'</li>'
 						);
@@ -945,7 +961,8 @@ function GetSwitchMapsWyca()
 	}
 }
 
-function GetMapsForDownloadNormal(){
+function GetMapsForDownloadNormal()
+{
 	$('.install_normal_setup_download_loading').show();
 	$('#install_normal_setup_download_map .loaded').hide();
 	if (wycaApi.websocketAuthed)
@@ -979,7 +996,8 @@ function GetMapsForDownloadNormal(){
 	}
 }
 
-function GetMapsForDownloadWyca(){
+function GetMapsForDownloadWyca()
+{
 	$('.wyca_setup_download_loading').show();
 	$('#wyca_setup_download_map .loaded').hide();
 	if (wycaApi.websocketAuthed)
@@ -1350,9 +1368,10 @@ function GetWycasWyca()
 			$.each(data.D,function(index, value){
 				if (value.id_group_user  == wycaApi.GroupUser.WYCA)
 				{
+					let active = user_id == value.id_user?'active':'';
 					$('#wyca_wyca .list_wycas').append('' +
 						'<li id="wyca_wyca_list_wyca_elem_'+value.id_user+'" data-id_wyca="'+value.id_user+'">'+
-						'	<span class="email">'+value.email+'</span>'+
+						'	<span class="email '+active+'">'+value.email+'</span>'+
 						'	<a href="#" class="bWycaDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>'+
 						'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>'+
 						'	<a href="#" class="bWycaEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pen"></i></a>'+
