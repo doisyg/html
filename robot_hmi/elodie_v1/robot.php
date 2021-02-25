@@ -102,8 +102,6 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
 		<script src="<?php echo $_CONFIG['URL'];?>/js/sim_map_svg.js"></script>
 	<?php endif; ?>
 		
-	
-
 </head>
 
 <body>
@@ -198,21 +196,33 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
 	</div>
 	<div class="row m-0 vh-100 p-3" id="dashboard">
 		<div class="col-md-9 h-100">
-			<div class="w-100 h-100 m-auto" id="map" style="position:relative;">
-				<svg id="install_normal_edit_map_svg" width="0" height="0" style="position:absolute; top:0; left:0; width:100%; height:100%;">
-					<image id="install_normal_edit_map_image" xlink:href="" x="0" y="0" height="0" width="0" />
+			<div class="w-100 h-100 d-flex justify-content-center align-items-center" id="map">
+				<svg id="map_svg" width="0" height="0" style="display:none;">
+					<image id="map_image" xlink:href="" x="0" y="0" height="0" width="0" />
+					<span id="tRobotNotLocalised" class="tRobotNotLocalised" style="display:none;"><i class="fas fa-exclamation-triangle"></i>The robot is not localized</span>
 				</svg>
-				<div class="d-flex justify-content-around align-items-center" id="legende">
-					<p class="m-0">Legende</p>
-					<i class="fas fa-backward"></i>
-					<i class="fas fa-backward"></i>
+				<div id="loader_map">
+					<div class="loader-container">
+						<div class="dot dot-1"></div>
+						<div class="dot dot-2"></div>
+						<div class="dot dot-3"></div>
+					</div>
+
+					<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+						<defs>
+							<filter id="goo">
+								<feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+								<feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 21 -7"/>
+							</filter>
+						</defs>
+					</svg>
 				</div>
 			</div>
 		</div>
 		<div class="col-md-3 h-100 d-flex flex-column" style="justify-content: space-evenly;">
-			<div class="my-2 flex-centered py-5" id="battery_widget">
+			<div class="my-2 flex-centered py-5 battery_not_init" id="battery_widget">
 				<i class="fas fa-battery-full fa-5x mr-4"></i>
-				<h2 class="m-0"><span id="battery_lvl">99</span> %</h2>
+				<h2 class="m-0"><span id="battery_lvl">-</span> %</h2>
 				<h1 class="position-absolute">Battery</h1>
 			</div>
 			<hr>
@@ -225,7 +235,7 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
 					<i class="fas fa-download fa-3x"></i>
 					<p>docking</p>
 				</div>
-				<div class="d-flex justify-content-center align-items-center docking_state active flex-column" id="undocking">
+				<div class="d-flex justify-content-center align-items-center docking_state flex-column" id="undocking">
 					<i class="fas fa-upload fa-3x"></i>
 					<p>undocking</p>
 				</div>

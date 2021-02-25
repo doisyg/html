@@ -67,7 +67,9 @@ h1,h2,h3,h5{
 #battery_lvl{
 	font-family:'OpenSans-SemiBold';
 }
-
+.battery_not_init > h2,i{
+	opacity:0.3;
+}
 /* DOCKING STATE WIDGET */
 
 #docking_state_widget{
@@ -122,3 +124,111 @@ h1,h2,h3,h5{
 	left:0;
 	position:absolute;
 }
+
+.tRobotNotLocalised{
+	text-align: right;
+    font-size: 14px;
+    font-weight: 700;
+    position: absolute;
+    bottom: 0px;
+    right: 10px;
+    background: #6b6b6b;
+    padding: 2px 7px;
+    color: white;
+    border-radius: 50px;
+}
+.tRobotNotLocalised > .fas{
+	color: orangered;
+    margin-right: 5px;
+}
+
+
+
+
+
+
+
+
+
+
+/* LOADER MAP */
+body{
+	--Lscale:1.5;
+}
+
+.loader-container {
+  width: calc(200px * var(--Lscale));
+  height: calc(200px * var(--Lscale));
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: auto;
+  filter: url('#goo');
+  animation: rotate-move 2s ease-in-out infinite;
+}
+
+.loader-container .dot { 
+  width: calc(70px * var(--Lscale)) ;
+  height: calc(70px * var(--Lscale));
+  border-radius: 50%;
+  background-color: #000;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.loader-container .dot-3 {
+  background-color: #f74d75;
+  animation: dot-3-move 2s ease infinite, index 6s ease infinite;
+}
+
+.loader-container .dot-2 {
+  background-color: #10beae;
+  animation: dot-2-move 2s ease infinite, index 6s -4s ease infinite;
+}
+
+.loader-container .dot-1 {
+  background-color: #ffe386;
+  animation: dot-1-move 2s ease infinite, index 6s -2s ease infinite;
+}
+
+@keyframes dot-3-move {
+  20% {transform: scale(1)}
+  45% {transform: translateY(calc(-1 * 18px * var(--Lscale))) scale(.45)} 
+  60% {transform: translateY(calc(-1 * 90px * var(--Lscale))) scale(.45)}
+  80% {transform: translateY(calc(-1 * 90px * var(--Lscale))) scale(.45)}
+  100% {transform: translateY(0px) scale(1)}
+}
+
+@keyframes dot-2-move {
+  20% {transform: scale(1)}
+  45% {transform: translate(calc(-1 * 16px * var(--Lscale)), calc(1 * 12px * var(--Lscale))) scale(.45)}
+  60% {transform: translate(calc(-1 * 80px * var(--Lscale)), calc(1 * 60px * var(--Lscale))) scale(.45)}
+  80% {transform: translate(calc(-1 * 80px * var(--Lscale)), calc(1 * 60px * var(--Lscale))) scale(.45)}
+  100% {transform: translateY(0px) scale(1)}
+}
+
+@keyframes dot-1-move {
+  20% {transform: scale(1)}
+  45% {transform: translate(calc(1 * 16px * var(--Lscale)), calc(1 * 12px * var(--Lscale))) scale(.45)}
+  60% {transform: translate(calc(1 * 80px * var(--Lscale)), calc(1 * 60px * var(--Lscale))) scale(.45)}
+  80% {transform: translate(calc(1 * 80px * var(--Lscale)), calc(1 * 60px * var(--Lscale))) scale(.45)}
+  100% {transform: translateY(0px) scale(1)}
+}
+
+@keyframes rotate-move {
+  55% {transform: translate(-50%, -50%) rotate(0deg)}
+  80% {transform: translate(-50%, -50%) rotate(360deg)}
+  100% {transform: translate(-50%, -50%) rotate(360deg)}
+}
+
+@keyframes index {
+  0%, 100% {z-index: 3}
+  33.3% {z-index: 2}
+  66.6% {z-index: 1}
+}
+/* LOADER MAP */

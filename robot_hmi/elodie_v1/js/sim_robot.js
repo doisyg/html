@@ -36,6 +36,9 @@ $(document).ready(function(e){
 		onInitialized: function(){
 			
 		},
+		onMapUpdated: function(){
+			initMap();
+		},
 		onBatteryState: function(data){
 			if(data.SOC != SOC || data.IS_POWERED != IS_POWERED)
 				refreshBattery(data);
@@ -49,19 +52,11 @@ $(document).ready(function(e){
 		},
 		onNavigationRobotPose:function(pose){
 			lastRobotPose = pose;
+			if(robot_traced)
+				TraceRobot(lastRobotPose);
 		},
 		onNavigationStateChange: function(data) {
-			navLaunched = data;
-			if (data)
-			{
-				$('.no_navigation').hide();
-				$('.only_navigation').show();
-			}
-			else
-			{
-				$('.no_navigation').show();
-				$('.only_navigation').hide();
-			}
+			
 		}
 	
 	});
@@ -74,8 +69,12 @@ var id_site = -1;
 var name_site = '';
 
 function initMap(){
+	$('#loader_map').show();
+	$('#map_svg').hide();
+	
 	if (wycaApi.websocketAuthed)
 	{
+		$('#map_svg').children('.map_elem').remove();
 		wycaApi.GetCurrentSite(function(data){
 			if (data.A == wycaApi.AnswerCode.NO_ERROR){
 				
@@ -100,21 +99,21 @@ function initMap(){
 						ros_hauteur = data.D.ros_height;
 						ros_resolution = data.D.ros_resolution;
 						
-						$('#install_normal_edit_map_svg').attr('width', data.D.ros_width);
-						$('#install_normal_edit_map_svg').attr('height', data.D.ros_height);
+						svg_resolution_height = $('#map').outerHeight() / ros_hauteur ;
+						svg_resolution_width = (ros_largeur * svg_resolution_height) / ros_largeur ;
 						
-						//console.log(
+						$('#map_svg').attr('width', ros_largeur * svg_resolution_height);
+						$('#map_svg').attr('height',$('#map').outerHeight());
 						
-						//$('#install_normal_edit_map_image').attr('width', data.D.ros_width);
-						//$('#install_normal_edit_map_image').attr('height', data.D.ros_height);
+						$('#map_image').attr('width', ros_largeur * svg_resolution_height);
+						$('#map_image').attr('height', $('#map').outerHeight());
+						$('#map_image').attr('xlink:href', 'data:image/png;base64,'+data.D.image_tri);
 						
-						$('#install_normal_edit_map_image').attr('width', $('#map').outerWidth());
-						$('#install_normal_edit_map_image').attr('height', $('#map').outerHeight()*0.95);
-						$('#install_normal_edit_map_image').attr('xlink:href', 'data:image/png;base64,'+data.D.image_tri);
-						
-						svgMap= document.querySelector('#install_normal_edit_map_svg');
-						
+						svgMap = document.querySelector('#map_svg');
+						TraceRobot(lastRobotPose);
 						setTimeout(function(){
+							$('#loader_map').hide();
+							$('#map_svg').show();
 							if($('html').scrollTop() < $("#dashboard").offset().top)
 								$('html, body').animate({scrollTop: $("#dashboard").offset().top}, 1000)}
 						,1000)
@@ -141,7 +140,7 @@ function refreshBattery(data){
 	let targetIcon = $('#battery_widget i');
 	let targetTxt = $('#battery_lvl');
 	targetTxt.html(SOC);
-	
+	$('#battery_widget').removeClass('battery_not_init');
 	if(!IS_POWERED){
 		//REMOVE CLASSES
 		targetIcon.removeClass('fa-battery-empty').removeClass('fa-battery-quarter').removeClass('fa-battery-half').removeClass('fa-battery-three-quarters').removeClass('fa-battery-full').removeClass('battery-charging');
@@ -230,7 +229,7 @@ function animBatteryCharging(){
 
 function refreshDockingState(){
 	$('#docking_state_widget .docking_state').removeClass('active');
-	if(dockingStateLast != 'not_init'){
+	if(dockingStateLast == 'docked' || dockingStateLast == 'undocked' || dockingStateLast == 'docking' || dockingStateLast == 'unocking'){
 		$('#docking_state_widget .docking_state#'+dockingStateLast).addClass('active');
 	}
 }

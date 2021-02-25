@@ -23,43 +23,52 @@ function TraceRobot(pose)
 	robot_y = pose.Y;
 	robot_theta = pose.T;
 	
-	x = robot_x * 100 / 5 * ($('#map').outerWidth()/ros_largeur);
-	y = ros_hauteur - (robot_y * 100 / ros_resolution);	
-	angle = 0 - robot_theta * 180 / Math.PI;
-	rayonRobot = (26 / ros_resolution);
-	
-	if (true || !robot_traced) // true pour le mettre au premier plan
-	{
+	if(robot_x == robot_y && robot_y == robot_theta && robot_x == 0 ){
+		$(tRobotNotLocalised).show();
+		$('#robot_circle').remove();
+		$('#robot_sens').remove();
 		robot_traced = true;
-		$('#user_edit_map_robot_circle').remove();
-		path = makeSVGElement('circle', { cx: x,
-										cy: y,
-									   r: rayonRobot,
-									   'class': 'robot_elem robot_elem_fond',
-									   'id': 'user_edit_map_robot_circle',
+	}else{
+		$('#tRobotNotLocalised').hide();
+		
+		x = (robot_x * 100 / ros_resolution) * svg_resolution_width;
+		y = (ros_hauteur - (robot_y * 100 / ros_resolution)) * svg_resolution_height;
+		angle = 0 - robot_theta * 180 / Math.PI;
+		rayonRobot = (26 / ros_resolution) * svg_resolution_width;
+		
+		if (true || !robot_traced) // true pour le mettre au premier plan
+		{
+			robot_traced = true;
+			$('#robot_circle').remove();
+			path = makeSVGElement('circle', { cx: x,
+											cy: y,
+										   r: rayonRobot,
+										   'class': 'map_elem robot_elem robot_elem_fond',
+										   'id': 'robot_circle',
+										   'data-element_type': 'robot',
+										   'data-element': 'robot'
+										   });
+			svgMap.appendChild(path);
+		}
+		else
+		{
+			$('#robot_circle').attr("cx", x);
+			$('#robot_circle').attr("cy", y);
+		}
+		
+		$('#robot_sens').remove();
+		path = makeSVGElement('polyline', { 'points': (x-2*svg_resolution_width)+' '+(y-2*svg_resolution_width)+' '+(x+2*svg_resolution_width)+' '+(y)+' '+(x-2*svg_resolution_width)+' '+(y+2*svg_resolution_width),
+										'stroke':'#FFFFFF',
+										'stroke-width':Math.round(1*svg_resolution_width),
+										'fill':'none',
+										'stroke-linejoin':'round',
+										'stroke-linecap':'round',
+									   'class': 'map_elem robot_elem',
+									   'transform':'rotate('+angle+', '+x+', '+y+')',
+									   'id': 'robot_sens',
 									   'data-element_type': 'robot',
 									   'data-element': 'robot'
 									   });
-		svgMap.appendChild(path);
+		$('#robot_circle').after(path);
 	}
-	else
-	{
-		$('#user_edit_map_robot_circle').attr("cx", x);
-		$('#user_edit_map_robot_circle').attr("cy", y);
-	}
-	
-	$('#user_edit_map_robot_sens').remove();
-	path = makeSVGElement('polyline', { 'points': (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2),
-									'stroke':'#FFFFFF',
-									'stroke-width':1,
-									'fill':'none',
-									'stroke-linejoin':'round',
-									'stroke-linecap':'round',
-								   'class': 'robot_elem',
-								   'transform':'rotate('+angle+', '+x+', '+y+')',
-								   'id': 'user_edit_map_robot_sens',
-								   'data-element_type': 'robot',
-								   'data-element': 'robot'
-								   });
-	$('#user_edit_map_robot_circle').after(path);
 }
