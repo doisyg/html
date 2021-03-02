@@ -2038,10 +2038,11 @@ function InitInstallWifiPageWyca()
 {
 	if (wycaApi.websocketAuthed)
 	{
-		
+		//$('.wyca_setup_wifi_loading').show();
 		wycaApi.GetWifiList(function(data) {
-			$('.wyca_setup_wifi_loading').hide();
+			
 			$('#wyca_setup_wifi tr').hide();
+			let wifis = [];
 			if (data.D.length > 0)
 			{
 				$.each(data.D,function(index, value){
@@ -2058,13 +2059,20 @@ function InitInstallWifiPageWyca()
 					}
 					else
 					{
-						if (value.state == 'active')
-							$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td><i class="fas fa-check"></i> '+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
-						else
-							$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td>'+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
+						if(!wifis.includes(value.ssid)){
+							wifis.push(value.ssid);
+							if (value.state == 'active')
+								$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td><i class="fas fa-check"></i> '+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
+							else
+								$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td>'+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
+						}else{
+							if(value.state == 'active')
+								$('.tbody_wifi tr[data-ssid="'+'wyca_office'+'"]:visible').addClass('active').children('td:first-child').html('<i class="fas fa-check"></i> '+value.ssid);//Add check + bold
+						}
 					}
 				});
 			}
+			$('.wyca_setup_wifi_loading').hide();
 		});
 		
 		if ($('#wyca_setup_wifi').is(':visible'))
@@ -2080,10 +2088,10 @@ function InitInstallWifiPageNormal()
 {
 	if (wycaApi.websocketAuthed)
 	{
-		
+		//$('.install_normal_setup_wifi_loading').show();
 		wycaApi.GetWifiList(function(data) {
-			$('.install_normal_setup_wifi_loading').hide();
 			$('#install_normal_setup_wifi tr').hide();
+			let wifis = [];
 			if (data.D.length > 0)
 			{
 				$.each(data.D,function(index, value){
@@ -2100,13 +2108,20 @@ function InitInstallWifiPageNormal()
 					}
 					else
 					{
-						if (value.state == 'active')
-							$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td><i class="fas fa-check"></i> '+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
-						else
-							$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td>'+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
+						if(!wifis.includes(value.ssid)){
+							wifis.push(value.ssid);
+							if (value.state == 'active')
+								$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td><i class="fas fa-check"></i> '+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
+							else
+								$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td>'+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
+						}else{
+							if(value.state == 'active')
+								$('.tbody_wifi tr[data-ssid="'+'wyca_office'+'"]:visible').addClass('active').children('td:first-child').html('<i class="fas fa-check"></i> '+value.ssid);//Add check + bold
+						}
 					}
 				});
 			}
+			$('.install_normal_setup_wifi_loading').hide();
 		});
 		
 		if ($('#install_normal_setup_wifi').is(':visible'))
@@ -2122,16 +2137,18 @@ function InitInstallWifiPageByStep()
 {
 	if (wycaApi.websocketAuthed)
 	{
-		
+		//$('.install_bystep_setup_wifi_loading').show();
 		wycaApi.GetWifiList(function(data) {
-			$('.install_bystep_setup_wifi_loading').hide();
+			
 			$('#install_by_step_wifi tr').hide();
+			let wifis = [];
 			if (data.D.length > 0)
 			{
 				$.each(data.D,function(index, value){
 					signal = parseInt(value.signal/20);
 					if ($('#install_by_step_wifi .wifi'+value.bssid).length > 0)
 					{
+						console.log('re');
 						$('#install_by_step_wifi tr').show();
 						$('#install_by_step_wifi .wifi'+value.bssid+' img').attr('src', 'assets/images/signal-'+signal+'.png');
 						if (value.state == 'active')
@@ -2142,13 +2159,21 @@ function InitInstallWifiPageByStep()
 					}
 					else
 					{
-						if (value.state == 'active')
-							$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td><i class="fas fa-check"></i> '+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
-						else
-							$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td>'+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
+						if(!wifis.includes(value.ssid)){
+							wifis.push(value.ssid);
+							if (value.state == 'active')
+								$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td><i class="fas fa-check"></i> '+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
+							else
+								$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td>'+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
+						}else{
+							if(value.state == 'active')
+								$('.tbody_wifi tr[data-ssid="'+'wyca_office'+'"]:visible').addClass('active').children('td:first-child').html('<i class="fas fa-check"></i> '+value.ssid);//Add check + bold
+						}
 					}
 				});
+				
 			}
+			$('.install_bystep_setup_wifi_loading').hide();
 		});
 		
 		if ($('#install_by_step_wifi').is(':visible'))
