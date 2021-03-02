@@ -97,11 +97,13 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
 		<script src="<?php echo $_CONFIG['URL'];?>/js/sim_jquery.js"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>/js/sim_bootstrap.js"></script>
 		
-		
+		<script src="<?php echo $_CONFIG['URL'];?>/js/sim_anim_led.js"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>/js/sim_led.js"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>/js/sim_robot.js"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>/js/sim_map_svg.js"></script>
 	<?php endif; ?>
-		
+	
+	<script src="<?php echo $_CONFIG['URL'];?>js/robot.js?v=202012141414"></script>		
 </head>
 
 <body>
