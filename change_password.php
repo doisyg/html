@@ -144,12 +144,19 @@ var ws;
 var use_ssl = <?php echo $server_request_scheme == 'http'?'false':'true';?>;
 var user_api_key = '<?php echo $_SESSION["api_key"];?>';
 
-var robot_host = '<?php echo (file_exists('C:\\'))?((file_exists('C:\\Users\\F') || file_exists('C:\\Users\\Yvan'))?'10.0.0.39:'.($server_request_scheme == 'http'?'9094':'9095'):'192.168.0.33:'.($server_request_scheme == 'http'?'9094':'9095')):'wyca.run:'.($server_request_scheme == 'http'?'9094':'9095');?>';
-//var robot_host = '<?php echo (file_exists('C:\\'))?((file_exists('C:\\Users\\F'))?'10.0.0.39:'.($server_request_scheme == 'http'?'9094':'9095'):'10.0.0.44:'.($server_request_scheme == 'http'?'9094':'9095')):'wyca.run:'.($server_request_scheme == 'http'?'9094':'9095');?>';
+var robot_host = '<?php echo $_CONFIG["ROBOT_HOST"]?>';
 
 
 $(document).ready(function(e) {
-
+	<?php if(isset($error_conf_release) && $error_conf_release) { ?>
+		<?php if($_CONFIG['MODE'] == 'PROD') { ?>
+			console.log('---------------------------------------------------------');
+			console.log('Invalid or missing version.conf file on release detected');
+			console.log('---------------------------------------------------------');
+		<?php }else{?>
+			DisplayError('Invalid or missing version.conf file on release detected');
+		<?php }?>
+	<?php }?>
 
 	wycaApi = new WycaAPI({
 		host:robot_host, //192.168.1.32:9090', // host:'192.168.100.245:9090',

@@ -936,7 +936,7 @@ function ByStepResizeSVG()
 function ExportSVG()
 {
 
-	var rawSVG = $("#install_by_step_edit_map_svg").outerHTML;;
+	var rawSVG = $("#install_by_step_edit_map_svg").outerHTML;
 	
 	var myCanvas = document.getElementById("install_by_step_edit_map_canvas_export_svg");
     var ctxt = myCanvas.getContext("2d");

@@ -74,3 +74,19 @@ svg#user_edit_map_svg_clone .movable.active { display:none !important; }
 }
 .go_to_pose_elem_line{
 }
+.tRobotNotLocalised{
+	text-align: right;
+    font-size: 14px;
+    font-weight: 700;
+    position: absolute;
+    bottom: 20px;
+    right: 10px;
+    background: #6b6b6b;
+    padding: 2px 7px;
+    color: white;
+    border-radius: 50px;
+}
+.tRobotNotLocalised > .fas{
+	color: orangered;
+    margin-right: 5px;
+}

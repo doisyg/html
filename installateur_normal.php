@@ -98,7 +98,7 @@
                     
                     <a href="#" id="install_normal_edit_map_bUndo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:20px; left:10px;"><i class="fas fa-undo-alt"></i></a>
                     <a href="#" id="install_normal_edit_map_bRedo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:20px; left:45px;"><i class="fas fa-redo-alt"></i></a>
-                    
+                    <span id="install_normal_edit_map_tRobotNotLocalised" class="tRobotNotLocalised" style="display:none;"><i class="fas fa-exclamation-triangle"></i><?php echo __('The robot is not localized');?></span>
                     <div id="install_normal_edit_map_menu" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
                         	<li><a href="#" class="btn btn-circle btn-default bAddForbiddenArea btn-menu" data-orientation="V">
@@ -1870,7 +1870,8 @@
                 <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_dashboard"><?php echo __('Back');?></a>
             </footer>
         </section>
-        
+		
+        <!--
         <section id="install_normal_user" class="page with_footer">
 	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_accounts"></a>
             <header>
@@ -1982,7 +1983,8 @@
                 <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_accounts"><?php echo __('Back');?></a>
             </footer>
         </section>
-        
+        -->
+		
         <section id="install_normal_manager" class="page with_footer">
 	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_accounts"></a>
             <header>
@@ -2127,7 +2129,9 @@
             <div class="content">
 				<ul class="tuiles row">
 					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile1" data-goto="install_normal_manager" href="#"><i class="fas fa-users-cog" style="transform:scaleX(-1)"></i><?php echo __('Managers');?></a></li>
+					<!--
 					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="install_normal_user" href="#"><i class="fas fa-user-friends"></i><?php echo __('Users');?></a></li>
+					-->
 				</ul>
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
@@ -2135,8 +2139,8 @@
 						<p class=""><?= __('This page allows you to manage manager and user accounts.')?></p>
 						<p class=""><?= __('Manager accounts can mainly be :')?></p>
 						<p class="">&nbsp;&nbsp;&nbsp;<?= __('- Move the robot through the map.')?><br><br>&nbsp;&nbsp;&nbsp;<?= __('- Add POI')?><br><br>&nbsp;&nbsp;&nbsp;<?= __('- Change active top on the robot among the preselected tops.')?></p>
-						<p class=""><?= __('User accounts can mainly :')?></p>
-						<p class="">&nbsp;&nbsp;&nbsp;<?= __('- Move the robot through map.')?></p>
+						<!--<p class=""><?= __('User accounts can mainly :')?></p>
+						<p class="">&nbsp;&nbsp;&nbsp;<?= __('- Move the robot through map.')?></p>-->
 					</div>
 					<p class="legende"><?=__('Click to hide')?></p>
 				</div>
