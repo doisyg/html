@@ -221,7 +221,9 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
 			</div>
 		</div>
 		<div class="col-md-3 h-100 d-flex flex-column" style="justify-content: space-evenly;">
-			<div class="my-2 flex-centered py-5 battery_not_init" id="battery_widget">
+			<img src="<?php echo $_CONFIG['URL'];?>/images/sim_logo.jpg" class="img-fluid">
+			
+			<div class="my-2 flex-centered py-5" id="battery_widget">
 				<i class="fas fa-battery-full fa-5x mr-4"></i>
 				<h2 class="m-0"><span id="battery_lvl">-</span> %</h2>
 				<h1 class="position-absolute">Battery</h1>
