@@ -995,7 +995,9 @@ function WycaInitMap()
 		this.hammer.destroy()
 	  }
 	}
-
+	if(typeof(window.panZoomWyca) != 'undefined'){
+		window.panZoomWyca.destroy();
+	}
 	// Expose to window namespace for testing purposes
 	
 	window.panZoomWyca = svgPanZoom('#wyca_edit_map_svg', {
@@ -1013,6 +1015,19 @@ function WycaInitMap()
 	//window.panZoomWyca = {};
 	//window.panZoomWyca.getZoom = function () { return 1; }
 	WycaRefreshZoomView();
+	
+	setTimeout(function(){
+		if(typeof(window.panZoomWyca) != 'undefined'){
+			
+			//WORKING ON CONSOLE 
+			window.panZoomWyca.resize();
+			window.panZoomWyca.updateBBox();
+			window.panZoomWyca.fit();
+			window.panZoomWyca.center();
+			
+		}
+		setTimeout(function(){$('.wyca_edit_map_loading').hide()},100);
+	},100);
 	
 	$('.wyca_edit_map_loading').hide();
 }

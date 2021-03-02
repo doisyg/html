@@ -2040,7 +2040,6 @@ function InitInstallWifiPageWyca()
 	{
 		//$('.wyca_setup_wifi_loading').show();
 		wycaApi.GetWifiList(function(data) {
-			
 			$('#wyca_setup_wifi tr').hide();
 			let wifis = [];
 			if (data.D.length > 0)
@@ -2148,7 +2147,6 @@ function InitInstallWifiPageByStep()
 					signal = parseInt(value.signal/20);
 					if ($('#install_by_step_wifi .wifi'+value.bssid).length > 0)
 					{
-						console.log('re');
 						$('#install_by_step_wifi tr').show();
 						$('#install_by_step_wifi .wifi'+value.bssid+' img').attr('src', 'assets/images/signal-'+signal+'.png');
 						if (value.state == 'active')
