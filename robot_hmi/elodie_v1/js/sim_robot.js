@@ -39,6 +39,12 @@ $(document).ready(function(e){
 		onMapUpdated: function(){
 			initMap();
 		},
+		onMoveInProgress: function(data){
+			if(data)
+				$('#tActionInProgess').show();
+			else
+				$('#tActionInProgess').hide();
+		},
 		onBatteryState: function(data){
 			if(data.SOC != SOC || data.IS_POWERED != IS_POWERED)
 				refreshBattery(data);
@@ -110,6 +116,7 @@ function initMap(){
 						$('#map_image').attr('xlink:href', 'data:image/png;base64,'+data.D.image_tri);
 						
 						svgMap = document.querySelector('#map_svg');
+						DrawMapElements();
 						TraceRobot(lastRobotPose);
 						setTimeout(function(){
 							$('#loader_map').hide();
@@ -140,7 +147,6 @@ function refreshBattery(data){
 	let targetIcon = $('#battery_widget i');
 	let targetTxt = $('#battery_lvl');
 	targetTxt.html(SOC);
-	$('#battery_widget').removeClass('battery_not_init');
 	if(!IS_POWERED){
 		//REMOVE CLASSES
 		targetIcon.removeClass('fa-battery-empty').removeClass('fa-battery-quarter').removeClass('fa-battery-half').removeClass('fa-battery-three-quarters').removeClass('fa-battery-full').removeClass('battery-charging');

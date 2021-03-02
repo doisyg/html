@@ -246,6 +246,9 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
 			</div>
 			<hr>
 			<div class="my-2 flex-centered py-5" id="leds_widget" style="min-height:300px">
+				<div class="LED_wrapper position-relative flex-centered" id="LED_wrapper">
+					<img id="eloLED" src="<?php echo $_CONFIG['URL'];?>images/elo_LED.png" style="max-width: 200px;" class="position-relative img-fluid" >
+				</div>
 				<h1>LEDs</h1>
 			</div>
 		</div>
