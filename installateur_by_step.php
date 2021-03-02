@@ -154,7 +154,7 @@
             <div class="content" style="padding: 0;">
             
             	<div style="position:relative;max-width:375px; margin:auto;">
-					<svg class="svg_legende" xmlns="http://www.w3.org/2000/svg" style="z-index:10;">
+					<svg class="svg_legende" xmlns="http://www.w3.org/2000/svg">
 						<line x1="65" y1="142" x2="109" y2="226" stroke-width="1" stroke="#343434" class="line_lidar"/>
 						<line x1="187" y1="122" x2="168" y2="197" stroke-width="1" stroke="#343434" class="line_us"/>
 						<line x1="187" y1="122" x2="134" y2="197" stroke-width="1" stroke="#343434" class="line_us"/>
