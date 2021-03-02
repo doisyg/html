@@ -1028,8 +1028,6 @@ function WycaInitMap()
 		}
 		setTimeout(function(){$('.wyca_edit_map_loading').hide()},100);
 	},100);
-	
-	$('.wyca_edit_map_loading').hide();
 }
 
 function WycaShakeActiveElement()
