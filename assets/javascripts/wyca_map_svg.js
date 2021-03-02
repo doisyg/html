@@ -698,46 +698,52 @@ var robot_traced_wyca = false;
 
 function WycaTraceRobot(robot_x, robot_y, robot_theta)
 {
-	x = robot_x * 100 / ros_resolution;
-	y = ros_hauteur - (robot_y * 100 / ros_resolution);	
-	angle = 0 - robot_theta * 180 / Math.PI;
-	
-	rayonRobot = (26 / ros_resolution);
-	
-	if (!robot_traced_wyca)
-	{
-		robot_traced_wyca = true;
+	if(robot_x == robot_y && robot_y == robot_theta && robot_x == 0 ){
+		$('#wyca_edit_map_tRobotNotLocalised').show();
+		$('#wyca_edit_map_robot_circle').remove();
+		$('#wyca_edit_map_robot_sens').remove();
+	}else{
+		x = robot_x * 100 / ros_resolution;
+		y = ros_hauteur - (robot_y * 100 / ros_resolution);	
+		angle = 0 - robot_theta * 180 / Math.PI;
 		
-		path = makeSVGElement('circle', { cx: x,
-										cy: y,
-									   r: rayonRobot,
-									   'class': 'robot_elem robot_elem_fond',
-									   'id': 'wyca_edit_map_robot_circle',
+		rayonRobot = (26 / ros_resolution);
+		
+		if (!robot_traced_wyca)
+		{
+			robot_traced_wyca = true;
+			
+			path = makeSVGElement('circle', { cx: x,
+											cy: y,
+										   r: rayonRobot,
+										   'class': 'robot_elem robot_elem_fond',
+										   'id': 'wyca_edit_map_robot_circle',
+										   'data-element_type': 'robot',
+										   'data-element': 'robot'
+										   });
+			svgWyca.appendChild(path);
+		}
+		else
+		{
+			$('#wyca_edit_map_robot_circle').attr("cx", x);
+			$('#wyca_edit_map_robot_circle').attr("cy", y);
+		}
+		
+		$('#wyca_edit_map_robot_sens').remove();
+		path = makeSVGElement('polyline', { 'points': (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2),
+										'stroke':'#FFFFFF',
+										'stroke-width':1,
+										'fill':'none',
+										'stroke-linejoin':'round',
+										'stroke-linecap':'round',
+									   'class': 'robot_elem',
+									   'transform':'rotate('+angle+', '+x+', '+y+')',
+									   'id': 'wyca_edit_map_robot_sens',
 									   'data-element_type': 'robot',
 									   'data-element': 'robot'
 									   });
-		svgWyca.appendChild(path);
+		$('#wyca_edit_map_robot_circle').after(path);
 	}
-	else
-	{
-		$('#wyca_edit_map_robot_circle').attr("cx", x);
-		$('#wyca_edit_map_robot_circle').attr("cy", y);
-	}
-	
-	$('#wyca_edit_map_robot_sens').remove();
-	path = makeSVGElement('polyline', { 'points': (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2),
-									'stroke':'#FFFFFF',
-									'stroke-width':1,
-									'fill':'none',
-									'stroke-linejoin':'round',
-									'stroke-linecap':'round',
-								   'class': 'robot_elem',
-								   'transform':'rotate('+angle+', '+x+', '+y+')',
-								   'id': 'wyca_edit_map_robot_sens',
-								   'data-element_type': 'robot',
-								   'data-element': 'robot'
-								   });
-	$('#wyca_edit_map_robot_circle').after(path);
 }
 
 function WycaResizeSVG()
