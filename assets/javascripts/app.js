@@ -1027,7 +1027,7 @@ function GetMapsForDownloadWyca()
 	}
 	else
 	{
-		setTimeout(GetMapsForDownloadNormal, 500);
+		setTimeout(GetMapsForDownloadWyca, 500);
 	}
 }
 
