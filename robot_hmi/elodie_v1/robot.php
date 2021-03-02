@@ -74,7 +74,7 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
 	<script src="<?php echo $_CONFIG['URL_API'];?>wyca_socket_api.js"></script>
 		
 		
-	<?php if(!$sim) : ?>
+	
 		<link href="<?php echo $_CONFIG['URL'];?>css/bootstrap.css" rel="stylesheet">
 		<link href="<?php echo $_CONFIG['URL'];?>css/bootstrap-switch.min.css" rel="stylesheet">
 		<link href='https://fonts.googleapis.com/css?family=Montserrat%3A400%2C700&#038;subset=latin&#038;ver=1455269554' type='text/css' media='all' rel='stylesheet' id='anaglyph-google-fonts-anaglyph_config-css' />
@@ -89,7 +89,7 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
 		
 		
 		<script src="<?php echo $_CONFIG['URL'];?>js/robot.js?v=202012141414"></script>
-    <?php else : ?>
+   <?php if($sim) : ?>
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>/css/sim_bootstrap.css" />
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>/css/sim_font_awesome.css" />
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>/css/sim_style.css" />
@@ -105,8 +105,7 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
 </head>
 
 <body>
-<?php if(!$sim) : ?>
-<div id="HMI_elodie">
+<div id="HMI_elodie" style="<?= $sim?'display:none':'' ?>">
 	<span id="connection" class=""><i class="fa fa-exchange fa-rotate-90"></i></span>
 	<span id="icoBattery" class="battery-ko blinking"><i class="fa fa-battery-0" aria-hidden="true"></i></span>
     	
@@ -182,8 +181,8 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
         </div>
     </div>
 </div>
-<?php else : ?>
-<div id="HMI_simu">
+
+<div id="HMI_simu"  style="<?= !$sim?'display:none':'' ?>">
 	<div class="row m-0">
 		<div class="col-xl-10 offset-xl-1 col-12 text-center">
 			<div class="title_logo d-inline-flex flex-column" style="padding-top: 40vh;padding-bottom: 40vh;">
@@ -240,7 +239,7 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
 					<p>undocking</p>
 				</div>
 				<div class="d-flex justify-content-center align-items-center docking_state flex-column" id="undocked">
-					<i class="fas fa-compass fa-3x"></i>
+					<i class="fas fa-route fa-3x"></i>
 					<p>undocked</p>
 				</div>
 				<h1>Docking State</h1>
@@ -252,6 +251,5 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
 		</div>
 	</div>
 </div>
-<?php endif; ?>
 </body>
 </html>
