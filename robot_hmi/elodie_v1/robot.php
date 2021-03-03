@@ -37,13 +37,11 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml"  <?=$sim?'style="font-size:14px;"':'' ?>>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Wyca - Robot interface</title>
 	
-	
-   
 	<link rel="shortcut icon" href="<?php echo $_CONFIG['URL'];?>/images/favicon/favicon.ico" type="image/x-icon">
 	<link rel="icon" href="<?php echo $_CONFIG['URL'];?>/images/favicon/favicon.png" type="image/png">
 	<link rel="icon" sizes="32x32" href="<?php echo $_CONFIG['URL'];?>/images/favicon/favicon-32.png" type="image/png">
@@ -71,39 +69,33 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
 		var is_simu = <?php echo $sim?'true':'false' ?>;
 	</script>
 	
-	<script src="<?php echo $_CONFIG['URL_API'];?>wyca_socket_api.js"></script>
-		
-		
+	<link href="<?php echo $_CONFIG['URL'];?>css/bootstrap.css" rel="stylesheet">
+	<link href="<?php echo $_CONFIG['URL'];?>css/bootstrap-switch.min.css" rel="stylesheet">
+	<link href='https://fonts.googleapis.com/css?family=Montserrat%3A400%2C700&#038;subset=latin&#038;ver=1455269554' type='text/css' media='all' rel='stylesheet' id='anaglyph-google-fonts-anaglyph_config-css' />
+	<link href="<?php echo $_CONFIG['URL'];?>css/font-awesome.min.css" rel="stylesheet">
+	<link href="<?php echo $_CONFIG['URL'];?>css/robot.css?v=<?= $version ?>" rel="stylesheet">
+	<link href="<?php echo $_CONFIG['URL_API'];?>css/map_wyca.css?v=<?= $version ?>" rel="stylesheet">
 	
-		<link href="<?php echo $_CONFIG['URL'];?>css/bootstrap.css" rel="stylesheet">
-		<link href="<?php echo $_CONFIG['URL'];?>css/bootstrap-switch.min.css" rel="stylesheet">
-		<link href='https://fonts.googleapis.com/css?family=Montserrat%3A400%2C700&#038;subset=latin&#038;ver=1455269554' type='text/css' media='all' rel='stylesheet' id='anaglyph-google-fonts-anaglyph_config-css' />
-		<link href="<?php echo $_CONFIG['URL'];?>css/font-awesome.min.css" rel="stylesheet">
-		<link href="<?php echo $_CONFIG['URL'];?>css/robot.css?v=20191128" rel="stylesheet">
-		
-		<link href="<?php echo $_CONFIG['URL_API'];?>css/map_wyca.css" rel="stylesheet">
-		<script src="<?php echo $_CONFIG['URL_API'];?>extern/jquery-1.11.3.min.js"></script>
-		<script src="<?php echo $_CONFIG['URL_API'];?>webrtc.wyca2.min.js"></script>
-		
-		<script src="<?php echo $_CONFIG['URL'];?>js/bootstrap.js"></script>
-		
-		
-		<script src="<?php echo $_CONFIG['URL'];?>js/robot.js?v=202012141414"></script>
-   <?php if($sim) : ?>
+	<script src="<?php echo $_CONFIG['URL_API'];?>wyca_socket_api.js?v=<?= $version ?>"></script>
+	<script src="<?php echo $_CONFIG['URL_API'];?>extern/jquery-1.11.3.min.js"></script>
+	<script src="<?php echo $_CONFIG['URL_API'];?>webrtc.wyca2.min.js?v=<?= $version ?>"></script>
+	<script src="<?php echo $_CONFIG['URL'];?>js/bootstrap.js"></script>
+	
+	<?php if($sim) : ?>
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>/css/sim_bootstrap.css" />
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>/css/sim_font_awesome.css" />
-		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>/css/sim_style.css" />
+		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>/css/sim_style.css?v=<?= $version ?>" />
 		
 		<script src="<?php echo $_CONFIG['URL'];?>/js/sim_jquery.js"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>/js/sim_bootstrap.js"></script>
 		
-		<script src="<?php echo $_CONFIG['URL'];?>/js/sim_anim_led.js"></script>
-		<script src="<?php echo $_CONFIG['URL'];?>/js/sim_led.js"></script>
-		<script src="<?php echo $_CONFIG['URL'];?>/js/sim_robot.js"></script>
-		<script src="<?php echo $_CONFIG['URL'];?>/js/sim_map_svg.js"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>/js/sim_anim_led.js?v=<?= $version ?>"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>/js/sim_led.js?v=<?= $version ?>"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>/js/sim_map_svg.js?v=<?= $version ?>"></script>
 	<?php endif; ?>
 	
-	<script src="<?php echo $_CONFIG['URL'];?>js/robot.js?v=202012141414"></script>		
+	<script src="<?php echo $_CONFIG['URL'];?>/js/_sim_robot.js"></script>
+	<!-- <script src="<?php echo $_CONFIG['URL'];?>js/robot.js?v=202012141414"></script> -->
 </head>
 
 <body>
@@ -198,10 +190,15 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
 	<div class="row m-0 vh-100 p-3" id="dashboard">
 		<div class="col-md-9 h-100">
 			<div class="w-100 h-100 d-flex justify-content-center align-items-center" id="map">
-				<svg id="map_svg" width="0" height="0" style="display:none;">
-					<image id="map_image" xlink:href="" x="0" y="0" height="0" width="0" />
+				<div class="d-flex position-relative">
+					<svg id="map_svg" class="position-relative" width="0" height="0" style="display:none;">
+						<image id="map_image" xlink:href="" x="0" y="0" height="0" width="0" />
+					</svg>
+					<div class="flex-centered tActionInProgess blinking_soft" id="tActionInProgess" style="display:none;"><i class="fas fa-map-marker-alt fa-2x"></i></div>
 					<span id="tRobotNotLocalised" class="tRobotNotLocalised" style="display:none;"><i class="fas fa-exclamation-triangle"></i>The robot is not localized</span>
-				</svg>
+					
+				</div>
+				
 				<div id="loader_map">
 					<div class="loader-container">
 						<div class="dot dot-1"></div>
@@ -218,18 +215,18 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
 						</defs>
 					</svg>
 				</div>
+				<span id="tVersion" class="tVersion">v = <span class="font-weight-bold"><?= $version ?></span>
 			</div>
 		</div>
-		<div class="col-md-3 h-100 d-flex flex-column" style="justify-content: space-evenly;">
+		<div class="col-md-3 h-100 d-flex flex-column" style="justify-content:space-between;">
 			<img src="<?php echo $_CONFIG['URL'];?>/images/sim_logo.jpg" class="img-fluid">
 			
-			<div class="my-2 flex-centered py-5" id="battery_widget">
+			<div class="flex-centered py-5" id="battery_widget">
 				<i class="fas fa-battery-full fa-5x mr-4"></i>
 				<h2 class="m-0"><span id="battery_lvl">-</span> %</h2>
 				<h1 class="position-absolute">Battery</h1>
 			</div>
-			<hr>
-			<div class="my-2 d-flex justify-content-around align-items-center py-5" id="docking_state_widget">
+			<div class="d-flex justify-content-around align-items-center py-5" id="docking_state_widget">
 				<div class="d-flex justify-content-center align-items-center docking_state flex-column" id="docked">
 					<i class="fas fa-charging-station fa-3x"></i>
 					<p>docked</p>
@@ -248,8 +245,7 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
 				</div>
 				<h1>Docking State</h1>
 			</div>
-			<hr>
-			<div class="my-2 flex-centered py-5" id="leds_widget" style="min-height:300px">
+			<div class="flex-centered py-5" id="leds_widget" style="min-height:300px">
 				<div class="LED_wrapper position-relative flex-centered" id="LED_wrapper">
 					<img id="eloLED" src="<?php echo $_CONFIG['URL'];?>images/elo_LED.png" style="max-width: 200px;" class="position-relative img-fluid" >
 				</div>
