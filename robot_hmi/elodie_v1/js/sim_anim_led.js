@@ -3,20 +3,22 @@ function AnimationLeds()
 
 	this.ANIM = {
 		ANIM_PROGRESS: 1,
-		ANIM_PROGRESS_CENTER:2,
-		ANIM_PROGRESS_CENTER_CHARGE:3,
-		ANIM_PROGRESS_CENTER_CHARGE_BLINK: 4,
-		ANIM_RAINBOW : 5,
-		ANIM_K2000 : 6,
-		ANIM_BLINK : 7,
-		ANIM_BLINK_2 : 8,
-		ANIM_POLICE  : 9,
-		ANIM_FADE : 10,
-		ANIM_MOVE : 11,
-		ANIM_LIGHT : 12,
-		ANIM_FADE_FR_FLAG : 13,
-		ANIM_CUSTOM : 14,
+  ANIM_PROGRESS_CENTER:2,
+  ANIM_RAINBOW:3,
+  ANIM_K2000:4,
+  ANIM_BLINK:5,
+  ANIM_BLINK_2:6,
+  ANIM_POLICE:7,
+  ANIM_FADE:8,
+  ANIM_MOVE:9,
+  ANIM_LIGHT:10,
+  ANIM_PROGRESS_CENTER_CHARGE:11,
+  ANIM_PROGRESS_CENTER_CHARGE_BLINK:12,
+  ANIM_FADE_FR_FLAG:13,
+  ANIM_CUSTOM:14,
 	};
+	
+	
 
 	this.currentLed = 0;
 	this.currentLed2 = 0;
@@ -545,7 +547,7 @@ function AnimationLeds()
 			this.centre = parseInt(this.ledsNumber/2);
 		}
 
-		this.chaseWait = 100 * this.frequenceIT / 1000;
+		this.chaseWait = 2; //100 * this.frequenceIT / 1000;
 
 		if (this.counter > 0)
 		{
@@ -554,53 +556,55 @@ function AnimationLeds()
 		else
 		{
 			this.counter = this.chaseWait;
-			
+		
 			this.i = 0;
 			for (this.i = 0; this.i<this.ledsNumber; this.i++)
 			{
 				this.frontLeds[this.i]= [0,0,0];
 				this.backLeds[this.i] = [0,0,0];
 			}
-
+			
 			if (this.currentLed2 < 5)
 			{
 				if (this.currentLed == 0 || this.currentLed == 2)
 				{
-					for (this.i  = this.centre + 3; this.i  < this.ledsNumber; this.i ++)
+					for (this.i  = this.centre + 3; this.i  < this.ledsNumber; this.i++)
 					{
-						this.backLeds[this.i ] = [0, 51, 255];
-						this.frontLeds[this.i ] = [0, 51, 255];
+						this.backLeds[this.i] = [0, 51, 255];
+						this.frontLeds[this.i] = [0, 51, 255];
 					}
 					for (this.i  = this.centre - 2; this.i  <= this.centre + 2; this.i++)
 					{
 						this.backLeds[this.i] = [255, 255, 255];
-						this.frontLeds[this.i ] = [255, 255, 255];
+						this.frontLeds[this.i] = [255, 255, 255];
 					}
 				}
+				
 				if (this.currentLed == 4 || this.currentLed == 6)
 				{
-					for (this.i  = 0; this.i  <= this.centre - 3; this.i ++)
+					for (this.i = 0; this.i  <= this.centre - 3; this.i++)
 					{
-						this.backLeds[this.i ] = [204, 0, 0];
-						this.frontLeds[this.i ] = [204, 0, 0];
+						this.backLeds[this.i] = [204, 0, 0];
+						this.frontLeds[this.i] = [204, 0, 0];
 					}
-					for (this.i  = this.centre - 2; this.i  <= this.centre + 2; this.i ++)
+					for (this.i = this.centre - 2; this.i  <= this.centre + 2; this.i++)
 					{
-						this.backLeds[this.i ] = [255, 255, 255];
-						this.frontLeds[this.i ] = [255, 255, 255];
+						this.backLeds[this.i] = [255, 255, 255];
+						this.frontLeds[this.i] = [255, 255, 255];
 					}
 				}
 			}
 			else if (this.currentLed2 < 10)
 			{
+				
 				if (this.currentLed == 0)
 				{
-					for (this.i = this.centre + 10; i < this.ledsNumber; this.i++)
+					for (this.i = this.centre + 10; this.i < this.ledsNumber; this.i++)
 					{
 						this.backLeds[this.i] = [0, 51, 255];
 						this.frontLeds[this.i] = [0, 51, 255];
 					}
-					for (i = 0; this.i <= this.centre - 10; this.i++)
+					for (this.i = 0; this.i <= this.centre - 10; this.i++)
 					{
 						this.backLeds[this.i] = [204, 0, 0];
 						this.frontLeds[this.i] = [204, 0, 0];
@@ -629,7 +633,7 @@ function AnimationLeds()
 			{
 				if (this.currentLed == 0 || this.currentLed == 2)
 				{
-					for (this.i = this.centre + 10; i < this.ledsNumber; this.i++)
+					for (this.i = this.centre + 10; this.i < this.ledsNumber; this.i++)
 					{
 						this.backLeds[this.i] = [0, 51, 255];
 						this.frontLeds[this.i] = [0, 51, 255];
@@ -655,7 +659,7 @@ function AnimationLeds()
 				}
 				if (this.currentLed == 8 || this.currentLed == 10)
 				{
-					for (i = 0; this.i <= this.centre - 10; this.i++)
+					for (this.i = 0; this.i <= this.centre - 10; this.i++)
 					{
 						this.backLeds[this.i] = [204, 0, 0];
 						this.frontLeds[this.i] = [204, 0, 0];
@@ -688,7 +692,7 @@ function AnimationLeds()
 					if (this.currentLed2 >= 15) this.currentLed2 = 0;
 				}
 			}
-
+			
 			this.setLeds();
 		}
 	},
@@ -1079,8 +1083,8 @@ function AnimationLeds()
 			// Init
 			this.rainbowColor = 0;
 		}
-		this.rainbowColor++;
-		if (this.rainbowColor == 256) this.rainbowColor = 0;
+		this.rainbowColor+=5;
+		if (this.rainbowColor >= 256) this.rainbowColor = 0;
 
 		for (this.i = 0; this.i<this.ledsNumber; this.i++)
 			this.backLeds[this.i]= this.Wheel((this.i + this.rainbowColor) & 255);

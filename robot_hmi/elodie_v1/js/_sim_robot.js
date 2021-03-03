@@ -41,6 +41,7 @@ var version = '';
 
 var svgMap = false;
 
+var LED = {anim:1,r:255,g:0,b:0,speedleft:0,speedright:0};
 /* SIM VARS */
 
 $(document).ready(function(e) {
@@ -143,6 +144,10 @@ $(document).ready(function(e) {
 				dockingStateLast = data;
             	refreshDockingState();
 			}
+		},
+		onLedStateControl : function(data){
+           LED = data;
+		   console.log('LEDSTATE',data);
 		},
 		onNavigationRobotPose:function(pose){
 			lastRobotPose = pose;

@@ -37,33 +37,31 @@ $(document).ready(function()
 });
 
 function refreshLEDs(){
-	
-	current_anim =  animations.ANIM.ANIM_PROGRESS;
-	current_r = 255;
-	current_b = 0;
-	current_g = 0;
-	voltage = 0; // last battery .SOC
-	leftSpeed = 0;
-	rightSpeed = 0;
+	current_anim = animations.ANIM.ANIM_FADE_FR_FLAG;
+	current_r = LED.r;
+	current_b = LED.b;
+	current_g = LED.g;
+	voltage = SOC; // last battery .SOC
+	leftSpeed = LED.speedLeft;
+	rightSpeed = LED.speed_right;
 	
 	switch(current_anim)
     {
         case animations.ANIM.ANIM_PROGRESS: animations.AnimProgress(current_r, current_g, current_b);  break;
-		/*
-        case animations.ANIM.ANIM_PROGRESS_CENTER: animations.AnimProgressFromCenter(current_r, current_g, current_b); break;
-        case animations.ANIM.ANIM_PROGRESS_CENTER_CHARGE: animations.AnimProgressFromCenterCharge(current_r, current_g, current_b, voltage); break;
+        case animations.ANIM.ANIM_PROGRESS_CENTER: animations.AnimProgressFromCenter(current_r, current_g, current_b);  break;
+        case animations.ANIM.ANIM_PROGRESS_CENTER_CHARGE: animations.AnimProgressFromCenterCharge(current_r, current_g, current_b,voltage);  break;
         case animations.ANIM.ANIM_PROGRESS_CENTER_CHARGE_BLINK: animations.AnimProgressFromCenterChargeBlink(current_r, current_g, current_b, voltage); break;
         case animations.ANIM.ANIM_RAINBOW : animations.AnimRainbow(); break;
         case animations.ANIM.ANIM_K2000 : animations.AnimK2000(current_r, current_g, current_b); break;
         case animations.ANIM.ANIM_BLINK : animations.AnimBlink(current_r, current_g, current_b); break;
         case animations.ANIM.ANIM_BLINK_2 : animations.AnimBlink2(current_r, current_g, current_b); break;
-        case animations.ANIM.ANIM_POLICE  : animations.AnimPolice(); break;
-        case animations.ANIM.ANIM_FADE : animations.AnimFade(current_r, current_g, current_b); break;
+		case animations.ANIM.ANIM_POLICE  : animations.AnimPolice(); break;
+		case animations.ANIM.ANIM_FADE : animations.AnimFade(current_r, current_g, current_b); break;
         case animations.ANIM.ANIM_MOVE : animations.Move(current_r, current_g, current_b, leftSpeed, rightSpeed); break;
         case animations.ANIM.ANIM_LIGHT : animations.AnimLight(current_r, current_g, current_b); break;
         case animations.ANIM.ANIM_FADE_FR_FLAG : animations.AnimFadeFrFlag(); break;
         case animations.ANIM.ANIM_CUSTOM : animations.AnimCustom(_custom_msg); break;
-		*/
+		
         default: animations.AnimProgressFromCenter(current_r, current_g, current_b); break;
     }
 	
