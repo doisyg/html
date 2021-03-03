@@ -154,7 +154,7 @@
             <div class="content" style="padding: 0;">
             
             	<div style="position:relative;max-width:375px; margin:auto;">
-					<svg class="svg_legende" xmlns="http://www.w3.org/2000/svg" style="z-index:10;">
+					<svg class="svg_legende" xmlns="http://www.w3.org/2000/svg">
 						<line x1="65" y1="142" x2="109" y2="226" stroke-width="1" stroke="#343434" class="line_lidar"/>
 						<line x1="187" y1="122" x2="168" y2="197" stroke-width="1" stroke="#343434" class="line_us"/>
 						<line x1="187" y1="122" x2="134" y2="197" stroke-width="1" stroke="#343434" class="line_us"/>
@@ -286,7 +286,7 @@
             </div>
 			<footer>
 				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50 btn_back" data-goto="install_by_step_check" ><?= __('Back')?></a>
-				<a href="#" class="skip_wifi button_goto btn btn-primary btn_footer_right btn_50" data-goto="install_by_step_site"><?= __('Skip')?></a>
+				<a href="#" class="skip_wifi button_goto btn btn-primary btn_footer_right btn_50" data-goto="install_by_step_sound"><?= __('Skip')?></a>
                 <a href="#" class="set_passwd_wifi button_goto" data-goto="install_by_step_wifi_password" style="display:none;"></a>
             </footer>
         </section>
@@ -752,7 +752,7 @@
                     
                     <a href="#" id="install_by_step_edit_map_bUndo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:20px; left:10px;"><i class="fas fa-undo-alt"></i></a>
                     <a href="#" id="install_by_step_edit_map_bRedo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:20px; left:45px;"><i class="fas fa-redo-alt"></i></a>
-                    
+                    <span id="install_by_step_edit_map_tRobotNotLocalised" class="tRobotNotLocalised" style="display:none;"><i class="fas fa-exclamation-triangle"></i><?php echo __('The robot is not localized');?></span>
                     <div id="install_by_step_edit_map_menu" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
                         	<li><a href="#" class="btn btn-circle btn-default bAddForbiddenArea btn-menu" data-orientation="V">

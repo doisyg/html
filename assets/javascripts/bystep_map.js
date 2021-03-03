@@ -982,7 +982,9 @@ function ByStepInitMap()
 		this.hammer.destroy()
 	  }
 	}
-	
+	if(typeof(window.panZoom) != 'undefined'){
+		window.panZoom.destroy();
+	}
 
 	// Expose to window namespace for testing purposes
 	
@@ -1002,7 +1004,18 @@ function ByStepInitMap()
 	//window.panZoom.getZoom = function () { return 1; }
 	RefreshZoomView();
 	
-	$('.install_by_step_edit_map_loading').hide();
+	setTimeout(function(){
+		if(typeof(window.panZoom) != 'undefined'){
+			
+			//WORKING ON CONSOLE 
+			window.panZoom.resize();
+			window.panZoom.updateBBox();
+			window.panZoom.fit();
+			window.panZoom.center();
+			
+		}
+		setTimeout(function(){$('.install_by_step_edit_map_loading').hide()},100);
+	},100);
 }
 
 function ByStepShakeActiveElement()
