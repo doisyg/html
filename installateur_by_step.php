@@ -419,6 +419,27 @@
             </footer>
         </section>
 		
+		<section id="install_by_step_site_master_dock" class="page <?php echo $INSTALL_STEP == 69?'active':'';?> with_footer">
+	        <a href="#" class="bBackButton button_goto" data-goto="install_by_step_import_site"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Default Dock');?></h2>
+            </header>
+            <div class="content">
+				<h4 style="text-align:center;margin:30px 0"><?= __('Pick the default docking station') ?></h4>
+				
+				<div class="MasterDock_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
+				<div class="row" id="MasterDockList">
+                    
+				</div>
+				<p style="padding-left:5px;margin-top:10px"><i class="fas fa-asterisk" style="color: darkorange;"></i> <?=__('Actual default dock') ?></p>
+				<a href="#" class="install_by_step_site_master_dock_next button_goto" data-goto="install_by_step_site_recovery" style="display:none;"></a>
+            </div>
+            <footer>
+				<a href="#" class="button_goto btn btn-default btn_footer_left btn_100 btn_back" data-goto=	"install_by_step_import_site"><?= __('Back')?></a>
+            </footer>
+        </section>
+		
 		<section id="install_by_step_site_master_dock" class="page <?php echo $INSTALL_STEP == 61?'active':'';?> with_footer">
 	        <a href="#" class="bBackButton button_goto" data-goto="install_by_step_import_site"></a>
             <header>
@@ -488,7 +509,8 @@
 				<a href="#" class="install_by_step_site_recovery_next button_goto" data-goto="install_by_step_edit_map" style="display:none;"></a>
             </div>
             <footer>
-				<a href="#" class="button_goto btn btn-default btn_footer_left btn_100 btn_back" data-goto=	"install_by_step_site_master_dock"><?= __('Back')?></a>
+				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50 btn_back" data-goto=	"install_by_step_site_master_dock"><?= __('Back')?></a>
+				<a href="#" class="button_goto btn btn-warning btn_footer_right btn_50 skip_recovery" data-goto=	"install_by_step_edit_map"><?= __('Skip')?></a>
             </footer>
         </section>
 		
