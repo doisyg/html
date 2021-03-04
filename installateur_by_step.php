@@ -154,7 +154,7 @@
             <div class="content" style="padding: 0;">
             
             	<div style="position:relative;max-width:375px; margin:auto;">
-					<svg class="svg_legende" xmlns="http://www.w3.org/2000/svg" style="z-index:10;">
+					<svg class="svg_legende" xmlns="http://www.w3.org/2000/svg">
 						<line x1="65" y1="142" x2="109" y2="226" stroke-width="1" stroke="#343434" class="line_lidar"/>
 						<line x1="187" y1="122" x2="168" y2="197" stroke-width="1" stroke="#343434" class="line_us"/>
 						<line x1="187" y1="122" x2="134" y2="197" stroke-width="1" stroke="#343434" class="line_us"/>
@@ -286,7 +286,7 @@
             </div>
 			<footer>
 				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50 btn_back" data-goto="install_by_step_check" ><?= __('Back')?></a>
-				<a href="#" class="skip_wifi button_goto btn btn-primary btn_footer_right btn_50" data-goto="install_by_step_site"><?= __('Skip')?></a>
+				<a href="#" class="skip_wifi button_goto btn btn-primary btn_footer_right btn_50" data-goto="install_by_step_sound"><?= __('Skip')?></a>
                 <a href="#" class="set_passwd_wifi button_goto" data-goto="install_by_step_wifi_password" style="display:none;"></a>
             </footer>
         </section>
@@ -419,6 +419,27 @@
             </footer>
         </section>
 		
+		<section id="install_by_step_site_master_dock" class="page <?php echo $INSTALL_STEP == 69?'active':'';?> with_footer">
+	        <a href="#" class="bBackButton button_goto" data-goto="install_by_step_import_site"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Default Dock');?></h2>
+            </header>
+            <div class="content">
+				<h4 style="text-align:center;margin:30px 0"><?= __('Pick the default docking station') ?></h4>
+				
+				<div class="MasterDock_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
+				<div class="row" id="MasterDockList">
+                    
+				</div>
+				<p style="padding-left:5px;margin-top:10px"><i class="fas fa-asterisk" style="color: darkorange;"></i> <?=__('Actual default dock') ?></p>
+				<a href="#" class="install_by_step_site_master_dock_next button_goto" data-goto="install_by_step_site_recovery" style="display:none;"></a>
+            </div>
+            <footer>
+				<a href="#" class="button_goto btn btn-default btn_footer_left btn_100 btn_back" data-goto=	"install_by_step_import_site"><?= __('Back')?></a>
+            </footer>
+        </section>
+		
 		<section id="install_by_step_site_master_dock" class="page <?php echo $INSTALL_STEP == 61?'active':'';?> with_footer">
 	        <a href="#" class="bBackButton button_goto" data-goto="install_by_step_import_site"></a>
             <header>
@@ -488,7 +509,8 @@
 				<a href="#" class="install_by_step_site_recovery_next button_goto" data-goto="install_by_step_edit_map" style="display:none;"></a>
             </div>
             <footer>
-				<a href="#" class="button_goto btn btn-default btn_footer_left btn_100 btn_back" data-goto=	"install_by_step_site_master_dock"><?= __('Back')?></a>
+				<a href="#" class="button_goto btn btn-default btn_footer_left btn_50 btn_back" data-goto=	"install_by_step_site_master_dock"><?= __('Back')?></a>
+				<a href="#" class="button_goto btn btn-warning btn_footer_right btn_50 skip_recovery" data-goto=	"install_by_step_edit_map"><?= __('Skip')?></a>
             </footer>
         </section>
 		
@@ -752,7 +774,7 @@
                     
                     <a href="#" id="install_by_step_edit_map_bUndo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:20px; left:10px;"><i class="fas fa-undo-alt"></i></a>
                     <a href="#" id="install_by_step_edit_map_bRedo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:20px; left:45px;"><i class="fas fa-redo-alt"></i></a>
-                    
+                    <span id="install_by_step_edit_map_tRobotNotLocalised" class="tRobotNotLocalised" style="display:none;"><i class="fas fa-exclamation-triangle"></i><?php echo __('The robot is not localized');?></span>
                     <div id="install_by_step_edit_map_menu" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
                         	<li><a href="#" class="btn btn-circle btn-default bAddForbiddenArea btn-menu" data-orientation="V">

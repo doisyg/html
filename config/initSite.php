@@ -62,22 +62,44 @@ if(file_exists(__DIR__ .'/../.git/HEAD')){
 				$bn = substr($branchname,0,2);
 		break;
 	}
-	if($bn == 'rel'){
+	
+	// ERASE VERSION IF DEV AND NOT RELEASE
+	if($bn != 'rel')
+	{
 		$file_version = __DIR__ .'/version.conf';
-		if(file_exists($file_version))
-			$json_version = json_decode(file_get_contents($file_version), true);
-		if(isset($json_version) && !is_null($json_version) && isset($json_version['release']) && $json_version['release'] != '')
-			$version = $json_version['release']; // GET RELEASE DATE FROM VERSION.CONF
-		else{
-			$version = date('Ymd'); // RELEASE NO VERSION.CONF OR INVALID
-			$error_conf_release = true; // FOR TEST IN FOOTER JS
+		if($_CONFIG['MODE'] == 'DEV')
+		{
+			if(file_exists($file_version)){
+				$json_empty = '{"release":""}';
+				file_put_contents($file_version,$json_empty);
+			}else{
+				$version = date('YmdHi').'_err'; // NO VERSION.CONF
+				$error_conf_release = true; // FOR TEST IN FOOTER JS
+			}
+		
 		}
-	}else
-		$version = date('Ymd').'_'.$bn;
+		
+		$version = date('YmdHi').'_'.$bn;
+		
+	}
 }else{
 	$bn = 'rel'; // NO GIT => RELEASE MODE
 	$_CONFIG['MODE'] = 'PROD';
-	$version = date('Ymd');
+	$version = date('YmdHi');
+}
+
+// IF RELEASE CHECK VERSION.CONF
+if($bn == 'rel')
+{
+	$file_version = __DIR__ .'/version.conf';
+	if(file_exists($file_version))
+		$json_version = json_decode(file_get_contents($file_version), true);
+	if(isset($json_version) && !is_null($json_version) && isset($json_version['release']) && $json_version['release'] != '')
+		$version = $json_version['release']; // GET RELEASE DATE FROM VERSION.CONF
+	else{
+		$version = date('YmdHi').'_err'; // RELEASE NO VERSION.CONF OR INVALID
+		$error_conf_release = true; // FOR TEST IN FOOTER JS
+	}
 }
 
 $_CONFIG['CONF_PATH'] = $_CONFIG['MODE'] == 'DEV' ? dirname(__FILE__).'/../lang/c.conf' : dirname(__FILE__).'/../../conf/c.conf';

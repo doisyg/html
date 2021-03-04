@@ -1249,7 +1249,23 @@ $(document).ready(function(e) {
 		})
 	})
 	
-	
+	//AJAX INSTALL STEP CALL
+
+	$('#install_by_step_site_recovery a.skip_recovery').click(function(e) {
+        e.preventDefault();
+		$.ajax({
+			type: "POST",
+			url: 'ajax/install_by_step_import_site_recovery.php',
+			data: {
+			},
+			dataType: 'json',
+			success: function(data) {
+			},
+			error: function(e) {
+				alert_wyca((typeof(textErrorRecovery) != 'undefined'? textErrorRecovery : 'Error in recovery') + ' ' + e.responseText);
+			}
+		});
+    });
 	/*
 	$('#install_by_step_mapping_use .bUseThisMapNowYes').click(function(e) {
 		e.preventDefault();

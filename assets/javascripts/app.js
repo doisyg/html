@@ -47,6 +47,7 @@ $(window).on("popstate", function(e) {
 })(history.pushState);
 
 $(document).ready(function(e) {
+	
 	$('#bHeaderInfo').attr('onClick',"$('.global_sub_page.active section.active .popupHelp').toggle('fast')");
 	
 	$('.iro-colorpicker').each(function(){
@@ -578,25 +579,37 @@ $(document).ready(function(e) {
 		slider.find('.ui-slider-range').css('width',temp+'%');
 		slider.find('.ui-slider-handle').css('left',temp+'%');
 	})	
+	
+	
 	//CONFIRM DELETE
 	$(document).on('click', '.confirm_delete', function(e) {
 		e.preventDefault();
 		if($(this)[0].nodeName == 'A'){
 			currentDeleteId = $(this).parent().attr('id');
-			console.log(currentDeleteId);
+			let txt_element = $(this).parent().find('.societe').text();
+			if(txt_element != ''){
+				tempConfirmDelete = $('#modalConfirmDelete').find('h3').text();
+				$('#modalConfirmDelete').find('h3').html(tempConfirmDelete + '<br><br><span>' + txt_element + '</span>');
+			}
 			if($(this).parent().parent().hasClass('list_wycas') && currentDeleteId.split('_elem_')[1] == user_id)
 				$('#modalConfirmDeleteCurrentAccount').modal('show');
 			else
 				$('#modalConfirmDelete').modal('show');
 		}
-		
 	})
 	
 	$('#bModalConfirmDeleteOk').click(function(e){
 		if(currentDeleteId !=''){
 			$('#'+currentDeleteId).find('.btn_confirm_delete').click();
 			currentDeleteId = '';
+			$('#modalConfirmDelete').find('h3').html(tempConfirmDelete);
+			tempConfirmDelete = '';
 		}
+	})
+	
+	$('#modalConfirmDelete .btn[data-dismiss="modal"]').click(function(e){
+		$('#modalConfirmDelete').find('h3').html(tempConfirmDelete);
+		tempConfirmDelete = '';
 	})
 	
 	$('#bModalConfirmDeleteCurrentAccountOk').click(function(e){
@@ -609,6 +622,8 @@ $(document).ready(function(e) {
 	})
 	
 });
+
+var tempConfirmDelete = "";
 
 /* USER GROUP FUNCTIONS */
 
@@ -665,9 +680,10 @@ function GetSitesWyca()
 				
 				if (data.D != undefined)
 				$.each(data.D,function(index, value){
+					let active = current_site.id_site == value.id_site?'active':'';  //'+active+'
 					$('#wyca_setup_sites .list_sites').append('' +
 						'<li id="wyca_setup_sites_list_site_elem_'+value.id_site+'" data-id_site="'+value.id_site+'">'+
-						'	<span class="societe">'+value.name+'</span>'+
+						'	<span class="societe '+active+'">'+value.name+'</span>'+
 						(current_site.id_site != value.id_site?'	<a href="#" class="bSiteDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>':'')+
 						(current_site.id_site != value.id_site?'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>':'')+
 						(current_site.id_site != value.id_site?'	<a href="#" class="bSiteSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-check"></i></a>':'')+
@@ -692,22 +708,27 @@ function GetSitesForExportWyca()
 	$('#wyca_setup_export .loaded').hide();
 	if (wycaApi.websocketAuthed)
 	{
-		wycaApi.GetSitesList(function(data) {
-			
-			$('#wyca_setup_export .list_sites').html('');
-			
-			if (data.D != undefined)
-			$.each(data.D,function(index, value){
-				$('#wyca_setup_export .list_sites').append('' +
-					'<li id="wyca_setup_export_list_site_elem_'+value.id_site+'" data-id_site="'+value.id_site+'" class="bSiteExportElem">'+
-					'	<span class="societe">'+value.name+'</span>'+
-					'	<a href="#" class="btn btn-sm btn-circle btn-success pull-right"><i class="fa fa-upload"></i></a>'+
-					'</li>'
-					);
+		wycaApi.GetCurrentSite(function(data) {
+			current_site = data.D;
+				//console.log(current_site);
+			wycaApi.GetSitesList(function(data) {
+				
+				$('#wyca_setup_export .list_sites').html('');
+				
+				if (data.D != undefined)
+				$.each(data.D,function(index, value){
+					let active = current_site.id_site == value.id_site?'active':'';  // '+active+'
+					$('#wyca_setup_export .list_sites').append('' +
+						'<li id="wyca_setup_export_list_site_elem_'+value.id_site+'" data-id_site="'+value.id_site+'" class="bSiteExportElem">'+
+						'	<span class="societe '+active+'">'+value.name+'</span>'+
+						'	<a href="#" class="btn btn-sm btn-circle btn-success pull-right"><i class="fa fa-upload"></i></a>'+
+						'</li>'
+						);
+				});
+				
+				$('.wyca_setup_export_loading').hide();
+				$('#wyca_setup_export .loaded').show();
 			});
-			
-			$('.wyca_setup_export_loading').hide();
-			$('#wyca_setup_export .loaded').show();
 		});
 	}
 	else
@@ -732,9 +753,10 @@ function GetSitesManager()
 				
 				if (data.D != undefined)
 				$.each(data.D,function(index, value){
+					let active = current_site.id_site == value.id_site?'active':'';  // '+active+'
 					$('#manager_setup_sites .list_sites').append('' +
 						'<li id="manager_setup_sites_list_site_elem_'+value.id_site+'" data-id_site="'+value.id_site+'">'+
-						'	<span class="societe">'+value.name+'</span>'+
+						'	<span class="societe '+active+'">'+value.name+'</span>'+
 						(current_site.id_site != value.id_site?'	<a href="#" class="bSiteDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>':'')+
 						(current_site.id_site != value.id_site?'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>':'')+
 						(current_site.id_site != value.id_site?'	<a href="#" class="bSiteSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-check"></i></a>':'')+
@@ -769,9 +791,10 @@ function GetSitesNormal()
 				
 				if (data.D != undefined)
 				$.each(data.D,function(index, value){
+					let active = current_site.id_site == value.id_site?'active':'';  // '+active+'
 					$('#install_normal_setup_sites .list_sites').append('' +
 						'<li id="install_normal_setup_sites_list_site_elem_'+value.id_site+'" data-id_site="'+value.id_site+'">'+
-						'	<span class="societe">'+value.name+'</span>'+
+						'	<span class="societe  '+active+'">'+value.name+'</span>'+
 						(current_site.id_site != value.id_site?'	<a href="#" class="bSiteDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>':'')+
 						(current_site.id_site != value.id_site?'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>':'')+
 						(current_site.id_site != value.id_site?'	<a href="#" class="bSiteSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-check"></i></a>':'')+
@@ -796,22 +819,27 @@ function GetSitesForExportNormal()
 	$('#install_normal_setup_export .loaded').hide();
 	if (wycaApi.websocketAuthed)
 	{
-		wycaApi.GetSitesList(function(data) {
-			
-			$('#install_normal_setup_export .list_sites').html('');
-			
-			if (data.D != undefined)
-			$.each(data.D,function(index, value){
-				$('#install_normal_setup_export .list_sites').append('' +
-					'<li id="install_normal_setup_export_list_site_elem_'+value.id_site+'" data-id_site="'+value.id_site+'" class="bSiteExportElem">'+
-					'	<span class="societe">'+value.name+'</span>'+
-					'	<a href="#" class="btn btn-sm btn-circle btn-success pull-right"><i class="fa fa-upload"></i></a>'+
-					'</li>'
-					);
+		wycaApi.GetCurrentSite(function(data) {
+			current_site = data.D;
+			//console.log(current_site);
+			wycaApi.GetSitesList(function(data) {
+				
+				$('#install_normal_setup_export .list_sites').html('');
+				
+				if (data.D != undefined)
+				$.each(data.D,function(index, value){
+					let active = current_site.id_site == value.id_site?'active':'';  // '+active+'
+					$('#install_normal_setup_export .list_sites').append('' +
+						'<li id="install_normal_setup_export_list_site_elem_'+value.id_site+'" data-id_site="'+value.id_site+'" class="bSiteExportElem">'+
+						'	<span class="societe '+active+'">'+value.name+'</span>'+
+						'	<a href="#" class="btn btn-sm btn-circle btn-success pull-right"><i class="fa fa-upload"></i></a>'+
+						'</li>'
+						);
+				});
+				
+				$('.install_normal_setup_export_loading').hide();
+				$('#install_normal_setup_export .loaded').show();
 			});
-			
-			$('.install_normal_setup_export_loading').hide();
-			$('#install_normal_setup_export .loaded').show();
 		});
 	}
 	else
@@ -837,14 +865,17 @@ function GetMapsNormal()
 				
 				if (data.D != undefined)
 				$.each(data.D,function(index, value){
-					$('#install_normal_setup_maps .list_maps').append('' +
-						'<li id="install_normal_setup_maps_list_map_elem_'+value.id_map+'" data-id_map="'+value.id_map+'">'+
-						'	<span class="societe">'+value.name+'</span>'+
-						(current_map.id_map != value.id_map?'	<a href="#" class="bMapDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>':'')+
-						(current_map.id_map != value.id_map?'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>':'')+
-						(current_map.id_map != value.id_map?'	<a href="#" class="bMapSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-check"></i></a>':'')+
-						'</li>'
-						);
+					if(value.name != ''){
+						let active = current_map.id_map == value.id_map?'active':'';
+						$('#install_normal_setup_maps .list_maps').append('' +
+							'<li id="install_normal_setup_maps_list_map_elem_'+value.id_map+'" data-id_map="'+value.id_map+'">'+
+							'	<span class="societe '+active+'">'+value.name+'</span>'+
+							(current_map.id_map != value.id_map?'	<a href="#" class="bMapDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>':'')+
+							(current_map.id_map != value.id_map?'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>':'')+
+							(current_map.id_map != value.id_map?'	<a href="#" class="bMapSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-check"></i></a>':'')+
+							'</li>'
+							);
+					}
 				});
 				
 				$('.install_normal_setup_maps_loading').hide();
@@ -874,14 +905,17 @@ function GetMapsWyca()
 				
 				if (data.D != undefined)
 				$.each(data.D,function(index, value){
-					$('#wyca_setup_maps .list_maps').append('' +
-						'<li id="wyca_setup_maps_list_map_elem_'+value.id_map+'" data-id_map="'+value.id_map+'">'+
-						'	<span class="societe">'+value.name+'</span>'+
-						(current_map.id_map != value.id_map?'	<a href="#" class="bMapDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>':'')+
-						(current_map.id_map != value.id_map?'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>':'')+
-						(current_map.id_map != value.id_map?'	<a href="#" class="bMapSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-check"></i></a>':'')+
-						'</li>'
-						);
+					if(value.name != ''){
+						let active = current_map.id_map == value.id_map?'active':'';
+						$('#wyca_setup_maps .list_maps').append('' +
+							'<li id="wyca_setup_maps_list_map_elem_'+value.id_map+'" data-id_map="'+value.id_map+'">'+
+							'	<span class="societe  '+active+'">'+value.name+'</span>'+
+							(current_map.id_map != value.id_map?'	<a href="#" class="bMapDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>':'')+
+							(current_map.id_map != value.id_map?'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>':'')+
+							(current_map.id_map != value.id_map?'	<a href="#" class="bMapSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-check"></i></a>':'')+
+							'</li>'
+							);
+						}
 				});
 				
 				$('.wyca_setup_maps_loading').hide();
@@ -911,12 +945,15 @@ function GetSwitchMapsWyca()
 				
 				if (data.D != undefined)
 				$.each(data.D,function(index, value){
-					$('#wyca_switch_map_landmark .list_switch_map_landmarks').append('' +
-						'<li id="wyca_switch_map_landmark_list_map_elem_'+value.id_map+'" data-id_map="'+value.id_map+'">'+
-						'	<span class="societe">'+value.name+'</span>'+
-						(current_map.id_map != value.id_map?'	<a href="#" class="bMapSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fas fa-exchange-alt"></i></a>':'')+
-						'</li>'
-						);
+					if(value.name != ''){
+						let active = current_map.id_map == value.id_map?'active':'';
+						$('#wyca_switch_map_landmark .list_switch_map_landmarks').append('' +
+							'<li id="wyca_switch_map_landmark_list_map_elem_'+value.id_map+'" data-id_map="'+value.id_map+'">'+
+							'	<span class="societe  '+active+'">'+value.name+'</span>'+
+							(current_map.id_map != value.id_map?'	<a href="#" class="bMapSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fas fa-exchange-alt"></i></a>':'')+
+							'</li>'
+							);
+					}
 				});
 				
 				$('.wyca_switch_map_landmark_loading').hide();
@@ -930,7 +967,8 @@ function GetSwitchMapsWyca()
 	}
 }
 
-function GetMapsForDownloadNormal(){
+function GetMapsForDownloadNormal()
+{
 	$('.install_normal_setup_download_loading').show();
 	$('#install_normal_setup_download_map .loaded').hide();
 	if (wycaApi.websocketAuthed)
@@ -944,13 +982,15 @@ function GetMapsForDownloadNormal(){
 				
 				if (data.D != undefined)
 				$.each(data.D,function(index, value){
-					let active = current_map.id_map == value.id_map?'active':'';
-					$('#install_normal_setup_download_map .list_maps').append('' +
-					'<li id="install_normal_setup_download_map_list_maps_elem_'+value.id_map+'" data-id_map="'+value.id_map+'" class="bMapDownloadElem">'+
-					'	<span class="societe '+active+'">'+value.name+'</span>'+
-					'	<a href="#" class="btn btn-sm btn-circle btn-success pull-right"><i class="fas fa-file-download"></i></a>'+
-					'</li>'
-					);
+					if(value.name != ''){
+						let active = current_map.id_map == value.id_map?'active':'';
+						$('#install_normal_setup_download_map .list_maps').append('' +
+						'<li id="install_normal_setup_download_map_list_maps_elem_'+value.id_map+'" data-id_map="'+value.id_map+'" class="bMapDownloadElem">'+
+						'	<span class="societe '+active+'">'+value.name+'</span>'+
+						'	<a href="#" class="btn btn-sm btn-circle btn-success pull-right"><i class="fas fa-file-download"></i></a>'+
+						'</li>'
+						);
+					}
 				});
 				
 				$('.install_normal_setup_download_loading').hide();
@@ -964,7 +1004,8 @@ function GetMapsForDownloadNormal(){
 	}
 }
 
-function GetMapsForDownloadWyca(){
+function GetMapsForDownloadWyca()
+{
 	$('.wyca_setup_download_loading').show();
 	$('#wyca_setup_download_map .loaded').hide();
 	if (wycaApi.websocketAuthed)
@@ -978,13 +1019,15 @@ function GetMapsForDownloadWyca(){
 				
 				if (data.D != undefined)
 				$.each(data.D,function(index, value){
-					let active = current_map.id_map == value.id_map?'active':'';
-					$('#wyca_setup_download_map .list_maps').append('' +
-					'<li id="wyca_setup_download_map_list_maps_elem_'+value.id_map+'" data-id_map="'+value.id_map+'" class="bMapDownloadElem">'+
-					'	<span class="societe '+active+'">'+value.name+'</span>'+
-					'	<a href="#" class="btn btn-sm btn-circle btn-success pull-right"><i class="fas fa-file-download"></i></a>'+
-					'</li>'
-					);
+					if(value.name != ''){
+						let active = current_map.id_map == value.id_map?'active':'';
+						$('#wyca_setup_download_map .list_maps').append('' +
+						'<li id="wyca_setup_download_map_list_maps_elem_'+value.id_map+'" data-id_map="'+value.id_map+'" class="bMapDownloadElem">'+
+						'	<span class="societe '+active+'">'+value.name+'</span>'+
+						'	<a href="#" class="btn btn-sm btn-circle btn-success pull-right"><i class="fas fa-file-download"></i></a>'+
+						'</li>'
+						);
+					}
 				});
 				
 				$('.wyca_setup_download_loading').hide();
@@ -994,7 +1037,7 @@ function GetMapsForDownloadWyca(){
 	}
 	else
 	{
-		setTimeout(GetMapsForDownloadNormal, 500);
+		setTimeout(GetMapsForDownloadWyca, 500);
 	}
 }
 
@@ -1335,9 +1378,10 @@ function GetWycasWyca()
 			$.each(data.D,function(index, value){
 				if (value.id_group_user  == wycaApi.GroupUser.WYCA)
 				{
+					let active = user_id == value.id_user?'active':'';
 					$('#wyca_wyca .list_wycas').append('' +
 						'<li id="wyca_wyca_list_wyca_elem_'+value.id_user+'" data-id_wyca="'+value.id_user+'">'+
-						'	<span class="email">'+value.email+'</span>'+
+						'	<span class="email '+active+'">'+value.email+'</span>'+
 						'	<a href="#" class="bWycaDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>'+
 						'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>'+
 						'	<a href="#" class="bWycaEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pen"></i></a>'+
@@ -2004,33 +2048,27 @@ function InitInstallWifiPageWyca()
 {
 	if (wycaApi.websocketAuthed)
 	{
-		
+		//$('.wyca_setup_wifi_loading').show();
 		wycaApi.GetWifiList(function(data) {
-			$('.wyca_setup_wifi_loading').hide();
 			$('#wyca_setup_wifi tr').hide();
+			let wifis = [];
 			if (data.D.length > 0)
 			{
 				$.each(data.D,function(index, value){
 					signal = parseInt(value.signal/20);
-					if ($('#wyca_setup_wifi .wifi'+value.bssid).length > 0)
-					{
-						$('#wyca_setup_wifi tr').show();
-						$('#wyca_setup_wifi .wifi'+value.bssid+' img').attr('src', 'assets/images/signal-'+signal+'.png');
-						if (value.state == 'active')
-						{
-							$('#wyca_setup_wifi tr').removeClass('active');
-							$('#wyca_setup_wifi .wifi'+value.bssid).addClass('active');
-						}
-					}
-					else
-					{
+					if(!wifis.includes(value.ssid)){
+						wifis.push(value.ssid);
 						if (value.state == 'active')
 							$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td><i class="fas fa-check"></i> '+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
 						else
 							$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td>'+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
+					}else{
+						if(value.state == 'active')
+							$('.tbody_wifi tr[data-ssid="'+value.ssid+'"]:visible').addClass('active').children('td:first-child').html('<i class="fas fa-check"></i> '+value.ssid);//Add check + bold
 					}
 				});
 			}
+			$('.wyca_setup_wifi_loading').hide();
 		});
 		
 		if ($('#wyca_setup_wifi').is(':visible'))
@@ -2046,33 +2084,27 @@ function InitInstallWifiPageNormal()
 {
 	if (wycaApi.websocketAuthed)
 	{
-		
+		//$('.install_normal_setup_wifi_loading').show();
 		wycaApi.GetWifiList(function(data) {
-			$('.install_normal_setup_wifi_loading').hide();
 			$('#install_normal_setup_wifi tr').hide();
+			let wifis = [];
 			if (data.D.length > 0)
 			{
 				$.each(data.D,function(index, value){
 					signal = parseInt(value.signal/20);
-					if ($('#install_normal_setup_wifi .wifi'+value.bssid).length > 0)
-					{
-						$('#install_normal_setup_wifi tr').show();
-						$('#install_normal_setup_wifi .wifi'+value.bssid+' img').attr('src', 'assets/images/signal-'+signal+'.png');
-						if (value.state == 'active')
-						{
-							$('#install_normal_setup_wifi tr').removeClass('active');
-							$('#install_normal_setup_wifi .wifi'+value.bssid).addClass('active');
-						}
-					}
-					else
-					{
+					if(!wifis.includes(value.ssid)){
+						wifis.push(value.ssid);
 						if (value.state == 'active')
 							$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td><i class="fas fa-check"></i> '+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
 						else
 							$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td>'+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
+					}else{
+						if(value.state == 'active')
+							$('.tbody_wifi tr[data-ssid="'+value.ssid+'"]:visible').addClass('active').children('td:first-child').html('<i class="fas fa-check"></i> '+value.ssid);//Add check + bold
 					}
 				});
 			}
+			$('.install_normal_setup_wifi_loading').hide();
 		});
 		
 		if ($('#install_normal_setup_wifi').is(':visible'))
@@ -2088,37 +2120,34 @@ function InitInstallWifiPageByStep()
 {
 	if (wycaApi.websocketAuthed)
 	{
-		
+		//$('.install_bystep_setup_wifi_loading').show();
 		wycaApi.GetWifiList(function(data) {
-			$('.install_bystep_setup_wifi_loading').hide();
+			
 			$('#install_by_step_wifi tr').hide();
+			let wifis = [];
 			if (data.D.length > 0)
 			{
+				console.log(data.D);
 				$.each(data.D,function(index, value){
 					signal = parseInt(value.signal/20);
-					if ($('#install_by_step_wifi .wifi'+value.bssid).length > 0)
-					{
-						$('#install_by_step_wifi tr').show();
-						$('#install_by_step_wifi .wifi'+value.bssid+' img').attr('src', 'assets/images/signal-'+signal+'.png');
-						if (value.state == 'active')
-						{
-							$('#install_by_step_wifi tr').removeClass('active');
-							$('#install_by_step_wifi .wifi'+value.bssid).addClass('active');
-						}
-					}
-					else
-					{
+					if(!wifis.includes(value.ssid)){
+						wifis.push(value.ssid);
 						if (value.state == 'active')
 							$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td><i class="fas fa-check"></i> '+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
 						else
 							$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td>'+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
+					}else{
+						if(value.state == 'active')
+							$('.tbody_wifi tr[data-ssid="'+value.ssid+'"]:visible').addClass('active').children('td:first-child').html('<i class="fas fa-check"></i> '+value.ssid);//Add check + bold
 					}
 				});
 			}
+			$('.install_bystep_setup_wifi_loading').hide();
 		});
 		
 		if ($('#install_by_step_wifi').is(':visible'))
 			setTimeout(InitInstallWifiPageByStep, 3000);
+		
 	}
 	else
 	{
