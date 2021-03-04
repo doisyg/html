@@ -130,6 +130,9 @@
 			InitSoundByStep();
 			<?php }?>
             <?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 61) {?>
+			InitSiteSelectMapByStep();
+			<?php }?>
+			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 62) {?>
 			InitMasterDockByStep();
 			<?php }?>
 			<?php if (isset($INSTALL_STEP) && $INSTALL_STEP == 10) {?>
