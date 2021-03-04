@@ -71,7 +71,7 @@
 				
 				<a href="#" id="manager_edit_map_bUndo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:20px; left:10px;"><i class="fas fa-undo-alt"></i></a>
 				<a href="#" id="manager_edit_map_bRedo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:20px; left:45px;"><i class="fas fa-redo-alt"></i></a>
-				
+				<span id="manager_edit_map_tRobotNotLocalised" class="tRobotNotLocalised" style="display:none;"><i class="fas fa-exclamation-triangle"></i><?php echo __('The robot is not localized');?></span>
 				<div id="manager_edit_map_menu" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
 					<ul>
 						<li><a href="#" class="btn btn-circle btn-default bAddPOI btn-menu" data-orientation="V">
@@ -286,13 +286,13 @@
 									
 										<a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
 										<div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div>
-										<div class="ifUndocked">
+										<div class="ifUndocked" style="    position: relative;">
 										
 											<div class ="modal-advice">
 												<p><?php echo stripslashes(__('Move the robot at the final position desired and click on the "Add POI" button'));?></p>
 											</div>                                                
 											
-											<div style="position:absolute; bottom:50px; left:0; width:100%; z-index:2000;">
+											<div style="position:absolute; bottom:-300%; left:0; width:100%; z-index:2000;">
 												<div class="joystickDiv" draggable="false" style="margin:auto;">
 													<div class="fond"></div>
 													<div class="curseur"></div>
@@ -578,13 +578,13 @@
         <div class="content">
             
 			<h4 style="text-align:center"><?= __('Move the robot near a reflector (dock or augmented pose) then click on the recovery button') ?></h4>
-			<div style="text-align:center; margin-top:20px;"><a href="#" class="bRecovery ifDocked_disabled btn btn-warning btn_big_popup" ><?=__('Recovery') ?></a></div>
+			<div style="text-align:center; margin-top:15px;"><a href="#" class="bRecovery ifDocked_disabled btn btn-warning btn_big_popup" style="margin-bottom:20px;"><?=__('Recovery') ?></a></div>
 					
 			<div style="text-align:center"><a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a></div>
 			<div style="text-align:center"><div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div></div>
 		   
 			<div class="ifUndocked ifNRecovery">
-				<div style="text-align:center; width:100%; z-index:2000; margin-top:20px;">
+				<div style="text-align:center; width:100%; z-index:2000;">
 					<div class="joystickDiv" draggable="false" style="margin:auto;">
 						<div class="fond"></div>
 						<div class="curseur"></div>
@@ -687,30 +687,6 @@
             <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="manager_dashboard"><?php echo __('Back');?></a>
         </footer>
     </section>
-	
-	<div class="modal fade modalWarningTeleop" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
-		<div class="modal-dialog" role="dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<div class="actions mh100vh_160">
-						<div class="h100vh_160" style="overflow:auto">
-							<i class="fas fa-sync-alt"></i>
-							<h4 style="margin:20px 0"><?= __('Are you sure ?')?></h4>
-							<h4 style="margin:20px 0"><?= __('If you choose to keep your map,')?></h4>
-							<h4 style="margin:20px 0"><?= __('You may loose some modifications perfomed on the map by overwriting changes that have been made.')?></h4>
-							<div class="manager_edit_map_modalReloadMap_loading loading_big" style="margin-top: 50px;"><i class="fa fa fa-spinner fa-pulse fa-2x"></i></div>
-						</div>
-						
-						<div style="clear:both;"></div>
-					   
-					   
-						<a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Cancel');?></a>
-						<a href="#" id="manager_users_bUserSave" class="btn btn-primary btn_footer_right btn_50"><?php echo __('Save');?></a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 	
 	<div class="modal fade modalWarningConnexion" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
 		<div class="modal-dialog" role="dialog">

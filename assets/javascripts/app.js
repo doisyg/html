@@ -865,15 +865,17 @@ function GetMapsNormal()
 				
 				if (data.D != undefined)
 				$.each(data.D,function(index, value){
-					let active = current_map.id_map == value.id_map?'active':'';
-					$('#install_normal_setup_maps .list_maps').append('' +
-						'<li id="install_normal_setup_maps_list_map_elem_'+value.id_map+'" data-id_map="'+value.id_map+'">'+
-						'	<span class="societe '+active+'">'+value.name+'</span>'+
-						(current_map.id_map != value.id_map?'	<a href="#" class="bMapDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>':'')+
-						(current_map.id_map != value.id_map?'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>':'')+
-						(current_map.id_map != value.id_map?'	<a href="#" class="bMapSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-check"></i></a>':'')+
-						'</li>'
-						);
+					if(value.name != ''){
+						let active = current_map.id_map == value.id_map?'active':'';
+						$('#install_normal_setup_maps .list_maps').append('' +
+							'<li id="install_normal_setup_maps_list_map_elem_'+value.id_map+'" data-id_map="'+value.id_map+'">'+
+							'	<span class="societe '+active+'">'+value.name+'</span>'+
+							(current_map.id_map != value.id_map?'	<a href="#" class="bMapDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>':'')+
+							(current_map.id_map != value.id_map?'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>':'')+
+							(current_map.id_map != value.id_map?'	<a href="#" class="bMapSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-check"></i></a>':'')+
+							'</li>'
+							);
+					}
 				});
 				
 				$('.install_normal_setup_maps_loading').hide();
@@ -903,15 +905,17 @@ function GetMapsWyca()
 				
 				if (data.D != undefined)
 				$.each(data.D,function(index, value){
-					let active = current_map.id_map == value.id_map?'active':'';
-					$('#wyca_setup_maps .list_maps').append('' +
-						'<li id="wyca_setup_maps_list_map_elem_'+value.id_map+'" data-id_map="'+value.id_map+'">'+
-						'	<span class="societe  '+active+'">'+value.name+'</span>'+
-						(current_map.id_map != value.id_map?'	<a href="#" class="bMapDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>':'')+
-						(current_map.id_map != value.id_map?'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>':'')+
-						(current_map.id_map != value.id_map?'	<a href="#" class="bMapSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-check"></i></a>':'')+
-						'</li>'
-						);
+					if(value.name != ''){
+						let active = current_map.id_map == value.id_map?'active':'';
+						$('#wyca_setup_maps .list_maps').append('' +
+							'<li id="wyca_setup_maps_list_map_elem_'+value.id_map+'" data-id_map="'+value.id_map+'">'+
+							'	<span class="societe  '+active+'">'+value.name+'</span>'+
+							(current_map.id_map != value.id_map?'	<a href="#" class="bMapDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>':'')+
+							(current_map.id_map != value.id_map?'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>':'')+
+							(current_map.id_map != value.id_map?'	<a href="#" class="bMapSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-check"></i></a>':'')+
+							'</li>'
+							);
+						}
 				});
 				
 				$('.wyca_setup_maps_loading').hide();
@@ -941,13 +945,15 @@ function GetSwitchMapsWyca()
 				
 				if (data.D != undefined)
 				$.each(data.D,function(index, value){
-					let active = current_map.id_map == value.id_map?'active':'';
-					$('#wyca_switch_map_landmark .list_switch_map_landmarks').append('' +
-						'<li id="wyca_switch_map_landmark_list_map_elem_'+value.id_map+'" data-id_map="'+value.id_map+'">'+
-						'	<span class="societe  '+active+'">'+value.name+'</span>'+
-						(current_map.id_map != value.id_map?'	<a href="#" class="bMapSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fas fa-exchange-alt"></i></a>':'')+
-						'</li>'
-						);
+					if(value.name != ''){
+						let active = current_map.id_map == value.id_map?'active':'';
+						$('#wyca_switch_map_landmark .list_switch_map_landmarks').append('' +
+							'<li id="wyca_switch_map_landmark_list_map_elem_'+value.id_map+'" data-id_map="'+value.id_map+'">'+
+							'	<span class="societe  '+active+'">'+value.name+'</span>'+
+							(current_map.id_map != value.id_map?'	<a href="#" class="bMapSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fas fa-exchange-alt"></i></a>':'')+
+							'</li>'
+							);
+					}
 				});
 				
 				$('.wyca_switch_map_landmark_loading').hide();
@@ -976,13 +982,15 @@ function GetMapsForDownloadNormal()
 				
 				if (data.D != undefined)
 				$.each(data.D,function(index, value){
-					let active = current_map.id_map == value.id_map?'active':'';
-					$('#install_normal_setup_download_map .list_maps').append('' +
-					'<li id="install_normal_setup_download_map_list_maps_elem_'+value.id_map+'" data-id_map="'+value.id_map+'" class="bMapDownloadElem">'+
-					'	<span class="societe '+active+'">'+value.name+'</span>'+
-					'	<a href="#" class="btn btn-sm btn-circle btn-success pull-right"><i class="fas fa-file-download"></i></a>'+
-					'</li>'
-					);
+					if(value.name != ''){
+						let active = current_map.id_map == value.id_map?'active':'';
+						$('#install_normal_setup_download_map .list_maps').append('' +
+						'<li id="install_normal_setup_download_map_list_maps_elem_'+value.id_map+'" data-id_map="'+value.id_map+'" class="bMapDownloadElem">'+
+						'	<span class="societe '+active+'">'+value.name+'</span>'+
+						'	<a href="#" class="btn btn-sm btn-circle btn-success pull-right"><i class="fas fa-file-download"></i></a>'+
+						'</li>'
+						);
+					}
 				});
 				
 				$('.install_normal_setup_download_loading').hide();
@@ -1011,13 +1019,15 @@ function GetMapsForDownloadWyca()
 				
 				if (data.D != undefined)
 				$.each(data.D,function(index, value){
-					let active = current_map.id_map == value.id_map?'active':'';
-					$('#wyca_setup_download_map .list_maps').append('' +
-					'<li id="wyca_setup_download_map_list_maps_elem_'+value.id_map+'" data-id_map="'+value.id_map+'" class="bMapDownloadElem">'+
-					'	<span class="societe '+active+'">'+value.name+'</span>'+
-					'	<a href="#" class="btn btn-sm btn-circle btn-success pull-right"><i class="fas fa-file-download"></i></a>'+
-					'</li>'
-					);
+					if(value.name != ''){
+						let active = current_map.id_map == value.id_map?'active':'';
+						$('#wyca_setup_download_map .list_maps').append('' +
+						'<li id="wyca_setup_download_map_list_maps_elem_'+value.id_map+'" data-id_map="'+value.id_map+'" class="bMapDownloadElem">'+
+						'	<span class="societe '+active+'">'+value.name+'</span>'+
+						'	<a href="#" class="btn btn-sm btn-circle btn-success pull-right"><i class="fas fa-file-download"></i></a>'+
+						'</li>'
+						);
+					}
 				});
 				
 				$('.wyca_setup_download_loading').hide();
@@ -2038,33 +2048,27 @@ function InitInstallWifiPageWyca()
 {
 	if (wycaApi.websocketAuthed)
 	{
-		
+		//$('.wyca_setup_wifi_loading').show();
 		wycaApi.GetWifiList(function(data) {
-			$('.wyca_setup_wifi_loading').hide();
 			$('#wyca_setup_wifi tr').hide();
+			let wifis = [];
 			if (data.D.length > 0)
 			{
 				$.each(data.D,function(index, value){
 					signal = parseInt(value.signal/20);
-					if ($('#wyca_setup_wifi .wifi'+value.bssid).length > 0)
-					{
-						$('#wyca_setup_wifi tr').show();
-						$('#wyca_setup_wifi .wifi'+value.bssid+' img').attr('src', 'assets/images/signal-'+signal+'.png');
-						if (value.state == 'active')
-						{
-							$('#wyca_setup_wifi tr').removeClass('active');
-							$('#wyca_setup_wifi .wifi'+value.bssid).addClass('active');
-						}
-					}
-					else
-					{
+					if(!wifis.includes(value.ssid)){
+						wifis.push(value.ssid);
 						if (value.state == 'active')
 							$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td><i class="fas fa-check"></i> '+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
 						else
 							$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td>'+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
+					}else{
+						if(value.state == 'active')
+							$('.tbody_wifi tr[data-ssid="'+value.ssid+'"]:visible').addClass('active').children('td:first-child').html('<i class="fas fa-check"></i> '+value.ssid);//Add check + bold
 					}
 				});
 			}
+			$('.wyca_setup_wifi_loading').hide();
 		});
 		
 		if ($('#wyca_setup_wifi').is(':visible'))
@@ -2080,33 +2084,27 @@ function InitInstallWifiPageNormal()
 {
 	if (wycaApi.websocketAuthed)
 	{
-		
+		//$('.install_normal_setup_wifi_loading').show();
 		wycaApi.GetWifiList(function(data) {
-			$('.install_normal_setup_wifi_loading').hide();
 			$('#install_normal_setup_wifi tr').hide();
+			let wifis = [];
 			if (data.D.length > 0)
 			{
 				$.each(data.D,function(index, value){
 					signal = parseInt(value.signal/20);
-					if ($('#install_normal_setup_wifi .wifi'+value.bssid).length > 0)
-					{
-						$('#install_normal_setup_wifi tr').show();
-						$('#install_normal_setup_wifi .wifi'+value.bssid+' img').attr('src', 'assets/images/signal-'+signal+'.png');
-						if (value.state == 'active')
-						{
-							$('#install_normal_setup_wifi tr').removeClass('active');
-							$('#install_normal_setup_wifi .wifi'+value.bssid).addClass('active');
-						}
-					}
-					else
-					{
+					if(!wifis.includes(value.ssid)){
+						wifis.push(value.ssid);
 						if (value.state == 'active')
 							$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td><i class="fas fa-check"></i> '+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
 						else
 							$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td>'+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
+					}else{
+						if(value.state == 'active')
+							$('.tbody_wifi tr[data-ssid="'+value.ssid+'"]:visible').addClass('active').children('td:first-child').html('<i class="fas fa-check"></i> '+value.ssid);//Add check + bold
 					}
 				});
 			}
+			$('.install_normal_setup_wifi_loading').hide();
 		});
 		
 		if ($('#install_normal_setup_wifi').is(':visible'))
@@ -2122,37 +2120,34 @@ function InitInstallWifiPageByStep()
 {
 	if (wycaApi.websocketAuthed)
 	{
-		
+		//$('.install_bystep_setup_wifi_loading').show();
 		wycaApi.GetWifiList(function(data) {
-			$('.install_bystep_setup_wifi_loading').hide();
+			
 			$('#install_by_step_wifi tr').hide();
+			let wifis = [];
 			if (data.D.length > 0)
 			{
+				console.log(data.D);
 				$.each(data.D,function(index, value){
 					signal = parseInt(value.signal/20);
-					if ($('#install_by_step_wifi .wifi'+value.bssid).length > 0)
-					{
-						$('#install_by_step_wifi tr').show();
-						$('#install_by_step_wifi .wifi'+value.bssid+' img').attr('src', 'assets/images/signal-'+signal+'.png');
-						if (value.state == 'active')
-						{
-							$('#install_by_step_wifi tr').removeClass('active');
-							$('#install_by_step_wifi .wifi'+value.bssid).addClass('active');
-						}
-					}
-					else
-					{
+					if(!wifis.includes(value.ssid)){
+						wifis.push(value.ssid);
 						if (value.state == 'active')
 							$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td><i class="fas fa-check"></i> '+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
 						else
 							$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td>'+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
+					}else{
+						if(value.state == 'active')
+							$('.tbody_wifi tr[data-ssid="'+value.ssid+'"]:visible').addClass('active').children('td:first-child').html('<i class="fas fa-check"></i> '+value.ssid);//Add check + bold
 					}
 				});
 			}
+			$('.install_bystep_setup_wifi_loading').hide();
 		});
 		
 		if ($('#install_by_step_wifi').is(':visible'))
 			setTimeout(InitInstallWifiPageByStep, 3000);
+		
 	}
 	else
 	{

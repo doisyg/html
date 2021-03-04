@@ -1023,7 +1023,7 @@ function NormalInitMap()
 			window.panZoomNormal.updateBBox();
 			window.panZoomNormal.fit();
 			window.panZoomNormal.center();
-			console.log('Refresh Zoom');
+			
 		}
 		setTimeout(function(){$('.install_normal_edit_map_loading').hide()},100);
 	},100);
