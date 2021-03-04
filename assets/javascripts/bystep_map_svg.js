@@ -869,6 +869,7 @@ function ByStepTraceRobot(robot_x, robot_y, robot_theta)
 		$('#install_by_step_edit_map_tRobotNotLocalised').show();
 		$('#install_by_step_edit_map_robot_circle').remove();
 		$('#install_by_step_edit_map_robot_sens').remove();
+		robot_traced = false;
 	}else{
 		$('#install_by_step_edit_map_tRobotNotLocalised').hide();
 		x = robot_x * 100 / ros_resolution;

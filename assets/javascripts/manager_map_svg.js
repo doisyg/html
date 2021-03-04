@@ -545,6 +545,7 @@ function ManagerTraceRobot(robot_x, robot_y, robot_theta)
 		$('#manager_edit_map_tRobotNotLocalised').show();
 		$('#manager_edit_map_robot_circle').remove();
 		$('#manager_edit_map_robot_sens').remove();
+		robot_traced_manager = false;
 	}else{
 		x = robot_x * 100 / ros_resolution;
 		y = ros_hauteur - (robot_y * 100 / ros_resolution);	

@@ -702,6 +702,7 @@ function WycaTraceRobot(robot_x, robot_y, robot_theta)
 		$('#wyca_edit_map_tRobotNotLocalised').show();
 		$('#wyca_edit_map_robot_circle').remove();
 		$('#wyca_edit_map_robot_sens').remove();
+		robot_traced_wyca = false;
 	}else{
 		x = robot_x * 100 / ros_resolution;
 		y = ros_hauteur - (robot_y * 100 / ros_resolution);	
