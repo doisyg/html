@@ -776,11 +776,7 @@ function resizeMap(){
 		svgMap = document.querySelector('#map_svg');
 		DrawMapElements();
 		TraceRobot(lastRobotPose);
-		setTimeout(function(){
-			console.log('map resized');
-			if($('html').scrollTop() < $("#dashboard").offset().top)
-				$('html, body').animate({scrollTop: $("#dashboard").offset().top}, 1000)}
-		,1000)
+		
 	}
 		
 		
