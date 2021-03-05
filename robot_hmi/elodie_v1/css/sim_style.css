@@ -133,8 +133,8 @@ h1,h2,h3,h5{
 	text-align: left;
     font-size: 14px;
     position: absolute;
-    bottom: 0px;
-    left: 0px;
+    bottom: 5px;
+    left: 5px;
 }
 .tRobotNotLocalised{
 	text-align: right;

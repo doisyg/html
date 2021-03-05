@@ -94,8 +94,7 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
 		<script src="<?php echo $_CONFIG['URL'];?>js/sim_map_svg.js?v=<?= $version ?>"></script>
 	<?php endif; ?>
 	
-	<script src="<?php echo $_CONFIG['URL'];?>js/_sim_robot.js"></script>
-	<!-- <script src="<?php echo $_CONFIG['URL'];?>js/robot.js?v=202012141414"></script> -->
+	<script src="<?php echo $_CONFIG['URL'];?>js/robot.js?v=<?= $version ?>"></script>
 </head>
 
 <body>
@@ -176,7 +175,7 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
     </div>
 </div>
 
-<div id="HMI_simu"  style="<?= !$sim?'display:none':'' ?>">
+<div id="HMI_simu" class="position-relative" style="<?= !$sim?'display:none':'' ?>">
 	<div class="row m-0">
 		<div class="col-xl-10 offset-xl-1 col-12 text-center">
 			<div class="title_logo d-inline-flex flex-column" style="padding-top: 40vh;padding-bottom: 40vh;">
@@ -215,7 +214,7 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
 						</defs>
 					</svg>
 				</div>
-				<span id="tVersion" class="tVersion">v = <span class="font-weight-bold"><?= $version ?></span>
+				
 			</div>
 		</div>
 		<div class="col-md-3 h-100 d-flex flex-column" style="justify-content:space-between;">
@@ -253,6 +252,7 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
 			</div>
 		</div>
 	</div>
+	<span id="tVersion" class="tVersion">v = <span class="font-weight-bold"><?= $version ?></span>
 </div>
 </body>
 </html>
