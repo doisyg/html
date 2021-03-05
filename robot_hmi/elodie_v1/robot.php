@@ -42,19 +42,19 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Wyca - Robot interface</title>
 	
-	<link rel="shortcut icon" href="<?php echo $_CONFIG['URL'];?>/images/favicon/favicon.ico" type="image/x-icon">
-	<link rel="icon" href="<?php echo $_CONFIG['URL'];?>/images/favicon/favicon.png" type="image/png">
-	<link rel="icon" sizes="32x32" href="<?php echo $_CONFIG['URL'];?>/images/favicon/favicon-32.png" type="image/png">
-	<link rel="icon" sizes="64x64" href="<?php echo $_CONFIG['URL'];?>/images/favicon/favicon-64.png" type="image/png">
-	<link rel="icon" sizes="96x96" href="<?php echo $_CONFIG['URL'];?>/images/favicon/favicon-96.png" type="image/png">
-	<link rel="icon" sizes="196x196" href="<?php echo $_CONFIG['URL'];?>/images/favicon/favicon-196.png" type="image/png">
-	<link rel="apple-touch-icon" sizes="152x152" href="<?php echo $_CONFIG['URL'];?>/images/favicon/apple-touch-icon.png">
-	<link rel="apple-touch-icon" sizes="60x60" href="<?php echo $_CONFIG['URL'];?>/images/favicon/apple-touch-icon-60x60.png">
-	<link rel="apple-touch-icon" sizes="76x76" href="<?php echo $_CONFIG['URL'];?>/images/favicon/apple-touch-icon-76x76.png">
-	<link rel="apple-touch-icon" sizes="114x114" href="<?php echo $_CONFIG['URL'];?>/images/favicon/apple-touch-icon-114x114.png">
-	<link rel="apple-touch-icon" sizes="120x120" href="<?php echo $_CONFIG['URL'];?>/images/favicon/apple-touch-icon-120x120.png">
-	<link rel="apple-touch-icon" sizes="144x144" href="<?php echo $_CONFIG['URL'];?>/images/favicon/apple-touch-icon-144x144.png">
-	<meta name="msapplication-TileImage" content="<?php echo $_CONFIG['URL'];?>/images/favicon/favicon-144.png">
+	<link rel="shortcut icon" href="<?php echo $_CONFIG['URL'];?>images/favicon/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="<?php echo $_CONFIG['URL'];?>images/favicon/favicon.png" type="image/png">
+	<link rel="icon" sizes="32x32" href="<?php echo $_CONFIG['URL'];?>images/favicon/favicon-32.png" type="image/png">
+	<link rel="icon" sizes="64x64" href="<?php echo $_CONFIG['URL'];?>images/favicon/favicon-64.png" type="image/png">
+	<link rel="icon" sizes="96x96" href="<?php echo $_CONFIG['URL'];?>images/favicon/favicon-96.png" type="image/png">
+	<link rel="icon" sizes="196x196" href="<?php echo $_CONFIG['URL'];?>images/favicon/favicon-196.png" type="image/png">
+	<link rel="apple-touch-icon" sizes="152x152" href="<?php echo $_CONFIG['URL'];?>images/favicon/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="<?php echo $_CONFIG['URL'];?>images/favicon/apple-touch-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="<?php echo $_CONFIG['URL'];?>images/favicon/apple-touch-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="<?php echo $_CONFIG['URL'];?>images/favicon/apple-touch-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="<?php echo $_CONFIG['URL'];?>images/favicon/apple-touch-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="<?php echo $_CONFIG['URL'];?>images/favicon/apple-touch-icon-144x144.png">
+	<meta name="msapplication-TileImage" content="<?php echo $_CONFIG['URL'];?>images/favicon/favicon-144.png">
 	<meta name="msapplication-TileColor" content="#FFFFFF"> 
 		
 	<script>
@@ -82,19 +82,19 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
 	<script src="<?php echo $_CONFIG['URL'];?>js/bootstrap.js"></script>
 	
 	<?php if($sim) : ?>
-		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>/css/sim_bootstrap.css" />
-		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>/css/sim_font_awesome.css" />
-		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>/css/sim_style.css?v=<?= $version ?>" />
+		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>css/sim_bootstrap.css" />
+		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>css/sim_font_awesome.css" />
+		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>css/sim_style.css?v=<?= $version ?>" />
 		
-		<script src="<?php echo $_CONFIG['URL'];?>/js/sim_jquery.js"></script>
-		<script src="<?php echo $_CONFIG['URL'];?>/js/sim_bootstrap.js"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>js/sim_jquery.js"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>js/sim_bootstrap.js"></script>
 		
-		<script src="<?php echo $_CONFIG['URL'];?>/js/sim_anim_led.js?v=<?= $version ?>"></script>
-		<script src="<?php echo $_CONFIG['URL'];?>/js/sim_led.js?v=<?= $version ?>"></script>
-		<script src="<?php echo $_CONFIG['URL'];?>/js/sim_map_svg.js?v=<?= $version ?>"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>js/sim_anim_led.js?v=<?= $version ?>"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>js/sim_led.js?v=<?= $version ?>"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>js/sim_map_svg.js?v=<?= $version ?>"></script>
 	<?php endif; ?>
 	
-	<script src="<?php echo $_CONFIG['URL'];?>/js/_sim_robot.js"></script>
+	<script src="<?php echo $_CONFIG['URL'];?>js/_sim_robot.js"></script>
 	<!-- <script src="<?php echo $_CONFIG['URL'];?>js/robot.js?v=202012141414"></script> -->
 </head>
 
@@ -180,7 +180,7 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
 	<div class="row m-0">
 		<div class="col-xl-10 offset-xl-1 col-12 text-center">
 			<div class="title_logo d-inline-flex flex-column" style="padding-top: 40vh;padding-bottom: 40vh;">
-				<img src="<?php echo $_CONFIG['URL'];?>/images/sim_logo.jpg" style="max-height: 175px;" class="img-fluid">
+				<img src="<?php echo $_CONFIG['URL'];?>images/sim_logo.jpg" style="max-height: 175px;" class="img-fluid">
 				<h1 class="text-right my-2">Simulation</h1>
 				<h4 class="text-right m-0">Site - <span id="site_name"></span></h4>
 			</div>
@@ -219,7 +219,7 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
 			</div>
 		</div>
 		<div class="col-md-3 h-100 d-flex flex-column" style="justify-content:space-between;">
-			<img src="<?php echo $_CONFIG['URL'];?>/images/sim_logo.jpg" class="img-fluid">
+			<img src="<?php echo $_CONFIG['URL'];?>images/sim_logo.jpg" class="img-fluid">
 			
 			<div class="flex-centered py-5" id="battery_widget">
 				<i class="fas fa-battery-full fa-5x mr-4"></i>
