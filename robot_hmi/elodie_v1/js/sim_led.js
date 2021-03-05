@@ -8,22 +8,23 @@ function DrawLEDs(){
 	let offset_absolute = (elo_width/2) ;
 	let radius = elo_width *0.6;
 	let x,y,div,i;
-	//FRONT LEDS
+	//BACK LEDS
 	for(let i=0;i<nb_LEDs;i++){
 		
 		x = radius * Math.cos(( Math.PI * 0.8 * (nb_LEDs - i -1)) / nb_LEDs - offset) + offset_absolute - LED_width/2;
         y = radius * Math.sin(( Math.PI * 0.8 * (nb_LEDs - i -1)) / nb_LEDs - offset) + offset_absolute - LED_width/2;
-        div = '<div class="led led_front" data-led="'+(i)+'" data-type="front" id="LED_front_'+(i)+'" style="top:'+(y)+'px;left:'+(x)+'px"></div>';
+        div = '<div class="led led_back" data-led="'+(i)+'" data-type="back" id="LED_back_'+(i)+'" style="top:'+(y)+'px;left:'+(x)+'px"></div>';
 		$('#LED_wrapper').append(div);
 	}
 	
+	
+	//FRONT LEDS
 	offset = Math.PI * 0.1;
-	//BACK LEDS
 	for(let i=0;i<nb_LEDs;i++){
 		
 		x = radius * Math.cos(( -Math.PI * 0.8 * (nb_LEDs - i - 1)) / nb_LEDs - offset) + offset_absolute - LED_width/2;
         y = radius * Math.sin(( -Math.PI * 0.8 * (nb_LEDs - i - 1 )) / nb_LEDs - offset) + offset_absolute - LED_width/2;
-        div = '<div class="led led_back" data-led="'+(i)+'" data-type="back" id="LED_back_'+(i)+'" style="top:'+(y)+'px;left:'+(x)+'px;background:green;"></div>';
+        div = '<div class="led led_front" data-led="'+(i)+'" data-type="front" id="LED_front_'+(i)+'" style="top:'+(y)+'px;left:'+(x)+'px;frontground:green;"></div>';
 		$('#LED_wrapper').append(div);
 	}
 	
