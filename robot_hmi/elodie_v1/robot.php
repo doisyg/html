@@ -187,7 +187,7 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
 		
 	</div>
 	<div class="row m-0 vh-100 p-3" id="dashboard">
-		<div class="col-md-9 h-100">
+		<div class="col-lg-9 col-12 h-100">
 			<div class="w-100 h-100 d-flex justify-content-center align-items-center" id="map">
 				<div class="d-flex position-relative">
 					<svg id="map_svg" class="position-relative" width="0" height="0" style="display:none;">
@@ -217,15 +217,15 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
 				
 			</div>
 		</div>
-		<div class="col-md-3 h-100 d-flex flex-column" style="justify-content:space-between;">
-			<img src="<?php echo $_CONFIG['URL'];?>images/sim_logo.jpg" class="img-fluid">
+		<div class="col-lg-3 col-12 h-100 d-flex flex-column" style="justify-content:space-between;">
+			<img src="<?php echo $_CONFIG['URL'];?>images/sim_logo.jpg" class="img-fluid my-3 my-lg-0 mx-auto" style="max-height:150px">
 			
-			<div class="flex-centered py-5" id="battery_widget">
+			<div class="flex-centered py-5 my-3 my-lg-0" id="battery_widget">
 				<i class="fas fa-battery-full fa-5x mr-4"></i>
 				<h2 class="m-0"><span id="battery_lvl">-</span> %</h2>
 				<h1 class="position-absolute">Battery</h1>
 			</div>
-			<div class="d-flex justify-content-around align-items-center py-5" id="docking_state_widget">
+			<div class="d-flex justify-content-around align-items-center py-5  my-3 my-lg-0" id="docking_state_widget">
 				<div class="d-flex justify-content-center align-items-center docking_state flex-column" id="docked">
 					<i class="fas fa-charging-station fa-3x"></i>
 					<p>docked</p>
@@ -244,7 +244,7 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
 				</div>
 				<h1>Docking State</h1>
 			</div>
-			<div class="flex-centered py-5" id="leds_widget" style="min-height:300px">
+			<div class="flex-centered py-5 my-3 my-lg-0" id="leds_widget" style="min-height:300px">
 				<div class="LED_wrapper position-relative flex-centered" id="LED_wrapper">
 					<img id="eloLED" src="<?php echo $_CONFIG['URL'];?>images/elo_LED.png" style="max-width: 200px;" class="position-relative img-fluid" >
 				</div>

@@ -777,9 +777,7 @@ function resizeMap(){
 		DrawMapElements();
 		TraceRobot(lastRobotPose);
 		setTimeout(function(){
-			$('#loader_map').hide();
-			$('#map_svg').show();
-			$('#tRobotNotLocalised').css('opacity',1);
+			console.log('map resized');
 			if($('html').scrollTop() < $("#dashboard").offset().top)
 				$('html, body').animate({scrollTop: $("#dashboard").offset().top}, 1000)}
 		,1000)
