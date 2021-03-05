@@ -50,6 +50,7 @@ if(file_exists(__DIR__ .'/../.git/HEAD')){
 		case 'master': $bn = 'mas'; break;
 		case 'html_stable': $bn = 'sta'; break;
 		case 'html_release': $bn = 'rel'; break;
+		case 'IHM_simu': $bn = 'IHM'; break;
 		case 'multimap': $bn = 'mum'; break;
 		default : 
 			$explode = explode('_',$branchname);

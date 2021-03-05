@@ -27,23 +27,6 @@ var actionListInProgress = false;
 
 var codeSaisie = "";
 
-
-/* SIM VARS */
-
-var SOC = 100;
-var IS_POWERED = false;
-var POWER_STATUT = false;
-var intervalBatteryCharging = false;
-var dockingStateLast = "not_init";
-
-var lastRobotPose = '';
-var version = '';
-
-var svgMap = false;
-
-var LED = {anim:1,r:255,g:0,b:0,speedleft:0,speedright:0};
-/* SIM VARS */
-
 $(document).ready(function(e) {
 
 	wycaApi = new WycaAPI({
@@ -71,9 +54,6 @@ $(document).ready(function(e) {
 		},
 		onInitialized: function(){
 			
-		},
-		onGlobalVehiculePersistanreDataStorageUpdated : function(){
-			RefreshConfigs();
 		},
 		onGoToPoiResult: function(data){
 			queueState = 'done';
@@ -103,11 +83,6 @@ $(document).ready(function(e) {
 		onBatteryState: function(data){
 			initBatteryState(data.SOC);
 			initPoweredState(data.IS_POWERED);
-			/* SIMU MODE */
-			if(is_simu)
-				if(data.SOC != SOC || data.IS_POWERED != IS_POWERED)
-					refreshBattery(data);
-			/* SIMU MODE */
 		},
         onIsSafetyStop: function(data){
             if (data)
@@ -128,41 +103,13 @@ $(document).ready(function(e) {
 				$('.no_navigation').show();
 				$('.only_navigation').hide();
 			}
-		},
-		
-		/* SIMU MODE */
-		onMapUpdated: function(){
-			initMap();
-		},
-		
-		onMoveInProgress: function(data){
-			if(data)
-				$('#tActionInProgess').show();
-			else
-				$('#tActionInProgess').hide();
-		},
-		onDockingState: function(data){
-            if (dockingStateLast != data)
-			{
-				dockingStateLast = data;
-            	refreshDockingState();
-			}
-		},
-		onLedStateControl : function(data){
-           LED = data;
-		},
-		
-		onNavigationRobotPose:function(pose){
-			lastRobotPose = pose;
-			if(typeof(robot_traced) != 'undefined' && robot_traced)
-				TraceRobot(lastRobotPose);
 		}
+	
 	});
 	
 	wycaApi.init();	
-	/* SIMU MODE */ if(is_simu)initMap(); /* SIMU MODE */
-	/* DEMO MODE */
 	
+	setInterval(RefreshConfigs, 1000); // Toutes les 1 secondes
 	RefreshConfigs();
 	
 	$('#bNextWaitClick').click(function(e) {
@@ -250,10 +197,8 @@ $(document).ready(function(e) {
 		wycaApi.DoBrowserRestart(true);
     });
 	
-	/* DEMO MODE */
 });
 
-/* DEMO MODE */
 function RetryDock()
 {
 	if (timeoutRetryDock != null)
@@ -268,7 +213,6 @@ function RetryDock()
 
 function ResultSendToDockDemand(result)
 {
-	
 }
 
 function ResultSendToDock(data)
@@ -416,8 +360,8 @@ function RefreshConfigs()
 		wycaApi.GetGlobalVehiculePersistanteDataStorage(function(data){
 			
 			oldWycaDemoStarted = dataStorage.wycaDemoStarted;
-			if(data.D != '')
-				dataStorage = JSON.parse(data.D);
+			
+			dataStorage = JSON.parse(data.D);
 			
 			if(typeof dataStorage.min_goto_charge == "undefined")
 				dataStorage.min_goto_charge = 75;
@@ -449,10 +393,6 @@ function RefreshConfigs()
 				NextAction();	
 			}
 		});
-	}
-	else
-	{
-		setTimeout(RefreshConfigs, 500);
 	}
 }
 
@@ -533,253 +473,3 @@ function NextTimeRemaining()
 	}
 }
 
-/* DEMO MODE */
-/* ---------------------------------------- */
-/* SIMU MODE */ 
-
-var id_site = -1;
-var name_site = '';
-$(window).on('resize',resizeMap);
- 
-function initMap(){
-	$('#loader_map').show();
-	$('#map_svg').hide();
-	$('#tRobotNotLocalised').css('opacity',0);
-	if (wycaApi.websocketAuthed)
-	{
-		$('#map_svg').children('.map_elem').remove();
-		wycaApi.GetCurrentSite(function(data){
-			if (data.A == wycaApi.AnswerCode.NO_ERROR){
-				
-				name_site = data.D.name;
-				$('#site_name').html(name_site);
-				id_site = data.D.id_site;
-				wycaApi.GetCurrentMapComplete(function(data) {
-					if (data.A == wycaApi.AnswerCode.NO_ERROR)
-					{
-						last_map = data.D;
-						id_map = data.D.id_map;
-						id_map_last = data.D.id_map;
-						
-						forbiddens = data.D.forbiddens;
-						areas = data.D.areas;
-						gommes = Array();
-						docks = data.D.docks;
-						pois = data.D.pois;
-						augmented_poses = data.D.augmented_poses;
-						
-						ros_largeur = data.D.ros_width ;
-						ros_hauteur = data.D.ros_height;
-						ros_resolution = data.D.ros_resolution;
-						
-						div_height = $('#map').outerHeight();
-						div_width = $('#map').outerWidth();
-						
-						svg_resolution = div_height / ros_hauteur ;
-						
-						let temp_width = ros_largeur * svg_resolution;
-						
-						if(temp_width > div_width)
-							svg_resolution = svg_resolution * div_width / temp_width;
-						
-						offset_image_x = ros_largeur * svg_resolution < div_width ? (div_width - ros_largeur * svg_resolution)/2 : 0;
-						offset_image_y = ros_hauteur * svg_resolution < div_height ? (div_height - ros_hauteur * svg_resolution)/2 : 0;
-							
-						
-						$('#map_svg').attr('width',$('#map').outerWidth());
-						$('#map_svg').attr('height',$('#map').outerHeight());
-						
-						$('#map_image').attr('width', ros_largeur * svg_resolution);
-						$('#map_image').attr('height', ros_hauteur * svg_resolution);
-						$('#map_image').attr('x', offset_image_x);
-						$('#map_image').attr('y', offset_image_y);
-						$('#map_image').attr('xlink:href', 'data:image/png;base64,'+data.D.image_tri);
-						
-						svg_resolution_width = svg_resolution;
-						svg_resolution_height = svg_resolution;
-						svgMap = document.querySelector('#map_svg');
-						DrawMapElements();
-						TraceRobot(lastRobotPose);
-						setTimeout(function(){
-							$('#loader_map').hide();
-							$('#map_svg').show();
-							$('#tRobotNotLocalised').css('opacity',1);
-							if($('html').scrollTop() < $("#dashboard").offset().top)
-								$('html, body').animate({scrollTop: $("#dashboard").offset().top}, 1000)}
-						,1000)
-						
-					}else{
-						alert('Error getting current Map');
-					}
-				})
-			}else{
-				alert('Error getting current site',data.A,data.M);
-			}
-		})
-	}
-	else
-	{
-		setTimeout(initMap, 500);
-	}
-	
-}
-
-function refreshBattery(data){
-	SOC = data.SOC;
-	IS_POWERED = data.IS_POWERED;
-	POWER_STATUT = data.POWER_STATUT;
-	let targetIcon = $('#battery_widget i');
-	let targetTxt = $('#battery_lvl');
-	targetTxt.html(SOC);
-	if(!IS_POWERED){
-		//REMOVE CLASSES
-		targetIcon.removeClass('fa-battery-empty').removeClass('fa-battery-quarter').removeClass('fa-battery-half').removeClass('fa-battery-three-quarters').removeClass('fa-battery-full').removeClass('battery-charging');
-		
-		if (SOC < 15)
-		{
-			targetIcon.addClass('fa-battery-empty');
-		}
-		else if (SOC <= 25)
-		{
-			targetIcon.addClass('fa-battery-quarter');
-		}
-		else if (SOC <= 50)
-		{
-			targetIcon.addClass('fa-battery-half');
-		}
-		else if (SOC <= 75)
-		{
-			targetIcon.addClass('fa-battery-three-quarters');
-		}
-		else
-		{
-			targetIcon.addClass('fa-battery-full');
-		}
-		//DESTROY INTERVAL ANIM CHARGE
-		if(intervalBatteryCharging != false){
-			clearInterval(intervalBatteryCharging)
-			intervalBatteryCharging = false;
-		}
-	}else{
-		if(intervalBatteryCharging == false){
-			animBatteryCharging(); // LAUNCH FOR FIRST TIME
-		}
-		
-	}
-}
-
-function animBatteryCharging(){
-	let targetIcon = $('#battery_widget i');
-	if(POWER_STATUT == 4)
-		targetIcon.addClass('fa-battery-full').removeClass('battery-charging').removeClass('fa-battery-empty').removeClass('fa-battery-quarter').removeClass('fa-battery-half').removeClass('fa-battery-three-quarters');
-	else{
-		targetIcon.addClass('battery-charging');
-		
-		if (targetIcon.hasClass('fa-battery-empty'))
-		{
-			targetIcon.removeClass('fa-battery-empty');
-			targetIcon.addClass('fa-battery-quarter');
-		}
-		else if (targetIcon.hasClass('fa-battery-quarter'))
-		{
-			targetIcon.removeClass('fa-battery-quarter');
-			targetIcon.addClass('fa-battery-half');
-		}
-		else if (targetIcon.hasClass('fa-battery-half'))
-		{
-			targetIcon.removeClass('fa-battery-half');
-			targetIcon.addClass('fa-battery-three-quarters');
-		}
-		else if (targetIcon.hasClass('fa-battery-three-quarters'))
-		{
-			targetIcon.removeClass('fa-battery-three-quarters');
-			targetIcon.addClass('fa-battery-full');
-		}
-		else if (targetIcon.hasClass('fa-battery-full'))
-		{
-			targetIcon.removeClass('fa-battery-full');
-			
-			if (SOC < 25)
-			{
-				targetIcon.addClass('fa-battery-empty');
-			}
-			else if (SOC <= 50)
-			{
-				targetIcon.addClass('fa-battery-quarter');
-			}
-			else if (SOC <= 75)
-			{
-				targetIcon.addClass('fa-battery-half');
-			}
-			else if (SOC <= 100)
-			{
-				targetIcon.addClass('fa-battery-three-quarters');
-			}
-		}
-		if(intervalBatteryCharging == false){
-			intervalBatteryCharging = setInterval(animBatteryCharging,1000);
-		}
-	}
-}
-
-function refreshDockingState(){
-	$('#docking_state_widget .docking_state').removeClass('active');
-	if(dockingStateLast == 'docked' || dockingStateLast == 'undocked' || dockingStateLast == 'docking' || dockingStateLast == 'unocking'){
-		$('#docking_state_widget .docking_state#'+dockingStateLast).addClass('active');
-	}
-}
-
-function resizeMap(){
-	if(typeof(last_map) == 'undefined')
-		initMap();
-	else{
-		$('#map_svg').children('.map_elem').remove();
-		id_map = last_map.id_map;
-		id_map_last = last_map.id_map;
-		
-		forbiddens = last_map.forbiddens;
-		areas = last_map.areas;
-		gommes = Array();
-		docks = last_map.docks;
-		pois = last_map.pois;
-		augmented_poses = last_map.augmented_poses;
-		
-		ros_largeur = last_map.ros_width ;
-		ros_hauteur = last_map.ros_height;
-		ros_resolution = last_map.ros_resolution;
-		
-		div_height = $('#map').outerHeight();
-		div_width = $('#map').outerWidth();
-		
-		svg_resolution = div_height / ros_hauteur ;
-		
-		let temp_width = ros_largeur * svg_resolution;
-		
-		if(temp_width > div_width)
-			svg_resolution = svg_resolution * div_width / temp_width;
-		
-		offset_image_x = ros_largeur * svg_resolution < div_width ? (div_width - ros_largeur * svg_resolution)/2 : 0;
-		offset_image_y = ros_hauteur * svg_resolution < div_height ? (div_height - ros_hauteur * svg_resolution)/2 : 0;
-			
-		
-		$('#map_svg').attr('width',$('#map').outerWidth());
-		$('#map_svg').attr('height',$('#map').outerHeight());
-		
-		$('#map_image').attr('width', ros_largeur * svg_resolution);
-		$('#map_image').attr('height', ros_hauteur * svg_resolution);
-		$('#map_image').attr('x', offset_image_x);
-		$('#map_image').attr('y', offset_image_y);
-		$('#map_image').attr('xlink:href', 'data:image/png;base64,'+last_map.image_tri);
-		
-		svg_resolution_width = svg_resolution;
-		svg_resolution_height = svg_resolution;
-		svgMap = document.querySelector('#map_svg');
-		DrawMapElements();
-		TraceRobot(lastRobotPose);
-		
-	}
-		
-		
-	
-}
-/* SIMU MODE */ 
