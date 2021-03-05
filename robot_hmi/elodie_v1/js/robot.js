@@ -142,6 +142,7 @@ $(document).ready(function(e) {
 				$('#tActionInProgess').hide();
 		},
 		onDockingState: function(data){
+			console.log('Docking State',data,'current',dockingStateLast);
             if (dockingStateLast != data)
 			{
 				dockingStateLast = data;
@@ -724,7 +725,7 @@ function animBatteryCharging(){
 
 function refreshDockingState(){
 	$('#docking_state_widget .docking_state').removeClass('active');
-	if(dockingStateLast == 'docked' || dockingStateLast == 'undocked' || dockingStateLast == 'docking' || dockingStateLast == 'unocking'){
+	if(dockingStateLast == 'docked' || dockingStateLast == 'undocked' || dockingStateLast == 'docking' || dockingStateLast == 'undocking'){
 		$('#docking_state_widget .docking_state#'+dockingStateLast).addClass('active');
 	}
 }
