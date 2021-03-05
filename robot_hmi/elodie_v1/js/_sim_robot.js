@@ -72,6 +72,9 @@ $(document).ready(function(e) {
 		onInitialized: function(){
 			
 		},
+		onGlobalVehiculePersistanreDataStorageUpdated : function(){
+			RefreshConfigs();
+		},
 		onGoToPoiResult: function(data){
 			queueState = 'done';
 			gotoPoiInProgress = false;
@@ -146,8 +149,8 @@ $(document).ready(function(e) {
 			}
 		},
 		onLedStateControl : function(data){
-           LED = data;
 		   console.log('LEDSTATE',data);
+           LED = data;
 		},
 		onNavigationRobotPose:function(pose){
 			lastRobotPose = pose;
@@ -160,7 +163,6 @@ $(document).ready(function(e) {
 	/* SIMU MODE */ if(is_simu)initMap(); /* SIMU MODE */
 	/* DEMO MODE */
 	
-	setInterval(RefreshConfigs, 1000); // Toutes les 1 secondes
 	RefreshConfigs();
 	
 	$('#bNextWaitClick').click(function(e) {

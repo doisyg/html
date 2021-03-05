@@ -55,6 +55,9 @@ $(document).ready(function(e) {
 		onInitialized: function(){
 			
 		},
+		onGlobalVehiculePersistanreDataStorageUpdated : function(){
+			RefreshConfigs();
+		},
 		onGoToPoiResult: function(data){
 			queueState = 'done';
 			gotoPoiInProgress = false;
@@ -109,7 +112,6 @@ $(document).ready(function(e) {
 	
 	wycaApi.init();	
 	
-	setInterval(RefreshConfigs, 1000); // Toutes les 1 secondes
 	RefreshConfigs();
 	
 	$('#bNextWaitClick').click(function(e) {
@@ -393,6 +395,10 @@ function RefreshConfigs()
 				NextAction();	
 			}
 		});
+	}
+	else
+	{
+		setTimeout(RefreshConfigs, 500);
 	}
 }
 
