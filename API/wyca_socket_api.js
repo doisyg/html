@@ -1235,6 +1235,9 @@ function WycaAPI(options){
 						case this.EventCode.TOP_PERSISTANTE_DATA_STORAGE_UPDATED:
 							// On ne le declenche pas à l'inscription
 							break;
+						case this.EventCode.DOCKING_STATE:
+							if (_this.options.onDockingState != undefined) { _this.options.onDockingState(msg.D.D); }
+							break;
 						case this.EventCode.POI_POSES:
 							if (_this.options.onPOIsDetect != undefined) { _this.options.onPOIsDetect(msg.D.D); }
 							break;
