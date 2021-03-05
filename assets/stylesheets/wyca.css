@@ -915,6 +915,10 @@ img.fi-robot{
 .btn-circle.btn-menu:focus{background-color: white;box-shadow: unset;}
 .btn-circle.btn-menu:active{background-color: white;box-shadow: unset;}
 
+.btn-danger.btn-circle.btn-menu:hover{background-color: #d64742;}
+.btn-danger.btn-circle.btn-menu:focus{background-color: #d64742;}
+.btn-danger.btn-circle.btn-menu:active{background-color: #d64742;}
+
 .btn-primary.btn-circle.btn-menu:hover{background-color: #0099e6;}
 .btn-primary.btn-circle.btn-menu:focus{background-color: #0099e6;}
 .btn-primary.btn-circle.btn-menu:active{background-color: #0099e6;}
