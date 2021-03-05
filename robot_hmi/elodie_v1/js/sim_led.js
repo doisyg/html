@@ -37,13 +37,14 @@ $(document).ready(function()
 });
 
 function refreshLEDs(){
-	current_anim = animations.ANIM.ANIM_FADE_FR_FLAG;
+	// current_anim = animations.ANIM.ANIM_MOVE; //TEST PURPOSE
+	current_anim = LED.anim;
 	current_r = LED.r;
 	current_b = LED.b;
 	current_g = LED.g;
 	voltage = SOC; // last battery .SOC
 	leftSpeed = LED.speedLeft;
-	rightSpeed = LED.speed_right;
+	rightSpeed = LED.speedRight;
 	
 	switch(current_anim)
     {

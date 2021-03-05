@@ -3,23 +3,21 @@ function AnimationLeds()
 
 	this.ANIM = {
 		ANIM_PROGRESS: 1,
-  ANIM_PROGRESS_CENTER:2,
-  ANIM_RAINBOW:3,
-  ANIM_K2000:4,
-  ANIM_BLINK:5,
-  ANIM_BLINK_2:6,
-  ANIM_POLICE:7,
-  ANIM_FADE:8,
-  ANIM_MOVE:9,
-  ANIM_LIGHT:10,
-  ANIM_PROGRESS_CENTER_CHARGE:11,
-  ANIM_PROGRESS_CENTER_CHARGE_BLINK:12,
-  ANIM_FADE_FR_FLAG:13,
-  ANIM_CUSTOM:14,
+		ANIM_PROGRESS_CENTER:2,
+		ANIM_RAINBOW:3,
+		ANIM_K2000:4,
+		ANIM_BLINK:5,
+		ANIM_BLINK_2:6,
+		ANIM_POLICE:7,
+		ANIM_FADE:8,
+		ANIM_MOVE:9,
+		ANIM_LIGHT:10,
+		ANIM_PROGRESS_CENTER_CHARGE:11,
+		ANIM_PROGRESS_CENTER_CHARGE_BLINK:12,
+		ANIM_FADE_FR_FLAG:13,
+		ANIM_CUSTOM:14,
 	};
 	
-	
-
 	this.currentLed = 0;
 	this.currentLed2 = 0;
 	this.centre = 0;
@@ -51,8 +49,6 @@ function AnimationLeds()
 	this.l2 = 0;
 	this.l3 = 0;
 	this.l4 = 0;
-
-	this.time_loop = 0;
 
 	this.luminosite = 0;
 	this.directionAugmente = true;
@@ -137,8 +133,7 @@ function AnimationLeds()
 				this.directionMoveG = 0;
 			}
 			
-			this.counterLeft = this.chaseWait;
-
+			this.counterLeft = this.chaseWaitLeft;
 			
 			
 			if (this.directionMoveG == 0) // Changement de this.direction
@@ -175,19 +170,19 @@ function AnimationLeds()
 			for (this.i = 0; this.i < 5; this.i++)
 			{
 				if (this.l4 <= this.ledsNumber/2) this.backLeds[parseInt(this.ledsNumber/2) + this.l4] = [(r * 25) >> 8, (g * 25) >> 8, (b * 25) >> 8];
-				else if(this.l4 <= this.ledsNumber) this.frontLeds[this.ledsNumber - this.l4 - parseInt(this.ledsNumber/2)] = [(r * 25) >> 8, (g * 25) >> 8, (b * 25) >> 8];
+				else if(this.l4 <= this.ledsNumber) this.frontLeds[this.ledsNumber - (this.l4 - parseInt(this.ledsNumber/2))] = [(r * 25) >> 8, (g * 25) >> 8, (b * 25) >> 8];
 
 				if (this.l3 <= this.ledsNumber/2) this.backLeds[parseInt(this.ledsNumber/2) + this.l3] = [(r * 75) >> 8, (g * 75) >> 8, (b * 75) >> 8];
-				else if(this.l3 < this.ledsNumber) this.frontLeds[this.ledsNumber - this.l3 - parseInt(this.ledsNumber/2)] = [(r * 75) >> 8, (g * 75) >> 8, (b * 75) >> 8];
+				else if(this.l3 < this.ledsNumber) this.frontLeds[this.ledsNumber - (this.l3 - parseInt(this.ledsNumber/2))] = [(r * 75) >> 8, (g * 75) >> 8, (b * 75) >> 8];
 		
 				if (this.l2 <= this.ledsNumber/2) this.backLeds[parseInt(this.ledsNumber/2) + this.l2] = [(r * 125) >> 8, (g * 125) >> 8, (b * 125) >> 8];
-				else if(this.l2 <= this.ledsNumber) this.frontLeds[this.ledsNumber - this.l2 - parseInt(this.ledsNumber/2)] = [(r * 125) >> 8, (g * 125) >> 8, (b * 125) >> 8];
+				else if(this.l2 <= this.ledsNumber) this.frontLeds[this.ledsNumber - (this.l2 - parseInt(this.ledsNumber/2))] = [(r * 125) >> 8, (g * 125) >> 8, (b * 125) >> 8];
 		
 				if (this.l1 <= this.ledsNumber/2) this.backLeds[parseInt(this.ledsNumber/2) + this.l1] = [(r * 175) >> 8, (g * 175) >> 8, (b * 175) >> 8];
-				else if(this.l1 <= this.ledsNumber) this.frontLeds[this.ledsNumber - this.l1 - parseInt(this.ledsNumber/2)] = [(r * 175) >> 8, (g * 175) >> 8, (b * 175) >> 8];
+				else if(this.l1 <= this.ledsNumber) this.frontLeds[this.ledsNumber - (this.l1 - parseInt(this.ledsNumber/2))] = [(r * 175) >> 8, (g * 175) >> 8, (b * 175) >> 8];
 		
 				if (this.l <= this.ledsNumber/2) this.backLeds[parseInt(this.ledsNumber/2) + this.l]= [r, g, b];
-				else if(this.l <= this.ledsNumber) this.frontLeds[this.ledsNumber - this.l - parseInt(this.ledsNumber/2)]= [r, g, b];
+				else if(this.l <= this.ledsNumber) this.frontLeds[this.ledsNumber - (this.l - parseInt(this.ledsNumber/2))]= [r, g, b];
 		
 				this.l4 += this.time_loop;
 				this.l3 += this.time_loop;
@@ -269,7 +264,7 @@ function AnimationLeds()
 			this.l3 = this.currentLedRight3;
 			this.l4 = this.currentLedRight4;
 
-			for (i = 0; i < 5; i++)
+			for (this.i = 0; this.i < 5; this.i++)
 			{
 				if (this.l4 <= this.ledsNumber/2) this.backLeds[parseInt(this.ledsNumber/2) - this.l4] = [(r * 25) >> 8, (g * 25) >> 8, (b * 25) >> 8];
 				else if(this.l4 <= this.ledsNumber) this.frontLeds[this.l4 - parseInt(this.ledsNumber/2)] = [(r * 25) >> 8, (g * 25) >> 8, (b * 25) >> 8];
@@ -283,8 +278,8 @@ function AnimationLeds()
 				if (this.l1 <= this.ledsNumber/2) this.backLeds[parseInt(this.ledsNumber/2) - this.l1] = [(r * 175) >> 8, (g * 175) >> 8, (b * 175) >> 8];
 				else if(this.l1 <= this.ledsNumber) this.frontLeds[this.l1 - parseInt(this.ledsNumber/2)] = [(r * 175) >> 8, (g * 175) >> 8, (b * 175) >> 8];
 
-				if (l <= this.ledsNumber/2) this.backLeds[parseInt(this.ledsNumber/2) - l]= [r, g, b];
-				else if(l <= this. this.ledsNumber) this.frontLeds[l - parseInt(this.ledsNumber/2)]= [r, g, b];
+				if (this.l <= this.ledsNumber/2) this.backLeds[parseInt(this.ledsNumber/2) - this.l]= [r, g, b];
+				else if(this.l <= this.ledsNumber) this.frontLeds[this.l - parseInt(this.ledsNumber/2)]= [r, g, b];
 
 				this.l += this.time_loop;
 				this.l1 += this.time_loop;
@@ -1063,7 +1058,8 @@ function AnimationLeds()
 		}
 	},
 	
-	this.Wheel = function(WheelPos) {
+	this.Wheel = function(WheelPos)
+	{
 		WheelPos = 255 - WheelPos;
 		if (WheelPos < 85) {
 			return [255 - WheelPos * 3, 0, WheelPos * 3];
@@ -1076,7 +1072,8 @@ function AnimationLeds()
 		return [WheelPos * 3, 255 - WheelPos * 3, 0];
 	}
 
-	this.AnimRainbow = function(){
+	this.AnimRainbow = function()
+	{
 		if (this.lastAnim != 7)
 		{
 			this.lastAnim = 7;
