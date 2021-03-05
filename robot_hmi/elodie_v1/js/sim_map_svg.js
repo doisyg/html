@@ -39,6 +39,9 @@ function TraceRobot(pose)
 		angle = 0 - robot_theta * 180 / Math.PI;
 		rayonRobot = (26 / ros_resolution) * svg_resolution_width;
 		
+		x = typeof(offset_image_x) == 'undefined' ? x : x + offset_image_x;
+		y = typeof(offset_image_y) == 'undefined' ? y : y + offset_image_y;
+	
 		if (true || !robot_traced) // true pour le mettre au premier plan
 		{
 			robot_traced = true;
@@ -97,6 +100,9 @@ function TraceForbidden(indexForbidden)
 			x = (point.x * 100 / ros_resolution) * svg_resolution_width;
 			y = (ros_hauteur - (point.y * 100 / ros_resolution)) * svg_resolution_height;
 			
+			x = typeof(offset_image_x) == 'undefined' ? x : x + offset_image_x;
+			y = typeof(offset_image_y) == 'undefined' ? y : y + offset_image_y;
+	
 			forbidden_point += x+','+y;
 		});
 		
@@ -129,6 +135,9 @@ function TraceArea(indexArea)
 			x = (point.x * 100 / ros_resolution) * svg_resolution_width;
 			y = (ros_hauteur - (point.y * 100 / ros_resolution)) * svg_resolution_height;
 			
+			x = typeof(offset_image_x) == 'undefined' ? x : x + offset_image_x;
+			y = typeof(offset_image_y) == 'undefined' ? y : y + offset_image_y;
+	
 			area_point += x+','+y;
 		});
 		
@@ -155,6 +164,9 @@ function TraceDock(indexDock)
 	y = (ros_hauteur - (dock.fiducial_pose_y * 100 / ros_resolution)) * svg_resolution_height;
 	
 	angle = 0 - dock.fiducial_pose_t * 180 / Math.PI - 90;
+	
+	x = typeof(offset_image_x) == 'undefined' ? x : x + offset_image_x;
+	y = typeof(offset_image_y) == 'undefined' ? y : y + offset_image_y;
 	
 	path = makeSVGElement('rect', { x: x-5* svg_resolution_width, y:y-1* svg_resolution_width, height:2* svg_resolution_width, width:10* svg_resolution_width,
 				   'stroke-width': minStokeWidth,
@@ -184,6 +196,9 @@ function TraceDock(indexDock)
 	x = (dock.final_pose_x * 100 / ros_resolution ) * svg_resolution_width;
 	y = (ros_hauteur - (dock.final_pose_y * 100 / ros_resolution)) * svg_resolution_height;
 	angle = 0 - dock.final_pose_t * 180 / Math.PI;
+	
+	x = typeof(offset_image_x) == 'undefined' ? x : x + offset_image_x;
+	y = typeof(offset_image_y) == 'undefined' ? y : y + offset_image_y;
 	
 	rayonRobot = (26 / ros_resolution) * svg_resolution_width;
 	rayonRobotSecure = ((26+15) / ros_resolution) * svg_resolution_width;
@@ -236,6 +251,9 @@ function TracePoi(indexPoi)
 	y = (ros_hauteur - (poi.final_pose_y * 100 / ros_resolution)) * svg_resolution_height;	
 	angle = 0 - poi.final_pose_t * 180 / Math.PI;
 	
+	x = typeof(offset_image_x) == 'undefined' ? x : x + offset_image_x;
+	y = typeof(offset_image_y) == 'undefined' ? y : y + offset_image_y;
+	
 	rayonRobot = (26 / ros_resolution)* svg_resolution_width;
 	rayonRobotSecure = ((26+15) / ros_resolution)* svg_resolution_width;
 	
@@ -285,6 +303,9 @@ function TraceAugmentedPose(indexAugmentedPose)
 	x = (augmented_pose.final_pose_x * 100 / ros_resolution)* svg_resolution_width;
 	y = (ros_hauteur - (augmented_pose.final_pose_y * 100 / ros_resolution)) * svg_resolution_width;	
 	angle = 0 - augmented_pose.final_pose_t * 180 / Math.PI;
+	
+	x = typeof(offset_image_x) == 'undefined' ? x : x + offset_image_x;
+	y = typeof(offset_image_y) == 'undefined' ? y : y + offset_image_y;
 	
 	rayonRobot = (26 / ros_resolution)* svg_resolution_width;
 	rayonRobotSecure = ((26+15) / ros_resolution)* svg_resolution_width;
