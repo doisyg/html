@@ -86,7 +86,7 @@ function WycaAPI(options){
 	// General
 		GET_LAST_STATUT			: 0x1107,
 		INSTALL_NEW_TOP			: 0x1105,
-		AUTH					: 0xE0001,
+		AUTH					: 0xE001,
 		AUTH_TOP			: 0x1101,
 		AUTH_USER			: 0x1102,
 		SINK			: 0x1108,
