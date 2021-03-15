@@ -837,7 +837,7 @@ $(document).ready(function(e) {
 				ParseAPIAnswerError(data,textErrorStopNavigation);
 			else
 			{
-				GetSitesNormal();
+				$('#install_normal_setup_sites .bBackToDashboard').click();
 			}
 		});
 	});

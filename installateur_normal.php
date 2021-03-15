@@ -1119,7 +1119,7 @@
                 <h2><?php echo __('Sites');?></h2>
             </header>
             <div class="content">
-                
+                <a href="#" class="bBackToDashboard button_goto" data-goto="install_normal_dashboard" style="display:none"></a>
                 <div class="install_normal_setup_sites_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
                 
                 <div class="loaded col-md-12" style="padding-top:30px;">
