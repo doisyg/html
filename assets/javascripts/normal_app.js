@@ -834,7 +834,7 @@ $(document).ready(function(e) {
 		
 		wycaApi.SetSiteAsCurrent(id_site, function(data) {
 			if (data.A != wycaApi.AnswerCode.NO_ERROR) 
-				ParseAPIAnswerError(data,textErrorStopNavigation);
+				ParseAPIAnswerError(data,textErrorSetSite);
 			else
 			{
 				$('#install_normal_setup_sites .bBackToDashboard').click();

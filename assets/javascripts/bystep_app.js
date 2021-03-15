@@ -511,7 +511,7 @@ $(document).ready(function(e) {
 				$('.install_by_step_site_save').addClass('disabled');
 				wycaApi.GetSitesList(function(data){
 					if (data.A != wycaApi.AnswerCode.NO_ERROR){
-						ParseAPIAnswerError(data,textErrorGetSite);
+						ParseAPIAnswerError(data,textErrorGetSites);
 					}else{
 						if(!CheckName(data.D,window.site_name)){
 							if (create_new_site) // BOOLEAN INSTALLATEUR_WYCA.JS GESTION DES SITES
@@ -816,7 +816,7 @@ $(document).ready(function(e) {
 						
 						wycaApi.GetMapsList(data.D.id_site,function(data){
 							if (data.A != wycaApi.AnswerCode.NO_ERROR){
-								ParseAPIAnswerError(data,textErrorGetSite);
+								ParseAPIAnswerError(data,textErrorGetMaps);
 							}else{
 								if(CheckName(data.D,window.map_name)){
 									alert_wyca(textNameUsed);
@@ -933,7 +933,7 @@ $(document).ready(function(e) {
 																		}
 																		else
 																		{
-																			ParseAPIAnswerError(data);
+																			ParseAPIAnswerError(data,textErrorSetMap);
 																			
 																			$('#install_by_step_mapping_use .bUseThisMapNowYes').show();
 																			$('#install_by_step_mapping_use .bUseThisMapNowNo').show();
