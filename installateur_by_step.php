@@ -584,6 +584,28 @@
                         </div>
                     </div>
                     
+					<div class="modal fade" id="install_by_step_mapping_modalConfirm" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+						<div class="modal-dialog" role="dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<div class="actions mh100vh_55">
+										<section class="panel panel-info">
+											<header class="panel-heading">
+												<h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fa fa-question-circle"></i></h2>
+											</header>
+											<div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
+												<h3><?= __('Are you sure mapping is over ?')?></h3>
+												<h3><?= __('In case mapping is not valid, you will have to start mapping again.')?></h3>
+											</div>
+										</section>
+										<div style="clear:both;"></div>
+										<a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Abort');?></a>
+										<a href="#" class="btn btn-primary bMappingStop button_goto btn_footer_right btn_50" data-dismiss="modal" data-goto="install_by_step_mapping_fin"><?php echo __('Save');?></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
                 </div>
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
@@ -602,7 +624,7 @@
             <footer>
             	<a href="#" class="ifNMapping bMappingBack btn btn-default button_goto btn_footer_left btn_33 btn_back" data-goto="install_by_step_new_site" ><?php echo __('Back');?></a>
             	<a href="#" class="ifNMapping bMappingStart btn btn-primary btn_footer_right btn_66 ifUndocked" ><?php echo __('Start Mapping');?></a>
-            	<a href="#" class="ifMapping bMappingStop button_goto btn btn-primary btn_footer_right btn_100" data-goto="install_by_step_mapping_fin" style="display:none"><?php echo __('Done');?></a>
+            	<a href="#" class="ifMapping btn btn-primary btn_footer_right btn_100 bMappingDone" style="display:none"><?php echo __('Mapping done');?></a>
             </footer>
         </section>
         
@@ -2347,5 +2369,3 @@
 			</div>
 		</div>
     </div>
-
-	

@@ -634,6 +634,7 @@ $(document).ready(function(e) {
 				$('#install_by_step_mapping .progressStartMapping').hide();
 				$('#install_by_step_mapping .switchLiveMapping').show();
 				$('#install_by_step_mapping .bMappingStop').show();
+				$('#install_by_step_mapping .bMappingDone').show();
 				$('.ifMapping').show();
 				$('#install_by_step_mapping .mapping_view').show();
 					
@@ -658,6 +659,7 @@ $(document).ready(function(e) {
 				$('#install_by_step_mapping .progressStartMapping').hide();
 				$('#install_by_step_mapping .switchLiveMapping').show();
 				$('#install_by_step_mapping .bMappingStop').show();
+				$('#install_by_step_mapping .bMappingDone').show();
 				$('#install_by_step_mapping .mapping_view').show();
 				img = document.getElementById("install_by_step_mapping_img_map_saved");
 				img.src = "assets/images/vide.png";
@@ -716,6 +718,11 @@ $(document).ready(function(e) {
 		
 	});
 	
+	$('#install_by_step_mapping .bMappingDone').click(function(e) {
+		e.preventDefault();
+		$('#install_by_step_mapping_modalConfirm').modal('show');
+	});
+	
 	$('#install_by_step_mapping .bMappingStop').click(function(e) {
 		e.preventDefault();
 		
@@ -765,6 +772,7 @@ $(document).ready(function(e) {
 		mappingStarted = false;
 		$('#install_by_step_mapping .switchLiveMapping').hide();
 		$('#install_by_step_mapping .bMappingStop').hide();
+		$('#install_by_step_mapping .bMappingDone').hide();
 		$('#install_by_step_mapping .mapping_view').hide();
 		$('#install_by_step_mapping .bMappingStart').show();
 		
