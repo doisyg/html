@@ -411,7 +411,7 @@
 						<span class="filename_import_site" style="display:none">Test</span>
 					</div>
     			</div>
-				<a href="#" class="install_by_step_import_site_next button_goto" data-goto="install_by_step_site_master_dock" style="display:none;"></a>
+				<a href="#" class="install_by_step_import_site_next button_goto" data-goto="install_by_step_site_map" style="display:none;"></a>
             </div>
             <footer>
                 <a href="#" class="button_goto btn btn-default btn_footer_left btn_50 btn_back" data-goto="install_by_step_site"><?= __('Back')?></a>
@@ -419,49 +419,48 @@
             </footer>
         </section>
 		
-		<section id="install_by_step_site_master_dock" class="page <?php echo $INSTALL_STEP == 69?'active':'';?> with_footer">
+		<section id="install_by_step_site_map" class="page <?php echo $INSTALL_STEP == 61?'active':'';?> with_footer">
 	        <a href="#" class="bBackButton button_goto" data-goto="install_by_step_import_site"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
-                <h2><?php echo __('Default Dock');?></h2>
+                <h2><?php echo __('Select Map');?></h2>
             </header>
             <div class="content">
-				<h4 style="text-align:center;margin:30px 0"><?= __('Pick the default docking station') ?></h4>
+				<h4 style="text-align:center;margin:30px 0"><?= __('Select the current map') ?></h4>
 				
-				<div class="MasterDock_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
-				<div class="row" id="MasterDockList">
+				<div class="import_site_map_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
+				<div class="row row-eq-height" id="ImportSiteMapList">
                     
 				</div>
-				<p style="padding-left:5px;margin-top:10px"><i class="fas fa-asterisk" style="color: darkorange;"></i> <?=__('Actual default dock') ?></p>
-				<a href="#" class="install_by_step_site_master_dock_next button_goto" data-goto="install_by_step_site_recovery" style="display:none;"></a>
+				<a href="#" class="install_by_step_site_map_next button_goto" data-goto="install_by_step_site_master_dock" style="display:none;"></a>
             </div>
             <footer>
 				<a href="#" class="button_goto btn btn-default btn_footer_left btn_100 btn_back" data-goto=	"install_by_step_import_site"><?= __('Back')?></a>
             </footer>
         </section>
 		
-		<section id="install_by_step_site_master_dock" class="page <?php echo $INSTALL_STEP == 61?'active':'';?> with_footer">
-	        <a href="#" class="bBackButton button_goto" data-goto="install_by_step_import_site"></a>
+		<section id="install_by_step_site_master_dock" class="page <?php echo $INSTALL_STEP == 62?'active':'';?> with_footer">
+	        <a href="#" class="bBackButton button_goto" data-goto="install_by_step_site_map"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
                 <h2><?php echo __('Default Dock');?></h2>
             </header>
             <div class="content">
-				<h4 style="text-align:center;margin:30px 0"><?= __('Pick the default docking station') ?></h4>
+				<h4 style="text-align:center;margin:30px 0"><?= __('Select the default docking station') ?></h4>
 				
 				<div class="MasterDock_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
-				<div class="row" id="MasterDockList">
+				<div class="row row-eq-height" id="MasterDockList">
                     
 				</div>
 				<p style="padding-left:5px;margin-top:10px"><i class="fas fa-asterisk" style="color: darkorange;"></i> <?=__('Actual default dock') ?></p>
 				<a href="#" class="install_by_step_site_master_dock_next button_goto" data-goto="install_by_step_site_recovery" style="display:none;"></a>
             </div>
             <footer>
-				<a href="#" class="button_goto btn btn-default btn_footer_left btn_100 btn_back" data-goto=	"install_by_step_import_site"><?= __('Back')?></a>
+				<a href="#" class="button_goto btn btn-default btn_footer_left btn_100 btn_back" data-goto="install_by_step_site_map"><?= __('Back')?></a>
             </footer>
         </section>
 		
-		<section id="install_by_step_site_recovery" class="page <?php echo $INSTALL_STEP == 62?'active':'';?> with_footer">
+		<section id="install_by_step_site_recovery" class="page <?php echo $INSTALL_STEP == 63?'active':'';?> with_footer">
 	        <a href="#" class="bBackButton button_goto" data-goto="install_by_step_site_master_dock"></a>
             <header>
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>

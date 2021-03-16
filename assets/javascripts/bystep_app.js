@@ -1028,64 +1028,82 @@ $(document).ready(function(e) {
 						//success_wyca(textSiteImported);
 						console.log(data);
 						if(data.D > -1){
-							wycaApi.SetSiteAsCurrent(data.D,function(data){
+							window.site_id=data.D;
+							wycaApi.SetSiteAsCurrent(window.site_id,function(data){
 								if (data.A == wycaApi.AnswerCode.NO_ERROR)
 								{
-									wycaApi.GetCurrentMapData(function(data){
-										if (data.A == wycaApi.AnswerCode.NO_ERROR)
-										{
-											if(data.D.docks.length <= 1){
-												$.ajax({
-													type: "POST",
-													url: 'ajax/install_by_step_import_site_master_dock.php',
-													data: { 
-													},
-													dataType: 'json',
-													success: function(data) {
-														success_wyca(textSiteImported);
-														$('.install_by_step_site_master_dock_next').click();
-													},
-													error: function(e) {
-														if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-															alert_wyca((typeof(textErrorImportSite) != 'undefined'? textErrorImportSite : 'Error import site') +  e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-															setTimeout(function(){window.location.href = 'logout.php'},3000);
-														}else{
-															alert_wyca((typeof(textErrorImportSite) != 'undefined'? textErrorImportSite : 'Error import site') + ' ' + e.responseText );
-														}
-													}
-												});
-											}else{
-												id_map = data.D.id_map;
-												id_map_last = data.D.id_map;
-												forbiddens = data.D.forbiddens;
-												areas = data.D.areas;
-												docks = data.D.docks;
-												pois = data.D.pois;
-												augmented_poses = data.D.augmented_poses; 
-												
-												$.ajax({
-													type: "POST",
-													url: 'ajax/install_by_step_import_site_finish.php',
-													data: { 
-													},
-													dataType: 'json',
-													success: function(data) {
+									wycaApi.GetMapsList(window.site_id,function(data){
+										if(data.D.length <= 1){ // IF ONLY ONE MAP
+										
+											wycaApi.GetCurrentMapData(function(data){
+												if (data.A == wycaApi.AnswerCode.NO_ERROR)
+												{
+													if(data.D.docks.length <= 1){
+														$.ajax({
+															type: "POST",
+															url: 'ajax/install_by_step_import_site_master_dock.php',
+															data: { 
+															},
+															dataType: 'json',
+															success: function(data) {
+																success_wyca(textSiteImported);
+																$('#install_by_step_site_master_dock .install_by_step_site_master_dock_next').click();
+															},
+															error: function(e) {
+																if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+																	alert_wyca((typeof(textErrorMasterDock) != 'undefined'? textErrorMasterDock : 'Error step master dock')+ ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+																	setTimeout(function(){window.location.href = 'logout.php'},3000);
+																}else{
+																	alert_wyca((typeof(textErrorMasterDock) != 'undefined'? textErrorMasterDock : 'Error step master dock')+ ' ' + e.responseText );
+																}
+															}
+														});
+													}else{
+														id_map = data.D.id_map;
+														id_map_last = data.D.id_map;
+														forbiddens = data.D.forbiddens;
+														areas = data.D.areas;
+														docks = data.D.docks;
+														pois = data.D.pois;
+														augmented_poses = data.D.augmented_poses; 
 														
-														InitMasterDockByStep();
-														$('.install_by_step_import_site_next').click();
-													},
-													error: function(e) {
-														alert_wyca((typeof(textErrorImportSite) != 'undefined'? textErrorImportSite : 'Error import site') + ' ' + e.responseText);
+														$.ajax({
+															type: "POST",
+															url: 'ajax/install_by_step_import_site_select_map.php',
+															data: { 
+															},
+															dataType: 'json',
+															success: function(data) {
+																$('#install_by_step_site_map .install_by_step_site_map_next').click();
+															},
+															error: function(e) {
+																alert_wyca((typeof(textErrorImportSite) != 'undefined'? textErrorImportSite : 'Error import site') + ' ' + e.responseText);
+															}
+														});
 													}
-												});
-												
-											}
+													
+												}else{
+													ParseAPIAnswerError(data);
+													InitSiteImportByStep();
+												}
+											})
 										}else{
-											ParseAPIAnswerError(data);
-											InitSiteImportByStep();
+											// IF MULTIPLES MAP
+											$.ajax({
+												type: "POST",
+												url: 'ajax/install_by_step_import_site_finish.php',
+												data: { 
+												},
+												dataType: 'json',
+												success: function(data) {
+													$('#install_by_step_import_site .install_by_step_import_site_next').click();
+												},
+												error: function(e) {
+													alert_wyca((typeof(textErrorImportSite) != 'undefined'? textErrorImportSite : 'Error import site') + ' ' + e.responseText);
+												}
+											});
 										}
 									})
-									window.site_id=data.D;
 								}else{
 									ParseAPIAnswerError(data);
 									InitSiteImportByStep();
@@ -1114,6 +1132,74 @@ $(document).ready(function(e) {
 			setTimeout(function(){icon.toggleClass('shake')},2000);
 		}
     });
+	
+	//------------------- STEP SELECT MAP ------------------------
+	
+	//AJAX INSTALL STEP CALL
+	//DECLARATION EVENTLISTENER BOUTON CREE DYNAMIQUEMENT .on('event',function(){})
+	$( "#pages_install_by_step #ImportSiteMapList" ).on( 'click', '.SelectMapItem', function(e) {
+		let id_map = parseInt($(this).attr('id'));
+		wycaApi.SetMapAsCurrent(id_map, function(data){
+			if (data.A == wycaApi.AnswerCode.NO_ERROR){
+				wycaApi.GetCurrentMapData(function(data){
+					if (data.A == wycaApi.AnswerCode.NO_ERROR)
+					{
+						if(data.D.docks.length <= 1){
+							$.ajax({
+								type: "POST",
+								url: 'ajax/install_by_step_import_site_master_dock.php',
+								data: { 
+								},
+								dataType: 'json',
+								success: function(data) {
+									success_wyca(textSiteImported);
+									$('#install_by_step_site_master_dock .install_by_step_site_master_dock_next').click();
+								},
+								error: function(e) {
+									if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+										alert_wyca((typeof(textErrorMasterDock) != 'undefined'? textErrorMasterDock : 'Error step master dock')+ ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+										setTimeout(function(){window.location.href = 'logout.php'},3000);
+									}else{
+										alert_wyca((typeof(textErrorMasterDock) != 'undefined'? textErrorMasterDock : 'Error step master dock')+ ' ' + e.responseText );
+									}
+								}
+							});
+						}else{
+							id_map = data.D.id_map;
+							id_map_last = data.D.id_map;
+							forbiddens = data.D.forbiddens;
+							areas = data.D.areas;
+							docks = data.D.docks;
+							pois = data.D.pois;
+							augmented_poses = data.D.augmented_poses; 
+							
+							$.ajax({
+								type: "POST",
+								url: 'ajax/install_by_step_import_site_select_map.php',
+								data: { 
+								},
+								dataType: 'json',
+								success: function(data) {
+									$('#install_by_step_site_map .install_by_step_site_map_next').click();
+								},
+								error: function(e) {
+									alert_wyca((typeof(textErrorImportSite) != 'undefined'? textErrorImportSite : 'Error import site') + ' ' + e.responseText);
+								}
+							});
+						}
+						
+					}else{
+						ParseAPIAnswerError(data);
+						InitSiteImportByStep();
+					}
+				})
+										
+			}else{
+				ParseAPIAnswerError(data);
+				InitSiteSelectMapByStep();
+			}
+		})
+	})
 	
 	//------------------- STEP MASTER DOCK ------------------------
 	
@@ -1154,7 +1240,7 @@ $(document).ready(function(e) {
 				});
 			}else{
 				ParseAPIAnswerError(data);
-				InitSiteImportByStep();
+				InitMasterDockByStep();
 				$('#pages_install_by_step .install_by_step_setup_import_loading').hide();
 				$('#pages_install_by_step .install_by_step_setup_import_content').show();
 				$('#pages_install_by_step section#install_by_step_site_master_dock .bBackButton').click();

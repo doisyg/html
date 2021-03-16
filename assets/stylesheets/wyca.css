@@ -1165,9 +1165,20 @@ div.icon_menu .iconForbiddenArea .fa-minus-circle{
     padding-top: 50%;
 }
 /* */
-#MasterDockList .MasterDockItem {position:relative}
+#MasterDockList .MasterDockItem {
+	position: relative;
+    width: calc(100% - 30px);
+    height: calc(100% - 30px);
+}
 #MasterDockList .MasterDockItem i.fa-asterisk {position:absolute; top: 10px;left: 15px;color: darkorange;font-size:16px; padding:0;  }
 #MasterDockList .MasterDockItem p.dockname {margin-top: 0px;font-weight: 700;margin-bottom: 0;font-size: 14px;}
+
+#ImportSiteMapList .SelectMapItem {
+	position: relative;
+    width: calc(100% - 30px);
+    height: calc(100% - 30px);
+}
+#ImportSiteMapList .SelectMapItem p.mapname {margin-top: 0px;font-weight: 700;margin-bottom: 0;font-size: 14px;}
 
 .password_format{margin: 0;text-align: right;font-size: 12px;font-style: italic;margin-bottom: 10px;}
 .password_format ~ div.form-group{margin-bottom:0;}
