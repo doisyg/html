@@ -1087,8 +1087,8 @@ $(document).ready(function(e) {
 													InitSiteImportByStep();
 												}
 											})
-										}else{// IF MULTIPLES MAP
-										
+										}else{
+											// IF MULTIPLES MAP
 											$.ajax({
 												type: "POST",
 												url: 'ajax/install_by_step_import_site_finish.php',

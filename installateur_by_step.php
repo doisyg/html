@@ -429,7 +429,7 @@
 				<h4 style="text-align:center;margin:30px 0"><?= __('Select the current map') ?></h4>
 				
 				<div class="import_site_map_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
-				<div class="row" id="ImportSiteMapList">
+				<div class="row row-eq-height" id="ImportSiteMapList">
                     
 				</div>
 				<a href="#" class="install_by_step_site_map_next button_goto" data-goto="install_by_step_site_master_dock" style="display:none;"></a>
@@ -449,7 +449,7 @@
 				<h4 style="text-align:center;margin:30px 0"><?= __('Select the default docking station') ?></h4>
 				
 				<div class="MasterDock_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
-				<div class="row" id="MasterDockList">
+				<div class="row row-eq-height" id="MasterDockList">
                     
 				</div>
 				<p style="padding-left:5px;margin-top:10px"><i class="fas fa-asterisk" style="color: darkorange;"></i> <?=__('Actual default dock') ?></p>

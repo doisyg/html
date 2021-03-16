@@ -1067,15 +1067,17 @@ function InitSiteSelectMapByStep(back = false)
 								$('#install_by_step_site_master_dock .bBackButton').click();
 						}else{
 							$.each(data.D,function(idx,item){
-								let map="";
-								map+='<div class="col-xs-6 text-center">';
-								map+='	<div class="SelectMapItem btn bTuile" id="'+item.id_map+'">';
-								map+='		<i class="fas fa-map-marked-alt"></i>';
-								map+='		<p class="mapname">'+item.name+'</p>';
-								map+='   </div>';
-								map+='</div>';
-								$('#pages_install_by_step #ImportSiteMapList').append(map);
-								$('#pages_install_by_step #install_by_step_site_map .import_site_map_loading').hide();
+								if(item.name != ''){
+									let map="";
+									map+='<div class="col-xs-6 text-center">';
+									map+='	<div class="SelectMapItem btn bTuile" id="'+item.id_map+'">';
+									map+='		<i class="fas fa-map-marked-alt"></i>';
+									map+='		<p class="mapname">'+item.name+'</p>';
+									map+='   </div>';
+									map+='</div>';
+									$('#pages_install_by_step #ImportSiteMapList').append(map);
+									$('#pages_install_by_step #install_by_step_site_map .import_site_map_loading').hide();
+								}
 							});
 						}				
 					}else{

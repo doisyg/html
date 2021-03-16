@@ -635,5 +635,8 @@ $_LANG['47a504a06798dc7c6a92ab1cf0aa6020'] = 'La cartographie est-elle terminée
 $_LANG['4e06d9cbcc29bbeac7e986d33063fb3f'] = 'Si la cartographie n\'est pas valide, vous devrez la recommencer.';
 $_LANG['e0ea021bc6289cc61900cf4a3de81cdc'] = 'Vous utilisez désormais le site';
 $_LANG['f3aa661b584021c1c8519d098fc807a8'] = 'GetPath';
+$_LANG['4f9baa1e6a39aef012c4faed2758c8c8'] = 'Sélection Carte';
+$_LANG['a1820c7db2c243a80e09162842bfddd1'] = 'Sélection carte courante';
+$_LANG['2a8e9f973e2c8beab004b64a98406d8d'] = 'Sélection du dock par défaut';
 
 ?>
