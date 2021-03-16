@@ -615,5 +615,9 @@ $_LANG['6a03d07c60c7ffd19860e6f518f2d8e4'] = 'Got it!';
 $_LANG['f3aa661b584021c1c8519d098fc807a8'] = 'GetPath';
 $_LANG['7376e0fa9b6382eee64aae2c6050bd80'] = 'I assume the responsibility';
 $_LANG['ebf46cb429e4e9d500fbc04f52618594'] = 'The robot is not localized';
+$_LANG['026f204fdfe02f21d641367d7d21c31f'] = 'Error get sites';
+$_LANG['5102e6fe89f557096daa91aa3ad1e16e'] = 'Error get maps';
+$_LANG['47a504a06798dc7c6a92ab1cf0aa6020'] = 'Are you sure that mapping is over ?';
+$_LANG['4e06d9cbcc29bbeac7e986d33063fb3f'] = 'In case mapping is not valid, you will have to start mapping again.';
 
 ?>

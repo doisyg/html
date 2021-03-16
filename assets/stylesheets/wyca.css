@@ -163,7 +163,7 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 	h3.warningObstacleTeleopManager{font-size: 20px;}
 }
 #install_by_step_mapping { background-color:rgba(245,245,245,0.8); }
-#install_by_step_mapping header { background-color:#FFFFFF; z-index:200; }
+/* #install_by_step_mapping header { background-color:#FFFFFF; z-index:200; } */
 #install_by_step_mapping .content { z-index:100; position:relative; height:100vh; height: calc(var(--vh, 1vh) * 100); }
 
 @media only screen and (max-width: 767px)

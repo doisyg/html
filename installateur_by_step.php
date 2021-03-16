@@ -595,7 +595,7 @@
 											</header>
 											<div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
 												<h3><?= __('Are you sure mapping is over ?')?></h3>
-												<h3><?= __('In case mapping is not valid, you will have to start mapping again.')?></h3>
+												<h4><?= __('In case mapping is not valid, you will have to start mapping again.')?></h4>
 											</div>
 										</section>
 										<div style="clear:both;"></div>

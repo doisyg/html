@@ -629,5 +629,9 @@ $_LANG['33a1c41368c3de66f20101e65d431b39'] = 'Ne doit pas être utilisé en prod
 $_LANG['4cada3ac19ec0105e876ebd85603e9f5'] = 'Uniquement pour les utilisateurs formés.';
 $_LANG['7376e0fa9b6382eee64aae2c6050bd80'] = 'J\'assume la responsabilité';
 $_LANG['ebf46cb429e4e9d500fbc04f52618594'] = 'Le robot n\'est pas localisé';
+$_LANG['026f204fdfe02f21d641367d7d21c31f'] = 'Erreur récupération sites';
+$_LANG['5102e6fe89f557096daa91aa3ad1e16e'] = 'Erreur récupération cartes';
+$_LANG['47a504a06798dc7c6a92ab1cf0aa6020'] = 'La cartographie est-elle terminée ?';
+$_LANG['4e06d9cbcc29bbeac7e986d33063fb3f'] = 'Si la cartographie n\'est pas valide, vous devrez la recommencer.';
 
 ?>
