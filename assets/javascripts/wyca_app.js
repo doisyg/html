@@ -821,10 +821,16 @@ $(document).ready(function(e) {
 		
 		wycaApi.SetSiteAsCurrent(id_site, function(data) {
 			if (data.A != wycaApi.AnswerCode.NO_ERROR) 
-				ParseAPIAnswerError(data,textErrorStopNavigation);
+				ParseAPIAnswerError(data,textErrorSetSite);
 			else
 			{
-				GetSitesWyca();
+				wycaApi.GetCurrentSite(function(data) {
+					current_site = data.D;
+					tempCurrentSite = $('#wyca_dashboard_modalCurrentSite').find('h3').text(); 
+					$('#wyca_dashboard_modalCurrentSite').find('h3').html(tempCurrentSite + '<br><br><span>' + current_site.name + '</span>')
+					$('#wyca_dashboard_modalCurrentSite').modal('show');
+					$('#wyca_setup_sites .bBackToDashboard').click();
+				})
 			}
 		});
 	});

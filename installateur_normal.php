@@ -15,6 +15,27 @@
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7" href="logout.php"><i class="fas fa-power-off"></i><?php echo __('Logout');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8 todo" data-goto="install_normal_help" href="#"><i class="fa fa-question"></i><?php echo __('Help');?></a></li>
                 </ul>
+				<div class="modal fade modalCurrentSite" id="install_normal_dashboard_modalCurrentSite" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+					<div class="modal-dialog" role="dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<div class="actions mh100vh_55">
+									<section class="panel panel-info">
+										<header class="panel-heading">
+											<h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fa fa-building"></i></h2>
+										</header>
+										<div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
+											<h3><?= __('You are now using site')?></h3>
+										</div>
+									</section>
+									<div style="clear:both;"></div>
+									<a href="#" class="btn btn-default btn_footer_left btn_100" data-dismiss="modal" ><?php echo __('Close');?></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
 					<div class="content sm-content text-left">
@@ -1119,7 +1140,7 @@
                 <h2><?php echo __('Sites');?></h2>
             </header>
             <div class="content">
-                
+                <a href="#" class="bBackToDashboard button_goto" data-goto="install_normal_dashboard" style="display:none"></a>
                 <div class="install_normal_setup_sites_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
                 
                 <div class="loaded col-md-12" style="padding-top:30px;">

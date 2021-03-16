@@ -834,10 +834,16 @@ $(document).ready(function(e) {
 		
 		wycaApi.SetSiteAsCurrent(id_site, function(data) {
 			if (data.A != wycaApi.AnswerCode.NO_ERROR) 
-				ParseAPIAnswerError(data,textErrorStopNavigation);
+				ParseAPIAnswerError(data,textErrorSetSite);
 			else
 			{
-				GetSitesNormal();
+				wycaApi.GetCurrentSite(function(data) {
+					current_site = data.D;
+					tempCurrentSite = $('#install_normal_dashboard_modalCurrentSite').find('h3').text(); 
+					$('#install_normal_dashboard_modalCurrentSite').find('h3').html(tempCurrentSite + '<br><br><span>' + current_site.name + '</span>')
+					$('#install_normal_dashboard_modalCurrentSite').modal('show');
+					$('#install_normal_setup_sites .bBackToDashboard').click();
+				})
 			}
 		});
 	});

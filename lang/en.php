@@ -620,5 +620,9 @@ $_LANG['9ac572ee7b59f270870eaba202bd9581'] = 'Pick the current map';
 $_LANG['6c963db04e24d54517a37ed14daf73e9'] = 'Pick the default map';
 $_LANG['a1820c7db2c243a80e09162842bfddd1'] = 'Select the current map';
 $_LANG['2a8e9f973e2c8beab004b64a98406d8d'] = 'Select the default docking station';
+$_LANG['026f204fdfe02f21d641367d7d21c31f'] = 'Error get sites';
+$_LANG['5102e6fe89f557096daa91aa3ad1e16e'] = 'Error get maps';
+$_LANG['47a504a06798dc7c6a92ab1cf0aa6020'] = 'Are you sure that mapping is over ?';
+$_LANG['4e06d9cbcc29bbeac7e986d33063fb3f'] = 'In case mapping is not valid, you will have to start mapping again.';
 
 ?>

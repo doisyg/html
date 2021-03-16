@@ -511,7 +511,7 @@ $(document).ready(function(e) {
 				$('.install_by_step_site_save').addClass('disabled');
 				wycaApi.GetSitesList(function(data){
 					if (data.A != wycaApi.AnswerCode.NO_ERROR){
-						ParseAPIAnswerError(data,textErrorGetSite);
+						ParseAPIAnswerError(data,textErrorGetSites);
 					}else{
 						if(!CheckName(data.D,window.site_name)){
 							if (create_new_site) // BOOLEAN INSTALLATEUR_WYCA.JS GESTION DES SITES
@@ -634,6 +634,7 @@ $(document).ready(function(e) {
 				$('#install_by_step_mapping .progressStartMapping').hide();
 				$('#install_by_step_mapping .switchLiveMapping').show();
 				$('#install_by_step_mapping .bMappingStop').show();
+				$('#install_by_step_mapping .bMappingDone').show();
 				$('.ifMapping').show();
 				$('#install_by_step_mapping .mapping_view').show();
 					
@@ -658,6 +659,7 @@ $(document).ready(function(e) {
 				$('#install_by_step_mapping .progressStartMapping').hide();
 				$('#install_by_step_mapping .switchLiveMapping').show();
 				$('#install_by_step_mapping .bMappingStop').show();
+				$('#install_by_step_mapping .bMappingDone').show();
 				$('#install_by_step_mapping .mapping_view').show();
 				img = document.getElementById("install_by_step_mapping_img_map_saved");
 				img.src = "assets/images/vide.png";
@@ -716,6 +718,11 @@ $(document).ready(function(e) {
 		
 	});
 	
+	$('#install_by_step_mapping .bMappingDone').click(function(e) {
+		e.preventDefault();
+		$('#install_by_step_mapping_modalConfirm').modal('show');
+	});
+	
 	$('#install_by_step_mapping .bMappingStop').click(function(e) {
 		e.preventDefault();
 		
@@ -765,6 +772,7 @@ $(document).ready(function(e) {
 		mappingStarted = false;
 		$('#install_by_step_mapping .switchLiveMapping').hide();
 		$('#install_by_step_mapping .bMappingStop').hide();
+		$('#install_by_step_mapping .bMappingDone').hide();
 		$('#install_by_step_mapping .mapping_view').hide();
 		$('#install_by_step_mapping .bMappingStart').show();
 		
@@ -808,7 +816,7 @@ $(document).ready(function(e) {
 						
 						wycaApi.GetMapsList(data.D.id_site,function(data){
 							if (data.A != wycaApi.AnswerCode.NO_ERROR){
-								ParseAPIAnswerError(data,textErrorGetSite);
+								ParseAPIAnswerError(data,textErrorGetMaps);
 							}else{
 								if(CheckName(data.D,window.map_name)){
 									alert_wyca(textNameUsed);
@@ -925,7 +933,7 @@ $(document).ready(function(e) {
 																		}
 																		else
 																		{
-																			ParseAPIAnswerError(data);
+																			ParseAPIAnswerError(data,textErrorSetMap);
 																			
 																			$('#install_by_step_mapping_use .bUseThisMapNowYes').show();
 																			$('#install_by_step_mapping_use .bUseThisMapNowNo').show();
