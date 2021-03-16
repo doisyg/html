@@ -638,5 +638,6 @@ $_LANG['f3aa661b584021c1c8519d098fc807a8'] = 'GetPath';
 $_LANG['4f9baa1e6a39aef012c4faed2758c8c8'] = 'Sélection Carte';
 $_LANG['a1820c7db2c243a80e09162842bfddd1'] = 'Sélection carte par défaut';
 $_LANG['2a8e9f973e2c8beab004b64a98406d8d'] = 'Sélection du dock par défaut';
+$_LANG['54de37cb2d6c68ac5f3433ed05d03a8c'] = 'Relocaliser le robot';
 
 ?>

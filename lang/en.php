@@ -624,5 +624,7 @@ $_LANG['026f204fdfe02f21d641367d7d21c31f'] = 'Error get sites';
 $_LANG['5102e6fe89f557096daa91aa3ad1e16e'] = 'Error get maps';
 $_LANG['47a504a06798dc7c6a92ab1cf0aa6020'] = 'Are you sure that mapping is over ?';
 $_LANG['4e06d9cbcc29bbeac7e986d33063fb3f'] = 'In case mapping is not valid, you will have to start mapping again.';
+$_LANG['e0ea021bc6289cc61900cf4a3de81cdc'] = 'You are now using site';
+$_LANG['54de37cb2d6c68ac5f3433ed05d03a8c'] = 'Relocate the robot';
 
 ?>
