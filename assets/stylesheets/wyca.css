@@ -1180,6 +1180,10 @@ h3.warningObstacleTeleopManager{
 	font-size:20px;
 	text-align: center;
 }
+.modalCurrentSite h3 span{
+	font-style:italic;
+	color:#343a40;
+}
 #modalConfirmDelete h3 span{
 	font-style:italic;
 	color:#343a40;

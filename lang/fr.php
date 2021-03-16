@@ -633,5 +633,7 @@ $_LANG['026f204fdfe02f21d641367d7d21c31f'] = 'Erreur récupération sites';
 $_LANG['5102e6fe89f557096daa91aa3ad1e16e'] = 'Erreur récupération cartes';
 $_LANG['47a504a06798dc7c6a92ab1cf0aa6020'] = 'La cartographie est-elle terminée ?';
 $_LANG['4e06d9cbcc29bbeac7e986d33063fb3f'] = 'Si la cartographie n\'est pas valide, vous devrez la recommencer.';
+$_LANG['e0ea021bc6289cc61900cf4a3de81cdc'] = 'Vous utilisez désormais le site';
+$_LANG['f3aa661b584021c1c8519d098fc807a8'] = 'GetPath';
 
 ?>

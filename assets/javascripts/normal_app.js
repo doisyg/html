@@ -837,7 +837,13 @@ $(document).ready(function(e) {
 				ParseAPIAnswerError(data,textErrorSetSite);
 			else
 			{
-				$('#install_normal_setup_sites .bBackToDashboard').click();
+				wycaApi.GetCurrentSite(function(data) {
+					current_site = data.D;
+					tempCurrentSite = $('#install_normal_dashboard_modalCurrentSite').find('h3').text(); 
+					$('#install_normal_dashboard_modalCurrentSite').find('h3').html(tempCurrentSite + '<br><br><span>' + current_site.name + '</span>')
+					$('#install_normal_dashboard_modalCurrentSite').modal('show');
+					$('#install_normal_setup_sites .bBackToDashboard').click();
+				})
 			}
 		});
 	});

@@ -524,8 +524,14 @@ $(document).ready(function(e) {
 				ParseAPIAnswerError(data,textErrorSetSite);
 			else
 			{
-				GetSitesManager();
-				warning_wyca(textBeSureSelectedSite);
+				wycaApi.GetCurrentSite(function(data) {
+					current_site = data.D;
+					tempCurrentSite = $('#manager_dashboard_modalCurrentSite').find('h3').text(); 
+					$('#manager_dashboard_modalCurrentSite').find('h3').html(tempCurrentSite + '<br><br><span>' + current_site.name + '</span>')
+					$('#manager_dashboard_modalCurrentSite').modal('show');
+					$('#manager_setup_sites .bBackToDashboard').click();
+					warning_wyca(textBeSureSelectedSite);
+				})
 			}
 		});
 	});
