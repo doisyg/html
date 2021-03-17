@@ -38,12 +38,12 @@ var statusRealTestEnd = false;
 
 var boolHelpManager=true;
 
-var ByStepBufferMapSaveElemName = '';
+var WycaByStepBufferMapSaveElemName = '';
 
 $(document).ready(function(e) {
 	
 	/*
-	$('#pages_install_by_step a.save_date').click(function(e) {
+	$('#pages_wyca_by_step a.save_date').click(function(e) {
         e.preventDefault();
 		$.ajax({
 			type: "POST",
@@ -62,7 +62,7 @@ $(document).ready(function(e) {
 	//------------------- STEP SELECT LANGUAGE ------------------------
 	
 	//AJAX INSTALL STEP CALL
-	$('#pages_install_by_step a.select_langue').click(function(e) {
+	$('#pages_wyca_by_step a.select_langue').click(function(e) {
 		resetCookies();
 		create_new_site = false;
         e.preventDefault();
@@ -90,48 +90,48 @@ $(document).ready(function(e) {
 	
 	//------------------- STEP SELECT AVAILABLES TOPS ------------------------
 	
-	$('#pages_install_by_step a.import_top').click(function(e) {
+	$('#pages_wyca_by_step a.import_top').click(function(e) {
         e.preventDefault();
 		
-		$('#pages_install_by_step .modalImportTop_loading').hide();
-		$('#pages_install_by_step .modalImportTop_content').show();
+		$('#pages_wyca_by_step .modalImportTop_loading').hide();
+		$('#pages_wyca_by_step .modalImportTop_content').show();
 		
-		$('#pages_install_by_step .modalImportTop').modal('show');
-		InitTopImportByStep();
+		$('#pages_wyca_by_step .modalImportTop').modal('show');
+		InitTopImportWycaByStep();
 	});
 	
-	$('#pages_install_by_step .file_import_top').change(function(){
+	$('#pages_wyca_by_step .file_import_top').change(function(){
 		
 		let fname = $(this)[0].files[0].name;console.log(fname);
 		if(fname.slice(fname.length - 5) == '.wyca'){
-			$('#pages_install_by_step .file_import_top_wrapper').css('background-color','#47a4476e');
+			$('#pages_wyca_by_step .file_import_top_wrapper').css('background-color','#47a4476e');
 		}else{
-			$('#pages_install_by_step .file_import_top_wrapper').css('background-color','#e611116e');
-			let icon = $('#pages_install_by_step .file_import_top_wrapper > p > i');
+			$('#pages_wyca_by_step .file_import_top_wrapper').css('background-color','#e611116e');
+			let icon = $('#pages_wyca_by_step .file_import_top_wrapper > p > i');
 			icon.toggleClass('shake');
 			setTimeout(function(){icon.toggleClass('shake')},2000);
 		}
-		$('#pages_install_by_step .filename_import_top').html(fname);
-		$('#pages_install_by_step .filename_import_top').show();
+		$('#pages_wyca_by_step .filename_import_top').html(fname);
+		$('#pages_wyca_by_step .filename_import_top').show();
 	})
 	
-	$('#pages_install_by_step a.bImportTopDo').click(function(e) {
+	$('#pages_wyca_by_step a.bImportTopDo').click(function(e) {
         e.preventDefault();
-		file = $('#pages_install_by_step .file_import_top')[0].files[0];
+		file = $('#pages_wyca_by_step .file_import_top')[0].files[0];
 		if(file != undefined && file.name.slice(file.name.length - 5) == '.wyca'){
-			$('#pages_install_by_step .modalImportTop_loading').show();
-			$('#pages_install_by_step .modalImportTop_content').hide();
+			$('#pages_wyca_by_step .modalImportTop_loading').show();
+			$('#pages_wyca_by_step .modalImportTop_content').hide();
 			var reader = new FileReader();
 			reader.onload = function(event) { 
 				wycaApi.InstallNewTopWithoutKey(btoa(reader.result), function(data) { 
 					if (data.A == wycaApi.AnswerCode.NO_ERROR)
 					{
 						
-						$('#pages_install_by_step .modalImportTop_loading').hide();
-						$('#pages_install_by_step .modalImportTop_content').show();
+						$('#pages_wyca_by_step .modalImportTop_loading').hide();
+						$('#pages_wyca_by_step .modalImportTop_content').show();
 						
-						$('#pages_install_by_step .modalImportTop').modal('hide');
-						InitTopsByStep();
+						$('#pages_wyca_by_step .modalImportTop').modal('hide');
+						InitTopsWycaByStep();
 					}
 					else
 					{
@@ -144,21 +144,21 @@ $(document).ready(function(e) {
 			reader.readAsText(file);
 		}else{
 			//NO FILE UPLOADED AND CLICK ON BTN => SHAKE ICON
-			let icon = $('#pages_install_by_step .file_import_top_wrapper > p > i');
+			let icon = $('#pages_wyca_by_step .file_import_top_wrapper > p > i');
 			icon.toggleClass('shake');
 			setTimeout(function(){icon.toggleClass('shake')},2000);
 		}
     });
 	
 	//AJAX INSTALL STEP CALL
-	$('#pages_install_by_step a.save_tops').click(function(e) {
+	$('#pages_wyca_by_step a.save_tops').click(function(e) {
         e.preventDefault();
 		
 		var listAvailableTops = Array();
-		//$('#pages_install_by_step .install_by_step_top li').hide();
+		//$('#pages_wyca_by_step .wyca_by_step_top li').hide();
 		$(this).parent().parent().find('.is_checkbox.checked').each(function(index, element) {
             listAvailableTops.push($(this).data('id_top'));
-			$('#pages_install_by_step .install_by_step_top .bTop'+$(this).data('id_top')).show();
+			$('#pages_wyca_by_step .wyca_by_step_top .bTop'+$(this).data('id_top')).show();
         });
 		
 		if (listAvailableTops.length == 0)
@@ -191,11 +191,11 @@ $(document).ready(function(e) {
 				if (listAvailableTops.length == 1)
 				{
 					wycaApi.SetActiveTop(listAvailableTops[0], function(data){
-						$('#pages_install_by_step a.save_tops_next_check').click();
+						$('#pages_wyca_by_step a.save_tops_next_check').click();
 					});
 				}
 				else
-					$('#pages_install_by_step a.save_tops_next_select').click();
+					$('#pages_wyca_by_step a.save_tops_next_select').click();
 			});
 		}
     });
@@ -203,7 +203,7 @@ $(document).ready(function(e) {
 	//------------------- STEP SELECT ACTIVE TOP ------------------------
 	
 	//AJAX INSTALL STEP CALL
-	$( '#pages_install_by_step' ).on( 'click', 'a.set_top', function(e) {
+	$( '#pages_wyca_by_step' ).on( 'click', 'a.set_top', function(e) {
         e.preventDefault();		
 		wycaApi.SetActiveTop($(this).data('id_top'), function(data){});		
 		
@@ -229,7 +229,7 @@ $(document).ready(function(e) {
     });
 	
 	//AJAX INSTALL STEP CALL
-	$('#pages_install_by_step a.install_by_step_check_next').click(function(e) {
+	$('#pages_wyca_by_step a.wyca_by_step_check_next').click(function(e) {
         e.preventDefault();
 		$.ajax({
 			type: "POST",
@@ -250,7 +250,7 @@ $(document).ready(function(e) {
 		});
     });
 	
-	$(document).on('click', '#install_by_step_check div.is_checkbox.checked', function(e) {
+	$(document).on('click', '#wyca_by_step_check div.is_checkbox.checked', function(e) {
 		e.preventDefault();
 		
 		if ($(this).hasClass('component_ok'))
@@ -272,7 +272,7 @@ $(document).ready(function(e) {
 			text = '';
 			switch($(this).attr('id'))
 			{
-				case 'install_by_step_check_lidar':
+				case 'wyca_by_step_check_lidar':
 					if (save_check_components_result.LI == 0) text = ''; 
 					else if (save_check_components_result.LI == 1) text = 'The frequency of feedback of information from the Lidar is abnormal but acceptable.';
 					else if (save_check_components_result.LI == 2) text = 'The frequency of feedback of information from the Lidar is abnormal.';
@@ -280,7 +280,7 @@ $(document).ready(function(e) {
 					else if (save_check_components_result.LI == 4) text = 'Lidar no longer responds.';
 					else if (save_check_components_result.LI == 5) text = '';
 					break;
-				case 'install_by_step_check_us':
+				case 'wyca_by_step_check_us':
 					if (save_check_components_result.US == 0) text = ''; 
 					else if (save_check_components_result.US == 1) text = 'The frequency of feedback of information from the ultrasonic sensors is abnormal but acceptable.';
 					else if (save_check_components_result.US == 2) text = 'The frequency of feedback of information from the ultrasonic sensors is abnormal.';
@@ -288,7 +288,7 @@ $(document).ready(function(e) {
 					else if (save_check_components_result.US == 4) text = 'Ultrasonic sensors no longer responds.';
 					else if (save_check_components_result.US == 5) text = '';
 					break;
-				case 'install_by_step_check_motor':
+				case 'wyca_by_step_check_motor':
 					if (save_check_components_result.M == 0) text = ''; 
 					else if (save_check_components_result.M == 1) text = 'The frequency of feedback of information from the motor card is abnormal but acceptable.';
 					else if (save_check_components_result.M == 2) text = 'The frequency of feedback of information from the motor card is abnormal.';
@@ -296,7 +296,7 @@ $(document).ready(function(e) {
 					else if (save_check_components_result.M == 4) text = 'Motor card no longer responds.';
 					else if (save_check_components_result.M == 5) text = '';
 					break;
-				case 'install_by_step_check_battery':
+				case 'wyca_by_step_check_battery':
 					if (save_check_components_result.B == 0) text = ''; 
 					else if (save_check_components_result.B == 1) text = 'The frequency of feedback of information from the battery is abnormal but acceptable.';
 					else if (save_check_components_result.B == 2) text = 'The frequency of feedback of information from the battery is abnormal.';
@@ -304,7 +304,7 @@ $(document).ready(function(e) {
 					else if (save_check_components_result.B == 4) text = 'Battery no longer responds.';
 					else if (save_check_components_result.B == 5) text = '';
 					break;
-				case 'install_by_step_check_cam3d':
+				case 'wyca_by_step_check_cam3d':
 					if (save_check_components_result.CL == 0) text = 'Camera left is OK'; 
 					else if (save_check_components_result.CL == 1) text = 'The frequency of feedback of information from the camera left is abnormal but acceptable.';
 					else if (save_check_components_result.CL == 2) text = 'The frequency of feedback of information from the camera left is abnormal.';
@@ -322,7 +322,7 @@ $(document).ready(function(e) {
 					else if (save_check_components_result.CR == 5) text += '';
 					
 					break;
-				case 'install_by_step_check_leds':
+				case 'wyca_by_step_check_leds':
 					if (save_check_components_result.LE == 0) text = ''; 
 					else if (save_check_components_result.LE == 1) text = 'The frequency of feedback of information from the leds is abnormal but acceptable.';
 					else if (save_check_components_result.LE == 2) text = 'The frequency of feedback of information from the leds is abnormal.';
@@ -345,48 +345,48 @@ $(document).ready(function(e) {
 	
 	//------------------- STEP WIFI ------------------------
 	
-	$('#install_by_step_wifi .refresh_wifi').click(function(e) {
+	$('#wyca_by_step_wifi .refresh_wifi').click(function(e) {
 		e.preventDefault();		
 	});
 	
-	$( '#install_by_step_wifi tbody' ).on( 'click', 'tr', function(e) {
+	$( '#wyca_by_step_wifi tbody' ).on( 'click', 'tr', function(e) {
 		e.preventDefault();
 		selectedWifi = $(this).data('ssid');
 		
-		$('#install_by_step_wifi_password .wifi_connexion_error').html('');
-		$('#install_by_step_wifi_password .install_by_step_wifi_password_save').show();
-		$('#install_by_step_wifi_password .wifi_connexion_progress').hide();
+		$('#wyca_by_step_wifi_password .wifi_connexion_error').html('');
+		$('#wyca_by_step_wifi_password .wyca_by_step_wifi_password_save').show();
+		$('#wyca_by_step_wifi_password .wifi_connexion_progress').hide();
 
-		$('#install_by_step_wifi .set_passwd_wifi').click();
+		$('#wyca_by_step_wifi .set_passwd_wifi').click();
 	});
 	
-	$('#install_by_step_wifi_password .install_by_step_wifi_password_save').click(function(e) {
+	$('#wyca_by_step_wifi_password .wyca_by_step_wifi_password_save').click(function(e) {
         e.preventDefault();
 		
-		$('#install_by_step_wifi_password .install_by_step_wifi_password_save').hide();
-		$('#install_by_step_wifi_password .wifi_connexion_progress').show();
-		$('#install_by_step_wifi_password .wifi_connexion_error').html('');
-		console.log(selectedWifi,$('#install_by_step_wifi_password .i_wifi_passwd_name').val());
-		wycaApi.WifiConnection(selectedWifi, $('#install_by_step_wifi_password .i_wifi_passwd_name').val(), function(data){
+		$('#wyca_by_step_wifi_password .wyca_by_step_wifi_password_save').hide();
+		$('#wyca_by_step_wifi_password .wifi_connexion_progress').show();
+		$('#wyca_by_step_wifi_password .wifi_connexion_error').html('');
+		console.log(selectedWifi,$('#wyca_by_step_wifi_password .i_wifi_passwd_name').val());
+		wycaApi.WifiConnection(selectedWifi, $('#wyca_by_step_wifi_password .i_wifi_passwd_name').val(), function(data){
 			
 			if (data.A != wycaApi.AnswerCode.NO_ERROR)
 			{
-				$('#install_by_step_wifi_password .wifi_connexion_error').html(data.M);
+				$('#wyca_by_step_wifi_password .wifi_connexion_error').html(data.M);
 			}
 			else
 			{
-				$('#install_by_step_wifi_password .skip_wifi').click();
-				$('#install_by_step_wifi_password .wifi_connexion_error').html('');
+				$('#wyca_by_step_wifi_password .skip_wifi').click();
+				$('#wyca_by_step_wifi_password .wifi_connexion_error').html('');
 			}
 
-			$('#install_by_step_wifi_password .install_by_step_wifi_password_save').show();
-			$('#install_by_step_wifi_password .wifi_connexion_progress').hide();
+			$('#wyca_by_step_wifi_password .wyca_by_step_wifi_password_save').show();
+			$('#wyca_by_step_wifi_password .wifi_connexion_progress').hide();
 		});
     });
 	
 	//AJAX INSTALL STEP CALL
 
-	$('#pages_install_by_step a.skip_wifi').click(function(e) {
+	$('#pages_wyca_by_step a.skip_wifi').click(function(e) {
         e.preventDefault();
 		$.ajax({
 			type: "POST",
@@ -407,18 +407,18 @@ $(document).ready(function(e) {
     });
 	
 	//------------------- STEP SOUND ------------------------
-	$('#install_by_step_sound .sound_switch_ROS').change(function(){
+	$('#wyca_by_step_sound .sound_switch_ROS').change(function(){
 		if(!$(this).prop('checked')){
-			$('#install_by_step_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off').addClass('disabled');
-			$('#install_by_step_sound .sound_switch_app').prop('checked',false);
+			$('#wyca_by_step_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off').addClass('disabled');
+			$('#wyca_by_step_sound .sound_switch_app').prop('checked',false);
 		}else{
-			$('#install_by_step_sound .sound_switch_app').parent().find('.ios-switch').removeClass('disabled');
+			$('#wyca_by_step_sound .sound_switch_app').parent().find('.ios-switch').removeClass('disabled');
 		}
 	});
 	
-	$('#install_by_step_sound .bNextSound').click(function(e) {
+	$('#wyca_by_step_sound .bNextSound').click(function(e) {
 		//SOUND
-		if($('#install_by_step_sound .sound_switch_ROS').prop('checked')){
+		if($('#wyca_by_step_sound .sound_switch_ROS').prop('checked')){
 			//SOUND ON
 			wycaApi.SetSoundIsOn(true,function(data){})
 			
@@ -429,7 +429,7 @@ $(document).ready(function(e) {
 		}
 		
 		//APP SOUND
-		if($('#install_by_step_sound .sound_switch_app').prop('checked')){
+		if($('#wyca_by_step_sound .sound_switch_app').prop('checked')){
 			//APP SOUND ON
 			$.ajax({
 				type: "POST",
@@ -496,9 +496,9 @@ $(document).ready(function(e) {
 	//------------------- STEP NEW SITE ------------------------
 	
 	//AJAX INSTALL STEP CALL
-	$('#pages_install_by_step form.form_site').submit(function(e) {
+	$('#pages_wyca_by_step form.form_site').submit(function(e) {
         e.preventDefault();
-		window.site_name = $('#pages_install_by_step .i_site_name').val();
+		window.site_name = $('#pages_wyca_by_step .i_site_name').val();
 		if (window.site_name == '')
 		{
 			alert_wyca(textIndicateAName);
@@ -508,7 +508,7 @@ $(document).ready(function(e) {
 			if(!form_sended){
 				let site_names = Array();
 				form_sended = true ;
-				$('.install_by_step_site_save').addClass('disabled');
+				$('.wyca_by_step_site_save').addClass('disabled');
 				wycaApi.GetSitesList(function(data){
 					if (data.A != wycaApi.AnswerCode.NO_ERROR){
 						ParseAPIAnswerError(data,textErrorGetSites);
@@ -529,7 +529,7 @@ $(document).ready(function(e) {
 												{
 													//REFRESH FORM SUBMIT
 													setTimeout(function(){form_sended = false},1000);
-													$('.install_by_step_site_save').removeClass('disabled');
+													$('.wyca_by_step_site_save').removeClass('disabled');
 													
 													$.ajax({
 														type: "POST",
@@ -548,7 +548,7 @@ $(document).ready(function(e) {
 															}
 														}
 													});
-													$('#pages_install_by_step a.install_by_step_site_next').click();
+													$('#pages_wyca_by_step a.wyca_by_step_site_next').click();
 												}
 											});
 										}
@@ -558,11 +558,11 @@ $(document).ready(function(e) {
 							else
 							{
 								wycaApi.GetCurrentSite(function(data) {
-									data.D.name = $('#pages_install_by_step .i_site_name').val();
+									data.D.name = $('#pages_wyca_by_step .i_site_name').val();
 									wycaApi.SetSite(data.D, function(data){
 										//REFRESH FORM SUBMIT
 										setTimeout(function(){form_sended = false},1000);
-										$('.install_by_step_site_save').removeClass('disabled');
+										$('.wyca_by_step_site_save').removeClass('disabled');
 										$.ajax({
 											type: "POST",
 											url: 'ajax/install_by_step_site.php',
@@ -575,7 +575,7 @@ $(document).ready(function(e) {
 												alert_wyca((typeof(textErrorSaveSite) != 'undefined'? textErrorSaveSite : 'Error save site') + ' ' + e.responseText);
 											}
 										});
-										$('#pages_install_by_step a.install_by_step_site_next').click();
+										$('#pages_wyca_by_step a.wyca_by_step_site_next').click();
 									});
 								});
 							}
@@ -583,7 +583,7 @@ $(document).ready(function(e) {
 							alert_wyca(textNameUsed);
 							//REFRESH FORM SUBMIT
 							setTimeout(function(){form_sended = false},1000);
-							$('.install_by_step_site_save').removeClass('disabled');
+							$('.wyca_by_step_site_save').removeClass('disabled');
 						}	
 					}
 				})
@@ -597,21 +597,21 @@ $(document).ready(function(e) {
 	
 	$(".map_dyn").on("load", function() {  InitPosCarteMapping(); });
 	
-	$('#install_by_step_mapping .bMappingStart').click(function(e) {
+	$('#wyca_by_step_mapping .bMappingStart').click(function(e) {
 		e.preventDefault();
-		$('#install_by_step_mapping .joystickDiv').hide();
-		$('#install_by_step_mapping .bMappingBack').hide();
-		$('#install_by_step_mapping .bMappingStart').hide();
+		$('#wyca_by_step_mapping .joystickDiv').hide();
+		$('#wyca_by_step_mapping .bMappingBack').hide();
+		$('#wyca_by_step_mapping .bMappingStart').hide();
 		$('.ifMappingInit').show();
 		$('.ifNMappingInit').hide();
 		if (navLaunched)
 		{
 			wycaApi.NavigationStop(function(data) { if (data.A != wycaApi.AnswerCode.NO_ERROR) ParseAPIAnswerError(data,textErrorStopNavigation);});
 			
-			$('#install_by_step_mapping .progressStartMapping h3').html(textStopNavigation);
+			$('#wyca_by_step_mapping .progressStartMapping h3').html(textStopNavigation);
 			timerCreateMap = 10;
 			timerCreateMapCurrent = 10;
-			$('#install_by_step_mapping .progressStartMapping').show();
+			$('#wyca_by_step_mapping .progressStartMapping').show();
 			NextTimerCreateMap();
 		}
 		else
@@ -623,22 +623,22 @@ $(document).ready(function(e) {
 					mappingStarted = true;
 				});
 				
-				$('#install_by_step_mapping .progressStartMapping h3').html(textStartMapping);
+				$('#wyca_by_step_mapping .progressStartMapping h3').html(textStartMapping);
 				timerCreateMap = 5;
 				timerCreateMapCurrent = 5;
-				$('#install_by_step_mapping .progressStartMapping').show();
+				$('#wyca_by_step_mapping .progressStartMapping').show();
 				NextTimerCreateMap();
 			}
 			else
 			{
-				$('#install_by_step_mapping .progressStartMapping').hide();
-				$('#install_by_step_mapping .switchLiveMapping').show();
-				$('#install_by_step_mapping .bMappingStop').show();
-				$('#install_by_step_mapping .bMappingDone').show();
+				$('#wyca_by_step_mapping .progressStartMapping').hide();
+				$('#wyca_by_step_mapping .switchLiveMapping').show();
+				$('#wyca_by_step_mapping .bMappingStop').show();
+				$('#wyca_by_step_mapping .bMappingDone').show();
 				$('.ifMapping').show();
-				$('#install_by_step_mapping .mapping_view').show();
+				$('#wyca_by_step_mapping .mapping_view').show();
 					
-				img = document.getElementById("install_by_step_mapping_img_map_saved");
+				img = document.getElementById("wyca_by_step_mapping_img_map_saved");
 				img.src = "assets/images/vide.png";
 				
 				if (intervalMap != null)
@@ -646,7 +646,7 @@ $(document).ready(function(e) {
 					clearInterval(intervalMap);
 					intervalMap = null;
 				}
-				$('#install_by_step_mapping .joystickDiv').show();
+				$('#wyca_by_step_mapping .joystickDiv').show();
 				GetMappingInConstruction();
 			}
 		}
@@ -656,12 +656,12 @@ $(document).ready(function(e) {
 		if (timerCreateMapCurrent < 0)
 		{
 			setTimeout(function() {
-				$('#install_by_step_mapping .progressStartMapping').hide();
-				$('#install_by_step_mapping .switchLiveMapping').show();
-				$('#install_by_step_mapping .bMappingStop').show();
-				$('#install_by_step_mapping .bMappingDone').show();
-				$('#install_by_step_mapping .mapping_view').show();
-				img = document.getElementById("install_by_step_mapping_img_map_saved");
+				$('#wyca_by_step_mapping .progressStartMapping').hide();
+				$('#wyca_by_step_mapping .switchLiveMapping').show();
+				$('#wyca_by_step_mapping .bMappingStop').show();
+				$('#wyca_by_step_mapping .bMappingDone').show();
+				$('#wyca_by_step_mapping .mapping_view').show();
+				img = document.getElementById("wyca_by_step_mapping_img_map_saved");
 				img.src = "assets/images/vide.png";
 				
 				if (intervalMap != null)
@@ -670,7 +670,7 @@ $(document).ready(function(e) {
 					intervalMap = null;
 				}
 				//intervalMap = setInterval(GetMap, 1000);
-				$('#install_by_step_mapping .joystickDiv').show();
+				$('#wyca_by_step_mapping .joystickDiv').show();
 				GetMappingInConstruction();
 			}, 500);
 		}
@@ -682,12 +682,12 @@ $(document).ready(function(e) {
 					mappingStarted = true;
 				});
 				
-				$('#install_by_step_mapping .progressStartMapping h3').html(textStartMapping);
+				$('#wyca_by_step_mapping .progressStartMapping h3').html(textStartMapping);
 			}
 			
 			valeur = 100-parseInt(timerCreateMapCurrent / timerCreateMap * 100);
 
-			$('#install_by_step_mapping .createMapProgress .progress-bar').css('width', valeur+'%').attr('aria-valuenow', valeur); 
+			$('#wyca_by_step_mapping .createMapProgress .progress-bar').css('width', valeur+'%').attr('aria-valuenow', valeur); 
 		
 			timerCreateMapCurrent -= 0.1;	
 			timerCreateMapCurrent = parseInt(timerCreateMapCurrent*10)/10;
@@ -696,7 +696,7 @@ $(document).ready(function(e) {
 		}
 	}
 
-	$('#install_by_step_mapping .switchLiveMapping input').change(function(e) {
+	$('#wyca_by_step_mapping .switchLiveMapping input').change(function(e) {
 		
 		if ($(this).is(':checked') )
 		{
@@ -718,21 +718,21 @@ $(document).ready(function(e) {
 		
 	});
 	
-	$('#install_by_step_mapping .bMappingDone').click(function(e) {
+	$('#wyca_by_step_mapping .bMappingDone').click(function(e) {
 		e.preventDefault();
-		$('#install_by_step_mapping_modalConfirm').modal('show');
+		$('#wyca_by_step_mapping_modalConfirm').modal('show');
 	});
 	
-	$('#install_by_step_mapping .bMappingStop').click(function(e) {
+	$('#wyca_by_step_mapping .bMappingStop').click(function(e) {
 		e.preventDefault();
 		
-		var canvasDessin = document.getElementById('install_by_step_mapping_canvas_result_trinary'),
+		var canvasDessin = document.getElementById('wyca_by_step_mapping_canvas_result_trinary'),
 		ctx = canvasDessin.getContext('2d');
 		ctx.clearRect(0, 0, canvasDessin.width, canvasDessin.height);
 		
-		$('#install_by_step_mapping_fin .loading_fin_create_map').show();
-		$('#install_by_step_mapping_fin .bMappingSaveMap ').addClass('disabled');
-		img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
+		$('#wyca_by_step_mapping_fin .loading_fin_create_map').show();
+		$('#wyca_by_step_mapping_fin .bMappingSaveMap ').addClass('disabled');
+		img = document.getElementById("wyca_by_step_mapping_img_map_saved_fin");
         img.src = 'assets/images/vide.png';
 		
 		wycaApi.MappingStop(function(data) {
@@ -748,7 +748,7 @@ $(document).ready(function(e) {
 				}
 			});
 			
-			var img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
+			var img = document.getElementById("wyca_by_step_mapping_img_map_saved_fin");
             img.src = 'data:image/png;base64,' + data.D;
 			
 			finalMapData = 'data:image/png;base64,' + data.D;
@@ -759,8 +759,8 @@ $(document).ready(function(e) {
 				width = img.naturalWidth;
 				height = img.naturalHeight;
 				
-				$('#install_by_step_mapping_canvas_result_trinary').attr('width', img.naturalWidth);
-				$('#install_by_step_mapping_canvas_result_trinary').attr('height', img.naturalHeight);
+				$('#wyca_by_step_mapping_canvas_result_trinary').attr('width', img.naturalWidth);
+				$('#wyca_by_step_mapping_canvas_result_trinary').attr('height', img.naturalHeight);
 				
 				canvas.width = img.naturalWidth;
 				canvas.height = img.naturalHeight;
@@ -770,14 +770,14 @@ $(document).ready(function(e) {
 			}, 100);
 		});
 		mappingStarted = false;
-		$('#install_by_step_mapping .switchLiveMapping').hide();
-		$('#install_by_step_mapping .bMappingStop').hide();
-		$('#install_by_step_mapping .bMappingDone').hide();
-		$('#install_by_step_mapping .mapping_view').hide();
-		$('#install_by_step_mapping .bMappingStart').show();
+		$('#wyca_by_step_mapping .switchLiveMapping').hide();
+		$('#wyca_by_step_mapping .bMappingStop').hide();
+		$('#wyca_by_step_mapping .bMappingDone').hide();
+		$('#wyca_by_step_mapping .mapping_view').hide();
+		$('#wyca_by_step_mapping .bMappingStart').show();
 		
-		$('#install_by_step_mapping_fin .bMappingCancelMap2').show();
-		$('#install_by_step_mapping_fin .bMappingSaveMap').show();
+		$('#wyca_by_step_mapping_fin .bMappingCancelMap2').show();
+		$('#wyca_by_step_mapping_fin .bMappingSaveMap').show();
 		
 		if (intervalMap != null)
 		{
@@ -794,8 +794,8 @@ $(document).ready(function(e) {
 	});
 	
 	//AJAX INSTALL STEP CALL
-	$('#install_by_step_mapping_fin .bMappingSaveMap').click(function(e) {
-		window.map_name = $('#install_by_step_mapping_from_name').val();
+	$('#wyca_by_step_mapping_fin .bMappingSaveMap').click(function(e) {
+		window.map_name = $('#wyca_by_step_mapping_from_name').val();
 		if (window.map_name == '')
 		{
 			alert_wyca(textIndicateAName);
@@ -825,17 +825,17 @@ $(document).ready(function(e) {
 								}else{
 																
 										//
-										var canvasDessin = document.getElementById('install_by_step_mapping_canvas_result_trinary');
+										var canvasDessin = document.getElementById('wyca_by_step_mapping_canvas_result_trinary');
 									
-										$('#install_by_step_mapping_fin .bMappingCancelMap2').hide();
-										$('#install_by_step_mapping_fin .bMappingSaveMap').hide();
+										$('#wyca_by_step_mapping_fin .bMappingCancelMap2').hide();
+										$('#wyca_by_step_mapping_fin .bMappingSaveMap').hide();
 									
-										$('#install_by_step_mapping_from_image').val(finalMapData);
-										$('#install_by_step_mapping_from_image_tri').val(canvasDessin.toDataURL());
-										$('#install_by_step_mapping_from_ros_largeur').val($('#install_by_step_mapping_img_map_saved_fin').prop('naturalWidth'));
-										$('#install_by_step_mapping_from_ros_hauteur').val($('#install_by_step_mapping_img_map_saved_fin').prop('naturalHeight'));
-										$('#install_by_step_mapping_from_threshold_free').val($('#install_by_step_mapping_threshold_free_slider').val());
-										$('#install_by_step_mapping_from_threshold_occupied').val($('#install_by_step_mapping_threshold_occupied_slider').val());
+										$('#wyca_by_step_mapping_from_image').val(finalMapData);
+										$('#wyca_by_step_mapping_from_image_tri').val(canvasDessin.toDataURL());
+										$('#wyca_by_step_mapping_from_ros_largeur').val($('#wyca_by_step_mapping_img_map_saved_fin').prop('naturalWidth'));
+										$('#wyca_by_step_mapping_from_ros_hauteur').val($('#wyca_by_step_mapping_img_map_saved_fin').prop('naturalHeight'));
+										$('#wyca_by_step_mapping_from_threshold_free').val($('#wyca_by_step_mapping_threshold_free_slider').val());
+										$('#wyca_by_step_mapping_from_threshold_occupied').val($('#wyca_by_step_mapping_threshold_occupied_slider').val());
 										//$('#form_mapping').submit();
 										
 										$.ajax({
@@ -856,10 +856,10 @@ $(document).ready(function(e) {
 														'image': finalMapData,
 														'image_tri': data.image,
 														'ros_resolution': 5,
-														'ros_width': $('#install_by_step_mapping_img_map_saved_fin').prop('naturalWidth'),
-														'ros_height': $('#install_by_step_mapping_img_map_saved_fin').prop('naturalHeight'),
-														'threshold_free': parseInt($('#install_by_step_mapping_threshold_free_slider').val()),
-														'threshold_occupied': parseInt($('#install_by_step_mapping_threshold_occupied_slider').val())
+														'ros_width': $('#wyca_by_step_mapping_img_map_saved_fin').prop('naturalWidth'),
+														'ros_height': $('#wyca_by_step_mapping_img_map_saved_fin').prop('naturalHeight'),
+														'threshold_free': parseInt($('#wyca_by_step_mapping_threshold_free_slider').val()),
+														'threshold_occupied': parseInt($('#wyca_by_step_mapping_threshold_occupied_slider').val())
 													};
 													if(typeof(updatingMap) != 'undefined')
 														updatingMap = true;
@@ -879,7 +879,7 @@ $(document).ready(function(e) {
 																	pois = data.D.pois;
 																	augmented_poses = data.D.augmented_poses;
 																	
-																	$('#install_by_step_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
+																	$('#wyca_by_step_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
 																	
 																	largeurSlam = data.D.ros_width;
 																	hauteurSlam = data.D.ros_height;
@@ -890,20 +890,20 @@ $(document).ready(function(e) {
 																	ros_hauteur = data.D.ros_height;
 																	ros_resolution = data.D.ros_resolution;
 																	
-																	$('#install_by_step_edit_map_svg').attr('width', data.D.ros_width);
-																	$('#install_by_step_edit_map_svg').attr('height', data.D.ros_height);
+																	$('#wyca_by_step_edit_map_svg').attr('width', data.D.ros_width);
+																	$('#wyca_by_step_edit_map_svg').attr('height', data.D.ros_height);
 																	
-																	$('#install_by_step_edit_map_image').attr('width', data.D.ros_width);
-																	$('#install_by_step_edit_map_image').attr('height', data.D.ros_height);
-																	$('#install_by_step_edit_map_image').attr('xlink:href', 'data:image/png;base64,'+data.D.image_tri);
+																	$('#wyca_by_step_edit_map_image').attr('width', data.D.ros_width);
+																	$('#wyca_by_step_edit_map_image').attr('height', data.D.ros_height);
+																	$('#wyca_by_step_edit_map_image').attr('xlink:href', 'data:image/png;base64,'+data.D.image_tri);
 																  
-																	$('#install_by_step_mapping_use .bUseThisMapNowYes').show();
-																	$('#install_by_step_mapping_use .bUseThisMapNowNo').show();
-																	$('#install_by_step_mapping_use .modalUseThisMapNowTitle1').show();
-																	$('#install_by_step_mapping_use .modalUseThisMapNowTitle2').hide();
-																	$('#install_by_step_mapping_use .modalUseThisMapNowContent').hide();
+																	$('#wyca_by_step_mapping_use .bUseThisMapNowYes').show();
+																	$('#wyca_by_step_mapping_use .bUseThisMapNowNo').show();
+																	$('#wyca_by_step_mapping_use .modalUseThisMapNowTitle1').show();
+																	$('#wyca_by_step_mapping_use .modalUseThisMapNowTitle2').hide();
+																	$('#wyca_by_step_mapping_use .modalUseThisMapNowContent').hide();
 																	
-																	$('#install_by_step_mapping_fin .install_by_step_mapping_fin_next').click();
+																	$('#wyca_by_step_mapping_fin .wyca_by_step_mapping_fin_next').click();
 																	
 																	
 																	wycaApi.SetMapAsCurrent(id_map, function(data){
@@ -914,11 +914,11 @@ $(document).ready(function(e) {
 																				if (data.A != wycaApi.AnswerCode.NO_ERROR)
 																					ParseAPIAnswerError(data,textErrorStartNavigation);
 																				
-																				$('#install_by_step_mapping_use .install_by_step_mapping_use_next').click();
+																				$('#wyca_by_step_mapping_use .wyca_by_step_mapping_use_next').click();
 																				
 																				setTimeout(function(){
-																					ByStepInitMap();
-																					ByStepResizeSVG();
+																					WycaByStepInitMap();
+																					WycaByStepResizeSVG();
 																				},500); 
 																				
 																				$.ajax({
@@ -937,17 +937,17 @@ $(document).ready(function(e) {
 																		{
 																			ParseAPIAnswerError(data,textErrorSetMap);
 																			
-																			$('#install_by_step_mapping_use .bUseThisMapNowYes').show();
-																			$('#install_by_step_mapping_use .bUseThisMapNowNo').show();
-																			$('#install_by_step_mapping_use .modalUseThisMapNowTitle1').show();
-																			$('#install_by_step_mapping_use .modalUseThisMapNowTitle2').hide();
-																			$('#install_by_step_mapping_use .modalUseThisMapNowContent').hide();
+																			$('#wyca_by_step_mapping_use .bUseThisMapNowYes').show();
+																			$('#wyca_by_step_mapping_use .bUseThisMapNowNo').show();
+																			$('#wyca_by_step_mapping_use .modalUseThisMapNowTitle1').show();
+																			$('#wyca_by_step_mapping_use .modalUseThisMapNowTitle2').hide();
+																			$('#wyca_by_step_mapping_use .modalUseThisMapNowContent').hide();
 																		}
 																	});
 										
 																	
 																  
-																	var img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
+																	var img = document.getElementById("wyca_by_step_mapping_img_map_saved_fin");
 																	img.src = "assets/images/vide.png";
 																	
 																	
@@ -969,7 +969,7 @@ $(document).ready(function(e) {
 												
 											},
 											error: function(e) {
-												var img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
+												var img = document.getElementById("wyca_by_step_mapping_img_map_saved_fin");
 												img.src = "assets/images/vide.png";
 												
 												if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
@@ -995,38 +995,38 @@ $(document).ready(function(e) {
 	
 	//------------------- STEP IMPORT SITE ------------------------
 	
-	$('#pages_install_by_step .file_import_site').change(function(){
+	$('#pages_wyca_by_step .file_import_site').change(function(){
 		
 		let fname = $(this)[0].files[0].name;
 		if(fname.slice(fname.length - 5) == '.wyca'){
-			$('#pages_install_by_step .file_import_site_wrapper').css('background-color','#47a4476e');
+			$('#pages_wyca_by_step .file_import_site_wrapper').css('background-color','#47a4476e');
 		}else{
-			$('#pages_install_by_step .file_import_site_wrapper').css('background-color','#e611116e');
-			let icon = $('#pages_install_by_step .file_import_site_wrapper > p > i');
+			$('#pages_wyca_by_step .file_import_site_wrapper').css('background-color','#e611116e');
+			let icon = $('#pages_wyca_by_step .file_import_site_wrapper > p > i');
 			icon.toggleClass('shake');
 			setTimeout(function(){icon.toggleClass('shake')},2000);
 		}
-		$('#pages_install_by_step .filename_import_site').html(fname);
-		$('#pages_install_by_step .filename_import_site').show();
+		$('#pages_wyca_by_step .filename_import_site').html(fname);
+		$('#pages_wyca_by_step .filename_import_site').show();
 		
 	})
 	
 	//AJAX INSTALL STEP CALL
-	$('#pages_install_by_step a.bImportSiteDo').click(function(e) {
+	$('#pages_wyca_by_step a.bImportSiteDo').click(function(e) {
         e.preventDefault();
-		file = $('#pages_install_by_step .file_import_site')[0].files[0];
+		file = $('#pages_wyca_by_step .file_import_site')[0].files[0];
 		if(file != undefined && file.name.slice(file.name.length - 5) == '.wyca'){
 			
-			$('#pages_install_by_step .install_by_step_setup_import_loading').show();
-			$('#pages_install_by_step .install_by_step_setup_import_content').hide();
+			$('#pages_wyca_by_step .wyca_by_step_setup_import_loading').show();
+			$('#pages_wyca_by_step .wyca_by_step_setup_import_content').hide();
 			
 			var reader = new FileReader();
 			reader.onload = function(event) { 
 				wycaApi.ImportSite(btoa(reader.result), function(data) {
 					if (data.A == wycaApi.AnswerCode.NO_ERROR)
 					{
-						$('#pages_install_by_step .install_by_step_setup_import_loading').hide();
-						$('#pages_install_by_step .install_by_step_setup_import_content').show();
+						$('#pages_wyca_by_step .wyca_by_step_setup_import_loading').hide();
+						$('#pages_wyca_by_step .wyca_by_step_setup_import_content').show();
 						//success_wyca(textSiteImported);
 						console.log(data);
 						if(data.D > -1){
@@ -1049,7 +1049,7 @@ $(document).ready(function(e) {
 															dataType: 'json',
 															success: function(data) {
 																success_wyca(textSiteImported);
-																$('#install_by_step_site_master_dock .install_by_step_site_master_dock_next').click();
+																$('#wyca_by_step_site_master_dock .wyca_by_step_site_master_dock_next').click();
 															},
 															error: function(e) {
 																if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
@@ -1076,7 +1076,7 @@ $(document).ready(function(e) {
 															},
 															dataType: 'json',
 															success: function(data) {
-																$('#install_by_step_site_map .install_by_step_site_map_next').click();
+																$('#wyca_by_step_site_map .wyca_by_step_site_map_next').click();
 															},
 															error: function(e) {
 																alert_wyca((typeof(textErrorImportSite) != 'undefined'? textErrorImportSite : 'Error import site') + ' ' + e.responseText);
@@ -1086,7 +1086,7 @@ $(document).ready(function(e) {
 													
 												}else{
 													ParseAPIAnswerError(data);
-													InitSiteImportByStep();
+													InitSiteImportWycaByStep();
 												}
 											})
 										}else{
@@ -1098,7 +1098,7 @@ $(document).ready(function(e) {
 												},
 												dataType: 'json',
 												success: function(data) {
-													$('#install_by_step_import_site .install_by_step_import_site_next').click();
+													$('#wyca_by_step_import_site .wyca_by_step_import_site_next').click();
 												},
 												error: function(e) {
 													alert_wyca((typeof(textErrorImportSite) != 'undefined'? textErrorImportSite : 'Error import site') + ' ' + e.responseText);
@@ -1108,28 +1108,28 @@ $(document).ready(function(e) {
 									})
 								}else{
 									ParseAPIAnswerError(data);
-									InitSiteImportByStep();
+									InitSiteImportWycaByStep();
 								}
 							})
 							
 						}else{
 							alert_wyca((typeof(textErrorIDSite) != 'undefined'? textErrorIDSite : 'Error in ID site'));
-							InitSiteImportByStep();
+							InitSiteImportWycaByStep();
 						}
 						
 					}
 					else
 					{
 						ParseAPIAnswerError(data);
-						InitSiteImportByStep();
-						$('#pages_install_by_step .install_by_step_setup_import_loading').hide();
-						$('#pages_install_by_step .install_by_step_setup_import_content').show();
+						InitSiteImportWycaByStep();
+						$('#pages_wyca_by_step .wyca_by_step_setup_import_loading').hide();
+						$('#pages_wyca_by_step .wyca_by_step_setup_import_content').show();
 					}
 				});
 			};
 			reader.readAsText(file);
 		}else{
-			let icon = $('#pages_install_by_step .file_import_site_wrapper > p > i');
+			let icon = $('#pages_wyca_by_step .file_import_site_wrapper > p > i');
 			icon.toggleClass('shake');
 			setTimeout(function(){icon.toggleClass('shake')},2000);
 		}
@@ -1139,7 +1139,7 @@ $(document).ready(function(e) {
 	
 	//AJAX INSTALL STEP CALL
 	//DECLARATION EVENTLISTENER BOUTON CREE DYNAMIQUEMENT .on('event',function(){})
-	$( "#pages_install_by_step #ImportSiteMapList" ).on( 'click', '.SelectMapItem', function(e) {
+	$( "#pages_wyca_by_step #ImportSiteMapList" ).on( 'click', '.SelectMapItem', function(e) {
 		let id_map = parseInt($(this).attr('id'));
 		wycaApi.SetMapAsCurrent(id_map, function(data){
 			if (data.A == wycaApi.AnswerCode.NO_ERROR){
@@ -1155,7 +1155,7 @@ $(document).ready(function(e) {
 								dataType: 'json',
 								success: function(data) {
 									success_wyca(textSiteImported);
-									$('#install_by_step_site_master_dock .install_by_step_site_master_dock_next').click();
+									$('#wyca_by_step_site_master_dock .wyca_by_step_site_master_dock_next').click();
 								},
 								error: function(e) {
 									if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
@@ -1182,7 +1182,7 @@ $(document).ready(function(e) {
 								},
 								dataType: 'json',
 								success: function(data) {
-									$('#install_by_step_site_map .install_by_step_site_map_next').click();
+									$('#wyca_by_step_site_map .wyca_by_step_site_map_next').click();
 								},
 								error: function(e) {
 									alert_wyca((typeof(textErrorImportSite) != 'undefined'? textErrorImportSite : 'Error import site') + ' ' + e.responseText);
@@ -1192,13 +1192,13 @@ $(document).ready(function(e) {
 						
 					}else{
 						ParseAPIAnswerError(data);
-						InitSiteImportByStep();
+						InitSiteImportWycaByStep();
 					}
 				})
 										
 			}else{
 				ParseAPIAnswerError(data);
-				InitSiteSelectMapByStep();
+				InitSiteSelectMapWycaByStep();
 			}
 		})
 	})
@@ -1207,7 +1207,7 @@ $(document).ready(function(e) {
 	
 	//AJAX INSTALL STEP CALL
 	//DECLARATION EVENTLISTENER BOUTON CREE DYNAMIQUEMENT .on('event',function(){})
-	$( "#pages_install_by_step #MasterDockList" ).on( 'click', '.MasterDockItem', function(e) {
+	$( "#pages_wyca_by_step #MasterDockList" ).on( 'click', '.MasterDockItem', function(e) {
 		let id_master = $(this).attr('id');
 		$.each(docks,function(idx,item){
 			docks[idx].is_master=false;
@@ -1227,8 +1227,8 @@ $(document).ready(function(e) {
 					dataType: 'json',
 					success: function(data) {
 						
-						GetInfosCurrentMapByStep(); //MAJ EDIT MAP
-						$('.install_by_step_site_master_dock_next').click();
+						GetInfosCurrentMapWycaByStep(); //MAJ EDIT MAP
+						$('.wyca_by_step_site_master_dock_next').click();
 						
 					},
 					error: function(e) {
@@ -1242,33 +1242,33 @@ $(document).ready(function(e) {
 				});
 			}else{
 				ParseAPIAnswerError(data);
-				InitMasterDockByStep();
-				$('#pages_install_by_step .install_by_step_setup_import_loading').hide();
-				$('#pages_install_by_step .install_by_step_setup_import_content').show();
-				$('#pages_install_by_step section#install_by_step_site_master_dock .bBackButton').click();
+				InitMasterDockWycaByStep();
+				$('#pages_wyca_by_step .wyca_by_step_setup_import_loading').hide();
+				$('#pages_wyca_by_step .wyca_by_step_setup_import_content').show();
+				$('#pages_wyca_by_step section#wyca_by_step_site_master_dock .bBackButton').click();
 			}
 		})		
 	})
 	
 	//------------------- STEP RECOVERY ------------------------
 	
-	$('#install_by_step_site_recovery .bRecovery').click(function(e) {
+	$('#wyca_by_step_site_recovery .bRecovery').click(function(e) {
         e.preventDefault();
-		$('#install_by_step_site_recovery .bRecovery').addClass('disabled');
+		$('#wyca_by_step_site_recovery .bRecovery').addClass('disabled');
 		
 		/*INIT FEEDBACK DISPLAY*/
-		$('#install_by_step_site_recovery .recovery_feedback .recovery_step').css('opacity','0').hide();
-		$('#install_by_step_site_recovery .recovery_feedback .recovery_step .fa-check').hide();
-		$('#install_by_step_site_recovery .recovery_feedback .recovery_step .fa-pulse').show();
+		$('#wyca_by_step_site_recovery .recovery_feedback .recovery_step').css('opacity','0').hide();
+		$('#wyca_by_step_site_recovery .recovery_feedback .recovery_step .fa-check').hide();
+		$('#wyca_by_step_site_recovery .recovery_feedback .recovery_step .fa-pulse').show();
 		
 		wycaApi.on('onRecoveryFromFiducialFeedback', function(data) {
 			if(data.A == wycaApi.AnswerCode.NO_ERROR){
 				target = '';
 				switch(data.M){
-					case 'Scan reflector': 				target = '#install_by_step_site_recovery .recovery_feedback .recovery_step.RecoveryScan';	break;
-					case 'Init pose': 					target = '#install_by_step_site_recovery .recovery_feedback .recovery_step.RecoveryPose';	break;
-					case 'Rotate to check obstacles': 	target = '#install_by_step_site_recovery .recovery_feedback .recovery_step.RecoveryRotate';	break;
-					case 'Start navigation': 			target = '#install_by_step_site_recovery .recovery_feedback .recovery_step.RecoveryNav';		break;
+					case 'Scan reflector': 				target = '#wyca_by_step_site_recovery .recovery_feedback .recovery_step.RecoveryScan';	break;
+					case 'Init pose': 					target = '#wyca_by_step_site_recovery .recovery_feedback .recovery_step.RecoveryPose';	break;
+					case 'Rotate to check obstacles': 	target = '#wyca_by_step_site_recovery .recovery_feedback .recovery_step.RecoveryRotate';	break;
+					case 'Start navigation': 			target = '#wyca_by_step_site_recovery .recovery_feedback .recovery_step.RecoveryNav';		break;
 				}
 				
 				target = $(target);
@@ -1285,15 +1285,15 @@ $(document).ready(function(e) {
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
 				
-				$('#install_by_step_site_recovery .recovery_step:visible').find('.fa-check').show();
-				$('#install_by_step_site_recovery .recovery_step:visible').find('.fa-pulse').hide();
+				$('#wyca_by_step_site_recovery .recovery_step:visible').find('.fa-check').show();
+				$('#wyca_by_step_site_recovery .recovery_step:visible').find('.fa-pulse').hide();
 				setTimeout(function(){
 					$('.ifRecovery').hide();
 					$('.ifNRecovery').show();
-					$('#install_by_step_site_recovery .bRecovery').removeClass('disabled');
+					$('#wyca_by_step_site_recovery .bRecovery').removeClass('disabled');
 					success_wyca(textRecoveryDone);
-					$('#install_by_step_site_recovery .bRecovery').removeClass('disabled');
-					$('#install_by_step_site_recovery .install_by_step_site_recovery_next').click();
+					$('#wyca_by_step_site_recovery .bRecovery').removeClass('disabled');
+					$('#wyca_by_step_site_recovery .wyca_by_step_site_recovery_next').click();
 
 					//AJAX INSTALL STEP CALL
 					$.ajax({
@@ -1314,7 +1314,7 @@ $(document).ready(function(e) {
 			{
 				$('.ifRecovery').hide();
 				$('.ifNRecovery').show();
-				$('#install_by_step_site_recovery .bRecovery').removeClass('disabled');
+				$('#wyca_by_step_site_recovery .bRecovery').removeClass('disabled');
 				ParseAPIAnswerError(data);
 			}
 			// On rebranche l'ancienne fonction
@@ -1332,22 +1332,22 @@ $(document).ready(function(e) {
 			{
 				$('.ifRecovery').hide();
 				$('.ifNRecovery').show();
-				$('#install_by_step_site_recovery .bRecovery').removeClass('disabled');
+				$('#wyca_by_step_site_recovery .bRecovery').removeClass('disabled');
 				ParseAPIAnswerError(data);
 			}
 		});
     });
 	
-	$('#install_by_step_site_recovery .bCancelRecovery').click(function(e) {
-		$('#install_by_step_site_recovery .bCancelRecovery').addClass('disabled');
+	$('#wyca_by_step_site_recovery .bCancelRecovery').click(function(e) {
+		$('#wyca_by_step_site_recovery .bCancelRecovery').addClass('disabled');
 		wycaApi.RecoveryFromFiducialCancel(function(data) {
-			$('#install_by_step_site_recovery .bCancelRecovery').removeClass('disabled');
+			$('#wyca_by_step_site_recovery .bCancelRecovery').removeClass('disabled');
 		})
 	})
 	
 	//AJAX INSTALL STEP CALL
 
-	$('#install_by_step_site_recovery a.skip_recovery').click(function(e) {
+	$('#wyca_by_step_site_recovery a.skip_recovery').click(function(e) {
         e.preventDefault();
 		$.ajax({
 			type: "POST",
@@ -1363,25 +1363,25 @@ $(document).ready(function(e) {
 		});
     });
 	/*
-	$('#install_by_step_mapping_use .bUseThisMapNowYes').click(function(e) {
+	$('#wyca_by_step_mapping_use .bUseThisMapNowYes').click(function(e) {
 		e.preventDefault();
         
-		$('#install_by_step_mapping_use .bUseThisMapNowYes').hide();
-		$('#install_by_step_mapping_use .bUseThisMapNowNo').hide();
-		$('#install_by_step_mapping_use .modalUseThisMapNowTitle1').hide();
-		$('#install_by_step_mapping_use .modalUseThisMapNowTitle2').show();
-		$('#install_by_step_mapping_use .modalUseThisMapNowContent').show();
+		$('#wyca_by_step_mapping_use .bUseThisMapNowYes').hide();
+		$('#wyca_by_step_mapping_use .bUseThisMapNowNo').hide();
+		$('#wyca_by_step_mapping_use .modalUseThisMapNowTitle1').hide();
+		$('#wyca_by_step_mapping_use .modalUseThisMapNowTitle2').show();
+		$('#wyca_by_step_mapping_use .modalUseThisMapNowContent').show();
 		
-		$('#install_by_step_mapping_use .modalUseThisMapNowContentDetails').html(textBuildingMap);
+		$('#wyca_by_step_mapping_use .modalUseThisMapNowContentDetails').html(textBuildingMap);
 		
 		wycaApi.SetMapAsCurrent(id_map, function(data){
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
-				$('#install_by_step_mapping_use .modalUseThisMapNowContentDetails').html(textStartAutonomous);
+				$('#wyca_by_step_mapping_use .modalUseThisMapNowContentDetails').html(textStartAutonomous);
 				wycaApi.NavigationStartFromMapping(function(data) {
 					
 					if (data.A != wycaApi.AnswerCode.NO_ERROR) { alert_wyca('Error navigation start ; ' + wycaApi.AnswerCodeToString(data.A)+ " " + data.M);} 
-					$('#install_by_step_mapping_use .install_by_step_mapping_use_next').click();
+					$('#wyca_by_step_mapping_use .wyca_by_step_mapping_use_next').click();
 				});
 			}
 			else
@@ -1391,11 +1391,11 @@ $(document).ready(function(e) {
 					text += ' : ' + data.M;
 				alert_wyca(text);
 				
-				$('#install_by_step_mapping_use .bUseThisMapNowYes').show();
-				$('#install_by_step_mapping_use .bUseThisMapNowNo').show();
-				$('#install_by_step_mapping_use .modalUseThisMapNowTitle1').show();
-				$('#install_by_step_mapping_use .modalUseThisMapNowTitle2').hide();
-				$('#install_by_step_mapping_use .modalUseThisMapNowContent').hide();
+				$('#wyca_by_step_mapping_use .bUseThisMapNowYes').show();
+				$('#wyca_by_step_mapping_use .bUseThisMapNowNo').show();
+				$('#wyca_by_step_mapping_use .modalUseThisMapNowTitle1').show();
+				$('#wyca_by_step_mapping_use .modalUseThisMapNowTitle2').hide();
+				$('#wyca_by_step_mapping_use .modalUseThisMapNowContent').hide();
 			}
 		});
 		
@@ -1405,47 +1405,47 @@ $(document).ready(function(e) {
 	
 	//------------------- STEP MAPPING CONFIG ------------------------
 	
-	$('#install_by_step_mapping_fin .bResetValueThreshold').click(function(e) {
+	$('#wyca_by_step_mapping_fin .bResetValueThreshold').click(function(e) {
         e.preventDefault();
 		
-		$("#install_by_step_mapping_threshold_free_slider").val(25);
-		$("#install_by_step_mapping_threshold_free_slider_elem").slider('value',25);
-		$('#install_by_step_mapping_threshold_free_output b').text( 25 );
+		$("#wyca_by_step_mapping_threshold_free_slider").val(25);
+		$("#wyca_by_step_mapping_threshold_free_slider_elem").slider('value',25);
+		$('#wyca_by_step_mapping_threshold_free_output b').text( 25 );
 		threshold_free = 25;
 		
-		$("#install_by_step_mapping_threshold_occupied_slider").val(65);
-		$("#install_by_step_mapping_threshold_occupied_slider_elem").slider('value',65);
-		$('#install_by_step_mapping_threshold_occupied_output b').text( 65 );
+		$("#wyca_by_step_mapping_threshold_occupied_slider").val(65);
+		$("#wyca_by_step_mapping_threshold_occupied_slider_elem").slider('value',65);
+		$('#wyca_by_step_mapping_threshold_occupied_output b').text( 65 );
 		threshold_occupied = 65;
 		
 		CalculateMapTrinary();
     });
 	
-	$('#install_by_step_mapping_threshold_free_slider').change(function() {
-		$('#install_by_step_mapping_threshold_free_output b').text( this.value );
+	$('#wyca_by_step_mapping_threshold_free_slider').change(function() {
+		$('#wyca_by_step_mapping_threshold_free_output b').text( this.value );
 		threshold_free = this.value;
 		
 		CalculateMapTrinary();
 	});
 	
-	$('#install_by_step_mapping_threshold_occupied_slider').change(function() {
-		$('#install_by_step_mapping_threshold_occupied_output b').text( this.value );
+	$('#wyca_by_step_mapping_threshold_occupied_slider').change(function() {
+		$('#wyca_by_step_mapping_threshold_occupied_output b').text( this.value );
 		threshold_occupied = this.value;
 		
 		CalculateMapTrinary();
 	});
 	
-	$("#install_by_step_mapping_threshold_occupied_slider_elem").slider({ "value": 65, "range": "min", "max": 100 });
-	$("#install_by_step_mapping_threshold_occupied_slider_elem").on("slide", function(slideEvt) { $("#install_by_step_mapping_threshold_occupied_output b").text(slideEvt.value); $("#install_by_step_mapping_threshold_occupied_slider").val(slideEvt.value); });
-	$("#install_by_step_mapping_threshold_free_slider_elem").slider({ "value": 25, "range": "min", "max": 100 });
-	$("#install_by_step_mapping_threshold_free_slider_elem").on("slide", function(slideEvt) { $("#install_by_step_mapping_threshold_free_output b").text(slideEvt.value); $("#install_by_step_mapping_threshold_free_slider").val(slideEvt.value); });
+	$("#wyca_by_step_mapping_threshold_occupied_slider_elem").slider({ "value": 65, "range": "min", "max": 100 });
+	$("#wyca_by_step_mapping_threshold_occupied_slider_elem").on("slide", function(slideEvt) { $("#wyca_by_step_mapping_threshold_occupied_output b").text(slideEvt.value); $("#wyca_by_step_mapping_threshold_occupied_slider").val(slideEvt.value); });
+	$("#wyca_by_step_mapping_threshold_free_slider_elem").slider({ "value": 25, "range": "min", "max": 100 });
+	$("#wyca_by_step_mapping_threshold_free_slider_elem").on("slide", function(slideEvt) { $("#wyca_by_step_mapping_threshold_free_output b").text(slideEvt.value); $("#wyca_by_step_mapping_threshold_free_slider").val(slideEvt.value); });
 
 	//------------------- STEP EDIT MAP ------------------------
 
-	$('#install_by_step_edit_map .bSaveEditMap').click(function(e) {
+	$('#wyca_by_step_edit_map .bSaveEditMap').click(function(e) {
 		e.preventDefault();
         
-		if (!bystepCanChangeMenu)
+		if (!wyca_bystepCanChangeMenu)
 		{
 			alert_wyca((typeof(textConfirmActiveElement) != 'undefined'? textConfirmActiveElement : 'You must confirm the active element'));
 			$('#bCloseAlertWyca').click(ShakeActiveElement());
@@ -1454,29 +1454,29 @@ $(document).ready(function(e) {
 		else
 		{
 			let actions_searched = ['editPoi','editDock','editAugmentedPose','editForbiddenArea','editArea'];
-			if(actions_searched.includes(bystepCurrentAction)){
-				switch(bystepCurrentAction){
+			if(actions_searched.includes(wyca_bystepCurrentAction)){
+				switch(wyca_bystepCurrentAction){
 					case 'editPoi' :
-						i = GetPoiIndexFromID(currentPoiByStepLongTouch.data('id_poi'));
-						ByStepBufferMapSaveElemName = pois[i].name;
+						i = GetPoiIndexFromID(currentPoiWycaByStepLongTouch.data('id_poi'));
+						WycaByStepBufferMapSaveElemName = pois[i].name;
 					break;
 					case 'editDock' :
-						i = GetDockIndexFromID(currentDockByStepLongTouch.data('id_docking_station'));
-						ByStepBufferMapSaveElemName = docks[i].name;
+						i = GetDockIndexFromID(currentDockWycaByStepLongTouch.data('id_docking_station'));
+						WycaByStepBufferMapSaveElemName = docks[i].name;
 					break;
 					case 'editAugmentedPose' :
-						i = GetAugmentedPoseIndexFromID(currentAugmentedPoseByStepLongTouch.data('id_augmented_pose'));
-						ByStepBufferMapSaveElemName = augmented_poses[i].name;
+						i = GetAugmentedPoseIndexFromID(currentAugmentedPoseWycaByStepLongTouch.data('id_augmented_pose'));
+						WycaByStepBufferMapSaveElemName = augmented_poses[i].name;
 					break;
 					case 'editForbiddenArea' :
-						i = GetForbiddenIndexFromID(currentForbiddenByStepLongTouch.data('id_area'));
-						ByStepBufferMapSaveElemName = forbiddens[i].name;
+						i = GetForbiddenIndexFromID(currentForbiddenWycaByStepLongTouch.data('id_area'));
+						WycaByStepBufferMapSaveElemName = forbiddens[i].name;
 					break;
 					case 'editArea' :
-						i = GetAreaIndexFromID(currentAreaByStepLongTouch.data('id_area'));
-						ByStepBufferMapSaveElemName = areas[i].name;
+						i = GetAreaIndexFromID(currentAreaWycaByStepLongTouch.data('id_area'));
+						WycaByStepBufferMapSaveElemName = areas[i].name;
 					break;
-					default: ByStepBufferMapSaveElemName = ''; break;
+					default: WycaByStepBufferMapSaveElemName = ''; break;
 				}
 			}
 
@@ -1484,8 +1484,8 @@ $(document).ready(function(e) {
 			
 			if ($(this).hasClass('button_goto'))
 			{
-				$('#install_by_step_test_map .list_test li').remove();
-				$('#install_by_step_test_map .install_by_step_test_map_loading').show();
+				$('#wyca_by_step_test_map .list_test li').remove();
+				$('#wyca_by_step_test_map .wyca_by_step_test_map_loading').show();
 				
 				gotoTest = true;
 			}
@@ -1498,7 +1498,7 @@ $(document).ready(function(e) {
 					success_info_wyca((typeof(textMapSaved) != 'undefined'? textMapSaved : 'Map saved'));
 
 					// On reload la carte pour mettre à jours les ids
-					GetInfosCurrentMapByStep();
+					GetInfosCurrentMapWycaByStep();
 					/*
 					if (navLaunched && id_map == current_id_map)
 					{
@@ -1514,10 +1514,10 @@ $(document).ready(function(e) {
 		}
     });
 	
-	$('#install_by_step_test_map').on( 'click', '.bExecuteTest', function(e) {
+	$('#wyca_by_step_test_map').on( 'click', '.bExecuteTest', function(e) {
         e.preventDefault();
 		
-		$('#install_by_step_test_map .bExecuteTest').addClass('disabled');
+		$('#wyca_by_step_test_map .bExecuteTest').addClass('disabled');
 		
 		currentTestIndex = $(this).parent().data('index_li');
 		
@@ -1526,18 +1526,18 @@ $(document).ready(function(e) {
 		{
 			wycaApi.on('onGoToPoiResult', function (data){
 				
-				$('#install_by_step_test_map .bExecuteTest').removeClass('disabled');
+				$('#wyca_by_step_test_map .bExecuteTest').removeClass('disabled');
 				if (data.A == wycaApi.AnswerCode.NO_ERROR)
 				{
-					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex).addClass('done');
-					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-danger');
-					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex+' a').addClass('btn-success');
+					$('#wyca_by_step_test_map #wyca_by_step_test_map_list_test_'+currentTestIndex).addClass('done');
+					$('#wyca_by_step_test_map #wyca_by_step_test_map_list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-danger');
+					$('#wyca_by_step_test_map #wyca_by_step_test_map_list_test_'+currentTestIndex+' a').addClass('btn-success');
 				}
 				else
 				{
-					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex).addClass('ko');
-					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-success');
-					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex+' a').addClass('btn-danger');
+					$('#wyca_by_step_test_map #wyca_by_step_test_map_list_test_'+currentTestIndex).addClass('ko');
+					$('#wyca_by_step_test_map #wyca_by_step_test_map_list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-success');
+					$('#wyca_by_step_test_map #wyca_by_step_test_map_list_test_'+currentTestIndex+' a').addClass('btn-danger');
 					ParseAPIAnswerError(data);
 				}
 				
@@ -1551,11 +1551,11 @@ $(document).ready(function(e) {
 				}
 				else
 				{
-					$('#install_by_step_test_map .bExecuteTest').removeClass('disabled');
+					$('#wyca_by_step_test_map .bExecuteTest').removeClass('disabled');
 				
-					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex).addClass('ko');
-					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-success');
-					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex+' a').addClass('btn-danger');
+					$('#wyca_by_step_test_map #wyca_by_step_test_map_list_test_'+currentTestIndex).addClass('ko');
+					$('#wyca_by_step_test_map #wyca_by_step_test_map_list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-success');
+					$('#wyca_by_step_test_map #wyca_by_step_test_map_list_test_'+currentTestIndex+' a').addClass('btn-danger');
 					ParseAPIAnswerError(data);
 					// On rebranche l'ancienne fonction
 					wycaApi.on('onGoToPoiResult', onGoToPoiResult);
@@ -1566,18 +1566,18 @@ $(document).ready(function(e) {
 		{
 			wycaApi.on('onGoToAugmentedPoseResult', function (data){
 				
-				$('#install_by_step_test_map .bExecuteTest').removeClass('disabled');
+				$('#wyca_by_step_test_map .bExecuteTest').removeClass('disabled');
 				if (data.A == wycaApi.AnswerCode.NO_ERROR)
 				{
-					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex).addClass('done');
-					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-danger');
-					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex+' a').addClass('btn-success');
+					$('#wyca_by_step_test_map #wyca_by_step_test_map_list_test_'+currentTestIndex).addClass('done');
+					$('#wyca_by_step_test_map #wyca_by_step_test_map_list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-danger');
+					$('#wyca_by_step_test_map #wyca_by_step_test_map_list_test_'+currentTestIndex+' a').addClass('btn-success');
 				}
 				else
 				{
-					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex).addClass('ko');
-					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-success');
-					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex+' a').addClass('btn-danger');
+					$('#wyca_by_step_test_map #wyca_by_step_test_map_list_test_'+currentTestIndex).addClass('ko');
+					$('#wyca_by_step_test_map #wyca_by_step_test_map_list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-success');
+					$('#wyca_by_step_test_map #wyca_by_step_test_map_list_test_'+currentTestIndex+' a').addClass('btn-danger');
 					ParseAPIAnswerError(data);
 				}
 				
@@ -1591,11 +1591,11 @@ $(document).ready(function(e) {
 				}
 				else
 				{
-					$('#install_by_step_test_map .bExecuteTest').removeClass('disabled');
+					$('#wyca_by_step_test_map .bExecuteTest').removeClass('disabled');
 				
-					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex).addClass('ko');
-					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-success');
-					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex+' a').addClass('btn-danger');
+					$('#wyca_by_step_test_map #wyca_by_step_test_map_list_test_'+currentTestIndex).addClass('ko');
+					$('#wyca_by_step_test_map #wyca_by_step_test_map_list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-success');
+					$('#wyca_by_step_test_map #wyca_by_step_test_map_list_test_'+currentTestIndex+' a').addClass('btn-danger');
 					ParseAPIAnswerError(data);
 					
 					// On rebranche l'ancienne fonction
@@ -1608,18 +1608,18 @@ $(document).ready(function(e) {
 			// Dock
 			wycaApi.on('onGoToChargeResult', function (data){
 				
-				$('#install_by_step_test_map .bExecuteTest').removeClass('disabled');
+				$('#wyca_by_step_test_map .bExecuteTest').removeClass('disabled');
 				if (data.A == wycaApi.AnswerCode.NO_ERROR)
 				{
-					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex).addClass('done');
-					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-danger');
-					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex+' a').addClass('btn-success');
+					$('#wyca_by_step_test_map #wyca_by_step_test_map_list_test_'+currentTestIndex).addClass('done');
+					$('#wyca_by_step_test_map #wyca_by_step_test_map_list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-danger');
+					$('#wyca_by_step_test_map #wyca_by_step_test_map_list_test_'+currentTestIndex+' a').addClass('btn-success');
 				}
 				else
 				{
-					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex).addClass('ko');
-					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-success');
-					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex+' a').addClass('btn-danger');
+					$('#wyca_by_step_test_map #wyca_by_step_test_map_list_test_'+currentTestIndex).addClass('ko');
+					$('#wyca_by_step_test_map #wyca_by_step_test_map_list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-success');
+					$('#wyca_by_step_test_map #wyca_by_step_test_map_list_test_'+currentTestIndex+' a').addClass('btn-danger');
 					ParseAPIAnswerError(data);
 				}
 				
@@ -1633,11 +1633,11 @@ $(document).ready(function(e) {
 				}
 				else
 				{
-					$('#install_by_step_test_map .bExecuteTest').removeClass('disabled');
+					$('#wyca_by_step_test_map .bExecuteTest').removeClass('disabled');
 					
-					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex).addClass('ko');
-					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-success');
-					$('#install_by_step_test_map #install_by_step_test_map_list_test_'+currentTestIndex+' a').addClass('btn-danger');
+					$('#wyca_by_step_test_map #wyca_by_step_test_map_list_test_'+currentTestIndex).addClass('ko');
+					$('#wyca_by_step_test_map #wyca_by_step_test_map_list_test_'+currentTestIndex+' a').removeClass('btn-warning btn-success');
+					$('#wyca_by_step_test_map #wyca_by_step_test_map_list_test_'+currentTestIndex+' a').addClass('btn-danger');
 					ParseAPIAnswerError(data);
 					
 					// On rebranche l'ancienne fonction
@@ -1650,7 +1650,7 @@ $(document).ready(function(e) {
 	
 	/*
 	//AJAX INSTALL STEP CALL
-	$('#install_by_step_test_map .bTestFinish').click(function(e) {
+	$('#wyca_by_step_test_map .bTestFinish').click(function(e) {
 		$.ajax({
 			type: "POST",
 			url: 'ajax/install_by_step_test_finish.php',
@@ -1672,7 +1672,7 @@ $(document).ready(function(e) {
 	*/
 	
 	//AJAX INSTALL STEP CALL
-	$('#install_by_step_edit_map .bNextEditMap').click(function(e) {
+	$('#wyca_by_step_edit_map .bNextEditMap').click(function(e) {
 		$.ajax({
 			type: "POST",
 			url: 'ajax/install_by_step_edit_map_finish.php',
@@ -1694,97 +1694,97 @@ $(document).ready(function(e) {
 	
 	//------------------- STEP CONFIGURATION EBL/MBL ------------------------
 	
-	$('#pages_install_by_step a.real_test').click(function(e) {
+	$('#pages_wyca_by_step a.real_test').click(function(e) {
         e.preventDefault();
-		$('#pages_install_by_step .modalRealTest_loading').show();
-		$('#pages_install_by_step .modalRealTest_content').hide();
-		$('#pages_install_by_step .modalRealTest').modal('show');
-		$('#pages_install_by_step a.bRealTestDo').addClass('disabled');
+		$('#pages_wyca_by_step .modalRealTest_loading').show();
+		$('#pages_wyca_by_step .modalRealTest_content').hide();
+		$('#pages_wyca_by_step .modalRealTest').modal('show');
+		$('#pages_wyca_by_step a.bRealTestDo').addClass('disabled');
 		wycaApi.GetCurrentMapData(function(data){
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
 				let n = 0 ;
-				$('#pages_install_by_step .modalRealTest_loading').hide();
-				$('#pages_install_by_step .modalRealTest_content').show();
-				$('#pages_install_by_step select.real_test_start > option').hide();
-				$('#pages_install_by_step select.real_test_end > option').hide();
+				$('#pages_wyca_by_step .modalRealTest_loading').hide();
+				$('#pages_wyca_by_step .modalRealTest_content').show();
+				$('#pages_wyca_by_step select.real_test_start > option').hide();
+				$('#pages_wyca_by_step select.real_test_end > option').hide();
 				//ADD POIS
 				$.each(data.D.pois,function(i, item){
-					$('#pages_install_by_step select.real_test_start').append('<option value="poi_'+item.id_poi+'" data-type="poi" data-id="'+item.id_poi+'" >&#xf3c5 - POI - '+item.name+'</option>' );
-					$('#pages_install_by_step select.real_test_end').append('<option value="poi_'+item.id_poi+'" data-type="poi" data-id="'+item.id_poi+'">&#xf3c5 - POI - '+item.name+'</option>' );
+					$('#pages_wyca_by_step select.real_test_start').append('<option value="poi_'+item.id_poi+'" data-type="poi" data-id="'+item.id_poi+'" >&#xf3c5 - POI - '+item.name+'</option>' );
+					$('#pages_wyca_by_step select.real_test_end').append('<option value="poi_'+item.id_poi+'" data-type="poi" data-id="'+item.id_poi+'">&#xf3c5 - POI - '+item.name+'</option>' );
 					n++;
 				});
 				//ADD DOCKS
 				$.each(data.D.docks,function(i, item){
-					$('#pages_install_by_step select.real_test_start').append('<option value="dock_'+item.id_docking_station+'" data-type="dock" data-id="'+item.id_docking_station+'" >&#xf5e7 - Dock - '+item.name+'</option>' );
-					$('#pages_install_by_step select.real_test_end').append('<option value="dock_'+item.id_docking_station+'" data-type="dock" data-id="'+item.id_docking_station+'" >&#xf5e7 - Dock - '+item.name+'</option>' );
+					$('#pages_wyca_by_step select.real_test_start').append('<option value="dock_'+item.id_docking_station+'" data-type="dock" data-id="'+item.id_docking_station+'" >&#xf5e7 - Dock - '+item.name+'</option>' );
+					$('#pages_wyca_by_step select.real_test_end').append('<option value="dock_'+item.id_docking_station+'" data-type="dock" data-id="'+item.id_docking_station+'" >&#xf5e7 - Dock - '+item.name+'</option>' );
 					n++;
 				});
 				//ADD A POSES
 				$.each(data.D.augmented_poses,function(i, item){
-					$('#pages_install_by_step select.real_test_start').append('<option value="augmented_pose_'+item.id_docking_station+'" data-type="augmented_pose" data-id="'+item.id_augmented_pose+'" >&#xf02a; - A. pose - '+item.name+'</option>' );
-					$('#pages_install_by_step select.real_test_end').append('<option value="augmented_pose_'+item.id_docking_station+'" data-type="augmented_pose" data-id="'+item.id_augmented_pose+'" >&#xf02a; - A. pose - '+item.name+'</option>' );
+					$('#pages_wyca_by_step select.real_test_start').append('<option value="augmented_pose_'+item.id_docking_station+'" data-type="augmented_pose" data-id="'+item.id_augmented_pose+'" >&#xf02a; - A. pose - '+item.name+'</option>' );
+					$('#pages_wyca_by_step select.real_test_end').append('<option value="augmented_pose_'+item.id_docking_station+'" data-type="augmented_pose" data-id="'+item.id_augmented_pose+'" >&#xf02a; - A. pose - '+item.name+'</option>' );
 					n++;
 				});
 				id_map = data.D.id_map;
 				id_map_last = data.D.id_map;
 				if(n < 2){
-					$('#pages_install_by_step .modalRealTest').modal('hide');
+					$('#pages_wyca_by_step .modalRealTest').modal('hide');
 					alert_wyca(textNoRealTest);
 				}
 			}
 			else
 			{
-				$('#pages_install_by_step .modalRealTest').modal('hide');
+				$('#pages_wyca_by_step .modalRealTest').modal('hide');
 			}
-			$('#pages_install_by_step a.bRealTestDo').removeClass('disabled');
+			$('#pages_wyca_by_step a.bRealTestDo').removeClass('disabled');
 		})		
 		
 	});
 	
 	/* REAL TEST */
 	
-	$('#pages_install_by_step a.bRealTestDo').click(function(e) {
+	$('#pages_wyca_by_step a.bRealTestDo').click(function(e) {
         e.preventDefault();
-		let start = $('#pages_install_by_step select.real_test_start option:selected');
-		let end = $('#pages_install_by_step select.real_test_end option:selected');
+		let start = $('#pages_wyca_by_step select.real_test_start option:selected');
+		let end = $('#pages_wyca_by_step select.real_test_end option:selected');
 		if(start.val()!='' && end.val()!='' && end.val()!=start.val()){
-			$('#pages_install_by_step .modalRealTest').modal('hide');
-			$('#pages_install_by_step .modalRealTestResult').modal('show');
+			$('#pages_wyca_by_step .modalRealTest').modal('hide');
+			$('#pages_wyca_by_step .modalRealTestResult').modal('show');
 			
-			$("#pages_install_by_step .modalRealTestResult .start_point").hide();
-			$("#pages_install_by_step .modalRealTestResult .end_point").hide();
-			$("#pages_install_by_step .modalRealTestResult .result_RealTest").hide();
+			$("#pages_wyca_by_step .modalRealTestResult .start_point").hide();
+			$("#pages_wyca_by_step .modalRealTestResult .end_point").hide();
+			$("#pages_wyca_by_step .modalRealTestResult .result_RealTest").hide();
 			
-			$("#pages_install_by_step .modalRealTestResult .btn[data-dismiss='modal']").removeClass('disabled');			
-			$("#pages_install_by_step .modalRealTestResult .start_point_text").html(start.html());
-			$("#pages_install_by_step .modalRealTestResult .end_point_text").html(end.html());
+			$("#pages_wyca_by_step .modalRealTestResult .btn[data-dismiss='modal']").removeClass('disabled');			
+			$("#pages_wyca_by_step .modalRealTestResult .start_point_text").html(start.html());
+			$("#pages_wyca_by_step .modalRealTestResult .end_point_text").html(end.html());
 			
-			RealTestGotoStartByStep(start,end);
+			RealTestGotoStartWycaByStep(start,end);
 		}
 	});
 	
-	$('#pages_install_by_step .modalRealTestResult a.bUseRealTest').click(function(e) {
+	$('#pages_wyca_by_step .modalRealTestResult a.bUseRealTest').click(function(e) {
 		e.preventDefault();
 		let temp = battery_lvl_needed == 0?1:parseInt(battery_lvl_needed);
 		let ebl = temp+5;
 		let mbl = 2*temp;
 		mbl < ebl ? mbl = ebl + 5:'';
-		$('#install_by_step_config_i_level_min_gotocharge').val(ebl)
-		$('#install_by_step_config_i_level_min_dotask').val(mbl)
-		$('#pages_install_by_step .modalRealTestResult').modal('hide')
+		$('#wyca_by_step_config_i_level_min_gotocharge').val(ebl)
+		$('#wyca_by_step_config_i_level_min_dotask').val(mbl)
+		$('#pages_wyca_by_step .modalRealTestResult').modal('hide')
     });
 	
-	$('section#install_by_step_config a.bResetValueEblMbl').click(function(e) {
+	$('section#wyca_by_step_config a.bResetValueEblMbl').click(function(e) {
 		
-		$('#install_by_step_config_i_level_min_gotocharge').val(15)
-		$('#install_by_step_config_i_level_min_dotask').val(20)
+		$('#wyca_by_step_config_i_level_min_gotocharge').val(15)
+		$('#wyca_by_step_config_i_level_min_dotask').val(20)
     });
 	
 	//AJAX INSTALL STEP CALL
-	$('#install_by_step_config .bConfigurationSave').click(function(e) {
-		let EBL = parseInt($('#install_by_step_config_i_level_min_gotocharge').val());
-		let MBL = parseInt($('#install_by_step_config_i_level_min_dotask').val());
+	$('#wyca_by_step_config .bConfigurationSave').click(function(e) {
+		let EBL = parseInt($('#wyca_by_step_config_i_level_min_gotocharge').val());
+		let MBL = parseInt($('#wyca_by_step_config_i_level_min_dotask').val());
 		EBL = EBL > 100 ? 15 : EBL;
 		EBL = EBL < 0 ? 15 : EBL;
 		MBL = MBL > 100 ? 20 : MBL;
@@ -1809,7 +1809,7 @@ $(document).ready(function(e) {
 						}
 					}
 				});
-				$('#install_by_step_config .install_by_step_config_next').click();
+				$('#wyca_by_step_config .wyca_by_step_config_next').click();
 			}
 			else
 			{
@@ -1820,9 +1820,9 @@ $(document).ready(function(e) {
 	
 	//------------------- STEP EXPORT SITE ------------------------
 	//AJAX INSTALL STEP CALL
-	$('#install_by_step_export_site .bExportSite').click(function(e){
+	$('#wyca_by_step_export_site .bExportSite').click(function(e){
 		
-		$('#install_by_step_export_site .bExportSite').addClass('disabled');
+		$('#wyca_by_step_export_site .bExportSite').addClass('disabled');
 		
 		wycaApi.GetCurrentSite(function(data){
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
@@ -1851,8 +1851,8 @@ $(document).ready(function(e) {
 							},
 							dataType: 'json',
 							success: function(data) {
-								$('#install_by_step_export_site .bExportSite').removeClass('disabled');
-								setTimeout(function(){$('#install_by_step_export_site .install_by_step_export_site_next').click();},100)
+								$('#wyca_by_step_export_site .bExportSite').removeClass('disabled');
+								setTimeout(function(){$('#wyca_by_step_export_site .wyca_by_step_export_site_next').click();},100)
 							},
 							error: function(e) {
 								if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
@@ -1866,21 +1866,21 @@ $(document).ready(function(e) {
 					}
 					else
 					{
-						$('#install_by_step_export_site .bExportSite').removeClass('disabled');
+						$('#wyca_by_step_export_site .bExportSite').removeClass('disabled');
 						ParseAPIAnswerError(data,(typeof(textErrorExportSite) != 'undefined'? textErrorExportSite : 'Error export site'));
 					}							
 				});
 			}
 			else
 			{
-				$('#install_by_step_export_site .bExportSite').removeClass('disabled');
+				$('#wyca_by_step_export_site .bExportSite').removeClass('disabled');
 				ParseAPIAnswerError(data,(typeof(textErrorGetCurrentSite) != 'undefined'? textErrorGetCurrentSite : 'Error get current site'));
 			}
 		})
 	})
 	//AJAX INSTALL STEP CALL
 	
-	$('#install_by_step_export_site .bExportSiteSkip').click(function(e){
+	$('#wyca_by_step_export_site .bExportSiteSkip').click(function(e){
 		$.ajax({
 			type: "POST",
 			url: 'ajax/install_by_step_export_site.php',
@@ -1900,16 +1900,16 @@ $(document).ready(function(e) {
 		});
 	})
 	//------------------- STEP MAINTENANCE ACCOUNT ------------------------
-	$('#install_by_step_maintenance #bModalDeleteMaintenanceAccount').click(function(e){
-		$('#install_by_step_maintenance .modalConfirmDeleteMaintenanceAccount').modal('show');
+	$('#wyca_by_step_maintenance #bModalDeleteMaintenanceAccount').click(function(e){
+		$('#wyca_by_step_maintenance .modalConfirmDeleteMaintenanceAccount').modal('show');
 	})
 	
-	$('#install_by_step_maintenance #install_by_step_delete_maintenance_account').change(function(e){
-		$('#install_by_step_maintenance #bDeleteMaintenanceAccount').toggleClass('disabled');
+	$('#wyca_by_step_maintenance #wyca_by_step_delete_maintenance_account').change(function(e){
+		$('#wyca_by_step_maintenance #bDeleteMaintenanceAccount').toggleClass('disabled');
 	})
 	
 	//AJAX INSTALL STEP CALL
-	$('#install_by_step_maintenance #bDeleteMaintenanceAccount').click(function(e){
+	$('#wyca_by_step_maintenance #bDeleteMaintenanceAccount').click(function(e){
 		wycaApi.DeleteUserWyca(function(data){
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
@@ -1921,8 +1921,8 @@ $(document).ready(function(e) {
 					dataType: 'json',
 					success: function(data) {
 						success_info_wyca(textAccountDeleted);
-						$('#install_by_step_maintenance .install_by_step_maintenance_next').click();
-						$('#install_by_step_maintenance .modalConfirmDeleteMaintenanceAccount').modal('hide');
+						$('#wyca_by_step_maintenance .wyca_by_step_maintenance_next').click();
+						$('#wyca_by_step_maintenance .modalConfirmDeleteMaintenanceAccount').modal('hide');
 					},
 					error: function(e) {
 						if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
@@ -1942,15 +1942,15 @@ $(document).ready(function(e) {
 		});
 	});
 		
-	$('#install_by_step_maintenance #bKeepMaintenanceAccount').click(function(e){
-		$('#install_by_step_maintenance .modalMaintenance').modal('show');
+	$('#wyca_by_step_maintenance #bKeepMaintenanceAccount').click(function(e){
+		$('#wyca_by_step_maintenance .modalMaintenance').modal('show');
 	});
 	
-	$('#install_by_step_maintenance #bChangeMaintenanceAccountPassword').click(function(e){
-		$('#install_by_step_maintenance .modalPasswordMaintenance').modal('show');
+	$('#wyca_by_step_maintenance #bChangeMaintenanceAccountPassword').click(function(e){
+		$('#wyca_by_step_maintenance .modalPasswordMaintenance').modal('show');
 	});
 		
-	$('#install_by_step_maintenance #bKeepMaintenanceAccountPassword').click(function(e){
+	$('#wyca_by_step_maintenance #bKeepMaintenanceAccountPassword').click(function(e){
 		$.ajax({
 			type: "POST",
 			url: 'ajax/install_by_step_maintenance.php',
@@ -1958,9 +1958,9 @@ $(document).ready(function(e) {
 			},
 			dataType: 'json',
 			success: function(data) {
-				$('#install_by_step_maintenance .install_by_step_maintenance_next').click();
-				$('#install_by_step_maintenance .modalMaintenance').modal('hide');
-				$('#install_by_step_maintenance .modalPasswordMaintenance').modal('hide');
+				$('#wyca_by_step_maintenance .wyca_by_step_maintenance_next').click();
+				$('#wyca_by_step_maintenance .modalMaintenance').modal('hide');
+				$('#wyca_by_step_maintenance .modalPasswordMaintenance').modal('hide');
 			},
 			error: function(e) {
 				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
@@ -1973,17 +1973,17 @@ $(document).ready(function(e) {
 		});
 	});
 	
-	$('#install_by_step_maintenance #bChangeMaintenanceAccountPassword').click(function(e){
-		$('#install_by_step_maintenance_i_maintenance_password').val('')
-		$('#install_by_step_maintenance_i_maintenance_cpassword').val('')
-		$('#install_by_step_maintenance .modalPasswordMaintenance').modal('show');
+	$('#wyca_by_step_maintenance #bChangeMaintenanceAccountPassword').click(function(e){
+		$('#wyca_by_step_maintenance_i_maintenance_password').val('')
+		$('#wyca_by_step_maintenance_i_maintenance_cpassword').val('')
+		$('#wyca_by_step_maintenance .modalPasswordMaintenance').modal('show');
 		
 	});
 	
 	//AJAX INSTALL STEP CALL
-	$('#install_by_step_maintenance #install_by_step_maintenance_bPasswordMaintenanceSave').click(function(e){
-		let pass = $('#install_by_step_maintenance_i_maintenance_password');
-		let cpass = $('#install_by_step_maintenance_i_maintenance_password');
+	$('#wyca_by_step_maintenance #wyca_by_step_maintenance_bPasswordMaintenanceSave').click(function(e){
+		let pass = $('#wyca_by_step_maintenance_i_maintenance_password');
+		let cpass = $('#wyca_by_step_maintenance_i_maintenance_password');
 		
 		if (pass.val() == '' || cpass.val() == ''){
 			alert_wyca(textPasswordRequired);
@@ -2002,9 +2002,9 @@ $(document).ready(function(e) {
 						},
 						dataType: 'json',
 						success: function(data) {
-							$('#install_by_step_maintenance .install_by_step_maintenance_next').click();
-							$('#install_by_step_maintenance .modalMaintenance').modal('hide');
-							$('#install_by_step_maintenance .modalPasswordMaintenance').modal('hide');
+							$('#wyca_by_step_maintenance .wyca_by_step_maintenance_next').click();
+							$('#wyca_by_step_maintenance .modalMaintenance').modal('hide');
+							$('#wyca_by_step_maintenance .modalPasswordMaintenance').modal('hide');
 						},
 						error: function(e) {
 							if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
@@ -2027,26 +2027,26 @@ $(document).ready(function(e) {
 	
 	//------------------- STEP MANAGERS ------------------------	
 	
-	$('#install_by_step_manager .bHelpManagerOk').click(function(){boolHelpManager = !$('#install_by_step_manager .checkboxHelpManager').prop('checked');setCookie('boolHelpManagerI',boolHelpManager);});//ADD SAVING BDD / COOKIES ?
+	$('#wyca_by_step_manager .bHelpManagerOk').click(function(){boolHelpManager = !$('#wyca_by_step_manager .checkboxHelpManager').prop('checked');setCookie('boolHelpManagerI',boolHelpManager);});//ADD SAVING BDD / COOKIES ?
 	
-	$('#install_by_step_manager .bAddManager').click(function(e) {
+	$('#wyca_by_step_manager .bAddManager').click(function(e) {
 	
-		$('#install_by_step_manager .modalManager #install_by_step_manager_i_id_manager').val(-1);
-		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_email').val('').removeClass('success').removeClass('error');
-		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_societe').val('');
-		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_prenom').val('');
-		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_nom').val('');
-		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_password').val('').removeClass('success').removeClass('error');
-		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_cpassword').val('').removeClass('success').removeClass('error');
+		$('#wyca_by_step_manager .modalManager #wyca_by_step_manager_i_id_manager').val(-1);
+		$('#wyca_by_step_manager .modalManager #wyca_by_step_manager_i_manager_email').val('').removeClass('success').removeClass('error');
+		$('#wyca_by_step_manager .modalManager #wyca_by_step_manager_i_manager_societe').val('');
+		$('#wyca_by_step_manager .modalManager #wyca_by_step_manager_i_manager_prenom').val('');
+		$('#wyca_by_step_manager .modalManager #wyca_by_step_manager_i_manager_nom').val('');
+		$('#wyca_by_step_manager .modalManager #wyca_by_step_manager_i_manager_password').val('').removeClass('success').removeClass('error');
+		$('#wyca_by_step_manager .modalManager #wyca_by_step_manager_i_manager_cpassword').val('').removeClass('success').removeClass('error');
 		
-		$('#install_by_step_manager .modalManager').modal('show');
+		$('#wyca_by_step_manager .modalManager').modal('show');
 	});
 	
-	$('#install_by_step_manager .modalManager #install_by_step_manager_bManagerSave').click(function(e) {
+	$('#wyca_by_step_manager .modalManager #wyca_by_step_manager_bManagerSave').click(function(e) {
         e.preventDefault();
 		
-		let pass = $('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_password');
-		let cpass = $('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_cpassword');
+		let pass = $('#wyca_by_step_manager .modalManager #wyca_by_step_manager_i_manager_password');
+		let cpass = $('#wyca_by_step_manager .modalManager #wyca_by_step_manager_i_manager_cpassword');
 		
 		if (pass.val() == '' || cpass.val() == ''){
 			alert_wyca(textPasswordRequired);
@@ -2054,31 +2054,31 @@ $(document).ready(function(e) {
 			alert_wyca(textPasswordMatching);
 		}else if(!pass[0].checkValidity() || !cpass[0].checkValidity()){
 			alert_wyca(textPasswordPattern);
-		}/*else if (!$('#install_by_step_manager_i_manager_email')[0].checkValidity()){
+		}/*else if (!$('#wyca_by_step_manager_i_manager_email')[0].checkValidity()){
 			alert_wyca(textLoginPattern);
 		}*/
 		/*
-		else if ($('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_societe').val() == "" )
+		else if ($('#wyca_by_step_manager .modalManager #wyca_by_step_manager_i_manager_societe').val() == "" )
 		{
 			alert_wyca('Company is required');
 		}
-		else if ($('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_prenom').val() == "" )
+		else if ($('#wyca_by_step_manager .modalManager #wyca_by_step_manager_i_manager_prenom').val() == "" )
 		{
 			alert_wyca('Firstname is required');
 		}
-		else if ($('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_nom').val() == "" )
+		else if ($('#wyca_by_step_manager .modalManager #wyca_by_step_manager_i_manager_nom').val() == "" )
 		{
 			alert_wyca('Lastname is required');
 		}*/
 		else
 		{
 			json_user = {
-				"id_user": parseInt($('#install_by_step_manager .modalManager #install_by_step_manager_i_id_manager').val()),
-				"company": $('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_societe').val(),
-				"lastname": $('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_nom').val(),
-				"firstname": $('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_prenom').val(),
-				"email": $('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_email').val(),
-				"pass": $('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_password').val(),
+				"id_user": parseInt($('#wyca_by_step_manager .modalManager #wyca_by_step_manager_i_id_manager').val()),
+				"company": $('#wyca_by_step_manager .modalManager #wyca_by_step_manager_i_manager_societe').val(),
+				"lastname": $('#wyca_by_step_manager .modalManager #wyca_by_step_manager_i_manager_nom').val(),
+				"firstname": $('#wyca_by_step_manager .modalManager #wyca_by_step_manager_i_manager_prenom').val(),
+				"email": $('#wyca_by_step_manager .modalManager #wyca_by_step_manager_i_manager_email').val(),
+				"pass": $('#wyca_by_step_manager .modalManager #wyca_by_step_manager_i_manager_password').val(),
 				"id_group_user": wycaApi.GroupUser.MANAGER,
 			};
 			
@@ -2087,19 +2087,19 @@ $(document).ready(function(e) {
 				{
 					// On ajoute le li
 					id_user = data.D;
-					if ($('#install_by_step_manager_list_manager_elem_'+id_user).length > 0)
+					if ($('#wyca_by_step_manager_list_manager_elem_'+id_user).length > 0)
 					{
-						$('#install_by_step_manager_list_manager_elem_'+id_user+' span.email').html(json_user.email);
+						$('#wyca_by_step_manager_list_manager_elem_'+id_user+' span.email').html(json_user.email);
 						/*
-						$('#install_by_step_manager_list_manager_elem_'+id_user+' span.societe').html(json_user.company);
-						$('#install_by_step_manager_list_manager_elem_'+id_user+' span.prenom').html(json_user.firstname);
-						$('#install_by_step_manager_list_manager_elem_'+id_user+' span.nom').html(json_user.lastname);
+						$('#wyca_by_step_manager_list_manager_elem_'+id_user+' span.societe').html(json_user.company);
+						$('#wyca_by_step_manager_list_manager_elem_'+id_user+' span.prenom').html(json_user.firstname);
+						$('#wyca_by_step_manager_list_manager_elem_'+id_user+' span.nom').html(json_user.lastname);
 						*/
 					}
 					else
 					{
-						$('#install_by_step_manager .list_managers').append('' +
-							'<li id="install_by_step_manager_list_manager_elem_'+id_user+'" data-id_user="'+id_user+'">'+
+						$('#wyca_by_step_manager .list_managers').append('' +
+							'<li id="wyca_by_step_manager_list_manager_elem_'+id_user+'" data-id_user="'+id_user+'">'+
 							'	<span class="email">'+json_user.email+'</span>'+
 							'	<a href="#" class="bManagerDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>'+
 							'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>'+
@@ -2107,8 +2107,8 @@ $(document).ready(function(e) {
 							'</li>'
 							);
 					}
-					RefreshDisplayManagerByStep();
-					$('#install_by_step_manager .modalManager').modal('hide');
+					RefreshDisplayManagerWycaByStep();
+					$('#wyca_by_step_manager .modalManager').modal('hide');
 				}
 				else
 				{
@@ -2118,7 +2118,7 @@ $(document).ready(function(e) {
 		}
     });
 	
-	$(document).on('click', '#install_by_step_manager .bManagerDeleteElem', function(e) {
+	$(document).on('click', '#wyca_by_step_manager .bManagerDeleteElem', function(e) {
 		e.preventDefault();
 		
 		id_user_to_delete = parseInt($(this).closest('li').data('id_user'));
@@ -2126,8 +2126,8 @@ $(document).ready(function(e) {
 		wycaApi.DeleteUser(id_user_to_delete, function(data) {
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
-				$('#install_by_step_manager_list_manager_elem_'+id_user_to_delete).remove();
-				RefreshDisplayManagerByStep();
+				$('#wyca_by_step_manager_list_manager_elem_'+id_user_to_delete).remove();
+				RefreshDisplayManagerWycaByStep();
 			}
 			else
 			{
@@ -2136,46 +2136,46 @@ $(document).ready(function(e) {
 		});
 	});
 	
-	$(document).on('click', '#install_by_step_manager .bManagerEditElem', function(e) {
+	$(document).on('click', '#wyca_by_step_manager .bManagerEditElem', function(e) {
 		e.preventDefault();
 		
 		id_user = $(this).closest('li').data('id_user');
-		$('#install_by_step_manager .modalManager #install_by_step_manager_i_id_manager').val(id_user);
-		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_email').val($('#install_by_step_manager_list_manager_elem_'+id_user+' span.email').html());
-		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_societe').val($('#install_by_step_manager_list_manager_elem_'+id_user+' span.societe').html());
-		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_prenom').val($('#install_by_step_manager_list_manager_elem_'+id_user+' span.prenom').html());
-		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_nom').val($('#install_by_step_manager_list_manager_elem_'+id_user+' span.nom').html());
-		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_password').val('');
-		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_cpassword').val('');
+		$('#wyca_by_step_manager .modalManager #wyca_by_step_manager_i_id_manager').val(id_user);
+		$('#wyca_by_step_manager .modalManager #wyca_by_step_manager_i_manager_email').val($('#wyca_by_step_manager_list_manager_elem_'+id_user+' span.email').html());
+		$('#wyca_by_step_manager .modalManager #wyca_by_step_manager_i_manager_societe').val($('#wyca_by_step_manager_list_manager_elem_'+id_user+' span.societe').html());
+		$('#wyca_by_step_manager .modalManager #wyca_by_step_manager_i_manager_prenom').val($('#wyca_by_step_manager_list_manager_elem_'+id_user+' span.prenom').html());
+		$('#wyca_by_step_manager .modalManager #wyca_by_step_manager_i_manager_nom').val($('#wyca_by_step_manager_list_manager_elem_'+id_user+' span.nom').html());
+		$('#wyca_by_step_manager .modalManager #wyca_by_step_manager_i_manager_password').val('');
+		$('#wyca_by_step_manager .modalManager #wyca_by_step_manager_i_manager_cpassword').val('');
 		
-		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_email').removeClass('success').removeClass('error');
-		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_password').removeClass('success').removeClass('error');
-		$('#install_by_step_manager .modalManager #install_by_step_manager_i_manager_cpassword').removeClass('success').removeClass('error');
+		$('#wyca_by_step_manager .modalManager #wyca_by_step_manager_i_manager_email').removeClass('success').removeClass('error');
+		$('#wyca_by_step_manager .modalManager #wyca_by_step_manager_i_manager_password').removeClass('success').removeClass('error');
+		$('#wyca_by_step_manager .modalManager #wyca_by_step_manager_i_manager_cpassword').removeClass('success').removeClass('error');
 		
-		$('#install_by_step_manager .modalManager').modal('show');
+		$('#wyca_by_step_manager .modalManager').modal('show');
 	});
 	
-	$('#install_by_step_manager input#install_by_step_manager_i_manager_email').change(function(e){
+	$('#wyca_by_step_manager input#wyca_by_step_manager_i_manager_email').change(function(e){
 		if($(this)[0].checkValidity())
 			$(this).removeClass('error').addClass('success');
 		else
 			$(this).removeClass('success').addClass('error');
 	})
 	
-	$('#install_by_step_manager input#install_by_step_manager_i_manager_password').change(function(e){
+	$('#wyca_by_step_manager input#wyca_by_step_manager_i_manager_password').change(function(e){
 		if($(this)[0].checkValidity())
 			$(this).removeClass('error').addClass('success');
 		else
 			$(this).removeClass('success').addClass('error');
 	})
 	
-	$('#install_by_step_manager input#install_by_step_manager_i_manager_cpassword').change(function(e){
+	$('#wyca_by_step_manager input#wyca_by_step_manager_i_manager_cpassword').change(function(e){
 		if($(this)[0].checkValidity())
 			$(this).removeClass('error').addClass('success');
 		else
 			$(this).removeClass('success').addClass('error');
-		if($('#install_by_step_manager input#install_by_step_manager_i_manager_password').val() != ''){
-			if($(this).val() == $('#install_by_step_manager input#install_by_step_manager_i_manager_password').val())
+		if($('#wyca_by_step_manager input#wyca_by_step_manager_i_manager_password').val() != ''){
+			if($(this).val() == $('#wyca_by_step_manager input#wyca_by_step_manager_i_manager_password').val())
 				$(this).removeClass('error').addClass('success');
 			else
 				$(this).removeClass('success').addClass('error');
@@ -2183,7 +2183,7 @@ $(document).ready(function(e) {
 	})
 	
 	//AJAX INSTALL STEP CALL
-	$('#install_by_step_manager .bValidManager').click(function(e) {
+	$('#wyca_by_step_manager .bValidManager').click(function(e) {
         $.ajax({
 			type: "POST",
 			url: 'ajax/install_by_step_managers.php',
@@ -2205,22 +2205,22 @@ $(document).ready(function(e) {
 	
 	//------------------- STEP SERVICE BOOK ------------------------	
 	
-	$('#install_by_step_service_book .bAddServiceBook').click(function(e) {
+	$('#wyca_by_step_service_book .bAddServiceBook').click(function(e) {
 	
-		$('#install_by_step_service_book .modalServiceBook #install_by_step_service_book_i_service_book_title').val('');
-		$('#install_by_step_service_book .modalServiceBook #install_by_step_service_book_i_service_book_comment').val('');
+		$('#wyca_by_step_service_book .modalServiceBook #wyca_by_step_service_book_i_service_book_title').val('');
+		$('#wyca_by_step_service_book .modalServiceBook #wyca_by_step_service_book_i_service_book_comment').val('');
 		
-		$('#install_by_step_service_book .modalServiceBook').modal('show');
+		$('#wyca_by_step_service_book .modalServiceBook').modal('show');
 	});
 	
-	$('#install_by_step_service_book .modalServiceBook #install_by_step_service_book_bServiceBookSave').click(function(e) {
+	$('#wyca_by_step_service_book .modalServiceBook #wyca_by_step_service_book_bServiceBookSave').click(function(e) {
         e.preventDefault();
 		
-		if ($('#install_by_step_service_book .modalServiceBook #install_by_step_service_book_i_service_book_title').val() == "" )
+		if ($('#wyca_by_step_service_book .modalServiceBook #wyca_by_step_service_book_i_service_book_title').val() == "" )
 		{
 			alert_wyca((typeof(textTitleRequired) != 'undefined'? textTitleRequired : 'Title is required.'));
 		}
-		else if ($('#install_by_step_service_book .modalServiceBook #install_by_step_service_book_i_service_book_comment').val() == "" )
+		else if ($('#wyca_by_step_service_book .modalServiceBook #wyca_by_step_service_book_i_service_book_comment').val() == "" )
 		{
 			alert_wyca((typeof(textCommentRequired) != 'undefined'? textCommentRequired : 'Comment is required.'));
 		}
@@ -2228,8 +2228,8 @@ $(document).ready(function(e) {
 		{
 			json_service_book = {
 				"id_service_book": -1,
-				"title": $('#install_by_step_service_book .modalServiceBook #install_by_step_service_book_i_service_book_title').val(),
-				"comment": $('#install_by_step_service_book .modalServiceBook #install_by_step_service_book_i_service_book_comment').val()
+				"title": $('#wyca_by_step_service_book .modalServiceBook #wyca_by_step_service_book_i_service_book_title').val(),
+				"comment": $('#wyca_by_step_service_book .modalServiceBook #wyca_by_step_service_book_i_service_book_comment').val()
 			};
 			
 			wycaApi.SetServiceBook(json_service_book, function(data) {
@@ -2243,7 +2243,7 @@ $(document).ready(function(e) {
 						default: break;
 					}
 					// On ajoute le li
-					$('#install_by_step_service_book .list_service_books').prepend('' +
+					$('#wyca_by_step_service_book .list_service_books').prepend('' +
 						'<li>'+
 						'	<div class="date">'+d_txt+'</div>'+
 						'	<div class="title">'+json_service_book.title+'</div>'+
@@ -2251,7 +2251,7 @@ $(document).ready(function(e) {
 						'</li>'
 						);
 
-					$('#install_by_step_service_book .modalServiceBook').modal('hide');
+					$('#wyca_by_step_service_book .modalServiceBook').modal('hide');
 				}
 				else
 				{
@@ -2262,7 +2262,7 @@ $(document).ready(function(e) {
     });
 	
     //AJAX INSTALL STEP CALL
-	$('#install_by_step_end .bCloseInstallation').click(function(e) {
+	$('#wyca_by_step_end .bCloseInstallation').click(function(e) {
 		if(create_new_site){
 			create_new_site = false;
 			setCookie('create_new_site',create_new_site);
@@ -2287,24 +2287,24 @@ $(document).ready(function(e) {
 		
 		
 		//AFFICHER QQ CHOSE
-		//$('section#install_normal_dashboard').hide();
+		//$('section#wyca_normal_dashboard').hide();
 
-		$('#pages_install_by_step').removeClass('active');
-		$('#pages_install_normal').addClass('active');
+		$('#pages_wyca_by_step').removeClass('active');
+		$('#pages_wyca_normal').addClass('active');
 		
 		
 		// back
-		$('#install_normal_edit_map .bBackButton').click();
+		$('#wyca_normal_edit_map .bBackButton').click();
 		
 		/*
-		if ($('#install_normal_setup_sites').is(':visible'))
+		if ($('#wyca_normal_setup_sites').is(':visible'))
 		{
 			GetSitesNormal();
 		}
 		else
 		{
 			//AFFICHER QQ CHOSE
-			$('section#install_normal_dashboard').show('slow');
+			$('section#wyca_normal_dashboard').show('slow');
 		}
 		*/
 		
@@ -2321,22 +2321,22 @@ $(document).ready(function(e) {
 function StartAnimCheckComposantInstall()
 {
 	timer_anim_check = undefined;
-	if ($('#install_by_step_check .test').length > 0)
+	if ($('#wyca_by_step_check .test').length > 0)
 	{
-		$('#install_by_step_check .test').addClass('checked');
-		$('#install_by_step_check .test').removeClass('test');
-		let lg = $('#install_by_step_check div.is_checkbox:not(".checked")').length;
+		$('#wyca_by_step_check .test').addClass('checked');
+		$('#wyca_by_step_check .test').removeClass('test');
+		let lg = $('#wyca_by_step_check div.is_checkbox:not(".checked")').length;
 		if ( lg > 0)
 		{
 			let rd = Math.floor(Math.random() * Math.floor(lg));
-			$('#install_by_step_check div.is_checkbox:not(".checked")').eq(rd).addClass('test');
+			$('#wyca_by_step_check div.is_checkbox:not(".checked")').eq(rd).addClass('test');
 			timer_anim_check = setTimeout(StartAnimCheckComposantInstall, Math.floor(Math.random() * 1500 + 500));
 		}
 		else
 		{
-			//$('#install_by_step_check .install_by_step_check_next').show();
-			$('.install_by_step_check_next').removeClass('disabled');
-			$('.install_by_step_check_next').html(textBtnCheckNext);
+			//$('#wyca_by_step_check .wyca_by_step_check_next').show();
+			$('.wyca_by_step_check_next').removeClass('disabled');
+			$('.wyca_by_step_check_next').html(textBtnCheckNext);
 			
 		
 		}
@@ -2347,42 +2347,42 @@ function StartAnimCheckComposantInstall()
 	
 /* FONCTION PROGRESS BAR REAL TEST */	/* REAL TEST */
 	
-function TimerRealTestByStep(step){
+function TimerRealTestWycaByStep(step){
 	if(step=='start'){			
 		if(statusRealTestStart > 0){
 			if(statusRealTestStart == 2 && timerRealTestStart==100){
 				statusRealTestStart=0;
 				timerRealTestStart=0;
-				$('#install_by_step_config .modalRealTestResult .checkStart').show('fast');
+				$('#wyca_by_step_config .modalRealTestResult .checkStart').show('fast');
 			}else{
-				$('#install_by_step_config .modalRealTestResult .checkStart').hide();
+				$('#wyca_by_step_config .modalRealTestResult .checkStart').hide();
 				delay = statusRealTestStart == 2 ? 1 : 200;
 				timerRealTestStart++;
 				if(timerRealTestStart == 101)timerRealTestStart=0;
-				$('#install_by_step_config .startRealTestprogress .progress-bar').css('width', timerRealTestStart+'%').attr('aria-valuenow', timerRealTestStart); 
-				setTimeout(TimerRealTestByStep,delay,step);
+				$('#wyca_by_step_config .startRealTestprogress .progress-bar').css('width', timerRealTestStart+'%').attr('aria-valuenow', timerRealTestStart); 
+				setTimeout(TimerRealTestWycaByStep,delay,step);
 			}
 		}
 	}else if(step=='end'){			
 		if(statusRealTestEnd > 0){
 			if(statusRealTestEnd == 2 && timerRealTestEnd==100){
-				$('#install_by_step_config .modalRealTestResult .stop_move').css('opacity',1);
+				$('#wyca_by_step_config .modalRealTestResult .stop_move').css('opacity',1);
 				statusRealTestEnd=0;
 				timerRealTestEnd=0;
-				$('#install_by_step_config .modalRealTestResult .checkEnd').show('fast');
+				$('#wyca_by_step_config .modalRealTestResult .checkEnd').show('fast');
 			}else{
-				$('#install_by_step_config .modalRealTestResult .checkEnd').hide();
+				$('#wyca_by_step_config .modalRealTestResult .checkEnd').hide();
 				delay = statusRealTestEnd == 2 ? 1 : 200;
 				timerRealTestEnd++;
 				if(timerRealTestEnd == 101)timerRealTestEnd=0;
-				$('#install_by_step_config .endRealTestprogress .progress-bar').css('width', timerRealTestEnd+'%').attr('aria-valuenow', timerRealTestEnd); 
-				setTimeout(TimerRealTestByStep,delay,step);
+				$('#wyca_by_step_config .endRealTestprogress .progress-bar').css('width', timerRealTestEnd+'%').attr('aria-valuenow', timerRealTestEnd); 
+				setTimeout(TimerRealTestWycaByStep,delay,step);
 			}
 		}
 	}
 }
 
-function RealTestGotoStartByStep(start,end){
+function RealTestGotoStartWycaByStep(start,end){
 	
 	//console.log('Go to start');
 	//console.log(start.data('type'),' id ',start.data('id'));
@@ -2394,9 +2394,9 @@ function RealTestGotoStartByStep(start,end){
 				if (data.A == wycaApi.AnswerCode.NO_ERROR){
 					battery_lvl_start = battery_lvl_current; // STOCKAGE BATTERY LVL
 					// GO TO END
-					RealTestGotoEndByStep(end);
+					RealTestGotoEndWycaByStep(end);
 				}else{
-					$('#pages_install_by_step .modalRealTestResult').modal('hide');
+					$('#pages_wyca_by_step .modalRealTestResult').modal('hide');
 					ParseAPIAnswerError(data);
 				}
 				if(end.data('type')!='poi') // On rebranche l'ancienne fonction
@@ -2406,16 +2406,16 @@ function RealTestGotoStartByStep(start,end){
 			id = start.data('id');
 			wycaApi.GoToPoi(id,function(data){
 				if (data.A == wycaApi.AnswerCode.NO_ERROR){
-					$("#pages_install_by_step .modalRealTestResult .start_point").show();
+					$("#pages_wyca_by_step .modalRealTestResult .start_point").show();
 					
-					$("#pages_install_by_step .modalRealTestResult .btn[data-dismiss='modal']").addClass('disabled');
+					$("#pages_wyca_by_step .modalRealTestResult .btn[data-dismiss='modal']").addClass('disabled');
 					
 					statusRealTestStart = 1;
 					timerRealTestStart = 0;
-					TimerRealTestByStep('start');
-					$('#install_by_step_config .modalRealTestResult .start_point .stop_move').css('opacity',1);
+					TimerRealTestWycaByStep('start');
+					$('#wyca_by_step_config .modalRealTestResult .start_point .stop_move').css('opacity',1);
 				}else{
-					$('#pages_install_by_step .modalRealTestResult').modal('hide');
+					$('#pages_wyca_by_step .modalRealTestResult').modal('hide');
 					ParseAPIAnswerError(data);
 				}
 			})
@@ -2426,9 +2426,9 @@ function RealTestGotoStartByStep(start,end){
 				if (data.A == wycaApi.AnswerCode.NO_ERROR){
 					battery_lvl_start = battery_lvl_current; // STOCKAGE BATTERY LVL
 					// GO TO END
-					RealTestGotoEndByStep(end);
+					RealTestGotoEndWycaByStep(end);
 				}else{
-					$('#pages_install_by_step .modalRealTestResult').modal('hide');
+					$('#pages_wyca_by_step .modalRealTestResult').modal('hide');
 					ParseAPIAnswerError(data);
 				}
 				if(end.data('type')!='dock') // On rebranche l'ancienne fonction
@@ -2439,14 +2439,14 @@ function RealTestGotoStartByStep(start,end){
 			
 			wycaApi.GoToCharge(id,function(data){
 				if (data.A == wycaApi.AnswerCode.NO_ERROR){
-					$("#pages_install_by_step .modalRealTestResult .start_point").show();
-					$("#pages_install_by_step .modalRealTestResult .btn[data-dismiss='modal']").addClass('disabled');
+					$("#pages_wyca_by_step .modalRealTestResult .start_point").show();
+					$("#pages_wyca_by_step .modalRealTestResult .btn[data-dismiss='modal']").addClass('disabled');
 					statusRealTestStart = 1;
 					timerRealTestStart = 0;
-					TimerRealTestByStep('start');
-					$('#install_by_step_config .modalRealTestResult .start_point .stop_move').css('opacity',1);
+					TimerRealTestWycaByStep('start');
+					$('#wyca_by_step_config .modalRealTestResult .start_point .stop_move').css('opacity',1);
 				}else{
-					$('#pages_install_by_step .modalRealTestResult').modal('hide');
+					$('#pages_wyca_by_step .modalRealTestResult').modal('hide');
 					ParseAPIAnswerError(data);
 				}
 			})
@@ -2457,9 +2457,9 @@ function RealTestGotoStartByStep(start,end){
 				if (data.A == wycaApi.AnswerCode.NO_ERROR){
 					battery_lvl_start = battery_lvl_current; // STOCKAGE BATTERY LVL
 					// GO TO END
-					RealTestGotoEndByStep(end);
+					RealTestGotoEndWycaByStep(end);
 				}else{
-					$('#pages_install_by_step .modalRealTestResult').modal('hide');
+					$('#pages_wyca_by_step .modalRealTestResult').modal('hide');
 					ParseAPIAnswerError(data);
 				}
 				if(end.data('type')!='augmented_pose') // On rebranche l'ancienne fonction
@@ -2470,14 +2470,14 @@ function RealTestGotoStartByStep(start,end){
 			
 			wycaApi.GoToAugmentedPose(id,function(data){
 				if (data.A == wycaApi.AnswerCode.NO_ERROR){
-					$("#pages_install_by_step .modalRealTestResult .start_point").show();
-					$("#pages_install_by_step .modalRealTestResult .btn[data-dismiss='modal']").addClass('disabled');
+					$("#pages_wyca_by_step .modalRealTestResult .start_point").show();
+					$("#pages_wyca_by_step .modalRealTestResult .btn[data-dismiss='modal']").addClass('disabled');
 					statusRealTestStart = 1;
 					timerRealTestStart = 0;
-					TimerRealTestByStep('start');
-					$('#install_by_step_config .modalRealTestResult .start_point .stop_move').css('opacity',1);
+					TimerRealTestWycaByStep('start');
+					$('#wyca_by_step_config .modalRealTestResult .start_point .stop_move').css('opacity',1);
 				}else{
-					$('#pages_install_by_step .modalRealTestResult').modal('hide');
+					$('#pages_wyca_by_step .modalRealTestResult').modal('hide');
 					ParseAPIAnswerError(data);
 				}						
 			})
@@ -2486,14 +2486,14 @@ function RealTestGotoStartByStep(start,end){
 	
 }
 
-function RealTestGotoEndByStep(end){
+function RealTestGotoEndWycaByStep(end){
 	//console.log('Go to end');
 	//console.log(end.data('type'),' id ',end.data('id'));
-	$('#install_by_step_config .modalRealTestResult .start_point .stop_move').css('opacity',0);
+	$('#wyca_by_step_config .modalRealTestResult .start_point .stop_move').css('opacity',0);
 	statusRealTestStart = 2;
 	statusRealTestEnd = 1;
 	timerRealTestEnd = 0;
-	TimerRealTestByStep('end');						
+	TimerRealTestWycaByStep('end');						
 	switch(end.data('type')){
 		case 'poi':
 			//AJOUTER ECOUTER RESULT + REBIND OLS FUNCTION FIN ECOUTEUR
@@ -2502,13 +2502,13 @@ function RealTestGotoEndByStep(end){
 					statusRealTestEnd = 2;
 					battery_lvl_needed = battery_lvl_start - battery_lvl_current; // STOCKAGE BATTERY LVL NEEDED
 					textDisplay = battery_lvl_needed == 0 ? textLessThanOne : battery_lvl_needed;
-					$('#pages_install_by_step .modalRealTestResult .battery_used').html(textDisplay);
-					$("#pages_install_by_step .modalRealTestResult .result_RealTest").show();
+					$('#pages_wyca_by_step .modalRealTestResult .battery_used').html(textDisplay);
+					$("#pages_wyca_by_step .modalRealTestResult .result_RealTest").show();
 				}else{
-					$('#pages_install_by_step .modalRealTestResult').modal('hide');
+					$('#pages_wyca_by_step .modalRealTestResult').modal('hide');
 					ParseAPIAnswerError(data);
 				}
-				$("#pages_install_by_step .modalRealTestResult .btn[data-dismiss='modal']").removeClass('disabled');
+				$("#pages_wyca_by_step .modalRealTestResult .btn[data-dismiss='modal']").removeClass('disabled');
 					
 				// On rebranche l'ancienne fonction
 				wycaApi.on('onGoToPoiResult', onGoToPoiResult);
@@ -2518,9 +2518,9 @@ function RealTestGotoEndByStep(end){
 			
 			wycaApi.GoToPoi(id,function(data){
 				if (data.A == wycaApi.AnswerCode.NO_ERROR){
-					$("#pages_install_by_step .modalRealTestResult .end_point").show()
+					$("#pages_wyca_by_step .modalRealTestResult .end_point").show()
 				}else{
-					$('#pages_install_by_step .modalRealTestResult').modal('hide');
+					$('#pages_wyca_by_step .modalRealTestResult').modal('hide');
 					ParseAPIAnswerError(data);
 				}
 			})
@@ -2532,13 +2532,13 @@ function RealTestGotoEndByStep(end){
 					statusRealTestEnd = 2;
 					battery_lvl_needed = battery_lvl_start - battery_lvl_current; // STOCKAGE BATTERY LVL NEEDED
 					textDisplay = battery_lvl_needed == 0 ? textLessThanOne : battery_lvl_needed;
-					$('#pages_install_by_step .modalRealTestResult .battery_used').html(textDisplay);
-					$("#pages_install_by_step .modalRealTestResult .result_RealTest").show();
+					$('#pages_wyca_by_step .modalRealTestResult .battery_used').html(textDisplay);
+					$("#pages_wyca_by_step .modalRealTestResult .result_RealTest").show();
 				}else{
-					$('#pages_install_by_step .modalRealTestResult').modal('hide');
+					$('#pages_wyca_by_step .modalRealTestResult').modal('hide');
 					ParseAPIAnswerError(data);
 				}
-				$("#pages_install_by_step .modalRealTestResult .btn[data-dismiss='modal']").removeClass('disabled');
+				$("#pages_wyca_by_step .modalRealTestResult .btn[data-dismiss='modal']").removeClass('disabled');
 				
 				// On rebranche l'ancienne fonction
 				wycaApi.on('onGoToChargeResult', onGoToChargeResult);
@@ -2548,9 +2548,9 @@ function RealTestGotoEndByStep(end){
 			
 			wycaApi.GoToCharge(id,function(data){
 				if (data.A == wycaApi.AnswerCode.NO_ERROR){
-					$("#pages_install_by_step .modalRealTestResult .end_point").show()
+					$("#pages_wyca_by_step .modalRealTestResult .end_point").show()
 				}else{
-					$('#pages_install_by_step .modalRealTestResult').modal('hide');
+					$('#pages_wyca_by_step .modalRealTestResult').modal('hide');
 					ParseAPIAnswerError(data);
 				}
 			})
@@ -2563,13 +2563,13 @@ function RealTestGotoEndByStep(end){
 					statusRealTestEnd = 2;
 					battery_lvl_needed = battery_lvl_start - battery_lvl_current; // STOCKAGE BATTERY LVL NEEDED
 					textDisplay = battery_lvl_needed == 0 ? textLessThanOne : battery_lvl_needed;
-					$('#pages_install_by_step .modalRealTestResult .battery_used').html(textDisplay);
-					$("#pages_install_by_step .modalRealTestResult .result_RealTest").show();
+					$('#pages_wyca_by_step .modalRealTestResult .battery_used').html(textDisplay);
+					$("#pages_wyca_by_step .modalRealTestResult .result_RealTest").show();
 				}else{
-					$('#pages_install_by_step .modalRealTestResult').modal('hide');
+					$('#pages_wyca_by_step .modalRealTestResult').modal('hide');
 					ParseAPIAnswerError(data);
 				}
-				$("#pages_install_by_step .modalRealTestResult .btn[data-dismiss='modal']").removeClass('disabled');
+				$("#pages_wyca_by_step .modalRealTestResult .btn[data-dismiss='modal']").removeClass('disabled');
 				
 				// On rebranche l'ancienne fonction
 				wycaApi.on('onGoToAugmentedPoseResult', onGoToAugmentedPoseResult);
@@ -2579,9 +2579,9 @@ function RealTestGotoEndByStep(end){
 			
 			wycaApi.GoToAugmentedPose(id,function(data){
 				if (data.A == wycaApi.AnswerCode.NO_ERROR){
-					$("#pages_install_by_step .modalRealTestResult .end_point").show()
+					$("#pages_wyca_by_step .modalRealTestResult .end_point").show()
 				}else{
-					$('#pages_install_by_step .modalRealTestResult').modal('hide');
+					$('#pages_wyca_by_step .modalRealTestResult').modal('hide');
 					ParseAPIAnswerError(data);
 				}						
 			})
@@ -2592,21 +2592,21 @@ function RealTestGotoEndByStep(end){
 
 //------------------- STEP MANAGERS ------------------------	
 
-function RefreshDisplayManagerByStep(){
-	if($('#install_by_step_manager ul.list_managers li').length > 0){
+function RefreshDisplayManagerWycaByStep(){
+	if($('#wyca_by_step_manager ul.list_managers li').length > 0){
 		//HIDE TUILE et AFF NEXT
-		$('#install_by_step_manager a.bAddManager').show();
-		$('#install_by_step_manager .bValidManagerNext').show();
+		$('#wyca_by_step_manager a.bAddManager').show();
+		$('#wyca_by_step_manager .bValidManagerNext').show();
 		
-		$('#install_by_step_manager .bValidManagerSkip').hide();
-		$('#install_by_step_manager a.bAddManager.bTuile').hide();
+		$('#wyca_by_step_manager .bValidManagerSkip').hide();
+		$('#wyca_by_step_manager a.bAddManager.bTuile').hide();
 	}else{
 		//AFF TUILE ET SKIP
-		$('#install_by_step_manager a.bAddManager').hide();
-		$('#install_by_step_manager .bValidManagerNext').hide();
+		$('#wyca_by_step_manager a.bAddManager').hide();
+		$('#wyca_by_step_manager .bValidManagerNext').hide();
 		
-		$('#install_by_step_manager .bValidManagerSkip').show();
-		$('#install_by_step_manager a.bAddManager.bTuile').show();
+		$('#wyca_by_step_manager .bValidManagerSkip').show();
+		$('#wyca_by_step_manager a.bAddManager.bTuile').show();
 	}
 	
 }
@@ -2658,13 +2658,13 @@ function CalculateMapTrinaryDo()
 				buffer[pos+3] = 255;           // set alpha channel
 		}
 	}
-	var canvasDessin = document.getElementById('install_by_step_mapping_canvas_result_trinary'),
+	var canvasDessin = document.getElementById('wyca_by_step_mapping_canvas_result_trinary'),
 	ctx = canvasDessin.getContext('2d');
 
 	var idata = ctx.createImageData(width, height);
 	idata.data.set(buffer);
 	ctx.putImageData(idata, 0, 0);
 	
-	$('#install_by_step_mapping_fin .loading_fin_create_map').hide();
-	$('#install_by_step_mapping_fin .bMappingSaveMap ').removeClass('disabled');
+	$('#wyca_by_step_mapping_fin .loading_fin_create_map').hide();
+	$('#wyca_by_step_mapping_fin .bMappingSaveMap ').removeClass('disabled');
 }	
