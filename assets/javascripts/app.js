@@ -253,6 +253,53 @@ $(document).ready(function(e) {
 				}
 			}
 			
+			if(target == 'wyca_by_step_mapping'){ //UPDATE INSTALL STEP ON BACK FROM MAPPING
+				$.ajax({
+					type: "POST",
+					url: 'ajax/install_by_step_site.php',
+					data: {
+					},
+					dataType: 'json',
+					success: function(data) {
+					},
+					error: function(e) {
+						alert_wyca((typeof(textErrorStartMapping) != 'undefined'? textErrorStartMapping : 'Error start mapping') + ' ' + e.responseText);
+					}
+				});
+			}
+			
+			if(target == 'wyca_by_step_sound'){ //UPDATE INSTALL STEP ON BACK FROM CREATE NEW SITE PROCESS NORMAL
+				if((getCookie('create_new_site') != '' ? JSON.parse(getCookie('create_new_site')) : false ) || create_new_site){
+					setCookie('create_new_site',false);
+					create_new_site = false;
+					$.ajax({
+						type: "POST",
+						url: 'ajax/install_by_step_finish.php',
+						data: {
+						},
+						dataType: 'json',
+						success: function(data) {
+						},
+						error: function(e) {
+							alert_wyca((typeof(textErrorFinish) != 'undefined'? textErrorFinish : 'Error in finish') + ' ' + e.responseText);
+						}
+					});
+					$('#modalBack').modal('hide');
+					$('#pages_wyca_by_step').removeClass('active');
+					$('#pages_install_normal').addClass('active');
+					
+					//AFFICHER QQ CHOSE
+					$('section#install_normal_setup_sites').show('slow');
+					$('.title_section').html($('section#install_normal_setup_sites > header > h2').text());
+					if ($('#install_normal_setup_sites').is(':visible'))
+					{
+						GetSitesNormal();
+					}
+					
+		
+				}
+			}
+			
 		}else{
 			if(typeof($(this).data('goto')) != 'undefined'){
 				let fromBackBtn = false;
@@ -316,7 +363,6 @@ $(document).ready(function(e) {
 					}
 				}
 				
-				
 				if (next == 'install_by_step_manager') {
 					GetManagersByStep();
 					$('#bHeaderInfo').attr('onClick',"$('#install_by_step_manager .modalHelpManager').modal('show')");
@@ -368,6 +414,54 @@ $(document).ready(function(e) {
 				
 				if (next == 'wyca_demo_mode_config') InitWycaDemo();
 				if (next == 'wyca_demo_mode_start_stop') InitWycaDemoState();
+				
+				//WYCA BYSTEP
+				
+				if (next == 'wyca_by_step_tops') InitTopsWycaByStep();
+				if (next == 'wyca_by_step_top') InitTopsActiveWycaByStep();
+				if (next == 'wyca_by_step_check') InitCheckWycaByStep();		
+				if (next == 'wyca_by_step_sound') InitSoundWycaByStep();		
+				if (next == 'wyca_by_step_wifi') InitInstallWifiPageWycaByStep();
+				if (next == 'wyca_by_step_config') GetConfigurationsWycaByStep();
+				if (next == 'wyca_by_step_mapping') InitMappingWycaByStep();
+				if (next == 'wyca_by_step_import_site') InitSiteImportWycaByStep();
+				
+				if (next == 'wyca_by_step_site_master_dock' && fromBackBtn) InitMasterDockWycaByStep('back');
+				if (next == 'wyca_by_step_site_master_dock' && !fromBackBtn) InitMasterDockWycaByStep();
+				if (next == 'wyca_by_step_site_map' && fromBackBtn) InitSiteSelectMapWycaByStep('back');
+				if (next == 'wyca_by_step_site_map' && !fromBackBtn) InitSiteSelectMapWycaByStep();
+				
+				if (next == 'wyca_by_step_edit_map')GetInfosCurrentMapWycaByStep();
+				if (next == 'wyca_by_step_mapping_fin'){
+					if(typeof(window.site_name) != 'undefined' && window.site_name != ""){
+						$('#wyca_by_step_mapping_from_name').val(window.site_name)
+					}else{
+						wycaApi.GetCurrentSite(function(data){
+							if (data.A == wycaApi.AnswerCode.NO_ERROR){
+								window.site_name=data.D.name;
+								$('#wyca_by_step_mapping_from_name').val(window.site_name)
+							}
+						})
+					}
+				}
+				
+				if (next == 'wyca_by_step_maintenance'){
+					InitMaintenanceWycaByStep();
+					if(create_new_site){
+						anim_show = false;
+						if($(this).attr('id') == 'bModalBackOk')
+							setTimeout(function(){$('#wyca_by_step_maintenance .bBackButton').click()},100);
+						else
+							setTimeout(function(){$('#wyca_by_step_maintenance .wyca_by_step_maintenance_next').click()},100);
+					}
+				}
+				
+				if (next == 'wyca_by_step_manager') {
+					GetManagersWycaByStep();
+					$('#bHeaderInfo').attr('onClick',"$('#wyca_by_step_manager .modalHelpManager').modal('show')");
+				}
+				
+				if (next == 'wyca_by_step_service_book') GetServiceBooksWycaByStep();
 				
 				// MANAGER
 				if (next == 'manager_setup_sites') GetSitesManager();
