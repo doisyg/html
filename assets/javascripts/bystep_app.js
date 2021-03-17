@@ -861,6 +861,8 @@ $(document).ready(function(e) {
 														'threshold_free': parseInt($('#install_by_step_mapping_threshold_free_slider').val()),
 														'threshold_occupied': parseInt($('#install_by_step_mapping_threshold_occupied_slider').val())
 													};
+													if(typeof(updatingMap) != 'undefined')
+														updatingMap = true;
 													
 													wycaApi.SetMap(map, function(data){
 														if (data.A == wycaApi.AnswerCode.NO_ERROR)
