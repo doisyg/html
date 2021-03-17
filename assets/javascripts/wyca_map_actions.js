@@ -2278,6 +2278,7 @@ $(document).ready(function()
 			$('#wyca_edit_map_container_all .text_prepare_robot').show();
 			
 			$('#wyca_edit_map_container_all .modalAddDock .dock').hide();
+			$('#wyca_edit_map_container_all .modalAddDock .fiducial_number_wrapper ').html('');
 			$('#wyca_edit_map_container_all .modalAddDock').modal('show');
 		}
 		else
@@ -2943,6 +2944,7 @@ $(document).ready(function()
 		if (wycaCanChangeMenu)
 		{
 			$('#wyca_edit_map_container_all .modalAddAugmentedPose .augmented_pose').hide();
+			$('#wyca_edit_map_container_all .modalAddAugmentedPose .fiducial_number_wrapper ').html('');
 			$('#wyca_edit_map_container_all .texts_add_augmented_pose').hide();
 			$('#wyca_edit_map_container_all .text_prepare_approch').show();
 			currentStepAddAugmentedPose = 'set_approch';

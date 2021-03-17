@@ -2249,6 +2249,7 @@ $(document).ready(function() {
 			$('#install_normal_edit_map_container_all .text_prepare_robot').show();
 			
 			$('#install_normal_edit_map_container_all .modalAddDock .dock').hide();
+			$('#install_normal_edit_map_container_all .modalAddDock .fiducial_number_wrapper ').html('');
 			$('#install_normal_edit_map_container_all .modalAddDock').modal('show');
 		}
 		else
@@ -2913,10 +2914,10 @@ $(document).ready(function() {
 		if (normalCanChangeMenu)
 		{
 			$('#install_normal_edit_map_container_all .modalAddAugmentedPose .augmented_pose').hide();
+			$('#install_normal_edit_map_container_all .modalAddAugmentedPose .fiducial_number_wrapper ').html('');
 			$('#install_normal_edit_map_container_all .texts_add_augmented_pose').hide();
 			$('#install_normal_edit_map_container_all .text_prepare_approch').show();
 			currentStepAddAugmentedPose = 'set_approch';
-			
 			$('#install_normal_edit_map_container_all .modalAddAugmentedPose').modal('show');
 		}
 		else
