@@ -82,6 +82,10 @@
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/wyca_map.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/wyca_map_actions.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/wyca_map_svg.js?v=<?php echo $lastUpdate;?>"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/wyca_bystep_app.js?v=<?php echo $lastUpdate;?>"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/wyca_bystep_map.js?v=<?php echo $lastUpdate;?>"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/wyca_bystep_map_actions.js?v=<?php echo $lastUpdate;?>"></script>
+		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/wyca_bystep_map_svg.js?v=<?php echo $lastUpdate;?>"></script>
 		<?php } if ($_SESSION['id_groupe_user'] == 2) {?>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/bystep_app.js?v=<?php echo $lastUpdate;?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>assets/javascripts/bystep_map.js?v=<?php echo $lastUpdate;?>"></script>
