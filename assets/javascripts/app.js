@@ -425,8 +425,20 @@ $(document).ready(function(e) {
 					
 				$('.title_section').html($('#'+next+' > header > h2').text());
 				
-				//
-				InitJoystick();
+				
+				//CHECK JOYSTICK TO START/STOP TELEOP
+				
+				if($('#'+next).find('.joystickDiv').length > 0){
+					if(!teleopEnable){
+						teleopEnable = true;
+						wycaApi.TeleopStart();
+					}
+				}else{
+					if(teleopEnable){
+						teleopEnable = false;
+						wycaApi.TeleopStop();
+					}
+				}
 			}
 		}
 
