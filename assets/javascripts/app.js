@@ -35,7 +35,8 @@ window.addEventListener('resize', () => {
 });
 
 $(window).on("popstate", function(e) {
-    change(e.originalEvent.state);
+	if($('.page.active').attr('id') != 'install_by_step_edit_map')
+		change(e.originalEvent.state);
 });
 
 (function(original) { // overwrite history.pushState so that it also calls
