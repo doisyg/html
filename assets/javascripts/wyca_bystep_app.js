@@ -2294,7 +2294,7 @@ $(document).ready(function(e) {
 		
 		
 		// back
-		$('#wyca_normal_edit_map .bBackButton').click();
+		$('#wyca_edit_map .bBackButton').click();
 		
 		/*
 		if ($('#wyca_normal_setup_sites').is(':visible'))
