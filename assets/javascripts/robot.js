@@ -460,6 +460,7 @@ function InitRobotPose(pose)
 	if ($('#manager_edit_map').length > 0 && ($('#manager_edit_map').is(':visible') || firstInitRobotPose)) ManagerTraceRobot(pose.X, pose.Y, pose.T);
 	if ($('#user_edit_map').length > 0 && ($('#user_edit_map').is(':visible') || firstInitRobotPose)) UserTraceRobot(pose.X, pose.Y, pose.T);
 	if ($('#wyca_edit_map').length > 0 && ($('#wyca_edit_map').is(':visible') || firstInitRobotPose)) WycaTraceRobot(pose.X, pose.Y, pose.T);
+	if ($('#wyca_by_step_edit_map').length > 0 && ($('#wyca_by_step_edit_map').is(':visible') || firstInitRobotPose)) WycaByStepTraceRobot(pose.X, pose.Y, pose.T);
 	
 	firstInitRobotPose = false
 }
@@ -471,6 +472,7 @@ function AskReloadMap()
 	if ($('#manager_edit_map').length > 0 && ($('#manager_edit_map').is(':visible'))) $('#manager_edit_map .modalReloadMap').modal('show');
 	if ($('#user_edit_map').length > 0 && ($('#user_edit_map').is(':visible'))) $('#user_edit_map .modalReloadMap').modal('show');
 	if ($('#wyca_edit_map').length > 0 && ($('#wyca_edit_map').is(':visible'))) $('#wyca_edit_map .modalReloadMap').modal('show');
+	if ($('#wyca_by_step_edit_map').length > 0 && ($('#wyca_by_step_edit_map').is(':visible'))) $('#wyca_by_step_edit_map .modalReloadMap').modal('show');
 }
 
 function InitPosCarteMapping()
