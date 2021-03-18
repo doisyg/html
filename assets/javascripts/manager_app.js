@@ -516,6 +516,8 @@ $(document).ready(function(e) {
 	
 	$(document).on('click', '#manager_setup_sites .bSiteSetCurrentElem', function(e) {
 		e.preventDefault();
+		$('#manager_setup_sites .btn-danger.confirm_delete').addClass('disabled');
+		$('#manager_setup_sites .bSiteSetCurrentElem').addClass('disabled');
 		
 		id_site = parseInt($(this).closest('li').data('id_site'));
 		
@@ -526,11 +528,15 @@ $(document).ready(function(e) {
 			{
 				wycaApi.GetCurrentSite(function(data) {
 					current_site = data.D;
-					tempCurrentSite = $('#manager_dashboard_modalCurrentSite').find('h3').text(); 
-					$('#manager_dashboard_modalCurrentSite').find('h3').html(tempCurrentSite + '<br><br><span>' + current_site.name + '</span>')
-					$('#manager_dashboard_modalCurrentSite').modal('show');
+					if($('#manager_dashboard_modalCurrentSite').data('original_txt') == undefined)
+						$('#manager_dashboard_modalCurrentSite').data('original_txt',$('#manager_dashboard_modalCurrentSite').find('h3').text());
+					$('#manager_dashboard_modalCurrentSite').find('h3').html($('#manager_dashboard_modalCurrentSite').data('original_txt') + '<br><br><span>' + current_site.name + '</span>')
+					
 					$('#manager_setup_sites .bBackToDashboard').click();
+					$('#manager_dashboard_modalCurrentSite').modal('show');
 					warning_wyca(textBeSureSelectedSite);
+					$('#manager_setup_sites .btn-danger.confirm_delete').removeClass('disabled');
+					$('#manager_setup_sites .bSiteSetCurrentElem').removeClass('disabled');
 				})
 			}
 		});
@@ -538,6 +544,8 @@ $(document).ready(function(e) {
 	
 	$(document).on('click', '#manager_setup_sites .bSiteDeleteElem', function(e) {
 		e.preventDefault();
+		$('#manager_setup_sites .btn-danger.confirm_delete').addClass('disabled');
+		$('#manager_setup_sites .bSiteSetCurrentElem').addClass('disabled');
 		
 		id_site_to_delete = parseInt($(this).closest('li').data('id_site'));
 		
@@ -550,6 +558,8 @@ $(document).ready(function(e) {
 			{
 				ParseAPIAnswerError(data);
 			}
+			$('#manager_setup_sites .btn-danger.confirm_delete').removeClass('disabled');
+			$('#manager_setup_sites .bSiteSetCurrentElem').removeClass('disabled');
 		});
 	});
 	
