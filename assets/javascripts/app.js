@@ -195,6 +195,8 @@ $(document).ready(function(e) {
 	$( 'body' ).on( 'click', '.button_goto', function(e) {
 		if(isDown)SetCurseurV2(xCentre, yCentre); // REINIT JOYSTICK TO MIDDLE
 		let anim_show = true; // TRIGGER ANIM ? 
+
+		
 		if($(this).hasClass('btn_back')){
 			
 			$('#bModalBackOk').attr('data-goto','');
@@ -264,6 +266,19 @@ $(document).ready(function(e) {
 				e.preventDefault();
 				history.pushState({ current_groupe:$('.menu_groupe .active').attr('id'), current_page:$(this).data('goto')}, $(this).data('goto'), "/#"+$(this).data('goto'));
 				next = $(this).data('goto');
+				
+				//CHECK JOYSTICK TO START/STOP TELEOP
+				if($('#'+next).find('.joystickDiv').length > 0){
+					if(!teleopEnable || teleopEnable == 'not_init'){
+						teleopEnable = true;
+						wycaApi.TeleopStart();
+					}
+				}else{
+					if(teleopEnable || teleopEnable == 'not_init'){
+						teleopEnable = false;
+						wycaApi.TeleopStop();
+					}
+				}
 				
 				$('#modalBack').modal('hide');
 				let section_active = $('section.active');
@@ -425,21 +440,6 @@ $(document).ready(function(e) {
 				// ADD TITLE CHANGE 
 					
 				$('.title_section').html($('#'+next+' > header > h2').text());
-				
-				
-				//CHECK JOYSTICK TO START/STOP TELEOP
-				
-				if($('#'+next).find('.joystickDiv').length > 0){
-					if(!teleopEnable){
-						teleopEnable = true;
-						wycaApi.TeleopStart();
-					}
-				}else{
-					if(teleopEnable){
-						teleopEnable = false;
-						wycaApi.TeleopStop();
-					}
-				}
 			}
 		}
 
