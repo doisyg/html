@@ -826,10 +826,7 @@ $(document).ready(function(e) {
 			{
 				wycaApi.GetCurrentSite(function(data) {
 					current_site = data.D;
-					tempCurrentSite = $('#wyca_dashboard_modalCurrentSite').find('h3').text();
-					if($('#wyca_dashboard_modalCurrentSite').data('original_txt') == undefined)
-						$('#wyca_dashboard_modalCurrentSite').data('original_txt',tempCurrentSite);
-					tempCurrentSite = $('#wyca_dashboard_modalCurrentSite').data('original_txt');
+					tempCurrentSite = $('#wyca_dashboard_modalCurrentSite').find('h3').text(); 
 					$('#wyca_dashboard_modalCurrentSite').find('h3').html(tempCurrentSite + '<br><br><span>' + current_site.name + '</span>')
 					$('#wyca_dashboard_modalCurrentSite').modal('show');
 					$('#wyca_setup_sites .bBackToDashboard').click();
