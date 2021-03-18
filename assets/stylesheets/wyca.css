@@ -775,10 +775,12 @@ ul.list_test li.done { color:#006600; border-color:#006600; }
 .tuile_wrapper{
 	margin-top:20px;
 	margin-bottom:20px;
+	z-index:2;
 }
 .tuile_wrapper:nth-child(4){
 	width:100%;
-	padding-top:0%
+	padding-top:0%;
+	z-index:0;
 }
 .tuile_wrapper:nth-child(4n+2){
 	margin-top:0;
@@ -795,6 +797,7 @@ ul.list_test li.done { color:#006600; border-color:#006600; }
     max-width: 375px;
     left: 50%;
     transform: translateX(-50%);
+	z-index:1;
 }
 @media only screen and (max-width:374px)
 {

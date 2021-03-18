@@ -27,7 +27,7 @@ var canvas;
 var width = 0;
 var height = 0;
 
-var teleopEnable = false;
+var teleopEnable = 'not_init';
 
 var lastRobotPose = {'X':0, 'Y':0, 'T':0 };
 var mappingLastOrigin = {'x':0, 'y':0 };
@@ -81,7 +81,16 @@ $(document).ready(function(e) {
 		},
 		onInitialized: function(){
 			wycaApi.TeleopIsStarted(function(data){
-				teleopEnable = data.D;
+				if(teleopEnable == 'not_init'){
+					teleopEnable = data.D;
+				}else{
+					if(teleopEnable != data.D){
+						if(teleopEnable)
+							wycaApi.TeleopStart();
+						else
+							wycaApi.TeleopStop();
+					}
+				}
 			});
 		},
 		onBatteryState: function(data){
