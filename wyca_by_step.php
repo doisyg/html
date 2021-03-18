@@ -264,7 +264,7 @@
             <div class="content">
             
             	<h3><?php echo __('Configure Wifi');?></h3>
-                <div class="install_bystep_setup_wifi_loading loading_big" style="display:block"><i class="fa fa fa-spinner fa-pulse"></i></div>
+                <div class="wyca_bystep_setup_wifi_loading loading_big" style="display:block"><i class="fa fa fa-spinner fa-pulse"></i></div>
                 <table class="table table_wifi">
                 	<tbody class="tbody_wifi">
                     </tbody>
