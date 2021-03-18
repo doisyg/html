@@ -734,13 +734,13 @@ var tempConfirmDelete = "";
 
 function InitSiteImportWyca()
 {
-	$('#pages_wyca .filename_import_site').html('');
-	$('#pages_wyca .filename_import_site').hide();
-	$('#pages_wyca .file_import_site_wrapper').css('background-color','#589fb26e');
-	$('#pages_wyca .file_import_site').val('');
+	$('#pages_wyca_normal .filename_import_site').html('');
+	$('#pages_wyca_normal .filename_import_site').hide();
+	$('#pages_wyca_normal .file_import_site_wrapper').css('background-color','#589fb26e');
+	$('#pages_wyca_normal .file_import_site').val('');
 	
-	$('#pages_wyca .wyca_setup_import_loading').hide();
-	$('#pages_wyca .wyca_setup_import_content').show();
+	$('#pages_wyca_normal .wyca_setup_import_loading').hide();
+	$('#pages_wyca_normal .wyca_setup_import_content').show();
 }
 
 function InitSiteImportWycaByStep()
@@ -1257,9 +1257,9 @@ function InitSiteSelectMapWycaByStep(back = false)
 
 function InitMasterDockWyca()
 {
-	$('#pages_wyca .modalMasterDock #MasterDockList').html('');
-	$('#pages_wyca .modalMasterDock .MasterDock_loading').show();
-	$('#pages_wyca .modalMasterDock').modal('show');
+	$('#pages_wyca_normal .modalMasterDock #MasterDockList').html('');
+	$('#pages_wyca_normal .modalMasterDock .MasterDock_loading').show();
+	$('#pages_wyca_normal .modalMasterDock').modal('show');
 	
 	if(docks != 'undefined' && docks.length > 1){
 		$.each(docks,function(idx,item){
@@ -1271,15 +1271,15 @@ function InitMasterDockWyca()
 			master_dock+='		<p class="dockname">'+item.name+'</p>';
 			master_dock+='   </div>';
 			master_dock+='</div>';
-			$('#pages_wyca #MasterDockList').append(master_dock);
+			$('#pages_wyca_normal #MasterDockList').append(master_dock);
 		});
-		$('#pages_wyca .MasterDock_loading').hide();
+		$('#pages_wyca_normal .MasterDock_loading').hide();
 	}else{
 		if (wycaApi.websocketAuthed){
 			wycaApi.GetCurrentMapData(function(data){
 				if (data.A == wycaApi.AnswerCode.NO_ERROR){
 					if(data.D.docks.length <= 1){
-						$('#pages_wyca #wyca_setup_import .bImportSiteBack').click();
+						$('#pages_wyca_normal #wyca_setup_import .bImportSiteBack').click();
 					}else{
 						id_map = data.D.id_map;
 						id_map_last = data.D.id_map;
@@ -1298,9 +1298,9 @@ function InitMasterDockWyca()
 							master_dock+='		<p class="dockname">'+item.name+'</p>';
 							master_dock+='   </div>';
 							master_dock+='</div>';
-							$('#pages_wyca #MasterDockList').append(master_dock);
+							$('#pages_wyca_normal #MasterDockList').append(master_dock);
 						});
-						$('#pages_wyca .MasterDock_loading').hide();
+						$('#pages_wyca_normal .MasterDock_loading').hide();
 					}
 				}else{
 					ParseAPIAnswerError(data);
@@ -1493,10 +1493,10 @@ function InitMasterDockByStep(back = false)
 
 function InitTopImportWyca()
 {
-	$('#pages_wyca .modalImportTop .filename_import_top').html('');
-	$('#pages_wyca .modalImportTop .filename_import_top').hide();
-	$('#pages_wyca .modalImportTop .file_import_top_wrapper').css('background-color','#589fb26e');
-	$('#pages_wyca .modalImportTop .file_import_top').val('');
+	$('#pages_wyca_normal .modalImportTop .filename_import_top').html('');
+	$('#pages_wyca_normal .modalImportTop .filename_import_top').hide();
+	$('#pages_wyca_normal .modalImportTop .file_import_top_wrapper').css('background-color','#589fb26e');
+	$('#pages_wyca_normal .modalImportTop .file_import_top').val('');
 }
 
 function InitTopImportWycaByStep()

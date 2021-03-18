@@ -41,7 +41,7 @@ section.page > header {
 section.page { min-height:calc(100vh - 54px); min-height: calc(var(--vh, 1vh) * 100 - 54px); display:none; position:absolute; top:0; left:0; width:100%; }
 section.page.active { display:block; }
 section.page header { text-align:right; border-bottom:2px solid #589FB2; }
-#pages_wyca section.page > header { border-color:#d9534f; }
+#pages_wyca_normal section.page > header { border-color:#d9534f; }
 #pages_install section.page > header { border-color:#f0ad4e; }
 #pages_manager section.page > header { border-color:#589FB2; }
 #pages_user section.page > header { border-color:#5cb85c; }
