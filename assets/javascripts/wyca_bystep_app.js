@@ -1140,7 +1140,7 @@ $(document).ready(function(e) {
 	//AJAX INSTALL STEP CALL
 	//DECLARATION EVENTLISTENER BOUTON CREE DYNAMIQUEMENT .on('event',function(){})
 	$( "#pages_wyca_by_step #ImportSiteMapList" ).on( 'click', '.SelectMapItem', function(e) {
-		let id_map = parseInt($(this).attr('id'));
+		id_map = parseInt($(this).attr('id'));
 		wycaApi.SetMapAsCurrent(id_map, function(data){
 			if (data.A == wycaApi.AnswerCode.NO_ERROR){
 				wycaApi.GetCurrentMapData(function(data){
