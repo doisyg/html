@@ -1984,22 +1984,14 @@ function InitSoundWyca()
 	{
 		wycaApi.GetSoundIsOn(function(data){
 			if(data.D){
-				let sound_is_on = data.D
-				if(sound_is_on){
-					//ROS SOUND TRUE
-					$('#wyca_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('off').addClass('on');
-					$('#wyca_setup_sound .sound_switch_ROS').prop('checked',true);
-						//APP SOUND
-					if(app_sound_is_on){
-						$('#wyca_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('off').addClass('on');
-						$('#wyca_setup_sound .sound_switch_app').prop('checked',true);
-					}else{
-						$('#wyca_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
-						$('#wyca_setup_sound .sound_switch_app').prop('checked',false);
-					}
+				//ROS SOUND TRUE
+				$('#wyca_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('off').addClass('on');
+				$('#wyca_setup_sound .sound_switch_ROS').prop('checked',true);
+				//APP SOUND
+				if(app_sound_is_on){
+					$('#wyca_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('off').addClass('on');
+					$('#wyca_setup_sound .sound_switch_app').prop('checked',true);
 				}else{
-					$('#wyca_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('on').addClass('off');
-					$('#wyca_setup_sound .sound_switch_ROS').prop('checked',false);
 					$('#wyca_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
 					$('#wyca_setup_sound .sound_switch_app').prop('checked',false);
 				}
@@ -2025,22 +2017,14 @@ function InitSoundNormal()
 	{
 		wycaApi.GetSoundIsOn(function(data){
 			if(data.D){
-				let sound_is_on = data.D
-				if(sound_is_on){
-					//ROS SOUND TRUE
-					$('#install_normal_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('off').addClass('on');
-					$('#install_normal_setup_sound .sound_switch_ROS').prop('checked',true);
-						//APP SOUND
-					if(app_sound_is_on){
-						$('#install_normal_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('off').addClass('on');
-						$('#install_normal_setup_sound .sound_switch_app').prop('checked',true);
-					}else{
-						$('#install_normal_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
-						$('#install_normal_setup_sound .sound_switch_app').prop('checked',false);
-					}
+				//ROS SOUND TRUE
+				$('#install_normal_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('off').addClass('on');
+				$('#install_normal_setup_sound .sound_switch_ROS').prop('checked',true);
+				//APP SOUND
+				if(app_sound_is_on){
+					$('#install_normal_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('off').addClass('on');
+					$('#install_normal_setup_sound .sound_switch_app').prop('checked',true);
 				}else{
-					$('#install_normal_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('on').addClass('off');
-					$('#install_normal_setup_sound .sound_switch_ROS').prop('checked',false);
 					$('#install_normal_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
 					$('#install_normal_setup_sound .sound_switch_app').prop('checked',false);
 				}
@@ -2066,22 +2050,14 @@ function InitSoundByStep()
 	{
 		wycaApi.GetSoundIsOn(function(data){
 			if(data.D){
-				let sound_is_on = data.D
-				if(sound_is_on){
-					//ROS SOUND TRUE
-					$('#install_by_step_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('off').addClass('on');
-					$('#install_by_step_setup_sound .sound_switch_ROS').prop('checked',true);
-						//APP SOUND
-					if(app_sound_is_on){
-						$('#install_by_step_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('off').addClass('on');
-						$('#install_by_step_setup_sound .sound_switch_app').prop('checked',true);
-					}else{
-						$('#install_by_step_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
-						$('#install_by_step_setup_sound .sound_switch_app').prop('checked',false);
-					}
+				//ROS SOUND TRUE
+				$('#install_by_step_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('off').addClass('on');
+				$('#install_by_step_setup_sound .sound_switch_ROS').prop('checked',true);
+				//APP SOUND
+				if(app_sound_is_on){
+					$('#install_by_step_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('off').addClass('on');
+					$('#install_by_step_setup_sound .sound_switch_app').prop('checked',true);
 				}else{
-					$('#install_by_step_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('on').addClass('off');
-					$('#install_by_step_setup_sound .sound_switch_ROS').prop('checked',false);
 					$('#install_by_step_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
 					$('#install_by_step_setup_sound .sound_switch_app').prop('checked',false);
 				}
