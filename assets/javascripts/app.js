@@ -286,14 +286,14 @@ $(document).ready(function(e) {
 					});
 					$('#modalBack').modal('hide');
 					$('#pages_wyca_by_step').removeClass('active');
-					$('#pages_install_normal').addClass('active');
+					$('#pages_wyca_normal').addClass('active');
 					
 					//AFFICHER QQ CHOSE
-					$('section#install_normal_setup_sites').show('slow');
-					$('.title_section').html($('section#install_normal_setup_sites > header > h2').text());
-					if ($('#install_normal_setup_sites').is(':visible'))
+					$('section#wyca_setup_sites').show('slow');
+					$('.title_section').html($('section#wyca_setup_sites > header > h2').text());
+					if ($('#wyca_setup_sites').is(':visible'))
 					{
-						GetSitesNormal();
+						GetSitesWyca();
 					}
 					
 		

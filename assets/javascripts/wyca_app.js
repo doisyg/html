@@ -806,11 +806,11 @@ $(document).ready(function(e) {
 		
 		create_new_site = true;
 		setCookie('create_new_site',create_new_site); // SET COOKIES
-		$('#pages_wyca').removeClass('active');
-		$('#pages_install_by_step section.page').hide();
+		$('#pages_wyca_normal').removeClass('active');
+		$('#pages_wyca_by_step section.page').hide();
 		
-		$('#pages_install_by_step').addClass('active');
-		$('#install_by_step_site').show();
+		$('#pages_wyca_by_step').addClass('active');
+		$('#wyca_by_step_site').show();
 	});
 	
 	$(document).on('click', '#wyca_setup_sites .bSiteSetCurrentElem', function(e) {
@@ -1917,7 +1917,7 @@ $(document).ready(function(e) {
 	
 	//------------------- ACTIVE TOP ------------------------
 	
-	$( '#pages_wyca' ).on( 'click', 'a.set_top', function(e) {
+	$( '#pages_wyca_normal' ).on( 'click', 'a.set_top', function(e) {
         e.preventDefault();
 		
 		wycaApi.on('onSetActiveTopResult', function(data) {
