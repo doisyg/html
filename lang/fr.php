@@ -639,5 +639,7 @@ $_LANG['4f9baa1e6a39aef012c4faed2758c8c8'] = 'Sélection Carte';
 $_LANG['a1820c7db2c243a80e09162842bfddd1'] = 'Sélection carte par défaut';
 $_LANG['2a8e9f973e2c8beab004b64a98406d8d'] = 'Sélection du dock par défaut';
 $_LANG['54de37cb2d6c68ac5f3433ed05d03a8c'] = 'Relocaliser le robot';
+$_LANG['e3f1d096c37593236533c5177387b949'] = 'Erreur de rafraîchissement de la session';
+$_LANG['109f2f31339812491eb9bc75d9065480'] = 'Erreur de session';
 
 ?>

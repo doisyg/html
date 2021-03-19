@@ -79,10 +79,10 @@ $(document).ready(function(e) {
 			},
 			error: function(e) {
 				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-					alert_wyca((typeof(textErrorLang) != 'undefined'? textErrorLang : 'Error lang') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-					setTimeout(function(){window.location.href = 'logout.php'},3000);
+					console.log((typeof(textErrorLang) != 'undefined'? textErrorLang : 'Error lang') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					$('#modalErrorSession').modal('show');
 				}else{
-					alert_wyca((typeof(textErrorLang) != 'undefined'? textErrorLang : 'Error lang') + ' ' + e.responseText );
+					console.log((typeof(textErrorLang) != 'undefined'? textErrorLang : 'Error lang') + ' ' + e.responseText );
 				}
 			}
 		});
@@ -180,10 +180,10 @@ $(document).ready(function(e) {
 					},
 					error: function(e) {
 						if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-							alert_wyca((typeof(textErrorSaveTops) != 'undefined'? textErrorSaveTops : 'Error save tops') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-							setTimeout(function(){window.location.href = 'logout.php'},3000);
+							console.log((typeof(textErrorSaveTops) != 'undefined'? textErrorSaveTops : 'Error save tops') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+							$('#modalErrorSession').modal('show');
 						}else{
-							alert_wyca((typeof(textErrorSaveTops) != 'undefined'? textErrorSaveTops : 'Error save tops') + ' ' + e.responseText );
+							console.log((typeof(textErrorSaveTops) != 'undefined'? textErrorSaveTops : 'Error save tops') + ' ' + e.responseText );
 						}
 					}
 				});
@@ -217,10 +217,10 @@ $(document).ready(function(e) {
 			},
 			error: function(e) {
 				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-					alert_wyca((typeof(textErrorSaveTop) != 'undefined'? textErrorSaveTop : 'Error save top') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-					setTimeout(function(){window.location.href = 'logout.php'},3000);
+					console.log((typeof(textErrorSaveTop) != 'undefined'? textErrorSaveTop : 'Error save top') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					$('#modalErrorSession').modal('show');
 				}else{
-					alert_wyca((typeof(textErrorSaveTop) != 'undefined'? textErrorSaveTop : 'Error save top') + ' ' + e.responseText );
+					console.log((typeof(textErrorSaveTop) != 'undefined'? textErrorSaveTop : 'Error save top') + ' ' + e.responseText );
 				}
 			}
 		});
@@ -241,10 +241,10 @@ $(document).ready(function(e) {
 			},
 			error: function(e) {
 				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-					alert_wyca((typeof(textErrorCheck) != 'undefined'? textErrorCheck : 'Error check components') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-					setTimeout(function(){window.location.href = 'logout.php'},3000);
+					console.log((typeof(textErrorCheck) != 'undefined'? textErrorCheck : 'Error check components') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					$('#modalErrorSession').modal('show');
 				}else{
-					alert_wyca((typeof(textErrorCheck) != 'undefined'? textErrorCheck : 'Error check components') + ' ' + e.responseText );
+					console.log((typeof(textErrorCheck) != 'undefined'? textErrorCheck : 'Error check components') + ' ' + e.responseText );
 				}
 			}
 		});
@@ -397,10 +397,10 @@ $(document).ready(function(e) {
 			},
 			error: function(e) {
 				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-					alert_wyca((typeof(textErrorSkipWifi) != 'undefined'? textErrorSkipWifi : 'Error skip wifi') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-					setTimeout(function(){window.location.href = 'logout.php'},3000);
+					console.log((typeof(textErrorSkipWifi) != 'undefined'? textErrorSkipWifi : 'Error skip wifi') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					$('#modalErrorSession').modal('show');
 				}else{
-					alert_wyca((typeof(textErrorSkipWifi) != 'undefined'? textErrorSkipWifi : 'Error skip wifi') + ' ' + e.responseText );
+					console.log((typeof(textErrorSkipWifi) != 'undefined'? textErrorSkipWifi : 'Error skip wifi') + ' ' + e.responseText );
 				}
 			}
 		});
@@ -442,10 +442,10 @@ $(document).ready(function(e) {
 				},
 				error: function(e) {
 					if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-						alert_wyca((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-						setTimeout(function(){window.location.href = 'logout.php'},3000);
+						console.log((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+						$('#modalErrorSession').modal('show');
 					}else{
-						alert_wyca((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText );
+						console.log((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText );
 					}
 				}
 			});
@@ -462,10 +462,10 @@ $(document).ready(function(e) {
 				},
 				error: function(e) {
 					if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-						alert_wyca((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-						setTimeout(function(){window.location.href = 'logout.php'},3000);
+						console.log((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+						$('#modalErrorSession').modal('show');
 					}else{
-						alert_wyca((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText );
+						console.log((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText );
 					}
 				}
 			});
@@ -481,10 +481,10 @@ $(document).ready(function(e) {
 			},
 			error: function(e) {
 				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-					alert_wyca((typeof(textErrorSound) != 'undefined'? textErrorSound : 'Error sound' ) + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-					setTimeout(function(){window.location.href = 'logout.php'},3000);
+					console.log((typeof(textErrorSound) != 'undefined'? textErrorSound : 'Error sound' ) + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					$('#modalErrorSession').modal('show');
 				}else{
-					alert_wyca((typeof(textErrorSound) != 'undefined'? textErrorSound : 'Error sound ') + ' ' + e.responseText );
+					console.log((typeof(textErrorSound) != 'undefined'? textErrorSound : 'Error sound ') + ' ' + e.responseText );
 				}
 			}
 		});
@@ -541,10 +541,10 @@ $(document).ready(function(e) {
 														},
 														error: function(e) {
 															if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-																alert_wyca((typeof(textErrorSaveSite) != 'undefined'? textErrorSaveSite : 'Error save site') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-																setTimeout(function(){window.location.href = 'logout.php'},3000);
+																console.log((typeof(textErrorSaveSite) != 'undefined'? textErrorSaveSite : 'Error save site') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+																$('#modalErrorSession').modal('show');
 															}else{
-																alert_wyca((typeof(textErrorSaveSite) != 'undefined'? textErrorSaveSite : 'Error save site') + ' ' + e.responseText );
+																console.log((typeof(textErrorSaveSite) != 'undefined'? textErrorSaveSite : 'Error save site') + ' ' + e.responseText );
 															}
 														}
 													});
@@ -572,7 +572,13 @@ $(document).ready(function(e) {
 											success: function(data) {
 											},
 											error: function(e) {
-												alert_wyca((typeof(textErrorSaveSite) != 'undefined'? textErrorSaveSite : 'Error save site') + ' ' + e.responseText);
+												if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+													console.log((typeof(textErrorSaveSite) != 'undefined'? textErrorSaveSite : 'Error save site') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+													$('#modalErrorSession').modal('show');
+												}else{
+													console.log((typeof(textErrorSaveSite) != 'undefined'? textErrorSaveSite : 'Error save site') + ' ' + e.responseText);
+												}
+												
 											}
 										});
 										$('#pages_wyca_by_step a.wyca_by_step_site_next').click();
@@ -973,10 +979,10 @@ $(document).ready(function(e) {
 												img.src = "assets/images/vide.png";
 												
 												if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-													alert_wyca((typeof(textErrorTrinary) != 'undefined'? textErrorTrinary : 'Error get map trinary') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-													setTimeout(function(){window.location.href = 'logout.php'},3000);
+													console.log((typeof(textErrorTrinary) != 'undefined'? textErrorTrinary : 'Error get map trinary') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+													$('#modalErrorSession').modal('show');
 												}else{
-													alert_wyca((typeof(textErrorTrinary) != 'undefined'? textErrorTrinary : 'Error get map trinary') + ' ' + e.responseText );
+													console.log((typeof(textErrorTrinary) != 'undefined'? textErrorTrinary : 'Error get map trinary') + ' ' + e.responseText );
 												}
 											}
 										});
@@ -1053,10 +1059,10 @@ $(document).ready(function(e) {
 															},
 															error: function(e) {
 																if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-																	alert_wyca((typeof(textErrorMasterDock) != 'undefined'? textErrorMasterDock : 'Error step master dock')+ ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-																	setTimeout(function(){window.location.href = 'logout.php'},3000);
+																	console.log((typeof(textErrorMasterDock) != 'undefined'? textErrorMasterDock : 'Error step master dock')+ ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+																	$('#modalErrorSession').modal('show');
 																}else{
-																	alert_wyca((typeof(textErrorMasterDock) != 'undefined'? textErrorMasterDock : 'Error step master dock')+ ' ' + e.responseText );
+																	console.log((typeof(textErrorMasterDock) != 'undefined'? textErrorMasterDock : 'Error step master dock')+ ' ' + e.responseText );
 																}
 															}
 														});
@@ -1079,7 +1085,12 @@ $(document).ready(function(e) {
 																$('#wyca_by_step_site_map .wyca_by_step_site_map_next').click();
 															},
 															error: function(e) {
-																alert_wyca((typeof(textErrorImportSite) != 'undefined'? textErrorImportSite : 'Error import site') + ' ' + e.responseText);
+																if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+																	console.log((typeof(textErrorImportSite) != 'undefined'? textErrorImportSite : 'Error import site')+ ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+																	$('#modalErrorSession').modal('show');
+																}else{
+																	console.log((typeof(textErrorImportSite) != 'undefined'? textErrorImportSite : 'Error import site') + ' ' + e.responseText);
+																}
 															}
 														});
 													}
@@ -1101,7 +1112,12 @@ $(document).ready(function(e) {
 													$('#wyca_by_step_import_site .wyca_by_step_import_site_next').click();
 												},
 												error: function(e) {
-													alert_wyca((typeof(textErrorImportSite) != 'undefined'? textErrorImportSite : 'Error import site') + ' ' + e.responseText);
+													if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+														console.log((typeof(textErrorImportSite) != 'undefined'? textErrorImportSite : 'Error import site')+ ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+														$('#modalErrorSession').modal('show');
+													}else{
+														console.log((typeof(textErrorImportSite) != 'undefined'? textErrorImportSite : 'Error import site') + ' ' + e.responseText);
+													}
 												}
 											});
 										}
@@ -1159,10 +1175,10 @@ $(document).ready(function(e) {
 								},
 								error: function(e) {
 									if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-										alert_wyca((typeof(textErrorMasterDock) != 'undefined'? textErrorMasterDock : 'Error step master dock')+ ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-										setTimeout(function(){window.location.href = 'logout.php'},3000);
+										console.log((typeof(textErrorMasterDock) != 'undefined'? textErrorMasterDock : 'Error step master dock')+ ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+										$('#modalErrorSession').modal('show');
 									}else{
-										alert_wyca((typeof(textErrorMasterDock) != 'undefined'? textErrorMasterDock : 'Error step master dock')+ ' ' + e.responseText );
+										console.log((typeof(textErrorMasterDock) != 'undefined'? textErrorMasterDock : 'Error step master dock')+ ' ' + e.responseText );
 									}
 								}
 							});
@@ -1185,7 +1201,12 @@ $(document).ready(function(e) {
 									$('#wyca_by_step_site_map .wyca_by_step_site_map_next').click();
 								},
 								error: function(e) {
-									alert_wyca((typeof(textErrorImportSite) != 'undefined'? textErrorImportSite : 'Error import site') + ' ' + e.responseText);
+									if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+										console.log((typeof(textErrorImportSite) != 'undefined'? textErrorImportSite : 'Error import site')+ ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+										$('#modalErrorSession').modal('show');
+									}else{
+										console.log((typeof(textErrorImportSite) != 'undefined'? textErrorImportSite : 'Error import site') + ' ' + e.responseText);
+									}
 								}
 							});
 						}
@@ -1233,10 +1254,10 @@ $(document).ready(function(e) {
 					},
 					error: function(e) {
 						if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-							alert_wyca((typeof(textErrorMasterDock) != 'undefined'? textErrorMasterDock : 'Error step master dock')+ ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-							setTimeout(function(){window.location.href = 'logout.php'},3000);
+							console.log((typeof(textErrorMasterDock) != 'undefined'? textErrorMasterDock : 'Error step master dock')+ ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+							$('#modalErrorSession').modal('show');
 						}else{
-							alert_wyca((typeof(textErrorMasterDock) != 'undefined'? textErrorMasterDock : 'Error step master dock')+ ' ' + e.responseText );
+							console.log((typeof(textErrorMasterDock) != 'undefined'? textErrorMasterDock : 'Error step master dock')+ ' ' + e.responseText );
 						}
 					}
 				});
@@ -1305,7 +1326,12 @@ $(document).ready(function(e) {
 						success: function(data) {
 						},
 						error: function(e) {
-							alert_wyca((typeof(textErrorRecovery) != 'undefined'? textErrorRecovery : 'Error in recovery') + ' ' + e.responseText);
+							if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+								console.log((typeof(textErrorRecovery) != 'undefined'? textErrorRecovery : 'Error in recovery')+ ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+								$('#modalErrorSession').modal('show');
+							}else{
+								console.log((typeof(textErrorRecovery) != 'undefined'? textErrorRecovery : 'Error in recovery') + ' ' + e.responseText);
+							}
 						}
 					});
 				},500)
@@ -1358,7 +1384,7 @@ $(document).ready(function(e) {
 			success: function(data) {
 			},
 			error: function(e) {
-				alert_wyca((typeof(textErrorRecovery) != 'undefined'? textErrorRecovery : 'Error in recovery') + ' ' + e.responseText);
+				console.log((typeof(textErrorRecovery) != 'undefined'? textErrorRecovery : 'Error in recovery') + ' ' + e.responseText);
 			}
 		});
     });
@@ -1662,7 +1688,7 @@ $(document).ready(function(e) {
 			error: function(e) {
 				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
 					alert_wyca('Error step test finish ; ' + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-					setTimeout(function(){window.location.href = 'logout.php'},3000);
+					$('#modalErrorSession').modal('show');
 				}else{
 					alert_wyca('Error step test finish ; ' + ' ' + e.responseText );
 				}
@@ -1683,10 +1709,10 @@ $(document).ready(function(e) {
 			},
 			error: function(e) {
 				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-					alert_wyca((typeof(textErrorEditMap) != 'undefined'? textErrorEditMap : 'Error step edit map') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-					setTimeout(function(){window.location.href = 'logout.php'},3000);
+					console.log((typeof(textErrorEditMap) != 'undefined'? textErrorEditMap : 'Error step edit map') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					$('#modalErrorSession').modal('show');
 				}else{
-					alert_wyca((typeof(textErrorEditMap) != 'undefined'? textErrorEditMap : 'Error step edit map') + ' ' + e.responseText );
+					console.log((typeof(textErrorEditMap) != 'undefined'? textErrorEditMap : 'Error step edit map') + ' ' + e.responseText );
 				}
 			}
 		});
@@ -1802,10 +1828,10 @@ $(document).ready(function(e) {
 					},
 					error: function(e) {
 						if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-							alert_wyca((typeof(textErrorBatteryConfig) != 'undefined'? textErrorBatteryConfig : 'Error step battery config')+ ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-							setTimeout(function(){window.location.href = 'logout.php'},3000);
+							console.log((typeof(textErrorBatteryConfig) != 'undefined'? textErrorBatteryConfig : 'Error step battery config')+ ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+							$('#modalErrorSession').modal('show');
 						}else{
-							alert_wyca((typeof(textErrorBatteryConfig) != 'undefined'? textErrorBatteryConfig : 'Error step battery config') + ' ' + e.responseText );
+							console.log((typeof(textErrorBatteryConfig) != 'undefined'? textErrorBatteryConfig : 'Error step battery config') + ' ' + e.responseText );
 						}
 					}
 				});
@@ -1856,10 +1882,10 @@ $(document).ready(function(e) {
 							},
 							error: function(e) {
 								if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-									alert_wyca((typeof(textErrorExportSite) != 'undefined'? textErrorExportSite : 'Error export site') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-									setTimeout(function(){window.location.href = 'logout.php'},3000);
+									console.log((typeof(textErrorExportSite) != 'undefined'? textErrorExportSite : 'Error export site') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+									$('#modalErrorSession').modal('show');
 								}else{
-									alert_wyca((typeof(textErrorExportSite) != 'undefined'? textErrorExportSite : 'Error export site') + ' ' + e.responseText );
+									console.log((typeof(textErrorExportSite) != 'undefined'? textErrorExportSite : 'Error export site') + ' ' + e.responseText );
 								}
 							}
 						});
@@ -1891,10 +1917,10 @@ $(document).ready(function(e) {
 			},
 			error: function(e) {
 				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-					alert_wyca((typeof(textErrorExportSite) != 'undefined'? textErrorExportSite : 'Error export site') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-					setTimeout(function(){window.location.href = 'logout.php'},3000);
+					console.log((typeof(textErrorExportSite) != 'undefined'? textErrorExportSite : 'Error export site') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					$('#modalErrorSession').modal('show');
 				}else{
-					alert_wyca((typeof(textErrorExportSite) != 'undefined'? textErrorExportSite : 'Error export site') + ' ' + e.responseText );
+					console.log((typeof(textErrorExportSite) != 'undefined'? textErrorExportSite : 'Error export site') + ' ' + e.responseText );
 				}
 			}
 		});
@@ -1926,10 +1952,10 @@ $(document).ready(function(e) {
 					},
 					error: function(e) {
 						if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-							alert_wyca((typeof(textErrorMaintenanceAccount) != 'undefined'? textErrorMaintenanceAccount : 'Error maintenance account') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-							setTimeout(function(){window.location.href = 'logout.php'},3000);
+							console.log((typeof(textErrorMaintenanceAccount) != 'undefined'? textErrorMaintenanceAccount : 'Error maintenance account') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+							$('#modalErrorSession').modal('show');
 						}else{
-							alert_wyca((typeof(textErrorMaintenanceAccount) != 'undefined'? textErrorMaintenanceAccount : 'Error maintenance account') + ' ' + e.responseText );
+							console.log((typeof(textErrorMaintenanceAccount) != 'undefined'? textErrorMaintenanceAccount : 'Error maintenance account') + ' ' + e.responseText );
 						}
 					}
 				});
@@ -1964,10 +1990,10 @@ $(document).ready(function(e) {
 			},
 			error: function(e) {
 				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-					alert_wyca((typeof(textErrorMaintenanceAccount) != 'undefined'? textErrorMaintenanceAccount : 'Error maintenance account') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-					setTimeout(function(){window.location.href = 'logout.php'},3000);
+					console.log((typeof(textErrorMaintenanceAccount) != 'undefined'? textErrorMaintenanceAccount : 'Error maintenance account') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					$('#modalErrorSession').modal('show');
 				}else{
-					alert_wyca((typeof(textErrorMaintenanceAccount) != 'undefined'? textErrorMaintenanceAccount : 'Error maintenance account') + ' ' + e.responseText );
+					console.log((typeof(textErrorMaintenanceAccount) != 'undefined'? textErrorMaintenanceAccount : 'Error maintenance account') + ' ' + e.responseText );
 				}
 			}
 		});
@@ -2008,10 +2034,10 @@ $(document).ready(function(e) {
 						},
 						error: function(e) {
 							if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-								alert_wyca((typeof(textErrorMaintenanceAccount) != 'undefined'? textErrorMaintenanceAccount : 'Error maintenance account') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-								setTimeout(function(){window.location.href = 'logout.php'},3000);
+								console.log((typeof(textErrorMaintenanceAccount) != 'undefined'? textErrorMaintenanceAccount : 'Error maintenance account') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+								$('#modalErrorSession').modal('show');
 							}else{
-								alert_wyca((typeof(textErrorMaintenanceAccount) != 'undefined'? textErrorMaintenanceAccount : 'Error maintenance account') + ' ' + e.responseText );
+								console.log((typeof(textErrorMaintenanceAccount) != 'undefined'? textErrorMaintenanceAccount : 'Error maintenance account') + ' ' + e.responseText );
 							}
 						}
 					});
@@ -2194,10 +2220,10 @@ $(document).ready(function(e) {
 			},
 			error: function(e) {
 				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-					alert_wyca((typeof(textErrorManagers) != 'undefined'? textErrorManagers : 'Error manager') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-					setTimeout(function(){window.location.href = 'logout.php'},3000);
+					console.log((typeof(textErrorManagers) != 'undefined'? textErrorManagers : 'Error manager') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					$('#modalErrorSession').modal('show');
 				}else{
-					alert_wyca((typeof(textErrorManagers) != 'undefined'? textErrorManagers : 'Error manager') + ' ' + e.responseText );
+					console.log((typeof(textErrorManagers) != 'undefined'? textErrorManagers : 'Error manager') + ' ' + e.responseText );
 				}
 			}
 		});
@@ -2277,10 +2303,10 @@ $(document).ready(function(e) {
 			},
 			error: function(e) {
 				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-					alert_wyca((typeof(textErrorFinish) != 'undefined'? textErrorFinish : 'Error in finish') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-					setTimeout(function(){window.location.href = 'logout.php'},3000);
+					console.log((typeof(textErrorFinish) != 'undefined'? textErrorFinish : 'Error in finish') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					$('#modalErrorSession').modal('show');
 				}else{
-					alert_wyca((typeof(textErrorFinish) != 'undefined'? textErrorFinish : 'Error in finish') + ' ' + e.responseText );
+					console.log((typeof(textErrorFinish) != 'undefined'? textErrorFinish : 'Error in finish') + ' ' + e.responseText );
 				}
 			}
 		});

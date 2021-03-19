@@ -49,6 +49,12 @@ $(window).on("popstate", function(e) {
 
 $(document).ready(function(e) {
 	
+	refresh_session_interval = setInterval(refresh_session_php,30000);
+	
+	$('#bModalErrorSession').click(function(){
+		window.location.href = 'logout.php'
+	});
+	
 	$('#bHeaderInfo').attr('onClick',"$('.global_sub_page.active section.active .popupHelp').toggle('fast')");
 	
 	$('.iro-colorpicker').each(function(){

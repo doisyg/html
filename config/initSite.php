@@ -112,8 +112,8 @@ if($_CONFIG['MODE'] == 'PROD'){
 }else{
 	if(file_exists('C:\\Users\\Yvan') || file_exists('C:\\Users\\F')){
 		//F
-		//$_CONFIG['ROBOT_HOST'] = $VM ? '172.25.65.22' : '10.0.0.72';
-		$_CONFIG['ROBOT_HOST'] = $VM ? '172.25.65.22' : '192.168.1.56';
+		$_CONFIG['ROBOT_HOST'] = $VM ? '172.25.65.22' : '10.0.0.72';
+		//$_CONFIG['ROBOT_HOST'] = $VM ? '172.25.65.22' : '192.168.1.56';
 	}else{
 		//SMORILLON
 		$_CONFIG['ROBOT_HOST'] = '192.168.0.33';
