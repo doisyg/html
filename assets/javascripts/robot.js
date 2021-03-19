@@ -38,6 +38,8 @@ var battery_lvl_current=0;
 $(document).ready(function(e) {
 	
 	var img = document.getElementById("install_by_step_mapping_img_map_saved");
+	if(img == null)
+		img = document.getElementById("wyca_by_step_mapping_img_map_saved");
 	if(img != null){
 		img.onload = function () {
 			imgMappingLoaded = true;	
@@ -283,6 +285,8 @@ function GetMappingInConstruction()
 					nbAttempLoadImg = 0;
 					imgMappingLoaded = false;
 					var img = document.getElementById("install_by_step_mapping_img_map_saved");
+					if(img == null)
+						 img = document.getElementById("wyca_by_step_mapping_img_map_saved");
 					//img.src = 'data:image/png;base64,' + data.D.M;
 					img.src = robot_http + '/mapping/last_mapping.jpg?v='+ Date.now();
 					//img.src = 'http://192.168.0.30/mapping/last_mapping.jpg?v='+ Date.now();
@@ -494,6 +498,9 @@ function InitPosCarteMapping()
 	{
 		img_map_save_id = '#install_by_step_mapping_img_map_saved';
 		img_map_save_contener_id = '#install_by_step_mapping';
+	}else if ($('#wyca_by_step_mapping_img_map_saved').is(':visible')){
+		img_map_save_id = '#wyca_by_step_mapping_img_map_saved';
+		img_map_save_contener_id = '#wyca_by_step_mapping';
 	}
 	
     originWidth = $(img_map_save_id).prop('naturalWidth') * 2;
