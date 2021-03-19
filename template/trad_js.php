@@ -11,6 +11,7 @@ else
 <?php
 }
 ?>
+
 var textBeSureSelectedSite = "<?php echo __js('Be sure that selected site is the one where is the vehicle, if not robot could be damaged or broken.');?>"; 
 
 var textActionCanceled = "<?php echo __js('Action canceled');?>";
@@ -90,6 +91,8 @@ var textErrorStartMapping = "<?php echo __js('Error start mapping');?>";
 var textErrorStopMapping = "<?php echo __js('Error stop mapping');?>";
 var textErrorGetMapping = "<?php echo __js('Error get mapping');?>";
 var textErrorInput = "<?php echo __js('Error on input');?>";
+
+var textErrorRefreshSession = "<?php echo __js('Error in refresh session');?>"; 
 
 //DEMO MODE
 var textDemoNeedActions = "<?php echo __js('You need to setup actions before launch Demo');?>";
