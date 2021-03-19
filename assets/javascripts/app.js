@@ -48,22 +48,31 @@ $(window).on("popstate", function(e) {
 })(history.pushState);
 
 var refresh_session_interval = null;
+var do_refresh = false;
+var do_refresh_continously = false;
 function refresh_session_php(){
-	$.ajax({
-		type: "POST",
-		url: 'ajax/refresh_session_php.php',
-		data: {
-		},
-		dataType: 'json',
-		success: function(data) {
-		},
-		error: function(e) {
-			console.log(typeof(textErrorRefreshSession) != 'undefined'? textErrorRefreshSession : 'Error in refresh session');
-		}
-	});
+	if (do_refresh_continously || do_refresh)
+	{
+		$.ajax({
+			type: "POST",
+			url: 'ajax/refresh_session_php.php',
+			data: {
+			},
+			dataType: 'json',
+			success: function(data) {
+			},
+			error: function(e) {
+				console.log(typeof(textErrorRefreshSession) != 'undefined'? textErrorRefreshSession : 'Error in refresh session');
+			}
+		});
+		do_refresh = false;
+	}
 }
 
 $(document).ready(function(e) {
+	
+	
+	refresh_session_interval = setInterval(refresh_session_php,30000);
 	
 	$('#bHeaderInfo').attr('onClick',"$('.global_sub_page.active section.active .popupHelp').toggle('fast')");
 	
@@ -356,13 +365,15 @@ $(document).ready(function(e) {
 				if (next == 'install_by_step_service_book') GetServiceBooksByStep();
 				
 				if(next.includes('install_by_step')){
-					if (refresh_session_interval == null)
-						refresh_session_interval = setInterval(refresh_session_php,30000);
+					do_refresh_continously = true;
 				}else{
-					if (refresh_session_interval != null)
+					if (do_refresh_continously)
 					{
-						clearInterval(refresh_session_interval);
-						refresh_session_interval = null;
+						do_refresh_continously = false;
+					}
+					else
+					{
+						do_refresh = true;
 					}
 				}
 				
