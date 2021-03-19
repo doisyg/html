@@ -1444,6 +1444,7 @@ $(document).ready(function(e) {
 		$('#wyca_by_step_mapping_threshold_occupied_output b').text( 65 );
 		threshold_occupied = 65;
 		
+		$('#wyca_by_step_mapping_fin .bMappingSaveMap ').addClass('disabled');
 		CalculateMapTrinary();
     });
 	
@@ -1451,6 +1452,7 @@ $(document).ready(function(e) {
 		$('#wyca_by_step_mapping_threshold_free_output b').text( this.value );
 		threshold_free = this.value;
 		
+		$('#wyca_by_step_mapping_fin .bMappingSaveMap ').addClass('disabled');
 		CalculateMapTrinary();
 	});
 	
@@ -1458,6 +1460,7 @@ $(document).ready(function(e) {
 		$('#wyca_by_step_mapping_threshold_occupied_output b').text( this.value );
 		threshold_occupied = this.value;
 		
+		$('#wyca_by_step_mapping_fin .bMappingSaveMap ').addClass('disabled');
 		CalculateMapTrinary();
 	});
 	
