@@ -52,6 +52,7 @@ $(document).ready(function(e) {
 		$('#wyca_setup_trinary_threshold_occupied_output b').text( 65 );
 		threshold_occupied_wyca = 65;
 		
+		$('#wyca_setup_trinary .bSaveTrinaryMap ').addClass('disabled');
 		CalculateMapTrinaryWyca();
     });
 	
@@ -59,6 +60,7 @@ $(document).ready(function(e) {
 		$('#wyca_setup_trinary_threshold_free_output b').text( this.value );
 		threshold_free_wyca = this.value;
 		
+		$('#wyca_setup_trinary .bSaveTrinaryMap ').addClass('disabled');
 		CalculateMapTrinaryWyca();
 	});
 	
@@ -66,6 +68,7 @@ $(document).ready(function(e) {
 		$('#wyca_setup_trinary_threshold_occupied_output b').text( this.value );
 		threshold_occupied_wyca = this.value;
 		
+		$('#wyca_setup_trinary .bSaveTrinaryMap ').addClass('disabled');
 		CalculateMapTrinaryWyca();
 	});
 	
@@ -574,7 +577,8 @@ var current_map_obj = {};
 function WycaInitTrinaryDo()
 {
 	$('#wyca_setup_trinary .loading_fin_create_map').show();
-		
+	$('#wyca_setup_trinary .bSaveTrinaryMap ').addClass('disabled');
+	
 	img = document.getElementById("wyca_setup_trinary_img_map_saved_fin");
 	img.src = 'assets/images/vide.png';
 	
@@ -670,6 +674,7 @@ function CalculateMapTrinaryDoWyca()
 	ctx.putImageData(idata, 0, 0);
 	
 	$('#wyca_setup_trinary .loading_fin_create_map').hide();
+	$('#wyca_setup_trinary .bSaveTrinaryMap ').removeClass('disabled');
 }
 
 var timeoutCalcul_wyca = null;

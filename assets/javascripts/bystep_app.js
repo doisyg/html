@@ -770,7 +770,7 @@ $(document).ready(function(e) {
 				canvas.width = img.naturalWidth;
 				canvas.height = img.naturalHeight;
 				canvas.getContext('2d').drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
-				
+				$('#install_by_step_mapping_fin .bMappingSaveMap ').addClass('disabled');
 				CalculateMapTrinary();
 			}, 100);
 		});
@@ -1449,6 +1449,7 @@ $(document).ready(function(e) {
 		$('#install_by_step_mapping_threshold_occupied_output b').text( 65 );
 		threshold_occupied = 65;
 		
+		$('#install_by_step_mapping_fin .bMappingSaveMap ').addClass('disabled');
 		CalculateMapTrinary();
     });
 	
@@ -1456,6 +1457,7 @@ $(document).ready(function(e) {
 		$('#install_by_step_mapping_threshold_free_output b').text( this.value );
 		threshold_free = this.value;
 		
+		$('#install_by_step_mapping_fin .bMappingSaveMap ').addClass('disabled');
 		CalculateMapTrinary();
 	});
 	
@@ -1463,6 +1465,7 @@ $(document).ready(function(e) {
 		$('#install_by_step_mapping_threshold_occupied_output b').text( this.value );
 		threshold_occupied = this.value;
 		
+		$('#install_by_step_mapping_fin .bMappingSaveMap ').addClass('disabled');
 		CalculateMapTrinary();
 	});
 	

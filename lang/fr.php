@@ -569,7 +569,7 @@ $_LANG['a3990aca6550f7e305ef8374ea67b989'] = 'Pas la carte actuelle';
 $_LANG['fe68a8c4efc3b24436293be1b10dc99b'] = 'La carte a été modifiée extérieurement.';
 $_LANG['1dc5ac9ee6615745ae0da26b4b9f8fae'] = 'Voulez-vous la recharger?';
 $_LANG['075ccf602d50ccef351a1742400b64da'] = 'Cela vous évitera de perdre les modifications.';
-$_LANG['156b59abd99c7c47965cdac65db8f63e'] = 'Recharger carte';
+$_LANG['156b59abd99c7c47965cdac65db8f63e'] = 'Recharger';
 $_LANG['01da36bdc7136ee63b0c6ff9689576c6'] = 'Êtes-vous sur?';
 $_LANG['a8eb6e99e889dfc6a35c821a2b4ae5b9'] = 'Si vous choisissez de conserver votre carte,';
 $_LANG['36b40c4b11ab567c12dafd9572074e42'] = 'Vous pouvez perdre certaines modifications effectuées sur la carte en écrasant les changements qui ont été faits.';
@@ -641,5 +641,8 @@ $_LANG['2a8e9f973e2c8beab004b64a98406d8d'] = 'Sélection du dock par défaut';
 $_LANG['54de37cb2d6c68ac5f3433ed05d03a8c'] = 'Relocaliser le robot';
 $_LANG['e3f1d096c37593236533c5177387b949'] = 'Erreur de rafraîchissement de la session';
 $_LANG['109f2f31339812491eb9bc75d9065480'] = 'Erreur de session';
+$_LANG['d5a40d899dd4fc3fddf2d623b69e91ea'] = 'Erreur recupération config son';
+$_LANG['7826f93e0e1ad56ff239e493cf97163a'] = 'Erreur recupération GlobalVehiculePersistanteDataStorage';
+$_LANG['dbb8c43385e7134b1936431305b7bbbb'] = 'Erreur sauvegarde GlobalVehiculePersistanteDataStorage';
 
 ?>
