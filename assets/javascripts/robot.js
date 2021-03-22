@@ -82,15 +82,15 @@ $(document).ready(function(e) {
 		onInitialized: function(){
 			wycaApi.TeleopIsStarted(function(data){
 				if(teleopEnable == 'not_init'){
-					teleopEnable = data.D;
-				}else{
-					if(teleopEnable != data.D){
-						if(teleopEnable)
-							wycaApi.TeleopStart();
-						else
-							wycaApi.TeleopStop();
-					}
+					teleopEnable = $('.page.active').find('.joystickDiv').length > 0;
 				}
+				if(teleopEnable != data.D){
+					if(teleopEnable)
+						wycaApi.TeleopStart();
+					else
+						wycaApi.TeleopStop();
+				}
+				
 			});
 		},
 		onBatteryState: function(data){

@@ -292,7 +292,7 @@ $(document).ready(function(e) {
 				history.pushState({ current_groupe:$('.menu_groupe .active').attr('id'), current_page:$(this).data('goto')}, $(this).data('goto'), "/#"+$(this).data('goto'));
 				next = $(this).data('goto');
 				
-				//CHECK JOYSTICK TO START/STOP TELEOP
+				//CHECK JOYSTICK TO START/STOP TELEOP ON NEXT PAGE
 				if($('#'+next).find('.joystickDiv').length > 0){
 					if(!teleopEnable || teleopEnable == 'not_init'){
 						teleopEnable = true;
