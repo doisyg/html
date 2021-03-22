@@ -67,6 +67,7 @@ $(document).ready(function(e) {
 		$('#install_normal_setup_trinary_threshold_occupied_output b').text( 65 );
 		threshold_occupied_normal = 65;
 		
+		$('#install_normal_setup_trinary .bSaveTrinaryMap ').addClass('disabled');
 		CalculateMapTrinaryNormal();
     });
 	
@@ -74,6 +75,7 @@ $(document).ready(function(e) {
 		$('#install_normal_setup_trinary_threshold_free_output b').text( this.value );
 		threshold_free_normal = this.value;
 		
+		$('#install_normal_setup_trinary .bSaveTrinaryMap ').addClass('disabled');
 		CalculateMapTrinaryNormal();
 	});
 	
@@ -81,6 +83,7 @@ $(document).ready(function(e) {
 		$('#install_normal_setup_trinary_threshold_occupied_output b').text( this.value );
 		threshold_occupied_normal = this.value;
 		
+		$('#install_normal_setup_trinary .bSaveTrinaryMap ').addClass('disabled');
 		CalculateMapTrinaryNormal();
 	});
 	
@@ -588,7 +591,8 @@ var current_map_obj = {};
 function NormalInitTrinaryDo()
 {
 	$('#install_normal_setup_trinary .loading_fin_create_map').show();
-		
+	$('#install_normal_setup_trinary .bSaveTrinaryMap ').addClass('disabled');
+	
 	img = document.getElementById("install_normal_setup_trinary_img_map_saved_fin");
 	img.src = 'assets/images/vide.png';
 	
@@ -684,6 +688,7 @@ function CalculateMapTrinaryDoNormal()
 	ctx.putImageData(idata, 0, 0);
 	
 	$('#install_normal_setup_trinary .loading_fin_create_map').hide();
+	$('#install_normal_setup_trinary .bSaveTrinaryMap ').removeClass('disabled');
 }
 
 var timeoutCalcul_normal = null;
