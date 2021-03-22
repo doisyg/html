@@ -1,6 +1,9 @@
 <?php
+ob_start();
+
 require_once (__DIR__.'/../config/initSite.php');
 
+ob_end_clean();
 if (false) // Pour rendre l'IDE plus firendly
 {
 ?><script id="trad_js"><?php
