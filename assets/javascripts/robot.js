@@ -210,11 +210,11 @@ $(document).ready(function(e) {
 				
 				if (data.O == wycaApi.CommandCode.GET_CURRENT_MAP_COMPLETE || data.O == wycaApi.CommandCode.GET_CURRENT_MAP_DATA)
 				{
-					$('#modalLoading h3').html(textUpdatingMap);
+					$('#modalLoading h3').html(typeof(textUpdatingMap) != 'undefined'? textUpdatingMap : 'Updating Map');
 				}
 				else
 				{
-					$('#modalLoading h3').html(textLoading);
+					$('#modalLoading h3').html(typeof(textLoading) != 'undefined'? textLoading : 'Loading' );
 				}
 				
 				valeur = parseInt(data.I / data.NB * 100);
