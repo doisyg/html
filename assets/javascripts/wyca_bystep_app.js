@@ -471,6 +471,7 @@ $(document).ready(function(e) {
 			});
 			
 		}
+		RefreshGlobalVehiculePersistanteDataStorage();
 		//AJAX INSTALL STEP CALL
 		$.ajax({
 			type: "POST",

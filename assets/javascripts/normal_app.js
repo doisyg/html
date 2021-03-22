@@ -1238,7 +1238,7 @@ $(document).ready(function(e) {
 	});
 	
 	$('#install_normal_setup_sound .bSaveSound').click(function(e) {
-		console.log('here');
+		//console.log('here');
 		//SOUND
 		if($('#install_normal_setup_sound .sound_switch_ROS').prop('checked')){
 			//SOUND ON
@@ -1294,6 +1294,7 @@ $(document).ready(function(e) {
 			});
 			
 		}
+		RefreshGlobalVehiculePersistanteDataStorage();
 	});
 	
 	

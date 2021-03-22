@@ -1507,7 +1507,7 @@ $(document).ready(function(e) {
 	});
 	
 	$('#wyca_setup_sound .bSaveSound').click(function(e) {
-		console.log('here');
+		//console.log('here');
 		//SOUND
 		if($('#wyca_setup_sound .sound_switch_ROS').prop('checked')){
 			//SOUND ON
@@ -1560,8 +1560,8 @@ $(document).ready(function(e) {
 					}
 				}
 			});
-			
 		}
+		RefreshGlobalVehiculePersistanteDataStorage();
 	});
 	
 	

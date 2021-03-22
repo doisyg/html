@@ -2389,6 +2389,7 @@ function InitTopsActiveByStep()
 	}
 }
 
+//var app_sound_is_on declared in footer.php initialized with c.conf;
 //SOUND
 
 function InitSoundWyca()
