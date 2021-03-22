@@ -1743,6 +1743,86 @@ $(document).ready(function() {
 	/*  Click on element      */
 	/**************************/
 	
+	/* BTN RECOVERY */
+	
+	$('#install_by_step_edit_map_modalRecovery .bRecovery').click(function(e) {
+        e.preventDefault();
+		$('#install_by_step_edit_map_modalRecovery .bRecovery').addClass('disabled');
+		
+		/*INIT FEEDBACK DISPLAY*/
+		$('#install_by_step_edit_map_modalRecovery .recovery_feedback .recovery_step').css('opacity','0').hide();
+		$('#install_by_step_edit_map_modalRecovery .recovery_feedback .recovery_step .fa-check').hide();
+		$('#install_by_step_edit_map_modalRecovery .recovery_feedback .recovery_step .fa-pulse').show();
+		
+		wycaApi.on('onRecoveryFromFiducialFeedback', function(data) {
+			if(data.A == wycaApi.AnswerCode.NO_ERROR){
+				target = '';
+				switch(data.M){
+					case 'Scan reflector': 				target = '#install_by_step_edit_map_modalRecovery .recovery_feedback .recovery_step.RecoveryScan';	break;
+					case 'Init pose': 					target = '#install_by_step_edit_map_modalRecovery .recovery_feedback .recovery_step.RecoveryPose';	break;
+					case 'Rotate to check obstacles': 	target = '#install_by_step_edit_map_modalRecovery .recovery_feedback .recovery_step.RecoveryRotate';	break;
+					case 'Start navigation': 			target = '#install_by_step_edit_map_modalRecovery .recovery_feedback .recovery_step.RecoveryNav';		break;
+				}
+				
+				target = $(target);
+				if(target.prevAll('.recovery_step:visible').length > 0){
+					target.prevAll('.recovery_step:visible').find('.fa-check').show();
+					target.prevAll('.recovery_step:visible').find('.fa-pulse').hide();
+				}
+				target.css('opacity','1').show();
+			}
+		});
+		
+		wycaApi.on('onRecoveryFromFiducialResult', function(data) {
+			
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				
+				$('#install_by_step_edit_map_modalRecovery .recovery_step:visible').find('.fa-check').show();
+				$('#install_by_step_edit_map_modalRecovery .recovery_step:visible').find('.fa-pulse').hide();
+				setTimeout(function(){
+					$('.ifRecovery').hide();
+					$('.ifNRecovery').show();
+					$('#install_by_step_edit_map_modalRecovery .bRecovery').removeClass('disabled');
+					success_wyca(textRecoveryDone);
+					$('#install_by_step_edit_map_modalRecovery').modal('hide');
+				},500)
+			}
+			else
+			{
+				$('.ifRecovery').hide();
+				$('.ifNRecovery').show();
+				$('#install_by_step_edit_map_modalRecovery .bRecovery').removeClass('disabled');
+				ParseAPIAnswerError(data);
+			}
+			// On rebranche l'ancienne fonction
+			wycaApi.on('onRecoveryFromFiducialResult', onRecoveryFromFiducialResult);
+			wycaApi.on('onRecoveryFromFiducialFeedback', onRecoveryFromFiducialFeedback);
+		});
+		
+		wycaApi.RecoveryFromFiducial(function(data) {
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$('.ifRecovery').show();
+				$('.ifNRecovery').hide();
+			}
+			else
+			{
+				$('.ifRecovery').hide();
+				$('.ifNRecovery').show();
+				$('#install_by_step_edit_map_modalRecovery .bRecovery').removeClass('disabled');
+				ParseAPIAnswerError(data);
+			}
+		});
+    });
+	
+	$('#install_by_step_edit_map_modalRecovery .bCancelRecovery').click(function(e) {
+		$('#install_by_step_edit_map_modalRecovery .bCancelRecovery').addClass('disabled');
+		wycaApi.RecoveryFromFiducialCancel(function(data) {
+			$('#install_by_step_edit_map_modalRecovery .bCancelRecovery').removeClass('disabled');
+		})
+	})
+	
 	/* BTN GOTOPOSE */
 	
 	$('#install_by_step_edit_map_menu .bMoveTo').click(function(e) {
@@ -2213,6 +2293,7 @@ $(document).ready(function() {
 			$('#install_by_step_edit_map_container_all .text_prepare_robot').show();
 			
 			$('#install_by_step_edit_map_container_all .modalAddDock .dock').hide();
+			$('#install_by_step_edit_map_container_all .modalAddDock .fiducial_number_wrapper ').html('')
 			$('#install_by_step_edit_map_container_all .modalAddDock').modal('show');
 		}
 		else
@@ -2878,6 +2959,7 @@ $(document).ready(function() {
 		if (bystepCanChangeMenu)
 		{
 			$('#install_by_step_edit_map_container_all .modalAddAugmentedPose .augmented_pose').hide();
+			$('#install_by_step_edit_map_container_all .modalAddAugmentedPose .fiducial_number_wrapper ').html('')
 			$('#install_by_step_edit_map_container_all .texts_add_augmented_pose').hide();
 			$('#install_by_step_edit_map_container_all .text_prepare_approch').show();
 			currentStepAddAugmentedPose = 'set_approch';

@@ -11,6 +11,7 @@ else
 <?php
 }
 ?>
+
 var textBeSureSelectedSite = "<?php echo __js('Be sure that selected site is the one where is the vehicle, if not robot could be damaged or broken.');?>"; 
 
 var textActionCanceled = "<?php echo __js('Action canceled');?>";
@@ -64,6 +65,7 @@ var textErrorTrinary = "<?php echo __js('Error get map trinary');?>";
 var textErrorImportSite = "<?php echo __js('Error import site');?>";
 var textErrorExportSite = "<?php echo __js('Error export site');?>";
 var textErrorDownloadMap = "<?php echo __js('Error download map');?>";
+var textErrorGetSites = "<?php echo __js('Error get sites');?>";
 var textErrorSaveSite = "<?php echo __js('Error save site');?>";
 var textErrorGetSite = "<?php echo __js('Error get site');?>";
 var textErrorSetSite = "<?php echo __js('Error set site');?>";
@@ -77,6 +79,7 @@ var textErrorMaintenanceAccount = "<?php echo __js('Error maintenance account');
 var textErrorManagers = "<?php echo __js('Error managers');?>";
 var textErrorFinish = "<?php echo __js('Error in finish');?>";
 var textErrorInitMap = "<?php echo __js('Error init map');?>";
+var textErrorGetMaps = "<?php echo __js('Error get maps');?>";
 var textErrorGetMap = "<?php echo __js('Error get map');?>";
 var textErrorSetMap = "<?php echo __js('Error set map');?>";
 var textErrorSaveMap = "<?php echo __js('Error save map');?>";
@@ -88,6 +91,8 @@ var textErrorStartMapping = "<?php echo __js('Error start mapping');?>";
 var textErrorStopMapping = "<?php echo __js('Error stop mapping');?>";
 var textErrorGetMapping = "<?php echo __js('Error get mapping');?>";
 var textErrorInput = "<?php echo __js('Error on input');?>";
+
+var textErrorRefreshSession = "<?php echo __js('Error in refresh session');?>"; 
 
 //DEMO MODE
 var textDemoNeedActions = "<?php echo __js('You need to setup actions before launch Demo');?>";

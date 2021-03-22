@@ -27,7 +27,7 @@ var canvas;
 var width = 0;
 var height = 0;
 
-var teleopEnable = false;
+var teleopEnable = 'not_init';
 
 var lastRobotPose = {'X':0, 'Y':0, 'T':0 };
 var mappingLastOrigin = {'x':0, 'y':0 };
@@ -80,6 +80,18 @@ $(document).ready(function(e) {
 			$('#connexion_robot').show();
 		},
 		onInitialized: function(){
+			wycaApi.TeleopIsStarted(function(data){
+				if(teleopEnable == 'not_init'){
+					teleopEnable = data.D;
+				}else{
+					if(teleopEnable != data.D){
+						if(teleopEnable)
+							wycaApi.TeleopStart();
+						else
+							wycaApi.TeleopStop();
+					}
+				}
+			});
 		},
 		onBatteryState: function(data){
 			initBatteryState(data.SOC);
@@ -388,29 +400,7 @@ function InitDockingState()
 	}
 	
 	// Le joystick s'affiche quand le robot passe de docker à dédocker, donc on recheck l'initialisation du joystick
-	InitJoystick();
-}
-
-function InitJoystick()
-{
-	// Si un joystick est visible, on enable le telop
-	if ($('.joystickDiv:visible').length > 0)
-	{
-		if (!teleopEnable)
-		{
-			teleopEnable = true;
-			wycaApi.TeleopStart();
-		}
-	}
-	else
-	{
-		// Sinon, on le disabled
-		if (teleopEnable)
-		{
-			teleopEnable = false;
-			wycaApi.TeleopStop();
-		}
-	}
+	//InitJoystick();
 }
 
 function initPoweredState(data)

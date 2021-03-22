@@ -815,22 +815,34 @@ $(document).ready(function(e) {
 	
 	$(document).on('click', '#wyca_setup_sites .bSiteSetCurrentElem', function(e) {
 		e.preventDefault();
+		$('#wyca_setup_sites .btn-danger.confirm_delete').addClass('disabled');
+		$('#wyca_setup_sites .bSiteSetCurrentElem').addClass('disabled');
 		
 		id_site = parseInt($(this).closest('li').data('id_site'));
 		
-		
 		wycaApi.SetSiteAsCurrent(id_site, function(data) {
 			if (data.A != wycaApi.AnswerCode.NO_ERROR) 
-				ParseAPIAnswerError(data,textErrorStopNavigation);
+				ParseAPIAnswerError(data,textErrorSetSite);
 			else
 			{
-				GetSitesWyca();
+				wycaApi.GetCurrentSite(function(data) {
+					current_site = data.D;
+					if($('#wyca_dashboard_modalCurrentSite').data('original_txt') == undefined)
+						$('#wyca_dashboard_modalCurrentSite').data('original_txt',$('#wyca_dashboard_modalCurrentSite').find('h3').text());
+					$('#wyca_dashboard_modalCurrentSite').find('h3').html($('#wyca_dashboard_modalCurrentSite').data('original_txt') + '<br><br><span>' + current_site.name + '</span>')
+					$('#wyca_setup_sites .bBackToDashboard').click();
+					$('#wyca_dashboard_modalCurrentSite').modal('show');
+					$('#wyca_setup_sites .btn-danger.confirm_delete').removeClass('disabled');
+					$('#wyca_setup_sites .bSiteSetCurrentElem').removeClass('disabled');
+				})
 			}
 		});
 	});
 	
 	$(document).on('click', '#wyca_setup_sites .bSiteDeleteElem', function(e) {
 		e.preventDefault();
+		$('#wyca_setup_sites .btn-danger.confirm_delete').addClass('disabled');
+		$('#wyca_setup_sites .bSiteSetCurrentElem').addClass('disabled');
 		
 		id_site_to_delete = parseInt($(this).closest('li').data('id_site'));
 		
@@ -843,6 +855,8 @@ $(document).ready(function(e) {
 			{
 				ParseAPIAnswerError(data);
 			}
+			$('#wyca_setup_sites .btn-danger.confirm_delete').removeClass('disabled');
+			$('#wyca_setup_sites .bSiteSetCurrentElem').removeClass('disabled');
 		});
 	});
 	

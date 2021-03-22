@@ -285,6 +285,8 @@ function WycaAPI(options){
 		MOVE_IN_PROGRESS			: 0x0015,
 		LIDAR_DATA			: 0x3007,
 		MAP_UPDATED			: 0x0018,
+		GLOBAL_VEHICULE_PERSISTANTE_DATA_STORAGE_UPDATED : 0x6003,
+		TOP_PERSISTANTE_DATA_STORAGE_UPDATED : 0x6004,
 		CURRENT_AREA_ID			: 0x001F,
 	 
 	// Actions
@@ -1227,6 +1229,12 @@ function WycaAPI(options){
 						case this.EventCode.MAP_UPDATED:
 							// On ne le declenche pas à l'inscription if (_this.options.onMapUpdated != undefined) { _this.options.onMapUpdated(); }
 							break;
+						case this.EventCode.GLOBAL_VEHICULE_PERSISTANTE_DATA_STORAGE_UPDATED:
+							// On ne le declenche pas à l'inscription
+							break;
+						case this.EventCode.TOP_PERSISTANTE_DATA_STORAGE_UPDATED:
+							// On ne le declenche pas à l'inscription
+							break;
 						case this.EventCode.DOCKING_STATE:
 							if (_this.options.onDockingState != undefined) { _this.options.onDockingState(msg.D.D); }
 							break;
@@ -1401,6 +1409,12 @@ function WycaAPI(options){
 					break;
 				case this.EventCode.MAP_UPDATED:
 					if (_this.options.onMapUpdated != undefined) { _this.options.onMapUpdated(); }
+					break;
+				case this.EventCode.GLOBAL_VEHICULE_PERSISTANTE_DATA_STORAGE_UPDATED:
+					if (_this.options.onGlobalVehiculePersistanreDataStorageUpdated != undefined) { _this.options.onGlobalVehiculePersistanreDataStorageUpdated(); }
+					break;
+				case this.EventCode.TOP_PERSISTANTE_DATA_STORAGE_UPDATED:
+					if (_this.options.onTopPersistanteDataStorageUpdated != undefined) { _this.options.onTopPersistanteDataStorageUpdated(); }
 					break;
 				case this.EventCode.DOCKING_STATE:
 					if (_this.options.onDockingState != undefined) { _this.options.onDockingState(msg.D); }
@@ -1632,6 +1646,8 @@ function WycaAPI(options){
 		if (_this.options.onIsSafetyStop != undefined) { var n=_this.EventCode.IS_SAFETY_STOP; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onLidarData != undefined) { var n=_this.EventCode.LIDAR_DATA; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onMapUpdated != undefined) { var n=_this.EventCode.MAP_UPDATED; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
+		if (_this.options.onGlobalVehiculePersistanreDataStorageUpdated != undefined) { var n=_this.EventCode.GLOBAL_VEHICULE_PERSISTANTE_DATA_STORAGE_UPDATED; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
+		if (_this.options.onTopPersistanteDataStorageUpdated != undefined) { var n=_this.EventCode.TOP_PERSISTANTE_DATA_STORAGE_UPDATED; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onDockingState != undefined) { var n=_this.EventCode.DOCKING_STATE; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onPOIsDetect != undefined) { var n=_this.EventCode.POI_POSES; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onMoveInProgress != undefined) { var n=_this.EventCode.MOVE_IN_PROGRESS; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
@@ -1671,6 +1687,8 @@ function WycaAPI(options){
 			case 'onIsSafetyStop': ev_code = _this.EventCode.IS_SAFETY_STOP; break;
 			case 'onLidarData': ev_code = _this.EventCode.LIDAR_DATA; break;
 			case 'onMapUpdated': ev_code = _this.EventCode.MAP_UPDATED; break;
+			case 'onGlobalVehiculePersistanreDataStorageUpdated': ev_code = _this.EventCode.GLOBAL_VEHICULE_PERSISTANTE_DATA_STORAGE_UPDATED; break;
+			case 'onTopPersistanteDataStorageUpdated': ev_code = _this.EventCode.TOP_PERSISTANTE_DATA_STORAGE_UPDATED; break;
 			case 'onDockingState': ev_code = _this.EventCode.DOCKING_STATE; break;
 			case 'onPOIsDetect': ev_code = _this.EventCode.POI_POSES; break;
 			case 'onMoveInProgress': ev_code = _this.EventCode.MOVE_IN_PROGRESS; break;
@@ -1748,6 +1766,8 @@ function WycaAPI(options){
 			case 'onIsSafetyStop': ev_code = _this.EventCode.IS_SAFETY_STOP; break;
 			case 'onLidarData': ev_code = _this.EventCode.LIDAR_DATA; break;
 			case 'onMapUpdated': ev_code = _this.EventCode.MAP_UPDATED; break;
+			case 'onGlobalVehiculePersistanreDataStorageUpdated': ev_code = _this.EventCode.GLOBAL_VEHICULE_PERSISTANTE_DATA_STORAGE_UPDATED; break;
+			case 'onTopPersistanteDataStorageUpdated': ev_code = _this.EventCode.TOP_PERSISTANTE_DATA_STORAGE_UPDATED; break;
 			case 'onDockingState': ev_code = _this.EventCode.DOCKING_STATE; break;
 			case 'onPOIsDetect': ev_code = _this.EventCode.POI_POSES; break;
 			case 'onMoveInProgress': ev_code = _this.EventCode.MOVE_IN_PROGRESS; break;

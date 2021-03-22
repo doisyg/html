@@ -511,7 +511,7 @@ $(document).ready(function(e) {
 				$('.install_by_step_site_save').addClass('disabled');
 				wycaApi.GetSitesList(function(data){
 					if (data.A != wycaApi.AnswerCode.NO_ERROR){
-						ParseAPIAnswerError(data,textErrorGetSite);
+						ParseAPIAnswerError(data,textErrorGetSites);
 					}else{
 						if(!CheckName(data.D,window.site_name)){
 							if (create_new_site) // BOOLEAN INSTALLATEUR_WYCA.JS GESTION DES SITES
@@ -634,6 +634,7 @@ $(document).ready(function(e) {
 				$('#install_by_step_mapping .progressStartMapping').hide();
 				$('#install_by_step_mapping .switchLiveMapping').show();
 				$('#install_by_step_mapping .bMappingStop').show();
+				$('#install_by_step_mapping .bMappingDone').show();
 				$('.ifMapping').show();
 				$('#install_by_step_mapping .mapping_view').show();
 					
@@ -658,6 +659,7 @@ $(document).ready(function(e) {
 				$('#install_by_step_mapping .progressStartMapping').hide();
 				$('#install_by_step_mapping .switchLiveMapping').show();
 				$('#install_by_step_mapping .bMappingStop').show();
+				$('#install_by_step_mapping .bMappingDone').show();
 				$('#install_by_step_mapping .mapping_view').show();
 				img = document.getElementById("install_by_step_mapping_img_map_saved");
 				img.src = "assets/images/vide.png";
@@ -716,6 +718,11 @@ $(document).ready(function(e) {
 		
 	});
 	
+	$('#install_by_step_mapping .bMappingDone').click(function(e) {
+		e.preventDefault();
+		$('#install_by_step_mapping_modalConfirm').modal('show');
+	});
+	
 	$('#install_by_step_mapping .bMappingStop').click(function(e) {
 		e.preventDefault();
 		
@@ -765,6 +772,7 @@ $(document).ready(function(e) {
 		mappingStarted = false;
 		$('#install_by_step_mapping .switchLiveMapping').hide();
 		$('#install_by_step_mapping .bMappingStop').hide();
+		$('#install_by_step_mapping .bMappingDone').hide();
 		$('#install_by_step_mapping .mapping_view').hide();
 		$('#install_by_step_mapping .bMappingStart').show();
 		
@@ -808,7 +816,7 @@ $(document).ready(function(e) {
 						
 						wycaApi.GetMapsList(data.D.id_site,function(data){
 							if (data.A != wycaApi.AnswerCode.NO_ERROR){
-								ParseAPIAnswerError(data,textErrorGetSite);
+								ParseAPIAnswerError(data,textErrorGetMaps);
 							}else{
 								if(CheckName(data.D,window.map_name)){
 									alert_wyca(textNameUsed);
@@ -853,6 +861,8 @@ $(document).ready(function(e) {
 														'threshold_free': parseInt($('#install_by_step_mapping_threshold_free_slider').val()),
 														'threshold_occupied': parseInt($('#install_by_step_mapping_threshold_occupied_slider').val())
 													};
+													if(typeof(updatingMap) != 'undefined')
+														updatingMap = true;
 													
 													wycaApi.SetMap(map, function(data){
 														if (data.A == wycaApi.AnswerCode.NO_ERROR)
@@ -925,7 +935,7 @@ $(document).ready(function(e) {
 																		}
 																		else
 																		{
-																			ParseAPIAnswerError(data);
+																			ParseAPIAnswerError(data,textErrorSetMap);
 																			
 																			$('#install_by_step_mapping_use .bUseThisMapNowYes').show();
 																			$('#install_by_step_mapping_use .bUseThisMapNowNo').show();
@@ -1020,64 +1030,82 @@ $(document).ready(function(e) {
 						//success_wyca(textSiteImported);
 						console.log(data);
 						if(data.D > -1){
-							wycaApi.SetSiteAsCurrent(data.D,function(data){
+							window.site_id=data.D;
+							wycaApi.SetSiteAsCurrent(window.site_id,function(data){
 								if (data.A == wycaApi.AnswerCode.NO_ERROR)
 								{
-									wycaApi.GetCurrentMapData(function(data){
-										if (data.A == wycaApi.AnswerCode.NO_ERROR)
-										{
-											if(data.D.docks.length <= 1){
-												$.ajax({
-													type: "POST",
-													url: 'ajax/install_by_step_import_site_master_dock.php',
-													data: { 
-													},
-													dataType: 'json',
-													success: function(data) {
-														success_wyca(textSiteImported);
-														$('.install_by_step_site_master_dock_next').click();
-													},
-													error: function(e) {
-														if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-															alert_wyca((typeof(textErrorImportSite) != 'undefined'? textErrorImportSite : 'Error import site') +  e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-															setTimeout(function(){window.location.href = 'logout.php'},3000);
-														}else{
-															alert_wyca((typeof(textErrorImportSite) != 'undefined'? textErrorImportSite : 'Error import site') + ' ' + e.responseText );
-														}
-													}
-												});
-											}else{
-												id_map = data.D.id_map;
-												id_map_last = data.D.id_map;
-												forbiddens = data.D.forbiddens;
-												areas = data.D.areas;
-												docks = data.D.docks;
-												pois = data.D.pois;
-												augmented_poses = data.D.augmented_poses; 
-												
-												$.ajax({
-													type: "POST",
-													url: 'ajax/install_by_step_import_site_finish.php',
-													data: { 
-													},
-													dataType: 'json',
-													success: function(data) {
+									wycaApi.GetMapsList(window.site_id,function(data){
+										if(data.D.length <= 1){ // IF ONLY ONE MAP
+										
+											wycaApi.GetCurrentMapData(function(data){
+												if (data.A == wycaApi.AnswerCode.NO_ERROR)
+												{
+													if(data.D.docks.length <= 1){
+														$.ajax({
+															type: "POST",
+															url: 'ajax/install_by_step_import_site_master_dock.php',
+															data: { 
+															},
+															dataType: 'json',
+															success: function(data) {
+																success_wyca(textSiteImported);
+																$('#install_by_step_site_master_dock .install_by_step_site_master_dock_next').click();
+															},
+															error: function(e) {
+																if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+																	alert_wyca((typeof(textErrorMasterDock) != 'undefined'? textErrorMasterDock : 'Error step master dock')+ ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+																	setTimeout(function(){window.location.href = 'logout.php'},3000);
+																}else{
+																	alert_wyca((typeof(textErrorMasterDock) != 'undefined'? textErrorMasterDock : 'Error step master dock')+ ' ' + e.responseText );
+																}
+															}
+														});
+													}else{
+														id_map = data.D.id_map;
+														id_map_last = data.D.id_map;
+														forbiddens = data.D.forbiddens;
+														areas = data.D.areas;
+														docks = data.D.docks;
+														pois = data.D.pois;
+														augmented_poses = data.D.augmented_poses; 
 														
-														InitMasterDockByStep();
-														$('.install_by_step_import_site_next').click();
-													},
-													error: function(e) {
-														alert_wyca((typeof(textErrorImportSite) != 'undefined'? textErrorImportSite : 'Error import site') + ' ' + e.responseText);
+														$.ajax({
+															type: "POST",
+															url: 'ajax/install_by_step_import_site_select_map.php',
+															data: { 
+															},
+															dataType: 'json',
+															success: function(data) {
+																$('#install_by_step_site_map .install_by_step_site_map_next').click();
+															},
+															error: function(e) {
+																alert_wyca((typeof(textErrorImportSite) != 'undefined'? textErrorImportSite : 'Error import site') + ' ' + e.responseText);
+															}
+														});
 													}
-												});
-												
-											}
+													
+												}else{
+													ParseAPIAnswerError(data);
+													InitSiteImportByStep();
+												}
+											})
 										}else{
-											ParseAPIAnswerError(data);
-											InitSiteImportByStep();
+											// IF MULTIPLES MAP
+											$.ajax({
+												type: "POST",
+												url: 'ajax/install_by_step_import_site_finish.php',
+												data: { 
+												},
+												dataType: 'json',
+												success: function(data) {
+													$('#install_by_step_import_site .install_by_step_import_site_next').click();
+												},
+												error: function(e) {
+													alert_wyca((typeof(textErrorImportSite) != 'undefined'? textErrorImportSite : 'Error import site') + ' ' + e.responseText);
+												}
+											});
 										}
 									})
-									window.site_id=data.D;
 								}else{
 									ParseAPIAnswerError(data);
 									InitSiteImportByStep();
@@ -1106,6 +1134,74 @@ $(document).ready(function(e) {
 			setTimeout(function(){icon.toggleClass('shake')},2000);
 		}
     });
+	
+	//------------------- STEP SELECT MAP ------------------------
+	
+	//AJAX INSTALL STEP CALL
+	//DECLARATION EVENTLISTENER BOUTON CREE DYNAMIQUEMENT .on('event',function(){})
+	$( "#pages_install_by_step #ImportSiteMapList" ).on( 'click', '.SelectMapItem', function(e) {
+		id_map = parseInt($(this).attr('id'));
+		wycaApi.SetMapAsCurrent(id_map, function(data){
+			if (data.A == wycaApi.AnswerCode.NO_ERROR){
+				wycaApi.GetCurrentMapData(function(data){
+					if (data.A == wycaApi.AnswerCode.NO_ERROR)
+					{
+						if(data.D.docks.length <= 1){
+							$.ajax({
+								type: "POST",
+								url: 'ajax/install_by_step_import_site_master_dock.php',
+								data: { 
+								},
+								dataType: 'json',
+								success: function(data) {
+									success_wyca(textSiteImported);
+									$('#install_by_step_site_master_dock .install_by_step_site_master_dock_next').click();
+								},
+								error: function(e) {
+									if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+										alert_wyca((typeof(textErrorMasterDock) != 'undefined'? textErrorMasterDock : 'Error step master dock')+ ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+										setTimeout(function(){window.location.href = 'logout.php'},3000);
+									}else{
+										alert_wyca((typeof(textErrorMasterDock) != 'undefined'? textErrorMasterDock : 'Error step master dock')+ ' ' + e.responseText );
+									}
+								}
+							});
+						}else{
+							id_map = data.D.id_map;
+							id_map_last = data.D.id_map;
+							forbiddens = data.D.forbiddens;
+							areas = data.D.areas;
+							docks = data.D.docks;
+							pois = data.D.pois;
+							augmented_poses = data.D.augmented_poses; 
+							
+							$.ajax({
+								type: "POST",
+								url: 'ajax/install_by_step_import_site_select_map.php',
+								data: { 
+								},
+								dataType: 'json',
+								success: function(data) {
+									$('#install_by_step_site_map .install_by_step_site_map_next').click();
+								},
+								error: function(e) {
+									alert_wyca((typeof(textErrorImportSite) != 'undefined'? textErrorImportSite : 'Error import site') + ' ' + e.responseText);
+								}
+							});
+						}
+						
+					}else{
+						ParseAPIAnswerError(data);
+						InitSiteImportByStep();
+					}
+				})
+										
+			}else{
+				ParseAPIAnswerError(data);
+				InitSiteSelectMapByStep();
+			}
+		})
+	})
 	
 	//------------------- STEP MASTER DOCK ------------------------
 	
@@ -1146,7 +1242,7 @@ $(document).ready(function(e) {
 				});
 			}else{
 				ParseAPIAnswerError(data);
-				InitSiteImportByStep();
+				InitMasterDockByStep();
 				$('#pages_install_by_step .install_by_step_setup_import_loading').hide();
 				$('#pages_install_by_step .install_by_step_setup_import_content').show();
 				$('#pages_install_by_step section#install_by_step_site_master_dock .bBackButton').click();
@@ -1249,7 +1345,23 @@ $(document).ready(function(e) {
 		})
 	})
 	
-	
+	//AJAX INSTALL STEP CALL
+
+	$('#install_by_step_site_recovery a.skip_recovery').click(function(e) {
+        e.preventDefault();
+		$.ajax({
+			type: "POST",
+			url: 'ajax/install_by_step_import_site_recovery.php',
+			data: {
+			},
+			dataType: 'json',
+			success: function(data) {
+			},
+			error: function(e) {
+				alert_wyca((typeof(textErrorRecovery) != 'undefined'? textErrorRecovery : 'Error in recovery') + ' ' + e.responseText);
+			}
+		});
+    });
 	/*
 	$('#install_by_step_mapping_use .bUseThisMapNowYes').click(function(e) {
 		e.preventDefault();

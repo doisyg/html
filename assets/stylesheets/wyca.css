@@ -163,7 +163,7 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 	h3.warningObstacleTeleopManager{font-size: 20px;}
 }
 #install_by_step_mapping { background-color:rgba(245,245,245,0.8); }
-#install_by_step_mapping header { background-color:#FFFFFF; z-index:200; }
+/* #install_by_step_mapping header { background-color:#FFFFFF; z-index:200; } */
 #install_by_step_mapping .content { z-index:100; position:relative; height:100vh; height: calc(var(--vh, 1vh) * 100); }
 
 @media only screen and (max-width: 767px)
@@ -753,10 +753,12 @@ ul.list_test li.done { color:#006600; border-color:#006600; }
 .tuile_wrapper{
 	margin-top:20px;
 	margin-bottom:20px;
+	z-index:2;
 }
 .tuile_wrapper:nth-child(4){
 	width:100%;
-	padding-top:0%
+	padding-top:0%;
+	z-index:0;
 }
 .tuile_wrapper:nth-child(4n+2){
 	margin-top:0;
@@ -773,6 +775,7 @@ ul.list_test li.done { color:#006600; border-color:#006600; }
     max-width: 375px;
     left: 50%;
     transform: translateX(-50%);
+	z-index:1;
 }
 @media only screen and (max-width:374px)
 {
@@ -915,6 +918,10 @@ img.fi-robot{
 .btn-circle.btn-menu:focus{background-color: white;box-shadow: unset;}
 .btn-circle.btn-menu:active{background-color: white;box-shadow: unset;}
 
+.btn-danger.btn-circle.btn-menu:hover{background-color: #d64742;}
+.btn-danger.btn-circle.btn-menu:focus{background-color: #d64742;}
+.btn-danger.btn-circle.btn-menu:active{background-color: #d64742;}
+
 .btn-primary.btn-circle.btn-menu:hover{background-color: #0099e6;}
 .btn-primary.btn-circle.btn-menu:focus{background-color: #0099e6;}
 .btn-primary.btn-circle.btn-menu:active{background-color: #0099e6;}
@@ -969,6 +976,7 @@ img.fi-robot{
 .iconMenuBlue{color:#589fb2}
 .iconMenuGreen{color:#187f18}
 .iconMenuRed{color:#da3939}
+.iconMenuColorWarning{color:#ed9c28}
 .iconMenuPurple{color:#5d24cb}
 
 img.fi-route {
@@ -1161,9 +1169,20 @@ div.icon_menu .iconForbiddenArea .fa-minus-circle{
     padding-top: 50%;
 }
 /* */
-#MasterDockList .MasterDockItem {position:relative}
+#MasterDockList .MasterDockItem {
+	position: relative;
+    width: calc(100% - 30px);
+    height: calc(100% - 30px);
+}
 #MasterDockList .MasterDockItem i.fa-asterisk {position:absolute; top: 10px;left: 15px;color: darkorange;font-size:16px; padding:0;  }
 #MasterDockList .MasterDockItem p.dockname {margin-top: 0px;font-weight: 700;margin-bottom: 0;font-size: 14px;}
+
+#ImportSiteMapList .SelectMapItem {
+	position: relative;
+    width: calc(100% - 30px);
+    height: calc(100% - 30px);
+}
+#ImportSiteMapList .SelectMapItem p.mapname {margin-top: 0px;font-weight: 700;margin-bottom: 0;font-size: 14px;}
 
 .password_format{margin: 0;text-align: right;font-size: 12px;font-style: italic;margin-bottom: 10px;}
 .password_format ~ div.form-group{margin-bottom:0;}
@@ -1175,6 +1194,10 @@ div.icon_menu .iconForbiddenArea .fa-minus-circle{
 h3.warningObstacleTeleopManager{
 	font-size:20px;
 	text-align: center;
+}
+.modalCurrentSite h3 span{
+	font-style:italic;
+	color:#343a40;
 }
 #modalConfirmDelete h3 span{
 	font-style:italic;

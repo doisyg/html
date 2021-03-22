@@ -828,22 +828,35 @@ $(document).ready(function(e) {
 	
 	$(document).on('click', '#install_normal_setup_sites .bSiteSetCurrentElem', function(e) {
 		e.preventDefault();
+		$('#install_normal_setup_sites .btn-danger.confirm_delete').addClass('disabled');
+		$('#install_normal_setup_sites .bSiteSetCurrentElem').addClass('disabled');
 		
 		id_site = parseInt($(this).closest('li').data('id_site'));
 		
-		
 		wycaApi.SetSiteAsCurrent(id_site, function(data) {
 			if (data.A != wycaApi.AnswerCode.NO_ERROR) 
-				ParseAPIAnswerError(data,textErrorStopNavigation);
+				ParseAPIAnswerError(data,textErrorSetSite);
 			else
 			{
-				GetSitesNormal();
+				wycaApi.GetCurrentSite(function(data) {
+					current_site = data.D;
+					if($('#install_normal_dashboard_modalCurrentSite').data('original_txt') == undefined)
+						$('#install_normal_dashboard_modalCurrentSite').data('original_txt',$('#install_normal_dashboard_modalCurrentSite').find('h3').text());
+					$('#install_normal_dashboard_modalCurrentSite').find('h3').html($('#install_normal_dashboard_modalCurrentSite').data('original_txt') + '<br><br><span>' + current_site.name + '</span>');
+					$('#install_normal_setup_sites .bBackToDashboard').click();
+					$('#install_normal_dashboard_modalCurrentSite').modal('show');
+					$('#install_normal_setup_sites .btn-danger.confirm_delete').removeClass('disabled');
+					$('#install_normal_setup_sites .bSiteSetCurrentElem').removeClass('disabled');
+				})
 			}
+			
 		});
 	});
 	
 	$(document).on('click', '#install_normal_setup_sites .bSiteDeleteElem', function(e) {
 		e.preventDefault();
+		$('#install_normal_setup_sites .btn-danger.confirm_delete').addClass('disabled');
+		$('#install_normal_setup_sites .bSiteSetCurrentElem').addClass('disabled');
 		
 		id_site_to_delete = parseInt($(this).closest('li').data('id_site'));
 		
@@ -856,7 +869,10 @@ $(document).ready(function(e) {
 			{
 				ParseAPIAnswerError(data);
 			}
+			$('#install_normal_setup_sites .btn-danger.confirm_delete').removeClass('disabled');
+			$('#install_normal_setup_sites .bSiteSetCurrentElem').removeClass('disabled');
 		});
+		
 	});
 	
 	//------------------- SERVICE BOOK ------------------------

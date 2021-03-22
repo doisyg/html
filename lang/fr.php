@@ -584,7 +584,7 @@ $_LANG['5811313d9d3deac59db4bdb3a836c66e'] = 'de 0.05 à 10';
 $_LANG['e02efed9a6e78f3cbbfbeefc906489a4'] = 'Arrêter relocalisation';
 $_LANG['190570595f1bb30d40e706226266ab60'] = 'Scan des réflecteurs';
 $_LANG['bd33769324dd66b5219ec7be790f6d6c'] = 'Actualisation position robot ';
-$_LANG['8c019ae6177e7d6986a0c7f38165d7ca'] = 'Rotation pour enlever obstacles';
+$_LANG['8c019ae6177e7d6986a0c7f38165d7ca'] = 'Rotation pour nettoyer les obstacles';
 $_LANG['3be657531d498929caf79a27523c2400'] = 'Lancement navigation';
 $_LANG['c290a5941ad6eb0d5fe8752c15c5fd78'] = 'Prochaine étape';
 $_LANG['e62799c208ad55d9b2de35c3a929e425'] = 'seconde';
@@ -629,5 +629,16 @@ $_LANG['33a1c41368c3de66f20101e65d431b39'] = 'Ne doit pas être utilisé en prod
 $_LANG['4cada3ac19ec0105e876ebd85603e9f5'] = 'Uniquement pour les utilisateurs formés.';
 $_LANG['7376e0fa9b6382eee64aae2c6050bd80'] = 'J\'assume la responsabilité';
 $_LANG['ebf46cb429e4e9d500fbc04f52618594'] = 'Le robot n\'est pas localisé';
+$_LANG['026f204fdfe02f21d641367d7d21c31f'] = 'Erreur récupération sites';
+$_LANG['5102e6fe89f557096daa91aa3ad1e16e'] = 'Erreur récupération cartes';
+$_LANG['47a504a06798dc7c6a92ab1cf0aa6020'] = 'La cartographie est-elle terminée ?';
+$_LANG['4e06d9cbcc29bbeac7e986d33063fb3f'] = 'Si la cartographie n\'est pas valide, vous devrez la recommencer.';
+$_LANG['e0ea021bc6289cc61900cf4a3de81cdc'] = 'Vous utilisez désormais le site';
+$_LANG['f3aa661b584021c1c8519d098fc807a8'] = 'GetPath';
+$_LANG['4f9baa1e6a39aef012c4faed2758c8c8'] = 'Sélection Carte';
+$_LANG['a1820c7db2c243a80e09162842bfddd1'] = 'Sélection carte par défaut';
+$_LANG['2a8e9f973e2c8beab004b64a98406d8d'] = 'Sélection du dock par défaut';
+$_LANG['54de37cb2d6c68ac5f3433ed05d03a8c'] = 'Relocaliser le robot';
+$_LANG['e3f1d096c37593236533c5177387b949'] = 'Erreur de rafraîchissement de la session';
 
 ?>

@@ -615,5 +615,16 @@ $_LANG['6a03d07c60c7ffd19860e6f518f2d8e4'] = 'Got it!';
 $_LANG['f3aa661b584021c1c8519d098fc807a8'] = 'GetPath';
 $_LANG['7376e0fa9b6382eee64aae2c6050bd80'] = 'I assume the responsibility';
 $_LANG['ebf46cb429e4e9d500fbc04f52618594'] = 'The robot is not localized';
+$_LANG['4f9baa1e6a39aef012c4faed2758c8c8'] = 'Select Map';
+$_LANG['9ac572ee7b59f270870eaba202bd9581'] = 'Pick the current map';
+$_LANG['6c963db04e24d54517a37ed14daf73e9'] = 'Pick the default map';
+$_LANG['a1820c7db2c243a80e09162842bfddd1'] = 'Select the current map';
+$_LANG['2a8e9f973e2c8beab004b64a98406d8d'] = 'Select the default docking station';
+$_LANG['026f204fdfe02f21d641367d7d21c31f'] = 'Error get sites';
+$_LANG['5102e6fe89f557096daa91aa3ad1e16e'] = 'Error get maps';
+$_LANG['47a504a06798dc7c6a92ab1cf0aa6020'] = 'Are you sure that mapping is over ?';
+$_LANG['4e06d9cbcc29bbeac7e986d33063fb3f'] = 'In case mapping is not valid, you will have to start mapping again.';
+$_LANG['e0ea021bc6289cc61900cf4a3de81cdc'] = 'You are now using site';
+$_LANG['54de37cb2d6c68ac5f3433ed05d03a8c'] = 'Relocate the robot';
 
 ?>

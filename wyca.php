@@ -21,6 +21,27 @@
 					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile10" href="logout.php"><i class="fas fa-power-off"></i><?php echo __('Logout');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile11 todo" data-goto="wyca_help" href="#"><i class="fa fa-question"></i><?php echo __('Help');?></a></li>
                 </ul>
+				<div class="modal fade modalCurrentSite" id="wyca_dashboard_modalCurrentSite" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+					<div class="modal-dialog" role="dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<div class="actions mh100vh_55">
+									<section class="panel panel-info">
+										<header class="panel-heading">
+											<h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fa fa-building"></i></h2>
+										</header>
+										<div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
+											<h3><?= __('You are now using site')?></h3>
+										</div>
+									</section>
+									<div style="clear:both;"></div>
+									<a href="#" class="btn btn-default btn_footer_left btn_100" data-dismiss="modal" ><?php echo __('Close');?></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
 				<?php if($_SESSION['id_user'] == 1 ):?>
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
@@ -137,6 +158,9 @@
                         	<li><a href="#" class="btn btn-circle btn-default bMove btn-menu" data-orientation="H" data-toggle="modal" data-target="#wyca_edit_map_modalTeleop">
 								<i class="fa fa-gamepad iconMenuPurple"></i>
 							</a></li>
+							<li><a href="#" class="btn btn-circle btn-default btn-menu" data-orientation="H" data-toggle="modal" data-target="#wyca_edit_map_modalRecovery">
+								<i class="fa fa-search iconMenuColorWarning"></i>
+							</a></li>
                         </ul>
                     </div>
                     
@@ -206,6 +230,59 @@
                                                 </div>
                                             </div>
                                             
+                                        </div>
+                                        
+                                        <div style="clear:both;"></div>
+                                       
+                                        <a href="#" class="btn btn-primary btn_footer_left btn_100" data-dismiss="modal"><?php echo __('Close');?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="wyca_edit_map_modalRecovery" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+                                        <div class="h100vh_160" style="overflow:auto; text-align:center;">
+                                            <h4 style="text-align:center"><?= __('Move the robot near a reflector (dock or augmented pose) then click on the recovery button') ?></h4>
+											<div style="text-align:center; margin-top:20px;"><a href="#" class="bRecovery ifDocked_disabled btn btn-warning btn_big_popup" ><?=__('Recovery') ?></a></div>
+												
+											<div style="text-align:center"><a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a></div>
+											<div style="text-align:center"><div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div></div>
+										   
+											<div class="ifUndocked ifNRecovery">
+												<div style="text-align:center; width:100%; z-index:2000; margin-top:20px;">
+													<div class="joystickDiv" draggable="false" style="margin:auto;">
+														<div class="fond"></div>
+														<div class="curseur"></div>
+													</div>
+												</div>
+											</div>
+											
+											<div class="ifRecovery" style="text-align:center; margin-top:20px;display:none;"><a href="#" class="btn btn-danger btn-lg bCancelRecovery"><?=__('Cancel Recovery') ?></a></div>
+											<div class="ifRecovery wyca_recovery_feedback recovery_feedback" style="display:none;">
+												<hr style="border-top: 1px solid #909090;">
+												<div class="row recovery_step RecoveryScan" id="">
+													<div class="col-xs-10"><h5><?= __('Scan reflectors')?></h5></div>
+													<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+												</div>
+												<div class="row recovery_step RecoveryPose" id="">
+													<div class="col-xs-10"><h5><?= __('Robot position initiated')?></h5></div>
+													<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+												</div>
+												<div class="row recovery_step RecoveryRotate" id="">
+													<div class="col-xs-10"><h5><?= __('Rotate to clean obstacles')?></h5></div>
+													<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+												</div>
+												<div class="row recovery_step RecoveryNav" id="">
+													<div class="col-xs-10"><h5><?= __('Navigation started')?></h5></div>
+													<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+												</div>
+												<hr style="border-top: 1px solid #909090;">
+											</div>
                                         </div>
                                         
                                         <div style="clear:both;"></div>
@@ -1141,6 +1218,7 @@
 						<li><i class="fa fa-eraser"></i><span class="description"><?=__('Erase pixel')?></span></li>
 						<li><i class="fa fa-crosshairs iconMenuBlue"></i><span class="description"><?=__('Move the robot to this point')?></span></li>
 						<li><i class="fa fa-gamepad iconMenuPurple"></i><span class="description"><?=__('Teleop the robot')?></span></li>
+						<li><i class="fa fa-search iconMenuColorWarning"></i><span class="description"><?=__('Relocate the robot')?></span></li>
 						<li style="position:relative;font-size:16px"><img class="route" src="assets/images/route_green.svg"/><span class="description" style="margin-left: 40px;position: relative;top: 3px;"><?=__('Test go to POI, dock or augmented pose')?></span></li>
 						<li style="position:relative;">
 						<svg class="svg_popupHelp_robot" xmlns="http://www.w3.org/2000/svg">
@@ -1201,7 +1279,7 @@
                 <h2><?php echo __('Sites');?></h2>
             </header>
             <div class="content">
-                
+                <a href="#" class="bBackToDashboard button_goto" data-goto="wyca_dashboard" style="display:none"></a>
                 <div class="wyca_setup_sites_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
                 
                 <div class="loaded col-md-12" style="padding-top:30px;">
