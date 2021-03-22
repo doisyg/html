@@ -163,6 +163,10 @@ $(document).ready(function(e) {
 				AskReloadMap();
 			}
 		},
+		onGlobalVehiculePersistanteDataStorageUpdated: function(data){
+			GetAppSoundConf();
+		},
+		
 		onGoToPoiResult: onGoToPoiResult,
 		onGoToAugmentedPoseResult: onGoToAugmentedPoseResult,
 		onGoToChargeResult: onGoToChargeResult,

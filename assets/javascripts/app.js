@@ -2792,3 +2792,45 @@ function listCookies()
     }
     return aString;
 }
+
+/* GESTION C.CONF */
+
+function GetAppSoundConf(){
+	$.ajax({
+		type: "POST",
+		url: 'ajax/get_app_sound.php',
+		data: { },
+		dataType: 'json',
+		success: function(data) {
+			//console.log(data);
+			if(data.app_sound){
+				app_sound_is_on = true;
+			}else{
+				app_sound_is_on = false;
+			}
+		},
+		error: function(e) {
+		   if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+				console.log((typeof(textErrorGetSound) != 'undefined'? textErrorGetSound : 'Error get sound config') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+				$('#modalErrorSession').modal('show');
+			}else{
+				console.log((typeof(textErrorGetSound) != 'undefined'? textErrorGetSound : 'Error get sound config') + ' ' + e.responseText );
+			}
+		}
+	});
+}
+
+function RefreshGlobalVehiculePersistanteDataStorage(){
+	wycaApi.GetGlobalVehiculePersistanteDataStorage(function(data) {
+		if (data.A == wycaApi.AnswerCode.NO_ERROR)
+		{
+			console.log('GlobalVehiculePersistanteDataStorage',data.D);
+			wycaApi.SetGlobalVehiculePersistanteDataStorage(data.D,function(data) {
+				if (data.A != wycaApi.AnswerCode.NO_ERROR)
+					ParseAPIAnswerError(data,textErrorSetGlobalVehiculePersistanteDataStorage);
+			})
+		}
+		else
+			ParseAPIAnswerError(data,textErrorGetGlobalVehiculePersistanteDataStorage);
+	});
+}

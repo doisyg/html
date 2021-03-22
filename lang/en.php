@@ -628,5 +628,8 @@ $_LANG['e0ea021bc6289cc61900cf4a3de81cdc'] = 'You are now using site';
 $_LANG['54de37cb2d6c68ac5f3433ed05d03a8c'] = 'Relocate the robot';
 $_LANG['e3f1d096c37593236533c5177387b949'] = 'Error in refresh session';
 $_LANG['109f2f31339812491eb9bc75d9065480'] = 'Error in session';
+$_LANG['d5a40d899dd4fc3fddf2d623b69e91ea'] = 'Error get sound config';
+$_LANG['7826f93e0e1ad56ff239e493cf97163a'] = 'Error on get GlobalVehiculePersistanteDataStorage';
+$_LANG['dbb8c43385e7134b1936431305b7bbbb'] = 'Error on set GlobalVehiculePersistanteDataStorage';
 
 ?>

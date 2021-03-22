@@ -641,5 +641,8 @@ $_LANG['2a8e9f973e2c8beab004b64a98406d8d'] = 'Sélection du dock par défaut';
 $_LANG['54de37cb2d6c68ac5f3433ed05d03a8c'] = 'Relocaliser le robot';
 $_LANG['e3f1d096c37593236533c5177387b949'] = 'Erreur de rafraîchissement de la session';
 $_LANG['109f2f31339812491eb9bc75d9065480'] = 'Erreur de session';
+$_LANG['d5a40d899dd4fc3fddf2d623b69e91ea'] = 'Erreur recupération config son';
+$_LANG['7826f93e0e1ad56ff239e493cf97163a'] = 'Erreur recupération GlobalVehiculePersistanteDataStorage';
+$_LANG['dbb8c43385e7134b1936431305b7bbbb'] = 'Erreur sauvegarde GlobalVehiculePersistanteDataStorage';
 
 ?>
