@@ -741,40 +741,41 @@ $(document).ready(function(e) {
 		img = document.getElementById("wyca_by_step_mapping_img_map_saved_fin");
         img.src = 'assets/images/vide.png';
 		
-		wycaApi.MappingStop(function(data) {
-			if (data.A != wycaApi.AnswerCode.NO_ERROR) ParseAPIAnswerError(data,textErrorStopNavigation);
-			$.ajax({
-				type: "POST",
-				url: 'ajax/install_by_step_fin_mapping.php',
-				data: {},
-				dataType: 'json',
-				success: function(data) {
-				},
-				error: function(e) {
-				}
-			});
-			
-			var img = document.getElementById("wyca_by_step_mapping_img_map_saved_fin");
-            img.src = 'data:image/png;base64,' + data.D;
-			
-			finalMapData = 'data:image/png;base64,' + data.D;
-			
-			setTimeout(function() {
-				canvas = document.createElement('canvas');
-				
-				width = img.naturalWidth;
-				height = img.naturalHeight;
-				
-				$('#wyca_by_step_mapping_canvas_result_trinary').attr('width', img.naturalWidth);
-				$('#wyca_by_step_mapping_canvas_result_trinary').attr('height', img.naturalHeight);
-				
-				canvas.width = img.naturalWidth;
-				canvas.height = img.naturalHeight;
-				canvas.getContext('2d').drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
-				
-				CalculateMapTrinary();
-			}, 100);
+		$.ajax({
+			type: "POST",
+			url: 'ajax/install_by_step_fin_mapping.php',
+			data: {},
+			dataType: 'json',
+			success: function(data) {
+				wycaApi.MappingStop(function(data) {
+					if (data.A != wycaApi.AnswerCode.NO_ERROR) ParseAPIAnswerError(data,textErrorStopNavigation);
+					
+					var img = document.getElementById("wyca_by_step_mapping_img_map_saved_fin");
+					img.src = 'data:image/png;base64,' + data.D;
+					
+					finalMapData = 'data:image/png;base64,' + data.D;
+					
+					setTimeout(function() {
+						canvas = document.createElement('canvas');
+						
+						width = img.naturalWidth;
+						height = img.naturalHeight;
+						
+						$('#wyca_by_step_mapping_canvas_result_trinary').attr('width', img.naturalWidth);
+						$('#wyca_by_step_mapping_canvas_result_trinary').attr('height', img.naturalHeight);
+						
+						canvas.width = img.naturalWidth;
+						canvas.height = img.naturalHeight;
+						canvas.getContext('2d').drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
+						
+						CalculateMapTrinary();
+					}, 100);
+				});
+			},
+			error: function(e) {
+			}
 		});
+		
 		mappingStarted = false;
 		$('#wyca_by_step_mapping .switchLiveMapping').hide();
 		$('#wyca_by_step_mapping .bMappingStop').hide();
@@ -970,6 +971,9 @@ $(document).ready(function(e) {
 															ParseAPIAnswerError(data,textErrorSetMap);
 														}							
 													});
+												}else{
+													alert_wyca((typeof(textErrorTrinary) != 'undefined'? textErrorTrinary : 'Error get map trinary'));
+													$('.bMappingSaveMap').removeClass('disabled');
 												}
 																
 												
