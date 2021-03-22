@@ -50,6 +50,7 @@ $(document).ready(function(e) {
 		
 		api_key:api_key,
 		host:robot_host,
+		use_ssl:use_ssl,
 		
 		onRobotConnexionError: function(data){
 			console.log('erreur');
