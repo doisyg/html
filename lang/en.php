@@ -626,5 +626,7 @@ $_LANG['47a504a06798dc7c6a92ab1cf0aa6020'] = 'Are you sure that mapping is over 
 $_LANG['4e06d9cbcc29bbeac7e986d33063fb3f'] = 'In case mapping is not valid, you will have to start mapping again.';
 $_LANG['e0ea021bc6289cc61900cf4a3de81cdc'] = 'You are now using site';
 $_LANG['54de37cb2d6c68ac5f3433ed05d03a8c'] = 'Relocate the robot';
+$_LANG['e3f1d096c37593236533c5177387b949'] = 'Error in refresh session';
+$_LANG['109f2f31339812491eb9bc75d9065480'] = 'Error in session';
 
 ?>

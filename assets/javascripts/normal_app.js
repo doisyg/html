@@ -1260,10 +1260,10 @@ $(document).ready(function(e) {
 				},
 				error: function(e) {
 					if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-						alert_wyca((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-						setTimeout(function(){window.location.href = 'logout.php'},3000);
+						console.log((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+						$('#modalErrorSession').modal('show');
 					}else{
-						alert_wyca((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText );
+						console.log((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText );
 					}
 				}
 			});
@@ -1280,10 +1280,10 @@ $(document).ready(function(e) {
 				},
 				error: function(e) {
 					if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-						alert_wyca((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-						setTimeout(function(){window.location.href = 'logout.php'},3000);
+						console.log((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+						$('#modalErrorSession').modal('show');
 					}else{
-						alert_wyca((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText );
+						console.log((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText );
 					}
 				}
 			});
@@ -1543,10 +1543,10 @@ $(document).ready(function(e) {
 			},
 			error: function(e) {
 				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-					alert_wyca((typeof(textErrorLang) != 'undefined'? textErrorLang : 'Error lang') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-					setTimeout(function(){window.location.href = 'logout.php'},3000);
+					console.log((typeof(textErrorLang) != 'undefined'? textErrorLang : 'Error lang') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					$('#modalErrorSession').modal('show');
 				}else{
-					alert_wyca((typeof(textErrorLang) != 'undefined'? textErrorLang : 'Error lang') + ' ' + e.responseText );
+					console.log((typeof(textErrorLang) != 'undefined'? textErrorLang : 'Error lang') + ' ' + e.responseText );
 				}
 			}
 		});
