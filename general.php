@@ -66,7 +66,7 @@
 						</div>
 					</section>
 					<div style="clear:both;"></div>
-					<a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Abort');?></a>
+					<a href="#" id="bModalConfirmDeleteClose" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Abort');?></a>
 					<a href="#" id="bModalConfirmDeleteOk" class="btn btn-danger btn_footer_right btn_50" data-dismiss="modal"><?php echo __('Delete');?></a>
 				</div>
 			</div>

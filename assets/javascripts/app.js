@@ -730,15 +730,17 @@ $(document).ready(function(e) {
 		e.preventDefault();
 		if($(this)[0].nodeName == 'A'){
 			currentDeleteId = $(this).parent().attr('id');
-			let txt_element = $(this).parent().find('.societe').text();
-			if(txt_element != ''){
-				tempConfirmDelete = $('#modalConfirmDelete').find('h3').text();
-				$('#modalConfirmDelete').find('h3').html(tempConfirmDelete + '<br><br><span>' + txt_element + '</span>');
-			}
-			if($(this).parent().parent().hasClass('list_wycas') && currentDeleteId.split('_elem_')[1] == user_id)
+			
+			if($(this).parent().parent().hasClass('list_wycas') && currentDeleteId.split('_elem_')[1] == user_id) //IF DELETE CURRENT CONNECTED WYCA ACCOUNT
 				$('#modalConfirmDeleteCurrentAccount').modal('show');
-			else
+			else{
 				$('#modalConfirmDelete').modal('show');
+				let txt_element = $(this).parent().find('.societe').text();
+				if(txt_element != ''){
+					tempConfirmDelete = $('#modalConfirmDelete').find('h3').text();
+					$('#modalConfirmDelete').find('h3').html(tempConfirmDelete + '<br><br><span>' + txt_element + '</span>');
+				}
+			}
 		}
 	})
 	
@@ -751,7 +753,7 @@ $(document).ready(function(e) {
 		}
 	})
 	
-	$('#modalConfirmDelete .btn[data-dismiss="modal"]').click(function(e){
+	$('#bModalConfirmDeleteClose').click(function(e){
 		$('#modalConfirmDelete').find('h3').html(tempConfirmDelete);
 		tempConfirmDelete = '';
 	})
