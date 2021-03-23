@@ -42,7 +42,6 @@ if(file_exists(__DIR__ .'/../.git/HEAD')){
 	$lc = substr($branchname,-1);
 	if($lc == "\n" || $lc == "\r"|| $lc == "\t");
 		$branchname = substr($branchname,0,strlen($branchname)- 1);
-
 	$bn = '';
 	switch($branchname){
 		case 'dev': $bn = 'dev'; break;
@@ -68,8 +67,7 @@ if(file_exists(__DIR__ .'/../.git/HEAD')){
 	if($bn != 'rel')
 	{
 		$file_version = __DIR__ .'/version.conf';
-		if($_CONFIG['MODE'] == 'DEV')
-		{
+		if($_CONFIG['MODE'] == 'DEV'){
 			if(file_exists($file_version)){
 				$json_empty = '{"release":""}';
 				file_put_contents($file_version,$json_empty);
@@ -77,11 +75,11 @@ if(file_exists(__DIR__ .'/../.git/HEAD')){
 				$version = date('YmdHi').'_err'; // NO VERSION.CONF
 				$error_conf_release = true; // FOR TEST IN FOOTER JS
 			}
-		
-		}
-		
-		$version = date('YmdHi').'_'.$bn;
-		
+			$noHi_version = true;
+		}else
+			$noHi_version = false;
+		if(!isset($version))//IF NO ERR
+			$version = $noHi_version?date('Ymd').'_'.$bn:date('YmdHi').'_'.$bn;
 	}
 }else{
 	$bn = 'rel'; // NO GIT => RELEASE MODE
