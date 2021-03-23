@@ -80,8 +80,8 @@ $(document).ready(function(e) {
 	$('#bHeaderInfo').attr('onClick',"$('.global_sub_page.active section.active .popupHelp').toggle('fast')");
 	
 	$('.iro-colorpicker').each(function(){
-		let preview = $(this).parent().find('.preview_color');
-		let input = $(this).parent().find('input[type="text"]');
+		let preview = $(this).parent().parent().find('.preview_color');
+		let input = $(this).parent().parent().find('input[type="text"]');
 		let div = $(this);
 		let color_init = $(this).data('color_init');
 		let w = window.outerWidth - 75;
@@ -90,8 +90,8 @@ $(document).ready(function(e) {
 			wheelLightness:false,
 			color: color_init,
 			width: w,
-
 		});
+		
 		preview.on('click',function(){
 			$('.iro-colorpicker').not(div).hide();
 			if(div.css('display') == 'none')

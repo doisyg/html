@@ -431,8 +431,8 @@
                                                             <span class="input-group-addon"><i class="fas fa-stop preview_color"></i></span>
                                                             <input id="install_normal_edit_map_area_color" name="area_color" type="text" class="form-control"  value="#579fb1">
                                                         </div>
+														<div class="col-xs-12" style="padding:0"><div class="iro-colorpicker" data-color_init="#579fb1"></div></div>
                                                     </div>
-													<div class="iro-colorpicker" data-color_init="#579fb1"></div>
                                                 </div>
                                                 <div class="form-group sep">
                                                     <label class="col-xs-4 control-label"><?php echo __('LED Color');?></label>
