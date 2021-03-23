@@ -188,6 +188,8 @@ $(document).ready(function(e) {
 				$('.bTestAugmentedPose').addClass('disabled');
 				$('.bTestDock').addClass('disabled');
 				$('.bMoveTo').addClass('disabled');
+				//DISABLE BUTTONS SAVE MAP
+				$('.bSaveEditMap').addClass('disabled');
 			}else{
 				//$('body > header .stop_move').hide();
 				$('.stop_move').hide(); //AJOUT btn.stop_move autre part que dans le header
@@ -197,6 +199,8 @@ $(document).ready(function(e) {
 				$('.bTestAugmentedPose').removeClass('disabled');
 				$('.bTestDock').removeClass('disabled');
 				$('.bMoveTo').removeClass('disabled');
+				//ENABLE BUTTONS SAVE MAP
+				$('.bSaveEditMap').removeClass('disabled');
 			}
 		},
 		onReceviedSegmented: function(data){
