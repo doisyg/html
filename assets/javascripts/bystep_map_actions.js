@@ -1528,6 +1528,12 @@ $(document).ready(function() {
 			currentStep = '';
 			
 			currentForbiddenIndex = GetForbiddenIndexFromID($(this).data('id_area'));
+			//DELETE CURRENTPOINT + REDRAW TO PASS OVER SVG
+			if(currentPointByStepLongTouch != null)
+				currentPointByStepLongTouch.data('index_point',-1);
+			currentPointByStepLongTouch = null;
+			ByStepTraceForbidden(currentForbiddenIndex);
+			
 			forbidden = forbiddens[currentForbiddenIndex];
 			saveCurrentForbidden = JSON.stringify(forbidden);
 			
@@ -1576,6 +1582,12 @@ $(document).ready(function() {
 			currentStep = '';
 			
 			currentAreaIndex = GetAreaIndexFromID($(this).data('id_area'));
+			//DELETE CURRENTPOINT + REDRAW TO PASS OVER SVG
+			if(currentPointByStepLongTouch != null)
+				currentPointByStepLongTouch.data('index_point',-1);
+			currentPointByStepLongTouch = null;
+			ByStepTraceArea(currentAreaIndex);
+			
 			area = areas[currentAreaIndex];
 			saveCurrentArea = JSON.stringify(area);
 			
