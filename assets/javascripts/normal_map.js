@@ -262,6 +262,9 @@ var currentPoiNormalLongTouch = null;
 var currentAugmentedPoseNormalLongTouch = null;
 
 $(document).ready(function(e) {
+	$('#manager_edit_map .modal').on('shown.bs.modal', function () {
+		do_refresh = true;
+	});
 	
 	$('#install_normal_edit_map_svg').on('touchend', function(e) { 
 		$('#install_normal_edit_map_zoom_popup').hide();

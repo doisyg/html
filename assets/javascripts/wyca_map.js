@@ -261,6 +261,9 @@ var currentPoiWycaLongTouch = null;
 var currentAugmentedPoseWycaLongTouch = null;
 
 $(document).ready(function(e) {
+	$('#wyca_edit_map .modal').on('shown.bs.modal', function () {
+		do_refresh = true;
+	});
 	
 	$('#wyca_edit_map_svg').on('touchend', function(e) { 
 		$('#wyca_edit_map_zoom_popup').hide();

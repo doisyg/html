@@ -314,6 +314,9 @@ var currentPoiByStepLongTouch = null;
 var currentAugmentedPoseByStepLongTouch = null;
 
 $(document).ready(function(e) {
+	$('#install_by_step_edit_map .modal').on('shown.bs.modal', function () {
+		do_refresh = true;
+	});
 	
 	$('#install_by_step_edit_map_svg').on('touchend', function(e) { 
 		$('#install_by_step_edit_map_zoom_popup').hide();
