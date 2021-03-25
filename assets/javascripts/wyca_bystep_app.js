@@ -1482,7 +1482,7 @@ $(document).ready(function(e) {
 		if (!wyca_bystepCanChangeMenu)
 		{
 			alert_wyca((typeof(textConfirmActiveElement) != 'undefined'? textConfirmActiveElement : 'You must confirm the active element'));
-			$('#bCloseAlertWyca').click(ShakeActiveElement());
+			$('#bCloseAlertWyca').click(WycaByStepShakeActiveElement());
 			return false;
 		}
 		else
