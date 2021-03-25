@@ -1233,17 +1233,17 @@
             <div class="content">
 				<div class="install_normal_setup_tops_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
 				<h5 class="text-center" style="margin-bottom:5px;"><?=__('Please select available tops for the vehicle.') ?></h5>
-				<p class="text-center" style="margin-bottom:30px;"><i class="fas fa-exclamation-triangle"></i> <?=__('This is not the active top selection.') ?></p>
-            	
+				<p class="text-center"><i class="fas fa-exclamation-triangle"></i> <?=__('This is not the active top selection.') ?></p>
+				<div style="display:flex;justify-content:space-around;flex-wrap:wrap;margin-bottom:30px;">
+					<a href="#" class="import_top btn btn-success" style="min-width:45%;font-weight:bold;margin: 10px 0;"><?=__('Import new top')?></a>
+					<a href="#" class="button_goto btn btn-info" style="min-width:45%;font-weight:bold;margin: 10px 0;" data-goto="install_normal_setup_top"><?=__('Select active Top')?></a>
+				</div>
                 <ul class="tuiles row">
                 </ul>
                 
                 
                 <div style="clear:both; height:20px;"></div>
-                <div style="display:flex;justify-content:space-around">
-					<a href="#" class="import_top btn btn-success"><?=__('Import new top')?></a>
-					<a href="#" class="button_goto btn btn-info" data-goto="install_normal_setup_top"><?=__('Select active Top')?></a>
-				</div>
+              
                 <div class="modal fade modalImportTop" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
                     <div class="modal-dialog" role="dialog">
                         <div class="modal-content">
@@ -1345,6 +1345,7 @@
             </div>
             <footer>
                 <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="install_normal_setup_tops"><?php echo __('Back');?></a>
+				 <a href="#" class="button_goto bBackToDashboardSetup" style="display:none" data-goto="install_normal_setup"></a>
             </footer>
         </section>
         

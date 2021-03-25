@@ -1880,12 +1880,25 @@ $(document).ready(function(e) {
 		InitTopImportWyca();
 	});
 	
+	$( "#pages_wyca_normal #wyca_setup_tops .tuiles" ).on('click', 'a.is_checkbox[data-id_top]', function(e) {
+		let arr = Array();
+		$('#wyca_setup_tops ul.tuiles').find('.is_checkbox.checked').each(function(index, element) {
+            arr.push($(this).data('id_top'));
+        });
+		let lg = arr.length;
+		if(!$(this).hasClass('active'))
+			lg = $(this).hasClass('checked')? lg-1 : lg+1; // ADD OR REMOVE ITEM CLICKED ONLY IF NOT ACTIVE TOP (UNREMOVABLE)
+		let btnSelectActiveTop = $('#wyca_setup_tops a[data-goto="wyca_setup_top"]');
+		if(lg == 1)
+			btnSelectActiveTop.addClass('disabled');
+		else
+			btnSelectActiveTop.removeClass('disabled');
+	})
+	
 	$('#pages_wyca_normal a.save_tops').click(function(e) {
         e.preventDefault();
 		
-		var listAvailableTops = Array();
-		console.log($(this))
-		console.log($(this).parent())
+		listAvailableTops = Array();
 		//$('#pages_wyca_normal #wyca_setup_tops li').hide();
 		$('#wyca_setup_tops ul.tuiles').find('.is_checkbox.checked').each(function(index, element) {
             listAvailableTops.push($(this).data('id_top'));
@@ -1933,24 +1946,47 @@ $(document).ready(function(e) {
 	$( '#pages_wyca_normal' ).on( 'click', 'a.set_top', function(e) {
         e.preventDefault();
 		
+		/*INIT FEEDBACK DISPLAY*/
+		$('#wyca_setup_top .set_active_top_feedback').hide();
+		$('#wyca_setup_top .set_active_top_feedback .set_active_top_step').css('opacity','0').hide();
+		$('#wyca_setup_top .set_active_top_feedback .set_active_top_step .fa-check').hide();
+		$('#wyca_setup_top .set_active_top_feedback .set_active_top_step .fa-pulse').show();
+		
+		wycaApi.on('onSetActiveTopFeedback', function(data) {
+			if(data.A == wycaApi.AnswerCode.NO_ERROR){
+				target = '';
+				switch(data.M){
+					case '1/2': target = '#wyca_setup_top .set_active_top_feedback .set_active_top_step.SetActiveTopRemoveCurrent';	break;
+					case '2/2': target = '#wyca_setup_top .set_active_top_feedback .set_active_top_step.SetActiveTopSetNew';			break;
+				}
+				target = $(target);
+				if(target.prevAll('.set_active_top_step:visible').length > 0){
+					target.prevAll('.set_active_top_step:visible').find('.fa-check').show();
+					target.prevAll('.set_active_top_step:visible').find('.fa-pulse').hide();
+				}
+				target.css('opacity','1').show();
+			}
+		})
+		
 		wycaApi.on('onSetActiveTopResult', function(data) {
 			
-			InitTopsActiveWyca();
+			
 			timerSetActiveTop = 90;
 			statusSetActiveTop = 2;
-			setTimeout(function(){
-				$('#wyca_setup_top .modalSetActiveTop').modal('hide');
-				$('#wyca_setup_top .modalSetActiveTop a').removeClass('disabled');
-				
-			},750);
+			$('#wyca_setup_top .modalSetActiveTop').modal('hide');
+			
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
-				setTimeout(success_wyca,750,textTopNowActive);
+				success_wyca(textTopNowActive);
+				$('#wyca_setup_top .bBackToDashboardSetup').click();
 			}
 			else
 			{
+				InitTopsActiveWyca();
 				ParseAPIAnswerError(data);
 			}
+			wycaApi.on('onSetActiveTopResult', onSetActiveTopResult);
+			wycaApi.on('onSetActiveTopFeedback', onSetActiveTopFeedback);
 		});
 		
 		wycaApi.SetActiveTop($(this).data('id_top'), function(data){
@@ -1958,17 +1994,14 @@ $(document).ready(function(e) {
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
 				$('#wyca_setup_top .modalSetActiveTop').modal('show');
-				$('#wyca_setup_top .modalSetActiveTop a').addClass('disabled');
-				statusSetActiveTop = 1;
-				timerSetActiveTop = 0;
-
-				//$('#pages_wyca_normal .progressSetActiveTop').show();
-				TimerActiveTopWyca();
+				$('#wyca_setup_top .set_active_top_feedback').show();
 			}
 			else
 			{
-				InitTopsActiveWyca();
+				wycaApi.on('onSetActiveTopResult', onSetActiveTopResult);
+				wycaApi.on('onSetActiveTopFeedback', onSetActiveTopFeedback);
 				ParseAPIAnswerError(data);
+				InitTopsActiveWyca();
 			}	
 		});		
 	});

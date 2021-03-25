@@ -1621,12 +1621,26 @@ $(document).ready(function(e) {
 		InitTopImportNormal();
 	});
 	
+	$( "#pages_install_normal #install_normal_setup_tops .tuiles" ).on('click', 'a.is_checkbox[data-id_top]', function(e) {
+		let arr = Array();
+		$('#install_normal_setup_tops ul.tuiles').find('.is_checkbox.checked').each(function(index, element) {
+            arr.push($(this).data('id_top'));
+        });
+		let lg = arr.length;
+		if(!$(this).hasClass('active'))
+			lg = $(this).hasClass('checked')? lg-1 : lg+1; // ADD OR REMOVE ITEM CLICKED ONLY IF NOT ACTIVE TOP (UNREMOVABLE)
+		let btnSelectActiveTop = $('#install_normal_setup_tops a[data-goto="install_normal_setup_top"]');
+		if(lg == 1)
+			btnSelectActiveTop.addClass('disabled');
+		else
+			btnSelectActiveTop.removeClass('disabled');
+	})
+	
 	$('#pages_install_normal a.save_tops').click(function(e) {
         e.preventDefault();
 		
-		var listAvailableTops = Array();
-		console.log($(this))
-		console.log($(this).parent())
+		listAvailableTops = Array();
+		
 		//$('#pages_install_normal #install_normal_setup_tops li').hide();
 		$('#install_normal_setup_tops ul.tuiles').find('.is_checkbox.checked').each(function(index, element) {
             listAvailableTops.push($(this).data('id_top'));
@@ -1698,7 +1712,7 @@ $(document).ready(function(e) {
 		
 		wycaApi.on('onSetActiveTopResult', function(data) {
 			
-			InitTopsActiveNormal();
+			
 			timerSetActiveTop = 90;
 			statusSetActiveTop = 2;
 			$('#install_normal_setup_top .modalSetActiveTop').modal('hide');
@@ -1706,9 +1720,11 @@ $(document).ready(function(e) {
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
 				success_wyca(textTopNowActive);
+				$('#install_normal_setup_top .bBackToDashboardSetup').click();
 			}
 			else
 			{
+				InitTopsActiveNormal();
 				ParseAPIAnswerError(data);
 			}
 			wycaApi.on('onSetActiveTopResult', onSetActiveTopResult);

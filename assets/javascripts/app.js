@@ -2149,6 +2149,8 @@ function GetConfigurationsByStep()
 }
 
 // TOP
+var listAvailableTops = Array();
+var templistAvailableTops = Array();
 
 function InitTopsWyca()
 {
@@ -2159,6 +2161,7 @@ function InitTopsWyca()
 		wycaApi.GetTopsList(function(data) {
 			//console.log(data);
 			$.each(data.D,function(index, value){
+				if(value.available)	listAvailableTops.push(value.id_top);
 				$('#wyca_setup_tops .tuiles').append('<li class="col-xs-4 col-md-3 col-lg-2">'+
 				'	<a class="is_checkbox '+(value.active?'active no_update':'')+' '+(value.available?'checked':'')+' anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'" href="#">'+
 				'		<i class="fa fa-check"></i>'+
@@ -2184,6 +2187,7 @@ function InitTopsWycaByStep()
 		wycaApi.GetTopsList(function(data) {
 			//console.log(data);
 			$.each(data.D,function(index, value){
+				if(value.available)	listAvailableTops.push(value.id_top);
 				$('#wyca_by_step_tops .tuiles').append('<li class="col-xs-4 col-md-3 col-lg-2">'+
 				'	<a class="is_checkbox '+(value.available?'checked':'')+' anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'" href="#">'+
 				'		<i class="fa fa-check"></i>'+
@@ -2207,8 +2211,11 @@ function InitTopsNormal()
 	if (wycaApi.websocketAuthed)
 	{
 		wycaApi.GetTopsList(function(data) {
+			
 			//console.log(data);
+			listAvailableTops = Array();
 			$.each(data.D,function(index, value){
+				if(value.available)	listAvailableTops.push(value.id_top);
 				$('#install_normal_setup_tops .tuiles').append('<li class="col-xs-4 col-md-3 col-lg-2">'+
 				'	<a class="is_checkbox '+(value.active?'active no_update':'')+' '+(value.available?'checked':'')+' anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'" href="#">'+
 				'		<i class="fa fa-check"></i>'+
@@ -2234,6 +2241,7 @@ function InitTopsByStep()
 		wycaApi.GetTopsList(function(data) {
 			//console.log(data);
 			$.each(data.D,function(index, value){
+				if(value.available)	listAvailableTops.push(value.id_top);
 				$('#install_by_step_tops .tuiles').append('<li class="col-xs-4 col-md-3 col-lg-2">'+
 				'	<a class="is_checkbox '+(value.available?'checked':'')+' anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'" href="#">'+
 				'		<i class="fa fa-check"></i>'+
@@ -2285,21 +2293,55 @@ function InitTopsActiveWyca()
 	$('#wyca_setup_top .tuiles').html('');
 	if (wycaApi.websocketAuthed)
 	{
-		wycaApi.GetTopsList(function(data) {
-			//console.log(data);
-			$.each(data.D,function(index, value){
-				if (value.available)
-				{
-					$('#wyca_setup_top .tuiles').append('<li class="col-xs-4 col-md-3 col-lg-2 bTop' + value.id_top + '">'+
-					'	<a href="#" class="is_checkbox set_top '+(value.active?'checked':'')+' anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'">'+
-					'		<i class="fa fa-check"></i>'+
-					'		<img src="data:image/png;base64, '+value.image_b64+'" />'+value.name+''+
-					'	</a>'+
-					'</li>');
-				}
-			});
-			$('.wyca_setup_top_loading').hide();
+		//CHECK IF AVAILABLE TOPS LIST CHANGED
+		templistAvailableTops = JSON.parse(JSON.stringify(listAvailableTops));
+		listAvailableTops = Array();
+		$('#wyca_setup_tops ul.tuiles').find('.is_checkbox.checked').each(function(index, element) {
+			listAvailableTops.push($(this).data('id_top'));
 		});
+		
+		if(JSON.stringify(listAvailableTops) == JSON.stringify(templistAvailableTops)){
+			wycaApi.GetTopsList(function(data) {
+				//console.log(data);
+				$.each(data.D,function(index, value){
+						if (value.available)
+						{
+							$('#wyca_setup_top .tuiles').append('<li class="col-xs-4 col-md-3 col-lg-2 bTop' + value.id_top + '">'+
+							'	<a href="#" class="is_checkbox set_top '+(value.active?'checked':'')+' anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'">'+
+							'		<i class="fa fa-check"></i>'+
+							'		<img src="data:image/png;base64, '+value.image_b64+'" />'+value.name+''+
+							'	</a>'+
+							'</li>');
+						}
+					});
+				$('.wyca_setup_top_loading').hide();
+			})
+		}
+		else
+		{
+			wycaApi.SetAvailableTops(listAvailableTops, function(data){
+				if (data.A == wycaApi.AnswerCode.NO_ERROR)
+				{
+					wycaApi.GetTopsList(function(data) {
+						//console.log(data);
+						$.each(data.D,function(index, value){
+							if (value.available)
+							{
+								$('#wyca_setup_top .tuiles').append('<li class="col-xs-4 col-md-3 col-lg-2 bTop' + value.id_top + '">'+
+								'	<a href="#" class="is_checkbox set_top '+(value.active?'checked':'')+' anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'">'+
+								'		<i class="fa fa-check"></i>'+
+								'		<img src="data:image/png;base64, '+value.image_b64+'" />'+value.name+''+
+								'	</a>'+
+								'</li>');
+							}
+						});
+						$('.wyca_setup_top_loading').hide();
+					});
+				}
+				else
+					ParseAPIAnswerError(data);
+			});
+		}
 	}
 	else
 	{
@@ -2341,21 +2383,56 @@ function InitTopsActiveNormal()
 	$('#install_normal_setup_top .tuiles').html('');
 	if (wycaApi.websocketAuthed)
 	{
-		wycaApi.GetTopsList(function(data) {
-			//console.log(data);
-			$.each(data.D,function(index, value){
-				if (value.available)
-				{
-					$('#install_normal_setup_top .tuiles').append('<li class="col-xs-4 col-md-3 col-lg-2 bTop' + value.id_top + '">'+
-					'	<a href="#" class="is_checkbox set_top '+(value.active?'checked':'')+' anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'">'+
-					'		<i class="fa fa-check"></i>'+
-					'		<img src="data:image/png;base64, '+value.image_b64+'" />'+value.name+''+
-					'	</a>'+
-					'</li>');
-				}
-			});
-			$('.install_normal_setup_top_loading').hide();
+		//CHECK IF AVAILABLE TOPS LIST CHANGED
+		templistAvailableTops = JSON.parse(JSON.stringify(listAvailableTops));
+		listAvailableTops = Array();
+		$('#install_normal_setup_tops ul.tuiles').find('.is_checkbox.checked').each(function(index, element) {
+			listAvailableTops.push($(this).data('id_top'));
 		});
+		
+		if(JSON.stringify(listAvailableTops) == JSON.stringify(templistAvailableTops)){
+			wycaApi.GetTopsList(function(data) {
+				//console.log(data);
+				$.each(data.D,function(index, value){
+					if (value.available)
+					{
+						$('#install_normal_setup_top .tuiles').append('<li class="col-xs-4 col-md-3 col-lg-2 bTop' + value.id_top + '">'+
+						'	<a href="#" class="is_checkbox set_top '+(value.active?'checked':'')+' anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'">'+
+						'		<i class="fa fa-check"></i>'+
+						'		<img src="data:image/png;base64, '+value.image_b64+'" />'+value.name+''+
+						'	</a>'+
+						'</li>');
+					}
+				});
+				$('.install_normal_setup_top_loading').hide();
+			});
+		}
+		else
+		{
+			wycaApi.SetAvailableTops(listAvailableTops, function(data){
+				if (data.A == wycaApi.AnswerCode.NO_ERROR)
+				{
+					wycaApi.GetTopsList(function(data) {
+						//console.log(data);
+						$.each(data.D,function(index, value){
+							if (value.available)
+							{
+								$('#install_normal_setup_top .tuiles').append('<li class="col-xs-4 col-md-3 col-lg-2 bTop' + value.id_top + '">'+
+								'	<a href="#" class="is_checkbox set_top '+(value.active?'checked':'')+' anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'">'+
+								'		<i class="fa fa-check"></i>'+
+								'		<img src="data:image/png;base64, '+value.image_b64+'" />'+value.name+''+
+								'	</a>'+
+								'</li>');
+							}
+						});
+						$('.install_normal_setup_top_loading').hide();
+					});
+				}
+				else
+					ParseAPIAnswerError(data);
+			});
+		}
+		
 	}
 	else
 	{

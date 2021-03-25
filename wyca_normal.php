@@ -1313,17 +1313,17 @@
             <div class="content">
 				<div class="wyca_setup_tops_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
 				<h5 class="text-center" style="margin-bottom:5px;"><?=__('Please select available tops for the vehicle.') ?></h5>
-				<p class="text-center" style="margin-bottom:30px;"><i class="fas fa-exclamation-triangle"></i> <?=__('This is not the active top selection.') ?></p>
-            	
+				<p class="text-center" style=""><i class="fas fa-exclamation-triangle"></i> <?=__('This is not the active top selection.') ?></p>
+            	<div style="display:flex;justify-content:space-around;flex-wrap:wrap;margin-bottom:30px;">
+					<a href="#" class="import_top btn btn-success" style="min-width:45%;font-weight:bold;margin: 10px 0;"><?=__('Import new top')?></a>
+					<a href="#" class="button_goto btn btn-info" style="min-width:45%;font-weight:bold;margin: 10px 0;" data-goto="wyca_setup_top"><?=__('Select active Top')?></a>
+				</div>
                 <ul class="tuiles row">
                 </ul>
                 
                 
                 <div style="clear:both; height:20px;"></div>
-                <div style="display:flex;justify-content:space-around">
-					<a href="#" class="import_top btn btn-success"><?=__('Import new top')?></a>
-					<a href="#" class="button_goto btn btn-info" data-goto="wyca_setup_top"><?=__('Select active Top')?></a>
-				</div>
+                
                 <div class="modal fade modalImportTop" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
                     <div class="modal-dialog" role="dialog">
                         <div class="modal-content">
@@ -1392,19 +1392,22 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <div class="actions mh100vh_55">
-                                    
                                     <div class="h100vh_160" style="overflow:auto">
-                                        <div class="progressSetActiveTop">
-                                            <h4 style="text-align:center;margin-bottom:20px"><?php echo __('Setting new active top');?></h4>
-                                            <div class="setActiveTopProgress progress progress-striped light active m-md">
-                                                <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;">
-                                                </div>
-                                            </div>
-                                        </div>
-			                                    
+										<h4 style="text-align:center;margin-bottom:20px"><?php echo __('Setting new active top');?></h4>
+			                            <div class="wyca_set_active_top_feedback set_active_top_feedback" style="display:none;">
+											<hr style="border-top: 1px solid #909090;">
+											<div class="row set_active_top_step SetActiveTopRemoveCurrent" id="">
+												<div class="col-xs-10"><h5><?= __('Removing actual top')?></h5></div>
+												<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+											</div>
+											<div class="row set_active_top_step SetActiveTopSetNew" id="">
+												<div class="col-xs-10"><h5><?= __('Setting new top')?></h5></div>
+												<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+											</div>
+											<hr style="border-top: 1px solid #909090;">
+										</div>
             	                        <div style="clear:both;"></div>
                 					</div>                   
-                                    <a href="#" class="btn btn-primary" data-dismiss="modal" style="width:100%; position:absolute; left:0; bottom:0px; font-size:30px;"><?php echo __('Close');?></a>
                                 </div>
                             </div>
                         </div>
@@ -1421,6 +1424,7 @@
             </div>
             <footer>
                 <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="wyca_setup_tops"><?php echo __('Back');?></a>
+                <a href="#" class="button_goto bBackToDashboardSetup" style="display:none" data-goto="wyca_setup"></a>
             </footer>
         </section>
         

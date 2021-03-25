@@ -154,7 +154,7 @@ $(document).ready(function(e) {
 	$('#pages_wyca_by_step a.save_tops').click(function(e) {
         e.preventDefault();
 		
-		var listAvailableTops = Array();
+		listAvailableTops = Array();
 		//$('#pages_wyca_by_step .wyca_by_step_top li').hide();
 		$(this).parent().parent().find('.is_checkbox.checked').each(function(index, element) {
             listAvailableTops.push($(this).data('id_top'));
