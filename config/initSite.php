@@ -79,6 +79,7 @@ if(file_exists(__DIR__ .'/../.git/HEAD')){
 		}else
 			$noHi_version = false;
 		if(!isset($version))//IF NO ERR
+			$noHi_version = false;
 			$version = $noHi_version?date('Ymd').'_'.$bn:date('YmdHi').'_'.$bn;
 	}
 }else{
