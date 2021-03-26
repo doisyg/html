@@ -436,7 +436,7 @@ $(document).ready(function(e) {
 				
 				RemoveClass('#manager_edit_map_svg .active', 'active');
 				RemoveClass('#manager_edit_map_svg .activ_select', 'activ_select'); 
-				
+				ManagerResizeSVG();
 				currentSelectedItem = Array();
 				managerCurrentAction='';
 				$('body').removeClass('no_current select');

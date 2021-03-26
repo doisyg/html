@@ -752,7 +752,7 @@ $(document).ready(function(e) {
 				
 				RemoveClass('#install_by_step_edit_map_svg .active', 'active');
 				RemoveClass('#install_by_step_edit_map_svg .activ_select', 'activ_select'); 
-				
+				ByStepResizeSVG();
 				currentSelectedItem = Array();
 				bystepCurrentAction='';
 				$('body').removeClass('no_current select');

@@ -701,7 +701,7 @@ $(document).ready(function(e) {
 				
 				RemoveClass('#wyca_edit_map_svg .active', 'active');
 				RemoveClass('#wyca_edit_map_svg .activ_select', 'activ_select'); 
-				
+				WycaResizeSVG();
 				currentSelectedItem = Array();
 				wycaCurrentAction='';
 				$('body').removeClass('no_current select');
