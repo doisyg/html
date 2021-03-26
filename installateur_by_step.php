@@ -622,7 +622,7 @@
             </div>
             <footer>
             	<a href="#" class="ifNMapping bMappingBack btn btn-default button_goto btn_footer_left btn_33 btn_back" data-goto="install_by_step_new_site" ><?php echo __('Back');?></a>
-            	<a href="#" class="ifNMapping bMappingStart btn btn-primary btn_footer_right btn_66 ifUndocked" ><?php echo __('Start Mapping');?></a>
+            	<a href="#" class="ifNMapping bMappingStart btn btn-primary btn_footer_right btn_66 ifDocked_disabled" ><?php echo __('Start Mapping');?></a>
             	<a href="#" class="ifMapping btn btn-primary btn_footer_right btn_100 bMappingDone" style="display:none"><?php echo __('Mapping done');?></a>
             </footer>
         </section>
