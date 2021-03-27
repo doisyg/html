@@ -67,6 +67,7 @@ $(document).ready(function(e) {
 		$('#install_normal_setup_trinary_threshold_occupied_output b').text( 65 );
 		threshold_occupied_normal = 65;
 		
+		$('#install_normal_setup_trinary .bSaveTrinaryMap ').addClass('disabled');
 		CalculateMapTrinaryNormal();
     });
 	
@@ -74,6 +75,7 @@ $(document).ready(function(e) {
 		$('#install_normal_setup_trinary_threshold_free_output b').text( this.value );
 		threshold_free_normal = this.value;
 		
+		$('#install_normal_setup_trinary .bSaveTrinaryMap ').addClass('disabled');
 		CalculateMapTrinaryNormal();
 	});
 	
@@ -81,6 +83,7 @@ $(document).ready(function(e) {
 		$('#install_normal_setup_trinary_threshold_occupied_output b').text( this.value );
 		threshold_occupied_normal = this.value;
 		
+		$('#install_normal_setup_trinary .bSaveTrinaryMap ').addClass('disabled');
 		CalculateMapTrinaryNormal();
 	});
 	
@@ -588,7 +591,8 @@ var current_map_obj = {};
 function NormalInitTrinaryDo()
 {
 	$('#install_normal_setup_trinary .loading_fin_create_map').show();
-		
+	$('#install_normal_setup_trinary .bSaveTrinaryMap ').addClass('disabled');
+	
 	img = document.getElementById("install_normal_setup_trinary_img_map_saved_fin");
 	img.src = 'assets/images/vide.png';
 	
@@ -684,6 +688,7 @@ function CalculateMapTrinaryDoNormal()
 	ctx.putImageData(idata, 0, 0);
 	
 	$('#install_normal_setup_trinary .loading_fin_create_map').hide();
+	$('#install_normal_setup_trinary .bSaveTrinaryMap ').removeClass('disabled');
 }
 
 var timeoutCalcul_normal = null;
@@ -1233,7 +1238,7 @@ $(document).ready(function(e) {
 	});
 	
 	$('#install_normal_setup_sound .bSaveSound').click(function(e) {
-		console.log('here');
+		//console.log('here');
 		//SOUND
 		if($('#install_normal_setup_sound .sound_switch_ROS').prop('checked')){
 			//SOUND ON
@@ -1260,10 +1265,10 @@ $(document).ready(function(e) {
 				},
 				error: function(e) {
 					if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-						alert_wyca((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-						setTimeout(function(){window.location.href = 'logout.php'},3000);
+						console.log((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+						$('#modalErrorSession').modal('show');
 					}else{
-						alert_wyca((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText );
+						console.log((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText );
 					}
 				}
 			});
@@ -1280,15 +1285,16 @@ $(document).ready(function(e) {
 				},
 				error: function(e) {
 					if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-						alert_wyca((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-						setTimeout(function(){window.location.href = 'logout.php'},3000);
+						console.log((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+						$('#modalErrorSession').modal('show');
 					}else{
-						alert_wyca((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText );
+						console.log((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText );
 					}
 				}
 			});
 			
 		}
+		RefreshGlobalVehiculePersistanteDataStorage();
 	});
 	
 	
@@ -1543,10 +1549,10 @@ $(document).ready(function(e) {
 			},
 			error: function(e) {
 				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-					alert_wyca((typeof(textErrorLang) != 'undefined'? textErrorLang : 'Error lang') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-					setTimeout(function(){window.location.href = 'logout.php'},3000);
+					console.log((typeof(textErrorLang) != 'undefined'? textErrorLang : 'Error lang') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					$('#modalErrorSession').modal('show');
 				}else{
-					alert_wyca((typeof(textErrorLang) != 'undefined'? textErrorLang : 'Error lang') + ' ' + e.responseText );
+					console.log((typeof(textErrorLang) != 'undefined'? textErrorLang : 'Error lang') + ' ' + e.responseText );
 				}
 			}
 		});
@@ -1615,12 +1621,26 @@ $(document).ready(function(e) {
 		InitTopImportNormal();
 	});
 	
+	$( "#pages_install_normal #install_normal_setup_tops .tuiles" ).on('click', 'a.is_checkbox[data-id_top]', function(e) {
+		let arr = Array();
+		$('#install_normal_setup_tops ul.tuiles').find('.is_checkbox.checked').each(function(index, element) {
+            arr.push($(this).data('id_top'));
+        });
+		let lg = arr.length;
+		if(!$(this).hasClass('active'))
+			lg = $(this).hasClass('checked')? lg-1 : lg+1; // ADD OR REMOVE ITEM CLICKED ONLY IF NOT ACTIVE TOP (UNREMOVABLE)
+		let btnSelectActiveTop = $('#install_normal_setup_tops a[data-goto="install_normal_setup_top"]');
+		if(lg == 1)
+			btnSelectActiveTop.addClass('disabled');
+		else
+			btnSelectActiveTop.removeClass('disabled');
+	})
+	
 	$('#pages_install_normal a.save_tops').click(function(e) {
         e.preventDefault();
 		
-		var listAvailableTops = Array();
-		console.log($(this))
-		console.log($(this).parent())
+		listAvailableTops = Array();
+		
 		//$('#pages_install_normal #install_normal_setup_tops li').hide();
 		$('#install_normal_setup_tops ul.tuiles').find('.is_checkbox.checked').each(function(index, element) {
             listAvailableTops.push($(this).data('id_top'));
@@ -1692,7 +1712,7 @@ $(document).ready(function(e) {
 		
 		wycaApi.on('onSetActiveTopResult', function(data) {
 			
-			InitTopsActiveNormal();
+			
 			timerSetActiveTop = 90;
 			statusSetActiveTop = 2;
 			$('#install_normal_setup_top .modalSetActiveTop').modal('hide');
@@ -1700,9 +1720,11 @@ $(document).ready(function(e) {
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
 				success_wyca(textTopNowActive);
+				$('#install_normal_setup_top .bBackToDashboardSetup').click();
 			}
 			else
 			{
+				InitTopsActiveNormal();
 				ParseAPIAnswerError(data);
 			}
 			wycaApi.on('onSetActiveTopResult', onSetActiveTopResult);

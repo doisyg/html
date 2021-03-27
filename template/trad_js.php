@@ -1,6 +1,9 @@
 <?php
+ob_start();
+
 require_once (__DIR__.'/../config/initSite.php');
 
+ob_end_clean();
 if (false) // Pour rendre l'IDE plus firendly
 {
 ?><script id="trad_js"><?php
@@ -59,6 +62,7 @@ var textErrorSaveTops = "<?php echo __js('Error save tops');?>";
 var textErrorSaveTop = "<?php echo __js('Error save top');?>";
 var textErrorCheck = "<?php echo __js('Error check components');?>";
 var textErrorSkipWifi = "<?php echo __js('Error skip wifi');?>";
+var textErrorGetSound = "<?php echo __js('Error get sound config');?>";
 var textErrorSaveSound = "<?php echo __js('Error save sound config');?>";
 var textErrorSound = "<?php echo __js('Error sound');?>";
 var textErrorTrinary = "<?php echo __js('Error get map trinary');?>";
@@ -91,6 +95,8 @@ var textErrorStartMapping = "<?php echo __js('Error start mapping');?>";
 var textErrorStopMapping = "<?php echo __js('Error stop mapping');?>";
 var textErrorGetMapping = "<?php echo __js('Error get mapping');?>";
 var textErrorInput = "<?php echo __js('Error on input');?>";
+var textErrorGetGlobalVehiculePersistanteDataStorage = "<?php echo __js('Error on get GlobalVehiculePersistanteDataStorage');?>";
+var textErrorSetGlobalVehiculePersistanteDataStorage = "<?php echo __js('Error on set GlobalVehiculePersistanteDataStorage');?>";
 
 var textErrorRefreshSession = "<?php echo __js('Error in refresh session');?>"; 
 

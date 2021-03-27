@@ -261,6 +261,9 @@ var currentPoiWycaLongTouch = null;
 var currentAugmentedPoseWycaLongTouch = null;
 
 $(document).ready(function(e) {
+	$('#wyca_edit_map .modal').on('shown.bs.modal', function () {
+		do_refresh = true;
+	});
 	
 	$('#wyca_edit_map_svg').on('touchend', function(e) { 
 		$('#wyca_edit_map_zoom_popup').hide();
@@ -698,7 +701,7 @@ $(document).ready(function(e) {
 				
 				RemoveClass('#wyca_edit_map_svg .active', 'active');
 				RemoveClass('#wyca_edit_map_svg .activ_select', 'activ_select'); 
-				
+				WycaResizeSVG();
 				currentSelectedItem = Array();
 				wycaCurrentAction='';
 				$('body').removeClass('no_current select');
