@@ -998,8 +998,12 @@ function WycaInitMap()
 		this.hammer.destroy()
 	  }
 	}
-	if(typeof(window.panZoomWyca) != 'undefined'){
-		window.panZoomWyca.destroy();
+	let init_zoom = false;
+	if(id_map_zoom != id_map){
+		init_zoom = true;
+		id_map_zoom = id_map;
+		if(typeof(window.panZoomWyca) != 'undefined')
+			window.panZoomWyca.destroy();
 	}
 	// Expose to window namespace for testing purposes
 	
@@ -1020,16 +1024,14 @@ function WycaInitMap()
 	WycaRefreshZoomView();
 	
 	setTimeout(function(){
-		if(typeof(window.panZoomWyca) != 'undefined'){
-			
+		if(init_zoom){
 			//WORKING ON CONSOLE 
 			window.panZoomWyca.resize();
 			window.panZoomWyca.updateBBox();
 			window.panZoomWyca.fit();
 			window.panZoomWyca.center();
-			
 		}
-		setTimeout(function(){$('.wyca_edit_map_loading').hide()},100);
+		$('.wyca_edit_map_loading').hide();
 	},100);
 }
 

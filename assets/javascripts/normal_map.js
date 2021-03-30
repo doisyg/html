@@ -999,8 +999,12 @@ function NormalInitMap()
 		this.hammer.destroy()
 	  }
 	}
-	if(typeof(window.panZoomNormal) != 'undefined'){
-		window.panZoomNormal.destroy();
+	let init_zoom = false;
+	if(id_map_zoom != id_map){
+		init_zoom = true;
+		id_map_zoom = id_map;
+		if(typeof(window.panZoomNormal) != 'undefined')
+			window.panZoomNormal.destroy();
 	}
 	// Expose to window namespace for testing purposes
 	
@@ -1019,16 +1023,14 @@ function NormalInitMap()
 	NormalRefreshZoomView();
 	
 	setTimeout(function(){
-		if(typeof(window.panZoomNormal) != 'undefined'){
-			
+		if(init_zoom){
 			//WORKING ON CONSOLE 
 			window.panZoomNormal.resize();
 			window.panZoomNormal.updateBBox();
 			window.panZoomNormal.fit();
 			window.panZoomNormal.center();
-			
 		}
-		setTimeout(function(){$('.install_normal_edit_map_loading').hide()},100);
+		$('.install_normal_edit_map_loading').hide();
 	},100);
 }
 

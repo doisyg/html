@@ -985,10 +985,13 @@ function WycaByStepInitMap()
 		this.hammer.destroy()
 	  }
 	}
-	if(typeof(window.panZoom) != 'undefined'){
-		window.panZoom.destroy();
+	let init_zoom = false;
+	if(id_map_zoom != id_map){
+		init_zoom = true;
+		id_map_zoom = id_map;
+		if(typeof(window.panZoom) != 'undefined')
+			window.panZoom.destroy();
 	}
-
 	// Expose to window namespace for testing purposes
 	
 	window.panZoom = svgPanZoom('#wyca_by_step_edit_map_svg', {
@@ -1008,16 +1011,14 @@ function WycaByStepInitMap()
 	RefreshZoomView();
 	
 	setTimeout(function(){
-		if(typeof(window.panZoom) != 'undefined'){
-			
+		if(init_zoom){
 			//WORKING ON CONSOLE 
 			window.panZoom.resize();
 			window.panZoom.updateBBox();
 			window.panZoom.fit();
 			window.panZoom.center();
-			
 		}
-		setTimeout(function(){$('.wyca_by_step_edit_map_loading').hide()},100);
+		$('.wyca_by_step_edit_map_loading').hide();
 	},100);
 }
 
