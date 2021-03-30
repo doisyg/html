@@ -631,5 +631,6 @@ $_LANG['109f2f31339812491eb9bc75d9065480'] = 'Error in session';
 $_LANG['d5a40d899dd4fc3fddf2d623b69e91ea'] = 'Error get sound config';
 $_LANG['7826f93e0e1ad56ff239e493cf97163a'] = 'Error on get GlobalVehiculePersistanteDataStorage';
 $_LANG['dbb8c43385e7134b1936431305b7bbbb'] = 'Error on set GlobalVehiculePersistanteDataStorage';
+$_LANG['3bfd163b7f2b0c3b3157bc805a7f7551'] = 'Back';
 
 ?>

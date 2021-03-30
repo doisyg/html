@@ -678,7 +678,7 @@
                                                         </div>
                                                         <div class="col-xs-6">
                                                             <input type="radio" id="install_normal_edit_map_up_elem_direction_back" name="up_elem_direction" value="back" class="form-control" />
-                                                            <label for="up_elem_direction_back" class="control-label"><?= __('Back')?></label>
+                                                            <label for="up_elem_direction_back" class="control-label"><?= __(' Back')?></label>
                                                         </div>
                                                     </div>
                                                     
