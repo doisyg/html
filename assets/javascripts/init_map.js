@@ -57,7 +57,7 @@ var pois = Array();
 var augmented_poses = Array();
 var landmarks = Array();
 var id_map = -1;
-var id_map_last = -1;
+var id_map_zoom = -1;
 
 
 var blockZoom = false;
