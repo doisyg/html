@@ -2649,7 +2649,7 @@ $(document).ready(function(e) {
 		else
 		{
 			$('#list_all_poi_'+index_li).data('duration', $('#wyca_demo_mode_config_duration').val());
-			$('#list_all_poi_'+index_li+' span').html('Wait ' + $('#wyca_demo_mode_config_duration').val() + ' secondes');
+			$('#list_all_poi_'+index_li+' span').html((typeof(textDemoWait) != 'undefined' ? textDemoWait : 'Wait' )+' '+ $('#wyca_demo_mode_config_duration').val() + ' secondes');
 		}
 			
 		$('#wyca_demo_mode_config_duration').val('');
