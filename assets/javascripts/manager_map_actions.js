@@ -875,6 +875,86 @@ $(document).ready(function() {
 	/*  Click on element      */
 	/**************************/
 	
+	/* BTN RECOVERY */
+	
+	$('#manager_edit_map_modalRecovery .bRecovery').click(function(e) {
+        e.preventDefault();
+		$('#manager_edit_map_modalRecovery .bRecovery').addClass('disabled');
+		
+		/*INIT FEEDBACK DISPLAY*/
+		$('#manager_edit_map_modalRecovery .recovery_feedback .recovery_step').css('opacity','0').hide();
+		$('#manager_edit_map_modalRecovery .recovery_feedback .recovery_step .fa-check').hide();
+		$('#manager_edit_map_modalRecovery .recovery_feedback .recovery_step .fa-pulse').show();
+		
+		wycaApi.on('onRecoveryFromFiducialFeedback', function(data) {
+			if(data.A == wycaApi.AnswerCode.NO_ERROR){
+				target = '';
+				switch(data.M){
+					case 'Scan reflector': 				target = '#manager_edit_map_modalRecovery .recovery_feedback .recovery_step.RecoveryScan';	break;
+					case 'Init pose': 					target = '#manager_edit_map_modalRecovery .recovery_feedback .recovery_step.RecoveryPose';	break;
+					case 'Rotate to check obstacles': 	target = '#manager_edit_map_modalRecovery .recovery_feedback .recovery_step.RecoveryRotate';	break;
+					case 'Start navigation': 			target = '#manager_edit_map_modalRecovery .recovery_feedback .recovery_step.RecoveryNav';		break;
+				}
+				
+				target = $(target);
+				if(target.prevAll('.recovery_step:visible').length > 0){
+					target.prevAll('.recovery_step:visible').find('.fa-check').show();
+					target.prevAll('.recovery_step:visible').find('.fa-pulse').hide();
+				}
+				target.css('opacity','1').show();
+			}
+		});
+		
+		wycaApi.on('onRecoveryFromFiducialResult', function(data) {
+			
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				
+				$('#manager_edit_map_modalRecovery .recovery_step:visible').find('.fa-check').show();
+				$('#manager_edit_map_modalRecovery .recovery_step:visible').find('.fa-pulse').hide();
+				setTimeout(function(){
+					$('.ifRecovery').hide();
+					$('.ifNRecovery').show();
+					$('#manager_edit_map_modalRecovery .bRecovery').removeClass('disabled');
+					success_wyca(textRecoveryDone);
+					$('#manager_edit_map_modalRecovery').modal('hide');
+				},500)
+			}
+			else
+			{
+				$('.ifRecovery').hide();
+				$('.ifNRecovery').show();
+				$('#manager_edit_map_modalRecovery .bRecovery').removeClass('disabled');
+				ParseAPIAnswerError(data);
+			}
+			// On rebranche l'ancienne fonction
+			wycaApi.on('onRecoveryFromFiducialResult', onRecoveryFromFiducialResult);
+			wycaApi.on('onRecoveryFromFiducialFeedback', onRecoveryFromFiducialFeedback);
+		});
+		
+		wycaApi.RecoveryFromFiducial(function(data) {
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$('.ifRecovery').show();
+				$('.ifNRecovery').hide();
+			}
+			else
+			{
+				$('.ifRecovery').hide();
+				$('.ifNRecovery').show();
+				$('#manager_edit_map_modalRecovery .bRecovery').removeClass('disabled');
+				ParseAPIAnswerError(data);
+			}
+		});
+    });
+	
+	$('#manager_edit_map_modalRecovery .bCancelRecovery').click(function(e) {
+		$('#manager_edit_map_modalRecovery .bCancelRecovery').addClass('disabled');
+		wycaApi.RecoveryFromFiducialCancel(function(data) {
+			$('#manager_edit_map_modalRecovery .bCancelRecovery').removeClass('disabled');
+		})
+	})
+	
 	/* BTN GOTOPOSE */
 	
 	$('#manager_edit_map_menu .bMoveTo').click(function(e) {

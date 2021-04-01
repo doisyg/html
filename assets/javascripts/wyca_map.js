@@ -263,6 +263,9 @@ var currentAugmentedPoseWycaLongTouch = null;
 var currentLandmarkWycaLongTouch = null;
 
 $(document).ready(function(e) {
+	$('#wyca_edit_map .modal').on('shown.bs.modal', function () {
+		do_refresh = true;
+	});
 	
 	$('#wyca_edit_map_svg').on('touchend', function(e) { 
 		$('#wyca_edit_map_zoom_popup').hide();
@@ -756,7 +759,7 @@ $(document).ready(function(e) {
 				
 				RemoveClass('#wyca_edit_map_svg .active', 'active');
 				RemoveClass('#wyca_edit_map_svg .activ_select', 'activ_select'); 
-				
+				WycaResizeSVG();
 				currentSelectedItem = Array();
 				wycaCurrentAction='';
 				$('body').removeClass('no_current select');
@@ -1060,7 +1063,13 @@ function WycaInitMap()
 		this.hammer.destroy()
 	  }
 	}
-
+	let init_zoom = false;
+	if(id_map_zoom != id_map){
+		init_zoom = true;
+		id_map_zoom = id_map;
+		if(typeof(window.panZoomWyca) != 'undefined')
+			window.panZoomWyca.destroy();
+	}
 	// Expose to window namespace for testing purposes
 	
 	window.panZoomWyca = svgPanZoom('#wyca_edit_map_svg', {
@@ -1079,7 +1088,16 @@ function WycaInitMap()
 	//window.panZoomWyca.getZoom = function () { return 1; }
 	WycaRefreshZoomView();
 	
-	$('.wyca_edit_map_loading').hide();
+	setTimeout(function(){
+		if(init_zoom){
+			//WORKING ON CONSOLE 
+			window.panZoomWyca.resize();
+			window.panZoomWyca.updateBBox();
+			window.panZoomWyca.fit();
+			window.panZoomWyca.center();
+		}
+		$('.wyca_edit_map_loading').hide();
+	},100);
 }
 
 function WycaShakeActiveElement()

@@ -273,6 +273,7 @@ function WycaAPI(options){
 		LED_CURRENT_LED_ROBOT_STATE			: 0x5002,
 		LED_IS_LIGHT_MODE			: 0x5003,
 		LED_IS_MANUAL_MODE			: 0x5004,
+		LED_STATE_CONTROL			: 0x5005,
 		MAPPING_IS_STARTED			: 0x4001,
 		MAPPING_MAP_IN_CONSTRUCTION			: 0x4002,
 		MAPPING_ROBOT_POSE_CURRENT_MAP			: 0x4003,
@@ -286,6 +287,8 @@ function WycaAPI(options){
 		MOVE_IN_PROGRESS			: 0x0015,
 		LIDAR_DATA			: 0x3007,
 		MAP_UPDATED			: 0x0018,
+		GLOBAL_VEHICULE_PERSISTANTE_DATA_STORAGE_UPDATED : 0x6003,
+		TOP_PERSISTANTE_DATA_STORAGE_UPDATED : 0x6004,
 		CURRENT_AREA_ID			: 0x001F,
 	 
 	// Actions
@@ -1204,6 +1207,9 @@ function WycaAPI(options){
 						case this.EventCode.LED_IS_MANUAL_MODE:
 							if (_this.options.onLedIsManualMode != undefined) { _this.options.onLedIsManualMode(msg.D.D); }
 							break;
+						case this.EventCode.LED_STATE_CONTROL:
+							if (_this.options.onLedStateControl != undefined) { _this.options.onLedStateControl(msg.D.D); }
+							break;
 						case this.EventCode.MAPPING_IS_STARTED:
 							if (_this.options.onMappingIsStarted != undefined) { _this.options.onMappingIsStarted(msg.D.D); }
 							break;
@@ -1233,6 +1239,12 @@ function WycaAPI(options){
 							break;
 						case this.EventCode.MAP_UPDATED:
 							// On ne le declenche pas à l'inscription if (_this.options.onMapUpdated != undefined) { _this.options.onMapUpdated(); }
+							break;
+						case this.EventCode.GLOBAL_VEHICULE_PERSISTANTE_DATA_STORAGE_UPDATED:
+							// On ne le declenche pas à l'inscription
+							break;
+						case this.EventCode.TOP_PERSISTANTE_DATA_STORAGE_UPDATED:
+							// On ne le declenche pas à l'inscription
 							break;
 						case this.EventCode.DOCKING_STATE:
 							if (_this.options.onDockingState != undefined) { _this.options.onDockingState(msg.D.D); }
@@ -1382,6 +1394,9 @@ function WycaAPI(options){
 				case this.EventCode.LED_IS_MANUAL_MODE:
 					if (_this.options.onLedIsManualMode != undefined) { _this.options.onLedIsManualMode(msg.D); }
 					break;
+				case this.EventCode.LED_STATE_CONTROL:
+					if (_this.options.onLedStateControl != undefined) { _this.options.onLedStateControl(msg.D); }
+					break;
 				case this.EventCode.MAPPING_IS_STARTED:
 					if (_this.options.onMappingIsStarted != undefined) { _this.options.onMappingIsStarted(msg.D); }
 					break;
@@ -1411,6 +1426,12 @@ function WycaAPI(options){
 					break;
 				case this.EventCode.MAP_UPDATED:
 					if (_this.options.onMapUpdated != undefined) { _this.options.onMapUpdated(); }
+					break;
+				case this.EventCode.GLOBAL_VEHICULE_PERSISTANTE_DATA_STORAGE_UPDATED:
+					if (_this.options.onGlobalVehiculePersistanteDataStorageUpdated != undefined) { _this.options.onGlobalVehiculePersistanteDataStorageUpdated(); }
+					break;
+				case this.EventCode.TOP_PERSISTANTE_DATA_STORAGE_UPDATED:
+					if (_this.options.onTopPersistanteDataStorageUpdated != undefined) { _this.options.onTopPersistanteDataStorageUpdated(); }
 					break;
 				case this.EventCode.DOCKING_STATE:
 					if (_this.options.onDockingState != undefined) { _this.options.onDockingState(msg.D); }
@@ -1631,6 +1652,7 @@ function WycaAPI(options){
 		if (_this.options.onLedCurrentRobotStateMode != undefined) { var n=_this.EventCode.LED_CURRENT_LED_ROBOT_STATE; var subscribe = {	"O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onLedIsLightMode != undefined) { var n=_this.EventCode.LED_IS_LIGHT_MODE; var subscribe = {	"O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onLedIsManualMode != undefined) { var n=_this.EventCode.LED_IS_MANUAL_MODE; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
+		if (_this.options.onLedStateControl != undefined) { var n=_this.EventCode.LED_STATE_CONTROL; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onMappingIsStarted != undefined) { var n=_this.EventCode.MAPPING_IS_STARTED; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onMappingMapInConstruction != undefined) { var n=_this.EventCode.MAPPING_MAP_IN_CONSTRUCTION; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onMappingRobotPoseInBuildingMap != undefined) { var n=_this.EventCode.MAPPING_ROBOT_POSE_CURRENT_MAP; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
@@ -1641,6 +1663,8 @@ function WycaAPI(options){
 		if (_this.options.onIsSafetyStop != undefined) { var n=_this.EventCode.IS_SAFETY_STOP; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onLidarData != undefined) { var n=_this.EventCode.LIDAR_DATA; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onMapUpdated != undefined) { var n=_this.EventCode.MAP_UPDATED; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
+		if (_this.options.onGlobalVehiculePersistanteDataStorageUpdated != undefined) { var n=_this.EventCode.GLOBAL_VEHICULE_PERSISTANTE_DATA_STORAGE_UPDATED; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
+		if (_this.options.onTopPersistanteDataStorageUpdated != undefined) { var n=_this.EventCode.TOP_PERSISTANTE_DATA_STORAGE_UPDATED; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onDockingState != undefined) { var n=_this.EventCode.DOCKING_STATE; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onPOIsDetect != undefined) { var n=_this.EventCode.POI_POSES; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
 		if (_this.options.onMoveInProgress != undefined) { var n=_this.EventCode.MOVE_IN_PROGRESS; var subscribe = { "O": _this.CommandCode.SUBSCRIBE_ON_CHANGE, "P": n}; _this.wycaSend(JSON.stringify(subscribe)); }
@@ -1669,6 +1693,7 @@ function WycaAPI(options){
 			case 'onLedCurrentRobotStateMode': ev_code = _this.EventCode.LED_CURRENT_LED_ROBOT_STATE; break;
 			case 'onLedIsLightMode': ev_code = _this.EventCode.LED_IS_LIGHT_MODE; break;
 			case 'onLedIsManualMode': ev_code = _this.EventCode.LED_IS_MANUAL_MODE; break;
+			case 'onLedStateControl': ev_code = _this.EventCode.LED_STATE_CONTROL; break;
 			case 'onMappingIsStarted': ev_code = _this.EventCode.MAPPING_IS_STARTED; break;
 			case 'onMappingMapInConstruction': ev_code = _this.EventCode.MAPPING_MAP_IN_CONSTRUCTION; break;
 			case 'onMappingRobotPoseInBuildingMap': ev_code = _this.EventCode.MAPPING_ROBOT_POSE_CURRENT_MAP; break;
@@ -1679,6 +1704,8 @@ function WycaAPI(options){
 			case 'onIsSafetyStop': ev_code = _this.EventCode.IS_SAFETY_STOP; break;
 			case 'onLidarData': ev_code = _this.EventCode.LIDAR_DATA; break;
 			case 'onMapUpdated': ev_code = _this.EventCode.MAP_UPDATED; break;
+			case 'onGlobalVehiculePersistanteDataStorageUpdated': ev_code = _this.EventCode.GLOBAL_VEHICULE_PERSISTANTE_DATA_STORAGE_UPDATED; break;
+			case 'onTopPersistanteDataStorageUpdated': ev_code = _this.EventCode.TOP_PERSISTANTE_DATA_STORAGE_UPDATED; break;
 			case 'onDockingState': ev_code = _this.EventCode.DOCKING_STATE; break;
 			case 'onPOIsDetect': ev_code = _this.EventCode.POI_POSES; break;
 			case 'onMoveInProgress': ev_code = _this.EventCode.MOVE_IN_PROGRESS; break;
@@ -1747,6 +1774,7 @@ function WycaAPI(options){
 			case 'onLedCurrentRobotStateMode': ev_code = _this.EventCode.LED_CURRENT_LED_ROBOT_STATE; break;
 			case 'onLedIsLightMode': ev_code = _this.EventCode.LED_IS_LIGHT_MODE; break;
 			case 'onLedIsManualMode': ev_code = _this.EventCode.LED_IS_MANUAL_MODE; break;
+			case 'onLedStateControl': ev_code = _this.EventCode.LED_STATE_CONTROL; break;
 			case 'onMappingIsStarted': ev_code = _this.EventCode.MAPPING_IS_STARTED; break;
 			case 'onMappingMapInConstruction': ev_code = _this.EventCode.MAPPING_MAP_IN_CONSTRUCTION; break;
 			case 'onMappingRobotPoseInBuildingMap': ev_code = _this.EventCode.MAPPING_ROBOT_POSE_CURRENT_MAP; break;
@@ -1757,6 +1785,8 @@ function WycaAPI(options){
 			case 'onIsSafetyStop': ev_code = _this.EventCode.IS_SAFETY_STOP; break;
 			case 'onLidarData': ev_code = _this.EventCode.LIDAR_DATA; break;
 			case 'onMapUpdated': ev_code = _this.EventCode.MAP_UPDATED; break;
+			case 'onGlobalVehiculePersistanteDataStorageUpdated': ev_code = _this.EventCode.GLOBAL_VEHICULE_PERSISTANTE_DATA_STORAGE_UPDATED; break;
+			case 'onTopPersistanteDataStorageUpdated': ev_code = _this.EventCode.TOP_PERSISTANTE_DATA_STORAGE_UPDATED; break;
 			case 'onDockingState': ev_code = _this.EventCode.DOCKING_STATE; break;
 			case 'onPOIsDetect': ev_code = _this.EventCode.POI_POSES; break;
 			case 'onMoveInProgress': ev_code = _this.EventCode.MOVE_IN_PROGRESS; break;

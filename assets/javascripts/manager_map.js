@@ -174,6 +174,10 @@ var currentPoiManagerLongTouch = null;
 var currentAugmentedPoseManagerLongTouch = null;
 
 $(document).ready(function(e) {
+	$('#manager_edit_map .modal').on('shown.bs.modal', function () {
+		do_refresh = true;
+	});
+	
 	$('#manager_edit_map_svg').on('touchend', function(e) { 
 		$('#manager_edit_map_zoom_popup').hide();
 		if (timerManagerLongPress != null)
@@ -433,7 +437,7 @@ $(document).ready(function(e) {
 				
 				RemoveClass('#manager_edit_map_svg .active', 'active');
 				RemoveClass('#manager_edit_map_svg .activ_select', 'activ_select'); 
-				
+				ManagerResizeSVG();
 				currentSelectedItem = Array();
 				managerCurrentAction='';
 				$('body').removeClass('no_current select');
@@ -664,7 +668,13 @@ function ManagerInitMap()
 		this.hammer.destroy()
 	  }
 	}
-
+	let init_zoom = false;
+	if(id_map_zoom != id_map){
+		init_zoom = true;
+		id_map_zoom = id_map;
+		if(typeof(window.panZoomManager) != 'undefined')
+			window.panZoomManager.destroy();
+	}
 	// Expose to window namespace for testing purposes
 	
 	window.panZoomManager = svgPanZoom('#manager_edit_map_svg', {
@@ -683,5 +693,14 @@ function ManagerInitMap()
 	//window.panZoomManager.getZoom = function () { return 1; }
 	ManagerRefreshZoomView();
 	
-	$('.manager_edit_map_loading').hide();
+	setTimeout(function(){
+		if(init_zoom){
+			//WORKING ON CONSOLE 
+			window.panZoomManager.resize();
+			window.panZoomManager.updateBBox();
+			window.panZoomManager.fit();
+			window.panZoomManager.center();
+		}
+		$('.manager_edit_map_loading').hide();
+	},100);
 }

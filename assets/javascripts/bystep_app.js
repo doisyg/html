@@ -80,10 +80,10 @@ $(document).ready(function(e) {
 			},
 			error: function(e) {
 				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-					alert_wyca((typeof(textErrorLang) != 'undefined'? textErrorLang : 'Error lang') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-					setTimeout(function(){window.location.href = 'logout.php'},3000);
+					console.log((typeof(textErrorLang) != 'undefined'? textErrorLang : 'Error lang') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					$('#modalErrorSession').modal('show');
 				}else{
-					alert_wyca((typeof(textErrorLang) != 'undefined'? textErrorLang : 'Error lang') + ' ' + e.responseText );
+					console.log((typeof(textErrorLang) != 'undefined'? textErrorLang : 'Error lang') + ' ' + e.responseText );
 				}
 			}
 		});
@@ -155,7 +155,7 @@ $(document).ready(function(e) {
 	$('#pages_install_by_step a.save_tops').click(function(e) {
         e.preventDefault();
 		
-		var listAvailableTops = Array();
+		listAvailableTops = Array();
 		//$('#pages_install_by_step .install_by_step_top li').hide();
 		$(this).parent().parent().find('.is_checkbox.checked').each(function(index, element) {
             listAvailableTops.push($(this).data('id_top'));
@@ -181,10 +181,10 @@ $(document).ready(function(e) {
 					},
 					error: function(e) {
 						if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-							alert_wyca((typeof(textErrorSaveTops) != 'undefined'? textErrorSaveTops : 'Error save tops') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-							setTimeout(function(){window.location.href = 'logout.php'},3000);
+							console.log((typeof(textErrorSaveTops) != 'undefined'? textErrorSaveTops : 'Error save tops') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+							$('#modalErrorSession').modal('show');
 						}else{
-							alert_wyca((typeof(textErrorSaveTops) != 'undefined'? textErrorSaveTops : 'Error save tops') + ' ' + e.responseText );
+							console.log((typeof(textErrorSaveTops) != 'undefined'? textErrorSaveTops : 'Error save tops') + ' ' + e.responseText );
 						}
 					}
 				});
@@ -218,10 +218,10 @@ $(document).ready(function(e) {
 			},
 			error: function(e) {
 				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-					alert_wyca((typeof(textErrorSaveTop) != 'undefined'? textErrorSaveTop : 'Error save top') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-					setTimeout(function(){window.location.href = 'logout.php'},3000);
+					console.log((typeof(textErrorSaveTop) != 'undefined'? textErrorSaveTop : 'Error save top') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					$('#modalErrorSession').modal('show');
 				}else{
-					alert_wyca((typeof(textErrorSaveTop) != 'undefined'? textErrorSaveTop : 'Error save top') + ' ' + e.responseText );
+					console.log((typeof(textErrorSaveTop) != 'undefined'? textErrorSaveTop : 'Error save top') + ' ' + e.responseText );
 				}
 			}
 		});
@@ -242,10 +242,10 @@ $(document).ready(function(e) {
 			},
 			error: function(e) {
 				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-					alert_wyca((typeof(textErrorCheck) != 'undefined'? textErrorCheck : 'Error check components') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-					setTimeout(function(){window.location.href = 'logout.php'},3000);
+					console.log((typeof(textErrorCheck) != 'undefined'? textErrorCheck : 'Error check components') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					$('#modalErrorSession').modal('show');
 				}else{
-					alert_wyca((typeof(textErrorCheck) != 'undefined'? textErrorCheck : 'Error check components') + ' ' + e.responseText );
+					console.log((typeof(textErrorCheck) != 'undefined'? textErrorCheck : 'Error check components') + ' ' + e.responseText );
 				}
 			}
 		});
@@ -398,10 +398,10 @@ $(document).ready(function(e) {
 			},
 			error: function(e) {
 				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-					alert_wyca((typeof(textErrorSkipWifi) != 'undefined'? textErrorSkipWifi : 'Error skip wifi') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-					setTimeout(function(){window.location.href = 'logout.php'},3000);
+					console.log((typeof(textErrorSkipWifi) != 'undefined'? textErrorSkipWifi : 'Error skip wifi') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					$('#modalErrorSession').modal('show');
 				}else{
-					alert_wyca((typeof(textErrorSkipWifi) != 'undefined'? textErrorSkipWifi : 'Error skip wifi') + ' ' + e.responseText );
+					console.log((typeof(textErrorSkipWifi) != 'undefined'? textErrorSkipWifi : 'Error skip wifi') + ' ' + e.responseText );
 				}
 			}
 		});
@@ -443,10 +443,10 @@ $(document).ready(function(e) {
 				},
 				error: function(e) {
 					if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-						alert_wyca((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-						setTimeout(function(){window.location.href = 'logout.php'},3000);
+						console.log((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+						$('#modalErrorSession').modal('show');
 					}else{
-						alert_wyca((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText );
+						console.log((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText );
 					}
 				}
 			});
@@ -463,15 +463,16 @@ $(document).ready(function(e) {
 				},
 				error: function(e) {
 					if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-						alert_wyca((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-						setTimeout(function(){window.location.href = 'logout.php'},3000);
+						console.log((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+						$('#modalErrorSession').modal('show');
 					}else{
-						alert_wyca((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText );
+						console.log((typeof(textErrorSaveSound) != 'undefined'? textErrorSaveSound : 'Error save sound config') + ' ' + e.responseText );
 					}
 				}
 			});
 			
 		}
+		RefreshGlobalVehiculePersistanteDataStorage();
 		//AJAX INSTALL STEP CALL
 		$.ajax({
 			type: "POST",
@@ -482,10 +483,10 @@ $(document).ready(function(e) {
 			},
 			error: function(e) {
 				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-					alert_wyca((typeof(textErrorSound) != 'undefined'? textErrorSound : 'Error sound' ) + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-					setTimeout(function(){window.location.href = 'logout.php'},3000);
+					console.log((typeof(textErrorSound) != 'undefined'? textErrorSound : 'Error sound' ) + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					$('#modalErrorSession').modal('show');
 				}else{
-					alert_wyca((typeof(textErrorSound) != 'undefined'? textErrorSound : 'Error sound ') + ' ' + e.responseText );
+					console.log((typeof(textErrorSound) != 'undefined'? textErrorSound : 'Error sound ') + ' ' + e.responseText );
 				}
 			}
 		});
@@ -512,7 +513,7 @@ $(document).ready(function(e) {
 				$('.install_by_step_site_save').addClass('disabled');
 				wycaApi.GetSitesList(function(data){
 					if (data.A != wycaApi.AnswerCode.NO_ERROR){
-						ParseAPIAnswerError(data,textErrorGetSite);
+						ParseAPIAnswerError(data,textErrorGetSites);
 					}else{
 						if(!CheckName(data.D,window.site_name)){
 							if (create_new_site) // BOOLEAN INSTALLATEUR_WYCA.JS GESTION DES SITES
@@ -542,10 +543,10 @@ $(document).ready(function(e) {
 														},
 														error: function(e) {
 															if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-																alert_wyca((typeof(textErrorSaveSite) != 'undefined'? textErrorSaveSite : 'Error save site') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-																setTimeout(function(){window.location.href = 'logout.php'},3000);
+																console.log((typeof(textErrorSaveSite) != 'undefined'? textErrorSaveSite : 'Error save site') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+																$('#modalErrorSession').modal('show');
 															}else{
-																alert_wyca((typeof(textErrorSaveSite) != 'undefined'? textErrorSaveSite : 'Error save site') + ' ' + e.responseText );
+																console.log((typeof(textErrorSaveSite) != 'undefined'? textErrorSaveSite : 'Error save site') + ' ' + e.responseText );
 															}
 														}
 													});
@@ -573,7 +574,12 @@ $(document).ready(function(e) {
 											success: function(data) {
 											},
 											error: function(e) {
-												alert_wyca((typeof(textErrorSaveSite) != 'undefined'? textErrorSaveSite : 'Error save site') + ' ' + e.responseText);
+												if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+													console.log((typeof(textErrorSaveSite) != 'undefined'? textErrorSaveSite : 'Error save site') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+													$('#modalErrorSession').modal('show');
+												}else{
+													console.log((typeof(textErrorSaveSite) != 'undefined'? textErrorSaveSite : 'Error save site') + ' ' + e.responseText);
+												}
 											}
 										});
 										$('#pages_install_by_step a.install_by_step_site_next').click();
@@ -635,6 +641,7 @@ $(document).ready(function(e) {
 				$('#install_by_step_mapping .progressStartMapping').hide();
 				$('#install_by_step_mapping .switchLiveMapping').show();
 				$('#install_by_step_mapping .bMappingStop').show();
+				$('#install_by_step_mapping .bMappingDone').show();
 				$('.ifMapping').show();
 				$('#install_by_step_mapping .mapping_view').show();
 					
@@ -659,6 +666,7 @@ $(document).ready(function(e) {
 				$('#install_by_step_mapping .progressStartMapping').hide();
 				$('#install_by_step_mapping .switchLiveMapping').show();
 				$('#install_by_step_mapping .bMappingStop').show();
+				$('#install_by_step_mapping .bMappingDone').show();
 				$('#install_by_step_mapping .mapping_view').show();
 				img = document.getElementById("install_by_step_mapping_img_map_saved");
 				img.src = "assets/images/vide.png";
@@ -717,6 +725,11 @@ $(document).ready(function(e) {
 		
 	});
 	
+	$('#install_by_step_mapping .bMappingDone').click(function(e) {
+		e.preventDefault();
+		$('#install_by_step_mapping_modalConfirm').modal('show');
+	});
+	
 	$('#install_by_step_mapping .bMappingStop').click(function(e) {
 		e.preventDefault();
 		
@@ -729,43 +742,53 @@ $(document).ready(function(e) {
 		img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
         img.src = 'assets/images/vide.png';
 		
-		wycaApi.MappingStop(function(data) {
-			if (data.A != wycaApi.AnswerCode.NO_ERROR) ParseAPIAnswerError(data,textErrorStopNavigation);
-			$.ajax({
-				type: "POST",
-				url: 'ajax/install_by_step_fin_mapping.php',
-				data: {},
-				dataType: 'json',
-				success: function(data) {
-				},
-				error: function(e) {
+		$.ajax({
+			type: "POST",
+			url: 'ajax/install_by_step_fin_mapping.php',
+			data: {},
+			dataType: 'json',
+			success: function(data) {
+				wycaApi.MappingStop(function(data) {
+					if (data.A != wycaApi.AnswerCode.NO_ERROR) ParseAPIAnswerError(data,textErrorStopNavigation);
+					
+					
+					var img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
+					img.src = 'data:image/png;base64,' + data.D;
+					
+					finalMapData = 'data:image/png;base64,' + data.D;
+					
+					setTimeout(function() {
+						canvas = document.createElement('canvas');
+						
+						width = img.naturalWidth;
+						height = img.naturalHeight;
+						
+						$('#install_by_step_mapping_canvas_result_trinary').attr('width', img.naturalWidth);
+						$('#install_by_step_mapping_canvas_result_trinary').attr('height', img.naturalHeight);
+						
+						canvas.width = img.naturalWidth;
+						canvas.height = img.naturalHeight;
+						canvas.getContext('2d').drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
+						$('#install_by_step_mapping_fin .bMappingSaveMap ').addClass('disabled');
+						CalculateMapTrinary();
+					}, 100);
+				});
+			},
+			error: function(e) {
+				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+					console.log((typeof(textErrorStopMapping) != 'undefined'? textErrorStopMapping : 'Error stop mapping') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					$('#modalErrorSession').modal('show');
+				}else{
+					console.log((typeof(textErrorStopMapping) != 'undefined'? textErrorStopMapping : 'Error stop mapping') + ' ' + e.responseText );
 				}
-			});
+			}
 			
-			var img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
-            img.src = 'data:image/png;base64,' + data.D;
-			
-			finalMapData = 'data:image/png;base64,' + data.D;
-			
-			setTimeout(function() {
-				canvas = document.createElement('canvas');
-				
-				width = img.naturalWidth;
-				height = img.naturalHeight;
-				
-				$('#install_by_step_mapping_canvas_result_trinary').attr('width', img.naturalWidth);
-				$('#install_by_step_mapping_canvas_result_trinary').attr('height', img.naturalHeight);
-				
-				canvas.width = img.naturalWidth;
-				canvas.height = img.naturalHeight;
-				canvas.getContext('2d').drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
-				
-				CalculateMapTrinary();
-			}, 100);
 		});
+		
 		mappingStarted = false;
 		$('#install_by_step_mapping .switchLiveMapping').hide();
 		$('#install_by_step_mapping .bMappingStop').hide();
+		$('#install_by_step_mapping .bMappingDone').hide();
 		$('#install_by_step_mapping .mapping_view').hide();
 		$('#install_by_step_mapping .bMappingStart').show();
 		
@@ -809,7 +832,7 @@ $(document).ready(function(e) {
 						
 						wycaApi.GetMapsList(data.D.id_site,function(data){
 							if (data.A != wycaApi.AnswerCode.NO_ERROR){
-								ParseAPIAnswerError(data,textErrorGetSite);
+								ParseAPIAnswerError(data,textErrorGetMaps);
 							}else{
 								if(CheckName(data.D,window.map_name)){
 									alert_wyca(textNameUsed);
@@ -854,6 +877,8 @@ $(document).ready(function(e) {
 														'threshold_free': parseInt($('#install_by_step_mapping_threshold_free_slider').val()),
 														'threshold_occupied': parseInt($('#install_by_step_mapping_threshold_occupied_slider').val())
 													};
+													if(typeof(updatingMap) != 'undefined')
+														updatingMap = true;
 													
 													wycaApi.SetMap(map, function(data){
 														if (data.A == wycaApi.AnswerCode.NO_ERROR)
@@ -927,7 +952,7 @@ $(document).ready(function(e) {
 																		}
 																		else
 																		{
-																			ParseAPIAnswerError(data);
+																			ParseAPIAnswerError(data,textErrorSetMap);
 																			
 																			$('#install_by_step_mapping_use .bUseThisMapNowYes').show();
 																			$('#install_by_step_mapping_use .bUseThisMapNowNo').show();
@@ -956,19 +981,20 @@ $(document).ready(function(e) {
 															ParseAPIAnswerError(data,textErrorSetMap);
 														}							
 													});
+												}else{
+													alert_wyca((typeof(textErrorTrinary) != 'undefined'? textErrorTrinary : 'Error get map trinary'));
+													$('.bMappingSaveMap').removeClass('disabled');
 												}
-																
-												
 											},
 											error: function(e) {
 												var img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
 												img.src = "assets/images/vide.png";
 												
 												if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-													alert_wyca((typeof(textErrorTrinary) != 'undefined'? textErrorTrinary : 'Error get map trinary') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-													setTimeout(function(){window.location.href = 'logout.php'},3000);
+													console.log((typeof(textErrorTrinary) != 'undefined'? textErrorTrinary : 'Error get map trinary') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+													$('#modalErrorSession').modal('show');
 												}else{
-													alert_wyca((typeof(textErrorTrinary) != 'undefined'? textErrorTrinary : 'Error get map trinary') + ' ' + e.responseText );
+													console.log((typeof(textErrorTrinary) != 'undefined'? textErrorTrinary : 'Error get map trinary') + ' ' + e.responseText );
 												}
 											}
 										});
@@ -1022,65 +1048,93 @@ $(document).ready(function(e) {
 						//success_wyca(textSiteImported);
 						console.log(data);
 						if(data.D > -1){
-							wycaApi.SetSiteAsCurrent(data.D,function(data){
+							window.site_id=data.D;
+							wycaApi.SetSiteAsCurrent(window.site_id,function(data){
 								if (data.A == wycaApi.AnswerCode.NO_ERROR)
 								{
-									wycaApi.GetCurrentMapData(function(data){
-										if (data.A == wycaApi.AnswerCode.NO_ERROR)
-										{
-											if(data.D.docks.length <= 1){
-												$.ajax({
-													type: "POST",
-													url: 'ajax/install_by_step_import_site_master_dock.php',
-													data: { 
-													},
-													dataType: 'json',
-													success: function(data) {
-														success_wyca(textSiteImported);
-														$('.install_by_step_site_master_dock_next').click();
-													},
-													error: function(e) {
-														if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-															alert_wyca((typeof(textErrorImportSite) != 'undefined'? textErrorImportSite : 'Error import site') +  e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-															setTimeout(function(){window.location.href = 'logout.php'},3000);
-														}else{
-															alert_wyca((typeof(textErrorImportSite) != 'undefined'? textErrorImportSite : 'Error import site') + ' ' + e.responseText );
-														}
-													}
-												});
-											}else{
-												id_map = data.D.id_map;
-												id_map_last = data.D.id_map;
-												forbiddens = data.D.forbiddens;
-												areas = data.D.areas;
-												docks = data.D.docks;
-												landmarks = data.D.landmarks;
-												pois = data.D.pois;
-												augmented_poses = data.D.augmented_poses; 
-												
-												$.ajax({
-													type: "POST",
-													url: 'ajax/install_by_step_import_site_finish.php',
-													data: { 
-													},
-													dataType: 'json',
-													success: function(data) {
+									wycaApi.GetMapsList(window.site_id,function(data){
+										if(data.D.length <= 1){ // IF ONLY ONE MAP
+										
+											wycaApi.GetCurrentMapData(function(data){
+												if (data.A == wycaApi.AnswerCode.NO_ERROR)
+												{
+													if(data.D.docks.length <= 1){
+														$.ajax({
+															type: "POST",
+															url: 'ajax/install_by_step_import_site_master_dock.php',
+															data: { 
+															},
+															dataType: 'json',
+															success: function(data) {
+																success_wyca(textSiteImported);
+																$('#install_by_step_site_master_dock .install_by_step_site_master_dock_next').click();
+															},
+															error: function(e) {
+																if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+																	console.log((typeof(textErrorMasterDock) != 'undefined'? textErrorMasterDock : 'Error step master dock')+ ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+																	$('#modalErrorSession').modal('show');
+																}else{
+																	console.log((typeof(textErrorMasterDock) != 'undefined'? textErrorMasterDock : 'Error step master dock')+ ' ' + e.responseText );
+																}
+															}
+														});
+													}else{
+														id_map = data.D.id_map;
+														id_map_last = data.D.id_map;
+														forbiddens = data.D.forbiddens;
+														areas = data.D.areas;
+														docks = data.D.docks;
+														pois = data.D.pois;
+														augmented_poses = data.D.augmented_poses; 
 														
-														InitMasterDockByStep();
-														$('.install_by_step_import_site_next').click();
-													},
-													error: function(e) {
-														alert_wyca((typeof(textErrorImportSite) != 'undefined'? textErrorImportSite : 'Error import site') + ' ' + e.responseText);
+														$.ajax({
+															type: "POST",
+															url: 'ajax/install_by_step_import_site_select_map.php',
+															data: { 
+															},
+															dataType: 'json',
+															success: function(data) {
+																$('#install_by_step_site_map .install_by_step_site_map_next').click();
+															},
+															error: function(e) {
+																if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+																	console.log((typeof(textErrorSetMap) != 'undefined'? textErrorSetMap : 'Error step set map')+ ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+																	$('#modalErrorSession').modal('show');
+																}else{
+																	console.log((typeof(textErrorSetMap) != 'undefined'? textErrorSetMap : 'Error step set map') + ' ' + e.responseText);
+																}
+															}
+														});
 													}
-												});
-												
-											}
+													
+												}else{
+													ParseAPIAnswerError(data);
+													InitSiteImportByStep();
+												}
+											})
 										}else{
-											ParseAPIAnswerError(data);
-											InitSiteImportByStep();
+											// IF MULTIPLES MAP
+											$.ajax({
+												type: "POST",
+												url: 'ajax/install_by_step_import_site_finish.php',
+												data: { 
+												},
+												dataType: 'json',
+												success: function(data) {
+													$('#install_by_step_import_site .install_by_step_import_site_next').click();
+												},
+												error: function(e) {
+													if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+														console.log((typeof(textErrorImportSite) != 'undefined'? textErrorImportSite : 'Error import site')+ ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+														$('#modalErrorSession').modal('show');
+													}else{
+														console.log((typeof(textErrorImportSite) != 'undefined'? textErrorImportSite : 'Error import site') + ' ' + e.responseText);
+													}
+													
+												}
+											});
 										}
 									})
-									window.site_id=data.D;
 								}else{
 									ParseAPIAnswerError(data);
 									InitSiteImportByStep();
@@ -1109,6 +1163,79 @@ $(document).ready(function(e) {
 			setTimeout(function(){icon.toggleClass('shake')},2000);
 		}
     });
+	
+	//------------------- STEP SELECT MAP ------------------------
+	
+	//AJAX INSTALL STEP CALL
+	//DECLARATION EVENTLISTENER BOUTON CREE DYNAMIQUEMENT .on('event',function(){})
+	$( "#pages_install_by_step #ImportSiteMapList" ).on( 'click', '.SelectMapItem', function(e) {
+		id_map = parseInt($(this).attr('id'));
+		wycaApi.SetMapAsCurrent(id_map, function(data){
+			if (data.A == wycaApi.AnswerCode.NO_ERROR){
+				wycaApi.GetCurrentMapData(function(data){
+					if (data.A == wycaApi.AnswerCode.NO_ERROR)
+					{
+						if(data.D.docks.length <= 1){
+							$.ajax({
+								type: "POST",
+								url: 'ajax/install_by_step_import_site_master_dock.php',
+								data: { 
+								},
+								dataType: 'json',
+								success: function(data) {
+									success_wyca(textSiteImported);
+									$('#install_by_step_site_master_dock .install_by_step_site_master_dock_next').click();
+								},
+								error: function(e) {
+									if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+										console.log((typeof(textErrorMasterDock) != 'undefined'? textErrorMasterDock : 'Error step master dock')+ ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+										$('#modalErrorSession').modal('show');
+									}else{
+										console.log((typeof(textErrorMasterDock) != 'undefined'? textErrorMasterDock : 'Error step master dock')+ ' ' + e.responseText );
+									}
+								}
+							});
+						}else{
+							id_map = data.D.id_map;
+							id_map_last = data.D.id_map;
+							forbiddens = data.D.forbiddens;
+							areas = data.D.areas;
+							docks = data.D.docks;
+							pois = data.D.pois;
+							augmented_poses = data.D.augmented_poses; 
+							
+							$.ajax({
+								type: "POST",
+								url: 'ajax/install_by_step_import_site_select_map.php',
+								data: { 
+								},
+								dataType: 'json',
+								success: function(data) {
+									$('#install_by_step_site_map .install_by_step_site_map_next').click();
+								},
+								error: function(e) {
+									if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+										console.log((typeof(textErrorMasterDock) != 'undefined'? textErrorMasterDock : 'Error step master dock')+ ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+										$('#modalErrorSession').modal('show');
+									}else{
+										console.log((typeof(textErrorImportSite) != 'undefined'? textErrorImportSite : 'Error import site') + ' ' + e.responseText);
+									}
+								}
+							});
+						}
+						
+					}else{
+						ParseAPIAnswerError(data);
+						InitSiteImportByStep();
+					}
+				})
+										
+			}else{
+				ParseAPIAnswerError(data);
+				InitSiteSelectMapByStep();
+			}
+		})
+	})
 	
 	//------------------- STEP MASTER DOCK ------------------------
 	
@@ -1140,16 +1267,16 @@ $(document).ready(function(e) {
 					},
 					error: function(e) {
 						if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-							alert_wyca((typeof(textErrorMasterDock) != 'undefined'? textErrorMasterDock : 'Error step master dock')+ ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-							setTimeout(function(){window.location.href = 'logout.php'},3000);
+							console.log((typeof(textErrorMasterDock) != 'undefined'? textErrorMasterDock : 'Error step master dock')+ ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+							$('#modalErrorSession').modal('show');
 						}else{
-							alert_wyca((typeof(textErrorMasterDock) != 'undefined'? textErrorMasterDock : 'Error step master dock')+ ' ' + e.responseText );
+							console.log((typeof(textErrorMasterDock) != 'undefined'? textErrorMasterDock : 'Error step master dock')+ ' ' + e.responseText );
 						}
 					}
 				});
 			}else{
 				ParseAPIAnswerError(data);
-				InitSiteImportByStep();
+				InitMasterDockByStep();
 				$('#pages_install_by_step .install_by_step_setup_import_loading').hide();
 				$('#pages_install_by_step .install_by_step_setup_import_content').show();
 				$('#pages_install_by_step section#install_by_step_site_master_dock .bBackButton').click();
@@ -1212,7 +1339,12 @@ $(document).ready(function(e) {
 						success: function(data) {
 						},
 						error: function(e) {
-							alert_wyca((typeof(textErrorRecovery) != 'undefined'? textErrorRecovery : 'Error in recovery') + ' ' + e.responseText);
+							if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+								console.log((typeof(textErrorMasterDock) != 'undefined'? textErrorMasterDock : 'Error step master dock')+ ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+								$('#modalErrorSession').modal('show');
+							}else{
+								console.log((typeof(textErrorRecovery) != 'undefined'? textErrorRecovery : 'Error in recovery') + ' ' + e.responseText);
+							}
 						}
 					});
 				},500)
@@ -1252,7 +1384,28 @@ $(document).ready(function(e) {
 		})
 	})
 	
-	
+	//AJAX INSTALL STEP CALL
+
+	$('#install_by_step_site_recovery a.skip_recovery').click(function(e) {
+        e.preventDefault();
+		$.ajax({
+			type: "POST",
+			url: 'ajax/install_by_step_import_site_recovery.php',
+			data: {
+			},
+			dataType: 'json',
+			success: function(data) {
+			},
+			error: function(e) {
+				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+					console.log((typeof(textErrorRecovery) != 'undefined'? textErrorRecovery : 'Error in recovery')+ ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					$('#modalErrorSession').modal('show');
+				}else{
+					console.log((typeof(textErrorRecovery) != 'undefined'? textErrorRecovery : 'Error in recovery') + ' ' + e.responseText);
+				}
+			}
+		});
+    });
 	/*
 	$('#install_by_step_mapping_use .bUseThisMapNowYes').click(function(e) {
 		e.preventDefault();
@@ -1309,6 +1462,7 @@ $(document).ready(function(e) {
 		$('#install_by_step_mapping_threshold_occupied_output b').text( 65 );
 		threshold_occupied = 65;
 		
+		$('#install_by_step_mapping_fin .bMappingSaveMap ').addClass('disabled');
 		CalculateMapTrinary();
     });
 	
@@ -1316,6 +1470,7 @@ $(document).ready(function(e) {
 		$('#install_by_step_mapping_threshold_free_output b').text( this.value );
 		threshold_free = this.value;
 		
+		$('#install_by_step_mapping_fin .bMappingSaveMap ').addClass('disabled');
 		CalculateMapTrinary();
 	});
 	
@@ -1323,6 +1478,7 @@ $(document).ready(function(e) {
 		$('#install_by_step_mapping_threshold_occupied_output b').text( this.value );
 		threshold_occupied = this.value;
 		
+		$('#install_by_step_mapping_fin .bMappingSaveMap ').addClass('disabled');
 		CalculateMapTrinary();
 	});
 	
@@ -1339,7 +1495,7 @@ $(document).ready(function(e) {
 		if (!bystepCanChangeMenu)
 		{
 			alert_wyca((typeof(textConfirmActiveElement) != 'undefined'? textConfirmActiveElement : 'You must confirm the active element'));
-			$('#bCloseAlertWyca').click(ShakeActiveElement());
+			$('#bCloseAlertWyca').click(ByStepShakeActiveElement());
 			return false;
 		}
 		else
@@ -1556,7 +1712,7 @@ $(document).ready(function(e) {
 			error: function(e) {
 				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
 					alert_wyca('Error step test finish ; ' + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-					setTimeout(function(){window.location.href = 'logout.php'},3000);
+					$('#modalErrorSession').modal('show');
 				}else{
 					alert_wyca('Error step test finish ; ' + ' ' + e.responseText );
 				}
@@ -1577,10 +1733,10 @@ $(document).ready(function(e) {
 			},
 			error: function(e) {
 				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-					alert_wyca((typeof(textErrorEditMap) != 'undefined'? textErrorEditMap : 'Error step edit map') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-					setTimeout(function(){window.location.href = 'logout.php'},3000);
+					console.log((typeof(textErrorEditMap) != 'undefined'? textErrorEditMap : 'Error step edit map') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					$('#modalErrorSession').modal('show');
 				}else{
-					alert_wyca((typeof(textErrorEditMap) != 'undefined'? textErrorEditMap : 'Error step edit map') + ' ' + e.responseText );
+					console.log((typeof(textErrorEditMap) != 'undefined'? textErrorEditMap : 'Error step edit map') + ' ' + e.responseText );
 				}
 			}
 		});
@@ -1696,10 +1852,10 @@ $(document).ready(function(e) {
 					},
 					error: function(e) {
 						if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-							alert_wyca((typeof(textErrorBatteryConfig) != 'undefined'? textErrorBatteryConfig : 'Error step battery config')+ ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-							setTimeout(function(){window.location.href = 'logout.php'},3000);
+							console.log((typeof(textErrorBatteryConfig) != 'undefined'? textErrorBatteryConfig : 'Error step battery config')+ ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+							$('#modalErrorSession').modal('show');
 						}else{
-							alert_wyca((typeof(textErrorBatteryConfig) != 'undefined'? textErrorBatteryConfig : 'Error step battery config') + ' ' + e.responseText );
+							console.log((typeof(textErrorBatteryConfig) != 'undefined'? textErrorBatteryConfig : 'Error step battery config') + ' ' + e.responseText );
 						}
 					}
 				});
@@ -1750,10 +1906,10 @@ $(document).ready(function(e) {
 							},
 							error: function(e) {
 								if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-									alert_wyca((typeof(textErrorExportSite) != 'undefined'? textErrorExportSite : 'Error export site') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-									setTimeout(function(){window.location.href = 'logout.php'},3000);
+									console.log((typeof(textErrorExportSite) != 'undefined'? textErrorExportSite : 'Error export site') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+									$('#modalErrorSession').modal('show');
 								}else{
-									alert_wyca((typeof(textErrorExportSite) != 'undefined'? textErrorExportSite : 'Error export site') + ' ' + e.responseText );
+									console.log((typeof(textErrorExportSite) != 'undefined'? textErrorExportSite : 'Error export site') + ' ' + e.responseText );
 								}
 							}
 						});
@@ -1785,10 +1941,10 @@ $(document).ready(function(e) {
 			},
 			error: function(e) {
 				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-					alert_wyca((typeof(textErrorExportSite) != 'undefined'? textErrorExportSite : 'Error export site') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-					setTimeout(function(){window.location.href = 'logout.php'},3000);
+					console.log((typeof(textErrorExportSite) != 'undefined'? textErrorExportSite : 'Error export site') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					$('#modalErrorSession').modal('show');
 				}else{
-					alert_wyca((typeof(textErrorExportSite) != 'undefined'? textErrorExportSite : 'Error export site') + ' ' + e.responseText );
+					console.log((typeof(textErrorExportSite) != 'undefined'? textErrorExportSite : 'Error export site') + ' ' + e.responseText );
 				}
 			}
 		});
@@ -1820,10 +1976,10 @@ $(document).ready(function(e) {
 					},
 					error: function(e) {
 						if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-							alert_wyca((typeof(textErrorMaintenanceAccount) != 'undefined'? textErrorMaintenanceAccount : 'Error maintenance account') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-							setTimeout(function(){window.location.href = 'logout.php'},3000);
+							console.log((typeof(textErrorMaintenanceAccount) != 'undefined'? textErrorMaintenanceAccount : 'Error maintenance account') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+							$('#modalErrorSession').modal('show');
 						}else{
-							alert_wyca((typeof(textErrorMaintenanceAccount) != 'undefined'? textErrorMaintenanceAccount : 'Error maintenance account') + ' ' + e.responseText );
+							console.log((typeof(textErrorMaintenanceAccount) != 'undefined'? textErrorMaintenanceAccount : 'Error maintenance account') + ' ' + e.responseText );
 						}
 					}
 				});
@@ -1858,10 +2014,10 @@ $(document).ready(function(e) {
 			},
 			error: function(e) {
 				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-					alert_wyca((typeof(textErrorMaintenanceAccount) != 'undefined'? textErrorMaintenanceAccount : 'Error maintenance account') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-					setTimeout(function(){window.location.href = 'logout.php'},3000);
+					console.log((typeof(textErrorMaintenanceAccount) != 'undefined'? textErrorMaintenanceAccount : 'Error maintenance account') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					$('#modalErrorSession').modal('show');
 				}else{
-					alert_wyca((typeof(textErrorMaintenanceAccount) != 'undefined'? textErrorMaintenanceAccount : 'Error maintenance account') + ' ' + e.responseText );
+					console.log((typeof(textErrorMaintenanceAccount) != 'undefined'? textErrorMaintenanceAccount : 'Error maintenance account') + ' ' + e.responseText );
 				}
 			}
 		});
@@ -1902,10 +2058,10 @@ $(document).ready(function(e) {
 						},
 						error: function(e) {
 							if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-								alert_wyca((typeof(textErrorMaintenanceAccount) != 'undefined'? textErrorMaintenanceAccount : 'Error maintenance account') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-								setTimeout(function(){window.location.href = 'logout.php'},3000);
+								console.log((typeof(textErrorMaintenanceAccount) != 'undefined'? textErrorMaintenanceAccount : 'Error maintenance account') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+								$('#modalErrorSession').modal('show');
 							}else{
-								alert_wyca((typeof(textErrorMaintenanceAccount) != 'undefined'? textErrorMaintenanceAccount : 'Error maintenance account') + ' ' + e.responseText );
+								console.log((typeof(textErrorMaintenanceAccount) != 'undefined'? textErrorMaintenanceAccount : 'Error maintenance account') + ' ' + e.responseText );
 							}
 						}
 					});
@@ -2088,10 +2244,10 @@ $(document).ready(function(e) {
 			},
 			error: function(e) {
 				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-					alert_wyca((typeof(textErrorManagers) != 'undefined'? textErrorManagers : 'Error manager') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-					setTimeout(function(){window.location.href = 'logout.php'},3000);
+					console.log((typeof(textErrorManagers) != 'undefined'? textErrorManagers : 'Error manager') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					$('#modalErrorSession').modal('show');
 				}else{
-					alert_wyca((typeof(textErrorManagers) != 'undefined'? textErrorManagers : 'Error manager') + ' ' + e.responseText );
+					console.log((typeof(textErrorManagers) != 'undefined'? textErrorManagers : 'Error manager') + ' ' + e.responseText );
 				}
 			}
 		});
@@ -2175,10 +2331,10 @@ $(document).ready(function(e) {
 			},
 			error: function(e) {
 				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
-					alert_wyca((typeof(textErrorFinish) != 'undefined'? textErrorFinish : 'Error in finish') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
-					setTimeout(function(){window.location.href = 'logout.php'},3000);
+					console.log((typeof(textErrorFinish) != 'undefined'? textErrorFinish : 'Error in finish') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+					$('#modalErrorSession').modal('show');
 				}else{
-					alert_wyca((typeof(textErrorFinish) != 'undefined'? textErrorFinish : 'Error in finish') + ' ' + e.responseText );
+					console.log((typeof(textErrorFinish) != 'undefined'? textErrorFinish : 'Error in finish') + ' ' + e.responseText );
 				}
 			}
 		});

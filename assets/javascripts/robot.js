@@ -27,7 +27,7 @@ var canvas;
 var width = 0;
 var height = 0;
 
-var teleopEnable = false;
+var teleopEnable = 'not_init';
 
 var lastRobotPose = {'X':0, 'Y':0, 'T':0 };
 var mappingLastOrigin = {'x':0, 'y':0 };
@@ -38,6 +38,8 @@ var battery_lvl_current=0;
 $(document).ready(function(e) {
 	
 	var img = document.getElementById("install_by_step_mapping_img_map_saved");
+	if(img == null)
+		img = document.getElementById("wyca_by_step_mapping_img_map_saved");
 	if(img != null){
 		img.onload = function () {
 			imgMappingLoaded = true;	
@@ -80,6 +82,18 @@ $(document).ready(function(e) {
 			$('#connexion_robot').show();
 		},
 		onInitialized: function(){
+			wycaApi.TeleopIsStarted(function(data){
+				if(teleopEnable == 'not_init'){
+					teleopEnable = $('.page.active').find('.joystickDiv').length > 0;
+				}
+				if(teleopEnable != data.D){
+					if(teleopEnable)
+						wycaApi.TeleopStart();
+					else
+						wycaApi.TeleopStop();
+				}
+				
+			});
 		},
 		onBatteryState: function(data){
 			initBatteryState(data.SOC);
@@ -151,6 +165,10 @@ $(document).ready(function(e) {
 				AskReloadMap();
 			}
 		},
+		onGlobalVehiculePersistanteDataStorageUpdated: function(data){
+			GetAppSoundConf();
+		},
+		
 		onGoToPoiResult: onGoToPoiResult,
 		onGoToAugmentedPoseResult: onGoToAugmentedPoseResult,
 		onGoToChargeResult: onGoToChargeResult,
@@ -170,6 +188,8 @@ $(document).ready(function(e) {
 				$('.bTestAugmentedPose').addClass('disabled');
 				$('.bTestDock').addClass('disabled');
 				$('.bMoveTo').addClass('disabled');
+				//DISABLE BUTTONS SAVE MAP
+				$('.bSaveEditMap').addClass('disabled');
 			}else{
 				//$('body > header .stop_move').hide();
 				$('.stop_move').hide(); //AJOUT btn.stop_move autre part que dans le header
@@ -179,6 +199,8 @@ $(document).ready(function(e) {
 				$('.bTestAugmentedPose').removeClass('disabled');
 				$('.bTestDock').removeClass('disabled');
 				$('.bMoveTo').removeClass('disabled');
+				//ENABLE BUTTONS SAVE MAP
+				$('.bSaveEditMap').removeClass('disabled');
 			}
 		},
 		onReceviedSegmented: function(data){
@@ -192,11 +214,11 @@ $(document).ready(function(e) {
 				
 				if (data.O == wycaApi.CommandCode.GET_CURRENT_MAP_COMPLETE || data.O == wycaApi.CommandCode.GET_CURRENT_MAP_DATA)
 				{
-					$('#modalLoading h3').html(textUpdatingMap);
+					$('#modalLoading h3').html(typeof(textUpdatingMap) != 'undefined'? textUpdatingMap : 'Updating Map');
 				}
 				else
 				{
-					$('#modalLoading h3').html(textLoading);
+					$('#modalLoading h3').html(typeof(textLoading) != 'undefined'? textLoading : 'Loading' );
 				}
 				
 				valeur = parseInt(data.I / data.NB * 100);
@@ -271,6 +293,8 @@ function GetMappingInConstruction()
 					nbAttempLoadImg = 0;
 					imgMappingLoaded = false;
 					var img = document.getElementById("install_by_step_mapping_img_map_saved");
+					if(img == null)
+						 img = document.getElementById("wyca_by_step_mapping_img_map_saved");
 					//img.src = 'data:image/png;base64,' + data.D.M;
 					img.src = robot_http + '/mapping/last_mapping.jpg?v='+ Date.now();
 					//img.src = 'http://192.168.0.30/mapping/last_mapping.jpg?v='+ Date.now();
@@ -396,29 +420,7 @@ function InitDockingState()
 	}
 	
 	// Le joystick s'affiche quand le robot passe de docker à dédocker, donc on recheck l'initialisation du joystick
-	InitJoystick();
-}
-
-function InitJoystick()
-{
-	// Si un joystick est visible, on enable le telop
-	if ($('.joystickDiv:visible').length > 0)
-	{
-		if (!teleopEnable)
-		{
-			teleopEnable = true;
-			wycaApi.TeleopStart();
-		}
-	}
-	else
-	{
-		// Sinon, on le disabled
-		if (teleopEnable)
-		{
-			teleopEnable = false;
-			wycaApi.TeleopStop();
-		}
-	}
+	//InitJoystick();
 }
 
 function initPoweredState(data)
@@ -487,6 +489,7 @@ function InitRobotPose(pose)
 	if ($('#manager_edit_map').length > 0 && ($('#manager_edit_map').is(':visible') || firstInitRobotPose)) ManagerTraceRobot(pose.X, pose.Y, pose.T);
 	if ($('#user_edit_map').length > 0 && ($('#user_edit_map').is(':visible') || firstInitRobotPose)) UserTraceRobot(pose.X, pose.Y, pose.T);
 	if ($('#wyca_edit_map').length > 0 && ($('#wyca_edit_map').is(':visible') || firstInitRobotPose)) WycaTraceRobot(pose.X, pose.Y, pose.T);
+	if ($('#wyca_by_step_edit_map').length > 0 && ($('#wyca_by_step_edit_map').is(':visible') || firstInitRobotPose)) WycaByStepTraceRobot(pose.X, pose.Y, pose.T);
 	
 	firstInitRobotPose = false
 }
@@ -499,6 +502,7 @@ function AskReloadMap()
 	if ($('#manager_edit_map').length > 0 && ($('#manager_edit_map').is(':visible'))) $('#manager_edit_map .modalReloadMap').modal('show');
 	if ($('#user_edit_map').length > 0 && ($('#user_edit_map').is(':visible'))) $('#user_edit_map .modalReloadMap').modal('show');
 	if ($('#wyca_edit_map').length > 0 && ($('#wyca_edit_map').is(':visible'))) $('#wyca_edit_map .modalReloadMap').modal('show');
+	if ($('#wyca_by_step_edit_map').length > 0 && ($('#wyca_by_step_edit_map').is(':visible'))) $('#wyca_by_step_edit_map .modalReloadMap').modal('show');
 }
 
 function InitPosCarteMapping()
@@ -511,6 +515,9 @@ function InitPosCarteMapping()
 	{
 		img_map_save_id = '#install_by_step_mapping_img_map_saved';
 		img_map_save_contener_id = '#install_by_step_mapping';
+	}else if ($('#wyca_by_step_mapping_img_map_saved').is(':visible')){
+		img_map_save_id = '#wyca_by_step_mapping_img_map_saved';
+		img_map_save_contener_id = '#wyca_by_step_mapping';
 	}
 	
     originWidth = $(img_map_save_id).prop('naturalWidth') * 2;

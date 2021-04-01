@@ -264,6 +264,9 @@ var currentAugmentedPoseNormalLongTouch = null;
 var currentLandmarkNormalLongTouch = null;
 
 $(document).ready(function(e) {
+	$('#manager_edit_map .modal').on('shown.bs.modal', function () {
+		do_refresh = true;
+	});
 	
 	$('#install_normal_edit_map_svg').on('touchend', function(e) { 
 		$('#install_normal_edit_map_zoom_popup').hide();
@@ -757,7 +760,7 @@ $(document).ready(function(e) {
 				
 				RemoveClass('#install_normal_edit_map_svg .active', 'active');
 				RemoveClass('#install_normal_edit_map_svg .activ_select', 'activ_select'); 
-				
+				NormalResizeSVG();
 				currentSelectedItem = Array();
 				normalCurrentAction='';
 				$('body').removeClass('no_current select');
@@ -1061,8 +1064,12 @@ function NormalInitMap()
 		this.hammer.destroy()
 	  }
 	}
-	if(typeof(window.panZoomNormal) != 'undefined'){
-		console.log('destroy');
+	let init_zoom = false;
+	if(id_map_zoom != id_map){
+		init_zoom = true;
+		id_map_zoom = id_map;
+		if(typeof(window.panZoomNormal) != 'undefined')
+			window.panZoomNormal.destroy();
 	}
 	// Expose to window namespace for testing purposes
 	
@@ -1081,16 +1088,14 @@ function NormalInitMap()
 	NormalRefreshZoomView();
 	
 	setTimeout(function(){
-		if(typeof(window.panZoomNormal) != 'undefined'){
-			
+		if(init_zoom){
 			//WORKING ON CONSOLE 
 			window.panZoomNormal.resize();
 			window.panZoomNormal.updateBBox();
 			window.panZoomNormal.fit();
 			window.panZoomNormal.center();
-			console.log('Refresh Zoom');
 		}
-		setTimeout(function(){$('.install_normal_edit_map_loading').hide()},100);
+		$('.install_normal_edit_map_loading').hide();
 	},100);
 }
 

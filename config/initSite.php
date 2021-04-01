@@ -42,7 +42,6 @@ if(file_exists(__DIR__ .'/../.git/HEAD')){
 	$lc = substr($branchname,-1);
 	if($lc == "\n" || $lc == "\r"|| $lc == "\t");
 		$branchname = substr($branchname,0,strlen($branchname)- 1);
-
 	$bn = '';
 	switch($branchname){
 		case 'dev': $bn = 'dev'; break;
@@ -50,6 +49,7 @@ if(file_exists(__DIR__ .'/../.git/HEAD')){
 		case 'master': $bn = 'mas'; break;
 		case 'html_stable': $bn = 'sta'; break;
 		case 'html_release': $bn = 'rel'; break;
+		case 'IHM_simu': $bn = 'IHM'; break;
 		case 'multimap': $bn = 'mum'; break;
 		default : 
 			$explode = explode('_',$branchname);
@@ -62,22 +62,43 @@ if(file_exists(__DIR__ .'/../.git/HEAD')){
 				$bn = substr($branchname,0,2);
 		break;
 	}
-	if($bn == 'rel'){
+	
+	// ERASE VERSION IF DEV AND NOT RELEASE
+	if($bn != 'rel')
+	{
 		$file_version = __DIR__ .'/version.conf';
-		if(file_exists($file_version))
-			$json_version = json_decode(file_get_contents($file_version), true);
-		if(isset($json_version) && !is_null($json_version) && isset($json_version['release']) && $json_version['release'] != '')
-			$version = $json_version['release']; // GET RELEASE DATE FROM VERSION.CONF
-		else{
-			$version = date('Ymd'); // RELEASE NO VERSION.CONF OR INVALID
-			$error_conf_release = true; // FOR TEST IN FOOTER JS
-		}
-	}else
-		$version = date('Ymd').'_'.$bn;
+		if($_CONFIG['MODE'] == 'DEV'){
+			if(file_exists($file_version)){
+				$json_empty = '{"release":""}';
+				file_put_contents($file_version,$json_empty);
+			}else{
+				$version = date('YmdHi').'_err'; // NO VERSION.CONF
+				$error_conf_release = true; // FOR TEST IN FOOTER JS
+			}
+			$noHi_version = true;
+		}else
+			$noHi_version = false;
+		if(!isset($version))//IF NO ERR
+			$version = $noHi_version?date('Ymd').'_'.$bn:date('YmdHi').'_'.$bn;
+	}
 }else{
 	$bn = 'rel'; // NO GIT => RELEASE MODE
 	$_CONFIG['MODE'] = 'PROD';
-	$version = date('Ymd');
+	$version = date('YmdHi');
+}
+
+// IF RELEASE CHECK VERSION.CONF
+if($bn == 'rel')
+{
+	$file_version = __DIR__ .'/version.conf';
+	if(file_exists($file_version))
+		$json_version = json_decode(file_get_contents($file_version), true);
+	if(isset($json_version) && !is_null($json_version) && isset($json_version['release']) && $json_version['release'] != '')
+		$version = $json_version['release']; // GET RELEASE DATE FROM VERSION.CONF
+	else{
+		$version = date('YmdHi').'_err'; // RELEASE NO VERSION.CONF OR INVALID
+		$error_conf_release = true; // FOR TEST IN FOOTER JS
+	}
 }
 
 $_CONFIG['CONF_PATH'] = $_CONFIG['MODE'] == 'DEV' ? dirname(__FILE__).'/../lang/c.conf' : dirname(__FILE__).'/../../conf/c.conf';
@@ -90,12 +111,12 @@ if($_CONFIG['MODE'] == 'PROD'){
 	if(file_exists('C:\\Users\\Yvan') || file_exists('C:\\Users\\F')){
 		//F
 		$_CONFIG['ROBOT_HOST'] = $VM ? '172.25.65.22' : '10.0.0.72';
+		//$_CONFIG['ROBOT_HOST'] = $VM ? '172.25.65.22' : '192.168.1.56';
 	}else{
 		//SMORILLON
 		$_CONFIG['ROBOT_HOST'] = '192.168.0.33';
 	}
 }
-
 $_CONFIG['ROBOT_HTTP'] = $server_request_scheme.'://'.$_CONFIG['ROBOT_HOST'];
 $_CONFIG['ROBOT_HOST'] .= $server_request_scheme == 'http' ? ':9094' : ':9095';
 

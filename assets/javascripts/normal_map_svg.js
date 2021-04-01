@@ -747,6 +747,7 @@ function NormalTraceRobot(robot_x, robot_y, robot_theta)
 		$('#install_normal_edit_map_tRobotNotLocalised').show();
 		$('#install_normal_edit_map_robot_circle').remove();
 		$('#install_normal_edit_map_robot_sens').remove();
+		robot_traced_normal = false;
 	}else{
 		$('#install_normal_edit_map_tRobotNotLocalised').hide();
 		x = robot_x * 100 / ros_resolution;

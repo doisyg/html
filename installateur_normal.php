@@ -15,6 +15,27 @@
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7" href="logout.php"><i class="fas fa-power-off"></i><?php echo __('Logout');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8 todo" data-goto="install_normal_help" href="#"><i class="fa fa-question"></i><?php echo __('Help');?></a></li>
                 </ul>
+				<div class="modal fade modalCurrentSite" id="install_normal_dashboard_modalCurrentSite" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+					<div class="modal-dialog" role="dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<div class="actions mh100vh_55">
+									<section class="panel panel-info">
+										<header class="panel-heading">
+											<h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fa fa-building"></i></h2>
+										</header>
+										<div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
+											<h3><?= __('You are now using site')?></h3>
+										</div>
+									</section>
+									<div style="clear:both;"></div>
+									<a href="#" class="btn btn-default btn_footer_left btn_100" data-dismiss="modal" ><?php echo __('Close');?></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
 					<div class="content sm-content text-left">
@@ -102,7 +123,8 @@
                     <a href="#" id="install_normal_edit_map_bUndo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:20px; left:10px;"><i class="fas fa-undo-alt"></i></a>
                     <a href="#" id="install_normal_edit_map_bRedo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:20px; left:45px;"><i class="fas fa-redo-alt"></i></a>
                     <span id="install_normal_edit_map_tRobotNotLocalised" class="tRobotNotLocalised" style="display:none;"><i class="fas fa-exclamation-triangle"></i><?php echo __('The robot is not localized');?></span>
-                    <div id="install_normal_edit_map_menu" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
+                    
+					<div id="install_normal_edit_map_menu" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
                         	<li><a href="#" class="btn btn-circle btn-default bAddForbiddenArea btn-menu" data-orientation="V">
 								<div class="iconForbiddenArea"><i class="fas fa-vector-square"></i><i class="fa fa-minus-circle iconMenuRed"></i></div>
@@ -130,6 +152,9 @@
 							</a></li>
                         	<li><a href="#" class="btn btn-circle btn-default bMove btn-menu" data-orientation="H" data-toggle="modal" data-target="#install_normal_edit_map_modalTeleop">
 								<i class="fa fa-gamepad iconMenuPurple"></i>
+							</a></li>
+							<li><a href="#" class="btn btn-circle btn-default btn-menu" data-orientation="H" data-toggle="modal" data-target="#install_normal_edit_map_modalRecovery">
+								<i class="fa fa-search iconMenuColorWarning"></i>
 							</a></li>
                         </ul>
                     </div>
@@ -206,6 +231,59 @@
                                                 </div>
                                             </div>
                                             
+                                        </div>
+                                        
+                                        <div style="clear:both;"></div>
+                                       
+                                        <a href="#" class="btn btn-primary btn_footer_left btn_100" data-dismiss="modal"><?php echo __('Close');?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="install_normal_edit_map_modalRecovery" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+                                        <div class="h100vh_160" style="overflow:auto; text-align:center;">
+                                            <h4 style="text-align:center"><?= __('Move the robot near a reflector (dock or augmented pose) then click on the recovery button') ?></h4>
+											<div style="text-align:center; margin-top:20px;"><a href="#" class="bRecovery ifDocked_disabled btn btn-warning btn_big_popup" ><?=__('Recovery') ?></a></div>
+												
+											<div style="text-align:center"><a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a></div>
+											<div style="text-align:center"><div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div></div>
+										   
+											<div class="ifUndocked ifNRecovery">
+												<div style="text-align:center; width:100%; z-index:2000; margin-top:20px;">
+													<div class="joystickDiv" draggable="false" style="margin:auto;">
+														<div class="fond"></div>
+														<div class="curseur"></div>
+													</div>
+												</div>
+											</div>
+											
+											<div class="ifRecovery" style="text-align:center; margin-top:20px;display:none;"><a href="#" class="btn btn-danger btn-lg bCancelRecovery"><?=__('Cancel Recovery') ?></a></div>
+											<div class="ifRecovery install_normal_recovery_feedback recovery_feedback" style="display:none;">
+												<hr style="border-top: 1px solid #909090;">
+												<div class="row recovery_step RecoveryScan" id="">
+													<div class="col-xs-10"><h5><?= __('Scan reflectors')?></h5></div>
+													<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+												</div>
+												<div class="row recovery_step RecoveryPose" id="">
+													<div class="col-xs-10"><h5><?= __('Robot position initiated')?></h5></div>
+													<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+												</div>
+												<div class="row recovery_step RecoveryRotate" id="">
+													<div class="col-xs-10"><h5><?= __('Rotate to clean obstacles')?></h5></div>
+													<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+												</div>
+												<div class="row recovery_step RecoveryNav" id="">
+													<div class="col-xs-10"><h5><?= __('Navigation started')?></h5></div>
+													<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+												</div>
+												<hr style="border-top: 1px solid #909090;">
+											</div>
                                         </div>
                                         
                                         <div style="clear:both;"></div>
@@ -365,8 +443,8 @@
                                                             <span class="input-group-addon"><i class="fas fa-stop preview_color"></i></span>
                                                             <input id="install_normal_edit_map_area_color" name="area_color" type="text" class="form-control"  value="#579fb1">
                                                         </div>
+														<div class="col-xs-12" style="padding:0"><div class="iro-colorpicker" data-color_init="#579fb1"></div></div>
                                                     </div>
-													<div class="iro-colorpicker" data-color_init="#579fb1"></div>
                                                 </div>
                                                 <div class="form-group sep">
                                                     <label class="col-xs-4 control-label"><?php echo __('LED Color');?></label>
@@ -506,10 +584,7 @@
                                         </div>
                                         
                                         <div style="clear:both;"></div>
-                                                                                
-                                        
-                                        <a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Cancel');?></a>
-										<a href="#" id="install_normal_edit_map_bModalAddDockSave" class="btn btn-primary btn_footer_right btn_50" data-dismiss="modal" ><?php echo __('Save');?></a>
+                                        <a href="#" class="btn btn-default btn_footer_left btn_100" data-dismiss="modal" ><?php echo __('Cancel');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -612,7 +687,7 @@
                                                         </div>
                                                         <div class="col-xs-6">
                                                             <input type="radio" id="install_normal_edit_map_up_elem_direction_back" name="up_elem_direction" value="back" class="form-control" />
-                                                            <label for="up_elem_direction_back" class="control-label"><?= __('Back')?></label>
+                                                            <label for="up_elem_direction_back" class="control-label"><?= __(' Back')?></label>
                                                         </div>
                                                     </div>
                                                     
@@ -864,8 +939,7 @@
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Cancel');?></a>
-                                        <a href="#" id="install_normal_edit_map_bModalAddAugmentedPoseSave" class="btn btn-primary btn_footer_right btn_50" data-dismiss="modal" ><?php echo __('Save');?></a>
+                                        <a href="#" class="btn btn-default btn_footer_left btn_100" data-dismiss="modal" ><?php echo __('Cancel');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -1174,6 +1248,7 @@
 						<li><i class="fa fa-eraser"></i><span class="description"><?=__('Erase pixel')?></span></li>
 						<li><i class="fa fa-crosshairs iconMenuBlue"></i><span class="description"><?=__('Move the robot to this point')?></span></li>
 						<li><i class="fa fa-gamepad iconMenuPurple"></i><span class="description"><?=__('Teleop the robot')?></span></li>
+						<li><i class="fa fa-search iconMenuColorWarning"></i><span class="description"><?=__('Relocate the robot')?></span></li>
 						<li style="position:relative;font-size:16px"><img class="route" src="assets/images/route_green.svg"/><span class="description" style="margin-left: 40px;position: relative;top: 3px;"><?=__('Test go to POI, dock or augmented pose')?></span></li>
 						<li style="position:relative;">
 						<svg class="svg_popupHelp_robot" xmlns="http://www.w3.org/2000/svg">
@@ -1236,7 +1311,7 @@
                 <h2><?php echo __('Sites');?></h2>
             </header>
             <div class="content">
-                
+                <a href="#" class="bBackToDashboard button_goto" data-goto="install_normal_dashboard" style="display:none"></a>
                 <div class="install_normal_setup_sites_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
                 
                 <div class="loaded col-md-12" style="padding-top:30px;">
@@ -1271,17 +1346,17 @@
             <div class="content">
 				<div class="install_normal_setup_tops_loading loading_big"><i class="fa fa fa-spinner fa-pulse"></i></div>
 				<h5 class="text-center" style="margin-bottom:5px;"><?=__('Please select available tops for the vehicle.') ?></h5>
-				<p class="text-center" style="margin-bottom:30px;"><i class="fas fa-exclamation-triangle"></i> <?=__('This is not the active top selection.') ?></p>
-            	
+				<p class="text-center"><i class="fas fa-exclamation-triangle"></i> <?=__('This is not the active top selection.') ?></p>
+				<div style="display:flex;justify-content:space-around;flex-wrap:wrap;margin-bottom:30px;">
+					<a href="#" class="import_top btn btn-success" style="min-width:45%;font-weight:bold;margin: 10px 0;"><?=__('Import new top')?></a>
+					<a href="#" class="button_goto btn btn-info" style="min-width:45%;font-weight:bold;margin: 10px 0;" data-goto="install_normal_setup_top"><?=__('Select active Top')?></a>
+				</div>
                 <ul class="tuiles row">
                 </ul>
                 
                 
                 <div style="clear:both; height:20px;"></div>
-                <div style="display:flex;justify-content:space-around">
-					<a href="#" class="import_top btn btn-success"><?=__('Import new top')?></a>
-					<a href="#" class="button_goto btn btn-info" data-goto="install_normal_setup_top"><?=__('Select active Top')?></a>
-				</div>
+              
                 <div class="modal fade modalImportTop" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
                     <div class="modal-dialog" role="dialog">
                         <div class="modal-content">
@@ -1383,6 +1458,7 @@
             </div>
             <footer>
                 <a href="#" class="btn btn-default button_goto btn_footer_left btn_100" data-goto="install_normal_setup_tops"><?php echo __('Back');?></a>
+				 <a href="#" class="button_goto bBackToDashboardSetup" style="display:none" data-goto="install_normal_setup"></a>
             </footer>
         </section>
 		
