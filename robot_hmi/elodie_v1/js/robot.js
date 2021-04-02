@@ -133,7 +133,8 @@ $(document).ready(function(e) {
 		
 		/* SIMU MODE */
 		onMapUpdated: function(){
-			initMap();
+			if(is_simu)
+				initMap();
 		},
 		
 		onMoveInProgress: function(data){
@@ -162,7 +163,10 @@ $(document).ready(function(e) {
 	});
 	
 	wycaApi.init();	
-	/* SIMU MODE */ if(is_simu)initMap(); /* SIMU MODE */
+	/* SIMU MODE */ 
+	if(is_simu)
+		initMap(); 
+	/* SIMU MODE */
 	/* DEMO MODE */
 	
 	RefreshConfigs();
@@ -732,56 +736,55 @@ function refreshDockingState(){
 }
 
 function resizeMap(){
-	if(typeof(last_map) == 'undefined')
-		initMap();
-	else{
-		$('#map_svg').children('.map_elem').remove();
-		id_map = last_map.id_map;
-		id_map_last = last_map.id_map;
-		
-		forbiddens = last_map.forbiddens;
-		areas = last_map.areas;
-		gommes = Array();
-		docks = last_map.docks;
-		pois = last_map.pois;
-		augmented_poses = last_map.augmented_poses;
-		
-		ros_largeur = last_map.ros_width ;
-		ros_hauteur = last_map.ros_height;
-		ros_resolution = last_map.ros_resolution;
-		
-		div_height = $('#map').outerHeight();
-		div_width = $('#map').outerWidth();
-		
-		svg_resolution = div_height / ros_hauteur ;
-		
-		let temp_width = ros_largeur * svg_resolution;
-		
-		if(temp_width > div_width)
-			svg_resolution = svg_resolution * div_width / temp_width;
-		
-		offset_image_x = ros_largeur * svg_resolution < div_width ? (div_width - ros_largeur * svg_resolution)/2 : 0;
-		offset_image_y = ros_hauteur * svg_resolution < div_height ? (div_height - ros_hauteur * svg_resolution)/2 : 0;
+	if(is_simu){
+		if(typeof(last_map) == 'undefined')
+			initMap();
+		else{
+			$('#map_svg').children('.map_elem').remove();
+			id_map = last_map.id_map;
+			id_map_last = last_map.id_map;
 			
-		
-		$('#map_svg').attr('width',$('#map').outerWidth());
-		$('#map_svg').attr('height',$('#map').outerHeight());
-		
-		$('#map_image').attr('width', ros_largeur * svg_resolution);
-		$('#map_image').attr('height', ros_hauteur * svg_resolution);
-		$('#map_image').attr('x', offset_image_x);
-		$('#map_image').attr('y', offset_image_y);
-		$('#map_image').attr('xlink:href', 'data:image/png;base64,'+last_map.image_tri);
-		
-		svg_resolution_width = svg_resolution;
-		svg_resolution_height = svg_resolution;
-		svgMap = document.querySelector('#map_svg');
-		DrawMapElements();
-		TraceRobot(lastRobotPose);
-		
+			forbiddens = last_map.forbiddens;
+			areas = last_map.areas;
+			gommes = Array();
+			docks = last_map.docks;
+			pois = last_map.pois;
+			augmented_poses = last_map.augmented_poses;
+			
+			ros_largeur = last_map.ros_width ;
+			ros_hauteur = last_map.ros_height;
+			ros_resolution = last_map.ros_resolution;
+			
+			div_height = $('#map').outerHeight();
+			div_width = $('#map').outerWidth();
+			
+			svg_resolution = div_height / ros_hauteur ;
+			
+			let temp_width = ros_largeur * svg_resolution;
+			
+			if(temp_width > div_width)
+				svg_resolution = svg_resolution * div_width / temp_width;
+			
+			offset_image_x = ros_largeur * svg_resolution < div_width ? (div_width - ros_largeur * svg_resolution)/2 : 0;
+			offset_image_y = ros_hauteur * svg_resolution < div_height ? (div_height - ros_hauteur * svg_resolution)/2 : 0;
+				
+			
+			$('#map_svg').attr('width',$('#map').outerWidth());
+			$('#map_svg').attr('height',$('#map').outerHeight());
+			
+			$('#map_image').attr('width', ros_largeur * svg_resolution);
+			$('#map_image').attr('height', ros_hauteur * svg_resolution);
+			$('#map_image').attr('x', offset_image_x);
+			$('#map_image').attr('y', offset_image_y);
+			$('#map_image').attr('xlink:href', 'data:image/png;base64,'+last_map.image_tri);
+			
+			svg_resolution_width = svg_resolution;
+			svg_resolution_height = svg_resolution;
+			svgMap = document.querySelector('#map_svg');
+			DrawMapElements();
+			TraceRobot(lastRobotPose);
+			
+		}
 	}
-		
-		
-	
 }
 /* SIMU MODE */ 
