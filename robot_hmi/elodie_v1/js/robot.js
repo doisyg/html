@@ -274,8 +274,29 @@ function RetryDock()
 
 function ResultSendToDockDemand(data)
 {
-	if (data.A != wycaApi.AnswerCode.NO_ERROR)
-		ResultSendToDock(data);
+	robotMoveToDock = false;
+	
+	if (data.A != wycaApi.AnswerCode.NO_ERROR && data.A != wycaApi.AnswerCode.CANCELED)
+	{		
+		actionListInProgress = false;
+		if (timeoutRetryDock != null)
+		{
+			clearTimeout(timeoutRetryDock);
+			timeoutRetryDock = null;
+		}
+		nbDockAttempt = 0;
+		
+		
+		queueState = 'done';
+		gotoPoiInProgress = false;
+		if (currentBatteryState < dataStorage.min_goto_charge)
+		{
+			$('#current_action').html('Low battery, charging');
+		}
+		else
+			NextAction();
+		
+	}
 }
 
 function ResultSendToDock(data)
