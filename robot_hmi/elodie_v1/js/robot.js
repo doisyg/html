@@ -274,7 +274,8 @@ function RetryDock()
 
 function ResultSendToDockDemand(result)
 {
-	ResultSendToDock(result);
+	if (data.A != wycaApi.AnswerCode.NO_ERROR)
+		ResultSendToDock(result);
 }
 
 function ResultSendToDock(data)
