@@ -2250,7 +2250,7 @@ $(document).ready(function(){
 		$('#wyca_edit_map .modalGoToPoseFlexible').modal('hide');
 	});
 	
-	$('#wyca_edit_map .modalGoToPose .GoToPoseWyca').click(function(e) {
+	$('#wyca_edit_map .modalGoToPose .GoToPoseNormal').click(function(e) {
 		WycaGoToPose(0);
 	});
 	
