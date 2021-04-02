@@ -274,7 +274,7 @@ function RetryDock()
 
 function ResultSendToDockDemand(result)
 {
-	
+	ResultSendToDock(result);
 }
 
 function ResultSendToDock(data)
@@ -496,7 +496,30 @@ function ExecAction(action)
 	{
 		gotoPoiInProgress = true;
 		$('#current_action').html('Go to Poi '+action.id);
-		wycaApi.GoToPoi(action.id);
+		wycaApi.GoToPoi(action.id,function(data){
+			if (data.A != wycaApi.AnswerCode.NO_ERROR){
+				queueState = 'done';
+				gotoPoiInProgress = false;
+				actionListInProgress = false;
+				if (currentBatteryState < dataStorage.min_goto_charge)
+				{
+					if (!robotMoveToDock && robotCurrentState == 'undocked')
+					{
+						$('#current_action').html('Low battery, go to dock');
+						// On stop tout et on envoi le robot se docker
+						robotMoveToDock = true; 
+						wycaApi.GoToCharge(-1,	ResultSendToDockDemand);
+					}
+					else
+					{
+						if (robotCurrentState == 'docked')
+							$('#current_action').html('Low battery, charging');
+					}
+				}
+				else
+					NextAction();
+			}
+		});
 	}
 	else if(action.type == 'Dock')
 	{
