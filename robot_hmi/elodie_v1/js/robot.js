@@ -73,7 +73,7 @@ $(document).ready(function(e) {
 		onInitialized: function(){
 			
 		},
-		onGlobalVehiculePersistanreDataStorageUpdated : function(){
+		onGlobalVehiculePersistanteDataStorageUpdated : function(){
 			RefreshConfigs();
 		},
 		onGoToPoiResult: function(data){
