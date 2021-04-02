@@ -373,32 +373,34 @@ function initPoweredState(data)
 function initBatteryState(volt)
 {
 	currentBatteryState = volt;
-	if (volt > dataStorage.min_goto_demo && robotCurrentState == 'docked')
-	{
-		NextAction();
-	}
-	else
-	{
-		if (volt < dataStorage.min_goto_demo && robotCurrentState == 'docked')
+	if(dataStorage.wycaDemoStarted){
+		//ONLY ON DEMO STARTED
+		if (volt > dataStorage.min_goto_demo && robotCurrentState == 'docked')
 		{
-			$('#current_action').html('Low battery for new task, charging');
-		}
-	}
-	
-	
-	if (currentBatteryState < dataStorage.min_goto_charge)
-	{
-		if (robotMoveToDock)
-		{
-			$('#current_action').html('Low battery, go to dock');
+			NextAction();
 		}
 		else
 		{
-			if (robotCurrentState == 'docked')
-				$('#current_action').html('Low battery, charging');
+			if (volt < dataStorage.min_goto_demo && robotCurrentState == 'docked')
+			{
+				$('#current_action').html('Low battery for new task, charging');
+			}
+		}
+		
+		
+		if (currentBatteryState < dataStorage.min_goto_charge)
+		{
+			if (robotMoveToDock)
+			{
+				$('#current_action').html('Low battery, go to dock');
+			}
+			else
+			{
+				if (robotCurrentState == 'docked')
+					$('#current_action').html('Low battery, charging');
+			}
 		}
 	}
-	
 	$('#icoBattery i').removeClass('fa-battery-0 fa-battery-1 fa-battery-2 fa-battery-3 fa-battery-4');
     $('#icoBattery').removeClass('battery-ko');
     if (volt < 15)
