@@ -463,11 +463,9 @@ function RefreshConfigs()
 			
 			if (!dataStorage.wycaDemoStarted && oldWycaDemoStarted != dataStorage.wycaDemoStarted)
 			{
-				// Stop la demo, on cancel le go to poi
-				if (gotoPoiInProgress)
-					wycaApi.GoToPoiCancel();
-				else
-					waitTimeRemaining = 0;
+				// STOP => STOP MOVE
+				wycaApi.StopMove();
+				waitTimeRemaining = 0;
 			}
 			
 			if (!dataStorage.wycaDemoStarted)
