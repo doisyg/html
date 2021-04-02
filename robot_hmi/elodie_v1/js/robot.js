@@ -272,10 +272,10 @@ function RetryDock()
 	wycaApi.GoToCharge(-1, ResultSendToDockDemand);
 }
 
-function ResultSendToDockDemand(result)
+function ResultSendToDockDemand(data)
 {
 	if (data.A != wycaApi.AnswerCode.NO_ERROR)
-		ResultSendToDock(result);
+		ResultSendToDock(data);
 }
 
 function ResultSendToDock(data)
