@@ -1284,6 +1284,27 @@
                     <ul class="list_sites list_elem">
                     </ul>
                 </div>
+				<div class="modal fade modalSelectMap" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">           
+                    <div class="modal-dialog" role="dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="actions mh100vh_55">
+									<div class="h100vh_160" style="overflow:auto; text-align:center">
+										<h3 style="text-align:center;margin:30px 0"><?= __('This site has several maps.') ?></h3>
+										<h4 style="text-align:center;margin:20px 0"><?= __('Choose the current map to load') ?></h4>
+										<div class="row row-eq-height list_maps" id="wyca_setup_sites_SelectMapList">
+										</div>										
+                                    </div>
+                                    
+                                    <div style="clear:both;"></div>
+									
+                                    
+                                    <a href="#" class="btn btn-default btn_100 bCloseSelectMap" style="display:none;" data-dismiss="modal"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
 					<div class="content sm-content text-left">
@@ -1292,6 +1313,7 @@
 						<p class=""><?= __('You can delete a site by clicking on the red cross icon.')?></p>
 						<p class=""><?= __('A confimation will be asked for each site you want to delete.')?></p>
 						<p class=""><?= __('You can switch site by clicking on the blue check icon of the site you want to load.')?></p>
+						<p class=""><?= __('You may have to choose the current map if loading a multi map site.')?></p>
 					</div>
 					<p class="legende"><?=__('Click to hide')?></p>
 				</div>

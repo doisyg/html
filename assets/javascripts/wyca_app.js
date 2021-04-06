@@ -831,14 +831,44 @@ $(document).ready(function(e) {
 			else
 			{
 				wycaApi.GetCurrentSite(function(data) {
-					current_site = data.D;
-					if($('#wyca_dashboard_modalCurrentSite').data('original_txt') == undefined)
-						$('#wyca_dashboard_modalCurrentSite').data('original_txt',$('#wyca_dashboard_modalCurrentSite').find('h3').text());
-					$('#wyca_dashboard_modalCurrentSite').find('h3').html($('#wyca_dashboard_modalCurrentSite').data('original_txt') + '<br><br><span>' + current_site.name + '</span>')
-					$('#wyca_setup_sites .bBackToDashboard').click();
-					$('#wyca_dashboard_modalCurrentSite').modal('show');
-					$('#wyca_setup_sites .btn-danger.confirm_delete').removeClass('disabled');
-					$('#wyca_setup_sites .bSiteSetCurrentElem').removeClass('disabled');
+					if (data.A != wycaApi.AnswerCode.NO_ERROR) 
+						ParseAPIAnswerError(data,textErrorGetSite);
+					else
+					{
+						current_site = data.D;
+						wycaApi.GetMapsList(current_site.id_site,function(data){
+							if (data.A != wycaApi.AnswerCode.NO_ERROR)
+								ParseAPIAnswerError(data,textErrorGetMaps);
+							else
+							{
+								if(data.D.length >= 2){
+									$('#wyca_setup_sites .modalSelectMap .list_maps').html('');
+									$.each(data.D,function(idx,item){
+										if(item.name != ''){
+											let map_item="";
+											map_item+='<div class="col-xs-6 text-center">';
+											map_item+='	<div class="SelectMapItem btn bTuile" id="'+item.id_map+'">';
+											map_item+='		<i class="fas fa-map-marked-alt"></i>';
+											map_item+='		<p class="mapname">'+item.name+'</p>';
+											map_item+='   </div>';
+											map_item+='</div>';
+											$('#wyca_setup_sites .modalSelectMap .list_maps').append(map_item);
+										}
+									});
+									$('#wyca_setup_sites .modalSelectMap').modal('show');
+								}else{
+									if($('#wyca_dashboard_modalCurrentSite').data('original_txt') == undefined)
+										$('#wyca_dashboard_modalCurrentSite').data('original_txt',$('#wyca_dashboard_modalCurrentSite').find('h3').text());
+									$('#wyca_dashboard_modalCurrentSite').find('h3').html($('#wyca_dashboard_modalCurrentSite').data('original_txt') + '<br><br><span>' + current_site.name + '</span>')
+									$('#wyca_setup_sites .bBackToDashboard').click();
+									$('#wyca_dashboard_modalCurrentSite').modal('show');
+									$('#wyca_setup_sites .btn-danger.confirm_delete').removeClass('disabled');
+									$('#wyca_setup_sites .bSiteSetCurrentElem').removeClass('disabled');
+								}
+							}
+						});
+						
+					}
 				})
 			}
 		});
@@ -864,6 +894,32 @@ $(document).ready(function(e) {
 			$('#wyca_setup_sites .bSiteSetCurrentElem').removeClass('disabled');
 		});
 	});
+	
+	//DECLARATION EVENTLISTENER BOUTON CREE DYNAMIQUEMENT .on('event',function(){})
+	$( "#pages_wyca_normal #wyca_setup_sites .modalSelectMap" ).on( 'click', '.SelectMapItem', function(e) {
+		let id_map_selected = parseInt($(this).attr('id'));
+		wycaApi.SetMapAsCurrent(id_map_selected, function(data){
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				if($('#wyca_dashboard_modalCurrentSite').data('original_txt') == undefined)
+					$('#wyca_dashboard_modalCurrentSite').data('original_txt',$('#wyca_dashboard_modalCurrentSite').find('h3').text());
+				$('#wyca_dashboard_modalCurrentSite').find('h3').html($('#wyca_dashboard_modalCurrentSite').data('original_txt') + '<br><br><span>' + current_site.name + '</span>')
+				$('#wyca_setup_sites .bBackToDashboard').click();
+				$('#wyca_dashboard_modalCurrentSite').modal('show');
+				$('#wyca_setup_sites .btn-danger.confirm_delete').removeClass('disabled');
+				$('#wyca_setup_sites .bSiteSetCurrentElem').removeClass('disabled');
+				
+				$('#pages_wyca_normal .modalSelectMap .bCloseSelectMap').click();
+			}else{
+				$('#wyca_setup_sites .btn-danger.confirm_delete').removeClass('disabled');
+				$('#wyca_setup_sites .bSiteSetCurrentElem').removeClass('disabled');
+				
+				$('#pages_wyca_normal .modalSelectMap .bCloseSelectMap').click();
+				ParseAPIAnswerError(data);
+				GetSitesWyca();
+			}
+		})		
+	})
 	
 	//------------------- SERVICE BOOK ------------------------
 	

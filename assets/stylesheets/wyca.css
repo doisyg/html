@@ -1200,12 +1200,14 @@ div.icon_menu .iconForbiddenArea .fa-minus-circle{
 #MasterDockList .MasterDockItem i.fa-asterisk {position:absolute; top: 10px;left: 15px;color: darkorange;font-size:16px; padding:0;  }
 #MasterDockList .MasterDockItem p.dockname {margin-top: 0px;font-weight: 700;margin-bottom: 0;font-size: 14px;}
 
-#ImportSiteMapList .SelectMapItem {
+.modalSelectMap .SelectMapItem {
 	position: relative;
-    width: calc(100% - 30px);
+    /* width: calc(100% - 30px); */
+    width: 100%;
     height: calc(100% - 30px);
 }
-#ImportSiteMapList .SelectMapItem p.mapname {margin-top: 0px;font-weight: 700;margin-bottom: 0;font-size: 14px;}
+.modalSelectMap .SelectMapItem i.fa-map-marked-alt {color:#5bc0de;color:#589FB2;}
+.modalSelectMap .SelectMapItem p.mapname {margin-top: 0px;font-weight: 700;margin-bottom: 0;font-size: 14px;}
 
 .password_format{margin: 0;text-align: right;font-size: 12px;font-style: italic;margin-bottom: 10px;}
 .password_format ~ div.form-group{margin-bottom:0;}
