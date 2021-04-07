@@ -621,8 +621,8 @@ $_LANG['9281dff768f67c06984bad579f388eb8'] = 'Cette page vous permet d\'importer
 $_LANG['53b47879e5406ac41e729856bbabcfa1'] = 'Cette page vous permet d\'importer un site en utilisant le fichier .wyca associé';
 $_LANG['1846f06a0ae617eed00fc5ef2281e610'] = 'Télécharger une carte';
 $_LANG['5c2a40a6776f7e0f3ee3210bbee07075'] = 'Télécharger vos cartes en cliquant sur l\'icône';
-$_LANG['666cbb24c2d5d4ec055108dff052d2d0'] = 'This page allow you to download a PNG file of your map by clicking on the correspondant icon.';
-$_LANG['5ff02c037fd5e680d2601accfceb5fd4'] = 'L\'objectif est de faire en sorte que tous les murs soient représentés en noir sur la carte et que toutes les zones où le robot peut se déplacer soient représentées en blanc sur la carte';
+$_LANG['666cbb24c2d5d4ec055108dff052d2d0'] = 'Cette page vous permet de télécharger un fichier PNG de votre carte en cliquant sur l\'icône correspondante.';
+$_LANG['5ff02c037fd5e680d2601accfceb5fd4'] = 'L\'objectif est de faire en sorte que tous les murs soient représentés en noir sur la carte et que toutes les zones où le robot peut se déplacer soient représentées en blanc sur la carte.';
 $_LANG['c14e4451c3a6e87fccd7a77cb924021e'] = 'Vous êtes connecté en tant que manager.';
 $_LANG['17472d7a9e50501eb9824c0d9709be78'] = 'La sécurité est dégradée.';
 $_LANG['33a1c41368c3de66f20101e65d431b39'] = 'Ne doit pas être utilisé en production.';
@@ -645,5 +645,11 @@ $_LANG['d5a40d899dd4fc3fddf2d623b69e91ea'] = 'Erreur recupération config son';
 $_LANG['7826f93e0e1ad56ff239e493cf97163a'] = 'Erreur recupération GlobalVehiculePersistanteDataStorage';
 $_LANG['dbb8c43385e7134b1936431305b7bbbb'] = 'Erreur sauvegarde GlobalVehiculePersistanteDataStorage';
 $_LANG['3bfd163b7f2b0c3b3157bc805a7f7551'] = 'Arrière';
+$_LANG['0154c65a07d5bff9727950a2d8deb877'] = 'Ce site possède plusieurs cartes';
+$_LANG['3b42fc26c3a579ba9b2d46cb7d33c6db'] = 'Sélectionnez la carte active';
+$_LANG['d9925f1ee1fbf79dace5f58fcbefb78e'] = 'Il se peut que vous deviez choisir la carte active si vous chargez un site à cartes multiples.';
+$_LANG['0172ad297374c5e2b221838b56fa274c'] = 'Sélectionnez la carte';
+$_LANG['db87111a800141eeb4083ae88d42a8d9'] = 'Etes-vous sûr de vouloir passer sur ce site ?';
+$_LANG['3ea46fe23d03788e7cab31d1214ba887'] = 'Ce site possède plusieurs cartes';
 
 ?>

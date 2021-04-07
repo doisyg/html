@@ -1290,7 +1290,7 @@
                             <div class="modal-header">
                                 <div class="actions mh100vh_55">
 									<div class="h100vh_160" style="overflow:auto; text-align:center">
-										<h3 style="text-align:center;margin:30px 0"><?= __('This site has several maps.') ?></h3>
+										<h3 style="text-align:center;margin:30px 0"><?= __('This site has several maps') ?></h3>
 										<h4 style="text-align:center;margin:20px 0"><?= __('Choose the current map to load') ?></h4>
 										<div class="row row-eq-height list_maps" id="wyca_setup_sites_SelectMapList">
 										</div>										
@@ -1305,6 +1305,27 @@
                         </div>
                     </div>
                 </div>
+				<div class="modal fade" id="modalConfirmSwitchSite" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+					<div class="modal-dialog" role="dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<div class="actions mh100vh_55">
+									<section class="panel panel-info">
+										<header class="panel-heading">
+											<h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fa fa-question-circle"></i></h2>
+										</header>
+										<div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
+											<h3><?= __('Are you sure to switch to this site ?')?></h3>
+										</div>
+									</section>
+									<div style="clear:both;"></div>
+									<a href="#" id="" class="btn btn-default btn_footer_left btn_50 bModalConfirmSwitchSiteClose" data-dismiss="modal" ><?php echo __('No');?></a>
+									<a href="#" id="" class="btn btn-info btn_footer_right btn_50 bModalConfirmSwitchSiteOk" data-dismiss="modal"><?php echo __('Yes');?></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
 					<div class="content sm-content text-left">
