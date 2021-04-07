@@ -466,6 +466,7 @@ function RefreshConfigs()
 				// STOP => STOP MOVE
 				wycaApi.StopMove();
 				waitTimeRemaining = 0;
+				$('#current_action').html('');
 			}
 			
 			if (!dataStorage.wycaDemoStarted)
