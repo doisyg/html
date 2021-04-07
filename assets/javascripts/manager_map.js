@@ -173,6 +173,10 @@ var currentPoiManagerLongTouch = null;
 var currentAugmentedPoseManagerLongTouch = null;
 
 $(document).ready(function(e) {
+	$('#manager_edit_map .modal').on('shown.bs.modal', function () {
+		do_refresh = true;
+	});
+	
 	$('#manager_edit_map_svg').on('touchend', function(e) { 
 		$('#manager_edit_map_zoom_popup').hide();
 		if (timerManagerLongPress != null)
@@ -432,7 +436,7 @@ $(document).ready(function(e) {
 				
 				RemoveClass('#manager_edit_map_svg .active', 'active');
 				RemoveClass('#manager_edit_map_svg .activ_select', 'activ_select'); 
-				
+				ManagerResizeSVG();
 				currentSelectedItem = Array();
 				managerCurrentAction='';
 				$('body').removeClass('no_current select');

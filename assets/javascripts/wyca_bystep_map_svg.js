@@ -1,18 +1,19 @@
 
-/* ZOOM FUNCS*/
+/* ZOOM FUNCS */
 
-function WycaGetZoom()
+
+function WycaByStepGetZoom()
 {
-	var obj = $('#wyca_edit_map_svg g');
-	obj.attr('id', 'wyca_edit_map_svg_g');
+	var obj = $('#wyca_by_step_edit_map_svg g');
+	obj.attr('id', 'wyca_by_step_edit_map_svg_g');
 	 var transformMatrix = obj.css("-webkit-transform") ||
 	   obj.css("-moz-transform")    ||
 	   obj.css("-ms-transform")     ||
 	   obj.css("-o-transform")      ||
 	   obj.css("transform");
 	   
-	if (transformMatrix == undefined && typeof(window.panZoomWyca) != 'undefined' )
-	 	return  ros_largeur / $('#wyca_edit_map_svg').width() / window.panZoomWyca.getZoom()
+	if (transformMatrix == undefined && typeof(window.panZoom) != 'undefined')
+	 	return  ros_largeur / $('#wyca_by_step_edit_map_svg').width() / window.panZoom.getZoom()
 	if(transformMatrix != undefined){
 		var matrix = transformMatrix.replace(/[^0-9\-.,]/g, '').split(',');
 	 
@@ -23,15 +24,11 @@ function WycaGetZoom()
 	}
 }
 
-function WycaInitSVG()
-{
-}
-
 /* TRACE FUNCS */
 
-function WycaTraceSection(x1, y1, x2, y2)
+function WycaByStepTraceSection(x1, y1, x2, y2)
 {
-	$('#wyca_edit_map_svg .selection').remove();
+	$('#wyca_by_step_edit_map_svg .selection').remove();
 	
 	if (x1 < x2){	x = x1; w = x2-x1; }
 	else { x = x2; w = x1-x2; }
@@ -45,13 +42,13 @@ function WycaTraceSection(x1, y1, x2, y2)
 				   'class':'selection',
 				   'id': 'selection',
 				  });
-	svgWyca.appendChild(path);
+	svgWycaByStep.appendChild(path);
 }
 
-function WycaTraceCurrentGomme(gomme, index)
+function WycaByStepTraceCurrentGomme(gomme, index)
 {
 	points = gomme.points;
-	$('#wyca_edit_map_svg .gomme_elem_current_'+index).remove();
+	$('#wyca_by_step_edit_map_svg .gomme_elem_current_'+index).remove();
 	
 	if (points.length > 1)
 	{
@@ -65,7 +62,7 @@ function WycaTraceCurrentGomme(gomme, index)
 		});
 		
 		path = makeSVGElement('polyline', { points: gomme_point,
-								   'stroke-width': gomme.size,
+								  'stroke-width': gomme.size,
 								   'stroke': '#FFF',
 								   'fill': 'none',
 								   'class':'gomme_elem gomme_elem_current_'+index,
@@ -73,21 +70,99 @@ function WycaTraceCurrentGomme(gomme, index)
 								   'shape-rendering': 'crispEdges' // anti aliasing
 								  });
 								  
-		svgWyca.appendChild(path);
-		$('#wyca_edit_map_svg .gomme_elem_current_'+index).insertAfter($('#wyca_edit_map_svg image'));
+		svgWycaByStep.appendChild(path);
+		$('#wyca_by_step_edit_map_svg .gomme_elem_current_'+index).insertAfter($('#wyca_by_step_edit_map_svg image'));
 		
+		/*
+		path = makeSVGElement('polyline', { points: gomme_point,
+								   'stroke-width': gomme.size,
+								   'stroke': '#FFF',
+								   'fill': 'none',
+								   'class':'gomme_elem gomme_elem_current_'+index,
+								   'data-index': 'current'
+								  });
+								  
+		svgWycaByStep.appendChild(path);
+		$('#wyca_by_step_edit_map_svg .gomme_elem_current_'+index).insertAfter($('#wyca_by_step_edit_map_svg image'));
+		*/
 	}
 }
 
-function WycaTraceForbidden(indexForbidden)
+/*
+function WycaByStepTraceCurrentForbidden(points)
+{
+	$('#wyca_by_step_edit_map_svg .forbidden_elem_current').remove();
+	
+	if (points.length >= 1)
+	{
+		if (points.length <= 2)
+		{
+			point = points[0];
+			x = (point.x * 100 / ros_resolution);
+			y = ros_hauteur - ((point.y * 100 / ros_resolution));
+				
+			path = makeSVGElement('rect', { x: x-5, y:y-5, height:10, width:10,
+							   'stroke-width': minStokeWidth,
+							   'class':'poly forbidden_elem_current',
+							   'data-index': 'current'
+							  });
+			svgWycaByStep.appendChild(path);
+		}
+		else
+		{
+			forbidden_point = '';
+			$.each(points, function( indexPoint, point ) {
+				if (forbidden_point != '') forbidden_point += ' ';
+				
+				x = (point.x * 100 / ros_resolution);
+				y = ros_hauteur - ((point.y * 100 / ros_resolution));
+				
+				forbidden_point += x+','+y;
+			});
+			
+			path = makeSVGElement('polygon', { points: forbidden_point,
+									   'stroke-width': minStokeWidth,
+									   'class':'poly forbidden_elem_current',
+									   'data-index': 'current'
+									  });
+			svgWycaByStep.appendChild(path);
+		}
+	}
+}
+*/
+
+function GetCenterForbidden(indexForbidden)
 {
 	forbidden = forbiddens[indexForbidden];
-	if (forbidden.deleted) { $('#wyca_edit_map_svg .forbidden_elem_'+forbidden.id_area).remove(); return; }
+	
+	minX = 10000;
+	minY = 10000;
+	maxX = 0;
+	maxY = 0;
+	
+	points = forbidden.points;
+	$.each(points, function( indexPoint, point ) {
+		if (point.x < minX) minX = point.x;
+		if (point.x > maxX) maxX = point.x;
+		if (point.y < minY) minY = point.y;
+		if (point.y > maxY) maxY = point.y;
+	});
+	
+	x = minX + (maxX-minX)/2;
+	y = minY + (maxY-minY)/2;
+	
+	return { "x":x, "y":y};
+}
+
+function WycaByStepTraceForbidden(indexForbidden)
+{
+	forbidden = forbiddens[indexForbidden];
+	if (forbidden.deleted) { $('#wyca_by_step_edit_map_svg .forbidden_elem_'+forbidden.id_area).remove(); return; }
 	
 	is_active = false;
-	if ($('#wyca_edit_map_svg .forbidden_elem_'+forbidden.id_area).length > 0)
+	if ($('#wyca_by_step_edit_map_svg .forbidden_elem_'+forbidden.id_area).length > 0)
 	{
-		t = $('#wyca_edit_map_svg .forbidden_elem_'+forbidden.id_area);
+		t = $('#wyca_by_step_edit_map_svg .forbidden_elem_'+forbidden.id_area);
 		if (t.attr('class') != t.attr('class').replace('active', ''))
 		{
 			is_active = true;
@@ -99,7 +174,7 @@ function WycaTraceForbidden(indexForbidden)
 		index_point_movable = movableDown.data('index_point');
 	}
 	else
-		$('#wyca_edit_map_svg .forbidden_elem_'+forbidden.id_area).remove();		  
+		$('#wyca_by_step_edit_map_svg .forbidden_elem_'+forbidden.id_area).remove();		  
 	
 	points = forbidden.points;
 	if (points.length > 1)
@@ -114,16 +189,16 @@ function WycaTraceForbidden(indexForbidden)
 			forbidden_point += x+','+y;
 		});
 		
-		$('#wyca_edit_map_svg #wyca_edit_map_forbidden_'+forbidden.id_area).remove();
+		$('#wyca_by_step_edit_map_svg #wyca_by_step_edit_map_forbidden_'+forbidden.id_area).remove();
 		
 		path = makeSVGElement('polygon', { points: forbidden_point,
 							   'stroke-width': 0,
 							   'class':'poly forbidden forbidden_root poly_elem forbidden_elem forbidden_elem_'+forbidden.id_area,
-							   'id':'wyca_edit_map_forbidden_'+forbidden.id_area,
+							   'id':'wyca_by_step_edit_map_forbidden_'+forbidden.id_area,
 							   'data-id_area': forbidden.id_area
 							  });
 		path.style.fill = 'rgba(255,0,0,0.3)';
-		svgWyca.appendChild(path);
+		svgWycaByStep.appendChild(path);
 		
 		lastPointIndex = points.length-1;
 		lastPoint = points[lastPointIndex];
@@ -131,24 +206,24 @@ function WycaTraceForbidden(indexForbidden)
 			
 			if (!downOnMovable || (index_point_movable != indexPoint || index_point_movable != lastPointIndex))
 			{
-				$('#wyca_edit_map_svg #wyca_edit_map_forbidden_trait_'+forbidden.id_area+'_'+indexPoint).remove();
+				$('#wyca_by_step_edit_map_svg #wyca_by_step_edit_map_forbidden_trait_'+forbidden.id_area+'_'+indexPoint).remove();
 				
 				x = point.x * 100 / ros_resolution;
 				y = ros_hauteur - (point.y * 100 / ros_resolution);
 				
 				x2 = lastPoint.x * 100 / ros_resolution;
 				y2 = ros_hauteur - (lastPoint.y * 100 / ros_resolution);
-				
+								
 				path = makeSVGElement('line', { x1: x, y1:y, x2:x2, y2:y2,
 							   'stroke-width': downOnMovable?1:5,
 							   'class':'secable poly_elem forbidden_elem forbidden_elem_'+forbidden.id_area,
-							   'id': 'wyca_edit_map_forbidden_trait_'+forbidden.id_area+'_'+indexPoint,
+							   'id': 'wyca_by_step_edit_map_forbidden_trait_'+forbidden.id_area+'_'+indexPoint,
 							   'data-id_area': forbidden.id_area,
 							   'data-index_point': indexPoint,
 							   'data-element_type': 'forbidden',
 							   'data-element': 'forbidden'
 							  });
-				svgWyca.appendChild(path);
+				svgWycaByStep.appendChild(path);
 			}
 			
 			lastPointIndex = indexPoint;
@@ -157,51 +232,119 @@ function WycaTraceForbidden(indexForbidden)
 		
 		$.each(points, function( indexPoint, point ) {
 			/*
-			x = (point.x * 100 / ros_resolution) / largeurRos * $('#wyca_edit_map_mapBox').width();
-			y = $('#wyca_edit_map_mapBox').height() - ((point.y * 100 / ros_resolution) / largeurRos * $('#wyca_edit_map_mapBox').width());
+			x = (point.x * 100 / ros_resolution) / largeurRos * $('#wyca_by_step_edit_map_mapBox').width();
+			y = $('#wyca_by_step_edit_map_mapBox').height() - ((point.y * 100 / ros_resolution) / largeurRos * $('#wyca_by_step_edit_map_mapBox').width());
 			*/
 			
 			if (!downOnMovable || index_point_movable != indexPoint)
 			{
-				$('#wyca_edit_map_svg #wyca_edit_map_forbidden_'+forbidden.id_area+'_'+indexPoint).remove();
+				$('#wyca_by_step_edit_map_svg #wyca_by_step_edit_map_forbidden_'+forbidden.id_area+'_'+indexPoint).remove();
 				
 				x = point.x * 100 / ros_resolution;
 				y = ros_hauteur - (point.y * 100 / ros_resolution);
 				
 				let	pointActiveClass = '';
-				if(typeof(currentPointWycaLongTouch) != 'undefined' && currentPointWycaLongTouch != null){
-					pointActiveClass = indexPoint == currentPointWycaLongTouch.data('index_point') ? ' editing_point' : '' ;
+				if(typeof(currentPointWycaByStepLongTouch) != 'undefined' && currentPointWycaByStepLongTouch != null){
+					pointActiveClass = indexPoint == currentPointWycaByStepLongTouch.data('index_point') ? ' editing_point' : '' ;
 				}
 				
+
 				path = makeSVGElement('rect', { x: x-5, y:y-5, height:10, width:10,
 							   'stroke-width': minStokeWidth,
 							   'class':'movable point_deletable poly_elem forbidden_elem forbidden_elem_'+forbidden.id_area+pointActiveClass,
-							   'id': 'wyca_edit_map_forbidden_'+forbidden.id_area+'_'+indexPoint,
+							   'id': 'wyca_by_step_edit_map_forbidden_'+forbidden.id_area+'_'+indexPoint,
 							   'data-id_area': forbidden.id_area,
 							   'data-index_point': indexPoint,
 							   'data-element_type': 'forbidden',
 							   'data-element': 'forbidden'
 							  });
-				svgWyca.appendChild(path);
+				svgWycaByStep.appendChild(path);
 			}
 			
 			lastPoint = point;
 		});
 		
 		if (is_active)
-			AddClass('#wyca_edit_map_svg .forbidden_elem_'+forbidden.id_area, 'active');
+			AddClass('#wyca_by_step_edit_map_svg .forbidden_elem_'+forbidden.id_area, 'active');
 	}
 }
 
-function WycaTraceArea(indexArea)
+/*
+function WycaByStepTraceCurrentArea(points)
+{
+	$('#wyca_by_step_edit_map_svg .area_elem_current').remove();
+	
+	if (points.length >= 1)
+	{
+		
+		if (points.length <= 2)
+		{
+			point = points[0];
+			x = (point.x * 100 / ros_resolution);
+			y = ros_hauteur - ((point.y * 100 / ros_resolution));
+				
+			path = makeSVGElement('rect', { x: x-5, y:y-5, height:10, width:10,
+							   'stroke-width': minStokeWidth,
+							   'class':'poly forbidden_elem_current',
+							   'data-index': 'current'
+							  });
+			svgWycaByStep.appendChild(path);
+		}
+		else
+		{
+			area_point = '';
+			$.each(points, function( indexPoint, point ) {
+				if (area_point != '') area_point += ' ';
+				
+				x = (point.x * 100 / ros_resolution);
+				y = ros_hauteur - ((point.y * 100 / ros_resolution));
+				
+				area_point += x+','+y;
+			});
+			
+			path = makeSVGElement('polygon', { points: area_point,
+									   'stroke-width': minStokeWidth,
+									   'class':'poly area_elem_current',
+									   'data-index': 'current'
+									  });
+			svgWycaByStep.appendChild(path);
+		}
+	}
+}
+*/
+
+function GetCenterArea(indexArea)
 {
 	area = areas[indexArea];
-	if (area.deleted) { $('#wyca_edit_map_svg .area_elem_'+area.id_area).remove(); return; }
+	
+	minX = 10000;
+	minY = 10000;
+	maxX = 0;
+	maxY = 0;
+	
+	points = area.points;
+	$.each(points, function( indexPoint, point ) {
+		if (point.x < minX) minX = point.x;
+		if (point.x > maxX) maxX = point.x;
+		if (point.y < minY) minY = point.y;
+		if (point.y > maxY) maxY = point.y;
+	});
+	
+	x = minX + (maxX-minX)/2;
+	y = minY + (maxY-minY)/2;
+	
+	return { "x":x, "y":y};
+}
+
+function WycaByStepTraceArea(indexArea)
+{
+	area = areas[indexArea];
+	if (area.deleted) { $('#wyca_by_step_edit_map_svg .area_elem_'+area.id_area).remove(); return; }
 	
 	is_active = false;
-	if ($('#wyca_edit_map_svg .area_elem_'+area.id_area).length > 0)
+	if ($('#wyca_by_step_edit_map_svg .area_elem_'+area.id_area).length > 0)
 	{
-		t = $('#wyca_edit_map_svg .area_elem_'+area.id_area);
+		t = $('#wyca_by_step_edit_map_svg .area_elem_'+area.id_area);
 		if (t.attr('class') != t.attr('class').replace('active', ''))
 		{
 			is_active = true;
@@ -213,7 +356,7 @@ function WycaTraceArea(indexArea)
 		index_point_movable = movableDown.data('index_point');
 	}
 	else
-		$('#wyca_edit_map_svg .area_elem_'+area.id_area).remove();
+		$('#wyca_by_step_edit_map_svg .area_elem_'+area.id_area).remove();
 	
 	points = area.points;
 	if (points.length > 1)
@@ -228,16 +371,16 @@ function WycaTraceArea(indexArea)
 			area_point += x+','+y;
 		});
 		
-		$('#wyca_edit_map_svg #wyca_edit_map_area_'+area.id_area).remove();
+		$('#wyca_by_step_edit_map_svg #wyca_by_step_edit_map_area_'+area.id_area).remove();
 		
 		path = makeSVGElement('polygon', { points: area_point,
 							   'stroke-width': 0,
 							   'class':'poly area area_root poly_elem area_elem area_elem_'+area.id_area,
-							   'id':'wyca_edit_map_area_'+area.id_area,
+							   'id':'wyca_by_step_edit_map_area_'+area.id_area,
 							   'data-id_area': area.id_area
 							  });
 		path.style.fill = 'rgba('+area.color_r+','+area.color_g+','+area.color_b+',0.5)'
-		svgWyca.appendChild(path);
+		svgWycaByStep.appendChild(path);
 		
 		lastPointIndex = points.length-1;
 		lastPoint = points[lastPointIndex];
@@ -245,24 +388,24 @@ function WycaTraceArea(indexArea)
 			
 			if (!downOnMovable || (index_point_movable != indexPoint || index_point_movable != lastPointIndex))
 			{
-				$('#wyca_edit_map_svg #wyca_edit_map_area_trait_'+area.id_area+'_'+indexPoint).remove();
+				$('#wyca_by_step_edit_map_svg #wyca_by_step_edit_map_area_trait_'+area.id_area+'_'+indexPoint).remove();
 				
 				x = point.x * 100 / ros_resolution;
 				y = ros_hauteur - (point.y * 100 / ros_resolution);
 				
 				x2 = lastPoint.x * 100 / ros_resolution;
 				y2 = ros_hauteur - (lastPoint.y * 100 / ros_resolution);
-				
+								
 				path = makeSVGElement('line', { x1: x, y1:y, x2:x2, y2:y2,
 							   'stroke-width': downOnMovable?1:5,
 							   'class':'secable poly_elem area_elem area_elem_'+area.id_area,
-							   'id': 'wyca_edit_map_area_trait_'+area.id_area+'_'+indexPoint,
+							   'id': 'wyca_by_step_edit_map_area_trait_'+area.id_area+'_'+indexPoint,
 							   'data-id_area': area.id_area,
 							   'data-index_point': indexPoint,
 							   'data-element_type': 'area',
 							   'data-element': 'area'
 							  });
-				svgWyca.appendChild(path);
+				svgWycaByStep.appendChild(path);
 			}
 			
 			lastPointIndex = indexPoint;
@@ -274,38 +417,39 @@ function WycaTraceArea(indexArea)
 			
 			if (!downOnMovable || index_point_movable != indexPoint)
 			{
-				$('#wyca_edit_map_svg #wyca_edit_map_area_'+area.id_area+'_'+indexPoint).remove();
+				$('#wyca_by_step_edit_map_svg #wyca_by_step_edit_map_area_'+area.id_area+'_'+indexPoint).remove();
 				
 				x = point.x * 100 / ros_resolution;
 				y = ros_hauteur - (point.y * 100 / ros_resolution);
 				
-				let	pointActiveClass = '';
-				if(typeof(currentPointWycaLongTouch) != 'undefined' && currentPointWycaLongTouch != null){
-					pointActiveClass = indexPoint == currentPointWycaLongTouch.data('index_point') ? ' editing_point' : '' ;
-				}
 				
+				let	pointActiveClass = '';
+				if(typeof(currentPointWycaByStepLongTouch) != 'undefined' && currentPointWycaByStepLongTouch != null){
+					pointActiveClass = indexPoint == currentPointWycaByStepLongTouch.data('index_point') ? ' editing_point' : '' ;
+				}
 				
 				path = makeSVGElement('rect', { x: x-5, y:y-5, height:10, width:10,
 							   'stroke-width': minStokeWidth,
 							   'class':'movable point_deletable poly_elem area_elem area_elem_'+area.id_area+pointActiveClass,
-							   'id': 'wyca_edit_map_area_'+area.id_area+'_'+indexPoint,
+							   'id': 'wyca_by_step_edit_map_area_'+area.id_area+'_'+indexPoint,
 							   'data-id_area': area.id_area,
 							   'data-index_point': indexPoint,
 							   'data-element_type': 'area',
 							   'data-element': 'area'
 							  });
-				svgWyca.appendChild(path);
+				svgWycaByStep.appendChild(path);
 			}
 		});
 		
 		if (is_active)
-			AddClass('#wyca_edit_map_svg .area_elem_'+area.id_area, 'active');
+			AddClass('#wyca_by_step_edit_map_svg .area_elem_'+area.id_area, 'active');
 	}
 }
 
-function WycaTraceCurrentDock(pose)
+/*
+function WycaByStepTraceCurrentDock(pose)
 {
-	$('#wyca_edit_map_svg .dock_elem_current').remove();
+	$('#wyca_by_step_edit_map_svg .dock_elem_current').remove();
 	
 	x = pose.fiducial_pose_x * 100 / ros_resolution;
 	y = ros_hauteur - (pose.fiducial_pose_y * 100 / ros_resolution);
@@ -318,7 +462,7 @@ function WycaTraceCurrentDock(pose)
 				   'transform':'rotate('+angle+', '+x+', '+y+')',
 				   'class':'movable dock_elem dock_elem_current'
 				  });
-	svgWyca.appendChild(path);
+	svgWycaByStep.appendChild(path);
 	
 	path = makeSVGElement('line', { 'x1': x-1, 'y1':y+1, 'x2': x+1, 'y2':y+1,
 				   'stroke-width': 1,
@@ -327,18 +471,19 @@ function WycaTraceCurrentDock(pose)
 				   'transform':'rotate('+angle+', '+x+', '+y+')',
 				   'class':'dock_elem dock_elem_current'
 				  });
-	svgWyca.appendChild(path);
+	svgWycaByStep.appendChild(path);
 }
+*/
 
-function WycaTraceDock(indexDock)
+function WycaByStepTraceDock(indexDock)
 {
 	dock = docks[indexDock];
-	if (dock.deleted != undefined && dock.deleted) { $('#wyca_edit_map_svg .dock_elem_'+dock.id_docking_station).remove(); return; }
+	if (dock.deleted != undefined && dock.deleted) { $('#wyca_by_step_edit_map_svg .dock_elem_'+dock.id_docking_station).remove(); return; }
 	
 	is_active = false;
-	if ($('#wyca_edit_map_svg .dock_elem_'+dock.id_docking_station).length > 0)
+	if ($('#wyca_by_step_edit_map_svg .dock_elem_'+dock.id_docking_station).length > 0)
 	{
-		t = $('#wyca_edit_map_svg .dock_elem_'+dock.id_docking_station);
+		t = $('#wyca_by_step_edit_map_svg .dock_elem_'+dock.id_docking_station);
 		if (t.attr('class') != t.attr('class').replace('active', ''))
 		{
 			is_active = true;
@@ -350,7 +495,7 @@ function WycaTraceDock(indexDock)
 		index_point_movable = movableDown.data('index_point');
 	}
 	else
-		$('#wyca_edit_map_svg .dock_elem_'+dock.id_docking_station).remove();
+		$('#wyca_by_step_edit_map_svg .dock_elem_'+dock.id_docking_station).remove();
 	
 	x = dock.fiducial_pose_x * 100 / ros_resolution;
 	y = ros_hauteur - (dock.fiducial_pose_y * 100 / ros_resolution);
@@ -362,12 +507,12 @@ function WycaTraceDock(indexDock)
 				   'fill':'red',
 				   'transform':'rotate('+angle+', '+x+', '+y+')',
 				   'class':'dock_elem dock_elem_fond dock_elem_'+dock.id_docking_station,
-				   'id': 'wyca_edit_map_dock_'+dock.id_docking_station,
+				   'id': 'wyca_by_step_edit_map_dock_'+dock.id_docking_station,
 				   'data-id_docking_station': dock.id_docking_station,
 				   'data-element_type': 'dock',
 				   'data-element': 'dock'
 				  });
-	svgWyca.appendChild(path);
+	svgWycaByStep.appendChild(path);
 	
 	path = makeSVGElement('line', { 'x1': x-1, 'y1':y+1, 'x2': x+1, 'y2':y+1,
 				   'stroke-width': 1,
@@ -375,12 +520,12 @@ function WycaTraceDock(indexDock)
 				   'stroke':'red',
 				   'transform':'rotate('+angle+', '+x+', '+y+')',
 				   'class':'dock_elem dock_elem_'+dock.id_docking_station,
-				   'id': 'wyca_edit_map_dock_connect_'+dock.id_docking_station,
+				   'id': 'wyca_by_step_edit_map_dock_connect_'+dock.id_docking_station,
 				   'data-id_docking_station': dock.id_docking_station,
 				   'data-element_type': 'dock',
 				   'data-element': 'dock'
 				  });
-	svgWyca.appendChild(path);
+	svgWycaByStep.appendChild(path);
 	
 	x = dock.final_pose_x * 100 / ros_resolution;
 	y = ros_hauteur - (dock.final_pose_y * 100 / ros_resolution);
@@ -388,27 +533,27 @@ function WycaTraceDock(indexDock)
 	
 	rayonRobot = (26 / ros_resolution);
 	rayonRobotSecure = ((26+15) / ros_resolution);
-	
+		
 	path = makeSVGElement('circle', { cx: x,
 									cy: y,
 								   r: rayonRobot,
 								   'class': 'dock_elem dock_elem_circle dock_elem_'+dock.id_docking_station,
-								   'id': 'wyca_edit_map_dock_secure_'+dock.id_docking_station,
+								   'id': 'wyca_by_step_edit_map_dock_secure_'+dock.id_docking_station,
 								   'data-id_docking_station': dock.id_docking_station,
 								   'data-element_type': 'dock',
 								   'data-element': 'dock'
 								   });
-	svgWyca.appendChild(path);
+	svgWycaByStep.appendChild(path);
 	path = makeSVGElement('circle', { cx: x,
 									cy: y,
 								   r: rayonRobot * 0.60,
 								   'class': 'dock_elem dock_elem_robot dock_elem_fond dock_elem_'+dock.id_docking_station,
-								   'id': 'wyca_edit_map_dock_robot_'+dock.id_docking_station,
+								   'id': 'wyca_by_step_edit_map_dock_robot_'+dock.id_docking_station,
 								   'data-id_docking_station': dock.id_docking_station,
 								   'data-element_type': 'dock',
 								   'data-element': 'dock'
 								   });
-	svgWyca.appendChild(path);
+	svgWycaByStep.appendChild(path);
 	
 	path = makeSVGElement('polyline', { 'points': (x-1.5)+' '+(y-1.5)+' '+(x+1.5)+' '+(y)+' '+(x-1.5)+' '+(y+1.5),
 									'stroke':'#FFFFFF',
@@ -418,21 +563,21 @@ function WycaTraceDock(indexDock)
 									'stroke-linecap':'round',
 								   'class': 'dock_elem dock_elem_'+dock.id_docking_station,
 								   'transform':'rotate('+angle+', '+x+', '+y+')',
-								   'id': 'wyca_edit_map_dock_sens_'+dock.id_docking_station,
+								   'id': 'wyca_by_step_edit_map_dock_sens_'+dock.id_docking_station,
 								   'data-id_docking_station': dock.id_docking_station,
 								   'data-element_type': 'dock',
 								   'data-element': 'dock'
 								   });
-	svgWyca.appendChild(path);
+	svgWycaByStep.appendChild(path);
 	
 	if (is_active)
-		AddClass('#wyca_edit_map_svg .dock_elem_'+dock.id_docking_station, 'active');
+		AddClass('#wyca_by_step_edit_map_svg .dock_elem_'+dock.id_docking_station, 'active');
 }
 
 /*
-function WycaTraceCurrentPoi(pose)
+function WycaByStepTraceCurrentPoi(pose)
 {
-	$('#wyca_edit_map_svg .poi_elem_current').remove();
+	$('#wyca_by_step_edit_map_svg .poi_elem_current').remove();
 	
 	x = pose.final_pose_x * 100 / ros_resolution;
 	y = ros_hauteur - (pose.final_pose_y * 100 / ros_resolution);
@@ -447,7 +592,7 @@ function WycaTraceCurrentPoi(pose)
 								   'class': 'poi_elem poi_elem_current',
 								   });
 	path.style.fill = '#AAAAAA';
-	svgWyca.appendChild(path);
+	svgWycaByStep.appendChild(path);
 	
 	path = makeSVGElement('circle', { cx: x,
 									cy: y,
@@ -455,7 +600,7 @@ function WycaTraceCurrentPoi(pose)
 								   'class': 'poi_elem poi_elem_current',
 								   });
 	path.style.fill = '#589FB1';
-	svgWyca.appendChild(path);
+	svgWycaByStep.appendChild(path);
 	
 	path = makeSVGElement('polyline', { 'points': (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2),
 									'stroke':'#FFFFFF',
@@ -466,19 +611,19 @@ function WycaTraceCurrentPoi(pose)
 								   'class': 'poi_elem poi_elem_current',
 								   'transform':'rotate('+angle+', '+x+', '+y+')',
 								   });
-	svgWyca.appendChild(path);
+	svgWycaByStep.appendChild(path);
 }
 */
 
-function WycaTracePoi(indexPoi)
+function WycaByStepTracePoi(indexPoi)
 {
 	poi = pois[indexPoi];
-	if (poi.deleted != undefined && poi.deleted) { $('#wyca_edit_map_svg .poi_elem_'+poi.id_poi).remove(); return; }
+	if (poi.deleted != undefined && poi.deleted) { $('#wyca_by_step_edit_map_svg .poi_elem_'+poi.id_poi).remove(); return; }
 	
 	is_active = false;
-	if ($('#wyca_edit_map_svg .poi_elem_'+poi.id_poi).length > 0)
+	if ($('#wyca_by_step_edit_map_svg .poi_elem_'+poi.id_poi).length > 0)
 	{
-		t = $('#wyca_edit_map_svg .poi_elem_'+poi.id_poi);
+		t = $('#wyca_by_step_edit_map_svg .poi_elem_'+poi.id_poi);
 		if (t.attr('class') != t.attr('class').replace('active', ''))
 		{
 			is_active = true;
@@ -490,7 +635,7 @@ function WycaTracePoi(indexPoi)
 		index_point_movable = movableDown.data('index_point');
 	}
 	else
-		$('#wyca_edit_map_svg .poi_elem_'+poi.id_poi).remove();
+		$('#wyca_by_step_edit_map_svg .poi_elem_'+poi.id_poi).remove();
 	
 	x = poi.final_pose_x * 100 / ros_resolution;
 	y = ros_hauteur - (poi.final_pose_y * 100 / ros_resolution);	
@@ -498,28 +643,40 @@ function WycaTracePoi(indexPoi)
 	
 	rayonRobot = (26 / ros_resolution);
 	rayonRobotSecure = ((26+15) / ros_resolution);
+	/*
+	path = makeSVGElement('circle', { cx: x,
+									cy: y,
+								   r: rayonRobotSecure,
+								   'class': 'poi_elem poi_elem_secure poi_elem_'+poi.id_poi,
+								   'id': 'wyca_by_step_edit_map_poi_secure_'+poi.id_poi,
+								   'data-id_poi': poi.id_poi,
+								   'data-element_type': 'poi',
+								   'data-element': 'poi'
+								   });
+	svgWycaByStep.appendChild(path);
+	*/
 	
 	path = makeSVGElement('circle', { cx: x,
 									cy: y,
 								   r: rayonRobot,
 								   'class': 'poi_elem poi_elem_circle poi_elem_'+poi.id_poi,
-								   'id': 'wyca_edit_map_poi_secure_'+poi.id_poi,
+								   'id': 'wyca_by_step_edit_map_poi_secure_'+poi.id_poi,
 								   'data-id_poi': poi.id_poi,
 								   'data-element_type': 'poi',
 								   'data-element': 'poi'
 								   });
-	svgWyca.appendChild(path);
+	svgWycaByStep.appendChild(path);
 	
 	path = makeSVGElement('circle', { cx: x,
 									cy: y,
 								   r: rayonRobot * 0.6,
 								   'class': 'poi_elem poi_elem_fond poi_elem_'+poi.id_poi,
-								   'id': 'wyca_edit_map_poi_robot_'+poi.id_poi,
+								   'id': 'wyca_by_step_edit_map_poi_robot_'+poi.id_poi,
 								   'data-id_poi': poi.id_poi,
 								   'data-element_type': 'poi',
 								   'data-element': 'poi'
 								   });
-	svgWyca.appendChild(path);
+	svgWycaByStep.appendChild(path);
 	
 	path = makeSVGElement('polyline', { 'points': (x-1.5)+' '+(y-1.5)+' '+(x+1.5)+' '+(y)+' '+(x-1.5)+' '+(y+1.5),
 									'stroke':'#FFFFFF',
@@ -529,21 +686,22 @@ function WycaTracePoi(indexPoi)
 									'stroke-linecap':'round',
 								   'class': 'poi_elem poi_elem_'+poi.id_poi,
 								   'transform':'rotate('+angle+', '+x+', '+y+')',
-								   'id': 'wyca_edit_map_poi_sens_'+poi.id_poi,
+								   'id': 'wyca_by_step_edit_map_poi_sens_'+poi.id_poi,
 								   'data-id_poi': poi.id_poi,
 								   'data-element_type': 'poi',
 								   'data-element': 'poi'
 								   });
-	svgWyca.appendChild(path);
+	svgWycaByStep.appendChild(path);
 	
 	if (is_active)
-		AddClass('#wyca_edit_map_svg .poi_elem_'+poi.id_poi, 'active');
+		AddClass('#wyca_by_step_edit_map_svg .poi_elem_'+poi.id_poi, 'active');
 }
 
 /*
-function WycaTraceCurrentAugmentedPose(pose)
+function WycaByStepTraceCurrentAugmentedPose(pose)
 {
-	$('#wyca_edit_map_svg .augmented_pose_elem_current').remove();
+	
+	$('#wyca_by_step_edit_map_svg .augmented_pose_elem_current').remove();
 	
 	x = pose.final_pose_x * 100 / ros_resolution;
 	y = ros_hauteur - (pose.final_pose_y * 100 / ros_resolution);
@@ -558,7 +716,7 @@ function WycaTraceCurrentAugmentedPose(pose)
 								   'class': 'augmented_pose_elem augmented_pose_elem_current',
 								   });
 	path.style.fill = '#AAAAAA';
-	svgWyca.appendChild(path);
+	svgWycaByStep.appendChild(path);
 	
 	path = makeSVGElement('circle', { cx: x,
 									cy: y,
@@ -566,7 +724,7 @@ function WycaTraceCurrentAugmentedPose(pose)
 								   'class': 'augmented_pose_elem augmented_pose_elem_current',
 								   });
 	path.style.fill = '#589FB1';
-	svgWyca.appendChild(path);
+	svgWycaByStep.appendChild(path);
 	
 	path = makeSVGElement('polyline', { 'points': (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2),
 									'stroke':'#FFFFFF',
@@ -577,19 +735,19 @@ function WycaTraceCurrentAugmentedPose(pose)
 								   'class': 'augmented_pose_elem augmented_pose_elem_current',
 								   'transform':'rotate('+angle+', '+x+', '+y+')',
 								   });
-	svgWyca.appendChild(path);
+	svgWycaByStep.appendChild(path);
 }
 */
 
-function WycaTraceAugmentedPose(indexAugmentedPose)
+function WycaByStepTraceAugmentedPose(indexAugmentedPose)
 {
 	augmented_pose = augmented_poses[indexAugmentedPose];
-	if (augmented_pose.deleted != undefined && augmented_pose.deleted) { $('#wyca_edit_map_svg .augmented_pose_elem_'+augmented_pose.id_augmented_pose).remove(); return; }
+	if (augmented_pose.deleted != undefined && augmented_pose.deleted) { $('#wyca_by_step_edit_map_svg .augmented_pose_elem_'+augmented_pose.id_augmented_pose).remove(); return; }
 	
 	is_active = false;
-	if ($('#wyca_edit_map_svg .augmented_pose_elem_'+augmented_pose.id_augmented_pose).length > 0)
+	if ($('#wyca_by_step_edit_map_svg .augmented_pose_elem_'+augmented_pose.id_augmented_pose).length > 0)
 	{
-		t = $('#wyca_edit_map_svg .augmented_pose_elem_'+augmented_pose.id_augmented_pose);
+		t = $('#wyca_by_step_edit_map_svg .augmented_pose_elem_'+augmented_pose.id_augmented_pose);
 		if (t.attr('class') != t.attr('class').replace('active', ''))
 		{
 			is_active = true;
@@ -601,7 +759,7 @@ function WycaTraceAugmentedPose(indexAugmentedPose)
 		index_point_movable = movableDown.data('index_point');
 	}
 	else
-		$('#wyca_edit_map_svg .augmented_pose_elem_'+augmented_pose.id_augmented_pose).remove();
+		$('#wyca_by_step_edit_map_svg .augmented_pose_elem_'+augmented_pose.id_augmented_pose).remove();
 	
 	x = augmented_pose.final_pose_x * 100 / ros_resolution;
 	y = ros_hauteur - (augmented_pose.final_pose_y * 100 / ros_resolution);	
@@ -610,27 +768,37 @@ function WycaTraceAugmentedPose(indexAugmentedPose)
 	rayonRobot = (26 / ros_resolution);
 	rayonRobotSecure = ((26+15) / ros_resolution);
 	
-	path = makeSVGElement('circle', { cx: x,
+	/*path = makeSVGElement('circle', { cx: x,
 									cy: y,
-								   r: rayonRobot,
-								   'class': 'augmented_pose_elem augmented_pose_elem_circle augmented_pose_elem_'+augmented_pose.id_augmented_pose,
-								   'id': 'wyca_edit_map_augmented_pose_secure_'+augmented_pose.id_augmented_pose,
+								   r: rayonRobotSecure,
+								   'class': 'augmented_pose_elem augmented_pose_elem_secure augmented_pose_elem_'+augmented_pose.id_augmented_pose,
+								   'id': 'wyca_by_step_edit_map_augmented_pose_secure_'+augmented_pose.id_augmented_pose,
 								   'data-id_augmented_pose': augmented_pose.id_augmented_pose,
 								   'data-element_type': 'augmented_pose',
 								   'data-element': 'augmented_pose'
 								   });
-	svgWyca.appendChild(path);
+	svgWycaByStep.appendChild(path);*/
+	path = makeSVGElement('circle', { cx: x,
+									cy: y,
+								   r: rayonRobot,
+								   'class': 'augmented_pose_elem augmented_pose_elem_circle augmented_pose_elem_'+augmented_pose.id_augmented_pose,
+								   'id': 'wyca_by_step_edit_map_augmented_pose_secure_'+augmented_pose.id_augmented_pose,
+								   'data-id_augmented_pose': augmented_pose.id_augmented_pose,
+								   'data-element_type': 'augmented_pose',
+								   'data-element': 'augmented_pose'
+								   });
+	svgWycaByStep.appendChild(path);
 	
 	path = makeSVGElement('circle', { cx: x,
 									cy: y,
 								   r: rayonRobot * 0.6,
 								   'class': 'augmented_pose_elem augmented_pose_elem_fond augmented_pose_elem_'+augmented_pose.id_augmented_pose,
-								   'id': 'wyca_edit_map_augmented_pose_robot_'+augmented_pose.id_augmented_pose,
+								   'id': 'wyca_by_step_edit_map_augmented_pose_robot_'+augmented_pose.id_augmented_pose,
 								   'data-id_augmented_pose': augmented_pose.id_augmented_pose,
 								   'data-element_type': 'augmented_pose',
 								   'data-element': 'augmented_pose'
 								   });
-	svgWyca.appendChild(path);
+	svgWycaByStep.appendChild(path);
 	
 	path = makeSVGElement('polyline', { 'points': (x-1.5)+' '+(y-1.5)+' '+(x+1.5)+' '+(y)+' '+(x-1.5)+' '+(y+1.5),
 									'stroke':'#FFFFFF',
@@ -640,18 +808,18 @@ function WycaTraceAugmentedPose(indexAugmentedPose)
 									'stroke-linecap':'round',
 								   'class': 'augmented_pose_elem augmented_pose_elem_'+augmented_pose.id_augmented_pose,
 								   'transform':'rotate('+angle+', '+x+', '+y+')',
-								   'id': 'wyca_edit_map_augmented_pose_sens_'+augmented_pose.id_augmented_pose,
+								   'id': 'wyca_by_step_edit_map_augmented_pose_sens_'+augmented_pose.id_augmented_pose,
 								   'data-id_augmented_pose': augmented_pose.id_augmented_pose,
 								   'data-element_type': 'augmented_pose',
 								   'data-element': 'augmented_pose'
 								   });
-	svgWyca.appendChild(path);
+	svgWycaByStep.appendChild(path);
 	
 	if (is_active)
-		AddClass('#wyca_edit_map_svg .augmented_pose_elem_'+augmented_pose.id_augmented_pose, 'active');
+		AddClass('#wyca_by_step_edit_map_svg .augmented_pose_elem_'+augmented_pose.id_augmented_pose, 'active');
 }
 
-function WycaTraceGoToPose(x,y)
+function WycaByStepTraceGoToPose(x,y)
 {
 	path = makeSVGElement('circle', { cx: x,
 									cy: y,
@@ -659,7 +827,7 @@ function WycaTraceGoToPose(x,y)
 									'class': 'go_to_pose_elem',
 									'id': 'go_to_pose_elem_circle',
 									});
-	svgWyca.appendChild(path);
+	svgWycaByStep.appendChild(path);
 	
 	path = makeSVGElement('circle', { cx: x,
 									cy: y,
@@ -667,71 +835,70 @@ function WycaTraceGoToPose(x,y)
 									'class': 'go_to_pose_elem',
 									'id': 'go_to_pose_elem_dot',
 									});
-	svgWyca.appendChild(path);
+	svgWycaByStep.appendChild(path);
 
 	path = makeSVGElement('line', { x1: x+(rayonRobot*0.9)  + rayonRobot/3 , y1:y, x2:x+(rayonRobot*0.9)  - rayonRobot/3, y2:y,
 						   'class':'go_to_pose_elem go_to_pose_elem_line',
 						   'id': 'go_to_pose_elem_line_left',
 						  });
-	svgWyca.appendChild(path);
+	svgWycaByStep.appendChild(path);
 	
 	path = makeSVGElement('line', { x1: x-(rayonRobot*0.9)  + rayonRobot/3 , y1:y, x2:x-(rayonRobot*0.9)  - rayonRobot/3, y2:y,
 						   'class':'go_to_pose_elem go_to_pose_elem_line',
 						   'id': 'go_to_pose_elem_line_right',
 						  });
-	svgWyca.appendChild(path);
+	svgWycaByStep.appendChild(path);
 	
 	path = makeSVGElement('line', { x1: x  , y1:y  -(rayonRobot*0.9)  + rayonRobot/3 , x2:x  , y2:y-(rayonRobot*0.9)  - rayonRobot/3,
 						   'class':'go_to_pose_elem go_to_pose_elem_line',
 						   'id': 'go_to_pose_elem_line_bottom',
 						  });
-	svgWyca.appendChild(path);
+	svgWycaByStep.appendChild(path);
 	
 	path = makeSVGElement('line', { x1: x , y1:y  +(rayonRobot*0.9)  + rayonRobot/3 , x2:x  , y2:y+(rayonRobot*0.9)  - rayonRobot/3,
 						   'class':'go_to_pose_elem go_to_pose_elem_line',
 						   'id': 'go_to_pose_elem_line_top',
 						  });
-	svgWyca.appendChild(path);
+	svgWycaByStep.appendChild(path);
 }
+var robot_traced = false;
 
-var robot_traced_wyca = false;
-
-function WycaTraceRobot(robot_x, robot_y, robot_theta)
+function WycaByStepTraceRobot(robot_x, robot_y, robot_theta)
 {
 	if(robot_x == robot_y && robot_y == robot_theta && robot_x == 0 ){
-		$('#wyca_edit_map_tRobotNotLocalised').show();
-		$('#wyca_edit_map_robot_circle').remove();
-		$('#wyca_edit_map_robot_sens').remove();
-		robot_traced_wyca = false;
+		$('#wyca_by_step_edit_map_tRobotNotLocalised').show();
+		$('#wyca_by_step_edit_map_robot_circle').remove();
+		$('#wyca_by_step_edit_map_robot_sens').remove();
+		robot_traced = false;
 	}else{
-		$('#wyca_edit_map_tRobotNotLocalised').hide();
+		$('#wyca_by_step_edit_map_tRobotNotLocalised').hide();
 		x = robot_x * 100 / ros_resolution;
 		y = ros_hauteur - (robot_y * 100 / ros_resolution);	
 		angle = 0 - robot_theta * 180 / Math.PI;
 		
 		rayonRobot = (26 / ros_resolution);
 		
-		if (!robot_traced_wyca)
+		if (!robot_traced)
 		{
-			robot_traced_wyca = true;
+			robot_traced = true;
 			
 			path = makeSVGElement('circle', { cx: x,
 											cy: y,
 										   r: rayonRobot,
 										   'class': 'robot_elem robot_elem_fond',
-										   'id': 'wyca_edit_map_robot_circle',
+										   'id': 'wyca_by_step_edit_map_robot_circle',
 										   'data-element_type': 'robot',
 										   'data-element': 'robot'
 										   });
-			svgWyca.appendChild(path);
+			svgWycaByStep.appendChild(path);
 		}
 		else
 		{
-			$('#wyca_edit_map_robot_circle').attr("cx", x);
-			$('#wyca_edit_map_robot_circle').attr("cy", y);
+			$('#wyca_by_step_edit_map_robot_circle').attr("cx", x);
+			$('#wyca_by_step_edit_map_robot_circle').attr("cy", y);
 		}
 		
-		$('#wyca_edit_map_robot_sens').remove();
+		$('#wyca_by_step_edit_map_robot_sens').remove();
 		path = makeSVGElement('polyline', { 'points': (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2),
 										'stroke':'#FFFFFF',
 										'stroke-width':1,
@@ -740,41 +907,214 @@ function WycaTraceRobot(robot_x, robot_y, robot_theta)
 										'stroke-linecap':'round',
 									   'class': 'robot_elem',
 									   'transform':'rotate('+angle+', '+x+', '+y+')',
-									   'id': 'wyca_edit_map_robot_sens',
+									   'id': 'wyca_by_step_edit_map_robot_sens',
 									   'data-element_type': 'robot',
 									   'data-element': 'robot'
 									   });
-		$('#wyca_edit_map_robot_circle').after(path);
+		$('#wyca_by_step_edit_map_robot_circle').after(path);
 	}
 }
 
-function WycaResizeSVG()
+function WycaByStepResizeSVG()
 {	
-	WycaTraceRobot(lastRobotPose.X, lastRobotPose.Y, lastRobotPose.T);
+	WycaByStepTraceRobot(lastRobotPose.X, lastRobotPose.Y, lastRobotPose.T);
 	
-	$('#wyca_edit_map_svg .gomme_elem').remove();
-	$.each(gommes, function( index, gomme ) {
-		WycaTraceCurrentGomme(gomme, index)
-	});
-	
-	$('#wyca_edit_map_svg .forbidden_elem').remove();
+	$('#wyca_by_step_edit_map_svg .forbidden_elem').remove();
 	$.each(forbiddens, function( index, forbidden ) {
-		WycaTraceForbidden(index);
+		WycaByStepTraceForbidden(index);
 	});
-	$('#wyca_edit_map_svg .area_elem').remove();
+	$('#wyca_by_step_edit_map_svg .area_elem').remove();
 	$.each(areas, function( index, area ) {
-		WycaTraceArea(index);
+		WycaByStepTraceArea(index);
 	});
-	$('#wyca_edit_map_svg .dock_elem').remove();
+	$('#wyca_by_step_edit_map_svg .dock_elem').remove();
 	$.each(docks, function( index, dock ) {
-		WycaTraceDock(index);
+		WycaByStepTraceDock(index);
 	});
-	$('#wyca_edit_map_svg .poi_elem').remove();
+	$('#wyca_by_step_edit_map_svg .poi_elem').remove();
 	$.each(pois, function( index, poi ) {
-		WycaTracePoi(index);
+		WycaByStepTracePoi(index);
 	});
-	$('#wyca_edit_map_svg .augmented_pose_elem').remove();
+	$('#wyca_by_step_edit_map_svg .augmented_pose_elem').remove();
 	$.each(augmented_poses, function( index, augmented_pose ) {
-		WycaTraceAugmentedPose(index);
+		WycaByStepTraceAugmentedPose(index);
 	});
 }
+
+function ExportSVG()
+{
+
+	var rawSVG = $("#wyca_by_step_edit_map_svg").outerHTML;
+	
+	var myCanvas = document.getElementById("wyca_by_step_edit_map_canvas_export_svg");
+    var ctxt = myCanvas.getContext("2d");
+
+    var svgTemp = new Blob([rawSVG], {type:"image/svg+xml;charset=utf-8"}),
+        domURL = self.URL || self.webkitURL || self,
+        url = domURL.createObjectURL(svgTemp),
+        img = new Image;
+
+    img.onload = function () {
+        ctx.drawImage(this, 0, 0);     
+        domURL.revokeObjectURL(url);
+        SaveImg();
+    };
+
+    img.src = url;
+}
+
+function SaveImg()
+{
+	var myCanvas = document.getElementById("wyca_by_step_edit_map_canvas_export_svg");
+}
+
+function svg_to_png_data(target) {
+  var ctx, mycanvas, svg_data, img, child;
+
+  // Flatten CSS styles into the SVG
+  for (i = 0; i < target.childNodes.length; i++) {
+    child = target.childNodes[i];
+    var cssStyle = window.getComputedStyle(child);
+    if(cssStyle){
+       child.style.cssText = cssStyle.cssText;
+    }
+  }
+
+  // Construct an SVG image
+  svg_data = '<svg xmlns="http://www.w3.org/2000/svg" width="' + target.offsetWidth +
+             '" height="' + target.offsetHeight + '">' + target.innerHTML + '</svg>';
+  img = new Image();
+  img.src = "data:image/svg+xml," + encodeURIComponent(svg_data);
+
+  // Draw the SVG image to a canvas
+  mycanvas = document.createElement('canvas');
+  mycanvas.width = target.offsetWidth;
+  mycanvas.height = target.offsetHeight;
+  ctx = mycanvas.getContext("2d");
+  ctx.drawImage(img, 0, 0);
+
+  // Return the canvas's data
+  return mycanvas.toDataURL("image/png");
+}
+
+// Takes an SVG element as target
+function svg_to_png_replace(target) {
+  var data, img;
+  data = svg_to_png_data(target);
+  img = new Image();
+  img.src = data;
+  
+  target.parentNode.replaceChild(img, target);
+}
+
+var svgTemp;
+var svgData;
+var canvas;
+var svgSize;
+var ctx;
+var imgUser;
+var imgFond;
+
+var saveExportZoom = 1;
+var saveExportScrollLeft = 0;
+var saveExportScrollTop = 0;
+
+function DrawFond()
+{
+	
+	saveExportScrollTop = document.getElementById('wyca_by_step_edit_map_container_all').scrollTop;
+	saveExportScrollLeft = document.getElementById('wyca_by_step_edit_map_container_all').scrollLeft;
+	
+	saveExportZoom = zoom_carte;
+	zoom_carte=1;
+	AppliquerZoom();
+	
+	
+	svgTemp = document.getElementById("wyca_by_step_edit_map_svg");
+		
+	for (i = 0; i < svgTemp.childNodes.length; i++) {
+		child = svgTemp.childNodes[i];
+		child.oldFill = child.style.fill;
+		
+		var cssStyle = window.getComputedStyle(child);
+		if(cssStyle){
+			child.style.cssText = cssStyle.cssText;
+		}
+	  }
+	  
+	svgData = new XMLSerializer().serializeToString(svgTemp);
+	canvas = document.createElement("canvas");
+	svgSize = svgTemp.getBoundingClientRect();
+	
+	canvas.width = svgSize.width * 3;
+	canvas.height = svgSize.height * 3;
+	canvas.style.width = svgSize.width;
+	canvas.style.height = svgSize.height;
+	ctx = canvas.getContext("2d");
+	
+	imgFond = document.createElement("img");
+	imgFond.setAttribute("src", $('#wyca_by_step_edit_map_svg #wyca_by_step_edit_map_mapBox').attr('src'));
+	imgFond.onload = function() {
+		ctx.globalAlpha = 0.4;
+		ctx.drawImage(imgFond, 0, 0, svgSize.width*3, svgSize.height*3);
+		ctx.globalAlpha = 1;
+		DrawImgUser();
+	
+	};	
+}
+
+function DrawImgUser()
+{
+}
+
+function DrawSVG()
+{
+	var canvasdata = canvas.toDataURL("image/png", 1);
+		
+	var pngimg = '<img src="' + canvasdata + '">';
+	//d3.select("#pngdataurl").html(pngimg);
+	
+	var img = document.createElement("img");
+	img.setAttribute("src", "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svgData))));
+	img.onload = function() {
+		ctx.scale(3, 3);
+		ctx.drawImage(img, 0, 0);
+	
+		zoom_carte = saveExportZoom;
+		AppliquerZoom();
+			
+		$('#wyca_by_step_edit_map_container_all').scrollLeft(saveExportScrollLeft);
+		$('#wyca_by_step_edit_map_container_all').scrollTop(saveExportScrollTop);
+		
+		
+		for (i = 0; i < svgTemp.childNodes.length; i++) {
+			child = svgTemp.childNodes[i];
+			child.style.fill = child.oldFill;
+	  	}
+		
+		DownloadFile();
+		
+	};	
+}
+
+function DownloadFile()
+{
+	var canvasdata = canvas.toDataURL("image/png", 1);
+	
+	var pngimg = '<img src="' + canvasdata + '">';
+	
+	var a = document.createElement("a");
+	a.download = "download_img" + ".png";
+	a.href = canvasdata;
+	document.body.appendChild(a);
+	a.click();
+}
+
+$(document).ready(function(e) {
+    $('#wyca_by_step_edit_map_bExportSVG').click(function(e) {
+        e.preventDefault();
+		
+		DrawFond();
+		
+    });
+});

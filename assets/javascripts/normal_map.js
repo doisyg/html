@@ -262,6 +262,9 @@ var currentPoiNormalLongTouch = null;
 var currentAugmentedPoseNormalLongTouch = null;
 
 $(document).ready(function(e) {
+	$('#manager_edit_map .modal').on('shown.bs.modal', function () {
+		do_refresh = true;
+	});
 	
 	$('#install_normal_edit_map_svg').on('touchend', function(e) { 
 		$('#install_normal_edit_map_zoom_popup').hide();
@@ -699,7 +702,7 @@ $(document).ready(function(e) {
 				
 				RemoveClass('#install_normal_edit_map_svg .active', 'active');
 				RemoveClass('#install_normal_edit_map_svg .activ_select', 'activ_select'); 
-				
+				NormalResizeSVG();
 				currentSelectedItem = Array();
 				normalCurrentAction='';
 				$('body').removeClass('no_current select');

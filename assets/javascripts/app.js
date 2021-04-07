@@ -35,7 +35,8 @@ window.addEventListener('resize', () => {
 });
 
 $(window).on("popstate", function(e) {
-    change(e.originalEvent.state);
+	if($('.page.active').attr('id') != 'install_by_step_edit_map')
+		change(e.originalEvent.state);
 });
 
 (function(original) { // overwrite history.pushState so that it also calls
@@ -46,13 +47,41 @@ $(window).on("popstate", function(e) {
     };
 })(history.pushState);
 
+var refresh_session_interval = null;
+var do_refresh = false;
+var do_refresh_continously = false;
+function refresh_session_php(){
+	if (do_refresh_continously || do_refresh)
+	{
+		$.ajax({
+			type: "POST",
+			url: 'ajax/refresh_session_php.php',
+			data: {
+			},
+			dataType: 'json',
+			success: function(data) {
+			},
+			error: function(e) {
+				console.log(typeof(textErrorRefreshSession) != 'undefined'? textErrorRefreshSession : 'Error in refresh session');
+			}
+		});
+		do_refresh = false;
+	}
+}
+
 $(document).ready(function(e) {
+	
+	refresh_session_interval = setInterval(refresh_session_php,30000);
+	
+	$('#bModalErrorSession').click(function(){
+		window.location.href = 'logout.php'
+	});
 	
 	$('#bHeaderInfo').attr('onClick',"$('.global_sub_page.active section.active .popupHelp').toggle('fast')");
 	
 	$('.iro-colorpicker').each(function(){
-		let preview = $(this).parent().find('.preview_color');
-		let input = $(this).parent().find('input[type="text"]');
+		let preview = $(this).parent().parent().find('.preview_color');
+		let input = $(this).parent().parent().find('input[type="text"]');
 		let div = $(this);
 		let color_init = $(this).data('color_init');
 		let w = window.outerWidth - 75;
@@ -61,8 +90,8 @@ $(document).ready(function(e) {
 			wheelLightness:false,
 			color: color_init,
 			width: w,
-
 		});
+		
 		preview.on('click',function(){
 			$('.iro-colorpicker').not(div).hide();
 			if(div.css('display') == 'none')
@@ -144,26 +173,16 @@ $(document).ready(function(e) {
 		
         e.preventDefault();
 		wycaApi.on('onUndockResult', function (data){
-			console.log('onUndockResult',data);
-			if (data.A == wycaApi.AnswerCode.NO_ERROR)
-			{
-			}
-			else
-			{	
+			//console.log('onUndockResult',data);
+			if (data.A != wycaApi.AnswerCode.NO_ERROR)
 				ParseAPIAnswerError(data);
-			}
 			// On rebranche l'ancienne fonction
 			wycaApi.on('onUndockResult', onUndockResult);
 		});
 		
 		wycaApi.Undock(function(data){
-			if (data.A == wycaApi.AnswerCode.NO_ERROR)
-			{
-			}
-			else
-			{
+			if (data.A != wycaApi.AnswerCode.NO_ERROR)
 				ParseAPIAnswerError(data);
-			}
 		});
     });
 	
@@ -204,6 +223,8 @@ $(document).ready(function(e) {
 	$( 'body' ).on( 'click', '.button_goto', function(e) {
 		if(isDown)SetCurseurV2(xCentre, yCentre); // REINIT JOYSTICK TO MIDDLE
 		let anim_show = true; // TRIGGER ANIM ? 
+
+		
 		if($(this).hasClass('btn_back')){
 			
 			$('#bModalBackOk').attr('data-goto','');
@@ -262,176 +283,299 @@ $(document).ready(function(e) {
 				}
 			}
 			
-		}else{
-			let fromBackBtn = false;
-			if($(this).data('goto').includes('fromBackBtn')){
-				let goTo =  $(this).data('goto').split('_fromBackBtn')[0];
-				$(this).data('goto',goTo);
-				fromBackBtn = true;
+			if(target == 'wyca_by_step_mapping'){ //UPDATE INSTALL STEP ON BACK FROM MAPPING
+				$.ajax({
+					type: "POST",
+					url: 'ajax/install_by_step_site.php',
+					data: {
+					},
+					dataType: 'json',
+					success: function(data) {
+					},
+					error: function(e) {
+						alert_wyca((typeof(textErrorStartMapping) != 'undefined'? textErrorStartMapping : 'Error start mapping') + ' ' + e.responseText);
+					}
+				});
 			}
-			e.preventDefault();
-			history.pushState({ current_groupe:$('.menu_groupe .active').attr('id'), current_page:$(this).data('goto')}, $(this).data('goto'), "/#"+$(this).data('goto'));
-			next = $(this).data('goto');
 			
-			$('#modalBack').modal('hide');
-			let section_active = $('section.active');
-			$('section.active').removeClass('active');
-			$('section.page').hide();
-			
-			$('#bHeaderInfo').attr('onClick',""); // REINIT (i) icone
-			$('#bHeaderInfo').attr('onClick',"$('#"+next+" .popupHelp').toggle('fast')");
-			
-			console.log('next ',next);
-			
-			//BYSTEP
-			
-			if (next == 'install_by_step_tops') InitTopsByStep();
-			if (next == 'install_by_step_top') InitTopsActiveByStep();
-			if (next == 'install_by_step_check') InitCheckByStep();		
-			if (next == 'install_by_step_sound') InitSoundByStep();		
-			if (next == 'install_by_step_wifi') InitInstallWifiPageByStep();
-			if (next == 'install_by_step_config') GetConfigurationsByStep();
-			if (next == 'install_by_step_mapping') InitMappingByStep();
-			if (next == 'install_by_step_import_site') InitSiteImportByStep();
-			
-			if (next == 'install_by_step_edit_map')GetInfosCurrentMapByStep();
-			if (next == 'install_by_step_mapping_fin'){
-				if(typeof(window.site_name) != 'undefined' && window.site_name != ""){
-					$('#install_by_step_mapping_from_name').val(window.site_name)
-				}else{
-					wycaApi.GetCurrentSite(function(data){
-						if (data.A == wycaApi.AnswerCode.NO_ERROR){
-							window.site_name=data.D.name;
-							$('#install_by_step_mapping_from_name').val(window.site_name)
+			if(target == 'wyca_by_step_sound'){ //UPDATE INSTALL STEP ON BACK FROM CREATE NEW SITE PROCESS NORMAL
+				if((getCookie('create_new_site') != '' ? JSON.parse(getCookie('create_new_site')) : false ) || create_new_site){
+					setCookie('create_new_site',false);
+					create_new_site = false;
+					$.ajax({
+						type: "POST",
+						url: 'ajax/install_by_step_finish.php',
+						data: {
+						},
+						dataType: 'json',
+						success: function(data) {
+						},
+						error: function(e) {
+							alert_wyca((typeof(textErrorFinish) != 'undefined'? textErrorFinish : 'Error in finish') + ' ' + e.responseText);
 						}
-					})
+					});
+					$('#modalBack').modal('hide');
+					$('#pages_wyca_by_step').removeClass('active');
+					$('#pages_wyca_normal').addClass('active');
+					
+					//AFFICHER QQ CHOSE
+					$('section#wyca_setup_sites').show('slow');
+					$('.title_section').html($('section#wyca_setup_sites > header > h2').text());
+					if ($('#wyca_setup_sites').is(':visible'))
+					{
+						GetSitesWyca();
+					}
+					
+		
 				}
 			}
 			
-			if (next == 'install_by_step_maintenance'){
-				InitMaintenanceByStep();
-				if(create_new_site){
-					anim_show = false;
-					if($(this).attr('id') == 'bModalBackOk')
-						setTimeout(function(){$('#install_by_step_maintenance .bBackButton').click()},100);
+		}else{
+			if(typeof($(this).data('goto')) != 'undefined'){
+				let fromBackBtn = false;
+				if($(this).data('goto').includes('fromBackBtn')){
+					let goTo =  $(this).data('goto').split('_fromBackBtn')[0];
+					$(this).data('goto',goTo);
+					fromBackBtn = true;
+				}
+				e.preventDefault();
+				history.pushState({ current_groupe:$('.menu_groupe .active').attr('id'), current_page:$(this).data('goto')}, $(this).data('goto'), "/#"+$(this).data('goto'));
+				next = $(this).data('goto');
+				
+				//CHECK JOYSTICK TO START/STOP TELEOP ON NEXT PAGE
+				if($('#'+next).find('.joystickDiv').length > 0){
+					if(!teleopEnable || teleopEnable == 'not_init'){
+						teleopEnable = true;
+						wycaApi.TeleopStart();
+					}
+				}else{
+					if(teleopEnable || teleopEnable == 'not_init'){
+						teleopEnable = false;
+						wycaApi.TeleopStop();
+					}
+				}
+				
+				$('#modalBack').modal('hide');
+				let section_active = $('section.active');
+				$('section.active').removeClass('active');
+				$('section.page').hide();
+				
+				$('#bHeaderInfo').attr('onClick',""); // REINIT (i) icone
+				$('#bHeaderInfo').attr('onClick',"$('#"+next+" .popupHelp').toggle('fast')");
+				
+				console.log('next ',next);
+				
+				//BYSTEP
+				
+				if (next == 'install_by_step_tops') InitTopsByStep();
+				if (next == 'install_by_step_top') InitTopsActiveByStep();
+				if (next == 'install_by_step_check') InitCheckByStep();		
+				if (next == 'install_by_step_sound') InitSoundByStep();		
+				if (next == 'install_by_step_wifi') InitInstallWifiPageByStep();
+				if (next == 'install_by_step_config') GetConfigurationsByStep();
+				if (next == 'install_by_step_mapping') InitMappingByStep();
+				if (next == 'install_by_step_import_site') InitSiteImportByStep();
+				
+				if (next == 'install_by_step_site_master_dock' && fromBackBtn) InitMasterDockByStep('back');
+				if (next == 'install_by_step_site_master_dock' && !fromBackBtn) InitMasterDockByStep();
+				if (next == 'install_by_step_site_map' && fromBackBtn) InitSiteSelectMapByStep('back');
+				if (next == 'install_by_step_site_map' && !fromBackBtn) InitSiteSelectMapByStep();
+				
+				if (next == 'install_by_step_edit_map')GetInfosCurrentMapByStep();
+				if (next == 'install_by_step_mapping_fin'){
+					if(typeof(window.site_name) != 'undefined' && window.site_name != ""){
+						$('#install_by_step_mapping_from_name').val(window.site_name)
+					}else{
+						wycaApi.GetCurrentSite(function(data){
+							if (data.A == wycaApi.AnswerCode.NO_ERROR){
+								window.site_name=data.D.name;
+								$('#install_by_step_mapping_from_name').val(window.site_name)
+							}
+						})
+					}
+				}
+				
+				if (next == 'install_by_step_maintenance'){
+					InitMaintenanceByStep();
+					if(create_new_site){
+						anim_show = false;
+						if($(this).attr('id') == 'bModalBackOk')
+							setTimeout(function(){$('#install_by_step_maintenance .bBackButton').click()},100);
+						else
+							setTimeout(function(){$('#install_by_step_maintenance .install_by_step_maintenance_next').click()},100);
+					}
+				}
+				
+				if (next == 'install_by_step_manager') {
+					GetManagersByStep();
+					$('#bHeaderInfo').attr('onClick',"$('#install_by_step_manager .modalHelpManager').modal('show')");
+				}
+				
+				if (next == 'install_by_step_service_book') GetServiceBooksByStep();
+				
+				if(next.includes('install_by_step')){
+					do_refresh_continously = true;
+				}else{
+					if (do_refresh_continously)
+					{
+						do_refresh_continously = false;
+					}
 					else
-						setTimeout(function(){$('#install_by_step_maintenance .install_by_step_maintenance_next').click()},100);
+					{
+						do_refresh = true;
+					}
 				}
-			}
-			
-			if (next == 'install_by_step_site_master_dock' && fromBackBtn) InitMasterDockByStep('back');
-			if (next == 'install_by_step_site_master_dock' && !fromBackBtn) InitMasterDockByStep();
-			if (next == 'install_by_step_manager') {
-				GetManagersByStep();
-				$('#bHeaderInfo').attr('onClick',"$('#install_by_step_manager .modalHelpManager').modal('show')");
-			}
-			
-			if (next == 'install_by_step_service_book') GetServiceBooksByStep();
-			
-			// NORMAL
-			
-			if (next == 'install_normal_setup_sites') GetSitesNormal();
-			if (next == 'install_normal_setup_export') GetSitesForExportNormal();
-			if (next == 'install_normal_setup_import') InitSiteImportNormal();
-			if (next == 'install_normal_setup_download_map') GetMapsForDownloadNormal();
-			if (next == 'install_normal_setup_tops') InitTopsNormal();
-			if (next == 'install_normal_setup_top') InitTopsActiveNormal();
-			if (next == 'install_normal_setup_config') GetConfigurationsNormal();
-			if (next == 'install_normal_setup_sound') InitSoundNormal();
-			if (next == 'install_normal_setup_wifi') InitInstallWifiPageNormal();
-			if (next == 'install_normal_manager') {
-				GetManagersNormal();
-				$('#bHeaderInfo').attr('onClick',"$('#install_normal_manager .modalHelpManager').modal('show')");
-			}
-			if (next == 'install_normal_user') GetUsersNormal();
-			if (next == 'install_normal_service_book') GetServiceBooksNormal();
-			if (next == 'install_normal_edit_map') GetInfosCurrentMapNormal();
-			if (next == 'install_normal_setup_trinary') NormalInitTrinary();
-			
-			// WYCA
-			
-			if (next == 'wyca_setup_sites') GetSitesWyca();
-			if (next == 'wyca_setup_sound') InitSoundWyca();
-			if (next == 'wyca_setup_export') GetSitesForExportWyca();
-			if (next == 'wyca_setup_import') InitSiteImportWyca();
-			if (next == 'wyca_setup_download_map') GetMapsForDownloadWyca();
-			if (next == 'wyca_setup_tops') InitTopsWyca();
-			if (next == 'wyca_setup_top') InitTopsActiveWyca();
-			if (next == 'wyca_setup_config') GetConfigurationsWyca();
-			if (next == 'wyca_setup_wifi') InitInstallWifiPageWyca();
-			if (next == 'wyca_manager') {
-				GetManagersWyca();
-				$('#bHeaderInfo').attr('onClick',"$('#wyca_manager .modalHelpManager').modal('show')");
-			}
-			if (next == 'wyca_user') GetUsersWyca();
-			if (next == 'wyca_wyca') GetWycasWyca();
-			if (next == 'wyca_installer') GetInstallersWyca();
-			if (next == 'wyca_service_book') GetServiceBooksWyca();
-			if (next == 'wyca_edit_map') GetInfosCurrentMapWyca();
-			if (next == 'wyca_setup_trinary') WycaInitTrinary();
-			
-			if (next == 'wyca_demo_mode_config') InitWycaDemo();
-			if (next == 'wyca_demo_mode_start_stop') InitWycaDemoState();
-			
-			// MANAGER
-			if (next == 'manager_setup_sites') GetSitesManager();
-			if (next == 'manager_edit_map') GetInfosCurrentMapManager();
-			if (next == 'manager_top') InitTopsActiveManager();
-			if (next == 'manager_users') GetUsersManager();
-			
-			// USER
-			
-			if (next == 'user_edit_map') GetInfosCurrentMapUser();
-			
-			// Anim HIDE current page
-			var startShowAfter = 0;
-			if ($(this).closest('section').hasClass('hmi_tuile') && anim_show )
-			{
-				nbTuiles = $(this).closest('section').find('.anim_tuiles').length;
-				delay = 70;
-				for (i=1; i <= nbTuiles; i++)
+				
+				// NORMAL
+				
+				if (next == 'install_normal_setup_sites') GetSitesNormal();
+				if (next == 'install_normal_setup_export') GetSitesForExportNormal();
+				if (next == 'install_normal_setup_import') InitSiteImportNormal();
+				if (next == 'install_normal_setup_download_map') GetMapsForDownloadNormal();
+				if (next == 'install_normal_setup_tops') InitTopsNormal();
+				if (next == 'install_normal_setup_top') InitTopsActiveNormal();
+				if (next == 'install_normal_setup_config') GetConfigurationsNormal();
+				if (next == 'install_normal_setup_sound') InitSoundNormal();
+				if (next == 'install_normal_setup_wifi') InitInstallWifiPageNormal();
+				if (next == 'install_normal_manager') {
+					GetManagersNormal();
+					$('#bHeaderInfo').attr('onClick',"$('#install_normal_manager .modalHelpManager').modal('show')");
+				}
+				if (next == 'install_normal_user') GetUsersNormal();
+				if (next == 'install_normal_service_book') GetServiceBooksNormal();
+				if (next == 'install_normal_edit_map') GetInfosCurrentMapNormal();
+				if (next == 'install_normal_setup_trinary') NormalInitTrinary();
+				
+				// WYCA
+				
+				if (next == 'wyca_setup_sites') GetSitesWyca();
+				if (next == 'wyca_setup_sound') InitSoundWyca();
+				if (next == 'wyca_setup_export') GetSitesForExportWyca();
+				if (next == 'wyca_setup_import') InitSiteImportWyca();
+				if (next == 'wyca_setup_download_map') GetMapsForDownloadWyca();
+				if (next == 'wyca_setup_tops') InitTopsWyca();
+				if (next == 'wyca_setup_top') InitTopsActiveWyca();
+				if (next == 'wyca_setup_config') GetConfigurationsWyca();
+				if (next == 'wyca_setup_wifi') InitInstallWifiPageWyca();
+				if (next == 'wyca_manager') {
+					GetManagersWyca();
+					$('#bHeaderInfo').attr('onClick',"$('#wyca_manager .modalHelpManager').modal('show')");
+				}
+				if (next == 'wyca_user') GetUsersWyca();
+				if (next == 'wyca_wyca') GetWycasWyca();
+				if (next == 'wyca_installer') GetInstallersWyca();
+				if (next == 'wyca_service_book') GetServiceBooksWyca();
+				if (next == 'wyca_edit_map') GetInfosCurrentMapWyca();
+				if (next == 'wyca_setup_trinary') WycaInitTrinary();
+				
+				if (next == 'wyca_demo_mode_config') InitWycaDemo();
+				if (next == 'wyca_demo_mode_start_stop') InitWycaDemoState();
+				
+				//WYCA BYSTEP
+				
+				if (next == 'wyca_by_step_tops') InitTopsWycaByStep();
+				if (next == 'wyca_by_step_top') InitTopsActiveWycaByStep();
+				if (next == 'wyca_by_step_check') InitCheckWycaByStep();		
+				if (next == 'wyca_by_step_sound') InitSoundWycaByStep();		
+				if (next == 'wyca_by_step_wifi') InitInstallWifiPageWycaByStep();
+				if (next == 'wyca_by_step_config') GetConfigurationsWycaByStep();
+				if (next == 'wyca_by_step_mapping') InitMappingWycaByStep();
+				if (next == 'wyca_by_step_import_site') InitSiteImportWycaByStep();
+				
+				if (next == 'wyca_by_step_site_master_dock' && fromBackBtn) InitMasterDockWycaByStep('back');
+				if (next == 'wyca_by_step_site_master_dock' && !fromBackBtn) InitMasterDockWycaByStep();
+				if (next == 'wyca_by_step_site_map' && fromBackBtn) InitSiteSelectMapWycaByStep('back');
+				if (next == 'wyca_by_step_site_map' && !fromBackBtn) InitSiteSelectMapWycaByStep();
+				
+				if (next == 'wyca_by_step_edit_map')GetInfosCurrentMapWycaByStep();
+				if (next == 'wyca_by_step_mapping_fin'){
+					if(typeof(window.site_name) != 'undefined' && window.site_name != ""){
+						$('#wyca_by_step_mapping_from_name').val(window.site_name)
+					}else{
+						wycaApi.GetCurrentSite(function(data){
+							if (data.A == wycaApi.AnswerCode.NO_ERROR){
+								window.site_name=data.D.name;
+								$('#wyca_by_step_mapping_from_name').val(window.site_name)
+							}
+						})
+					}
+				}
+				
+				if (next == 'wyca_by_step_maintenance'){
+					InitMaintenanceWycaByStep();
+					if(create_new_site){
+						anim_show = false;
+						if($(this).attr('id') == 'bModalBackOk')
+							setTimeout(function(){$('#wyca_by_step_maintenance .bBackButton').click()},100);
+						else
+							setTimeout(function(){$('#wyca_by_step_maintenance .wyca_by_step_maintenance_next').click()},100);
+					}
+				}
+				
+				if (next == 'wyca_by_step_manager') {
+					GetManagersWycaByStep();
+					$('#bHeaderInfo').attr('onClick',"$('#wyca_by_step_manager .modalHelpManager').modal('show')");
+				}
+				
+				if (next == 'wyca_by_step_service_book') GetServiceBooksWycaByStep();
+				
+				// MANAGER
+				if (next == 'manager_setup_sites') GetSitesManager();
+				if (next == 'manager_edit_map') GetInfosCurrentMapManager();
+				if (next == 'manager_top') InitTopsActiveManager();
+				if (next == 'manager_users') GetUsersManager();
+				
+				// USER
+				
+				if (next == 'user_edit_map') GetInfosCurrentMapUser();
+				
+				// Anim HIDE current page
+				var startShowAfter = 0;
+				if ($(this).closest('section').hasClass('hmi_tuile') && anim_show )
 				{
-					setTimeout(HideTuile, delay * (i - 1), $(this).closest('section').find('.tuile' + (nbTuiles - i + 1)));
+					nbTuiles = $(this).closest('section').find('.anim_tuiles').length;
+					delay = 70;
+					for (i=1; i <= nbTuiles; i++)
+					{
+						setTimeout(HideTuile, delay * (i - 1), $(this).closest('section').find('.tuile' + (nbTuiles - i + 1)));
+					}
+					
+					startShowAfter = nbTuiles * 70;
+					$(this).closest('section').delay(startShowAfter+250).fadeOut(500, function() {
+					   $(this).removeClass('active');
+					});
 				}
-				
-				startShowAfter = nbTuiles * 70;
-				$(this).closest('section').delay(startShowAfter+250).fadeOut(500, function() {
-				   $(this).removeClass('active');
-				});
-			}
-			else
-			{
-				$(this).closest('section').fadeOut(500);
-			}
-				
-			// Anim SHOW next page
-			next = $(this).data('goto');
-			if ($('#'+next).hasClass('hmi_tuile') && anim_show)
-			{
-				nbTuiles = $('#'+next).find('.anim_tuiles').length;
-				delay = 70;
-				for (i=1; i <= nbTuiles; i++)
+				else
 				{
-					setTimeout(ShowTuile, 700 + delay * (i - 1), $('#'+next).find('.tuile' + i));
+					$(this).closest('section').fadeOut(500);
+				}
+					
+				// Anim SHOW next page
+				next = $(this).data('goto');
+				if ($('#'+next).hasClass('hmi_tuile') && anim_show)
+				{
+					nbTuiles = $('#'+next).find('.anim_tuiles').length;
+					delay = 70;
+					for (i=1; i <= nbTuiles; i++)
+					{
+						setTimeout(ShowTuile, 700 + delay * (i - 1), $('#'+next).find('.tuile' + i));
+					}
+					
+					$('#'+next).delay(startShowAfter+250).fadeIn(500, function() {					
+						$(this).addClass('active');
+					});
+				}
+				else
+				{
+					$('#'+next).delay(startShowAfter).fadeIn(500, function() {
+						$(this).addClass('active');
+					});
 				}
 				
-				$('#'+next).delay(startShowAfter+250).fadeIn(500, function() {					
-					$(this).addClass('active');
-				});
+				// ADD TITLE CHANGE 
+					
+				$('.title_section').html($('#'+next+' > header > h2').text());
 			}
-			else
-			{
-				$('#'+next).delay(startShowAfter).fadeIn(500, function() {
-					$(this).addClass('active');
-				});
-			}
-			
-			// ADD TITLE CHANGE 
-				
-			$('.title_section').html($('#'+next+' > header > h2').text());
-			
-			//
-			InitJoystick();
 		}
 
     });
@@ -586,15 +730,17 @@ $(document).ready(function(e) {
 		e.preventDefault();
 		if($(this)[0].nodeName == 'A'){
 			currentDeleteId = $(this).parent().attr('id');
-			let txt_element = $(this).parent().find('.societe').text();
-			if(txt_element != ''){
-				tempConfirmDelete = $('#modalConfirmDelete').find('h3').text();
-				$('#modalConfirmDelete').find('h3').html(tempConfirmDelete + '<br><br><span>' + txt_element + '</span>');
-			}
-			if($(this).parent().parent().hasClass('list_wycas') && currentDeleteId.split('_elem_')[1] == user_id)
+			
+			if($(this).parent().parent().hasClass('list_wycas') && currentDeleteId.split('_elem_')[1] == user_id) //IF DELETE CURRENT CONNECTED WYCA ACCOUNT
 				$('#modalConfirmDeleteCurrentAccount').modal('show');
-			else
+			else{
 				$('#modalConfirmDelete').modal('show');
+				let txt_element = $(this).parent().find('.societe').text();
+				if(txt_element != ''){
+					tempConfirmDelete = $('#modalConfirmDelete').find('h3').text();
+					$('#modalConfirmDelete').find('h3').html(tempConfirmDelete + '<br><br><span>' + txt_element + '</span>');
+				}
+			}
 		}
 	})
 	
@@ -607,7 +753,7 @@ $(document).ready(function(e) {
 		}
 	})
 	
-	$('#modalConfirmDelete .btn[data-dismiss="modal"]').click(function(e){
+	$('#bModalConfirmDeleteClose').click(function(e){
 		$('#modalConfirmDelete').find('h3').html(tempConfirmDelete);
 		tempConfirmDelete = '';
 	})
@@ -631,13 +777,24 @@ var tempConfirmDelete = "";
 
 function InitSiteImportWyca()
 {
-	$('#pages_wyca .filename_import_site').html('');
-	$('#pages_wyca .filename_import_site').hide();
-	$('#pages_wyca .file_import_site_wrapper').css('background-color','#589fb26e');
-	$('#pages_wyca .file_import_site').val('');
+	$('#pages_wyca_normal .filename_import_site').html('');
+	$('#pages_wyca_normal .filename_import_site').hide();
+	$('#pages_wyca_normal .file_import_site_wrapper').css('background-color','#589fb26e');
+	$('#pages_wyca_normal .file_import_site').val('');
 	
-	$('#pages_wyca .wyca_setup_import_loading').hide();
-	$('#pages_wyca .wyca_setup_import_content').show();
+	$('#pages_wyca_normal .wyca_setup_import_loading').hide();
+	$('#pages_wyca_normal .wyca_setup_import_content').show();
+}
+
+function InitSiteImportWycaByStep()
+{
+	$('#pages_wyca_by_step .filename_import_site').html('');
+	$('#pages_wyca_by_step .filename_import_site').hide();
+	$('#pages_wyca_by_step .file_import_site_wrapper').css('background-color','#589fb26e');
+	$('#pages_wyca_by_step .file_import_site').val('');
+	
+	$('#pages_wyca_by_step .wyca_by_step_setup_import_loading').hide();
+	$('#pages_wyca_by_step .wyca_by_step_setup_import_content').show();
 }
 
 function InitSiteImportNormal()
@@ -1041,13 +1198,111 @@ function GetMapsForDownloadWyca()
 	}
 }
 
+// SELECT MAP
+
+function InitSiteSelectMapByStep(back = false)
+{
+	$('#pages_install_by_step #install_by_step_site_map #ImportSiteMapList').html('');
+	console.log('clear')
+	$('#pages_install_by_step #install_by_step_site_map .import_site_map_loading').show();
+
+	if (wycaApi.websocketAuthed){
+		wycaApi.GetCurrentSite(function(data){
+			if (data.A == wycaApi.AnswerCode.NO_ERROR){
+				current_site = data.D;
+				wycaApi.GetMapsList(current_site.id_site,function(data){
+					if (data.A == wycaApi.AnswerCode.NO_ERROR){
+						if(data.D.length <= 1){
+							$('#pages_install_by_step #install_by_step_site_map .import_site_map_loading').hide();
+							if(!back)
+								$('.install_by_step_site_master_dock_next').click();
+							else
+								$('#install_by_step_site_master_dock .bBackButton').click();
+						}else{
+							$.each(data.D,function(idx,item){
+								if(item.name != ''){
+									let map="";
+									map+='<div class="col-xs-6 text-center">';
+									map+='	<div class="SelectMapItem btn bTuile" id="'+item.id_map+'">';
+									map+='		<i class="fas fa-map-marked-alt"></i>';
+									map+='		<p class="mapname">'+item.name+'</p>';
+									map+='   </div>';
+									map+='</div>';
+									$('#pages_install_by_step #ImportSiteMapList').append(map);
+									$('#pages_install_by_step #install_by_step_site_map .import_site_map_loading').hide();
+								}
+							});
+						}				
+					}else{
+						ParseAPIAnswerError(data);
+						$('#pages_install_by_step #install_by_step_site_map .import_site_map_loading').hide();
+					}
+				})
+			}else{
+				ParseAPIAnswerError(data);
+				$('#pages_install_by_step #install_by_step_site_map .import_site_map_loading').hide();
+			}
+		})
+	}else{
+		setTimeout(InitSiteSelectMapByStep, 500);
+	}
+}
+
+function InitSiteSelectMapWycaByStep(back = false)
+{
+	$('#pages_wyca_by_step #wyca_by_step_site_map #ImportSiteMapList').html('');
+	console.log('clear')
+	$('#pages_wyca_by_step #wyca_by_step_site_map .import_site_map_loading').show();
+
+	if (wycaApi.websocketAuthed){
+		wycaApi.GetCurrentSite(function(data){
+			if (data.A == wycaApi.AnswerCode.NO_ERROR){
+				current_site = data.D;
+				wycaApi.GetMapsList(current_site.id_site,function(data){
+					if (data.A == wycaApi.AnswerCode.NO_ERROR){
+						if(data.D.length <= 1){
+							$('#pages_wyca_by_step #wyca_by_step_site_map .import_site_map_loading').hide();
+							if(!back)
+								$('.wyca_by_step_site_master_dock_next').click();
+							else
+								$('#wyca_by_step_site_master_dock .bBackButton').click();
+						}else{
+							$.each(data.D,function(idx,item){
+								if(item.name != ''){
+									let map="";
+									map+='<div class="col-xs-6 text-center">';
+									map+='	<div class="SelectMapItem btn bTuile" id="'+item.id_map+'">';
+									map+='		<i class="fas fa-map-marked-alt"></i>';
+									map+='		<p class="mapname">'+item.name+'</p>';
+									map+='   </div>';
+									map+='</div>';
+									$('#pages_wyca_by_step #ImportSiteMapList').append(map);
+									$('#pages_wyca_by_step #wyca_by_step_site_map .import_site_map_loading').hide();
+								}
+							});
+						}				
+					}else{
+						ParseAPIAnswerError(data);
+						$('#pages_wyca_by_step #wyca_by_step_site_map .import_site_map_loading').hide();
+					}
+				})
+			}else{
+				ParseAPIAnswerError(data);
+				$('#pages_wyca_by_step #wyca_by_step_site_map .import_site_map_loading').hide();
+			}
+		})
+	}else{
+		setTimeout(InitSiteSelectMapWycaByStep, 500);
+	}
+}
+
 // MASTER DOCK
 
 function InitMasterDockWyca()
 {
-	$('#pages_wyca .modalMasterDock #MasterDockList').html('');
-	$('#pages_wyca .modalMasterDock .MasterDock_loading').show();
-	$('#pages_wyca .modalMasterDock').modal('show');
+	$('#pages_wyca_normal .modalMasterDock #MasterDockList').html('');
+	$('#pages_wyca_normal .modalMasterDock .MasterDock_loading').show();
+	$('#pages_wyca_normal .modalMasterDock').modal('show');
 	
 	if(docks != 'undefined' && docks.length > 1){
 		$.each(docks,function(idx,item){
@@ -1059,15 +1314,15 @@ function InitMasterDockWyca()
 			master_dock+='		<p class="dockname">'+item.name+'</p>';
 			master_dock+='   </div>';
 			master_dock+='</div>';
-			$('#pages_wyca #MasterDockList').append(master_dock);
+			$('#pages_wyca_normal #MasterDockList').append(master_dock);
 		});
-		$('#pages_wyca .MasterDock_loading').hide();
+		$('#pages_wyca_normal .MasterDock_loading').hide();
 	}else{
 		if (wycaApi.websocketAuthed){
 			wycaApi.GetCurrentMapData(function(data){
 				if (data.A == wycaApi.AnswerCode.NO_ERROR){
 					if(data.D.docks.length <= 1){
-						$('#pages_wyca #wyca_setup_import .bImportSiteBack').click();
+						$('#pages_wyca_normal #wyca_setup_import .bImportSiteBack').click();
 					}else{
 						id_map = data.D.id_map;
 						id_map_last = data.D.id_map;
@@ -1086,9 +1341,9 @@ function InitMasterDockWyca()
 							master_dock+='		<p class="dockname">'+item.name+'</p>';
 							master_dock+='   </div>';
 							master_dock+='</div>';
-							$('#pages_wyca #MasterDockList').append(master_dock);
+							$('#pages_wyca_normal #MasterDockList').append(master_dock);
 						});
-						$('#pages_wyca .MasterDock_loading').hide();
+						$('#pages_wyca_normal .MasterDock_loading').hide();
 					}
 				}else{
 					ParseAPIAnswerError(data);
@@ -1098,6 +1353,66 @@ function InitMasterDockWyca()
 			setTimeout(InitMasterDockWyca, 500);
 		}
 	}
+}
+
+function InitMasterDockWycaByStep(back = false)
+{
+	$('#pages_wyca_by_step #MasterDockList').html('');
+	$('#pages_wyca_by_step .MasterDock_loading').show();
+	
+	if(docks != 'undefined' && docks.length > 1){
+		$.each(docks,function(idx,item){
+			let master_dock="";
+			master_dock+='<div class="col-xs-6 text-center">';
+			master_dock+='	<div class="MasterDockItem btn bTuile" id="'+item.id_docking_station+'">';
+			master_dock+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
+			master_dock+='		<i class="fas fa-charging-station"></i>';
+			master_dock+='		<p class="dockname">'+item.name+'</p>';
+			master_dock+='   </div>';
+			master_dock+='</div>';
+			$('#pages_wyca_by_step #MasterDockList').append(master_dock);
+		});
+		$('#pages_wyca_by_step .MasterDock_loading').hide();
+	}else{
+		if (wycaApi.websocketAuthed){
+			wycaApi.GetCurrentMapData(function(data){
+				if (data.A == wycaApi.AnswerCode.NO_ERROR){
+					if(data.D.docks.length <= 1){
+						if(!back)
+							$('.wyca_by_step_site_master_dock_next').click();
+						else
+							$('#wyca_by_step_site_master_dock .bBackButton').click();
+					}else{
+						id_map = data.D.id_map;
+						id_map_last = data.D.id_map;
+						forbiddens = data.D.forbiddens;
+						areas = data.D.areas;
+						docks = data.D.docks;
+						pois = data.D.pois;
+						augmented_poses = data.D.augmented_poses;
+						
+						$.each(docks,function(idx,item){
+							let master_dock="";
+							master_dock+='<div class="col-xs-6 text-center">';
+							master_dock+='	<div class="MasterDockItem btn bTuile" id="'+item.id_docking_station+'">';
+							master_dock+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
+							master_dock+='		<i class="fas fa-charging-station"></i>';
+							master_dock+='		<p class="dockname">'+item.name+'</p>';
+							master_dock+='   </div>';
+							master_dock+='</div>';
+							$('#pages_wyca_by_step #MasterDockList').append(master_dock);
+						});
+						$('#pages_wyca_by_step .MasterDock_loading').hide();
+					}
+				}else{
+					ParseAPIAnswerError(data);
+				}
+			})
+		}else{
+			setTimeout(InitMasterDockWycaByStep, 500);
+		}
+	}
+	
 }
 
 function InitMasterDockNormal()
@@ -1221,10 +1536,18 @@ function InitMasterDockByStep(back = false)
 
 function InitTopImportWyca()
 {
-	$('#pages_wyca .modalImportTop .filename_import_top').html('');
-	$('#pages_wyca .modalImportTop .filename_import_top').hide();
-	$('#pages_wyca .modalImportTop .file_import_top_wrapper').css('background-color','#589fb26e');
-	$('#pages_wyca .modalImportTop .file_import_top').val('');
+	$('#pages_wyca_normal .modalImportTop .filename_import_top').html('');
+	$('#pages_wyca_normal .modalImportTop .filename_import_top').hide();
+	$('#pages_wyca_normal .modalImportTop .file_import_top_wrapper').css('background-color','#589fb26e');
+	$('#pages_wyca_normal .modalImportTop .file_import_top').val('');
+}
+
+function InitTopImportWycaByStep()
+{
+	$('#pages_wyca_by_step .modalImportTop .filename_import_top').html('');
+	$('#pages_wyca_by_step .modalImportTop .filename_import_top').hide();
+	$('#pages_wyca_by_step .modalImportTop .file_import_top_wrapper').css('background-color','#589fb26e');
+	$('#pages_wyca_by_step .modalImportTop .file_import_top').val('');
 }
 
 function InitTopImportNormal()
@@ -1281,6 +1604,45 @@ function GetServiceBooksWyca()
 	else
 	{
 		setTimeout(GetServiceBooksNormal, 500);
+	}
+}
+
+function GetServiceBooksWycaByStep()
+{
+	$('.wyca_by_step_service_book_loading').show();
+	$('#wyca_by_step_service_book .loaded').hide();
+	
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetServiceBooksList(function(data) {
+			
+			$('#wyca_by_step_service_book .list_service_books').html('');
+			
+			if (data.D != undefined)
+			$.each(data.D,function(index, value){
+				let d = new Date(value.date * 1000);
+				let d_txt="";
+				switch(lang){
+					case 'fr': d_txt = d.getDate() + '/' + (d.getMonth()+1) + '/' +  d.getFullYear() ; break;
+					case 'en': d_txt = (d.getMonth()+1) + '/' + d.getDate() + '/' +  d.getFullYear() ; break;
+					default: break;
+				}
+				$('#wyca_by_step_service_book .list_service_books').prepend('' +
+						'<li>'+
+						'	<div class="date">'+d_txt+'</div>'+
+						'	<div class="title">'+value.title+'</div>'+
+						'	<div class="comment">'+value.comment+'</div>'+
+						'</li>'
+						);
+			});
+			
+			$('.wyca_by_step_service_book_loading').hide();
+			$('#wyca_by_step_service_book .loaded').show();
+		});
+	}
+	else
+	{
+		setTimeout(GetServiceBooksWycaByStep, 500);
 	}
 }
 
@@ -1587,6 +1949,47 @@ function GetManagersWyca()
 	}
 }
 
+function GetManagersWycaByStep()
+{
+	boolHelpManager = getCookie('boolHelpManagerI') != '' ? JSON.parse(getCookie('boolHelpManagerI')) : true; // TRICK JSON.parse STR TO BOOL
+	if(boolHelpManager)
+		$('#wyca_by_step_manager .modalHelpManager').modal('show');
+	$('.wyca_by_step_manager_loading').show();
+	$('#wyca_by_step_manager .loaded').hide();
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetUsersList(function(data) {
+			
+			$('#wyca_by_step_manager .list_managers').html('');
+			
+			if (data.D != undefined)
+			$.each(data.D,function(index, value){
+				if (value.id_group_user  == wycaApi.GroupUser.MANAGER)
+				{
+					$('#wyca_by_step_manager .list_managers').append('' +
+						'<li id="wyca_by_step_manager_list_manager_elem_'+value.id_user+'" data-id_user="'+value.id_user+'">'+
+						'	<span class="email">'+value.email+'</span>'+
+						'	<a href="#" class="bManagerDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>'+
+						'	<a href="#" class="bManagerEditElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-pen"></i></a>'+
+						'</li>'
+						);
+				}
+			});
+			
+			$('.wyca_by_step_manager_loading').hide();
+			$('#wyca_by_step_manager .loaded').show();
+			RefreshDisplayManagerWycaByStep();
+		});
+		
+	}
+	else
+	{
+		setTimeout(GetManagersWycaByStep, 500);
+	}
+
+}
+
 function GetManagersNormal()
 {
 	boolHelpManager = getCookie('boolHelpManagerI') != '' ? JSON.parse(getCookie('boolHelpManagerI')) : true; // TRICK JSON.parse STR TO BOOL
@@ -1688,6 +2091,25 @@ function GetConfigurationsWyca()
 	}
 }
 
+function GetConfigurationsWycaByStep()
+{
+	$('.wyca_by_step_config_loading').show();
+	$('#wyca_by_step_config .loaded').hide();
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetEnergyConfiguration(function(data) {
+			$('#wyca_by_step_config #wyca_by_step_config_i_level_min_gotocharge').val(data.D.EBL);
+			$('#wyca_by_step_config #wyca_by_step_config_i_level_min_dotask').val(data.D.MBL);
+			$('.wyca_by_step_config_loading').hide();
+			$('#wyca_by_step_config .loaded').show();
+		});
+	}
+	else
+	{
+		setTimeout(GetConfigurationsWycaByStep, 500);
+	}
+}
+
 function GetConfigurationsNormal()
 {
 	$('.install_normal_setup_config_loading').show();
@@ -1727,6 +2149,8 @@ function GetConfigurationsByStep()
 }
 
 // TOP
+var listAvailableTops = Array();
+var templistAvailableTops = Array();
 
 function InitTopsWyca()
 {
@@ -1737,6 +2161,7 @@ function InitTopsWyca()
 		wycaApi.GetTopsList(function(data) {
 			//console.log(data);
 			$.each(data.D,function(index, value){
+				if(value.available)	listAvailableTops.push(value.id_top);
 				$('#wyca_setup_tops .tuiles').append('<li class="col-xs-4 col-md-3 col-lg-2">'+
 				'	<a class="is_checkbox '+(value.active?'active no_update':'')+' '+(value.available?'checked':'')+' anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'" href="#">'+
 				'		<i class="fa fa-check"></i>'+
@@ -1753,6 +2178,32 @@ function InitTopsWyca()
 	}
 }
 
+function InitTopsWycaByStep()
+{
+	$('.wyca_by_step_tops_loading').show();
+	$('#wyca_by_step_tops .tuiles').html('');
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetTopsList(function(data) {
+			//console.log(data);
+			$.each(data.D,function(index, value){
+				if(value.available)	listAvailableTops.push(value.id_top);
+				$('#wyca_by_step_tops .tuiles').append('<li class="col-xs-4 col-md-3 col-lg-2">'+
+				'	<a class="is_checkbox '+(value.available?'checked':'')+' anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'" href="#">'+
+				'		<i class="fa fa-check"></i>'+
+				'		<img src="data:image/png;base64, '+value.image_b64+'" />'+value.name+''+
+				'	</a>'+
+				'</li>');
+			});
+			$('.wyca_by_step_tops_loading').hide();
+		});
+	}
+	else
+	{
+		setTimeout(InitTopsWycaByStep, 500);
+	}
+}
+
 function InitTopsNormal()
 {
 	$('.install_normal_setup_tops_loading').show();
@@ -1760,8 +2211,11 @@ function InitTopsNormal()
 	if (wycaApi.websocketAuthed)
 	{
 		wycaApi.GetTopsList(function(data) {
+			
 			//console.log(data);
+			listAvailableTops = Array();
 			$.each(data.D,function(index, value){
+				if(value.available)	listAvailableTops.push(value.id_top);
 				$('#install_normal_setup_tops .tuiles').append('<li class="col-xs-4 col-md-3 col-lg-2">'+
 				'	<a class="is_checkbox '+(value.active?'active no_update':'')+' '+(value.available?'checked':'')+' anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'" href="#">'+
 				'		<i class="fa fa-check"></i>'+
@@ -1787,6 +2241,7 @@ function InitTopsByStep()
 		wycaApi.GetTopsList(function(data) {
 			//console.log(data);
 			$.each(data.D,function(index, value){
+				if(value.available)	listAvailableTops.push(value.id_top);
 				$('#install_by_step_tops .tuiles').append('<li class="col-xs-4 col-md-3 col-lg-2">'+
 				'	<a class="is_checkbox '+(value.available?'checked':'')+' anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'" href="#">'+
 				'		<i class="fa fa-check"></i>'+
@@ -1838,25 +2293,86 @@ function InitTopsActiveWyca()
 	$('#wyca_setup_top .tuiles').html('');
 	if (wycaApi.websocketAuthed)
 	{
+		//CHECK IF AVAILABLE TOPS LIST CHANGED
+		templistAvailableTops = JSON.parse(JSON.stringify(listAvailableTops));
+		listAvailableTops = Array();
+		$('#wyca_setup_tops ul.tuiles').find('.is_checkbox.checked').each(function(index, element) {
+			listAvailableTops.push($(this).data('id_top'));
+		});
+		
+		if(JSON.stringify(listAvailableTops) == JSON.stringify(templistAvailableTops)){
+			wycaApi.GetTopsList(function(data) {
+				//console.log(data);
+				$.each(data.D,function(index, value){
+						if (value.available)
+						{
+							$('#wyca_setup_top .tuiles').append('<li class="col-xs-4 col-md-3 col-lg-2 bTop' + value.id_top + '">'+
+							'	<a href="#" class="is_checkbox set_top '+(value.active?'checked':'')+' anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'">'+
+							'		<i class="fa fa-check"></i>'+
+							'		<img src="data:image/png;base64, '+value.image_b64+'" />'+value.name+''+
+							'	</a>'+
+							'</li>');
+						}
+					});
+				$('.wyca_setup_top_loading').hide();
+			})
+		}
+		else
+		{
+			wycaApi.SetAvailableTops(listAvailableTops, function(data){
+				if (data.A == wycaApi.AnswerCode.NO_ERROR)
+				{
+					wycaApi.GetTopsList(function(data) {
+						//console.log(data);
+						$.each(data.D,function(index, value){
+							if (value.available)
+							{
+								$('#wyca_setup_top .tuiles').append('<li class="col-xs-4 col-md-3 col-lg-2 bTop' + value.id_top + '">'+
+								'	<a href="#" class="is_checkbox set_top '+(value.active?'checked':'')+' anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'">'+
+								'		<i class="fa fa-check"></i>'+
+								'		<img src="data:image/png;base64, '+value.image_b64+'" />'+value.name+''+
+								'	</a>'+
+								'</li>');
+							}
+						});
+						$('.wyca_setup_top_loading').hide();
+					});
+				}
+				else
+					ParseAPIAnswerError(data);
+			});
+		}
+	}
+	else
+	{
+		setTimeout(InitTopsActiveWyca, 500);
+
+	}
+}
+
+function InitTopsActiveWycaByStep()
+{
+	$('.wyca_by_step_top_loading').show();
+	$('#wyca_by_step_top .tuiles').html('');
+	if (wycaApi.websocketAuthed)
+	{
 		wycaApi.GetTopsList(function(data) {
-			//console.log(data);
 			$.each(data.D,function(index, value){
 				if (value.available)
 				{
-					$('#wyca_setup_top .tuiles').append('<li class="col-xs-4 col-md-3 col-lg-2 bTop' + value.id_top + '">'+
-					'	<a href="#" class="is_checkbox set_top '+(value.active?'checked':'')+' anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'">'+
-					'		<i class="fa fa-check"></i>'+
+					$('#wyca_by_step_top .tuiles').append('<li class="col-xs-4 col-md-3 col-lg-2 bTop' + value.id_top + '">'+
+					'	<a href="#" class="set_top button_goto anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'" data-goto="wyca_by_step_check">'+
 					'		<img src="data:image/png;base64, '+value.image_b64+'" />'+value.name+''+
 					'	</a>'+
 					'</li>');
 				}
 			});
-			$('.wyca_setup_top_loading').hide();
+			$('.wyca_by_step_top_loading').hide();
 		});
 	}
 	else
 	{
-		setTimeout(InitTopsActiveWyca, 500);
+		setTimeout(InitTopsActiveWycaByStep, 500);
 
 	}
 }
@@ -1867,21 +2383,56 @@ function InitTopsActiveNormal()
 	$('#install_normal_setup_top .tuiles').html('');
 	if (wycaApi.websocketAuthed)
 	{
-		wycaApi.GetTopsList(function(data) {
-			//console.log(data);
-			$.each(data.D,function(index, value){
-				if (value.available)
-				{
-					$('#install_normal_setup_top .tuiles').append('<li class="col-xs-4 col-md-3 col-lg-2 bTop' + value.id_top + '">'+
-					'	<a href="#" class="is_checkbox set_top '+(value.active?'checked':'')+' anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'">'+
-					'		<i class="fa fa-check"></i>'+
-					'		<img src="data:image/png;base64, '+value.image_b64+'" />'+value.name+''+
-					'	</a>'+
-					'</li>');
-				}
-			});
-			$('.install_normal_setup_top_loading').hide();
+		//CHECK IF AVAILABLE TOPS LIST CHANGED
+		templistAvailableTops = JSON.parse(JSON.stringify(listAvailableTops));
+		listAvailableTops = Array();
+		$('#install_normal_setup_tops ul.tuiles').find('.is_checkbox.checked').each(function(index, element) {
+			listAvailableTops.push($(this).data('id_top'));
 		});
+		
+		if(JSON.stringify(listAvailableTops) == JSON.stringify(templistAvailableTops)){
+			wycaApi.GetTopsList(function(data) {
+				//console.log(data);
+				$.each(data.D,function(index, value){
+					if (value.available)
+					{
+						$('#install_normal_setup_top .tuiles').append('<li class="col-xs-4 col-md-3 col-lg-2 bTop' + value.id_top + '">'+
+						'	<a href="#" class="is_checkbox set_top '+(value.active?'checked':'')+' anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'">'+
+						'		<i class="fa fa-check"></i>'+
+						'		<img src="data:image/png;base64, '+value.image_b64+'" />'+value.name+''+
+						'	</a>'+
+						'</li>');
+					}
+				});
+				$('.install_normal_setup_top_loading').hide();
+			});
+		}
+		else
+		{
+			wycaApi.SetAvailableTops(listAvailableTops, function(data){
+				if (data.A == wycaApi.AnswerCode.NO_ERROR)
+				{
+					wycaApi.GetTopsList(function(data) {
+						//console.log(data);
+						$.each(data.D,function(index, value){
+							if (value.available)
+							{
+								$('#install_normal_setup_top .tuiles').append('<li class="col-xs-4 col-md-3 col-lg-2 bTop' + value.id_top + '">'+
+								'	<a href="#" class="is_checkbox set_top '+(value.active?'checked':'')+' anim_tuiles tuile_img tuile'+index+'" data-id_top="'+value.id_top+'">'+
+								'		<i class="fa fa-check"></i>'+
+								'		<img src="data:image/png;base64, '+value.image_b64+'" />'+value.name+''+
+								'	</a>'+
+								'</li>');
+							}
+						});
+						$('.install_normal_setup_top_loading').hide();
+					});
+				}
+				else
+					ParseAPIAnswerError(data);
+			});
+		}
+		
 	}
 	else
 	{
@@ -1917,6 +2468,7 @@ function InitTopsActiveByStep()
 	}
 }
 
+//var app_sound_is_on declared in footer.php initialized with c.conf;
 //SOUND
 
 function InitSoundWyca()
@@ -1925,22 +2477,14 @@ function InitSoundWyca()
 	{
 		wycaApi.GetSoundIsOn(function(data){
 			if(data.D){
-				let sound_is_on = data.D
-				if(sound_is_on == 1){
-					//ROS SOUND TRUE
-					$('#wyca_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('off').addClass('on');
-					$('#wyca_setup_sound .sound_switch_ROS').prop('checked',true);
-						//APP SOUND
-					if(app_sound_is_on){
-						$('#wyca_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('off').addClass('on');
-						$('#wyca_setup_sound .sound_switch_app').prop('checked',true);
-					}else{
-						$('#wyca_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
-						$('#wyca_setup_sound .sound_switch_app').prop('checked',false);
-					}
+				//ROS SOUND TRUE
+				$('#wyca_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('off').addClass('on');
+				$('#wyca_setup_sound .sound_switch_ROS').prop('checked',true);
+				//APP SOUND
+				if(app_sound_is_on){
+					$('#wyca_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('off').addClass('on');
+					$('#wyca_setup_sound .sound_switch_app').prop('checked',true);
 				}else{
-					$('#wyca_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('on').addClass('off');
-					$('#wyca_setup_sound .sound_switch_ROS').prop('checked',false);
 					$('#wyca_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
 					$('#wyca_setup_sound .sound_switch_app').prop('checked',false);
 				}
@@ -1960,28 +2504,53 @@ function InitSoundWyca()
 	}
 }
 
+function InitSoundWycaByStep()
+{
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetSoundIsOn(function(data){
+			if(data.D){
+				//ROS SOUND TRUE
+				$('#wyca_by_step_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('off').addClass('on');
+				$('#wyca_by_step_sound .sound_switch_ROS').prop('checked',true);
+				//APP SOUND
+				if(app_sound_is_on){
+					$('#wyca_by_step_sound .sound_switch_app').parent().find('.ios-switch').removeClass('off').addClass('on');
+					$('#wyca_by_step_sound .sound_switch_app').prop('checked',true);
+				}else{
+					$('#wyca_by_step_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
+					$('#wyca_by_step_sound .sound_switch_app').prop('checked',false);
+				}
+			}else{
+				$('#wyca_by_step_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('on').addClass('off');
+				$('#wyca_by_step_sound .sound_switch_ROS').prop('checked',false);
+				$('#wyca_by_step_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
+				$('#wyca_by_step_sound .sound_switch_app').prop('checked',false);
+			}
+			$('#wyca_by_step_sound .sound_switch_ROS').change();
+		})
+	}
+	else
+	{
+		setTimeout(InitSoundWycaByStep, 500);
+
+	}	
+}
+
 function InitSoundNormal()
 {
 	if (wycaApi.websocketAuthed)
 	{
 		wycaApi.GetSoundIsOn(function(data){
 			if(data.D){
-				let sound_is_on = data.D
-				if(sound_is_on == 1){
-					//ROS SOUND TRUE
-					$('#install_normal_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('off').addClass('on');
-					$('#install_normal_setup_sound .sound_switch_ROS').prop('checked',true);
-						//APP SOUND
-					if(app_sound_is_on){
-						$('#install_normal_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('off').addClass('on');
-						$('#install_normal_setup_sound .sound_switch_app').prop('checked',true);
-					}else{
-						$('#install_normal_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
-						$('#install_normal_setup_sound .sound_switch_app').prop('checked',false);
-					}
+				//ROS SOUND TRUE
+				$('#install_normal_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('off').addClass('on');
+				$('#install_normal_setup_sound .sound_switch_ROS').prop('checked',true);
+				//APP SOUND
+				if(app_sound_is_on){
+					$('#install_normal_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('off').addClass('on');
+					$('#install_normal_setup_sound .sound_switch_app').prop('checked',true);
 				}else{
-					$('#install_normal_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('on').addClass('off');
-					$('#install_normal_setup_sound .sound_switch_ROS').prop('checked',false);
 					$('#install_normal_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
 					$('#install_normal_setup_sound .sound_switch_app').prop('checked',false);
 				}
@@ -2007,22 +2576,14 @@ function InitSoundByStep()
 	{
 		wycaApi.GetSoundIsOn(function(data){
 			if(data.D){
-				let sound_is_on = data.D
-				if(sound_is_on == 1){
-					//ROS SOUND TRUE
-					$('#install_by_step_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('off').addClass('on');
-					$('#install_by_step_setup_sound .sound_switch_ROS').prop('checked',true);
-						//APP SOUND
-					if(app_sound_is_on){
-						$('#install_by_step_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('off').addClass('on');
-						$('#install_by_step_setup_sound .sound_switch_app').prop('checked',true);
-					}else{
-						$('#install_by_step_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
-						$('#install_by_step_setup_sound .sound_switch_app').prop('checked',false);
-					}
+				//ROS SOUND TRUE
+				$('#install_by_step_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('off').addClass('on');
+				$('#install_by_step_setup_sound .sound_switch_ROS').prop('checked',true);
+				//APP SOUND
+				if(app_sound_is_on){
+					$('#install_by_step_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('off').addClass('on');
+					$('#install_by_step_setup_sound .sound_switch_app').prop('checked',true);
 				}else{
-					$('#install_by_step_setup_sound .sound_switch_ROS').parent().find('.ios-switch').removeClass('on').addClass('off');
-					$('#install_by_step_setup_sound .sound_switch_ROS').prop('checked',false);
 					$('#install_by_step_setup_sound .sound_switch_app').parent().find('.ios-switch').removeClass('on').addClass('off');
 					$('#install_by_step_setup_sound .sound_switch_app').prop('checked',false);
 				}
@@ -2077,6 +2638,45 @@ function InitInstallWifiPageWyca()
 	else
 	{
 		setTimeout(InitInstallWifiPageWyca, 500);
+	}
+}
+
+function InitInstallWifiPageWycaByStep()
+{
+	if (wycaApi.websocketAuthed)
+	{
+		//$('.wyca_bystep_setup_wifi_loading').show();
+		wycaApi.GetWifiList(function(data) {
+			
+			$('#wyca_by_step_wifi tr').hide();
+			let wifis = [];
+			if (data.D.length > 0)
+			{
+				console.log(data.D);
+				$.each(data.D,function(index, value){
+					signal = parseInt(value.signal/20);
+					if(!wifis.includes(value.ssid)){
+						wifis.push(value.ssid);
+						if (value.state == 'active')
+							$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td><i class="fas fa-check"></i> '+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
+						else
+							$('.tbody_wifi').append('<tr data-ssid="'+value.ssid+'" class="wifi'+value.bssid+' '+ value.state +'"><td>'+value.ssid+'</td><td><img src="assets/images/signal-'+signal+'.png" /></td></tr>');
+					}else{
+						if(value.state == 'active')
+							$('.tbody_wifi tr[data-ssid="'+value.ssid+'"]:visible').addClass('active').children('td:first-child').html('<i class="fas fa-check"></i> '+value.ssid);//Add check + bold
+					}
+				});
+			}
+			$('.wyca_bystep_setup_wifi_loading').hide();
+		});
+		
+		if ($('#wyca_by_step_wifi').is(':visible'))
+			setTimeout(InitInstallWifiPageWycaByStep, 3000);
+		
+	}
+	else
+	{
+		setTimeout(InitInstallWifiPageWycaByStep, 500);
 	}
 }
 
@@ -2155,7 +2755,315 @@ function InitInstallWifiPageByStep()
 	}
 }
 
-// BYSTEP RELATED FUNCS
+// BYSTEP AND WYCA_BYSTEP RELATED FUNCS
+var save_check_components_result = undefined;
+
+function InitMappingWycaByStep()
+{
+	imgMappingLoaded = true;
+	//EMPECHER RETOUR NAVIGATEUR
+	history.pushState(null, null, document.URL);
+	window.addEventListener('popstate', function () {
+		history.pushState(null, null, document.URL);
+	});
+	
+	
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.MappingIsStarted(function(data) {
+			if (data.D)
+			{
+				mappingStarted = true;
+				
+				$('#wyca_by_step_mapping .bMappingStart').hide();
+				$('#wyca_by_step_mapping .progressStartMapping').hide();
+				$('#wyca_by_step_mapping .switchLiveMapping').show();
+				$('#wyca_by_step_mapping .bMappingStop').show();
+				$('#wyca_by_step_mapping .mapping_view').show();
+				$('.ifMapping').show();
+				$('.ifMappingInit').hide();
+				$('.ifNMapping').hide();
+				img = document.getElementById("wyca_by_step_mapping_img_map_saved");
+				img.src = "assets/images/vide.png";
+				
+				if (intervalMap != null)
+				{
+					clearInterval(intervalMap);
+					intervalMap = null;
+				}
+				
+				GetMappingInConstruction();
+			}else{
+				$('.ifMapping').hide();
+				$('.ifMappingInit').hide();
+				$('.ifNMapping').show();
+				mappingStarted = false;
+			}
+		});
+	}
+	else
+	{
+		setTimeout(InitMappingWycaByStep, 500);
+	}
+}
+
+function GetLastMappingWycaByStep()
+{
+	$('#wyca_by_step_mapping_fin .bMappingSaveMap ').addClass('disabled');
+	$('#wyca_by_step_mapping_fin .loading_fin_create_map').show();
+	
+	img = document.getElementById("wyca_by_step_mapping_img_map_saved_fin");
+	img.src = 'assets/images/vide.png';
+	
+	if(typeof(window.site_name) != 'undefined' && window.site_name != ""){
+		$('#wyca_by_step_mapping_from_name').val(window.site_name)
+	}else{
+		wycaApi.GetCurrentSite(function(data){
+			if (data.A == wycaApi.AnswerCode.NO_ERROR){
+				window.site_name=data.D.name;
+				$('#wyca_by_step_mapping_from_name').val(window.site_name)
+			}
+		})
+	}
+	
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetLastMapping(function(data) {
+			
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+			
+				var img = document.getElementById("wyca_by_step_mapping_img_map_saved_fin");
+				img.src = 'data:image/png;base64,' + data.D;
+				
+				finalMapData = 'data:image/png;base64,' + data.D;
+				
+				setTimeout(function() {
+					canvas = document.createElement('canvas');
+					
+					width = img.naturalWidth;
+					height = img.naturalHeight;
+					$('#wyca_by_step_mapping_fin .loading_fin_create_map').hide();
+					
+					$('#wyca_by_step_mapping_canvas_result_trinary').attr('width', img.naturalWidth);
+					$('#wyca_by_step_mapping_canvas_result_trinary').attr('height', img.naturalHeight);
+					
+					canvas.width = img.naturalWidth;
+					canvas.height = img.naturalHeight;
+					canvas.getContext('2d').drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
+					
+					CalculateMapTrinary();
+				}, 100);
+			}
+			else
+			{
+				$('#wyca_by_step_mapping_fin .loading_fin_create_map').hide();
+				
+				ParseAPIAnswerError(data,textErrorGetMapping);
+			}
+			$('#wyca_by_step_mapping_fin .bMappingSaveMap').removeClass('disabled');
+		});
+		
+		mappingStarted = false;
+		$('#wyca_by_step_mapping .switchLiveMapping').hide();
+		$('#wyca_by_step_mapping .bMappingStop').hide();
+		$('#wyca_by_step_mapping .mapping_view').hide();
+		$('#wyca_by_step_mapping .bMappingStart').show();
+		
+		$('#wyca_by_step_mapping_fin .bMappingCancelMap2').show();
+		$('#wyca_by_step_mapping_fin .bMappingSaveMap').show();
+		
+		if (intervalMap != null)
+		{
+			clearInterval(intervalMap);
+			intervalMap = null;
+		}
+	}
+	else
+	{
+		setTimeout(GetLastMappingWycaByStep, 500);
+	}
+}
+
+function InitMaintenanceWycaByStep()
+{
+	if(getCookie('create_new_site') != '')
+		create_new_site = JSON.parse(getCookie('create_new_site'));
+}
+
+function DrawSvgCheckWycaByStep()
+{
+	let svg = $('#wyca_by_step_check svg.svg_legende');
+	if(svg.width() < 300){
+		setTimeout(DrawSvgCheckWycaByStep,50);		
+	}else{
+		let base_w = 375;
+		let base_h = 492.5;
+		let base_hw_card = 111.65625;
+		let base_elodie_height = 120;
+		let base_offsetY = base_hw_card  + 50 + 20;
+		let base_offsetX = (base_w/4) + 10;
+		
+		let elodie_height = $('#wyca_by_step_check img#elodie_import_top')[0].getBoundingClientRect().height;
+		
+		let data = $('svg.svg_legende')[0].getBoundingClientRect();
+		let svg_offsetX = data.x;
+		let svg_offsetY = data.y;
+		$('#wyca_by_step_check div.is_checkbox').each(function(idx,item){
+			let data = item.getBoundingClientRect();
+			
+			let top = window.scrollY + data.top;
+			let left = window.scrollX + data.left;
+			
+			let height = data.height;
+			let width = data.width;
+			
+			let offsetY = height + 50 + 20; //(50 margin et padding div , 20 margin img elodie)
+			let offsetX = height + 50 + 20; //(50 margin et padding div , 20 margin img elodie)
+			
+			let line = $(item).data('line');
+			
+			let placement = $(item).data('line-placement');
+			let svgLines = $('svg.svg_legende .'+line);
+			svgLines.each(function(){
+				svgLine = $(this);
+				let x1,x2,y1,y2;
+				
+				if(isNaN(svgLine.attr('_x1'))){
+					x1 = svgLine.attr('x1');
+					y1 = svgLine.attr('y1');
+					x2 = svgLine.attr('x2');
+					y2 = svgLine.attr('y2');
+					svgLine.attr('_x1',x1);
+					svgLine.attr('_y1',y1);
+					svgLine.attr('_x2',x2);
+					svgLine.attr('_y2',y2);
+				}else{
+					x1 = svgLine.attr('_x1');
+					y1 = svgLine.attr('_y1');
+					x2 = svgLine.attr('_x2');
+					y2 = svgLine.attr('_y2');
+				}
+				
+				let _x1,_x2,_y1,_y2;
+				
+				//CIBLE ELODIE
+				let ratioX = (x2 - base_offsetX)/base_w;
+				_x2 = (svg.innerWidth()/4 + 10) + ratioX * svg.innerWidth();
+				
+				let ratioY = (y2 - base_offsetY)/base_elodie_height;
+				_y2 = ratioY * elodie_height + offsetY - (svg_offsetY - 54);
+				
+				//ORIGINE FLECHE
+				if(typeof(placement) != 'undefined'){
+					switch(placement){
+						case 'bottom' : 
+							_x1 = left + width/2 - svg_offsetX;
+							_y1 = top + height - svg_offsetY;
+						break;				
+						case 'top' : 
+							_x1 = left + width/2 - svg_offsetX;
+							_y1 = top - svg_offsetY;
+						break;				
+						case 'left' : 
+							_x1 = left - svg_offsetX;
+							_y1 = top + height/2 - svg_offsetY;
+						break;				
+						case 'right' : 
+							_x1 = left + width - svg_offsetX;
+							_y1 = top + height/2 - svg_offsetY;
+						break;				
+						default:
+							_x1 = left + width/2 - svg_offsetX;
+							_y1 = top + height - svg_offsetY;
+						break;			
+					}
+				}
+				
+				_x1 = Math.round(_x1);
+				_x2 = Math.round(_x2);
+				_y1 = Math.round(_y1);
+				_y2 = Math.round(_y2);
+				
+				//console.log('Origine Calcul',_x1,_y1,'Origine Svg',svgLine.attr('x1'),svgLine.attr('y1'));
+				//console.log('Cible Calcul',_x2,_y2,'Cible Svg',svgLine.attr('x2'),svgLine.attr('y2'));
+				
+				svgLine.attr('x1',_x1);
+				svgLine.attr('y1',_y1);
+				svgLine.attr('x2',_x2);
+				svgLine.attr('y2',_y2);
+			})
+		})
+		console.log('SVG draw');
+	}
+}
+
+function InitCheckWycaByStep()
+{
+	
+	if (wycaApi.websocketAuthed)
+	{
+		
+		//INIT 
+		$('#wyca_by_step_check .test').removeClass('test'); // REMOVE CLASS TEST
+		$('#wyca_by_step_check .checked').removeClass('checked'); // REMOVE CLASS CHECKED
+		$('.wyca_by_step_check_next').removeClass('disabled').addClass('disabled'); //DISABLE BTN
+		$('.wyca_by_step_check_next').html('<i class="fa fa fa-spinner fa-pulse"></i> '+textBtnCheckTest); // ADD SPINNER ON BTN
+		$('#wyca_by_step_check .is_checkbox').removeClass('component_ok component_warning component_error'); // REMOVE OLD TEST CLASS
+		
+		if(timer_anim_check!=undefined){clearTimeout(timer_anim_check);timer_anim_check=undefined;}
+		
+		let lg = $('#wyca_by_step_check div.is_checkbox:not(".checked")').length;
+		let rd = Math.floor(Math.random() * Math.floor(lg));
+		$('#wyca_by_step_check div.is_checkbox:not(".checked")').eq(rd).addClass('test');
+		
+		wycaApi.CheckComponents(function (data){
+			
+			save_check_components_result = data.D;
+			
+			/*
+			0: OK
+			1: Frequency warning
+			2: Frequency error
+			3: Software error;
+			4: Device error
+			5: Not applicable (for cam top)
+			*/
+			
+			if (data.D.LI == 0) $('#wyca_by_step_check_lidar').addClass('component_ok'); 
+			else if (data.D.LI == 1) $('#wyca_by_step_check_lidar').addClass('component_warning');
+			else $('#wyca_by_step_check_lidar').addClass('component_error'); 
+			
+			if (data.D.US == 0) $('#wyca_by_step_check_us').addClass('component_ok'); 
+			else if (data.D.US == 1) $('#wyca_by_step_check_us').addClass('component_warning');
+			else $('#wyca_by_step_check_us').addClass('component_error'); 
+			
+			if (data.D.M == 0) $('#wyca_by_step_check_motor').addClass('component_ok'); 
+			else if (data.D.M == 1) $('#wyca_by_step_check_motor').addClass('component_warning');
+			else $('#wyca_by_step_check_motor').addClass('component_error'); 
+			
+			if (data.D.B == 0) $('#wyca_by_step_check_battery').addClass('component_ok'); 
+			else if (data.D.B == 1) $('#wyca_by_step_check_battery').addClass('component_warning');
+			else $('#wyca_by_step_check_battery').addClass('component_error'); 
+			
+			if (data.D.CL == 0 && data.D.CR == 0) $('#wyca_by_step_check_cam3d').addClass('component_ok'); 
+			else if (data.D.CL <= 1 && data.D.CR <= 1) $('#wyca_by_step_check_cam3d').addClass('component_warning');
+			else $('#wyca_by_step_check_cam3d').addClass('component_error'); 
+			
+			if (data.D.LE == 0) $('#wyca_by_step_check_leds').addClass('component_ok'); 
+			else if (data.D.LE == 1) $('#wyca_by_step_check_leds').addClass('component_warning');
+			else $('#wyca_by_step_check_leds').addClass('component_error'); 
+			
+			setTimeout(StartAnimCheckComposantInstall, 2000);
+			
+		});
+		DrawSvgCheckWycaByStep();
+	}
+	else
+	{
+		setTimeout(InitCheckWycaByStep, 500);
+	}
+}
 
 function InitMappingByStep()
 {
@@ -2396,8 +3304,6 @@ function DrawSvgCheckByStep()
 		console.log('SVG draw');
 	}
 }
-
-var save_check_components_result = undefined;
 
 function InitCheckByStep()
 {
@@ -2660,7 +3566,10 @@ function GetDataMapToSave()
 
 function TogglePopupHelp()
 {
-	$('.global_sub_page.active section.active .popupHelp').toggle('fast');
+	if($('.global_sub_page').length == 0)
+		$('.global_page.active section.active .popupHelp').toggle('fast');
+	else
+		$('.global_sub_page.active section.active .popupHelp').toggle('fast');
 }
 
 /* GESTION COOKIES */
@@ -2712,4 +3621,46 @@ function listCookies()
         aString += i + ' ' + theCookies[i-1] + "\n";
     }
     return aString;
+}
+
+/* GESTION C.CONF */
+
+function GetAppSoundConf(){
+	$.ajax({
+		type: "POST",
+		url: 'ajax/get_app_sound.php',
+		data: { },
+		dataType: 'json',
+		success: function(data) {
+			//console.log(data);
+			if(data.app_sound){
+				app_sound_is_on = true;
+			}else{
+				app_sound_is_on = false;
+			}
+		},
+		error: function(e) {
+		   if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+				console.log((typeof(textErrorGetSound) != 'undefined'? textErrorGetSound : 'Error get sound config') + ' ' + e.responseText + '\n' + (typeof(textNeedReconnect) != 'undefined'? textNeedReconnect : 'Reconnection is required'));
+				$('#modalErrorSession').modal('show');
+			}else{
+				console.log((typeof(textErrorGetSound) != 'undefined'? textErrorGetSound : 'Error get sound config') + ' ' + e.responseText );
+			}
+		}
+	});
+}
+
+function RefreshGlobalVehiculePersistanteDataStorage(){
+	wycaApi.GetGlobalVehiculePersistanteDataStorage(function(data) {
+		if (data.A == wycaApi.AnswerCode.NO_ERROR)
+		{
+			console.log('GlobalVehiculePersistanteDataStorage',data.D);
+			wycaApi.SetGlobalVehiculePersistanteDataStorage(data.D,function(data) {
+				if (data.A != wycaApi.AnswerCode.NO_ERROR)
+					ParseAPIAnswerError(data,textErrorSetGlobalVehiculePersistanteDataStorage);
+			})
+		}
+		else
+			ParseAPIAnswerError(data,textErrorGetGlobalVehiculePersistanteDataStorage);
+	});
 }

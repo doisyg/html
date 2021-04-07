@@ -71,7 +71,6 @@ class Configuration
 		}
 		catch (Exception $e) {
 			echo "Error on loading conf + ".$e->getMessage();
-			echo $e->getMessage();
 		}
 	}
 	
