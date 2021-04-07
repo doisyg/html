@@ -873,27 +873,6 @@ $(document).ready(function(e) {
 		$('#wyca_setup_sites .modalSelectMap').modal('hide');
 	})
 	
-	$(document).on('click', '#wyca_setup_sites .bSiteDeleteElem', function(e) {
-		e.preventDefault();
-		$('#wyca_setup_sites .btn-danger.confirm_delete').addClass('disabled');
-		$('#wyca_setup_sites .bSiteSetCurrentElem').addClass('disabled');
-		
-		id_site_to_delete = parseInt($(this).closest('li').data('id_site'));
-		
-		wycaApi.DeleteSite(id_site_to_delete, function(data) {
-			if (data.A == wycaApi.AnswerCode.NO_ERROR)
-			{
-				$('#wyca_setup_sites_list_site_elem_'+id_site_to_delete).remove();
-			}
-			else
-			{
-				ParseAPIAnswerError(data);
-			}
-			$('#wyca_setup_sites .btn-danger.confirm_delete').removeClass('disabled');
-			$('#wyca_setup_sites .bSiteSetCurrentElem').removeClass('disabled');
-		});
-	});
-	
 	$('#wyca_setup_sites #modalConfirmSwitchSite .bModalConfirmSwitchSiteOk').click(function(e){
 		if(id_site_to_switch != -1){
 			wycaApi.SetSiteAsCurrent(id_site_to_switch, function(data) {
@@ -940,6 +919,26 @@ $(document).ready(function(e) {
 		
 	})
 	
+	$(document).on('click', '#wyca_setup_sites .bSiteDeleteElem', function(e) {
+		e.preventDefault();
+		$('#wyca_setup_sites .btn-danger.confirm_delete').addClass('disabled');
+		$('#wyca_setup_sites .bSiteSetCurrentElem').addClass('disabled');
+		
+		id_site_to_delete = parseInt($(this).closest('li').data('id_site'));
+		
+		wycaApi.DeleteSite(id_site_to_delete, function(data) {
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$('#wyca_setup_sites_list_site_elem_'+id_site_to_delete).remove();
+			}
+			else
+			{
+				ParseAPIAnswerError(data);
+			}
+			$('#wyca_setup_sites .btn-danger.confirm_delete').removeClass('disabled');
+			$('#wyca_setup_sites .bSiteSetCurrentElem').removeClass('disabled');
+		});
+	});
 	
 	//------------------- SERVICE BOOK ------------------------
 	
