@@ -261,6 +261,7 @@ function WycaByStepSaveElementNeeded(need)
 		$('#wyca_by_step_edit_map_bCancelCurrentElem').show();
 		if(wyca_bystepCurrentAction == "addForbiddenArea"){
 			$('#wyca_by_step_edit_map .bDeleteForbidden').addClass('disabled');
+			$('#wyca_by_step_edit_map_bPlusCurrentElem').show();
 		}
 		if(wyca_bystepCurrentAction == "addArea"){
 			$('#wyca_by_step_edit_map .bConfigArea').addClass('disabled');
@@ -273,6 +274,7 @@ function WycaByStepSaveElementNeeded(need)
 			$('#wyca_by_step_edit_map .times_icon_menu').removeClass('dnone')
 			$('#wyca_by_step_edit_map .times_icon_menu').show('fast')
 		}
+		$('#wyca_by_step_edit_map_bPlusCurrentElem').hide();
 		$('#wyca_by_step_edit_map_bSaveCurrentElem').hide();
 		$('#wyca_by_step_edit_map_bCancelCurrentElem').hide();
 		if(wyca_bystepCurrentAction == "addForbiddenArea"){
@@ -368,6 +370,12 @@ $(document).ready(function() {
         e.preventDefault();
 		
 		wycaApi.StopMove();	
+    });
+	
+	$('#wyca_by_step_edit_map #wyca_by_step_edit_map_bPlusCurrentElem').click(function(e) {
+        e.preventDefault();
+		if (wyca_bystepCurrentAction == 'addForbiddenArea' || wyca_bystepCurrentAction == 'editForbiddenArea')
+			ForbiddenSave('plus');
     });
 	
 	$('#wyca_by_step_edit_map #wyca_by_step_edit_map_bSaveCurrentElem').click(function(e) {
@@ -4957,7 +4965,7 @@ function DeleteArea(indexInArray)
 
 // FORBIDDEN FUNCS
 
-function ForbiddenSave()
+function ForbiddenSave(fromPlusBtn = false)
 {
 	$('#wyca_by_step_edit_map_container_all .forbidden_elem_current').remove();
 	
@@ -4988,7 +4996,19 @@ function ForbiddenSave()
 		
 		wyca_bystepCurrentAction = 'editForbiddenArea';
 		RemoveClass('#wyca_by_step_edit_map_svg .editing_point ', 'editing_point ');
-		WycaByStepDisplayMenu('wyca_by_step_edit_map_menu_forbidden');
+		if(fromPlusBtn == false)
+			WycaByStepDisplayMenu('wyca_by_step_edit_map_menu_forbidden');
+		else{
+			// UNSELECT POINT
+			if(currentPointWycaByStepLongTouch != null)
+				currentPointWycaByStepLongTouch.data('index_point',-1);
+			currentPointWycaByStepLongTouch = null;
+			
+			RemoveClass('#wyca_by_step_edit_map_svg .active', 'active');
+			RemoveClass('#wyca_by_step_edit_map_svg .activ_select', 'activ_select'); 
+			
+			$('#wyca_by_step_edit_map_menu .bAddForbiddenArea').click();
+		}
 	}
 	else if (wyca_bystepCurrentAction == 'editForbiddenArea')
 	{	
@@ -5000,7 +5020,19 @@ function ForbiddenSave()
 		
 		wyca_bystepCurrentAction = 'editForbiddenArea';
 		RemoveClass('#wyca_by_step_edit_map_svg .editing_point ', 'editing_point ');
-		WycaByStepDisplayMenu('wyca_by_step_edit_map_menu_forbidden');
+		if(fromPlusBtn == false)
+			WycaByStepDisplayMenu('wyca_by_step_edit_map_menu_forbidden');
+		else{
+			// UNSELECT POINT
+			if(currentPointWycaByStepLongTouch != null)
+				currentPointWycaByStepLongTouch.data('index_point',-1);
+			currentPointWycaByStepLongTouch = null;
+			
+			RemoveClass('#wyca_by_step_edit_map_svg .active', 'active');
+			RemoveClass('#wyca_by_step_edit_map_svg .activ_select', 'activ_select'); 
+			
+			$('#wyca_by_step_edit_map_menu .bAddForbiddenArea').click();
+		}
 		/*
 		RemoveClass('#wyca_by_step_edit_map_svg .active', 'active');
 		RemoveClass('#wyca_by_step_edit_map_svg .activ_select', 'activ_select'); 

@@ -291,10 +291,12 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 .popupHelp ul li > div + span { margin-left:40px; }
 .popupHelp ul li .route {  width:40px; padding:7px!important;  position: absolute; top: 0px; left: -11px;}
 
+#install_by_step_edit_map_bPlusCurrentElem{ position:absolute; top:15px; left:160px;display:none; z-index:4;border-color:transparent;}
 #install_by_step_edit_map_bEndGomme, #install_by_step_edit_map_bSaveCurrentElem{ position:absolute; top:15px; left:70px;display:none; z-index:4;border-color:transparent;}
 #install_by_step_edit_map_bStop { position:absolute; bottom:15px; right:15px;display:none; z-index:4;border-color:transparent;}
 #install_by_step_edit_map_bCancelCurrentElem,#install_by_step_edit_map_bCancelGomme{ position:absolute; top:15px; left:115px; display:none; z-index:4;border-color:transparent;}
 
+#install_normal_edit_map_bPlusCurrentElem{ position:absolute; top:15px; left:160px;display:none; z-index:4;border-color:transparent;}
 #install_normal_edit_map_bEndGomme, #install_normal_edit_map_bSaveCurrentElem{ position:absolute; top:15px; left:70px;display:none; z-index:4;border-color:transparent;}
 #install_normal_edit_map_bStop { position:absolute; bottom:15px; right:15px;display:none; z-index:4;border-color:transparent;}
 #install_normal_edit_map_bCancelCurrentElem ,#install_normal_edit_map_bCancelGomme{ position:absolute; top:15px; left:115px; display:none; z-index:4;border-color:transparent;}
@@ -304,6 +306,7 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 #wyca_edit_map_bStop { position:absolute; bottom:15px; right:15px;display:none; z-index:4;border-color:transparent;}
 #wyca_edit_map_bCancelCurrentElem ,#wyca_edit_map_bCancelGomme{ position:absolute; top:15px; left:115px; display:none; z-index:4;border-color:transparent;}
 
+#wyca_by_step_edit_map_bPlusCurrentElem{ position:absolute; top:15px; left:160px;display:none; z-index:4;border-color:transparent;}
 #wyca_by_step_edit_map_bEndGomme, #wyca_by_step_edit_map_bSaveCurrentElem{ position:absolute; top:15px; left:70px;display:none; z-index:4;border-color:transparent;}
 #wyca_by_step_edit_map_bStop { position:absolute; bottom:15px; right:15px;display:none; z-index:4;border-color:transparent;}
 #wyca_by_step_edit_map_bCancelCurrentElem,#wyca_by_step_edit_map_bCancelGomme{ position:absolute; top:15px; left:115px; display:none; z-index:4;border-color:transparent;}
