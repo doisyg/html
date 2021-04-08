@@ -2269,10 +2269,12 @@ $(document).ready(function() {
 	$('#install_by_step_edit_map_bAreaSaveConfig').click(function(e) {
 		area = areas[currentAreaIndex];
 		saveCurrentArea = JSON.stringify(area);
-			
+		
+		if (parseInt($('#install_by_step_edit_map_min_distance_obstacle').val()) > 68) $('#install_by_step_edit_map_min_distance_obstacle').val(68);
+		if (parseInt($('#install_by_step_edit_map_min_distance_obstacle').val()) < 5) $('#install_by_step_edit_map_min_distance_obstacle').val(5);
+		
 		area.configs = Array();
 		area.configs.push({'name':'led_color_mode' , 'value':$('#install_by_step_edit_map_led_color_mode').val()});
-		
 		area.configs.push({'name':'led_color' , 'value':$('#install_by_step_edit_map_led_color').val()});
 		area.configs.push({'name':'led_animation_mode' , 'value':$('#install_by_step_edit_map_led_animation_mode').val()});
 		area.configs.push({'name':'led_animation' , 'value':$('#install_by_step_edit_map_led_animation').val()});
