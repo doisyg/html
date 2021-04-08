@@ -4945,7 +4945,7 @@ function WycaDeleteArea(indexInArray)
 
 // FORBIDDEN FUNCS
 
-function WycaForbiddenSave(fromPlusBtn = false)
+function WycaForbiddenSave(origin = false)
 {
 	$('#wyca_edit_map_container_all .forbidden_elem_current').remove();
 	
@@ -4975,7 +4975,7 @@ function WycaForbiddenSave(fromPlusBtn = false)
 		currentForbiddenWycaLongTouch = $('#wyca_edit_map_forbidden_'+forbiddens[currentForbiddenIndex].id_area);
 		wycaCurrentAction = 'editForbiddenArea';
 		RemoveClass('#wyca_edit_map_svg .editing_point ', 'editing_point ');
-		if(fromPlusBtn == false)
+		if(origin == false)
 			WycaDisplayMenu('wyca_edit_map_menu_forbidden');
 		else{
 			// UNSELECT POINT
@@ -4999,7 +4999,7 @@ function WycaForbiddenSave(fromPlusBtn = false)
 		
 		wycaCurrentAction = 'editForbiddenArea';
 		RemoveClass('#wyca_edit_map_svg .editing_point ', 'editing_point ');
-		if(fromPlusBtn == false)
+		if(origin == false)
 			WycaDisplayMenu('wyca_edit_map_menu_forbidden');
 		else{
 			// UNSELECT POINT

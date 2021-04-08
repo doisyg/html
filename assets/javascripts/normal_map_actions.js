@@ -4914,7 +4914,7 @@ function NormalDeleteArea(indexInArray)
 
 // FORBIDDEN FUNCS
 
-function NormalForbiddenSave(fromPlusBtn = false)
+function NormalForbiddenSave(origin = false)
 {
 	$('#install_normal_edit_map_container_all .forbidden_elem_current').remove();
 	
@@ -4944,7 +4944,7 @@ function NormalForbiddenSave(fromPlusBtn = false)
 		currentForbiddenNormalLongTouch = $('#install_normal_edit_map_forbidden_'+forbiddens[currentForbiddenIndex].id_area);
 		normalCurrentAction = 'editForbiddenArea';
 		RemoveClass('#install_normal_edit_map_svg .editing_point ', 'editing_point ');
-		if(fromPlusBtn == false)
+		if(origin == false)
 			NormalDisplayMenu('install_normal_edit_map_menu_forbidden');
 		else{
 			// UNSELECT POINT
@@ -4968,7 +4968,7 @@ function NormalForbiddenSave(fromPlusBtn = false)
 		
 		normalCurrentAction = 'editForbiddenArea';
 		RemoveClass('#install_normal_edit_map_svg .editing_point ', 'editing_point ');
-		if(fromPlusBtn == false)
+		if(origin == false)
 			NormalDisplayMenu('install_normal_edit_map_menu_forbidden');
 		else{
 			// UNSELECT POINT
