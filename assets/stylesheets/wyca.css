@@ -645,7 +645,7 @@ ul.list_test li.done { color:#006600; border-color:#006600; }
 	left:0; 
 	right:unset; 
 	bottom:0px; 
-	font-size:26px;
+	font-size:22px;
 	border-radius:0px;
 	line-height:42px;
 }
@@ -654,7 +654,7 @@ ul.list_test li.done { color:#006600; border-color:#006600; }
 	left:unset; 
 	right:0; 
 	bottom:0px; 
-	font-size:26px;
+	font-size:22px;
 	border-radius:0px;
 	line-height:42px;
 }
