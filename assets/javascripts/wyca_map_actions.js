@@ -393,7 +393,9 @@ $(document).ready(function()
 			WycaAugmentedPoseSave();
 		else if (wycaCurrentAction == 'addDock' || wycaCurrentAction == 'editDock')
 			WycaDockSave();
-		else if (wycaCurrentAction == 'addArea' || wycaCurrentAction == 'editArea')
+		else if (wycaCurrentAction == 'addArea')
+			WycaAreaSave('save');
+		else if (wycaCurrentAction == 'editArea')
 			WycaAreaSave();
 		else if (wycaCurrentAction == 'addForbiddenArea' || wycaCurrentAction == 'editForbiddenArea')
 			WycaForbiddenSave();		
@@ -4820,7 +4822,7 @@ function WycaDeleteDock(indexInArray)
 
 // AREA FUNCS
 
-function WycaAreaSave()
+function WycaAreaSave(origin = false)
 {
 	$('#wyca_edit_map_svg .area_elem_current').remove();
 	
@@ -4851,6 +4853,9 @@ function WycaAreaSave()
 		wycaCurrentAction = 'editArea';
 		RemoveClass('#wyca_edit_map_svg .editing_point ', 'editing_point ');
 		WycaDisplayMenu('wyca_edit_map_menu_area');
+		if(origin == 'save')
+			$('#wyca_edit_map_menu_area .bConfigArea').click();
+		
 	}
 	else if (wycaCurrentAction == 'editArea')
 	{
