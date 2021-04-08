@@ -387,7 +387,9 @@ $(document).ready(function() {
 			AugmentedPoseSave();
 		else if (bystepCurrentAction == 'addDock' || bystepCurrentAction == 'editDock')
 			DockSave();
-		else if (bystepCurrentAction == 'addArea' || bystepCurrentAction == 'editArea')
+		else if (bystepCurrentAction == 'addArea')
+			AreaSave('save');
+		else if (bystepCurrentAction == 'editArea')
 			AreaSave();
 		else if (bystepCurrentAction == 'addForbiddenArea' || bystepCurrentAction == 'editForbiddenArea')
 			ForbiddenSave();
@@ -4840,7 +4842,7 @@ function DeleteDock(indexInArray)
 
 // AREA FUNCS
 
-function AreaSave()
+function AreaSave(origin = false)
 {
 	$('#install_by_step_edit_map_svg .area_elem_current').remove();
 	
@@ -4871,6 +4873,8 @@ function AreaSave()
 		bystepCurrentAction = 'editArea';
 		RemoveClass('#install_by_step_edit_map_svg .editing_point ', 'editing_point ');
 		ByStepDisplayMenu('install_by_step_edit_map_menu_area');
+		if(origin == 'save')
+			$('#install_by_step_edit_map_menu_area .bConfigArea').click();
 	}
 	else if (bystepCurrentAction == 'editArea')
 	{

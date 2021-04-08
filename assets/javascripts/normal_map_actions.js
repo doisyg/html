@@ -384,7 +384,9 @@ $(document).ready(function() {
 			NormalAugmentedPoseSave();
 		else if (normalCurrentAction == 'addDock' || normalCurrentAction == 'editDock')
 			NormalDockSave();
-		else if (normalCurrentAction == 'addArea' || normalCurrentAction == 'editArea')
+		else if (normalCurrentAction == 'addArea')
+			NormalAreaSave('save');
+		else if (normalCurrentAction == 'editArea')
 			NormalAreaSave();
 		else if (normalCurrentAction == 'addForbiddenArea' || normalCurrentAction == 'editForbiddenArea')
 			NormalForbiddenSave();		
@@ -4788,7 +4790,7 @@ function NormalDeleteDock(indexInArray)
 
 // AREA FUNCS
 
-function NormalAreaSave()
+function NormalAreaSave(origin = false)
 {
 	$('#install_normal_edit_map_svg .area_elem_current').remove();
 	
@@ -4819,6 +4821,8 @@ function NormalAreaSave()
 		normalCurrentAction = 'editArea';
 		RemoveClass('#install_normal_edit_map_svg .editing_point ', 'editing_point ');
 		NormalDisplayMenu('install_normal_edit_map_menu_area');
+		if(origin == 'save')
+			$('#install_normal_edit_map_menu_area .bConfigArea').click();
 	}
 	else if (normalCurrentAction == 'editArea')
 	{
