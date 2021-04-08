@@ -698,53 +698,56 @@ var robot_traced_normal = false;
 
 function NormalTraceRobot(robot_x, robot_y, robot_theta)
 {	
-	if(robot_x == robot_y && robot_y == robot_theta && robot_x == 0 ){
-		$('#install_normal_edit_map_tRobotNotLocalised').show();
-		$('#install_normal_edit_map_robot_circle').remove();
-		$('#install_normal_edit_map_robot_sens').remove();
-		robot_traced_normal = false;
-	}else{
-		$('#install_normal_edit_map_tRobotNotLocalised').hide();
-		x = robot_x * 100 / ros_resolution;
-		y = ros_hauteur - (robot_y * 100 / ros_resolution);	
-		angle = 0 - robot_theta * 180 / Math.PI;
+	x = robot_x * 100 / ros_resolution;
+	y = ros_hauteur - (robot_y * 100 / ros_resolution);	
+	angle = 0 - robot_theta * 180 / Math.PI;
+	
+	rayonRobot = (26 / ros_resolution);
+	if (!robot_traced_normal)
+	{
+		robot_traced_normal = true;
 		
-		rayonRobot = (26 / ros_resolution);
-		
-		if (!robot_traced_normal)
-		{
-			robot_traced_normal = true;
-			
-			path = makeSVGElement('circle', { cx: x,
-											cy: y,
-										   r: rayonRobot,
-										   'class': 'robot_elem robot_elem_fond',
-										   'id': 'install_normal_edit_map_robot_circle',
-										   'data-element_type': 'robot',
-										   'data-element': 'robot'
-										   });
-			svgNormal.appendChild(path);
-		}
-		else
-		{
-			$('#install_normal_edit_map_robot_circle').attr("cx", x);
-			$('#install_normal_edit_map_robot_circle').attr("cy", y);
-		}
-		
-		$('#install_normal_edit_map_robot_sens').remove();
-		path = makeSVGElement('polyline', { 'points': (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2),
-										'stroke':'#FFFFFF',
-										'stroke-width':1,
-										'fill':'none',
-										'stroke-linejoin':'round',
-										'stroke-linecap':'round',
-									   'class': 'robot_elem',
-									   'transform':'rotate('+angle+', '+x+', '+y+')',
-									   'id': 'install_normal_edit_map_robot_sens',
+		path = makeSVGElement('circle', { cx: x,
+										cy: y,
+									   r: rayonRobot,
+									   'class': 'robot_elem robot_elem_fond',
+									   'id': 'install_normal_edit_map_robot_circle',
 									   'data-element_type': 'robot',
 									   'data-element': 'robot'
 									   });
-		$('#install_normal_edit_map_robot_circle').after(path);
+		svgNormal.appendChild(path);
+	}
+	else
+	{
+			
+		if(robot_x == robot_y && robot_y == robot_theta && robot_x == 0 ){
+			$('#install_normal_edit_map_tRobotNotLocalised').show();
+			$('#install_normal_edit_map_robot_circle').hide();
+			$('#install_normal_edit_map_robot_sens').hide();
+		}else{
+			
+			$('#install_normal_edit_map_robot_sens').remove();
+			path = makeSVGElement('polyline', { 'points': (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2),
+											'stroke':'#FFFFFF',
+											'stroke-width':1,
+											'fill':'none',
+											'stroke-linejoin':'round',
+											'stroke-linecap':'round',
+										   'class': 'robot_elem',
+										   'transform':'rotate('+angle+', '+x+', '+y+')',
+										   'id': 'install_normal_edit_map_robot_sens',
+										   'data-element_type': 'robot',
+										   'data-element': 'robot'
+										   });
+			$('#install_normal_edit_map_robot_circle').after(path);
+			
+			$('#install_normal_edit_map_robot_circle').attr("cx", x);
+			$('#install_normal_edit_map_robot_circle').attr("cy", y);
+			
+			$('#install_normal_edit_map_tRobotNotLocalised').hide();
+			$('#install_normal_edit_map_robot_circle').show();
+			$('#install_normal_edit_map_robot_sens').show();
+		}
 	}
 }
 
