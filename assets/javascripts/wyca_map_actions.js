@@ -574,6 +574,7 @@ $(document).ready(function()
 				$.each(area.configs, function( indexConfig, config ) {
 					switch(config.name)
 					{
+						case 'name': $('#wyca_edit_map_area_name').val(config.value); break;
 						case 'led_color_mode': $('#wyca_edit_map_led_color_mode').val(config.value); break;
 						case 'led_color': $('#wyca_edit_map_led_color').val(config.value); $('#wyca_edit_map_led_color').keyup(); break;
 						case 'led_animation_mode': $('#wyca_edit_map_led_animation_mode').val(config.value); break;
@@ -2230,6 +2231,7 @@ $(document).ready(function()
 		$.each(area.configs, function( indexConfig, config ) {
 			switch(config.name)
 			{
+				case 'name': $('#wyca_edit_map_area_name').val(config.value); break;
 				case 'led_color_mode': $('#wyca_edit_map_led_color_mode').val(config.value); break;
 				case 'led_color': $('#wyca_edit_map_led_color').val(config.value); $('#wyca_edit_map_led_color').keyup(); break;
 				case 'led_animation_mode': $('#wyca_edit_map_led_animation_mode').val(config.value); break;
@@ -2261,6 +2263,7 @@ $(document).ready(function()
 		if (parseInt($('#wyca_edit_map_min_distance_obstacle').val()) > 68) $('#wyca_edit_map_min_distance_obstacle').val(68);
 		if (parseInt($('#wyca_edit_map_min_distance_obstacle').val()) < 5) $('#wyca_edit_map_min_distance_obstacle').val(5);
 		
+		area.configs.push({'name':'name' , 'value':$('#wyca_edit_map_area_name').val()});
 		area.configs.push({'name':'led_color' , 'value':$('#wyca_edit_map_led_color').val()});
 		area.configs.push({'name':'led_animation_mode' , 'value':$('#wyca_edit_map_led_animation_mode').val()});
 		area.configs.push({'name':'led_animation' , 'value':$('#wyca_edit_map_led_animation').val()});
