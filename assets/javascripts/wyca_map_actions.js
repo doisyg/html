@@ -563,20 +563,24 @@ $(document).ready(function()
 		{
 			currentAreaIndex = GetAreaIndexFromID(currentAreaWycaLongTouch.data('id_area'));
 			area = areas[currentAreaIndex];
-			if (area.configs != undefined)
+			
+			//INIT AREA CONFIGS
+			$('#wyca_edit_map_area_name').val('');
+			$('#wyca_edit_map_led_color_mode').val('Automatic');
+			$('#wyca_edit_map_led_animation_mode').val('Automatic');
+			$('#wyca_edit_map_min_distance_obstacle_mode').val('Automatic');
+			$('#wyca_edit_map_max_speed_mode').val('Automatic');
+			$('#wyca_edit_map_area_sound').val(-1);
+				
+			if (area.configs != undefined && area.configs.length > 0)
 			{
-				$('#wyca_edit_map_led_color_mode').val('Automatic');
-				$('#wyca_edit_map_led_animation_mode').val('Automatic');
-				$('#wyca_edit_map_min_distance_obstacle_mode').val('Automatic');
-				$('#wyca_edit_map_max_speed_mode').val('Automatic');
-				$('#wyca_edit_map_area_sound').val(-1);
 				
 				$.each(area.configs, function( indexConfig, config ) {
 					switch(config.name)
 					{
 						case 'name': $('#wyca_edit_map_area_name').val(config.value); break;
 						case 'led_color_mode': $('#wyca_edit_map_led_color_mode').val(config.value); break;
-						case 'led_color': $('#wyca_edit_map_led_color').val(config.value); $('#wyca_edit_map_led_color').keyup(); break;
+						case 'led_color': $('#wyca_edit_map_led_color').val(config.value); break;
 						case 'led_animation_mode': $('#wyca_edit_map_led_animation_mode').val(config.value); break;
 						case 'led_animation': $('#wyca_edit_map_led_animation').val(config.value); break;
 						case 'max_speed_mode': $('#wyca_edit_map_max_speed_mode').val(config.value); break;
@@ -587,24 +591,17 @@ $(document).ready(function()
 					}
 				});
 			}
-			else
-			{
-				$('#wyca_edit_map_led_color_mode').val('Automatic');
-				$('#wyca_edit_map_led_animation_mode').val('Automatic');
-				$('#wyca_edit_map_min_distance_obstacle_mode').val('Automatic');
-				$('#wyca_edit_map_max_speed_mode').val('Automatic');
-				$('#wyca_edit_map_area_sound').val(-1);
-			}
 			
-			$('#wyca_edit_map_area_color').val('rgb('+area.color_r+','+area.color_g+','+area.color_b+')'); $('#wyca_edit_map_area_color').keyup();
+			$('#wyca_edit_map_area_color').val('rgb('+area.color_r+','+area.color_g+','+area.color_b+')');
 			
 			if ($('#wyca_edit_map_led_color_mode').val() == 'Automatic') $('#wyca_edit_map_led_color_group').hide(); else  $('#wyca_edit_map_led_color_group').show();
 			if ($('#wyca_edit_map_led_animation_mode').val() == 'Automatic') $('#wyca_edit_map_led_animation_group').hide(); else  $('#wyca_edit_map_led_animation_group').show();
-			if ($('#wyca_edit_map_min_distance_obstacle_mode').val() == 'Automatic')
-				$('#wyca_edit_map_min_distance_obstacle_group').hide(); 
-			else 
-				$('#wyca_edit_map_min_distance_obstacle_group').show();
 			if ($('#wyca_edit_map_max_speed_mode').val() == 'Automatic') $('#wyca_edit_map_max_speed_group').hide(); else  $('#wyca_edit_map_max_speed_group').show();
+			if ($('#wyca_edit_map_min_distance_obstacle_mode').val() == 'Automatic') $('#wyca_edit_map_min_distance_obstacle_group').hide(); else $('#wyca_edit_map_min_distance_obstacle_group').show();
+			
+			$('#wyca_edit_map_container_all .modalAreaOptions .preview_color').click();
+			$('#wyca_edit_map_container_all .modalAreaOptions .iro-colorpicker').hide();
+			
 			$('#wyca_edit_map_container_all .modalAreaOptions').modal('show');
 		}
     });

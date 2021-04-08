@@ -555,19 +555,24 @@ $(document).ready(function() {
 		{
 			currentAreaIndex = GetAreaIndexFromID(currentAreaNormalLongTouch.data('id_area'));
 			area = areas[currentAreaIndex];
-			if (area.configs != undefined)
+			
+			//INIT AREA CONFIGS
+			$('#install_by_step_edit_map_area_name').val('');
+			$('#install_normal_edit_map_led_color_mode').val('Automatic');
+			$('#install_normal_edit_map_led_animation_mode').val('Automatic');
+			$('#install_normal_edit_map_min_distance_obstacle_mode').val('Automatic');
+			$('#install_normal_edit_map_max_speed_mode').val('Automatic');
+			$('#install_normal_edit_map_area_sound').val(-1)
+				
+			if (area.configs != undefined && area.configs.length > 0)
 			{
-				$('#install_normal_edit_map_led_color_mode').val('Automatic');
-				$('#install_normal_edit_map_led_animation_mode').val('Automatic');
-				$('#install_normal_edit_map_min_distance_obstacle_mode').val('Automatic');
-				$('#install_normal_edit_map_max_speed_mode').val('Automatic');
-				$('#install_normal_edit_map_area_sound').val(-1)
 				
 				$.each(area.configs, function( indexConfig, config ) {
 					switch(config.name)
 					{
+						case 'name': $('#install_normal_edit_map_area_name').val(config.value); break;
 						case 'led_color_mode': $('#install_normal_edit_map_led_color_mode').val(config.value); break;
-						case 'led_color': $('#install_normal_edit_map_led_color').val(config.value); $('#install_normal_edit_map_led_color').keyup(); break;
+						case 'led_color': $('#install_normal_edit_map_led_color').val(config.value); break;
 						case 'led_animation_mode': $('#install_normal_edit_map_led_animation_mode').val(config.value); break;
 						case 'led_animation': $('#install_normal_edit_map_led_animation').val(config.value); break;
 						case 'max_speed_mode': $('#install_normal_edit_map_max_speed_mode').val(config.value); break;
@@ -578,24 +583,17 @@ $(document).ready(function() {
 					}
 				});
 			}
-			else
-			{
-				$('#install_normal_edit_map_led_color_mode').val('Automatic');
-				$('#install_normal_edit_map_led_animation_mode').val('Automatic');
-				$('#install_normal_edit_map_min_distance_obstacle_mode').val('Automatic');
-				$('#install_normal_edit_map_max_speed_mode').val('Automatic');
-				$('#install_normal_edit_map_area_sound').val(-1);
-			}
 			
-			$('#install_normal_edit_map_area_color').val('rgb('+area.color_r+','+area.color_g+','+area.color_b+')'); $('#install_normal_edit_map_area_color').keyup();
+			$('#install_normal_edit_map_area_color').val('rgb('+area.color_r+','+area.color_g+','+area.color_b+')');
 			
 			if ($('#install_normal_edit_map_led_color_mode').val() == 'Automatic') $('#install_normal_edit_map_led_color_group').hide(); else  $('#install_normal_edit_map_led_color_group').show();
 			if ($('#install_normal_edit_map_led_animation_mode').val() == 'Automatic') $('#install_normal_edit_map_led_animation_group').hide(); else  $('#install_normal_edit_map_led_animation_group').show();
-			if ($('#install_normal_edit_map_min_distance_obstacle_mode').val() == 'Automatic')
-				$('#install_normal_edit_map_min_distance_obstacle_group').hide(); 
-			else 
-				$('#install_normal_edit_map_min_distance_obstacle_group').show();
 			if ($('#install_normal_edit_map_max_speed_mode').val() == 'Automatic') $('#install_normal_edit_map_max_speed_group').hide(); else  $('#install_normal_edit_map_max_speed_group').show();
+			if ($('#install_normal_edit_map_min_distance_obstacle_mode').val() == 'Automatic') $('#install_normal_edit_map_min_distance_obstacle_group').hide(); else $('#install_normal_edit_map_min_distance_obstacle_group').show();
+			
+			$('#install_normal_edit_map_container_all .modalAreaOptions .preview_color').click();
+			$('#install_normal_edit_map_container_all .modalAreaOptions .iro-colorpicker').hide();
+			
 			$('#install_normal_edit_map_container_all .modalAreaOptions').modal('show');
 		}
     });
@@ -2198,6 +2196,7 @@ $(document).ready(function() {
 		$.each(area.configs, function( indexConfig, config ) {
 			switch(config.name)
 			{
+				case 'name': $('#install_normal_edit_map_area_name').val(config.value); break;
 				case 'led_color_mode': $('#install_normal_edit_map_led_color_mode').val(config.value); break;
 				case 'led_color': $('#install_normal_edit_map_led_color').val(config.value); $('#install_normal_edit_map_led_color').keyup(); break;
 				case 'led_animation_mode': $('#install_normal_edit_map_led_animation_mode').val(config.value); break;
@@ -2227,6 +2226,7 @@ $(document).ready(function() {
 		if (parseInt($('#install_normal_edit_map_min_distance_obstacle').val()) < 5) $('#install_normal_edit_map_min_distance_obstacle').val(5);
 		
 		area.configs = Array();
+		area.configs.push({'name':'name' , 'value':$('#install_normal_edit_map_area_name').val()});
 		area.configs.push({'name':'led_color_mode' , 'value':$('#install_normal_edit_map_led_color_mode').val()});
 		area.configs.push({'name':'led_color' , 'value':$('#install_normal_edit_map_led_color').val()});
 		area.configs.push({'name':'led_animation_mode' , 'value':$('#install_normal_edit_map_led_animation_mode').val()});

@@ -559,20 +559,24 @@ $(document).ready(function() {
 		{
 			currentAreaIndex = GetAreaIndexFromID(currentAreaWycaByStepLongTouch.data('id_area'));
 			area = areas[currentAreaIndex];
-			if (area.configs != undefined)
-			{
+			
+			//INIT AREA CONFIGS
+			$('#wyca_by_step_edit_map_area_name').val('');
+			$('#wyca_by_step_edit_map_led_color_mode').val('Automatic');
+			$('#wyca_by_step_edit_map_led_animation_mode').val('Automatic');
+			$('#wyca_by_step_edit_map_min_distance_obstacle_mode').val('Automatic');
+			$('#wyca_by_step_edit_map_max_speed_mode').val('Automatic');
+			$('#wyca_by_step_edit_map_area_sound').val(-1);
 				
-				$('#wyca_by_step_edit_map_led_color_mode').val('Automatic');
-				$('#wyca_by_step_edit_map_led_animation_mode').val('Automatic');
-				$('#wyca_by_step_edit_map_min_distance_obstacle_mode').val('Automatic');
-				$('#wyca_by_step_edit_map_max_speed_mode').val('Automatic');
-				$('#wyca_by_step_edit_map_area_sound').val(-1);
+			if (area.configs != undefined && area.configs.length > 0)
+			{
 				
 				$.each(area.configs, function( indexConfig, config ) {
 					switch(config.name)
 					{
+						case 'name': $('#wyca_by_step_edit_map_area_name').val(config.value); break;
 						case 'led_color_mode': $('#wyca_by_step_edit_map_led_color_mode').val(config.value); break;
-						case 'led_color': $('#wyca_by_step_edit_map_led_color').val(config.value); $('#wyca_by_step_edit_map_led_color').keyup(); break;
+						case 'led_color': $('#wyca_by_step_edit_map_led_color').val(config.value); break;
 						case 'led_animation_mode': $('#wyca_by_step_edit_map_led_animation_mode').val(config.value); break;
 						case 'led_animation': $('#wyca_by_step_edit_map_led_animation').val(config.value); break;
 						case 'max_speed_mode': $('#wyca_by_step_edit_map_max_speed_mode').val(config.value); break;
@@ -583,23 +587,17 @@ $(document).ready(function() {
 					}
 				});
 			}
-			else
-			{
-				$('#wyca_by_step_edit_map_led_color_mode').val('Automatic');
-				$('#wyca_by_step_edit_map_led_animation_mode').val('Automatic');
-				$('#wyca_by_step_edit_map_max_speed_mode').val('Automatic');
-				$('#wyca_by_step_edit_map_min_distance_obstacle_mode').val('Automatic');
-				$('#wyca_by_step_edit_map_area_sound').val(-1);
-			}
 			
-			$('#wyca_by_step_edit_map_area_color').val('rgb('+area.color_r+','+area.color_g+','+area.color_b+')'); $('#wyca_by_step_edit_map_area_color').keyup();
+			$('#wyca_by_step_edit_map_area_color').val('rgb('+area.color_r+','+area.color_g+','+area.color_b+')');
 			
 			if ($('#wyca_by_step_edit_map_led_color_mode').val() == 'Automatic') $('#wyca_by_step_edit_map_led_color_group').hide(); else  $('#wyca_by_step_edit_map_led_color_group').show();
 			if ($('#wyca_by_step_edit_map_led_animation_mode').val() == 'Automatic') $('#wyca_by_step_edit_map_led_animation_group').hide(); else  $('#wyca_by_step_edit_map_led_animation_group').show();
 			if ($('#wyca_by_step_edit_map_max_speed_mode').val() == 'Automatic') $('#wyca_by_step_edit_map_max_speed_group').hide(); else  $('#wyca_by_step_edit_map_max_speed_group').show();
-			$('#wyca_by_step_edit_map_container_all .modalAreaOptions').modal('show');
-			
 			if ($('#wyca_by_step_edit_map_min_distance_obstacle_mode').val() == 'Automatic') $('#wyca_by_step_edit_map_min_distance_obstacle_group').hide(); else  $('#wyca_by_step_edit_map_min_distance_obstacle_group').show();
+			
+			$('#wyca_by_step_edit_map_container_all .modalAreaOptions .preview_color').click();
+			$('#wyca_by_step_edit_map_container_all .modalAreaOptions .iro-colorpicker').hide();
+			
 			$('#wyca_by_step_edit_map_container_all .modalAreaOptions').modal('show');
 		}
     });
@@ -2248,6 +2246,7 @@ $(document).ready(function() {
 		$.each(area.configs, function( indexConfig, config ) {
 			switch(config.name)
 			{
+				case 'name': $('#wyca_by_step_edit_map_area_name').val(config.value); break;
 				case 'led_color_mode': $('#wyca_by_step_edit_map_led_color_mode').val(config.value); break;
 				case 'led_color': $('#wyca_by_step_edit_map_led_color').val(config.value); $('#wyca_by_step_edit_map_led_color').keyup(); break;
 				case 'led_animation_mode': $('#wyca_by_step_edit_map_led_animation_mode').val(config.value); break;
@@ -2274,6 +2273,7 @@ $(document).ready(function() {
 		if (parseInt($('#wyca_by_step_edit_map_min_distance_obstacle').val()) < 5) $('#wyca_by_step_edit_map_min_distance_obstacle').val(5);
 		
 		area.configs = Array();
+		area.configs.push({'name':'name' , 'value':$('#wyca_by_step_edit_map_area_name').val()});
 		area.configs.push({'name':'led_color_mode' , 'value':$('#wyca_by_step_edit_map_led_color_mode').val()});
 		area.configs.push({'name':'led_color' , 'value':$('#wyca_by_step_edit_map_led_color').val()});
 		area.configs.push({'name':'led_animation_mode' , 'value':$('#wyca_by_step_edit_map_led_animation_mode').val()});

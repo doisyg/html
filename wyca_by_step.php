@@ -1102,6 +1102,12 @@
                                         <div class="h100vh_160" style="overflow:auto">
                                             <form>
                                                 <div class="form-group">
+                                                    <label class="col-xs-4 control-label"><?= __('Name')?></label>
+                                                    <div class="col-xs-8">
+                                                        <input type="text" id="wyca_by_step_edit_map_area_name" name="area_name" value="" class="form-control input-sm mb-md" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group sep">
                                                     <label class="col-xs-4 control-label"><?php echo __('Area Color');?></label>
                                                     <div class="col-xs-8">
                                                         <div id="wyca_by_step_edit_map_area_color_elem" class="input-group color input-group-sm">
