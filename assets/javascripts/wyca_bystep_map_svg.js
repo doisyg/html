@@ -351,10 +351,13 @@ function WycaByStepTraceArea(indexArea)
 		}
 	}
 	
+	is_moving = false;
 	if (downOnMovable && movableDown.data('element_type') == 'area')
 	{
 		index_point_movable = movableDown.data('index_point');
 	}
+	else if(downOnMovable && movableDown.data('element_type') == 'polygon_area')
+		is_moving = true;
 	else
 		$('#wyca_by_step_edit_map_svg .area_elem_'+area.id_area).remove();
 	
@@ -371,78 +374,111 @@ function WycaByStepTraceArea(indexArea)
 			area_point += x+','+y;
 		});
 		
-		$('#wyca_by_step_edit_map_svg #wyca_by_step_edit_map_area_'+area.id_area).remove();
-		
-		path = makeSVGElement('polygon', { points: area_point,
-							   'stroke-width': 0,
-							   'class':'poly area area_root poly_elem area_elem area_elem_'+area.id_area,
-							   'id':'wyca_by_step_edit_map_area_'+area.id_area,
-							   'data-id_area': area.id_area
-							  });
-		path.style.fill = 'rgba('+area.color_r+','+area.color_g+','+area.color_b+',0.5)'
-		svgWycaByStep.appendChild(path);
-		
-		lastPointIndex = points.length-1;
-		lastPoint = points[lastPointIndex];
-		$.each(points, function( indexPoint, point ) {
+		if(!is_moving){
+			// IF NOT MOVING REMOVE + REDRAW
+			$('#wyca_by_step_edit_map_svg #wyca_by_step_edit_map_area_'+area.id_area).remove();
 			
-			if (!downOnMovable || (index_point_movable != indexPoint || index_point_movable != lastPointIndex))
-			{
-				$('#wyca_by_step_edit_map_svg #wyca_by_step_edit_map_area_trait_'+area.id_area+'_'+indexPoint).remove();
+			path = makeSVGElement('polygon', { points: area_point,
+								   'stroke-width': 0,
+								   'class':'poly area area_root poly_elem area_elem area_elem_'+area.id_area,
+								   'id':'wyca_by_step_edit_map_area_'+area.id_area,
+								   'data-element_type': 'polygon_area',
+								   'data-id_area': area.id_area
+								  });
+			path.style.fill = 'rgba('+area.color_r+','+area.color_g+','+area.color_b+',0.5)'
+			svgWycaByStep.appendChild(path);
+			
+			lastPointIndex = points.length-1;
+			lastPoint = points[lastPointIndex];
+			
+			$.each(points, function( indexPoint, point ) {
+				if (!downOnMovable || (index_point_movable != indexPoint || index_point_movable != lastPointIndex))
+				{
+					$('#wyca_by_step_edit_map_svg #wyca_by_step_edit_map_area_trait_'+area.id_area+'_'+indexPoint).remove();
+					
+					x = point.x * 100 / ros_resolution;
+					y = ros_hauteur - (point.y * 100 / ros_resolution);
+					
+					x2 = lastPoint.x * 100 / ros_resolution;
+					y2 = ros_hauteur - (lastPoint.y * 100 / ros_resolution);
+									
+					path = makeSVGElement('line', { x1: x, y1:y, x2:x2, y2:y2,
+								   'stroke-width': downOnMovable?1:5,
+								   'class':'secable poly_elem area_elem area_elem_'+area.id_area,
+								   'id': 'wyca_by_step_edit_map_area_trait_'+area.id_area+'_'+indexPoint,
+								   'data-id_area': area.id_area,
+								   'data-index_point': indexPoint,
+								   'data-element_type': 'area',
+								   'data-element': 'area'
+								  });
+					svgWycaByStep.appendChild(path);
+				}
+				
+				lastPointIndex = indexPoint;
+				lastPoint = point;
+			});
+			
+			
+			$.each(points, function( indexPoint, point ) {
+				
+				if (!downOnMovable || index_point_movable != indexPoint)
+				{
+					$('#wyca_by_step_edit_map_svg #wyca_by_step_edit_map_area_'+area.id_area+'_'+indexPoint).remove();
+					
+					x = point.x * 100 / ros_resolution;
+					y = ros_hauteur - (point.y * 100 / ros_resolution);
+					
+					
+					let	pointActiveClass = '';
+					if(typeof(currentPointWycaByStepLongTouch) != 'undefined' && currentPointWycaByStepLongTouch != null){
+						pointActiveClass = indexPoint == currentPointWycaByStepLongTouch.data('index_point') ? ' editing_point' : '' ;
+					}
+					
+					path = makeSVGElement('rect', { x: x-5, y:y-5, height:10, width:10,
+								   'stroke-width': minStokeWidth,
+								   'class':'movable point_deletable poly_elem area_elem area_elem_'+area.id_area+pointActiveClass,
+								   'id': 'wyca_by_step_edit_map_area_'+area.id_area+'_'+indexPoint,
+								   'data-id_area': area.id_area,
+								   'data-index_point': indexPoint,
+								   'data-element_type': 'area',
+								   'data-element': 'area'
+								  });
+					svgWycaByStep.appendChild(path);
+				}
+			});
+			
+			if (is_active)
+				AddClass('#wyca_by_step_edit_map_svg .area_elem_'+area.id_area, 'active');
+		}else{
+			//MOVING MOVE X Y ACTUAL SVG ELEM
+			let svg_polygon = $('#wyca_by_step_edit_map_area_'+area.id_area);
+			svg_polygon.attr('points',area_point);
+			
+			lastPointIndex = points.length-1;
+			lastPoint = points[lastPointIndex];
+			
+			$.each(points, function( indexPoint, point ) {
+				let svg_line = $('#wyca_by_step_edit_map_svg #wyca_by_step_edit_map_area_trait_'+area.id_area+'_'+indexPoint);
+				let svg_point = $('#wyca_by_step_edit_map_svg #wyca_by_step_edit_map_area_'+area.id_area+'_'+indexPoint);
 				
 				x = point.x * 100 / ros_resolution;
 				y = ros_hauteur - (point.y * 100 / ros_resolution);
 				
 				x2 = lastPoint.x * 100 / ros_resolution;
 				y2 = ros_hauteur - (lastPoint.y * 100 / ros_resolution);
-								
-				path = makeSVGElement('line', { x1: x, y1:y, x2:x2, y2:y2,
-							   'stroke-width': downOnMovable?1:5,
-							   'class':'secable poly_elem area_elem area_elem_'+area.id_area,
-							   'id': 'wyca_by_step_edit_map_area_trait_'+area.id_area+'_'+indexPoint,
-							   'data-id_area': area.id_area,
-							   'data-index_point': indexPoint,
-							   'data-element_type': 'area',
-							   'data-element': 'area'
-							  });
-				svgWycaByStep.appendChild(path);
-			}
-			
-			lastPointIndex = indexPoint;
-			lastPoint = point;
-		});
-		
-		
-		$.each(points, function( indexPoint, point ) {
-			
-			if (!downOnMovable || index_point_movable != indexPoint)
-			{
-				$('#wyca_by_step_edit_map_svg #wyca_by_step_edit_map_area_'+area.id_area+'_'+indexPoint).remove();
 				
-				x = point.x * 100 / ros_resolution;
-				y = ros_hauteur - (point.y * 100 / ros_resolution);
+				svg_line.attr('x1',x);
+				svg_line.attr('y1',y);
+				svg_line.attr('x2',x2);
+				svg_line.attr('y2',y2);
 				
+				svg_point.attr('x',x-5);
+				svg_point.attr('y',y-5);
 				
-				let	pointActiveClass = '';
-				if(typeof(currentPointWycaByStepLongTouch) != 'undefined' && currentPointWycaByStepLongTouch != null){
-					pointActiveClass = indexPoint == currentPointWycaByStepLongTouch.data('index_point') ? ' editing_point' : '' ;
-				}
-				
-				path = makeSVGElement('rect', { x: x-5, y:y-5, height:10, width:10,
-							   'stroke-width': minStokeWidth,
-							   'class':'movable point_deletable poly_elem area_elem area_elem_'+area.id_area+pointActiveClass,
-							   'id': 'wyca_by_step_edit_map_area_'+area.id_area+'_'+indexPoint,
-							   'data-id_area': area.id_area,
-							   'data-index_point': indexPoint,
-							   'data-element_type': 'area',
-							   'data-element': 'area'
-							  });
-				svgWycaByStep.appendChild(path);
-			}
-		});
-		
-		if (is_active)
-			AddClass('#wyca_by_step_edit_map_svg .area_elem_'+area.id_area, 'active');
+				lastPointIndex = indexPoint;
+				lastPoint = point;
+			});
+		}
 	}
 }
 
