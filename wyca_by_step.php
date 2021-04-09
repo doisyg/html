@@ -842,6 +842,7 @@
                     <div id="wyca_by_step_edit_map_menu_area" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
                         	<li><a href="#" class="btn btn-circle btn-default btn-menu bConfigArea"><i class="fa fa-gears iconMenuBlue"></i></a></li>
+							<li><a href="#" class="btn btn-circle btn-default btn-menu bCopyArea"><i class="fa fa-copy iconMenuGreen"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-menu bDeleteArea"><i class="fa fa-trash iconMenuRed"></i></a></li>
                         </ul>
                     </div>

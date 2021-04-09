@@ -264,8 +264,8 @@ function WycaByStepSaveElementNeeded(need)
 			$('#wyca_by_step_edit_map_bPlusCurrentElem').show();
 		}
 		if(wyca_bystepCurrentAction == "addArea"){
-			$('#wyca_by_step_edit_map .bConfigArea').addClass('disabled');
-			$('#wyca_by_step_edit_map .bDeleteArea').addClass('disabled');
+			$('#wyca_by_step_edit_map #wyca_by_step_edit_map_menu_area .btn-menu').addClass('disabled');
+			$('#wyca_by_step_edit_map #wyca_by_step_edit_map_menu_area .btn-menu[data-orientation="H"]').hide();
 		}
 	}
 	else
@@ -281,8 +281,8 @@ function WycaByStepSaveElementNeeded(need)
 			$('#wyca_by_step_edit_map .bDeleteForbidden').removeClass('disabled');
 		}
 		if(wyca_bystepCurrentAction == "addArea"){
-			$('#wyca_by_step_edit_map .bConfigArea').removeClass('disabled');
-			$('#wyca_by_step_edit_map .bDeleteArea').removeClass('disabled');
+			$('#wyca_by_step_edit_map #wyca_by_step_edit_map_menu_area .btn-menu').removeClass('disabled');
+			$('#wyca_by_step_edit_map #wyca_by_step_edit_map_menu_area .btn-menu[data-orientation="H"]').show();
 		}
 	}
 }
@@ -602,6 +602,27 @@ $(document).ready(function() {
 		}
     });
 	
+	$('#wyca_by_step_edit_map_menu_area .bCopyArea').click(function(e) {
+        e.preventDefault();
+		//WycaByStepHideMenus();
+		if (wyca_bystepCurrentAction == "select" || wyca_bystepCurrentAction == 'editArea')
+		{
+			currentAreaIndex = GetAreaIndexFromID(currentAreaWycaByStepLongTouch.data('id_area'));
+			area = areas[currentAreaIndex];
+			tempAreaCopy = JSON.stringify(area);
+			WycaByStepHideMenus();
+			if (wyca_bystepCanChangeMenu)
+			{
+				//CURRENT ACTION TARGET
+				wyca_bystepCurrentAction = 'prepareArea';
+				wyca_bystepCanChangeMenu = false;
+				//AJOUT ICON MENU + CROIX
+				$('#wyca_by_step_edit_map .burger_menu').hide('fast');
+				$('#wyca_by_step_edit_map .icon_menu[data-menu="wyca_by_step_edit_map_menu_area"]').show('fast');
+				setTimeout(function(){$('#wyca_by_step_edit_map .times_icon_menu').show('fast')},50);
+			}
+		}
+    });
 	/* MENU DOCK */
 	
 	$('#wyca_by_step_edit_map_menu_dock .bDeleteDock').click(function(e) {
@@ -2094,8 +2115,52 @@ $(document).ready(function() {
 					currentAreaPoints.push({x:xRos + 2*tailleArea, y:yRos});
 					currentAreaPoints.push({x:xRos + 2*tailleArea, y:yRos - 2*tailleArea});
 					currentAreaPoints.push({x:xRos, y:yRos - 2*tailleArea});
+					
+					if(tempAreaCopy != false){
+						//AIM CENTER AREA
+						a = JSON.parse(tempAreaCopy);
+						let centerAreaCopy = findAreaCenter(a.points);
+						console.log(centerAreaCopy);
+						console.log(a.points);
+						currentAreaPoints = Array();
+						
+						a.points.forEach(function(item,idx){
+							let deltaX = centerAreaCopy.x - item.x;
+							let deltaY = centerAreaCopy.y - item.y;
+							currentAreaPoints[idx]={x:xRos - deltaX, y:yRos - deltaY};
+						})
+						
+						console.log(findAreaCenter(currentAreaPoints));
+						console.log(currentAreaPoints);
+						
+						
+						/*
+						currentAreaPoints.push({x:xRos - tailleArea, y:yRos - tailleArea});
+						currentAreaPoints.push({x:xRos + tailleArea, y:yRos - tailleArea});
+						currentAreaPoints.push({x:xRos + tailleArea, y:yRos + tailleArea});
+						currentAreaPoints.push({x:xRos - tailleArea, y:yRos + tailleArea});
+						*/
+						//FROM AREA COPY
+						
+						console.log(JSON.parse(JSON.stringify(a)));
+						a.id_area = nextIdArea;
+						a.points = currentAreaPoints;
+						console.log(JSON.parse(JSON.stringify(a)));
+						
+					}
+					else
+					{
+						//AIM TOP LEFT CORNER
+					
+						currentAreaPoints = Array();
+						currentAreaPoints.push({x:xRos , y:yRos});
+						currentAreaPoints.push({x:xRos + 2*tailleArea, y:yRos});
+						currentAreaPoints.push({x:xRos + 2*tailleArea, y:yRos - 2*tailleArea});
+						currentAreaPoints.push({x:xRos, y:yRos - 2*tailleArea});
+						
+						a = {'id_area':nextIdArea, 'id_map':id_map, 'name':'', 'comment':'', 'is_forbidden':false, 'color_r':87, 'color_g':159, 'color_b':177, 'deleted':false, 'points':currentAreaPoints, 'configs':Array()};
+					}
 
-					a = {'id_area':nextIdArea, 'id_map':id_map, 'name':'', 'comment':'', 'is_forbidden':false, 'color_r':87, 'color_g':159, 'color_b':177, 'deleted':false, 'points':currentAreaPoints, 'configs':Array()};
 					WycaByStepAddHistorique({'action':'add_area', 'data':JSON.stringify(a)});
 					
 					areas.push(a);
@@ -4843,6 +4908,19 @@ function DeleteDock(indexInArray)
 }
 
 // AREA FUNCS
+var tempAreaCopy = false;
+
+function findAreaCenter(points){
+	let _x = 0 ,_y = 0;
+	points.forEach(function(item,idx){
+		_x += item.x;
+		_y += item.y;
+	})
+	_x=_x/points.length;
+	_y=_y/points.length;
+	
+	return{'x':_x,'y':_y};
+}
 
 function AreaSave(origin = false)
 {
@@ -4875,8 +4953,9 @@ function AreaSave(origin = false)
 		wyca_bystepCurrentAction = 'editArea';
 		RemoveClass('#wyca_by_step_edit_map_svg .editing_point ', 'editing_point ');
 		WycaByStepDisplayMenu('wyca_by_step_edit_map_menu_area');
-		if(origin == 'save')
+		if(origin == 'save' && tempAreaCopy == false)
 			$('#wyca_by_step_edit_map_menu_area .bConfigArea').click();
+		tempAreaCopy = false;
 	}
 	else if (wyca_bystepCurrentAction == 'editArea')
 	{
@@ -4939,8 +5018,9 @@ function AreaCancel()
 	$('#wyca_by_step_edit_map_boutonsStandard').show();
 	blockZoom = false;
 	
-	
-	
+	if(tempAreaCopy != false)
+		tempAreaCopy = false;
+		
 }
 
 function DeleteArea(indexInArray)
