@@ -446,29 +446,30 @@ $(document).ready(function() {
 			touchStarted = true;
 			downOnMovable = true;
 			movableDown = $(this);
-			console.log('breakpoint');
+			//console.log('breakpoint');
 			
 			if($(this).attr('x') == $(this).attr('y') && $(this).attr('y') == undefined){
 				//MOVING POLYGON
 				showPopupZoom = false;
+					
 				wyca_bystepDownOnSVG_x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX);
 				wyca_bystepDownOnSVG_y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY);
 			}else{	
 				showPopupZoom = true;
 				wyca_bystepDownOnSVG_x = parseFloat($(this).attr('x')) + parseFloat($(this).attr('width'))/2;
 				wyca_bystepDownOnSVG_y = parseFloat($(this).attr('y')) + parseFloat($(this).attr('height'))/2;
+				
+				p = $('#wyca_by_step_edit_map_svg image').position();
+				zoom = WycaByStepGetZoom();
+				
+				wyca_bystepDownOnSVG_x = wyca_bystepDownOnSVG_x / zoom + p.left;
+				wyca_bystepDownOnSVG_y = wyca_bystepDownOnSVG_y / zoom + p.top;
+				
 			}
-			
-			p = $('#wyca_by_step_edit_map_svg image').position();
-			zoom = WycaByStepGetZoom();
-			
-			wyca_bystepDownOnSVG_x = wyca_bystepDownOnSVG_x / zoom + p.left;
-			wyca_bystepDownOnSVG_y = wyca_bystepDownOnSVG_y / zoom + p.top;
 			
 			WycaByStepSaveElementNeeded(true);
 			
 			blockZoom = true;
-			
 		}
     });
 	
@@ -682,7 +683,7 @@ $(document).ready(function() {
 		{
 			$.each(dock.undock_path, function( indexConfig, undock_step ) {
 	
-				console.log(undock_step);
+				//console.log(undock_step);
 				indexDockElem++;
 				
 				if (undock_step.linear_distance != 0)
@@ -1178,7 +1179,7 @@ $(document).ready(function() {
 		{
 			$.each(augmented_pose.undock_path, function( indexConfig, undock_step ) {
 	
-				console.log(undock_step);
+				//console.log(undock_step);
 				indexAugmentedPoseElem++;
 				
 				if (undock_step.linear_distance != 0)
@@ -1683,7 +1684,7 @@ $(document).ready(function() {
 			$('body').removeClass('no_current select');
 			$('.select').css("strokeWidth", minStokeWidth);
 			currentDockWycaByStepLongTouch=$(this);
-			console.log(wyca_bystepCurrentAction);
+			//console.log(wyca_bystepCurrentAction);
 			//MENU DOCK DISPLAY
 			if (wyca_bystepCurrentAction != 'editDock' && wyca_bystepCurrentAction != 'addDock')
 			{
@@ -2151,8 +2152,8 @@ $(document).ready(function() {
 						//AIM CENTER AREA
 						a = JSON.parse(tempAreaCopy);
 						let centerAreaCopy = findAreaCenter(a.points);
-						console.log(centerAreaCopy);
-						console.log(a.points);
+						//console.log(centerAreaCopy);
+						//console.log(a.points);
 						currentAreaPoints = Array();
 						
 						a.points.forEach(function(item,idx){
@@ -2161,8 +2162,8 @@ $(document).ready(function() {
 							currentAreaPoints[idx]={x:xRos - deltaX, y:yRos - deltaY};
 						})
 						
-						console.log(findAreaCenter(currentAreaPoints));
-						console.log(currentAreaPoints);
+						//console.log(findAreaCenter(currentAreaPoints));
+						//console.log(currentAreaPoints);
 						
 						
 						/*
@@ -2173,10 +2174,10 @@ $(document).ready(function() {
 						*/
 						//FROM AREA COPY
 						
-						console.log(JSON.parse(JSON.stringify(a)));
+						//console.log(JSON.parse(JSON.stringify(a)));
 						a.id_area = nextIdArea;
 						a.points = currentAreaPoints;
-						console.log(JSON.parse(JSON.stringify(a)));
+						//console.log(JSON.parse(JSON.stringify(a)));
 						
 					}
 					else
@@ -2436,7 +2437,7 @@ $(document).ready(function() {
 			
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
-				console.log(data);
+				//console.log(data);
 				
 				$('#wyca_by_step_edit_map_container_all .modalAddDock .dock').hide();
 				
@@ -3104,7 +3105,7 @@ $(document).ready(function() {
 			
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
-				console.log(data);
+				//console.log(data);
 				
 				$('#wyca_by_step_edit_map_container_all .modalAddAugmentedPose .augmented_pose').hide();
 				
@@ -4237,17 +4238,16 @@ $(document).ready(function() {
 			   else if (movableDown.data('element_type') == 'polygon_area')
 			   {
 					e.preventDefault();
-				    
+				    //console.log(wyca_bystepDownOnSVG_x,wyca_bystepDownOnSVG_y)
+					
 					area = GetAreaFromID(movableDown.data('id_area'));
 				   
 					pageX = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX);
 					pageY = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY);
 					
-					p = $('#wyca_by_step_edit_map_svg image').position();
-					zoom = WycaByStepGetZoom();
+					//console.log(pageX,pageY)
 					
-					pageX = pageX / zoom + p.left;
-					pageY = pageY / zoom + p.top;
+					zoom = WycaByStepGetZoom();
 					
 					deltaX = (wyca_bystepDownOnSVG_x - pageX) * zoom * ros_resolution / 100;
 					deltaY = (wyca_bystepDownOnSVG_y - pageY) * zoom * ros_resolution / 100;
@@ -4256,12 +4256,6 @@ $(document).ready(function() {
 						item.y = item.y + deltaY;
 						area.points[idx] = item;
 					})
-					
-					/*
-					tempClass = movableDown.attr("class");
-					if(!tempClass.includes('editing_point'))
-						movableDown.attr("class",tempClass+' editing_point');
-					*/
 					
 					WycaByStepTraceArea(GetAreaIndexFromID(movableDown.data('id_area')));
 				    
@@ -5086,7 +5080,7 @@ function AreaSave(origin = false)
 	}
 	else if (wyca_bystepCurrentAction == 'moveArea')
 	{
-		console.log('here',currentAreaIndex);
+		//console.log('here',currentAreaIndex);
 		WycaByStepSaveElementNeeded(false);
 		
 		WycaByStepAddHistorique({'action':'edit_area', 'data':{'index':currentAreaIndex, 'old':saveCurrentArea, 'new':JSON.stringify(areas[currentAreaIndex])}});
