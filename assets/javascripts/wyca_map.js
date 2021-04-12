@@ -223,7 +223,8 @@ function WycaDisplayBlockZoom()
 		if (t < 20) t = 20;
 		$('#wyca_edit_map_zoom_popup').css('left', l);
 		$('#wyca_edit_map_zoom_popup').css('top', t);
-		$('#wyca_edit_map_zoom_popup').show();
+		if(!(typeof(showPopupZoom) != 'undefined' && !showPopupZoom))
+			$('#wyca_edit_map_zoom_popup').show();
 		
 		/*
 		

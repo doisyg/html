@@ -397,6 +397,8 @@ $(document).ready(function()
 			WycaAreaSave('save');
 		else if (wycaCurrentAction == 'editArea')
 			WycaAreaSave();
+		else if (wycaCurrentAction == 'moveArea')
+			WycaAreaSave();
 		else if (wycaCurrentAction == 'addForbiddenArea' || wycaCurrentAction == 'editForbiddenArea')
 			WycaForbiddenSave();		
     });
@@ -410,7 +412,7 @@ $(document).ready(function()
 			WycaAugmentedPoseCancel();
 		else if (wycaCurrentAction == 'addDock' || wycaCurrentAction == 'editDock')
 			WycaDockCancel();
-		else if (wycaCurrentAction == 'addArea' || wycaCurrentAction == 'editArea')
+		else if (wycaCurrentAction == 'addArea' || wycaCurrentAction == 'editArea' || wycaCurrentAction == 'moveArea')
 			WycaAreaCancel();
 		else if (wycaCurrentAction == 'addForbiddenArea' || wycaCurrentAction == 'editForbiddenArea')
 			WycaForbiddenCancel();		
@@ -449,16 +451,25 @@ $(document).ready(function()
 			touchStarted = true;
 			downOnMovable = true;
 			movableDown = $(this);
-			//wycaDownOnSVG_x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX);
-			//wycaDownOnSVG_y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY);
-			wycaDownOnSVG_x = parseFloat($(this).attr('x')) + parseFloat($(this).attr('width'))/2;
-			wycaDownOnSVG_y = parseFloat($(this).attr('y')) + parseFloat($(this).attr('height'))/2;
 			
-			p = $('#wyca_edit_map_svg image').position();
-			zoom = WycaGetZoom();
-			
-			wycaDownOnSVG_x = wycaDownOnSVG_x / zoom + p.left;
-			wycaDownOnSVG_y = wycaDownOnSVG_y / zoom + p.top;
+			if($(this).attr('x') == $(this).attr('y') && $(this).attr('y') == undefined){
+				//MOVING POLYGON
+				showPopupZoom = false;
+					
+				wycaDownOnSVG_x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX);
+				wycaDownOnSVG_y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY);
+			}else{
+				showPopupZoom = true;
+				wycaDownOnSVG_x = parseFloat($(this).attr('x')) + parseFloat($(this).attr('width'))/2;
+				wycaDownOnSVG_y = parseFloat($(this).attr('y')) + parseFloat($(this).attr('height'))/2;
+				
+				p = $('#wyca_edit_map_svg image').position();
+				zoom = WycaByStepGetZoom();
+				
+				wycaDownOnSVG_x = wycaDownOnSVG_x / zoom + p.left;
+				wycaDownOnSVG_y = wycaDownOnSVG_y / zoom + p.top;
+				
+			}
 			
 			WycaSaveElementNeeded(true);
 			
@@ -625,6 +636,25 @@ $(document).ready(function()
 				$('#wyca_edit_map .icon_menu[data-menu="wyca_edit_map_menu_area"]').show('fast');
 				setTimeout(function(){$('#wyca_edit_map .times_icon_menu').show('fast')},50);
 			}
+		}
+    });
+	
+	$('#wyca_edit_map_menu_area .bMoveArea').click(function(e) {
+        e.preventDefault();
+		//WycaHideMenus();
+		
+		if (wycaCanChangeMenu && wycaCurrentAction == 'editArea' && currentSelectedItem.length == 1 && currentSelectedItem[0].type == 'area' )
+		{
+			currentAreaIndex = GetAreaIndexFromID(currentAreaWycaLongTouch.data('id_area'));
+			area = areas[currentAreaIndex];
+			WycaHideMenus();
+			$('#wyca_edit_map .burger_menu').hide();
+			$('#wyca_edit_map .icon_menu[data-menu="wyca_edit_map_menu_area"]').show('fast');
+			WycaSaveElementNeeded(true);
+			wycaCanChangeMenu = false;
+			wycaCurrentAction = 'moveArea';
+			AddClass('#wyca_edit_map_svg .area_elem_'+currentSelectedItem[0].id, 'moving');
+			AddClass('#wyca_edit_map_svg polygon.area_elem_'+currentSelectedItem[0].id, 'movable');
 		}
     });
 	
@@ -4166,6 +4196,36 @@ $(document).ready(function()
 					wycaDownOnSVG_x = pageX;
 					wycaDownOnSVG_y = pageY;
 			   }
+			   else if (movableDown.data('element_type') == 'polygon_area')
+			   {
+					e.preventDefault();
+				    
+					area = GetAreaFromID(movableDown.data('id_area'));
+				   
+					pageX = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX);
+					pageY = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY);
+					
+					zoom = WycaGetZoom();
+					
+					deltaX = (wycaDownOnSVG_x - pageX) * zoom * ros_resolution / 100;
+					deltaY = (wycaDownOnSVG_y - pageY) * zoom * ros_resolution / 100;
+					area.points.forEach(function(item,idx){
+						item.x = item.x - deltaX;
+						item.y = item.y + deltaY;
+						area.points[idx] = item;
+					})
+					
+					/*
+					tempClass = movableDown.attr("class");
+					if(!tempClass.includes('editing_point'))
+						movableDown.attr("class",tempClass+' editing_point');
+					*/
+					
+					WycaTraceArea(GetAreaIndexFromID(movableDown.data('id_area')));
+				    
+					wycaDownOnSVG_x = pageX;
+					wycaDownOnSVG_y = pageY;
+			   }
 			}
 			else if (clickSelectSVG && wycaCurrentAction == 'select')
 			{
@@ -4945,6 +5005,27 @@ function WycaAreaSave(origin = false)
 		WycaSetModeSelect();
 		*/
 	}
+	else if (wycaCurrentAction == 'moveArea')
+	{
+		console.log('here',currentAreaIndex);
+		WycaSaveElementNeeded(false);
+		
+		WycaAddHistorique({'action':'edit_area', 'data':{'index':currentAreaIndex, 'old':saveCurrentArea, 'new':JSON.stringify(areas[currentAreaIndex])}});
+		
+		saveCurrentArea = JSON.stringify(areas[currentAreaIndex]);
+		
+		wycaCurrentAction = 'editArea';
+		RemoveClass('#wyca_edit_map_svg .moving ', 'moving');
+		RemoveClass('#wyca_edit_map_svg polygon.movable ', 'movable');
+		//WycaTraceArea(currentAreaIndex);
+		WycaDisplayMenu('wyca_edit_map_menu_area');
+		/*
+		RemoveClass('#wyca_edit_map_svg .moving', 'moving');
+		areas[currentAreaIndex] = JSON.parse(saveCurrentArea);
+		WycaTraceArea(currentAreaIndex);
+		wycaCurrentAction = 'editArea';
+		WycaDisplayMenu('wyca_edit_map_menu_area');*/
+	}
 }
 
 function WycaAreaCancel()
@@ -4973,7 +5054,14 @@ function WycaAreaCancel()
 		wycaCurrentAction = 'editArea';
 		WycaDisplayMenu('wyca_edit_map_menu_area');
 	}
-	
+	else if (wycaCurrentAction == 'moveArea')
+	{
+		RemoveClass('#wyca_edit_map_svg .moving', 'moving');
+		areas[currentAreaIndex] = JSON.parse(saveCurrentArea);
+		WycaTraceArea(currentAreaIndex);
+		wycaCurrentAction = 'editArea';
+		WycaDisplayMenu('wyca_edit_map_menu_area');
+	}
 	currentStep = '';
 	
 	$('#wyca_edit_map_boutonsArea').hide();
