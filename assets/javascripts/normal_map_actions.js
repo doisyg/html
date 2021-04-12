@@ -261,8 +261,8 @@ function NormalSaveElementNeeded(need)
 			$('#install_normal_edit_map_bPlusCurrentElem').show();
 		}
 		if(normalCurrentAction == "addArea"){
-			$('#install_normal_edit_map .bConfigArea').addClass('disabled');
-			$('#install_normal_edit_map .bDeleteArea').addClass('disabled');
+			$('#install_normal_map #install_normal_map_menu_area .btn-menu').addClass('disabled');
+			$('#install_normal_map #install_normal_map_menu_area .btn-menu[data-orientation="H"]').hide();
 		}
 	}
 	else
@@ -279,8 +279,8 @@ function NormalSaveElementNeeded(need)
 			$('#install_normal_edit_map .bDeleteForbidden').removeClass('disabled');
 		}
 		if(normalCurrentAction == "addArea"){
-			$('#install_normal_edit_map .bConfigArea').removeClass('disabled');
-			$('#install_normal_edit_map .bDeleteArea').removeClass('disabled');
+			$('#install_normal_map #install_normal_map_menu_area .btn-menu').removeClass('disabled');
+			$('#install_normal_map #install_normal_map_menu_area .btn-menu[data-orientation="H"]').show();
 		}
 	}
 }
@@ -595,6 +595,28 @@ $(document).ready(function() {
 			$('#install_normal_edit_map_container_all .modalAreaOptions .iro-colorpicker').hide();
 			
 			$('#install_normal_edit_map_container_all .modalAreaOptions').modal('show');
+		}
+    });
+	
+	$('#install_normal_edit_map_menu_area .bCopyArea').click(function(e) {
+        e.preventDefault();
+		//NormalHideMenus();
+		if (normalCurrentAction == "select" || normalCurrentAction == 'editArea')
+		{
+			currentAreaIndex = GetAreaIndexFromID(currentAreaNormalLongTouch.data('id_area'));
+			area = areas[currentAreaIndex];
+			tempAreaCopy = JSON.stringify(area);
+			NormalHideMenus();
+			if (normalCanChangeMenu)
+			{
+				//CURRENT ACTION TARGET
+				normalCurrentAction = 'prepareArea';
+				normalCanChangeMenu = false;
+				//AJOUT ICON MENU + CROIX
+				$('#install_normal_edit_map .burger_menu').hide('fast');
+				$('#install_normal_edit_map .icon_menu[data-menu="install_normal_edit_map_menu_area"]').show('fast');
+				setTimeout(function(){$('#install_normal_edit_map .times_icon_menu').show('fast')},50);
+			}
 		}
     });
 	
@@ -2028,29 +2050,57 @@ $(document).ready(function() {
 					tailleArea = 1*zoom;
 					tailleArea = 1;
 					
-					//AIM CENTER AREA
-					/* 
-					currentAreaPoints = Array();
-					currentAreaPoints.push({x:xRos - tailleArea, y:yRos - tailleArea});
-					currentAreaPoints.push({x:xRos + tailleArea, y:yRos - tailleArea});
-					currentAreaPoints.push({x:xRos + tailleArea, y:yRos + tailleArea});
-					currentAreaPoints.push({x:xRos - tailleArea, y:yRos + tailleArea});
-					*/
+					if(tempAreaCopy != false){
+						//AIM CENTER AREA
+						a = JSON.parse(tempAreaCopy);
+						let centerAreaCopy = findAreaCenter(a.points);
+						//console.log(centerAreaCopy);
+						//console.log(a.points);
+						currentAreaPoints = Array();
+						
+						a.points.forEach(function(item,idx){
+							let deltaX = centerAreaCopy.x - item.x;
+							let deltaY = centerAreaCopy.y - item.y;
+							currentAreaPoints[idx]={x:xRos - deltaX, y:yRos - deltaY};
+						})
+						
+						//console.log(findAreaCenter(currentAreaPoints));
+						//console.log(currentAreaPoints);
+						
+						
+						/*
+						currentAreaPoints.push({x:xRos - tailleArea, y:yRos - tailleArea});
+						currentAreaPoints.push({x:xRos + tailleArea, y:yRos - tailleArea});
+						currentAreaPoints.push({x:xRos + tailleArea, y:yRos + tailleArea});
+						currentAreaPoints.push({x:xRos - tailleArea, y:yRos + tailleArea});
+						*/
+						//FROM AREA COPY
+						
+						//console.log(JSON.parse(JSON.stringify(a)));
+						a.id_area = nextIdArea;
+						a.points = currentAreaPoints;
+						//console.log(JSON.parse(JSON.stringify(a)));
+						
+					}
+					else
+					{
+						//AIM TOP LEFT CORNER
 					
-					//AIM TOP LEFT CORNER
-					
-					currentAreaPoints = Array();
-					currentAreaPoints.push({x:xRos , y:yRos});
-					currentAreaPoints.push({x:xRos + 2*tailleArea, y:yRos});
-					currentAreaPoints.push({x:xRos + 2*tailleArea, y:yRos - 2*tailleArea});
-					currentAreaPoints.push({x:xRos, y:yRos - 2*tailleArea});
+						currentAreaPoints = Array();
+						currentAreaPoints.push({x:xRos , y:yRos});
+						currentAreaPoints.push({x:xRos + 2*tailleArea, y:yRos});
+						currentAreaPoints.push({x:xRos + 2*tailleArea, y:yRos - 2*tailleArea});
+						currentAreaPoints.push({x:xRos, y:yRos - 2*tailleArea});
+						
+						a = {'id_area':nextIdArea, 'id_map':id_map, 'name':'', 'comment':'', 'is_forbidden':false, 'color_r':87, 'color_g':159, 'color_b':177, 'deleted':false, 'points':currentAreaPoints, 'configs':Array()};
+					}
 
-					a = {'id_area':nextIdArea, 'id_map':id_map, 'name':'', 'comment':'', 'is_forbidden':false, 'color_r':87, 'color_g':159, 'color_b':177, 'deleted':false, 'points':currentAreaPoints, 'configs':Array()};
 					NormalAddHistorique({'action':'add_area', 'data':JSON.stringify(a)});
 					
 					areas.push(a);
 					NormalTraceArea(areas.length-1);
 					
+					RemoveClass('#install_normal_edit_map_svg .editing_point', 'editing_point');
 					RemoveClass('#install_normal_edit_map_svg .active', 'active');
 					RemoveClass('#install_normal_edit_map_svg .activ_select', 'activ_select'); 
 					
@@ -4788,6 +4838,19 @@ function NormalDeleteDock(indexInArray)
 
 
 // AREA FUNCS
+var tempAreaCopy = false;
+
+function findAreaCenter(points){
+	let _x = 0 ,_y = 0;
+	points.forEach(function(item,idx){
+		_x += item.x;
+		_y += item.y;
+	})
+	_x=_x/points.length;
+	_y=_y/points.length;
+	
+	return{'x':_x,'y':_y};
+}
 
 function NormalAreaSave(origin = false)
 {
@@ -4820,8 +4883,9 @@ function NormalAreaSave(origin = false)
 		normalCurrentAction = 'editArea';
 		RemoveClass('#install_normal_edit_map_svg .editing_point ', 'editing_point ');
 		NormalDisplayMenu('install_normal_edit_map_menu_area');
-		if(origin == 'save')
+		if(origin == 'save' && tempAreaCopy == false)
 			$('#install_normal_edit_map_menu_area .bConfigArea').click();
+		tempAreaCopy = false;
 	}
 	else if (normalCurrentAction == 'editArea')
 	{
@@ -4885,8 +4949,8 @@ function NormalAreaCancel()
 	$('#install_normal_edit_map_boutonsStandard').show();
 	blockZoom = false;
 	
-	//NormalSetModeSelect();
-	
+	if(tempAreaCopy != false)
+		tempAreaCopy = false;
 }
 
 function NormalDeleteArea(indexInArray)

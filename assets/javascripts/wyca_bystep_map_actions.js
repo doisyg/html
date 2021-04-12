@@ -2131,23 +2131,6 @@ $(document).ready(function() {
 					tailleArea = 1*zoom;
 					tailleArea = 1;
 					
-					//AIM CENTER AREA
-					/* 
-					currentAreaPoints = Array();
-					currentAreaPoints.push({x:xRos - tailleArea, y:yRos - tailleArea});
-					currentAreaPoints.push({x:xRos + tailleArea, y:yRos - tailleArea});
-					currentAreaPoints.push({x:xRos + tailleArea, y:yRos + tailleArea});
-					currentAreaPoints.push({x:xRos - tailleArea, y:yRos + tailleArea});
-					*/
-					
-					//AIM TOP LEFT CORNER
-					
-					currentAreaPoints = Array();
-					currentAreaPoints.push({x:xRos , y:yRos});
-					currentAreaPoints.push({x:xRos + 2*tailleArea, y:yRos});
-					currentAreaPoints.push({x:xRos + 2*tailleArea, y:yRos - 2*tailleArea});
-					currentAreaPoints.push({x:xRos, y:yRos - 2*tailleArea});
-					
 					if(tempAreaCopy != false){
 						//AIM CENTER AREA
 						a = JSON.parse(tempAreaCopy);
@@ -2198,6 +2181,7 @@ $(document).ready(function() {
 					areas.push(a);
 					WycaByStepTraceArea(areas.length-1);
 					
+					RemoveClass('#wyca_by_step_edit_map_svg .editing_point', 'editing_point');
 					RemoveClass('#wyca_by_step_edit_map_svg .active', 'active');
 					RemoveClass('#wyca_by_step_edit_map_svg .activ_select', 'activ_select'); 
 					

@@ -266,8 +266,8 @@ function WycaSaveElementNeeded(need)
 			$('#wyca_edit_map_bPlusCurrentElem').show();
 		}
 		if(wycaCurrentAction == "addArea"){
-			$('#wyca_edit_map .bConfigArea').addClass('disabled');
-			$('#wyca_edit_map .bDeleteArea').addClass('disabled');
+			$('#wyca_edit_map #wyca_edit_map_menu_area .btn-menu').addClass('disabled');
+			$('#wyca_edit_map #wyca_edit_map_menu_area .btn-menu[data-orientation="H"]').hide();
 		}
 	}
 	else
@@ -284,8 +284,8 @@ function WycaSaveElementNeeded(need)
 			$('#wyca_edit_map .bDeleteForbidden').removeClass('disabled');
 		}
 		if(wycaCurrentAction == "addArea"){
-			$('#wyca_edit_map .bConfigArea').removeClass('disabled');
-			$('#wyca_edit_map .bDeleteArea').removeClass('disabled');
+			$('#wyca_edit_map #wyca_edit_map_menu_area .btn-menu').removeClass('disabled');
+			$('#wyca_edit_map #wyca_edit_map_menu_area .btn-menu[data-orientation="H"]').show();
 		}
 	}
 }
@@ -603,6 +603,28 @@ $(document).ready(function()
 			$('#wyca_edit_map_container_all .modalAreaOptions .iro-colorpicker').hide();
 			
 			$('#wyca_edit_map_container_all .modalAreaOptions').modal('show');
+		}
+    });
+	
+	$('#wyca_edit_map_menu_area .bCopyArea').click(function(e) {
+        e.preventDefault();
+		//WycaHideMenus();
+		if (wycaCurrentAction == "select" || wycaCurrentAction == 'editArea')
+		{
+			currentAreaIndex = GetAreaIndexFromID(currentAreaWycaLongTouch.data('id_area'));
+			area = areas[currentAreaIndex];
+			tempAreaCopy = JSON.stringify(area);
+			WycaHideMenus();
+			if (wycaCanChangeMenu)
+			{
+				//CURRENT ACTION TARGET
+				wycaCurrentAction = 'prepareArea';
+				wycaCanChangeMenu = false;
+				//AJOUT ICON MENU + CROIX
+				$('#wyca_edit_map .burger_menu').hide('fast');
+				$('#wyca_edit_map .icon_menu[data-menu="wyca_edit_map_menu_area"]').show('fast');
+				setTimeout(function(){$('#wyca_edit_map .times_icon_menu').show('fast')},50);
+			}
 		}
     });
 	
@@ -2044,29 +2066,57 @@ $(document).ready(function()
 					tailleArea = 1*zoom;
 					tailleArea = 1;
 					
-					//AIM CENTER AREA
-					/* 
-					currentAreaPoints = Array();
-					currentAreaPoints.push({x:xRos - tailleArea, y:yRos - tailleArea});
-					currentAreaPoints.push({x:xRos + tailleArea, y:yRos - tailleArea});
-					currentAreaPoints.push({x:xRos + tailleArea, y:yRos + tailleArea});
-					currentAreaPoints.push({x:xRos - tailleArea, y:yRos + tailleArea});
-					*/
+					if(tempAreaCopy != false){
+						//AIM CENTER AREA
+						a = JSON.parse(tempAreaCopy);
+						let centerAreaCopy = findAreaCenter(a.points);
+						//console.log(centerAreaCopy);
+						//console.log(a.points);
+						currentAreaPoints = Array();
+						
+						a.points.forEach(function(item,idx){
+							let deltaX = centerAreaCopy.x - item.x;
+							let deltaY = centerAreaCopy.y - item.y;
+							currentAreaPoints[idx]={x:xRos - deltaX, y:yRos - deltaY};
+						})
+						
+						//console.log(findAreaCenter(currentAreaPoints));
+						//console.log(currentAreaPoints);
+						
+						
+						/*
+						currentAreaPoints.push({x:xRos - tailleArea, y:yRos - tailleArea});
+						currentAreaPoints.push({x:xRos + tailleArea, y:yRos - tailleArea});
+						currentAreaPoints.push({x:xRos + tailleArea, y:yRos + tailleArea});
+						currentAreaPoints.push({x:xRos - tailleArea, y:yRos + tailleArea});
+						*/
+						//FROM AREA COPY
+						
+						//console.log(JSON.parse(JSON.stringify(a)));
+						a.id_area = nextIdArea;
+						a.points = currentAreaPoints;
+						//console.log(JSON.parse(JSON.stringify(a)));
+						
+					}
+					else
+					{
+						//AIM TOP LEFT CORNER
 					
-					//AIM TOP LEFT CORNER
-					
-					currentAreaPoints = Array();
-					currentAreaPoints.push({x:xRos , y:yRos});
-					currentAreaPoints.push({x:xRos + 2*tailleArea, y:yRos});
-					currentAreaPoints.push({x:xRos + 2*tailleArea, y:yRos - 2*tailleArea});
-					currentAreaPoints.push({x:xRos, y:yRos - 2*tailleArea});
+						currentAreaPoints = Array();
+						currentAreaPoints.push({x:xRos , y:yRos});
+						currentAreaPoints.push({x:xRos + 2*tailleArea, y:yRos});
+						currentAreaPoints.push({x:xRos + 2*tailleArea, y:yRos - 2*tailleArea});
+						currentAreaPoints.push({x:xRos, y:yRos - 2*tailleArea});
+						
+						a = {'id_area':nextIdArea, 'id_map':id_map, 'name':'', 'comment':'', 'is_forbidden':false, 'color_r':87, 'color_g':159, 'color_b':177, 'deleted':false, 'points':currentAreaPoints, 'configs':Array()};
+					}
 
-					a = {'id_area':nextIdArea, 'id_map':id_map, 'name':'', 'comment':'', 'is_forbidden':false, 'color_r':87, 'color_g':159, 'color_b':177, 'deleted':false, 'points':currentAreaPoints, 'configs':Array()};
 					WycaAddHistorique({'action':'add_area', 'data':JSON.stringify(a)});
 					
 					areas.push(a);
 					WycaTraceArea(areas.length-1);
 					
+					RemoveClass('#wyca_edit_map_svg .editing_point', 'editing_point');
 					RemoveClass('#wyca_edit_map_svg .active', 'active');
 					RemoveClass('#wyca_edit_map_svg .activ_select', 'activ_select'); 
 					
@@ -4820,6 +4870,19 @@ function WycaDeleteDock(indexInArray)
 }
 
 // AREA FUNCS
+var tempAreaCopy = false;
+
+function findAreaCenter(points){
+	let _x = 0 ,_y = 0;
+	points.forEach(function(item,idx){
+		_x += item.x;
+		_y += item.y;
+	})
+	_x=_x/points.length;
+	_y=_y/points.length;
+	
+	return{'x':_x,'y':_y};
+}
 
 function WycaAreaSave(origin = false)
 {
@@ -4852,9 +4915,9 @@ function WycaAreaSave(origin = false)
 		wycaCurrentAction = 'editArea';
 		RemoveClass('#wyca_edit_map_svg .editing_point ', 'editing_point ');
 		WycaDisplayMenu('wyca_edit_map_menu_area');
-		if(origin == 'save')
+		if(origin == 'save' && tempAreaCopy == false)
 			$('#wyca_edit_map_menu_area .bConfigArea').click();
-		
+		tempAreaCopy = false;
 	}
 	else if (wycaCurrentAction == 'editArea')
 	{
@@ -4917,8 +4980,8 @@ function WycaAreaCancel()
 	$('#wyca_edit_map_boutonsStandard').show();
 	blockZoom = false;
 	
-	//WycaSetModeSelect();
-	
+	if(tempAreaCopy != false)
+		tempAreaCopy = false;
 }
 
 function WycaDeleteArea(indexInArray)
