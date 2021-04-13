@@ -391,6 +391,8 @@ $(document).ready(function() {
 			AreaSave('save');
 		else if (bystepCurrentAction == 'editArea')
 			AreaSave();
+		else if (bystepCurrentAction == 'moveArea')
+			AreaSave();
 		else if (bystepCurrentAction == 'addForbiddenArea' || bystepCurrentAction == 'editForbiddenArea')
 			ForbiddenSave();
 		
@@ -405,7 +407,7 @@ $(document).ready(function() {
 			AugmentedPoseCancel();
 		else if (bystepCurrentAction == 'addDock' || bystepCurrentAction == 'editDock')
 			DockCancel();
-		else if (bystepCurrentAction == 'addArea' || bystepCurrentAction == 'editArea')
+		else if (bystepCurrentAction == 'addArea' || bystepCurrentAction == 'editArea' || bystepCurrentAction == 'moveArea')
 			AreaCancel();
 		else if (bystepCurrentAction == 'addForbiddenArea' || bystepCurrentAction == 'editForbiddenArea')
 			ForbiddenCancel();	
@@ -444,16 +446,25 @@ $(document).ready(function() {
 			touchStarted = true;
 			downOnMovable = true;
 			movableDown = $(this);
-			//bystepDownOnSVG_x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX);
-			//bystepDownOnSVG_y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY);
-			bystepDownOnSVG_x = parseFloat($(this).attr('x')) + parseFloat($(this).attr('width'))/2;
-			bystepDownOnSVG_y = parseFloat($(this).attr('y')) + parseFloat($(this).attr('height'))/2;
 			
-			p = $('#install_by_step_edit_map_svg image').position();
-			zoom = ByStepGetZoom();
-			
-			bystepDownOnSVG_x = bystepDownOnSVG_x / zoom + p.left;
-			bystepDownOnSVG_y = bystepDownOnSVG_y / zoom + p.top;
+			if($(this).attr('x') == $(this).attr('y') && $(this).attr('y') == undefined){
+				//MOVING POLYGON
+				showPopupZoom = false;
+					
+				bystepDownOnSVG_x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX);
+				bystepDownOnSVG_y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY);
+			}else{	
+				showPopupZoom = true;
+				bystepDownOnSVG_x = parseFloat($(this).attr('x')) + parseFloat($(this).attr('width'))/2;
+				bystepDownOnSVG_y = parseFloat($(this).attr('y')) + parseFloat($(this).attr('height'))/2;
+				
+				p = $('#install_by_step_edit_map_svg image').position();
+				zoom = WycaByStepGetZoom();
+				
+				bystepDownOnSVG_x = bystepDownOnSVG_x / zoom + p.left;
+				bystepDownOnSVG_y = bystepDownOnSVG_y / zoom + p.top;
+				
+			}
 			
 			ByStepSaveElementNeeded(true);
 			
@@ -621,6 +632,25 @@ $(document).ready(function() {
 				$('#install_by_step_edit_map .icon_menu[data-menu="install_by_step_edit_map_menu_area"]').show('fast');
 				setTimeout(function(){$('#install_by_step_edit_map .times_icon_menu').show('fast')},50);
 			}
+		}
+    });
+	
+	$('#install_by_step_edit_map_menu_area .bMoveArea').click(function(e) {
+        e.preventDefault();
+		//ByStepHideMenus();
+		
+		if (bystepCanChangeMenu && bystepCurrentAction == 'editArea' && currentSelectedItem.length == 1 && currentSelectedItem[0].type == 'area' )
+		{
+			currentAreaIndex = GetAreaIndexFromID(currentAreaByStepLongTouch.data('id_area'));
+			area = areas[currentAreaIndex];
+			ByStepHideMenus();
+			$('#install_by_step_edit_map .burger_menu').hide();
+			$('#install_by_step_edit_map .icon_menu[data-menu="install_by_step_edit_map_menu_area"]').show('fast');
+			ByStepSaveElementNeeded(true);
+			bystepCanChangeMenu = false;
+			bystepCurrentAction = 'moveArea';
+			AddClass('#install_by_step_edit_map_svg .area_elem_'+currentSelectedItem[0].id, 'moving');
+			AddClass('#install_by_step_edit_map_svg polygon.area_elem_'+currentSelectedItem[0].id, 'movable');
 		}
     });
 	
@@ -4188,6 +4218,33 @@ $(document).ready(function() {
 					bystepDownOnSVG_x = pageX;
 					bystepDownOnSVG_y = pageY;
 			   }
+			   else if (movableDown.data('element_type') == 'polygon_area')
+			   {
+					e.preventDefault();
+				    //console.log(bystepDownOnSVG_x,bystepDownOnSVG_y)
+					
+					area = GetAreaFromID(movableDown.data('id_area'));
+				   
+					pageX = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX);
+					pageY = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY);
+					
+					//console.log(pageX,pageY)
+					
+					zoom = ByStepGetZoom();
+					
+					deltaX = (bystepDownOnSVG_x - pageX) * zoom * ros_resolution / 100;
+					deltaY = (bystepDownOnSVG_y - pageY) * zoom * ros_resolution / 100;
+					area.points.forEach(function(item,idx){
+						item.x = item.x - deltaX;
+						item.y = item.y + deltaY;
+						area.points[idx] = item;
+					})
+					
+					ByStepTraceArea(GetAreaIndexFromID(movableDown.data('id_area')));
+				    
+					bystepDownOnSVG_x = pageX;
+					bystepDownOnSVG_y = pageY;
+			   }
 			}
 			else if (clickSelectSVG && bystepCurrentAction == 'select')
 			{
@@ -4968,6 +5025,27 @@ function AreaSave(origin = false)
 		ByStepSetModeSelect();
 		*/
 	}
+	else if (bystepCurrentAction == 'moveArea')
+	{
+		//console.log('here',currentAreaIndex);
+		ByStepSaveElementNeeded(false);
+		
+		ByStepAddHistorique({'action':'edit_area', 'data':{'index':currentAreaIndex, 'old':saveCurrentArea, 'new':JSON.stringify(areas[currentAreaIndex])}});
+		
+		saveCurrentArea = JSON.stringify(areas[currentAreaIndex]);
+		
+		bystepCurrentAction = 'editArea';
+		RemoveClass('#install_by_step_edit_map_svg .moving ', 'moving');
+		RemoveClass('#install_by_step_edit_map_svg polygon.movable ', 'movable');
+		//ByStepTraceArea(currentAreaIndex);
+		ByStepDisplayMenu('install_by_step_edit_map_menu_area');
+		/*
+		RemoveClass('#install_by_step_edit_map_svg .moving', 'moving');
+		areas[currentAreaIndex] = JSON.parse(saveCurrentArea);
+		ByStepTraceArea(currentAreaIndex);
+		bystepCurrentAction = 'editArea';
+		ByStepDisplayMenu('by_step_edit_map_menu_area');*/
+	}
 }
 
 function AreaCancel()
@@ -4996,6 +5074,15 @@ function AreaCancel()
 		bystepCurrentAction = 'editArea';
 		ByStepDisplayMenu('install_by_step_edit_map_menu_area');
 	}
+	else if (bystepCurrentAction == 'moveArea')
+	{
+		RemoveClass('#install_by_step_edit_map_svg .moving', 'moving');
+		areas[currentAreaIndex] = JSON.parse(saveCurrentArea);
+		ByStepTraceArea(currentAreaIndex);
+		bystepCurrentAction = 'editArea';
+		ByStepDisplayMenu('install_by_step_edit_map_menu_area');
+	}
+	
 	
 	currentStep = '';
 	

@@ -4562,42 +4562,6 @@ $(document).ready(function() {
 			//currentStep='setDir';
 			//$('#wyca_by_step_edit_map_message_aide').html(textClickOnMapDir);
 		}
-		else if (wyca_bystepCurrentAction == 'moveArea')
-		{
-			p = $('#wyca_by_step_edit_map_svg image').position();
-			x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) - p.left;
-			y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) - p.top;
-			x = x * zoom;
-			y = ros_hauteur - (y * zoom);
-			
-			xRos = x * ros_resolution / 100;
-			yRos = y * ros_resolution / 100;
-			
-			currentAugmentedPosePose.approach_pose_x = xRos;
-			currentAugmentedPosePose.approach_pose_y = yRos;
-			currentAugmentedPosePose.approach_pose_t = 0;
-			
-			zoom = ros_largeur / $('#wyca_by_step_edit_map_svg').width() / window.panZoom.getZoom();		
-			p = $('#wyca_by_step_edit_map_svg image').position();
-			
-			
-			x = currentAugmentedPosePose.approach_pose_x * 100 / 5;
-			y = currentAugmentedPosePose.approach_pose_y * 100 / 5;
-			
-			x = x / zoom;
-			y = (ros_hauteur - y) / zoom;
-			
-			x = x + p.left;
-			y = y + p.top;
-			
-			$('#wyca_by_step_edit_map_boutonsRotate').css('left', x - $('#wyca_by_step_edit_map_boutonsRotate').width()/2);
-			$('#wyca_by_step_edit_map_boutonsRotate').css('top', y - 60);
-			$('#wyca_by_step_edit_map_boutonsRotate').show();
-			$('#wyca_by_step_edit_map_bAugmentedPoseSave').show();
-			
-			//currentStep='setDir';
-			//$('#wyca_by_step_edit_map_message_aide').html(textClickOnMapDir);
-		}
 		/*
 		else if (wyca_bystepCurrentAction == 'addPoi' && currentStep=='setDir')
 		{

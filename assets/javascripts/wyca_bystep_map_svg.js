@@ -353,9 +353,7 @@ function WycaByStepTraceArea(indexArea)
 	
 	is_moving = false;
 	if (downOnMovable && movableDown.data('element_type') == 'area')
-	{
 		index_point_movable = movableDown.data('index_point');
-	}
 	else if(downOnMovable && movableDown.data('element_type') == 'polygon_area')
 		is_moving = true;
 	else
