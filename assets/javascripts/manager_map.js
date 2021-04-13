@@ -434,9 +434,7 @@ $(document).ready(function(e) {
 			}
 			else
 			{
-				$('#manager_edit_map .burger_menu').removeClass('burger_menu_open');
-				RemoveClass('#manager_edit_map_svg .moving', 'moving');
-				RemoveClass('#manager_edit_map_svg .editing_point', 'editing_point');
+				
 				RemoveClass('#manager_edit_map_svg .active', 'active');
 				RemoveClass('#manager_edit_map_svg .activ_select', 'activ_select'); 
 				ManagerResizeSVG();
