@@ -388,6 +388,8 @@ $(document).ready(function() {
 			NormalAreaSave('save');
 		else if (normalCurrentAction == 'editArea')
 			NormalAreaSave();
+		else if (normalCurrentAction == 'moveArea')
+			NormalAreaSave();
 		else if (normalCurrentAction == 'addForbiddenArea' || normalCurrentAction == 'editForbiddenArea')
 			NormalForbiddenSave();		
     });
@@ -401,7 +403,7 @@ $(document).ready(function() {
 			NormalAugmentedPoseCancel();
 		else if (normalCurrentAction == 'addDock' || normalCurrentAction == 'editDock')
 			NormalDockCancel();
-		else if (normalCurrentAction == 'addArea' || normalCurrentAction == 'editArea')
+		else if (normalCurrentAction == 'addArea' || normalCurrentAction == 'editArea' || normalCurrentAction == 'moveArea')
 			NormalAreaCancel();
 		else if (normalCurrentAction == 'addForbiddenArea' || normalCurrentAction == 'editForbiddenArea')
 			NormalForbiddenCancel();		
@@ -440,16 +442,25 @@ $(document).ready(function() {
 			touchStarted = true;
 			downOnMovable = true;
 			movableDown = $(this);
-			//normalDownOnSVG_x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX);
-			//normalDownOnSVG_y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY);
-			normalDownOnSVG_x = parseFloat($(this).attr('x')) + parseFloat($(this).attr('width'))/2;
-			normalDownOnSVG_y = parseFloat($(this).attr('y')) + parseFloat($(this).attr('height'))/2;
 			
-			p = $('#install_normal_edit_map_svg image').position();
-			zoom = NormalGetZoom();
-			
-			normalDownOnSVG_x = normalDownOnSVG_x / zoom + p.left;
-			normalDownOnSVG_y = normalDownOnSVG_y / zoom + p.top;
+			if($(this).attr('x') == $(this).attr('y') && $(this).attr('y') == undefined){
+				//MOVING POLYGON
+				showPopupZoom = false;
+					
+				normalDownOnSVG_x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX);
+				normalDownOnSVG_y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY);
+			}else{	
+				showPopupZoom = true;
+				normalDownOnSVG_x = parseFloat($(this).attr('x')) + parseFloat($(this).attr('width'))/2;
+				normalDownOnSVG_y = parseFloat($(this).attr('y')) + parseFloat($(this).attr('height'))/2;
+				
+				p = $('#install_normal_edit_map_svg image').position();
+				zoom = WycaByStepGetZoom();
+				
+				normalDownOnSVG_x = normalDownOnSVG_x / zoom + p.left;
+				normalDownOnSVG_y = normalDownOnSVG_y / zoom + p.top;
+				
+			}
 			
 			NormalSaveElementNeeded(true);
 			
@@ -617,6 +628,25 @@ $(document).ready(function() {
 				$('#install_normal_edit_map .icon_menu[data-menu="install_normal_edit_map_menu_area"]').show('fast');
 				setTimeout(function(){$('#install_normal_edit_map .times_icon_menu').show('fast')},50);
 			}
+		}
+    });
+	
+	$('#install_normal_edit_map_menu_area .bMoveArea').click(function(e) {
+        e.preventDefault();
+		//NormalHideMenus();
+		
+		if (normalCanChangeMenu && normalCurrentAction == 'editArea' && currentSelectedItem.length == 1 && currentSelectedItem[0].type == 'area' )
+		{
+			currentAreaIndex = GetAreaIndexFromID(currentAreaNormalLongTouch.data('id_area'));
+			area = areas[currentAreaIndex];
+			NormalHideMenus();
+			$('#install_normal_edit_map .burger_menu').hide();
+			$('#install_normal_edit_map .icon_menu[data-menu="install_normal_edit_map_menu_area"]').show('fast');
+			NormalSaveElementNeeded(true);
+			normalCanChangeMenu = false;
+			normalCurrentAction = 'moveArea';
+			AddClass('#install_normal_edit_map_svg .area_elem_'+currentSelectedItem[0].id, 'moving');
+			AddClass('#install_normal_edit_map_svg polygon.area_elem_'+currentSelectedItem[0].id, 'movable');
 		}
     });
 	
@@ -4133,6 +4163,33 @@ $(document).ready(function() {
 					normalDownOnSVG_x = pageX;
 					normalDownOnSVG_y = pageY;
 			   }
+			   else if (movableDown.data('element_type') == 'polygon_area')
+			   {
+					e.preventDefault();
+				    //console.log(normalDownOnSVG_x,normalDownOnSVG_y)
+					
+					area = GetAreaFromID(movableDown.data('id_area'));
+				   
+					pageX = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX);
+					pageY = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY);
+					
+					//console.log(pageX,pageY)
+					
+					zoom = NormalGetZoom();
+					
+					deltaX = (normalDownOnSVG_x - pageX) * zoom * ros_resolution / 100;
+					deltaY = (normalDownOnSVG_y - pageY) * zoom * ros_resolution / 100;
+					area.points.forEach(function(item,idx){
+						item.x = item.x - deltaX;
+						item.y = item.y + deltaY;
+						area.points[idx] = item;
+					})
+					
+					NormalTraceArea(GetAreaIndexFromID(movableDown.data('id_area')));
+				    
+					normalDownOnSVG_x = pageX;
+					normalDownOnSVG_y = pageY;
+			   }
 			}
 			else if (clickSelectSVG && normalCurrentAction == 'select')
 			{
@@ -4913,6 +4970,27 @@ function NormalAreaSave(origin = false)
 		NormalSetModeSelect();
 		*/
 	}
+	else if (normalCurrentAction == 'moveArea')
+	{
+		//console.log('here',currentAreaIndex);
+		NormalSaveElementNeeded(false);
+		
+		NormalAddHistorique({'action':'edit_area', 'data':{'index':currentAreaIndex, 'old':saveCurrentArea, 'new':JSON.stringify(areas[currentAreaIndex])}});
+		
+		saveCurrentArea = JSON.stringify(areas[currentAreaIndex]);
+		
+		normalCurrentAction = 'editArea';
+		RemoveClass('#install_normal_edit_map_svg .moving ', 'moving');
+		RemoveClass('#install_normal_edit_map_svg polygon.movable ', 'movable');
+		//NormalTraceArea(currentAreaIndex);
+		NormalDisplayMenu('install_normal_edit_map_menu_area');
+		/*
+		RemoveClass('#install_normal_edit_map_svg .moving', 'moving');
+		areas[currentAreaIndex] = JSON.parse(saveCurrentArea);
+		NormalTraceArea(currentAreaIndex);
+		normalCurrentAction = 'editArea';
+		NormalDisplayMenu('install_normal_edit_map_menu_area');*/
+	}
 }
 
 function NormalAreaCancel()
@@ -4937,6 +5015,14 @@ function NormalAreaCancel()
 	else if (normalCurrentAction == 'editArea')
 	{
 		
+		areas[currentAreaIndex] = JSON.parse(saveCurrentArea);
+		NormalTraceArea(currentAreaIndex);
+		normalCurrentAction = 'editArea';
+		NormalDisplayMenu('install_normal_edit_map_menu_area');
+	}
+	else if (normalCurrentAction == 'moveArea')
+	{
+		RemoveClass('#install_normal_edit_map_svg .moving', 'moving');
 		areas[currentAreaIndex] = JSON.parse(saveCurrentArea);
 		NormalTraceArea(currentAreaIndex);
 		normalCurrentAction = 'editArea';

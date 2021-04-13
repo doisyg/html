@@ -224,7 +224,8 @@ function NormalDisplayBlockZoom()
 		if (t < 20) t = 20;
 		$('#install_normal_edit_map_zoom_popup').css('left', l);
 		$('#install_normal_edit_map_zoom_popup').css('top', t);
-		$('#install_normal_edit_map_zoom_popup').show();
+		if(!(typeof(showPopupZoom) != 'undefined' && !showPopupZoom))
+			$('#install_normal_edit_map_zoom_popup').show();
 		
 		/*
 		
