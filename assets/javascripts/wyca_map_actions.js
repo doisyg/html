@@ -461,7 +461,7 @@ $(document).ready(function()
 			if($(this).attr('x') == $(this).attr('y') && $(this).attr('y') == undefined){
 				//MOVING POLYGON
 				showPopupZoom = false;
-					
+
 				wycaDownOnSVG_x = (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX);
 				wycaDownOnSVG_y = (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY);
 			}else{
@@ -470,7 +470,7 @@ $(document).ready(function()
 				wycaDownOnSVG_y = parseFloat($(this).attr('y')) + parseFloat($(this).attr('height'))/2;
 				
 				p = $('#wyca_edit_map_svg image').position();
-				zoom = WycaByStepGetZoom();
+				zoom = WycaGetZoom();
 				
 				wycaDownOnSVG_x = wycaDownOnSVG_x / zoom + p.left;
 				wycaDownOnSVG_y = wycaDownOnSVG_y / zoom + p.top;
@@ -4174,7 +4174,11 @@ $(document).ready(function()
 					
 					movableDown.attr('x', forbidden.points[movableDown.data('index_point')].x * 100 / ros_resolution - 5);
 					movableDown.attr('y', ros_hauteur - (forbidden.points[movableDown.data('index_point')].y * 100 / ros_resolution) - 5); 
-				
+					
+					tempClass = movableDown.attr("class");
+					if(!tempClass.includes('editing_point'))
+						movableDown.attr("class",tempClass+' editing_point');
+					
 					WycaTraceForbidden(GetForbiddenIndexFromID(movableDown.data('id_area')));
 				    
 					wycaDownOnSVG_x = pageX;
@@ -4196,7 +4200,11 @@ $(document).ready(function()
 					
 					movableDown.attr('x', area.points[movableDown.data('index_point')].x * 100 / ros_resolution - 5);
 					movableDown.attr('y', ros_hauteur - (area.points[movableDown.data('index_point')].y * 100 / ros_resolution) - 5); 
-				
+					
+					tempClass = movableDown.attr("class");
+					if(!tempClass.includes('editing_point'))
+						movableDown.attr("class",tempClass+' editing_point');
+					
 					WycaTraceArea(GetAreaIndexFromID(movableDown.data('id_area')));
 				    
 					wycaDownOnSVG_x = pageX;
@@ -4220,12 +4228,6 @@ $(document).ready(function()
 						item.y = item.y + deltaY;
 						area.points[idx] = item;
 					})
-					
-					/*
-					tempClass = movableDown.attr("class");
-					if(!tempClass.includes('editing_point'))
-						movableDown.attr("class",tempClass+' editing_point');
-					*/
 					
 					WycaTraceArea(GetAreaIndexFromID(movableDown.data('id_area')));
 				    
