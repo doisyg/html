@@ -700,7 +700,9 @@ $(document).ready(function(e) {
 			}
 			else
 			{
-				
+				$('#wyca_edit_map .burger_menu').removeClass('burger_menu_open');
+				RemoveClass('#wyca_edit_map_svg .moving', 'moving');
+				RemoveClass('#wyca_edit_map_svg .editing_point', 'editing_point');
 				RemoveClass('#wyca_edit_map_svg .active', 'active');
 				RemoveClass('#wyca_edit_map_svg .activ_select', 'activ_select'); 
 				WycaResizeSVG();
