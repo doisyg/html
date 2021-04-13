@@ -502,6 +502,7 @@ $(document).ready(function(e) {
 				}
 				else
 				{
+					$('#install_normal_edit_map .burger_menu').removeClass('updatingMap');
 					ParseAPIAnswerError(data);
 				}
 			});

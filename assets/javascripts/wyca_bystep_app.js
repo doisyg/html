@@ -1542,6 +1542,7 @@ $(document).ready(function(e) {
 				}
 				else
 				{
+					$('#wyca_by_step_edit_map .burger_menu').removeClass('updatingMap');
 					ParseAPIAnswerError(data);
 				}
 			});

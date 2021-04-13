@@ -13,7 +13,7 @@ function GetInfosCurrentMapByStep()
 
 function GetInfosCurrentMapDoByStep()
 {
-	$('#install_by_step_edit_map .burger_menu ').addClass('updatingMap');
+	$('#install_by_step_edit_map .burger_menu').addClass('updatingMap');
 	wycaApi.GetCurrentMapComplete(function(data) {
 		if (data.A == wycaApi.AnswerCode.NO_ERROR)
 		{
@@ -133,7 +133,7 @@ function GetInfosCurrentMapDoByStep()
 				
 				bystepCanChangeMenu = true;
 				bystepCurrentAction = '';
-				$('#install_by_step_edit_map .burger_menu ').removeClass('updatingMap');
+				$('#install_by_step_edit_map .burger_menu').removeClass('updatingMap');
 				ByStepHideMenus();
 				
 			},500); 
@@ -144,7 +144,7 @@ function GetInfosCurrentMapDoByStep()
 		}
 		else
 		{
-			$('#install_by_step_edit_map .burger_menu ').removeClass('updatingMap');
+			$('#install_by_step_edit_map .burger_menu').removeClass('updatingMap');
 			ParseAPIAnswerError(data,textErrorInitMap);
 		}
 	});
