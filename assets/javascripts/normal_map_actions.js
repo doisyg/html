@@ -260,7 +260,7 @@ function NormalSaveElementNeeded(need)
 			$('#install_normal_edit_map .bDeleteForbidden').addClass('disabled');
 			$('#install_normal_edit_map_bPlusCurrentElem').show();
 		}
-		if(normalCurrentAction == "addArea" || normalCurrentAction == "editArea"){
+		if(normalCurrentAction == "addArea" || normalCurrentAction == "editArea" || normalCurrentAction == "moveArea"){
 			$('#install_normal_edit_map #install_normal_edit_map_menu_area .btn-menu').addClass('disabled');
 			$('#install_normal_edit_map #install_normal_edit_map_menu_area .btn-menu[data-orientation="H"]').hide();
 		}
@@ -275,10 +275,10 @@ function NormalSaveElementNeeded(need)
 		$('#install_normal_edit_map_bPlusCurrentElem').hide();
 		$('#install_normal_edit_map_bSaveCurrentElem').hide();
 		$('#install_normal_edit_map_bCancelCurrentElem').hide();
-		if(normalCurrentAction == "addForbiddenArea" || normalCurrentAction == "addForbiddenArea"){
+		if(normalCurrentAction == "addForbiddenArea" || normalCurrentAction == "editForbiddenArea"){
 			$('#install_normal_edit_map .bDeleteForbidden').removeClass('disabled');
 		}
-		if(normalCurrentAction == "addArea" || normalCurrentAction == "editArea"){
+		if(normalCurrentAction == "addArea" || normalCurrentAction == "editArea" || normalCurrentAction == "moveArea"){
 			$('#install_normal_edit_map #install_normal_edit_map_menu_area .btn-menu').removeClass('disabled');
 			$('#install_normal_edit_map #install_normal_edit_map_menu_area .btn-menu[data-orientation="H"]').show();
 		}
