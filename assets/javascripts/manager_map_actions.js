@@ -227,8 +227,11 @@ $(document).ready(function() {
 	
 	$('#manager_edit_map_bUndo').click(function(e) {
         e.preventDefault();
-		if (!$('#manager_edit_map_bUndo').hasClass('disabled'))
-			ManagerUndo();
+		if (!managerCanChangeMenu)
+			ManagerShakeActiveElement();
+		else
+			if (!$('#manager_edit_map_bUndo').hasClass('disabled'))
+				ManagerUndo();
 	});
 	/*
 	$('#manager_edit_map_bUndo').on('touchstart', function(e) { 
@@ -239,8 +242,11 @@ $(document).ready(function() {
 	*/
 	$('#manager_edit_map_bRedo').click(function(e) {
         e.preventDefault();
-		if (!$('#manager_edit_map_bRedo').hasClass('disabled'))
-			ManagerRedo();
+		if (!managerCanChangeMenu)
+			ManagerShakeActiveElement();
+		else
+			if (!$('#manager_edit_map_bRedo').hasClass('disabled'))
+				ManagerRedo();
     });
 	/*
 	$('#manager_edit_map_bRedo').on('touchstart', function(e) { 

@@ -1040,18 +1040,18 @@ function NormalShakeActiveElement()
 	if(!normalCanChangeMenu){
 		let ca = normalCurrentAction;
 		let target = '';
-		if(ca == 'addForbiddenArea' || ca == 'editForbiddenArea' || ca == 'editArea' || ca == 'addArea'){
+		if(ca == 'addForbiddenArea' || ca == 'editForbiddenArea' || ca == 'editArea' || ca == 'addArea' || ca == 'moveArea'){
 			//SHAKE BTN BLEU ORANGE
 			target = $('#install_normal_edit_map .btnSaveElem');
 		}else if(ca == 'prepareArea' || ca == 'prepareGotoPose' || ca == 'prepareForbiddenArea'){
 			target = $('#install_normal_edit_map .btn-circle.icon_menu:visible');
-			setTimeout(function(){$('#install_normal_edit_map .times_icon_menu').toggleClass('shake')},1000);
+			setTimeout(function(){$('#install_normal_edit_map .times_icon_menu').toggleClass('shake')},100);
 			setTimeout(function(){$('#install_normal_edit_map .times_icon_menu').toggleClass('shake')},3000);
 		}else if(ca == 'gomme'){
 			target = $('#install_normal_edit_map_bEndGomme');
 		}
 		if(target != ''){
-			setTimeout(function(){target.toggleClass('shake')},1000);
+			setTimeout(function(){target.toggleClass('shake')},100);
 			setTimeout(function(){target.toggleClass('shake')},3000);
 		}
 	}	

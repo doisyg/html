@@ -230,8 +230,11 @@ $(document).ready(function() {
 	
 	$('#user_edit_map_bUserUndo').click(function(e) {
         e.preventDefault();
-		if (!$('#user_edit_map_bUserUndo').hasClass('disabled'))
-			UserUndo();
+		if (!userCanChangeMenu)
+			UserShakeActiveElement();
+		else
+			if (!$('#user_edit_map_bUserUndo').hasClass('disabled'))
+				UserUndo();
 	});
 	/*
 	$('#user_edit_map_bUserUndo').on('touchstart', function(e) { 
@@ -242,8 +245,11 @@ $(document).ready(function() {
 	*/
 	$('#user_edit_map_bUserRedo').click(function(e) {
         e.preventDefault();
-		if (!$('#user_edit_map_bUserRedo').hasClass('disabled'))
-			UserRedo();
+		if (!userCanChangeMenu)
+			UserShakeActiveElement();
+		else
+			if (!$('#user_edit_map_bUserRedo').hasClass('disabled'))
+				UserRedo();
     });
 	/*
 	$('#user_edit_map_bUserRedo').on('touchstart', function(e) { 

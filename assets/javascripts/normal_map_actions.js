@@ -414,8 +414,11 @@ $(document).ready(function() {
 	
 	$('#install_normal_edit_map_bUndo').click(function(e) {
         e.preventDefault();
-		if (!$('#install_normal_edit_map_bUndo').hasClass('disabled'))
-			NormalUndo();
+		if (!normalCanChangeMenu)
+			NormalShakeActiveElement();
+		else
+			if (!$('#install_normal_edit_map_bUndo').hasClass('disabled'))
+				NormalUndo();
 	});
 	/*
 	$('#install_normal_edit_map_bUndo').on('touchstart', function(e) { 
@@ -426,8 +429,11 @@ $(document).ready(function() {
 	*/
 	$('#install_normal_edit_map_bRedo').click(function(e) {
         e.preventDefault();
-		if (!$('#install_normal_edit_map_bRedo').hasClass('disabled'))
-			NormalRedo();
+		if (!normalCanChangeMenu)
+			NormalShakeActiveElement();
+		else
+			if (!$('#install_normal_edit_map_bRedo').hasClass('disabled'))
+				NormalRedo();
     });
 	/*
 	$('#install_normal_edit_map_bRedo').on('touchstart', function(e) { 
