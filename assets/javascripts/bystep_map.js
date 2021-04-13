@@ -133,6 +133,7 @@ function GetInfosCurrentMapDoByStep()
 				
 				bystepCanChangeMenu = true;
 				bystepCurrentAction = '';
+				ByStepSaveElementNeeded(!bystepCanChangeMenu);
 				$('#install_by_step_edit_map .burger_menu').removeClass('updatingMap');
 				ByStepHideMenus();
 				

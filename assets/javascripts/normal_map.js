@@ -131,6 +131,7 @@ function GetInfosCurrentMapDoNormal()
 				
 				normalCanChangeMenu= true;
 				normalCurrentAction = '';
+				NormalSaveElementNeeded(!normalCanChangeMenu);
 				$('#install_normal_edit_map .burger_menu').removeClass('updatingMap');
 				NormalHideMenus();
 			},500);

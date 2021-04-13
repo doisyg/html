@@ -132,6 +132,7 @@ function GetInfosCurrentMapDoWycaByStep()
 				
 				wyca_bystepCanChangeMenu = true;
 				wyca_bystepCurrentAction = '';
+				WycaByStepSaveElementNeeded(!wyca_bystepCanChangeMenu);
 				$('#wyca_by_step_edit_map .burger_menu').removeClass('updatingMap');
 				WycaByStepHideMenus();
 				
