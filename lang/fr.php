@@ -651,6 +651,6 @@ $_LANG['d9925f1ee1fbf79dace5f58fcbefb78e'] = 'Il se peut que vous deviez choisir
 $_LANG['0172ad297374c5e2b221838b56fa274c'] = 'Sélectionnez la carte';
 $_LANG['db87111a800141eeb4083ae88d42a8d9'] = 'Êtes-vous sûr de vouloir passer sur ce site ?';
 $_LANG['3ea46fe23d03788e7cab31d1214ba887'] = 'Ce site possède plusieurs cartes';
-$_LANG['8149d609021280c0f8eba06b77b02ae7'] = 'Êtes-vous sûr de vouloir quitter?;';
+$_LANG['8149d609021280c0f8eba06b77b02ae7'] = 'Êtes-vous sûr de vouloir quitter?';
 
 ?>
