@@ -921,6 +921,9 @@ img.fi-robot{
 	transform: translate(0,-9px)rotate(-45deg);
 	
 }
+.burger_menu.updatingMap{
+	pointer-events:none;cursor:not-allowed;background:#a4a4a4;
+}
 .burger_menu_trait{
 	width: 30px;
     height: 5px;

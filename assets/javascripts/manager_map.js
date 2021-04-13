@@ -74,6 +74,7 @@ function GetInfosCurrentMapDoManager()
 				managerCanChangeMenu = true;
 				managerCurrentAction = '';
 				
+				$('#manager_edit_map .burger_menu').removeClass('updatingMap');
 				ManagerHideMenus();
 			},500);
 			$('#manager_edit_map .modal').not('.modalReloadMap').each(function(){$(this).modal('hide')});

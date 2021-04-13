@@ -1541,7 +1541,6 @@ $(document).ready(function(e) {
 				if (data.A == wycaApi.AnswerCode.NO_ERROR)
 				{
 					success_info_wyca((typeof(textMapSaved) != 'undefined'? textMapSaved : 'Map saved'));
-
 					// On reload la carte pour mettre à jours les ids
 					GetInfosCurrentMapByStep();
 					/*
@@ -1553,6 +1552,7 @@ $(document).ready(function(e) {
 				}
 				else
 				{
+					$('#install_by_step_edit_map .burger_menu').removeClass('updatingMap');
 					ParseAPIAnswerError(data);
 				}
 			});
