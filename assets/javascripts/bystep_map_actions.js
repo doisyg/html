@@ -259,11 +259,11 @@ function ByStepSaveElementNeeded(need)
 		$('#install_by_step_edit_map .times_icon_menu').hide()
 		$('#install_by_step_edit_map_bSaveCurrentElem').show();
 		$('#install_by_step_edit_map_bCancelCurrentElem').show();
-		if(bystepCurrentAction == "addForbiddenArea"){
+		if(bystepCurrentAction == "addForbiddenArea" || bystepCurrentAction == "editForbiddenArea"){
 			$('#install_by_step_edit_map .bDeleteForbidden').addClass('disabled');
 			$('#install_by_step_edit_map_bPlusCurrentElem').show();
 		}
-		if(bystepCurrentAction == "addArea"){
+		if(bystepCurrentAction == "addArea" || bystepCurrentAction == "editArea"){
 			$('#install_by_step_map #install_by_step_map_menu_area .btn-menu').addClass('disabled');
 			$('#install_by_step_map #install_by_step_map_menu_area .btn-menu[data-orientation="H"]').hide();
 		}
@@ -277,10 +277,10 @@ function ByStepSaveElementNeeded(need)
 		$('#install_by_step_edit_map_bPlusCurrentElem').hide();
 		$('#install_by_step_edit_map_bSaveCurrentElem').hide();
 		$('#install_by_step_edit_map_bCancelCurrentElem').hide();
-		if(bystepCurrentAction == "addForbiddenArea"){
+		if(bystepCurrentAction == "addForbiddenArea"|| bystepCurrentAction == "editForbiddenArea"){
 			$('#install_by_step_edit_map .bDeleteForbidden').removeClass('disabled');
 		}
-		if(bystepCurrentAction == "addArea"){
+		if(bystepCurrentAction == "addArea"|| bystepCurrentAction == "editArea"){
 			$('#install_by_step_map #install_by_step_map_menu_area .btn-menu').removeClass('disabled');
 			$('#install_by_step_map #install_by_step_map_menu_area .btn-menu[data-orientation="H"]').show();
 		}
