@@ -461,7 +461,7 @@ $(document).ready(function() {
 				normalDownOnSVG_y = parseFloat($(this).attr('y')) + parseFloat($(this).attr('height'))/2;
 				
 				p = $('#install_normal_edit_map_svg image').position();
-				zoom = WycaByStepGetZoom();
+				zoom = NormalGetZoom();
 				
 				normalDownOnSVG_x = normalDownOnSVG_x / zoom + p.left;
 				normalDownOnSVG_y = normalDownOnSVG_y / zoom + p.top;
@@ -4142,6 +4142,10 @@ $(document).ready(function() {
 					movableDown.attr('x', forbidden.points[movableDown.data('index_point')].x * 100 / ros_resolution - 5);
 					movableDown.attr('y', ros_hauteur - (forbidden.points[movableDown.data('index_point')].y * 100 / ros_resolution) - 5); 
 				
+					tempClass = movableDown.attr("class");
+					if(!tempClass.includes('editing_point'))
+						movableDown.attr("class",tempClass+' editing_point');
+						
 					NormalTraceForbidden(GetForbiddenIndexFromID(movableDown.data('id_area')));
 				    
 					normalDownOnSVG_x = pageX;
@@ -4164,6 +4168,10 @@ $(document).ready(function() {
 					movableDown.attr('x', area.points[movableDown.data('index_point')].x * 100 / ros_resolution - 5);
 					movableDown.attr('y', ros_hauteur - (area.points[movableDown.data('index_point')].y * 100 / ros_resolution) - 5); 
 				
+					tempClass = movableDown.attr("class");
+					if(!tempClass.includes('editing_point'))
+						movableDown.attr("class",tempClass+' editing_point');
+						
 					NormalTraceArea(GetAreaIndexFromID(movableDown.data('id_area')));
 				    
 					normalDownOnSVG_x = pageX;

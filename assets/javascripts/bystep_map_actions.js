@@ -465,7 +465,7 @@ $(document).ready(function() {
 				bystepDownOnSVG_y = parseFloat($(this).attr('y')) + parseFloat($(this).attr('height'))/2;
 				
 				p = $('#install_by_step_edit_map_svg image').position();
-				zoom = WycaByStepGetZoom();
+				zoom = ByStepGetZoom();
 				
 				bystepDownOnSVG_x = bystepDownOnSVG_x / zoom + p.left;
 				bystepDownOnSVG_y = bystepDownOnSVG_y / zoom + p.top;
