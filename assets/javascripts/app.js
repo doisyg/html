@@ -492,6 +492,7 @@ $(document).ready(function(e) {
 				
 				// NORMAL
 				
+				if (next == 'install_normal_switch_map_landmark') GetSwitchMapsNormal();
 				if (next == 'install_normal_setup_sites') GetSitesNormal();
 				if (next == 'install_normal_setup_export') GetSitesForExportNormal();
 				if (next == 'install_normal_setup_import') InitSiteImportNormal();
@@ -587,7 +588,9 @@ $(document).ready(function(e) {
 				if (next == 'wyca_by_step_service_book') GetServiceBooksWycaByStep();
 				
 				// MANAGER
+				if (next == 'manager_switch_map_landmark') GetSwitchMapsManager();
 				if (next == 'manager_setup_sites') GetSitesManager();
+				if (next == 'manager_setup_maps') GetMapsManager();
 				if (next == 'manager_edit_map') GetInfosCurrentMapManager();
 				if (next == 'manager_top') InitTopsActiveManager();
 				if (next == 'manager_users') GetUsersManager();
@@ -1073,6 +1076,45 @@ function GetSitesForExportNormal()
 
 // MAPS
 
+function GetMapsManager()
+{
+	$('.manager_setup_maps_loading').show();
+	$('#manager_setup_maps .loaded').hide();
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetCurrentMap(function(data) {
+			current_site = data.D.id_site;
+			current_map = data.D
+			wycaApi.GetMapsList(current_site,function(data) {
+				
+				$('#manager_setup_maps .list_maps').html('');
+				
+				if (data.D != undefined)
+				$.each(data.D,function(index, value){
+					if(value.name != ''){
+						let active = current_map.id_map == value.id_map?'active':'';
+						$('#manager_setup_maps .list_maps').append('' +
+							'<li id="manager_setup_maps_list_map_elem_'+value.id_map+'" data-id_map="'+value.id_map+'">'+
+							'	<span class="societe '+active+'">'+value.name+'</span>'+
+							(current_map.id_map != value.id_map?'	<a href="#" class="bMapDeleteElem btn_confirm_delete"><i class="fa fa-times"></i></a>':'')+
+							(current_map.id_map != value.id_map?'	<a href="#" class="btn btn-sm btn-circle btn-danger pull-right confirm_delete"><i class="fa fa-times"></i></a>':'')+
+							(current_map.id_map != value.id_map?'	<a href="#" class="bMapSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fa fa-check"></i></a>':'')+
+							'</li>'
+							);
+					}
+				});
+				
+				$('.manager_setup_maps_loading').hide();
+				$('#manager_setup_maps .loaded').show();
+			});
+		});
+	}
+	else
+	{
+		setTimeout(GetMapsManager, 500);
+	}
+}
+
 function GetMapsNormal()
 {
 	$('.install_normal_setup_maps_loading').show();
@@ -1149,6 +1191,82 @@ function GetMapsWyca()
 	else
 	{
 		setTimeout(GetMapsWyca, 500);
+	}
+}
+
+function GetSwitchMapsManager()
+{
+	$('.manager_switch_map_landmark_loading').show();
+	$('#manager_switch_map_landmark .loaded').hide();
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetCurrentMap(function(data) {
+			current_site = data.D.id_site;
+			current_map = data.D;
+			//console.log(current_map);
+			wycaApi.GetMapsList(current_site,function(data) {
+				
+				$('#manager_switch_map_landmark .list_switch_map_landmarks').html('');
+				
+				if (data.D != undefined)
+				$.each(data.D,function(index, value){
+					if(value.name != ''){
+						let active = current_map.id_map == value.id_map?'active':'';
+						$('#manager_switch_map_landmark .list_switch_map_landmarks').append('' +
+							'<li id="manager_switch_map_landmark_list_map_elem_'+value.id_map+'" data-id_map="'+value.id_map+'">'+
+							'	<span class="societe  '+active+'">'+value.name+'</span>'+
+							(current_map.id_map != value.id_map?'	<a href="#" class="bMapSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fas fa-exchange-alt"></i></a>':'')+
+							'</li>'
+							);
+					}
+				});
+				
+				$('.manager_switch_map_landmark_loading').hide();
+				$('#manager_switch_map_landmark .loaded').show();
+			});
+		});
+	}
+	else
+	{
+		setTimeout(GetSwitchMapsManager, 500);
+	}
+}
+
+function GetSwitchMapsNormal()
+{
+	$('.install_normal_switch_map_landmark_loading').show();
+	$('#install_normal_switch_map_landmark .loaded').hide();
+	if (wycaApi.websocketAuthed)
+	{
+		wycaApi.GetCurrentMap(function(data) {
+			current_site = data.D.id_site;
+			current_map = data.D;
+			//console.log(current_map);
+			wycaApi.GetMapsList(current_site,function(data) {
+				
+				$('#install_normal_switch_map_landmark .list_switch_map_landmarks').html('');
+				
+				if (data.D != undefined)
+				$.each(data.D,function(index, value){
+					if(value.name != ''){
+						let active = current_map.id_map == value.id_map?'active':'';
+						$('#install_normal_switch_map_landmark .list_switch_map_landmarks').append('' +
+							'<li id="install_normal_switch_map_landmark_list_map_elem_'+value.id_map+'" data-id_map="'+value.id_map+'">'+
+							'	<span class="societe  '+active+'">'+value.name+'</span>'+
+							(current_map.id_map != value.id_map?'	<a href="#" class="bMapSetCurrentElem btn btn-sm btn-circle btn-primary pull-right" style="margin-right:5px;"><i class="fas fa-exchange-alt"></i></a>':'')+
+							'</li>'
+							);
+					}
+				});
+				
+				$('.install_normal_switch_map_landmark_loading').hide();
+				$('#install_normal_switch_map_landmark .loaded').show();
+			});
+		});
+	}
+	else
+	{
+		setTimeout(GetSwitchMapsNormal, 500);
 	}
 }
 

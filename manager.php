@@ -10,11 +10,13 @@
                 <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile1" data-goto="manager_edit_map" href="#"><i class="fas fa-map-marked-alt"></i><?php echo __('Map');?></a></li>
                 <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="manager_move" href="#"><i class="fa fa-gamepad"></i><?php echo __('Control robot');?></a></li>
                 <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="manager_recovery" href="#"><i class="fa fa-search"></i><?php echo __('Recovery');?></a></li>
-                <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="manager_top" href="#"><i class="fa fa-refresh"></i><?php echo __('Change top');?></a></li>
-				<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5" data-goto="manager_setup_sites" href="#"><i class="fa fa-building"></i><?php echo __('Sites');?></a></li>
+				<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="manager_switch_map_landmark" href="#"><i class="fas fa-exchange-alt"></i><?php echo __('Switch map');?></a></li>
+                <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5" data-goto="manager_top" href="#"><i class="fa fa-refresh"></i><?php echo __('Change top');?></a></li>
+				<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" data-goto="manager_setup_sites" href="#"><i class="fa fa-building"></i><?php echo __('Sites');?></a></li>
+                <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7" data-goto="manager_setup_maps" href="#"><i class="fa fa-layer-group"></i><?php echo __('Maps');?></a></li>
                 <!-- <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" data-goto="manager_users" href="#"><i class="fa fa-group"></i><?php echo __('Users');?></a></li> -->
-                <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" href="logout.php"><i class="fas fa-power-off"></i><?php echo __('Logout');?></a></li>
-				<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7 todo" data-goto="manager_help" href="#"><i class="fa fa-question"></i><?php echo __('Help');?></a></li>
+                <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8" href="logout.php"><i class="fas fa-power-off"></i><?php echo __('Logout');?></a></li>
+				<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile9 todo" data-goto="manager_help" href="#"><i class="fa fa-question"></i><?php echo __('Help');?></a></li>
             </ul>
 			<div class="modal fade modalCurrentSite" id="manager_dashboard_modalCurrentSite" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
 				<div class="modal-dialog" role="dialog">
@@ -648,6 +650,36 @@
 			<a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="manager_dashboard"><?php echo __('Back');?></a>
 		</footer>
 	</section>
+
+	<section id="manager_setup_maps" class="page with_footer">
+		<a href="#" class="bBackButton button_goto" data-goto="manager_setup"></a>
+		<header>
+			<div class="pull-left"><img src="assets/images/logo.png" /></div>
+			<h2><?php echo __('Maps');?></h2>
+		</header>
+		<div class="content">
+			
+			<div class="manager_setup_maps_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
+			
+			<div class="loaded col-md-12" style="padding-top:30px;">
+				<ul class="list_maps list_elem">
+				</ul>
+			</div>
+			<div class="popupHelp">
+				<h2><?=__('Help')?></h2>
+				<div class="content sm-content text-left">
+					<p class=""><?= __('This page allow you to manage maps')?></p>
+					<p class=""><?= __('You can delete a map by clicking on the red cross icon.')?></p>
+					<p class=""><?= __('A confimation will be asked for each map you want to delete.')?></p>
+					<p class=""><?= __('You can switch map by clicking on the blue check icon of the map you want to load.')?></p>
+				</div>
+				<p class="legende"><?=__('Click to hide')?></p>
+			</div>
+		</div>
+		<footer>
+			<a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="manager_dashboard"><?php echo __('Back');?></a>
+		</footer>
+	</section>
 	
     <section id="manager_recovery" class="page with_footer">
         <header>
@@ -709,6 +741,110 @@
         </footer>
     </section>
     
+	<section id="manager_switch_map_landmark" class="page with_footer">
+		<a href="#" class="bBackButton button_goto" data-goto="manager_dashboard"></a>
+		<header>
+			<div class="pull-left"><img src="assets/images/logo.png" /></div>
+			<h2><?php echo __('Switch map');?></h2>
+		</header>
+		<div class="content">
+			<h4 style="text-align:center"><?php echo __('Switch map by placing the robot in front of landmark shared by maps.');?></h4>
+			<a href="#" class="bTeleop btn btn-lg btn-primary" style="transform:translateX(-50%);left:50%;position: relative;margin-top:30px;"><?= __('Teleop robot')?></a> 
+			<div class="manager_switch_map_landmark_loading loading_big" style="padding-top:30px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
+			<div class="loaded col-md-12" style="padding-top:30px;">
+				
+				<ul class="list_switch_map_landmarks list_elem">
+				</ul>
+				
+			</div>
+		
+			<div id="manager_switch_map_landmark_modalFeedback" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+				<div class="modal-dialog" role="dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<div class="actions mh100vh_55">
+								<div class="h100vh_160" style="overflow:auto; text-align:center;">
+									<div class="" style="text-align:center; margin-top:20px;"><a href="#" class="btn btn-danger btn-lg bCancelSwitchMap" style="display:none;"><?=__('Cancel Switch Map') ?></a></div>
+									<div class="manager_switch_map_landmark_feedback switch_map_feedback">
+										<hr style="border-top: 1px solid #909090;">
+										<div class="row switch_map_step SwitchMapScan" id="">
+											<div class="col-xs-10"><h5><?= __('Scan reflectors')?></h5></div>
+											<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+										</div>
+										<div class="row switch_map_step SwitchMapPose" id="">
+											<div class="col-xs-10"><h5><?= __('Robot position initiated')?></h5></div>
+											<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+										</div>
+										<div class="row switch_map_step SwitchMapSwitchMap" id="">
+											<div class="col-xs-10"><h5><?= __('Switch map')?></h5></div>
+											<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+										</div>
+										<div class="row switch_map_step SwitchMapStopNav" id="">
+											<div class="col-xs-10"><h5><?= __('Navigation stopped')?></h5></div>
+											<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+										</div>
+										<div class="row switch_map_step SwitchMapStartNav" id="">
+											<div class="col-xs-10"><h5><?= __('Navigation started')?></h5></div>
+											<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+										</div>
+										<hr style="border-top: 1px solid #909090;">
+									</div>
+								</div>
+								
+								<div style="clear:both;"></div>
+							   
+								<!--<a href="#" class="btn btn-primary btn_footer_left btn_100" data-dismiss="modal"><?php echo __('Close');?></a>-->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div id="manager_switch_map_landmark_modalTeleop" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+				<div class="modal-dialog" role="dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<div class="actions mh100vh_55">
+								<div class="h100vh_160" style="overflow:auto; text-align:center;">
+									
+									<div style="height:60px;"></div>
+									
+									<a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
+									<div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div>
+									<div class="ifUndocked">
+										
+										<div style="text-align:center; width:100%; z-index:2000; margin-top:50px;">
+											<div class="joystickDiv" draggable="false" style="margin:auto;">
+												<div class="fond"></div>
+												<div class="curseur"></div>
+											</div>
+										</div>
+									</div>
+									
+								</div>
+								
+								<div style="clear:both;"></div>
+							   
+								<a href="#" class="btn btn-primary btn_footer_left btn_100" data-dismiss="modal"><?php echo __('Close');?></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="popupHelp">
+				<h2><?=__('Help')?></h2>
+				<div class="content text-left">
+					<p class=""><?= __('This page allows you to manage switch between maps using landmarks.')?></p>
+				</div>
+				<p class="legende"><?=__('Click to hide')?></p>
+			</div>
+		</div>
+		<footer>
+			<a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="manager_dashboard"><?php echo __('Back');?></a>
+		</footer>
+	</section>
+	
 	<!--
     <section id="manager_users" class="page with_footer">
         <header>
