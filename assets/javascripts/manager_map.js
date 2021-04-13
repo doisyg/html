@@ -434,7 +434,8 @@ $(document).ready(function(e) {
 			}
 			else
 			{
-				
+				RemoveClass('#manager_edit_map_svg .moving', 'moving');
+				RemoveClass('#manager_edit_map_svg .editing_point', 'editing_point');
 				RemoveClass('#manager_edit_map_svg .active', 'active');
 				RemoveClass('#manager_edit_map_svg .activ_select', 'activ_select'); 
 				ManagerResizeSVG();

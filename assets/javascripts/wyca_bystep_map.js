@@ -751,7 +751,8 @@ $(document).ready(function(e) {
 			}
 			else
 			{
-				
+				RemoveClass('#wyca_by_step_edit_map_svg .moving', 'moving');
+				RemoveClass('#wyca_by_step_edit_map_svg .editing_point', 'editing_point');
 				RemoveClass('#wyca_by_step_edit_map_svg .active', 'active');
 				RemoveClass('#wyca_by_step_edit_map_svg .activ_select', 'activ_select'); 
 				WycaByStepResizeSVG();

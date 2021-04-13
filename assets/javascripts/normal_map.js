@@ -701,7 +701,8 @@ $(document).ready(function(e) {
 			}
 			else
 			{
-				
+				RemoveClass('#install_normal_edit_map_svg .moving', 'moving');
+				RemoveClass('#install_normal_edit_map_svg .editing_point', 'editing_point');
 				RemoveClass('#install_normal_edit_map_svg .active', 'active');
 				RemoveClass('#install_normal_edit_map_svg .activ_select', 'activ_select'); 
 				NormalResizeSVG();
