@@ -261,11 +261,11 @@ function WycaSaveElementNeeded(need)
 		$('#wyca_edit_map_bCancelCurrentElem').show();
 		$('#wyca_edit_map .times_icon_menu').addClass('dnone')
 		$('#wyca_edit_map .times_icon_menu').hide()
-		if(wycaCurrentAction == "addForbiddenArea"){
+		if(wycaCurrentAction == "addForbiddenArea" || wycaCurrentAction == "editForbiddenArea"){
 			$('#wyca_edit_map .bDeleteForbidden').addClass('disabled');
 			$('#wyca_edit_map_bPlusCurrentElem').show();
 		}
-		if(wycaCurrentAction == "addArea"){
+		if(wycaCurrentAction == "addArea" || wycaCurrentAction == "editArea"){
 			$('#wyca_edit_map #wyca_edit_map_menu_area .btn-menu').addClass('disabled');
 			$('#wyca_edit_map #wyca_edit_map_menu_area .btn-menu[data-orientation="H"]').hide();
 		}
@@ -280,10 +280,10 @@ function WycaSaveElementNeeded(need)
 		$('#wyca_edit_map_bPlusCurrentElem').hide();
 		$('#wyca_edit_map_bSaveCurrentElem').hide();
 		$('#wyca_edit_map_bCancelCurrentElem').hide();
-		if(wycaCurrentAction == "addForbiddenArea"){
+		if(wycaCurrentAction == "addForbiddenArea" || wycaCurrentAction == "editForbiddenArea"){
 			$('#wyca_edit_map .bDeleteForbidden').removeClass('disabled');
 		}
-		if(wycaCurrentAction == "addArea"){
+		if(wycaCurrentAction == "addArea" || wycaCurrentAction == "editArea"){
 			$('#wyca_edit_map #wyca_edit_map_menu_area .btn-menu').removeClass('disabled');
 			$('#wyca_edit_map #wyca_edit_map_menu_area .btn-menu[data-orientation="H"]').show();
 		}

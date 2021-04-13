@@ -256,13 +256,13 @@ function NormalSaveElementNeeded(need)
 		$('#install_normal_edit_map_bCancelCurrentElem').show();
 		$('#install_normal_edit_map .times_icon_menu').addClass('dnone')
 		$('#install_normal_edit_map .times_icon_menu').hide()
-		if(normalCurrentAction == "addForbiddenArea"){
+		if(normalCurrentAction == "addForbiddenArea" || normalCurrentAction == "editForbiddenArea"){
 			$('#install_normal_edit_map .bDeleteForbidden').addClass('disabled');
 			$('#install_normal_edit_map_bPlusCurrentElem').show();
 		}
-		if(normalCurrentAction == "addArea"){
-			$('#install_normal_map #install_normal_map_menu_area .btn-menu').addClass('disabled');
-			$('#install_normal_map #install_normal_map_menu_area .btn-menu[data-orientation="H"]').hide();
+		if(normalCurrentAction == "addArea" || normalCurrentAction == "editArea"){
+			$('#install_normal_edit_map #install_normal_edit_map_menu_area .btn-menu').addClass('disabled');
+			$('#install_normal_edit_map #install_normal_edit_map_menu_area .btn-menu[data-orientation="H"]').hide();
 		}
 	}
 	else
@@ -275,12 +275,12 @@ function NormalSaveElementNeeded(need)
 		$('#install_normal_edit_map_bPlusCurrentElem').hide();
 		$('#install_normal_edit_map_bSaveCurrentElem').hide();
 		$('#install_normal_edit_map_bCancelCurrentElem').hide();
-		if(normalCurrentAction == "addForbiddenArea"){
+		if(normalCurrentAction == "addForbiddenArea" || normalCurrentAction == "addForbiddenArea"){
 			$('#install_normal_edit_map .bDeleteForbidden').removeClass('disabled');
 		}
-		if(normalCurrentAction == "addArea"){
-			$('#install_normal_map #install_normal_map_menu_area .btn-menu').removeClass('disabled');
-			$('#install_normal_map #install_normal_map_menu_area .btn-menu[data-orientation="H"]').show();
+		if(normalCurrentAction == "addArea" || normalCurrentAction == "editArea"){
+			$('#install_normal_edit_map #install_normal_edit_map_menu_area .btn-menu').removeClass('disabled');
+			$('#install_normal_edit_map #install_normal_edit_map_menu_area .btn-menu[data-orientation="H"]').show();
 		}
 	}
 }
