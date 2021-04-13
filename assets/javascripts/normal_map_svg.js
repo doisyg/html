@@ -208,10 +208,11 @@ function NormalTraceArea(indexArea)
 		}
 	}
 	
+	is_moving = false;
 	if (downOnMovable && movableDown.data('element_type') == 'area')
-	{
 		index_point_movable = movableDown.data('index_point');
-	}
+	else if(downOnMovable && movableDown.data('element_type') == 'polygon_area')
+		is_moving = true;
 	else
 		$('#install_normal_edit_map_svg .area_elem_'+area.id_area).remove();
 	
@@ -228,24 +229,92 @@ function NormalTraceArea(indexArea)
 			area_point += x+','+y;
 		});
 		
-		$('#install_normal_edit_map_svg #install_normal_edit_map_area_'+area.id_area).remove();
-		
-		path = makeSVGElement('polygon', { points: area_point,
-							   'stroke-width': 0,
-							   'class':'poly area area_root poly_elem area_elem area_elem_'+area.id_area,
-							   'id':'install_normal_edit_map_area_'+area.id_area,
-							   'data-id_area': area.id_area
-							  });
-		path.style.fill = 'rgba('+area.color_r+','+area.color_g+','+area.color_b+',0.5)'
-		svgNormal.appendChild(path);
-		
-		lastPointIndex = points.length-1;
-		lastPoint = points[lastPointIndex];
-		$.each(points, function( indexPoint, point ) {
+		if(!is_moving){
+			// IF NOT MOVING REMOVE + REDRAW
+			$('#install_normal_edit_map_svg #install_normal_edit_map_area_'+area.id_area).remove();
 			
-			if (!downOnMovable || (index_point_movable != indexPoint || index_point_movable != lastPointIndex))
-			{
-				$('#install_normal_edit_map_svg #install_normal_edit_map_area_trait_'+area.id_area+'_'+indexPoint).remove();
+			path = makeSVGElement('polygon', { points: area_point,
+								   'stroke-width': 0,
+								   'class':'poly area area_root poly_elem area_elem area_elem_'+area.id_area,
+								   'id':'install_normal_edit_map_area_'+area.id_area,
+								   'data-element_type': 'polygon_area',
+								   'data-id_area': area.id_area
+								  });
+			path.style.fill = 'rgba('+area.color_r+','+area.color_g+','+area.color_b+',0.5)'
+			svgNormal.appendChild(path);
+			
+			lastPointIndex = points.length-1;
+			lastPoint = points[lastPointIndex];
+			$.each(points, function( indexPoint, point ) {
+				
+				if (!downOnMovable || (index_point_movable != indexPoint || index_point_movable != lastPointIndex))
+				{
+					$('#install_normal_edit_map_svg #install_normal_edit_map_area_trait_'+area.id_area+'_'+indexPoint).remove();
+					
+					x = point.x * 100 / ros_resolution;
+					y = ros_hauteur - (point.y * 100 / ros_resolution);
+					
+					x2 = lastPoint.x * 100 / ros_resolution;
+					y2 = ros_hauteur - (lastPoint.y * 100 / ros_resolution);
+					
+					path = makeSVGElement('line', { x1: x, y1:y, x2:x2, y2:y2,
+								   'stroke-width': downOnMovable?1:5,
+								   'class':'secable poly_elem area_elem area_elem_'+area.id_area,
+								   'id': 'install_normal_edit_map_area_trait_'+area.id_area+'_'+indexPoint,
+								   'data-id_area': area.id_area,
+								   'data-index_point': indexPoint,
+								   'data-element_type': 'area',
+								   'data-element': 'area'
+								  });
+					svgNormal.appendChild(path);
+				}
+				
+				lastPointIndex = indexPoint;
+				lastPoint = point;
+			});
+			
+			
+			$.each(points, function( indexPoint, point ) {
+				
+				if (!downOnMovable || index_point_movable != indexPoint)
+				{
+					$('#install_normal_edit_map_svg #install_normal_edit_map_area_'+area.id_area+'_'+indexPoint).remove();
+					
+					x = point.x * 100 / ros_resolution;
+					y = ros_hauteur - (point.y * 100 / ros_resolution);
+					
+					let	pointActiveClass = '';
+					if(typeof(currentPointNormalLongTouch) != 'undefined' && currentPointNormalLongTouch != null){
+						pointActiveClass = indexPoint == currentPointNormalLongTouch.data('index_point') ? ' editing_point' : '' ;
+					}
+					
+					
+					path = makeSVGElement('rect', { x: x-5, y:y-5, height:10, width:10,
+								   'stroke-width': minStokeWidth,
+								   'class':'movable point_deletable poly_elem area_elem area_elem_'+area.id_area+pointActiveClass,
+								   'id': 'install_normal_edit_map_area_'+area.id_area+'_'+indexPoint,
+								   'data-id_area': area.id_area,
+								   'data-index_point': indexPoint,
+								   'data-element_type': 'area',
+								   'data-element': 'area'
+								  });
+					svgNormal.appendChild(path);
+				}
+			});
+			
+			if (is_active)
+				AddClass('#install_normal_edit_map_svg .area_elem_'+area.id_area, 'active');
+		}else{
+			//MOVING MOVE X Y ACTUAL SVG ELEM
+			let svg_polygon = $('#install_normal_edit_map_area_'+area.id_area);
+			svg_polygon.attr('points',area_point);
+			
+			lastPointIndex = points.length-1;
+			lastPoint = points[lastPointIndex];
+			
+			$.each(points, function( indexPoint, point ) {
+				let svg_line = $('#install_normal_edit_map_svg #install_normal_edit_map_area_trait_'+area.id_area+'_'+indexPoint);
+				let svg_point = $('#install_normal_edit_map_svg #install_normal_edit_map_area_'+area.id_area+'_'+indexPoint);
 				
 				x = point.x * 100 / ros_resolution;
 				y = ros_hauteur - (point.y * 100 / ros_resolution);
@@ -253,53 +322,18 @@ function NormalTraceArea(indexArea)
 				x2 = lastPoint.x * 100 / ros_resolution;
 				y2 = ros_hauteur - (lastPoint.y * 100 / ros_resolution);
 				
-				path = makeSVGElement('line', { x1: x, y1:y, x2:x2, y2:y2,
-							   'stroke-width': downOnMovable?1:5,
-							   'class':'secable poly_elem area_elem area_elem_'+area.id_area,
-							   'id': 'install_normal_edit_map_area_trait_'+area.id_area+'_'+indexPoint,
-							   'data-id_area': area.id_area,
-							   'data-index_point': indexPoint,
-							   'data-element_type': 'area',
-							   'data-element': 'area'
-							  });
-				svgNormal.appendChild(path);
-			}
-			
-			lastPointIndex = indexPoint;
-			lastPoint = point;
-		});
-		
-		
-		$.each(points, function( indexPoint, point ) {
-			
-			if (!downOnMovable || index_point_movable != indexPoint)
-			{
-				$('#install_normal_edit_map_svg #install_normal_edit_map_area_'+area.id_area+'_'+indexPoint).remove();
+				svg_line.attr('x1',x);
+				svg_line.attr('y1',y);
+				svg_line.attr('x2',x2);
+				svg_line.attr('y2',y2);
 				
-				x = point.x * 100 / ros_resolution;
-				y = ros_hauteur - (point.y * 100 / ros_resolution);
+				svg_point.attr('x',x-5);
+				svg_point.attr('y',y-5);
 				
-				let	pointActiveClass = '';
-				if(typeof(currentPointNormalLongTouch) != 'undefined' && currentPointNormalLongTouch != null){
-					pointActiveClass = indexPoint == currentPointNormalLongTouch.data('index_point') ? ' editing_point' : '' ;
-				}
-				
-				
-				path = makeSVGElement('rect', { x: x-5, y:y-5, height:10, width:10,
-							   'stroke-width': minStokeWidth,
-							   'class':'movable point_deletable poly_elem area_elem area_elem_'+area.id_area+pointActiveClass,
-							   'id': 'install_normal_edit_map_area_'+area.id_area+'_'+indexPoint,
-							   'data-id_area': area.id_area,
-							   'data-index_point': indexPoint,
-							   'data-element_type': 'area',
-							   'data-element': 'area'
-							  });
-				svgNormal.appendChild(path);
-			}
-		});
-		
-		if (is_active)
-			AddClass('#install_normal_edit_map_svg .area_elem_'+area.id_area, 'active');
+				lastPointIndex = indexPoint;
+				lastPoint = point;
+			});
+		}
 	}
 }
 
@@ -743,53 +777,56 @@ var robot_traced_normal = false;
 
 function NormalTraceRobot(robot_x, robot_y, robot_theta)
 {	
-	if(robot_x == robot_y && robot_y == robot_theta && robot_x == 0 ){
-		$('#install_normal_edit_map_tRobotNotLocalised').show();
-		$('#install_normal_edit_map_robot_circle').remove();
-		$('#install_normal_edit_map_robot_sens').remove();
-		robot_traced_normal = false;
-	}else{
-		$('#install_normal_edit_map_tRobotNotLocalised').hide();
-		x = robot_x * 100 / ros_resolution;
-		y = ros_hauteur - (robot_y * 100 / ros_resolution);	
-		angle = 0 - robot_theta * 180 / Math.PI;
+	x = robot_x * 100 / ros_resolution;
+	y = ros_hauteur - (robot_y * 100 / ros_resolution);	
+	angle = 0 - robot_theta * 180 / Math.PI;
+	
+	rayonRobot = (26 / ros_resolution);
+	if (!robot_traced_normal)
+	{
+		robot_traced_normal = true;
 		
-		rayonRobot = (26 / ros_resolution);
-		
-		if (!robot_traced_normal)
-		{
-			robot_traced_normal = true;
-			
-			path = makeSVGElement('circle', { cx: x,
-											cy: y,
-										   r: rayonRobot,
-										   'class': 'robot_elem robot_elem_fond',
-										   'id': 'install_normal_edit_map_robot_circle',
-										   'data-element_type': 'robot',
-										   'data-element': 'robot'
-										   });
-			svgNormal.appendChild(path);
-		}
-		else
-		{
-			$('#install_normal_edit_map_robot_circle').attr("cx", x);
-			$('#install_normal_edit_map_robot_circle').attr("cy", y);
-		}
-		
-		$('#install_normal_edit_map_robot_sens').remove();
-		path = makeSVGElement('polyline', { 'points': (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2),
-										'stroke':'#FFFFFF',
-										'stroke-width':1,
-										'fill':'none',
-										'stroke-linejoin':'round',
-										'stroke-linecap':'round',
-									   'class': 'robot_elem',
-									   'transform':'rotate('+angle+', '+x+', '+y+')',
-									   'id': 'install_normal_edit_map_robot_sens',
+		path = makeSVGElement('circle', { cx: x,
+										cy: y,
+									   r: rayonRobot,
+									   'class': 'robot_elem robot_elem_fond',
+									   'id': 'install_normal_edit_map_robot_circle',
 									   'data-element_type': 'robot',
 									   'data-element': 'robot'
 									   });
-		$('#install_normal_edit_map_robot_circle').after(path);
+		svgNormal.appendChild(path);
+	}
+	else
+	{
+			
+		if(robot_x == robot_y && robot_y == robot_theta && robot_x == 0 ){
+			$('#install_normal_edit_map_tRobotNotLocalised').show();
+			$('#install_normal_edit_map_robot_circle').hide();
+			$('#install_normal_edit_map_robot_sens').hide();
+		}else{
+			
+			$('#install_normal_edit_map_robot_sens').remove();
+			path = makeSVGElement('polyline', { 'points': (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2),
+											'stroke':'#FFFFFF',
+											'stroke-width':1,
+											'fill':'none',
+											'stroke-linejoin':'round',
+											'stroke-linecap':'round',
+										   'class': 'robot_elem',
+										   'transform':'rotate('+angle+', '+x+', '+y+')',
+										   'id': 'install_normal_edit_map_robot_sens',
+										   'data-element_type': 'robot',
+										   'data-element': 'robot'
+										   });
+			$('#install_normal_edit_map_robot_circle').after(path);
+			
+			$('#install_normal_edit_map_robot_circle').attr("cx", x);
+			$('#install_normal_edit_map_robot_circle').attr("cy", y);
+			
+			$('#install_normal_edit_map_tRobotNotLocalised').hide();
+			$('#install_normal_edit_map_robot_circle').show();
+			$('#install_normal_edit_map_robot_sens').show();
+		}
 	}
 }
 

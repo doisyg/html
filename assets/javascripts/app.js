@@ -79,6 +79,7 @@ $(document).ready(function(e) {
 	
 	$('#bHeaderInfo').attr('onClick',"$('.global_sub_page.active section.active .popupHelp').toggle('fast')");
 	
+	//IRO COLOPICKER
 	$('.iro-colorpicker').each(function(){
 		let preview = $(this).parent().parent().find('.preview_color');
 		let input = $(this).parent().parent().find('input[type="text"]');
@@ -93,6 +94,12 @@ $(document).ready(function(e) {
 		});
 		
 		preview.on('click',function(){
+			if(validColor(input.val())){
+				if(input.val().indexOf('rgb') < 0)
+					colorPicker.color.hexString = input.val();
+				else
+					colorPicker.color.rgbString = input.val();
+			}
 			$('.iro-colorpicker').not(div).hide();
 			if(div.css('display') == 'none')
 				div.css('display','flex');
@@ -106,9 +113,17 @@ $(document).ready(function(e) {
 			else
 				div.css('display','none');
 		})
+		input.on('change',function(){
+			if(validColor(input.val())){
+				if(input.val().indexOf('rgb') < 0)
+					colorPicker.color.hexString = input.val();
+				else
+					colorPicker.color.rgbString = input.val();
+			}
+		})
 		colorPicker.on(['color:init', 'color:change'], function(color) {
 			preview.css('color',color.rgbString);
-			input.val(color.hexString);
+			input.val(color.rgbString);
 		});
 		
 	})
@@ -3622,6 +3637,17 @@ function success_info_wyca(text)
 {
 	$('#success_info_wyca p').html(text);
 	$('#success_info_wyca').show();
+}
+
+function validColor(str){
+	if(str.indexOf('#') == 0){
+		hex = str.substring(1);
+		return typeof hex === 'string' && hex.length === 6 && !isNaN(Number('0x' + hex));
+	}else if(str.indexOf('rgb') == 0){
+		rgb = str.substring(3).replace('(','').replace(')','').split(',');
+		return rgb.length === 3 && !isNaN(parseInt(rgb[0])) && rgb[0] >= 0 && rgb[0] <= 255&& !isNaN(parseInt(rgb[1])) && rgb[1] >= 0 && rgb[1] <= 255 && !isNaN(parseInt(rgb[2])) && rgb[2] >= 0 && rgb[2] <= 255;
+	}else 
+		return false;
 }
 
 function hexToRgb(hex)

@@ -276,7 +276,8 @@ function WycaByStepDisplayBlockZoom()
 		if (t < 20) t = 20;
 		$('#wyca_by_step_edit_map_zoom_popup').css('left', l);
 		$('#wyca_by_step_edit_map_zoom_popup').css('top', t);
-		$('#wyca_by_step_edit_map_zoom_popup').show();
+		if(!(typeof(showPopupZoom) != 'undefined' && !showPopupZoom))
+			$('#wyca_by_step_edit_map_zoom_popup').show();
 		
 		/*
 		
@@ -1027,18 +1028,18 @@ function WycaByStepShakeActiveElement()
 	if(!wyca_bystepCanChangeMenu){
 		let ca = wyca_bystepCurrentAction;
 		let target = '';
-		if(ca == 'addForbiddenArea' || ca == 'editForbiddenArea' || ca == 'editArea' || ca == 'addArea'){
+		if(ca == 'addForbiddenArea' || ca == 'editForbiddenArea' || ca == 'editArea' || ca == 'addArea' || ca == 'moveArea'){
 			//SHAKE BTN BLEU ORANGE
 			target = $('#wyca_by_step_edit_map .btnSaveElem');
 		}else if(ca == 'prepareArea' || ca == 'prepareGotoPose' || ca == 'prepareForbiddenArea'){
 			target = $('#wyca_by_step_edit_map .btn-circle.icon_menu:visible');
-			setTimeout(function(){$('#wyca_by_step_edit_map .times_icon_menu').toggleClass('shake')},1000);
+			setTimeout(function(){$('#wyca_by_step_edit_map .times_icon_menu').toggleClass('shake')},100);
 			setTimeout(function(){$('#wyca_by_step_edit_map .times_icon_menu').toggleClass('shake')},3000);
 		}else if(ca == 'gomme'){
 			target = $('#wyca_by_step_edit_map_bEndGomme');
 		}
 		if(target != ''){
-			setTimeout(function(){target.toggleClass('shake')},1000);
+			setTimeout(function(){target.toggleClass('shake')},100);
 			setTimeout(function(){target.toggleClass('shake')},3000);
 		}
 	}	

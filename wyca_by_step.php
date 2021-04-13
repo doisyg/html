@@ -792,7 +792,7 @@
                     <a href="#" id="wyca_by_step_edit_map_bCancelGomme" class="btn btn-circle btn-warning btn-menu"><i class="fa fa-times"></i></a>
                     <a href="#" id="wyca_by_step_edit_map_bSaveCurrentElem" class="btn btn-circle btn-primary btn-menu btnSaveElem"><i class="fa fa-check"></i></a>
                     <a href="#" id="wyca_by_step_edit_map_bCancelCurrentElem" class="btn btn-circle btn-warning btn-menu btnSaveElem"><i class="fa fa-times"></i></a>
-                    
+                    <a href="#" id="wyca_by_step_edit_map_bPlusCurrentElem" class="btn btn-circle btn-info btn-menu btnSaveElem"><i class="fa fa-plus"></i></a>
                     <a href="#" id="wyca_by_step_edit_map_bUndo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:20px; left:10px;"><i class="fas fa-undo-alt"></i></a>
                     <a href="#" id="wyca_by_step_edit_map_bRedo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:20px; left:45px;"><i class="fas fa-redo-alt"></i></a>
                     <span id="wyca_by_step_edit_map_tRobotNotLocalised" class="tRobotNotLocalised" style="display:none;"><i class="fas fa-exclamation-triangle"></i><?php echo __('The robot is not localized');?></span>
@@ -841,7 +841,9 @@
                     </div>
                     <div id="wyca_by_step_edit_map_menu_area" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-menu bMoveArea" data-orientation="H"><i class="fas fa-arrows-alt iconMenuGreen" style="position: relative;top:1px;font-size:26px"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-menu bConfigArea"><i class="fa fa-gears iconMenuBlue"></i></a></li>
+							<li><a href="#" class="btn btn-circle btn-default btn-menu bCopyArea"><i class="fa fa-copy iconMenuGreen"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-menu bDeleteArea"><i class="fa fa-trash iconMenuRed"></i></a></li>
                         </ul>
                     </div>
@@ -1102,6 +1104,12 @@
                                         <div class="h100vh_160" style="overflow:auto">
                                             <form>
                                                 <div class="form-group">
+                                                    <label class="col-xs-4 control-label"><?= __('Name')?></label>
+                                                    <div class="col-xs-8">
+                                                        <input type="text" id="wyca_by_step_edit_map_area_name" name="area_name" value="" class="form-control input-sm mb-md" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group sep">
                                                     <label class="col-xs-4 control-label"><?php echo __('Area Color');?></label>
                                                     <div class="col-xs-8">
                                                         <div id="wyca_by_step_edit_map_area_color_elem" class="input-group color input-group-sm">

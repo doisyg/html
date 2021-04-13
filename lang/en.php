@@ -639,5 +639,11 @@ $_LANG['53b47879e5406ac41e729856bbabcfa1'] = 'This page allow you to import a si
 $_LANG['1846f06a0ae617eed00fc5ef2281e610'] = 'Download Map';
 $_LANG['5c2a40a6776f7e0f3ee3210bbee07075'] = 'Download maps by clicking on the icon';
 $_LANG['666cbb24c2d5d4ec055108dff052d2d0'] = 'This page allow you to download a PNG file of your map by clicking on the correspondant icon.';
+$_LANG['3ea46fe23d03788e7cab31d1214ba887'] = 'This site has several maps';
+$_LANG['3b42fc26c3a579ba9b2d46cb7d33c6db'] = 'Choose the current map to load';
+$_LANG['db87111a800141eeb4083ae88d42a8d9'] = 'Are you sure to switch to this site ?';
+$_LANG['d9925f1ee1fbf79dace5f58fcbefb78e'] = 'You may have to choose the current map if loading a multi map site.';
+$_LANG['0154c65a07d5bff9727950a2d8deb877'] = 'This site has several maps.';
+$_LANG['8149d609021280c0f8eba06b77b02ae7'] = 'Are you sure you want to leave?';
 
 ?>

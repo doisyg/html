@@ -291,18 +291,22 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 .popupHelp ul li > div + span { margin-left:40px; }
 .popupHelp ul li .route {  width:40px; padding:7px!important;  position: absolute; top: 0px; left: -11px;}
 
+#install_by_step_edit_map_bPlusCurrentElem{ position:absolute; top:15px; left:160px;display:none; z-index:4;border-color:transparent;}
 #install_by_step_edit_map_bEndGomme, #install_by_step_edit_map_bSaveCurrentElem{ position:absolute; top:15px; left:70px;display:none; z-index:4;border-color:transparent;}
 #install_by_step_edit_map_bStop { position:absolute; bottom:15px; right:15px;display:none; z-index:4;border-color:transparent;}
 #install_by_step_edit_map_bCancelCurrentElem,#install_by_step_edit_map_bCancelGomme{ position:absolute; top:15px; left:115px; display:none; z-index:4;border-color:transparent;}
 
+#install_normal_edit_map_bPlusCurrentElem{ position:absolute; top:15px; left:160px;display:none; z-index:4;border-color:transparent;}
 #install_normal_edit_map_bEndGomme, #install_normal_edit_map_bSaveCurrentElem{ position:absolute; top:15px; left:70px;display:none; z-index:4;border-color:transparent;}
 #install_normal_edit_map_bStop { position:absolute; bottom:15px; right:15px;display:none; z-index:4;border-color:transparent;}
 #install_normal_edit_map_bCancelCurrentElem ,#install_normal_edit_map_bCancelGomme{ position:absolute; top:15px; left:115px; display:none; z-index:4;border-color:transparent;}
 
+#wyca_edit_map_bPlusCurrentElem{ position:absolute; top:15px; left:160px;display:none; z-index:4;border-color:transparent;}
 #wyca_edit_map_bEndGomme, #wyca_edit_map_bSaveCurrentElem{ position:absolute; top:15px; left:70px;display:none; z-index:4;border-color:transparent;}
 #wyca_edit_map_bStop { position:absolute; bottom:15px; right:15px;display:none; z-index:4;border-color:transparent;}
 #wyca_edit_map_bCancelCurrentElem ,#wyca_edit_map_bCancelGomme{ position:absolute; top:15px; left:115px; display:none; z-index:4;border-color:transparent;}
 
+#wyca_by_step_edit_map_bPlusCurrentElem{ position:absolute; top:15px; left:160px;display:none; z-index:4;border-color:transparent;}
 #wyca_by_step_edit_map_bEndGomme, #wyca_by_step_edit_map_bSaveCurrentElem{ position:absolute; top:15px; left:70px;display:none; z-index:4;border-color:transparent;}
 #wyca_by_step_edit_map_bStop { position:absolute; bottom:15px; right:15px;display:none; z-index:4;border-color:transparent;}
 #wyca_by_step_edit_map_bCancelCurrentElem,#wyca_by_step_edit_map_bCancelGomme{ position:absolute; top:15px; left:115px; display:none; z-index:4;border-color:transparent;}
@@ -642,7 +646,7 @@ ul.list_test li.done { color:#006600; border-color:#006600; }
 	left:0; 
 	right:unset; 
 	bottom:0px; 
-	font-size:26px;
+	font-size:22px;
 	border-radius:0px;
 	line-height:42px;
 }
@@ -651,7 +655,7 @@ ul.list_test li.done { color:#006600; border-color:#006600; }
 	left:unset; 
 	right:0; 
 	bottom:0px; 
-	font-size:26px;
+	font-size:22px;
 	border-radius:0px;
 	line-height:42px;
 }
@@ -1206,12 +1210,14 @@ div.icon_menu .iconForbiddenArea .fa-minus-circle{
 #MasterDockList .MasterDockItem i.fa-asterisk {position:absolute; top: 10px;left: 15px;color: darkorange;font-size:16px; padding:0;  }
 #MasterDockList .MasterDockItem p.dockname {margin-top: 0px;font-weight: 700;margin-bottom: 0;font-size: 14px;}
 
-#ImportSiteMapList .SelectMapItem {
+.modalSelectMap .SelectMapItem {
 	position: relative;
-    width: calc(100% - 30px);
+    /* width: calc(100% - 30px); */
+    width: 100%;
     height: calc(100% - 30px);
 }
-#ImportSiteMapList .SelectMapItem p.mapname {margin-top: 0px;font-weight: 700;margin-bottom: 0;font-size: 14px;}
+.modalSelectMap .SelectMapItem i.fa-map-marked-alt {color:#5bc0de;color:#589FB2;}
+.modalSelectMap .SelectMapItem p.mapname {margin-top: 0px;font-weight: 700;margin-bottom: 0;font-size: 14px;}
 
 .password_format{margin: 0;text-align: right;font-size: 12px;font-style: italic;margin-bottom: 10px;}
 .password_format ~ div.form-group{margin-bottom:0;}
@@ -1224,13 +1230,32 @@ h3.warningObstacleTeleopManager{
 	font-size:20px;
 	text-align: center;
 }
-.modalCurrentSite h3 span{
-	font-style:italic;
-	color:#343a40;
-}
+
 #modalConfirmDelete h3 span{
 	font-style:italic;
 	color:#343a40;
+}
+
+#modalConfirmSwitchSite h3 span{
+	font-style:italic;
+	font-size:20px;
+	color:#343a40;
+}
+
+#modalConfirmSwitchSite h3 span i.fas{
+	font-size: 35px;
+    line-height: 45px;
+}
+
+.modalCurrentSite h3 span{
+	font-style:italic;
+	font-size:20px;
+	color:#343a40;
+}
+
+.modalCurrentSite h3 span i.fas{
+	font-size: 35px;
+    line-height: 45px;
 }
 
 .list_switch_map_landmarks .active{
@@ -1367,7 +1392,7 @@ span.toggle_details{
     display: none;
     justify-content: flex-end;
     align-items: center;
-	margin-top: 5px;
+	margin-top: 10px;
 }
 
 .IroSlider{
