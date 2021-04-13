@@ -315,8 +315,8 @@ $(document).ready(function() {
 	window.addEventListener('beforeunload', function(e){
 		if (!bystepSavedCanClose)
 		{
-			(e || window.event).returnValue = 'Are you sure you want to leave?';
-			return 'Are you sure you want to leave?';
+			(e || window.event).returnValue = (typeof(textAreYouSureToLeave) !='undefined' ? textAreYouSureToLeave : (typeof(textAreYouSureToLeave) !='undefined' ? textAreYouSureToLeave : 'Are you sure you want to leave?'));
+			return (typeof(textAreYouSureToLeave) !='undefined' ? textAreYouSureToLeave : (typeof(textAreYouSureToLeave) !='undefined' ? textAreYouSureToLeave : 'Are you sure you want to leave?'));
 		}
 	});
 	

@@ -637,5 +637,6 @@ $_LANG['3b42fc26c3a579ba9b2d46cb7d33c6db'] = 'Choose the current map to load';
 $_LANG['db87111a800141eeb4083ae88d42a8d9'] = 'Are you sure to switch to this site ?';
 $_LANG['d9925f1ee1fbf79dace5f58fcbefb78e'] = 'You may have to choose the current map if loading a multi map site.';
 $_LANG['0154c65a07d5bff9727950a2d8deb877'] = 'This site has several maps.';
+$_LANG['8149d609021280c0f8eba06b77b02ae7'] = 'Are you sure you want to leave?';
 
 ?>
