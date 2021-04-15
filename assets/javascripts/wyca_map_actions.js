@@ -2105,7 +2105,7 @@ $(document).ready(function()
 					if(tempAreaCopy != false){
 						//AIM CENTER AREA
 						a = JSON.parse(tempAreaCopy);
-						let centerAreaCopy = findAreaCenter(a.points);
+						let centerAreaCopy = GetCenterArea(a.points);
 						//console.log(centerAreaCopy);
 						//console.log(a.points);
 						currentAreaPoints = Array();
@@ -2116,7 +2116,7 @@ $(document).ready(function()
 							currentAreaPoints[idx]={x:xRos - deltaX, y:yRos - deltaY};
 						})
 						
-						//console.log(findAreaCenter(currentAreaPoints));
+						//console.log(GetCenterArea(currentAreaPoints));
 						//console.log(currentAreaPoints);
 						
 						
@@ -4940,7 +4940,7 @@ function WycaDeleteDock(indexInArray)
 // AREA FUNCS
 var tempAreaCopy = false;
 
-function findAreaCenter(points){
+function GetCenterArea(points){
 	let _x = 0 ,_y = 0;
 	points.forEach(function(item,idx){
 		_x += item.x;
