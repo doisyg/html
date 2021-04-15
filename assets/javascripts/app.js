@@ -24,6 +24,10 @@ function change(state)
 		}
 	}
 }
+var minEBL = 5;
+var minMBL = 6;
+var defaultEBL = 15;
+var defaultMBL = 20;
 
 var vh = window.innerHeight * 0.01;
 document.documentElement.style.setProperty('--vh', vh+'px');
@@ -596,6 +600,34 @@ $(document).ready(function(e) {
     });
 	
 	/* ------------------------- GESTION BTN GOTO -----------------------*/
+	
+	/* CHECK EBL/MBL INPUTS */
+	
+	//EBL
+	$('input[name="i_level_min_gotocharge"]').change(function(){
+		let val = parseInt($(this).val());
+		if(isNaN(val)){
+			val = (typeof(defaultEBL) != 'undefined' ? defaultEBL : 15);
+		}else{
+			val = val < (typeof(minEBL) != 'undefined' ? minEBL : 6) ? (typeof(minEBL) != 'undefined' ? minEBL : 6) : val;
+			val = val > 100 ? 100 : val;
+		}
+		if(parseInt($(this).val()) != val)
+			$(this).val(val);
+	})
+	
+	//MBL
+	$('input[name="i_level_min_dotask"]').change(function(){
+		let val = parseInt($(this).val());
+		if(isNaN(val)){
+			val = (typeof(defaultMBL) != 'undefined' ? defaultMBL : 20);
+		}else{
+			val = val < (typeof(minMBL) != 'undefined' ? minMBL : 6) ? (typeof(minMBL) != 'undefined' ? minMBL : 6) : val;
+			val = val > 100 ? 100 : val;
+		}
+		if(parseInt($(this).val()) != val)
+			$(this).val(val);
+	})
 	
 	$(document).on('touchstart', '.ui-slider-handle', function(event) {
 		var self = this;

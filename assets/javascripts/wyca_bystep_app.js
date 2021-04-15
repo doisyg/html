@@ -1802,28 +1802,28 @@ $(document).ready(function(e) {
 	$('#pages_wyca_by_step .modalRealTestResult a.bUseRealTest').click(function(e) {
 		e.preventDefault();
 		let temp = battery_lvl_needed == 0?1:parseInt(battery_lvl_needed);
-		let ebl = temp+5;
-		let mbl = 2*temp;
-		mbl < ebl ? mbl = ebl + 5:'';
-		$('#wyca_by_step_config_i_level_min_gotocharge').val(ebl)
-		$('#wyca_by_step_config_i_level_min_dotask').val(mbl)
-		$('#pages_wyca_by_step .modalRealTestResult').modal('hide')
+		let EBL = temp+5;
+		let MBL = 2*temp;
+		MBL < EBL ? MBL = EBL + 5:'';
+		$('#wyca_by_step_config_i_level_min_gotocharge').val(EBL);
+		$('#wyca_by_step_config_i_level_min_dotask').val(MBL);
+		$('#pages_wyca_by_step .modalRealTestResult').modal('hide');
     });
 	
 	$('section#wyca_by_step_config a.bResetValueEblMbl').click(function(e) {
 		
-		$('#wyca_by_step_config_i_level_min_gotocharge').val(15)
-		$('#wyca_by_step_config_i_level_min_dotask').val(20)
+		$('#wyca_by_step_config_i_level_min_gotocharge').val((typeof(defaultEBL) != 'undefined'? defaultEBL : 15));
+		$('#wyca_by_step_config_i_level_min_gotocharge').val((typeof(defaultMBL) != 'undefined'? defaultMBL : 20));
     });
 	
 	//AJAX INSTALL STEP CALL
 	$('#wyca_by_step_config .bConfigurationSave').click(function(e) {
 		let EBL = parseInt($('#wyca_by_step_config_i_level_min_gotocharge').val());
 		let MBL = parseInt($('#wyca_by_step_config_i_level_min_dotask').val());
-		EBL = EBL > 100 ? 15 : EBL;
+		/*EBL = EBL > 100 ? 15 : EBL;
 		EBL = EBL < 0 ? 15 : EBL;
 		MBL = MBL > 100 ? 20 : MBL;
-		MBL = MBL < 0 ? 20 : MBL;
+		MBL = MBL < 0 ? 20 : MBL;*/
 		wycaApi.SetEnergyConfiguration(EBL,MBL, function(data) {
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
