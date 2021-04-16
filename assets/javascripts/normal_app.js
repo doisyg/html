@@ -846,7 +846,9 @@ $(document).ready(function(e) {
 			else
 			{
 				id_map_to_switch = -1;
-				if(data.D.length >= 2){
+				let nb_maps_w_name = 0;
+				data.D.forEach((element) => {if(element.name != '')nb_maps_w_name++;});
+				if(nb_maps_w_name >= 2){
 					$('#install_normal_setup_sites .modalSelectMap .list_maps').html('');
 					$.each(data.D,function(idx,item){
 						if(item.name != ''){
