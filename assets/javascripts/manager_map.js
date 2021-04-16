@@ -688,6 +688,14 @@ function ManagerInitMap()
 	, RefreshMap: function() { setTimeout(ManagerRefreshZoomView, 10); }
 	});
 	
+	if(init_zoom){
+		//WORKING ON CONSOLE 
+		window.panZoomManager.resize();
+		window.panZoomManager.updateBBox();
+		window.panZoomManager.fit();
+		window.panZoomManager.center();
+	}
+	
 	svgManager = document.querySelector('#manager_edit_map_svg .svg-pan-zoom_viewport');
 	
 	//window.panZoomManager = {};
@@ -703,7 +711,7 @@ function ManagerInitMap()
 			window.panZoomManager.center();
 		}
 		$('.manager_edit_map_loading').hide();
-	},100);
+	},200);
 }
 
 function ManagerShakeActiveElement()

@@ -1020,6 +1020,13 @@ function WycaInitMap()
 	, RefreshMap: function() { setTimeout(WycaRefreshZoomView, 10); }
 	});
 	
+	if(init_zoom){
+		//WORKING ON CONSOLE 
+		window.panZoomWyca.resize();
+		window.panZoomWyca.updateBBox();
+		window.panZoomWyca.fit();
+		window.panZoomWyca.center();
+	}
 	svgWyca = document.querySelector('#wyca_edit_map_svg .svg-pan-zoom_viewport');
 	
 	//window.panZoomWyca = {};
@@ -1035,7 +1042,7 @@ function WycaInitMap()
 			window.panZoomWyca.center();
 		}
 		$('.wyca_edit_map_loading').hide();
-	},100);
+	},200);
 }
 
 function WycaShakeActiveElement()

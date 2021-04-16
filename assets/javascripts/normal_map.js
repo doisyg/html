@@ -1021,6 +1021,14 @@ function NormalInitMap()
 	, RefreshMap: function() { setTimeout(NormalRefreshZoomView, 10); }
 	});
 	
+	if(init_zoom){
+		//WORKING ON CONSOLE 
+		window.panZoomNormal.resize();
+		window.panZoomNormal.updateBBox();
+		window.panZoomNormal.fit();
+		window.panZoomNormal.center();
+	}
+	
 	svgNormal = document.querySelector('#install_normal_edit_map_svg .svg-pan-zoom_viewport');
 	
 	NormalRefreshZoomView();
@@ -1034,7 +1042,7 @@ function NormalInitMap()
 			window.panZoomNormal.center();
 		}
 		$('.install_normal_edit_map_loading').hide();
-	},100);
+	},200);
 }
 
 function NormalShakeActiveElement()

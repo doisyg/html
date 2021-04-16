@@ -1007,6 +1007,14 @@ function WycaByStepInitMap()
 	, RefreshMap: function() { setTimeout(RefreshZoomView, 10); }
 	});
 	
+	if(init_zoom){
+		//WORKING ON CONSOLE 
+		window.panZoom.resize();
+		window.panZoom.updateBBox();
+		window.panZoom.fit();
+		window.panZoom.center();
+	}
+	
 	svgWycaByStep = document.querySelector('#wyca_by_step_edit_map_svg .svg-pan-zoom_viewport');
 	
 	//window.panZoom = {};
@@ -1022,7 +1030,7 @@ function WycaByStepInitMap()
 			window.panZoom.center();
 		}
 		$('.wyca_by_step_edit_map_loading').hide();
-	},100);
+	},200);
 }
 
 function WycaByStepShakeActiveElement()
