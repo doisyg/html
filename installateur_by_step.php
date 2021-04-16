@@ -843,7 +843,7 @@
                     	<ul>
 							<li><a href="#" class="btn btn-circle btn-default btn-menu bMoveArea" data-orientation="H"><i class="fas fa-arrows-alt iconMenuGreen" style="position: relative;top:1px;font-size:26px"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-menu bConfigArea"><i class="fa fa-gears iconMenuBlue"></i></a></li>
-							<li><a href="#" class="btn btn-circle btn-default btn-menu bCopyArea"><i class="fa fa-copy iconMenuGreen"></i></a></li>
+							<li><a href="#" class="btn btn-circle btn-default btn-menu bCopyArea"><i class="fa fa-cloneiconMenuGreen"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-menu bDeleteArea"><i class="fa fa-trash iconMenuRed"></i></a></li>
                         </ul>
                     </div>
