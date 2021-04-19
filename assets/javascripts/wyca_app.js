@@ -792,16 +792,14 @@ $(document).ready(function(e) {
 		})
 		data = GetDataMapToSave();
 		wycaApi.SetCurrentMapData(data, function(data){
+			$('#pages_wyca_normal .modalMasterDock').modal('hide');
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
-				$('#pages_wyca_normal .modalMasterDock .bCloseMasterDock').click();
 				success_wyca(textSiteImported);
 				$('#pages_wyca_normal #wyca_setup_import .bImportSiteBack').click();
 			}else{
-				$('#pages_wyca_normal .modalMasterDock .bCloseMasterDock').click();
 				ParseAPIAnswerError(data);
 				InitSiteImportWyca();
-				
 			}
 		})		
 	})

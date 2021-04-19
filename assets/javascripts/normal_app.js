@@ -803,16 +803,14 @@ $(document).ready(function(e) {
 		})
 		data = GetDataMapToSave();
 		wycaApi.SetCurrentMapData(data, function(data){
+			$('#pages_install_normal .modalMasterDock').modal('hide');
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
-				$('#pages_install_normal .modalMasterDock .bCloseMasterDock').click();
 				success_wyca(textSiteImported);
 				$('#pages_install_normal #install_normal_setup_import .bImportSiteBack').click();
 			}else{
-				$('#pages_install_normal .modalMasterDock .bCloseMasterDock').click();
 				ParseAPIAnswerError(data);
 				InitSiteImportNormal();
-				
 			}
 		})		
 	})

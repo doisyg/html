@@ -831,6 +831,10 @@ function InitSiteImportWyca()
 	
 	$('#pages_wyca_normal .wyca_setup_import_loading').hide();
 	$('#pages_wyca_normal .wyca_setup_import_content').show();
+	
+	$('#pages_wyca_normal #wyca_normal_setup_import .modalSelectMap').modal('hide');
+	$('#pages_wyca_normal #wyca_normal_setup_import .modalMasterDock').modal('hide');
+
 }
 
 function InitSiteImportWycaByStep()
@@ -853,6 +857,10 @@ function InitSiteImportNormal()
 	
 	$('#pages_install_normal .install_normal_setup_import_loading').hide();
 	$('#pages_install_normal .install_normal_setup_import_content').show();
+	
+	$('#pages_install_normal #install_normal_setup_import .modalSelectMap').modal('hide');
+	$('#pages_install_normal #install_normal_setup_import .modalMasterDock').modal('hide');
+
 }
 
 function InitSiteImportByStep()
@@ -864,6 +872,242 @@ function InitSiteImportByStep()
 	
 	$('#pages_install_by_step .install_by_step_setup_import_loading').hide();
 	$('#pages_install_by_step .install_by_step_setup_import_content').show();
+}
+
+// MASTER DOCK
+
+function InitMasterDockWyca()
+{
+	$('#pages_wyca_normal .modalMasterDock #MasterDockList').html('');
+	$('#pages_wyca_normal .modalMasterDock .MasterDock_loading').show();
+	$('#pages_wyca_normal .modalMasterDock').modal('show');
+	
+	if(docks != 'undefined' && docks.length > 1){
+		$.each(docks,function(idx,item){
+			let master_dock="";
+			master_dock+='<div class="col-xs-6 text-center">';
+			master_dock+='	<div class="MasterDockItem btn bTuile" id="'+item.id_docking_station+'">';
+			master_dock+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
+			master_dock+='		<i class="fas fa-charging-station"></i>';
+			master_dock+='		<p class="dockname">'+item.name+'</p>';
+			master_dock+='   </div>';
+			master_dock+='</div>';
+			$('#pages_wyca_normal #MasterDockList').append(master_dock);
+		});
+		$('#pages_wyca_normal .MasterDock_loading').hide();
+	}else{
+		if (wycaApi.websocketAuthed){
+			wycaApi.GetCurrentMapData(function(data){
+				if (data.A == wycaApi.AnswerCode.NO_ERROR){
+					if(data.D.docks.length <= 1){
+						$('#pages_wyca_normal #wyca_setup_import .bImportSiteBack').click();
+					}else{
+						id_map = data.D.id_map;
+						id_map_last = data.D.id_map;
+						forbiddens = data.D.forbiddens;
+						areas = data.D.areas;
+						docks = data.D.docks;
+						pois = data.D.pois;
+						augmented_poses = data.D.augmented_poses;
+						
+						$.each(docks,function(idx,item){
+							let master_dock="";
+							master_dock+='<div class="col-xs-6 text-center">';
+							master_dock+='	<div class="MasterDockItem btn bTuile" id="'+item.id_docking_station+'">';
+							master_dock+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
+							master_dock+='		<i class="fas fa-charging-station"></i>';
+							master_dock+='		<p class="dockname">'+item.name+'</p>';
+							master_dock+='   </div>';
+							master_dock+='</div>';
+							$('#pages_wyca_normal #MasterDockList').append(master_dock);
+						});
+						$('#pages_wyca_normal .MasterDock_loading').hide();
+					}
+				}else{
+					ParseAPIAnswerError(data);
+				}
+			})
+		}else{
+			setTimeout(InitMasterDockWyca, 500);
+		}
+	}
+}
+
+function InitMasterDockWycaByStep(back = false)
+{
+	$('#pages_wyca_by_step #MasterDockList').html('');
+	$('#pages_wyca_by_step .MasterDock_loading').show();
+	
+	if(docks != 'undefined' && docks.length > 1){
+		$.each(docks,function(idx,item){
+			let master_dock="";
+			master_dock+='<div class="col-xs-6 text-center">';
+			master_dock+='	<div class="MasterDockItem btn bTuile" id="'+item.id_docking_station+'">';
+			master_dock+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
+			master_dock+='		<i class="fas fa-charging-station"></i>';
+			master_dock+='		<p class="dockname">'+item.name+'</p>';
+			master_dock+='   </div>';
+			master_dock+='</div>';
+			$('#pages_wyca_by_step #MasterDockList').append(master_dock);
+		});
+		$('#pages_wyca_by_step .MasterDock_loading').hide();
+	}else{
+		if (wycaApi.websocketAuthed){
+			wycaApi.GetCurrentMapData(function(data){
+				if (data.A == wycaApi.AnswerCode.NO_ERROR){
+					if(data.D.docks.length <= 1){
+						if(!back)
+							$('.wyca_by_step_site_master_dock_next').click();
+						else
+							$('#wyca_by_step_site_master_dock .bBackButton').click();
+					}else{
+						id_map = data.D.id_map;
+						id_map_last = data.D.id_map;
+						forbiddens = data.D.forbiddens;
+						areas = data.D.areas;
+						docks = data.D.docks;
+						pois = data.D.pois;
+						augmented_poses = data.D.augmented_poses;
+						
+						$.each(docks,function(idx,item){
+							let master_dock="";
+							master_dock+='<div class="col-xs-6 text-center">';
+							master_dock+='	<div class="MasterDockItem btn bTuile" id="'+item.id_docking_station+'">';
+							master_dock+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
+							master_dock+='		<i class="fas fa-charging-station"></i>';
+							master_dock+='		<p class="dockname">'+item.name+'</p>';
+							master_dock+='   </div>';
+							master_dock+='</div>';
+							$('#pages_wyca_by_step #MasterDockList').append(master_dock);
+						});
+						$('#pages_wyca_by_step .MasterDock_loading').hide();
+					}
+				}else{
+					ParseAPIAnswerError(data);
+				}
+			})
+		}else{
+			setTimeout(InitMasterDockWycaByStep, 500);
+		}
+	}
+	
+}
+
+function InitMasterDockNormal()
+{
+	$('#pages_install_normal .modalMasterDock #MasterDockList').html('');
+	$('#pages_install_normal .modalMasterDock .MasterDock_loading').show();
+	$('#pages_install_normal .modalMasterDock').modal('show');
+	
+	if(docks != 'undefined' && docks.length > 1){
+		$.each(docks,function(idx,item){
+			let master_dock="";
+			master_dock+='<div class="col-xs-6 text-center">';
+			master_dock+='	<div class="MasterDockItem btn bTuile" id="'+item.id_docking_station+'">';
+			master_dock+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
+			master_dock+='		<i class="fas fa-charging-station"></i>';
+			master_dock+='		<p class="dockname">'+item.name+'</p>';
+			master_dock+='   </div>';
+			master_dock+='</div>';
+			$('#pages_install_normal #MasterDockList').append(master_dock);
+		});
+		$('#pages_install_normal .MasterDock_loading').hide();
+	}else{
+		if (wycaApi.websocketAuthed){
+			wycaApi.GetCurrentMapData(function(data){
+				if (data.A == wycaApi.AnswerCode.NO_ERROR){
+					if(data.D.docks.length <= 1){
+						$('#pages_install_normal #install_normal_setup_import .bImportSiteBack').click();
+					}else{
+						id_map = data.D.id_map;
+						id_map_last = data.D.id_map;
+						forbiddens = data.D.forbiddens;
+						areas = data.D.areas;
+						docks = data.D.docks;
+						pois = data.D.pois;
+						augmented_poses = data.D.augmented_poses;
+						
+						$.each(docks,function(idx,item){
+							let master_dock="";
+							master_dock+='<div class="col-xs-6 text-center">';
+							master_dock+='	<div class="MasterDockItem btn bTuile" id="'+item.id_docking_station+'">';
+							master_dock+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
+							master_dock+='		<i class="fas fa-charging-station"></i>';
+							master_dock+='		<p class="dockname">'+item.name+'</p>';
+							master_dock+='   </div>';
+							master_dock+='</div>';
+							$('#pages_install_normal #MasterDockList').append(master_dock);
+						});
+						$('#pages_install_normal .MasterDock_loading').hide();
+					}
+				}else{
+					ParseAPIAnswerError(data);
+				}
+			})
+		}else{
+			setTimeout(InitMasterDockNormal, 500);
+		}
+	}
+}
+
+function InitMasterDockByStep(back = false)
+{
+	$('#pages_install_by_step #MasterDockList').html('');
+	$('#pages_install_by_step .MasterDock_loading').show();
+	
+	if(docks != 'undefined' && docks.length > 1){
+		$.each(docks,function(idx,item){
+			let master_dock="";
+			master_dock+='<div class="col-xs-6 text-center">';
+			master_dock+='	<div class="MasterDockItem btn bTuile" id="'+item.id_docking_station+'">';
+			master_dock+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
+			master_dock+='		<i class="fas fa-charging-station"></i>';
+			master_dock+='		<p class="dockname">'+item.name+'</p>';
+			master_dock+='   </div>';
+			master_dock+='</div>';
+			$('#pages_install_by_step #MasterDockList').append(master_dock);
+		});
+		$('#pages_install_by_step .MasterDock_loading').hide();
+	}else{
+		if (wycaApi.websocketAuthed){
+			wycaApi.GetCurrentMapData(function(data){
+				if (data.A == wycaApi.AnswerCode.NO_ERROR){
+					if(data.D.docks.length <= 1){
+						if(!back)
+							$('.install_by_step_site_master_dock_next').click();
+						else
+							$('#install_by_step_site_master_dock .bBackButton').click();
+					}else{
+						id_map = data.D.id_map;
+						id_map_last = data.D.id_map;
+						forbiddens = data.D.forbiddens;
+						areas = data.D.areas;
+						docks = data.D.docks;
+						pois = data.D.pois;
+						augmented_poses = data.D.augmented_poses;
+						
+						$.each(docks,function(idx,item){
+							let master_dock="";
+							master_dock+='<div class="col-xs-6 text-center">';
+							master_dock+='	<div class="MasterDockItem btn bTuile" id="'+item.id_docking_station+'">';
+							master_dock+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
+							master_dock+='		<i class="fas fa-charging-station"></i>';
+							master_dock+='		<p class="dockname">'+item.name+'</p>';
+							master_dock+='   </div>';
+							master_dock+='</div>';
+							$('#pages_install_by_step #MasterDockList').append(master_dock);
+						});
+						$('#pages_install_by_step .MasterDock_loading').hide();
+					}
+				}else{
+					ParseAPIAnswerError(data);
+				}
+			})
+		}else{
+			setTimeout(InitMasterDockByStep, 500);
+		}
+	}
+	
 }
 
 var current_site = {};
@@ -1341,242 +1585,6 @@ function InitSiteSelectMapWycaByStep(back = false)
 	}else{
 		setTimeout(InitSiteSelectMapWycaByStep, 500);
 	}
-}
-
-// MASTER DOCK
-
-function InitMasterDockWyca()
-{
-	$('#pages_wyca_normal .modalMasterDock #MasterDockList').html('');
-	$('#pages_wyca_normal .modalMasterDock .MasterDock_loading').show();
-	$('#pages_wyca_normal .modalMasterDock').modal('show');
-	
-	if(docks != 'undefined' && docks.length > 1){
-		$.each(docks,function(idx,item){
-			let master_dock="";
-			master_dock+='<div class="col-xs-6 text-center">';
-			master_dock+='	<div class="MasterDockItem btn bTuile" id="'+item.id_docking_station+'">';
-			master_dock+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
-			master_dock+='		<i class="fas fa-charging-station"></i>';
-			master_dock+='		<p class="dockname">'+item.name+'</p>';
-			master_dock+='   </div>';
-			master_dock+='</div>';
-			$('#pages_wyca_normal #MasterDockList').append(master_dock);
-		});
-		$('#pages_wyca_normal .MasterDock_loading').hide();
-	}else{
-		if (wycaApi.websocketAuthed){
-			wycaApi.GetCurrentMapData(function(data){
-				if (data.A == wycaApi.AnswerCode.NO_ERROR){
-					if(data.D.docks.length <= 1){
-						$('#pages_wyca_normal #wyca_setup_import .bImportSiteBack').click();
-					}else{
-						id_map = data.D.id_map;
-						id_map_last = data.D.id_map;
-						forbiddens = data.D.forbiddens;
-						areas = data.D.areas;
-						docks = data.D.docks;
-						pois = data.D.pois;
-						augmented_poses = data.D.augmented_poses;
-						
-						$.each(docks,function(idx,item){
-							let master_dock="";
-							master_dock+='<div class="col-xs-6 text-center">';
-							master_dock+='	<div class="MasterDockItem btn bTuile" id="'+item.id_docking_station+'">';
-							master_dock+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
-							master_dock+='		<i class="fas fa-charging-station"></i>';
-							master_dock+='		<p class="dockname">'+item.name+'</p>';
-							master_dock+='   </div>';
-							master_dock+='</div>';
-							$('#pages_wyca_normal #MasterDockList').append(master_dock);
-						});
-						$('#pages_wyca_normal .MasterDock_loading').hide();
-					}
-				}else{
-					ParseAPIAnswerError(data);
-				}
-			})
-		}else{
-			setTimeout(InitMasterDockWyca, 500);
-		}
-	}
-}
-
-function InitMasterDockWycaByStep(back = false)
-{
-	$('#pages_wyca_by_step #MasterDockList').html('');
-	$('#pages_wyca_by_step .MasterDock_loading').show();
-	
-	if(docks != 'undefined' && docks.length > 1){
-		$.each(docks,function(idx,item){
-			let master_dock="";
-			master_dock+='<div class="col-xs-6 text-center">';
-			master_dock+='	<div class="MasterDockItem btn bTuile" id="'+item.id_docking_station+'">';
-			master_dock+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
-			master_dock+='		<i class="fas fa-charging-station"></i>';
-			master_dock+='		<p class="dockname">'+item.name+'</p>';
-			master_dock+='   </div>';
-			master_dock+='</div>';
-			$('#pages_wyca_by_step #MasterDockList').append(master_dock);
-		});
-		$('#pages_wyca_by_step .MasterDock_loading').hide();
-	}else{
-		if (wycaApi.websocketAuthed){
-			wycaApi.GetCurrentMapData(function(data){
-				if (data.A == wycaApi.AnswerCode.NO_ERROR){
-					if(data.D.docks.length <= 1){
-						if(!back)
-							$('.wyca_by_step_site_master_dock_next').click();
-						else
-							$('#wyca_by_step_site_master_dock .bBackButton').click();
-					}else{
-						id_map = data.D.id_map;
-						id_map_last = data.D.id_map;
-						forbiddens = data.D.forbiddens;
-						areas = data.D.areas;
-						docks = data.D.docks;
-						pois = data.D.pois;
-						augmented_poses = data.D.augmented_poses;
-						
-						$.each(docks,function(idx,item){
-							let master_dock="";
-							master_dock+='<div class="col-xs-6 text-center">';
-							master_dock+='	<div class="MasterDockItem btn bTuile" id="'+item.id_docking_station+'">';
-							master_dock+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
-							master_dock+='		<i class="fas fa-charging-station"></i>';
-							master_dock+='		<p class="dockname">'+item.name+'</p>';
-							master_dock+='   </div>';
-							master_dock+='</div>';
-							$('#pages_wyca_by_step #MasterDockList').append(master_dock);
-						});
-						$('#pages_wyca_by_step .MasterDock_loading').hide();
-					}
-				}else{
-					ParseAPIAnswerError(data);
-				}
-			})
-		}else{
-			setTimeout(InitMasterDockWycaByStep, 500);
-		}
-	}
-	
-}
-
-function InitMasterDockNormal()
-{
-	$('#pages_install_normal .modalMasterDock #MasterDockList').html('');
-	$('#pages_install_normal .modalMasterDock .MasterDock_loading').show();
-	$('#pages_install_normal .modalMasterDock').modal('show');
-	
-	if(docks != 'undefined' && docks.length > 1){
-		$.each(docks,function(idx,item){
-			let master_dock="";
-			master_dock+='<div class="col-xs-6 text-center">';
-			master_dock+='	<div class="MasterDockItem btn bTuile" id="'+item.id_docking_station+'">';
-			master_dock+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
-			master_dock+='		<i class="fas fa-charging-station"></i>';
-			master_dock+='		<p class="dockname">'+item.name+'</p>';
-			master_dock+='   </div>';
-			master_dock+='</div>';
-			$('#pages_install_normal #MasterDockList').append(master_dock);
-		});
-		$('#pages_install_normal .MasterDock_loading').hide();
-	}else{
-		if (wycaApi.websocketAuthed){
-			wycaApi.GetCurrentMapData(function(data){
-				if (data.A == wycaApi.AnswerCode.NO_ERROR){
-					if(data.D.docks.length <= 1){
-						$('#pages_install_normal #install_normal_setup_import .bImportSiteBack').click();
-					}else{
-						id_map = data.D.id_map;
-						id_map_last = data.D.id_map;
-						forbiddens = data.D.forbiddens;
-						areas = data.D.areas;
-						docks = data.D.docks;
-						pois = data.D.pois;
-						augmented_poses = data.D.augmented_poses;
-						
-						$.each(docks,function(idx,item){
-							let master_dock="";
-							master_dock+='<div class="col-xs-6 text-center">';
-							master_dock+='	<div class="MasterDockItem btn bTuile" id="'+item.id_docking_station+'">';
-							master_dock+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
-							master_dock+='		<i class="fas fa-charging-station"></i>';
-							master_dock+='		<p class="dockname">'+item.name+'</p>';
-							master_dock+='   </div>';
-							master_dock+='</div>';
-							$('#pages_install_normal #MasterDockList').append(master_dock);
-						});
-						$('#pages_install_normal .MasterDock_loading').hide();
-					}
-				}else{
-					ParseAPIAnswerError(data);
-				}
-			})
-		}else{
-			setTimeout(InitMasterDockNormal, 500);
-		}
-	}
-}
-
-function InitMasterDockByStep(back = false)
-{
-	$('#pages_install_by_step #MasterDockList').html('');
-	$('#pages_install_by_step .MasterDock_loading').show();
-	
-	if(docks != 'undefined' && docks.length > 1){
-		$.each(docks,function(idx,item){
-			let master_dock="";
-			master_dock+='<div class="col-xs-6 text-center">';
-			master_dock+='	<div class="MasterDockItem btn bTuile" id="'+item.id_docking_station+'">';
-			master_dock+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
-			master_dock+='		<i class="fas fa-charging-station"></i>';
-			master_dock+='		<p class="dockname">'+item.name+'</p>';
-			master_dock+='   </div>';
-			master_dock+='</div>';
-			$('#pages_install_by_step #MasterDockList').append(master_dock);
-		});
-		$('#pages_install_by_step .MasterDock_loading').hide();
-	}else{
-		if (wycaApi.websocketAuthed){
-			wycaApi.GetCurrentMapData(function(data){
-				if (data.A == wycaApi.AnswerCode.NO_ERROR){
-					if(data.D.docks.length <= 1){
-						if(!back)
-							$('.install_by_step_site_master_dock_next').click();
-						else
-							$('#install_by_step_site_master_dock .bBackButton').click();
-					}else{
-						id_map = data.D.id_map;
-						id_map_last = data.D.id_map;
-						forbiddens = data.D.forbiddens;
-						areas = data.D.areas;
-						docks = data.D.docks;
-						pois = data.D.pois;
-						augmented_poses = data.D.augmented_poses;
-						
-						$.each(docks,function(idx,item){
-							let master_dock="";
-							master_dock+='<div class="col-xs-6 text-center">';
-							master_dock+='	<div class="MasterDockItem btn bTuile" id="'+item.id_docking_station+'">';
-							master_dock+= item.is_master?'		<i class="fas fa-asterisk" ></i>':'';
-							master_dock+='		<i class="fas fa-charging-station"></i>';
-							master_dock+='		<p class="dockname">'+item.name+'</p>';
-							master_dock+='   </div>';
-							master_dock+='</div>';
-							$('#pages_install_by_step #MasterDockList').append(master_dock);
-						});
-						$('#pages_install_by_step .MasterDock_loading').hide();
-					}
-				}else{
-					ParseAPIAnswerError(data);
-				}
-			})
-		}else{
-			setTimeout(InitMasterDockByStep, 500);
-		}
-	}
-	
 }
 
 // TOP IMPORT
