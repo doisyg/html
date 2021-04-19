@@ -1222,6 +1222,18 @@ div.icon_menu .iconForbiddenArea .fa-minus-circle{
 .nopymy:after{margin-top:0;margin-bottom:0;padding-top:0;padding-bottom:0;}
 
 /* CSS FIXES */
+
+#pages_wyca_by_step .SelectMapItem{
+	width: 100%;
+    height: calc(100% - 30px);
+}
+
+#pages_install_by_step .SelectMapItem{
+	width: 100%;
+    height: calc(100% - 30px);
+}
+
+
 h3.warningObstacleTeleopManager{
 	font-size:20px;
 	text-align: center;
