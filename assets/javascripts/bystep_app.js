@@ -1715,9 +1715,24 @@ $(document).ready(function(e) {
 		});
     });
 	*/
+	$('#install_by_step_edit_map .bCheckNextEditMap').click(function(e) {
+		if(typeof(docks) == 'undefined' || docks.length == 0){
+			$('#install_by_step_edit_map .modalConfirmNextNoDock').modal('show');
+			
+		}else{
+			$('#install_by_step_edit_map .bNextEditMap').click();
+		}			
+	})
+	
+	$('#install_by_step_edit_map .modalConfirmNextNoDock .bConfirmNextNoDock').click(function(e) {
+		$('#install_by_step_edit_map .bNextEditMap').click();
+	})
+	
+	
 	
 	//AJAX INSTALL STEP CALL
 	$('#install_by_step_edit_map .bNextEditMap').click(function(e) {
+		console.log('clicked');
 		$.ajax({
 			type: "POST",
 			url: 'ajax/install_by_step_edit_map_finish.php',

@@ -1706,6 +1706,19 @@ $(document).ready(function(e) {
     });
 	*/
 	
+	$('#wyca_by_step_edit_map .bCheckNextEditMap').click(function(e) {
+		if(typeof(docks) == 'undefined' || docks.length == 0){
+			$('#wyca_by_step_edit_map .modalConfirmNextNoDock').modal('show');
+			
+		}else{
+			$('#wyca_by_step_edit_map .bNextEditMap').click();
+		}			
+	})
+	
+	$('#wyca_by_step_edit_map .modalConfirmNextNoDock .bConfirmNextNoDock').click(function(e) {
+		$('#wyca_by_step_edit_map .bNextEditMap').click();
+	})
+	
 	//AJAX INSTALL STEP CALL
 	$('#wyca_by_step_edit_map .bNextEditMap').click(function(e) {
 		$.ajax({

@@ -1796,6 +1796,29 @@
                         </div>
                     </div>
                     
+					<div class="modal fade modalConfirmNextNoDock" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+                                        <div class="h100vh_160" style="overflow:auto; text-align:center">
+											<i class="fas fa-exclamation-triangle fa-5x" style="margin:20px 0;position:relative;color:#ed9c28">
+												<!--<i class="fas fa-asterisk fa-2x" style="position: absolute;font-size: 16px;color: #343434;top:-8px;right: -9px;"></i>-->
+											</i>
+											<h3 style="margin:20px 0"><?= __('Map doesn\'t have any dock.')?></h3>
+											<h4 style="margin:20px 0"><?= __('Are you sure you want to continue without creating a dock ?')?></h4>
+											<h4 style="margin:20px 0"><?= __('It may cause some issues later.')?></h4>
+                                        </div>
+                                        
+                                        <div style="clear:both;"></div>
+										<a href="#" class="btn btn-primary btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('No');?></a>
+                                        <a href="#" class="btn btn-warning btn_footer_right btn_50 bConfirmNextNoDock" data-dismiss="modal"><?php echo __('Yes');?></a> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					
 					<div class="wyca_by_step_edit_map_loading loading_big loading_map"><i class="fa fa fa-spinner fa-pulse fa-3x"></i></div>
                 </div>
                 
@@ -1828,12 +1851,9 @@
                     
 			</div>
             <footer>
-            
-            	
-                
-            	
 				<a href="#" class="btn btn-success bSaveEditMap btn_footer_left btn_50"><?php echo __('Save map');?></a>
-				<a href="#" class="btn btn-primary button_goto bSaveEditMap btn_footer_right btn_50 bNextEditMap" data-goto="wyca_by_step_config" ><?php echo __('Next');?></a>
+				<a href="#" class="btn btn-primary btn_footer_right btn_50 bCheckNextEditMap"><?php echo __('Next');?></a>
+				<a href="#" class="button_goto bNextEditMap bSaveEditMap" data-goto="wyca_by_step_config" style="display:none;"></a>
             </footer>
         </section>
       

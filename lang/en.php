@@ -638,5 +638,8 @@ $_LANG['db87111a800141eeb4083ae88d42a8d9'] = 'Are you sure to switch to this sit
 $_LANG['d9925f1ee1fbf79dace5f58fcbefb78e'] = 'You may have to choose the current map if loading a multi map site.';
 $_LANG['0154c65a07d5bff9727950a2d8deb877'] = 'This site has several maps.';
 $_LANG['8149d609021280c0f8eba06b77b02ae7'] = 'Are you sure you want to leave?';
+$_LANG['29c595dde721e30236ed5ff86ad7407f'] = 'Map doesn\'t have any dock.';
+$_LANG['bb4ee7995f7fea36eb5318a8158c1062'] = 'Are you sure you want to continue without creating a dock ?';
+$_LANG['ed4b192c6a21eebf8c2210d71681c920'] = 'It may cause some issues later.';
 
 ?>
