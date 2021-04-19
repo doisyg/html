@@ -30,8 +30,8 @@ $version = '20200308';
 	<meta name="msapplication-TileColor" content="#FFFFFF"> 
 		
 	<script>
-		//var robot_host = 'wyca.run:9143';
-		var robot_host = '10.0.0.72:9143';
+		var robot_host = 'wyca.run:9143';
+		//var robot_host = '10.0.0.72:9143';
 		var api_key = '';
 		var use_ssl = true;
 	</script>
