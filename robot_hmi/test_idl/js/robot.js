@@ -231,6 +231,17 @@ function initMap(){
 						ros_hauteur = data.D.ros_height;
 						ros_resolution = data.D.ros_resolution;
 						
+						svg_resolution_width = $('#map').outerWidth() / ros_largeur ;
+						svg_resolution_height = (ros_hauteur * svg_resolution_width) / ros_hauteur;
+						
+						$('#map_svg').attr('width', $('#map').outerWidth());
+						$('#map_svg').attr('height',ros_hauteur * svg_resolution_width);
+						
+						$('#map_image').attr('width',$('#map').outerWidth());
+						$('#map_image').attr('height',ros_hauteur * svg_resolution_width);
+						$('#map_image').attr('xlink:href', 'data:image/png;base64,'+data.D.image_tri);
+						
+						/*
 						svg_resolution_height = $('#map').outerHeight() / ros_hauteur ;
 						svg_resolution_width = (ros_largeur * svg_resolution_height) / ros_largeur ;
 						
@@ -240,6 +251,7 @@ function initMap(){
 						$('#map_image').attr('width', ros_largeur * svg_resolution_height);
 						$('#map_image').attr('height', $('#map').outerHeight());
 						$('#map_image').attr('xlink:href', 'data:image/png;base64,'+data.D.image_tri);
+						*/
 						
 						svgMap = document.querySelector('#map_svg');
 						DrawMapElements();
