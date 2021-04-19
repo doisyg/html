@@ -732,7 +732,7 @@ $(document).ready(function(e) {
 			$('#pages_install_normal .install_normal_setup_import_content').hide();
 			
 			var reader = new FileReader();
-			reader.onload = function(event) { 
+			reader.onload = function(event) {
 				wycaApi.ImportSite(btoa(reader.result), function(data) { 
 					if (data.A == wycaApi.AnswerCode.NO_ERROR)
 					{
@@ -740,28 +740,38 @@ $(document).ready(function(e) {
 						wycaApi.SetSiteAsCurrent(id_site,function(data){
 							if (data.A == wycaApi.AnswerCode.NO_ERROR)
 							{
-								wycaApi.GetCurrentMapData(function(data){
-									if (data.A == wycaApi.AnswerCode.NO_ERROR)
-									{
-										if(data.D.docks.length <= 1){
-											$('#pages_install_normal .install_normal_setup_import_loading').hide();
-											$('#pages_install_normal .install_normal_setup_import_content').show();
-											success_wyca(textSiteImported);
-											$('#pages_install_normal .bImportSiteBack').click();
-										}else{
-											id_map = data.D.id_map;
-											id_map_last = data.D.id_map;
-											forbiddens = data.D.forbiddens;
-											areas = data.D.areas;
-											docks = data.D.docks;
-											pois = data.D.pois;
-											augmented_poses = data.D.augmented_poses; 
-											
-											InitMasterDockNormal();
-										}
+								wycaApi.GetMapsList(id_site,function(data){
+									let nb_maps_w_name = 0;
+									data.D.forEach((element) => {if(element.name != '')nb_maps_w_name++;});
+									if(nb_maps_w_name <= 1){
+										// IF ONLY ONE MAP
+										wycaApi.GetCurrentMapData(function(data){
+											if (data.A == wycaApi.AnswerCode.NO_ERROR)
+											{
+												if(data.D.docks.length <= 1){
+													$('#pages_install_normal .install_normal_setup_import_loading').hide();
+													$('#pages_install_normal .install_normal_setup_import_content').show();
+													success_wyca(textSiteImported);
+													$('#pages_install_normal .bImportSiteBack').click();
+												}else{
+													id_map = data.D.id_map;
+													id_map_last = data.D.id_map;
+													forbiddens = data.D.forbiddens;
+													areas = data.D.areas;
+													docks = data.D.docks;
+													pois = data.D.pois;
+													augmented_poses = data.D.augmented_poses; 
+													
+													InitMasterDockNormal();
+												}
+											}else{
+												ParseAPIAnswerError(data);
+												InitSiteImportNormal();
+											}
+										})
 									}else{
-										ParseAPIAnswerError(data);
-										InitSiteImportNormal();
+										// IF MULTIPLES MAP
+										InitSiteImportSelectMapNormal();
 									}
 								})
 							}
@@ -771,9 +781,6 @@ $(document).ready(function(e) {
 								InitSiteImportNormal();
 							}
 						})
-						
-						
-						
 					}
 					else
 					{
@@ -789,6 +796,39 @@ $(document).ready(function(e) {
 			setTimeout(function(){icon.toggleClass('shake')},2000);
 		}
     });
+	
+	//----------------------- SELECT MAP ----------------------------
+	
+	//DECLARATION EVENTLISTENER BOUTON CREE DYNAMIQUEMENT .on('event',function(){})
+	$( "#pages_install_normal #install_normal_setup_import .modalSelectMap #ImportSiteMapList" ).on( 'click', '.SelectMapItem', function(e) {
+		let id_map_import = parseInt($(this).attr('id'));
+		wycaApi.SetMapAsCurrent(id_map_import,function(){
+			wycaApi.GetCurrentMapData(function(data){
+				if (data.A == wycaApi.AnswerCode.NO_ERROR)
+				{
+					if(data.D.docks.length <= 1){
+						$('#pages_install_normal .install_normal_setup_import_loading').hide();
+						$('#pages_install_normal .install_normal_setup_import_content').show();
+						success_wyca(textSiteImported);
+						$('#pages_install_normal .bImportSiteBack').click();
+					}else{
+						id_map = data.D.id_map;
+						id_map_last = data.D.id_map;
+						forbiddens = data.D.forbiddens;
+						areas = data.D.areas;
+						docks = data.D.docks;
+						pois = data.D.pois;
+						augmented_poses = data.D.augmented_poses;
+						$( "#pages_install_normal #install_normal_setup_import .modalSelectMap").modal('hide');
+						InitMasterDockNormal();
+					}
+				}else{
+					ParseAPIAnswerError(data);
+					InitSiteImportNormal();
+				}
+			})
+		})
+	})
 	
 	//----------------------- MASTER DOCK ----------------------------
 	

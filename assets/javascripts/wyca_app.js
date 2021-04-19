@@ -727,30 +727,40 @@ $(document).ready(function(e) {
 						wycaApi.SetSiteAsCurrent(id_site,function(data){
 							if (data.A == wycaApi.AnswerCode.NO_ERROR)
 							{
-								wycaApi.GetCurrentMapData(function(data){
-									if (data.A == wycaApi.AnswerCode.NO_ERROR)
-									{
-										if(data.D.docks.length <= 1){
-											$('#pages_wyca_normal .wyca_setup_import_loading').hide();
-											$('#pages_wyca_normal .wyca_setup_import_content').show();
-											success_wyca(textSiteImported);
-											$('#pages_wyca_normal .bImportSiteBack').click();
-										}else{
-											
-											id_map = data.D.id_map;
-											id_map_last = data.D.id_map;
-								
-											forbiddens = data.D.forbiddens;
-											areas = data.D.areas;
-											docks = data.D.docks;
-											pois = data.D.pois;
-											augmented_poses = data.D.augmented_poses; 
-											
-											InitMasterDockWyca();
-										}
+								wycaApi.GetMapsList(id_site,function(data){
+									let nb_maps_w_name = 0;
+									data.D.forEach((element) => {if(element.name != '')nb_maps_w_name++;});
+									if(nb_maps_w_name <= 1){
+										// IF ONLY ONE MAP
+										wycaApi.GetCurrentMapData(function(data){
+											if (data.A == wycaApi.AnswerCode.NO_ERROR)
+											{
+												if(data.D.docks.length <= 1){
+													$('#pages_wyca_normal .wyca_setup_import_loading').hide();
+													$('#pages_wyca_normal .wyca_setup_import_content').show();
+													success_wyca(textSiteImported);
+													$('#pages_wyca_normal .bImportSiteBack').click();
+												}else{
+													
+													id_map = data.D.id_map;
+													id_map_last = data.D.id_map;
+										
+													forbiddens = data.D.forbiddens;
+													areas = data.D.areas;
+													docks = data.D.docks;
+													pois = data.D.pois;
+													augmented_poses = data.D.augmented_poses; 
+													
+													InitMasterDockWyca();
+												}
+											}else{
+												ParseAPIAnswerError(data);
+												InitSiteImportWyca();
+											}
+										})
 									}else{
-										ParseAPIAnswerError(data);
-										InitSiteImportWyca();
+										// IF MULTIPLES MAP
+										InitSiteImportSelectMapWyca();
 									}
 								})
 							}
@@ -760,9 +770,6 @@ $(document).ready(function(e) {
 								InitSiteImportWyca();
 							}
 						})
-						
-						
-						
 					}
 					else
 					{
@@ -778,6 +785,39 @@ $(document).ready(function(e) {
 			setTimeout(function(){icon.toggleClass('shake')},2000);
 		}
     });
+	
+	//----------------------- SELECT MAP ----------------------------
+	
+	//DECLARATION EVENTLISTENER BOUTON CREE DYNAMIQUEMENT .on('event',function(){})
+	$( "#pages_wyca_normal #wyca_setup_import .modalSelectMap #ImportSiteMapList" ).on( 'click', '.SelectMapItem', function(e) {
+		let id_map_import = parseInt($(this).attr('id'));
+		wycaApi.SetMapAsCurrent(id_map_import,function(){
+			wycaApi.GetCurrentMapData(function(data){
+				if (data.A == wycaApi.AnswerCode.NO_ERROR)
+				{
+					if(data.D.docks.length <= 1){
+						$('#pages_wyca_normal .wyca_setup_import_loading').hide();
+						$('#pages_wyca_normal .wyca_setup_import_content').show();
+						success_wyca(textSiteImported);
+						$('#pages_wyca_normal .bImportSiteBack').click();
+					}else{
+						id_map = data.D.id_map;
+						id_map_last = data.D.id_map;
+						forbiddens = data.D.forbiddens;
+						areas = data.D.areas;
+						docks = data.D.docks;
+						pois = data.D.pois;
+						augmented_poses = data.D.augmented_poses;
+						$( "#pages_wyca_normal #wyca_setup_import .modalSelectMap").modal('hide');
+						InitMasterDockWyca();
+					}
+				}else{
+					ParseAPIAnswerError(data);
+					InitSiteImportWyca();
+				}
+			})
+		})
+	})
 	
 	//----------------------- MASTER DOCK ----------------------------
 	

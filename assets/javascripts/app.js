@@ -874,6 +874,95 @@ function InitSiteImportByStep()
 	$('#pages_install_by_step .install_by_step_setup_import_content').show();
 }
 
+// SELECT MAP IMPORT SITE
+
+function InitSiteImportSelectMapWyca()
+{
+	$('#pages_wyca_normal #wyca_setup_import .modalSelectMap #ImportSiteMapList').html('');
+	$('#pages_wyca_normal #wyca_setup_import .modalSelectMap').modal('show');
+
+	if (wycaApi.websocketAuthed){
+		wycaApi.GetCurrentSite(function(data){
+			if (data.A == wycaApi.AnswerCode.NO_ERROR){
+				id_site = data.D.id_site;
+				wycaApi.GetMapsList(id_site,function(data){
+					if (data.A != wycaApi.AnswerCode.NO_ERROR){
+						InitSiteImportWyca();
+						ParseAPIAnswerError(data,textErrorGetMaps);
+					}
+					else
+					{
+						$('#pages_wyca_normal #wyca_setup_import .modalSelectMap #ImportSiteMapList').html('');
+						$.each(data.D,function(idx,item){
+							if(item.name != ''){
+								let map_item="";
+								map_item+='<div class="col-xs-6 text-center">';
+								map_item+='	<div class="SelectMapItem btn bTuile" id="'+item.id_map+'">';
+								map_item+='		<i class="fas fa-map-marked-alt"></i>';
+								map_item+='		<p class="mapname">'+item.name+'</p>';
+								map_item+='   </div>';
+								map_item+='</div>';
+								$('#pages_wyca_normal #wyca_setup_import .modalSelectMap #ImportSiteMapList').append(map_item);
+							}
+						});
+						$('#pages_wyca_normal #wyca_setup_import .modalSelectMap').modal('show');
+					}
+				});
+			}else{
+				InitSiteImportWyca();
+				ParseAPIAnswerError(data,textErrorGetSite);
+			}
+		})
+	}else{
+		setTimeout(InitSiteImportSelectMapWyca, 500);
+	}
+
+}
+
+
+function InitSiteImportSelectMapNormal()
+{
+	$('#pages_install_normal #install_normal_setup_import .modalSelectMap #ImportSiteMapList').html('');
+	$('#pages_install_normal #install_normal_setup_import .modalSelectMap').modal('show');
+
+	if (wycaApi.websocketAuthed){
+		wycaApi.GetCurrentSite(function(data){
+			if (data.A == wycaApi.AnswerCode.NO_ERROR){
+				id_site = data.D.id_site;
+				wycaApi.GetMapsList(id_site,function(data){
+					if (data.A != wycaApi.AnswerCode.NO_ERROR){
+						InitSiteImportNormal();
+						ParseAPIAnswerError(data,textErrorGetMaps);
+					}
+					else
+					{
+						$('#pages_install_normal #install_normal_setup_import .modalSelectMap #ImportSiteMapList').html('');
+						$.each(data.D,function(idx,item){
+							if(item.name != ''){
+								let map_item="";
+								map_item+='<div class="col-xs-6 text-center">';
+								map_item+='	<div class="SelectMapItem btn bTuile" id="'+item.id_map+'">';
+								map_item+='		<i class="fas fa-map-marked-alt"></i>';
+								map_item+='		<p class="mapname">'+item.name+'</p>';
+								map_item+='   </div>';
+								map_item+='</div>';
+								$('#pages_install_normal #install_normal_setup_import .modalSelectMap #ImportSiteMapList').append(map_item);
+							}
+						});
+						$('#pages_install_normal #install_normal_setup_import .modalSelectMap').modal('show');
+					}
+				});
+			}else{
+				InitSiteImportNormal();
+				ParseAPIAnswerError(data,textErrorGetSite);
+			}
+		})
+	}else{
+		setTimeout(InitSiteImportSelectMapNormal, 500);
+	}
+
+}
+
 // MASTER DOCK
 
 function InitMasterDockWyca()
