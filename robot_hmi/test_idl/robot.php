@@ -30,8 +30,8 @@ $version = '20200308';
 	<meta name="msapplication-TileColor" content="#FFFFFF"> 
 		
 	<script>
-		var robot_host = 'wyca.run:9143';
-		//var robot_host = '10.0.0.39:9143';
+		//var robot_host = 'wyca.run:9143';
+		var robot_host = '10.0.0.72:9143';
 		var api_key = '';
 		var use_ssl = true;
 	</script>
@@ -76,7 +76,7 @@ $version = '20200308';
 		
 	</div>
 	<div class="row m-0 vh-100 p-3" id="dashboard">
-		<div class="col-lg-9 col-12 h-100">
+		<div class="col-lg-6 col-12 h-100">
 			<div class="w-100 h-100 d-flex justify-content-center align-items-center" id="map">
 				<div class="d-flex position-relative">
 					<svg id="map_svg" class="position-relative" width="0" height="0" style="display:none;">
@@ -106,131 +106,144 @@ $version = '20200308';
 				
 			</div>
 		</div>
-		<div class="col-lg-3 col-12 h-100 d-flex flex-column" style="justify-content:space-between;">
-			<img src="<?php echo $_CONFIG['URL'];?>images/sim_logo.jpg" class="img-fluid my-3 my-lg-0 mx-auto" style="max-height:150px">
-			
-			<div class="flex-centered py-5 my-3 my-lg-0" id="battery_widget">
-				<i class="fas fa-battery-full fa-5x mr-4"></i>
-				<h2 class="m-0"><span id="battery_lvl">-</span> %</h2>
-				<h1 class="position-absolute">Battery</h1>
+		<div class="col-lg-6 col-12 h-100 d-flex flex-column" style="justify-content:space-between;">
+			<img src="<?php echo $_CONFIG['URL'];?>images/sim_logo.jpg" class="img-fluid my-3 my-lg-0 mx-auto" style="max-height:100px">
+			<div class="row row-eq-height">
+				<div class="col-md-6">
+					<div class="flex-centered py-5 my-3 my-lg-0 h-100" id="battery_widget">
+						<i class="fas fa-battery-full fa-5x mr-4"></i>
+						<h2 class="m-0"><span id="battery_lvl">-</span> %</h2>
+						<h1 class="position-absolute">Battery</h1>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="d-flex justify-content-around align-items-center py-5 h-100 my-3 my-lg-0" id="docking_state_widget">
+						<div class="d-flex justify-content-center align-items-center docking_state flex-column" id="docked">
+							<i class="fas fa-charging-station fa-3x"></i>
+							<p>docked</p>
+						</div>
+						<div class="d-flex justify-content-center align-items-center docking_state flex-column" id="docking">
+							<i class="fas fa-download fa-3x"></i>
+							<p>docking</p>
+						</div>
+						<div class="d-flex justify-content-center align-items-center docking_state flex-column" id="undocking">
+							<i class="fas fa-upload fa-3x"></i>
+							<p>undocking</p>
+						</div>
+						<div class="d-flex justify-content-center align-items-center docking_state flex-column" id="undocked">
+							<i class="fas fa-route fa-3x"></i>
+							<p>undocked</p>
+						</div>
+						<h1>Docking State</h1>
+					</div>
+				</div>
 			</div>
-			<div class="d-flex justify-content-around align-items-center py-5  my-3 my-lg-0" id="docking_state_widget">
-				<div class="d-flex justify-content-center align-items-center docking_state flex-column" id="docked">
-					<i class="fas fa-charging-station fa-3x"></i>
-					<p>docked</p>
+			<div class="row row-eq-height">
+				<div class="col-md-6">
+					<div class="pb-5 my-3 my-lg-0 p-2 h-100" id="segmentList_widget" style="overflow-y:scroll">
+						<ul class="list_segment list_elem">
+							
+						</ul>
+						<h1>NavSegment List</h1>
+					</div>
 				</div>
-				<div class="d-flex justify-content-center align-items-center docking_state flex-column" id="docking">
-					<i class="fas fa-download fa-3x"></i>
-					<p>docking</p>
+				<div class="col-md-6">
+					<div class="pt-3 pb-5 my-3 my-lg-0" id="segment_widget" style="min-height:600px">
+						<div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group sep d-flex align-items-center">
+										<label class="col-xs-4 control-label mb-0" for="segment_id">Segment id</label>
+										<div class="col-xs-8">
+											<div class=" input-group">
+												<input type="text" id="segment_id" name="segment_id" class="form-control input-sm mb-md" value="unique_id_string" />
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group sep d-flex align-items-center">
+										<label class="col-xs-4 control-label mb-0" for="step_distance">Step distance</label>
+										<div class="col-xs-8">
+											<div class=" input-group">
+												<input type="number" id="step_distance" name="step_distance" class="form-control input-sm mb-md" value="1.0" />
+												<span class="input-group-addon" style="padding: 5px; width: auto; line-height: 20px;">m</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+							
+								<div class="col-md-6">
+									<div class="form-group sep d-flex align-items-center">
+										<label class="col-xs-5 control-label mb-0" for="start_x">Start X</label>
+										<div class="col-xs-7 px-0">
+											<div class=" input-group">
+												<input type="number" id="start_x" name="start_x" class="form-control input-sm mb-md" value="1.0" />
+												<span class="input-group-addon" style="padding: 5px; width: auto; line-height: 20px;">m</span>
+											</div>
+										</div>
+									</div>
+									<div class="form-group sep d-flex align-items-center">
+										<label class="col-xs-5 control-label mb-0" for="start_x">Start Y</label>
+										<div class="col-xs-7 px-0">
+											<div class=" input-group">
+												<input type="number" id="start_y" name="start_y" class="form-control input-sm mb-md" value="1.0" />
+												<span class="input-group-addon" style="padding: 5px; width: auto; line-height: 20px;">m</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group sep d-flex align-items-center">
+										<label class="col-xs-5 control-label mb-0" for="end_x">End X</label>
+										<div class="col-xs-7 px-0">
+											<div class=" input-group">
+												<input type="number" id="end_x" name="end_x" class="form-control input-sm mb-md" value="1.0" />
+												<span class="input-group-addon" style="padding: 5px; width: auto; line-height: 20px;">m</span>
+											</div>
+										</div>
+									</div>
+									<div class="form-group sep d-flex align-items-center">
+										<label class="col-xs-5 control-label mb-0" for="end_y">End Y</label>
+										<div class="col-xs-7 px-0">
+											<div class=" input-group">
+												<input type="number" id="end_y" name="end_y" class="form-control input-sm mb-md" value="1.0" />
+												<span class="input-group-addon" style="padding: 5px; width: auto; line-height: 20px;">m</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="d-flex justify-content-around" style="padding:10px; text-align:center">
+								<a href="#" id="bStartNavSegment" class="btn btn-primary">Start nav segment</a>
+								<a href="#" id="bSaveNavSegment" class="btn btn-success">Save nav segment</a>
+							</div>
+						</div>
+						
+						<div style="padding:10px">
+							<h3>Response</h3>
+							<div id="navsegment_response" style="max-height:100px; overflow:auto;"></div>
+						</div>
+						
+						<div style="padding:10px">
+							<h3>Feedback</h3>
+							<div id="navsegment_feedback" style="max-height:100px; overflow:auto;"></div>
+						</div>
+						
+						<div style="padding:10px">
+							<h3>Result</h3>
+							<div id="navsegment_result" style="max-height:100px; overflow:auto;"></div>
+						</div>
+						
+						<h1>NavSegment</h1>
+					</div>
 				</div>
-				<div class="d-flex justify-content-center align-items-center docking_state flex-column" id="undocking">
-					<i class="fas fa-upload fa-3x"></i>
-					<p>undocking</p>
-				</div>
-				<div class="d-flex justify-content-center align-items-center docking_state flex-column" id="undocked">
-					<i class="fas fa-route fa-3x"></i>
-					<p>undocked</p>
-				</div>
-				<h1>Docking State</h1>
-			</div>
-			<div class=" py-5 my-3 my-lg-0" id="leds_widget" style="min-height:450px">
-            
-            	<div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group sep">
-                                <label class="col-xs-4 control-label" for="segment_id">Segment id</label>
-                                <div class="col-xs-8">
-                                    <div class=" input-group">
-                                        <input type="text" id="segment_id" name="segment_id" class="form-control input-sm mb-md" value="unique_id_string" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div style="clear:both; height:5px;"></div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group sep">
-                                <label class="col-xs-4 control-label" for="step_distance">Step distance</label>
-                                <div class="col-xs-8">
-                                    <div class=" input-group">
-                                        <input type="number" id="step_distance" name="step_distance" class="form-control input-sm mb-md" value="1.0" />
-                                        <span class="input-group-addon" style="padding: 5px; width: auto; line-height: 20px;">m</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div style="clear:both; height:5px;"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="row">
-                    
-                        <div class="col-md-6">
-                            <div class="form-group sep">
-                                <label class="col-xs-5 control-label" for="start_x">Start X</label>
-                                <div class="col-xs-7">
-                                    <div class=" input-group">
-                                        <input type="number" id="start_x" name="start_x" class="form-control input-sm mb-md" value="1.0" />
-                                        <span class="input-group-addon" style="padding: 5px; width: auto; line-height: 20px;">m</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div style="clear:both;"></div>
-                            <div class="form-group sep">
-                                <label class="col-xs-5 control-label" for="start_x">Start Y</label>
-                                <div class="col-xs-7">
-                                    <div class=" input-group">
-                                        <input type="number" id="start_y" name="start_y" class="form-control input-sm mb-md" value="1.0" />
-                                        <span class="input-group-addon" style="padding: 5px; width: auto; line-height: 20px;">m</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group sep">
-                                <label class="col-xs-5 control-label" for="end_x">End X</label>
-                                <div class="col-xs-7">
-                                    <div class=" input-group">
-                                        <input type="number" id="end_x" name="end_x" class="form-control input-sm mb-md" value="1.0" />
-                                        <span class="input-group-addon" style="padding: 5px; width: auto; line-height: 20px;">m</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div style="clear:both;"></div>
-                            <div class="form-group sep">
-                                <label class="col-xs-5 control-label" for="end_y">End Y</label>
-                                <div class="col-xs-7">
-                                    <div class=" input-group">
-                                        <input type="number" id="end_y" name="end_y" class="form-control input-sm mb-md" value="1.0" />
-                                        <span class="input-group-addon" style="padding: 5px; width: auto; line-height: 20px;">m</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div style="padding:10px; text-align:center">
-	                    <a href="#" id="bStartNavSegment" class="btn btn-primary">Start nav segment</a>
-    				</div>
-                </div>
-                
-                <div style="padding:10px">
-                	<h3>Response</h3>
-                    <div id="navsegment_response" style="max-height:100px; overflow:auto;"></div>
-                </div>
-                
-                <div style="padding:10px">
-                	<h3>Feedback</h3>
-                    <div id="navsegment_feedback" style="max-height:100px; overflow:auto;"></div>
-                </div>
-                
-                <div style="padding:10px">
-                	<h3>Result</h3>
-                    <div id="navsegment_result" style="max-height:100px; overflow:auto;"></div>
-                </div>
-            	
-				<h1>NavSegment</h1>
 			</div>
 		</div>
 	</div>
