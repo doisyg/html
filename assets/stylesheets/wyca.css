@@ -110,13 +110,16 @@ ul.tuiles li .tuile_img.is_checkbox.checked.component_error { border-color:#CC00
 ul.tuiles li .tuile_img.is_checkbox.checked.component_error i { border-color:#CC0000; }
 
 ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
+.max_375{max-width:375px}
 
-
-@media (min-width: 1200px) { 
+@media (min-width: 1200px) {
+	.max_375{max-width:1000px;}
 	ul.tuiles li { padding-top:15%; position:relative; } 
 	ul.tuiles.heightauto li { padding-top:0; position:relative; }
 	ul.tuiles li a, ul.tuiles li div { font-size:28px;    line-height: 32px;}
 	ul.tuiles li i { font-size:80px; padding-top:10%; display:block; padding-bottom:50px; }
+	ul.tuiles li.tuile_wrapper i { font-size:56px; padding-top:5%; display:block; padding-bottom:10px; }
+	ul.tuiles li img.i {height: 79px!important;padding-top:5%!important;}
 }
 
 .btn-wyca {
@@ -799,15 +802,13 @@ ul.list_test li.done { color:#006600; border-color:#006600; }
     width: 100%;
     top: 0;
     height: 100%;
-    max-width: 375px;
+    /* max-width: 375px; */
     left: 50%;
     transform: translateX(-50%);
 	z-index:1;
+	transition:2s all;
 }
-@media only screen and (max-width:374px)
-{
-	/* .svg_legende{display:none} */
-}
+
 img.elodie_legende{
 	width: 50%;
     margin: 0 auto;

@@ -3038,6 +3038,7 @@ function InitMaintenanceWycaByStep()
 function DrawSvgCheckWycaByStep()
 {
 	let svg = $('#wyca_by_step_check svg.svg_legende');
+	svg.css('opacity',0);
 	if(svg.width() < 300){
 		setTimeout(DrawSvgCheckWycaByStep,50);		
 	}else{
@@ -3053,6 +3054,9 @@ function DrawSvgCheckWycaByStep()
 		let data = $('svg.svg_legende')[0].getBoundingClientRect();
 		let svg_offsetX = data.x;
 		let svg_offsetY = data.y;
+		let lg_offsetX = window.outerWidth > 1200 ? window.outerWidth/100 : 0;
+		let lg_offsetY = window.outerWidth > 1200 ? window.outerHeight/100 : 0;
+		
 		$('#wyca_by_step_check div.is_checkbox').each(function(idx,item){
 			let data = item.getBoundingClientRect();
 			
@@ -3104,10 +3108,14 @@ function DrawSvgCheckWycaByStep()
 						case 'bottom' : 
 							_x1 = left + width/2 - svg_offsetX;
 							_y1 = top + height - svg_offsetY;
+							_x2 = _x2 + lg_offsetX;
+							_y2 = _y2 - lg_offsetY;
 						break;				
 						case 'top' : 
 							_x1 = left + width/2 - svg_offsetX;
 							_y1 = top - svg_offsetY;
+							//_x2 = _x2 + lg_offsetX;
+							_y2 = _y2 - lg_offsetY;
 						break;				
 						case 'left' : 
 							_x1 = left - svg_offsetX;
@@ -3138,6 +3146,7 @@ function DrawSvgCheckWycaByStep()
 				svgLine.attr('y2',_y2);
 			})
 		})
+		svg.css('opacity',1);
 		console.log('SVG draw');
 	}
 }
@@ -3147,7 +3156,6 @@ function InitCheckWycaByStep()
 	
 	if (wycaApi.websocketAuthed)
 	{
-		
 		//INIT 
 		$('#wyca_by_step_check .test').removeClass('test'); // REMOVE CLASS TEST
 		$('#wyca_by_step_check .checked').removeClass('checked'); // REMOVE CLASS CHECKED
@@ -3344,7 +3352,8 @@ function InitMaintenanceByStep()
 
 function DrawSvgCheckByStep()
 {
-	let svg = $('#install_by_step_check svg.svg_legende');
+	let svg = $('#install_by_step_check svg.svg_legende');0
+	svg.css('opacity',0);
 	if(svg.width() < 300){
 		setTimeout(DrawSvgCheckByStep,50);		
 	}else{
@@ -3360,6 +3369,9 @@ function DrawSvgCheckByStep()
 		let data = $('svg.svg_legende')[0].getBoundingClientRect();
 		let svg_offsetX = data.x;
 		let svg_offsetY = data.y;
+		let lg_offsetX = window.outerWidth > 1200 ? window.outerWidth/100 : 0;
+		let lg_offsetY = window.outerWidth > 1200 ? window.outerHeight/100 : 0;
+		
 		$('#install_by_step_check div.is_checkbox').each(function(idx,item){
 			let data = item.getBoundingClientRect();
 			
@@ -3411,10 +3423,14 @@ function DrawSvgCheckByStep()
 						case 'bottom' : 
 							_x1 = left + width/2 - svg_offsetX;
 							_y1 = top + height - svg_offsetY;
+							_x2 = _x2 + lg_offsetX;
+							_y2 = _y2 - lg_offsetY;
 						break;				
 						case 'top' : 
 							_x1 = left + width/2 - svg_offsetX;
 							_y1 = top - svg_offsetY;
+							//_x2 = _x2 + lg_offsetX;
+							_y2 = _y2 - lg_offsetY;
 						break;				
 						case 'left' : 
 							_x1 = left - svg_offsetX;
@@ -3445,6 +3461,7 @@ function DrawSvgCheckByStep()
 				svgLine.attr('y2',_y2);
 			})
 		})
+		svg.css('opacity',1);
 		console.log('SVG draw');
 	}
 }
