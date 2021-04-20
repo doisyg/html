@@ -1826,7 +1826,7 @@ $(document).ready(function(e) {
 	$('section#wyca_by_step_config a.bResetValueEblMbl').click(function(e) {
 		
 		$('#wyca_by_step_config_i_level_min_gotocharge').val((typeof(defaultEBL) != 'undefined'? defaultEBL : 15));
-		$('#wyca_by_step_config_i_level_min_gotocharge').val((typeof(defaultMBL) != 'undefined'? defaultMBL : 20));
+		$('#wyca_by_step_config_i_level_min_dotask').val((typeof(defaultMBL) != 'undefined'? defaultMBL : 20));
     });
 	
 	//AJAX INSTALL STEP CALL
