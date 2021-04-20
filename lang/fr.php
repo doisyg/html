@@ -655,5 +655,6 @@ $_LANG['8149d609021280c0f8eba06b77b02ae7'] = 'Êtes-vous sûr de vouloir quitter
 $_LANG['29c595dde721e30236ed5ff86ad7407f'] = 'La carte n\'a pas de station de recharge.';
 $_LANG['bb4ee7995f7fea36eb5318a8158c1062'] = 'Êtes-vous sûr de vouloir continuer sans créer de station de recharge ? ?';
 $_LANG['ed4b192c6a21eebf8c2210d71681c920'] = 'Cela pourrait causer des problèmes plus tard.';
+$_LANG['60a6dcf8d5433517080654268ae395cd'] = 'Ajouter un compte';
 
 ?>

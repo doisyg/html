@@ -641,5 +641,6 @@ $_LANG['8149d609021280c0f8eba06b77b02ae7'] = 'Are you sure you want to leave?';
 $_LANG['29c595dde721e30236ed5ff86ad7407f'] = 'Map doesn\'t have any dock.';
 $_LANG['bb4ee7995f7fea36eb5318a8158c1062'] = 'Are you sure you want to continue without creating a dock ?';
 $_LANG['ed4b192c6a21eebf8c2210d71681c920'] = 'It may cause some issues later.';
+$_LANG['60a6dcf8d5433517080654268ae395cd'] = 'Add an account';
 
 ?>

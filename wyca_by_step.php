@@ -2217,7 +2217,7 @@
 						<h4 class="iconMenuGreen" ><?php echo __('Create manager');?></h4>
 					</a>
 					
-					<a href="#" class="bAddManager btn btn-primary" style="margin-left: 50%;transform: translateX(-50%);" id="bAddManager"><?= ('Add an account') ?></a>
+					<a href="#" class="bAddManager btn btn-primary" style="margin-left: 50%;transform: translateX(-50%);" id="bAddManager"><?= __('Add an account') ?></a>
                     <ul class="list_managers list_elem">
                     </ul>
 					
