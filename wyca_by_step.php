@@ -165,7 +165,7 @@
 					</svg>
                     
                     <ul class="tuiles row max_375" style="position:relative;margin:0;">
-                        <li class="col-xs-4 col-md-3 col-lg-4 tuile_wrapper">
+                        <li class="col-xs-4 col-lg-4 tuile_wrapper">
                             <div id="wyca_by_step_check_lidar" data-line="line_lidar" data-line-placement="bottom" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
                                 <i class="fa fa-check component_state component_ok"></i>
                                 <i class="fa fa-exclamation-triangle component_state component_warning"></i>
@@ -175,7 +175,7 @@
                                 <?php echo __('Lidar');?>
                             </div>
                         </li>
-                        <li class="col-xs-4 col-md-3 col-lg-4 tuile_wrapper">
+                        <li class="col-xs-4 col-lg-4 tuile_wrapper">
                             <div id="wyca_by_step_check_us" data-line="line_us" data-line-placement="bottom" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
                                 <i class="fa fa-check component_state component_ok"></i>
                                 <i class="fa fa-exclamation-triangle component_state component_warning"></i>
@@ -186,7 +186,7 @@
                             </div>
                             <span class="trait_legende" style="width:calc(var(--vh, 1vh) * 20);transform:rotate(50deg)translateX(0px)translateY(0px);"></span>
                         </li>
-                        <li class="col-xs-4 col-md-3 col-lg-4 tuile_wrapper">
+                        <li class="col-xs-4 col-lg-4 tuile_wrapper">
                             <div id="wyca_by_step_check_motor" data-line="line_motor" data-line-placement="bottom" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
                                 <i class="fa fa-check component_state component_ok"></i>
                                 <i class="fa fa-exclamation-triangle component_state component_warning"></i>
@@ -197,10 +197,10 @@
                             </div>
                             <span class="trait_legende" style="width:calc(var(--vh, 1vh) * 20);transform:rotate(50deg)translateX(0px)translateY(0px);"></span>
                         </li>
-                        <li class="col-xs-4 col-md-3 col-lg-4 tuile_wrapper">
+                        <li class="col-xs-4 col-lg-4 tuile_wrapper">
                             <img class="img-responsive" id="elodie_import_top" src="assets/images/elodie_form.png" style="z-index:5">
                         </li>
-                        <li class="col-xs-4 col-md-3 col-lg-4 tuile_wrapper">
+                        <li class="col-xs-4 col-lg-4 tuile_wrapper">
                             <div id="wyca_by_step_check_battery" data-line="line_battery" data-line-placement="top" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
                                 <i class="fa fa-check component_state component_ok"></i>
                                 <i class="fa fa-exclamation-triangle component_state component_warning"></i>
@@ -210,7 +210,7 @@
                                 <?php echo __('Com. Battery');?>
                             </div>
                         </li>
-                        <li class="col-xs-4 col-md-3 col-lg-4 tuile_wrapper">
+                        <li class="col-xs-4 col-lg-4 tuile_wrapper">
                             <div id="wyca_by_step_check_cam3d" data-line="line_sensor" data-line-placement="top" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
                                 <i class="fa fa-check component_state component_ok"></i>
                                 <i class="fa fa-exclamation-triangle component_state component_warning"></i>
@@ -220,7 +220,7 @@
                                 <?php echo __('3D Sensor');?>
                             </div>
                         </li>
-                        <li class="col-xs-4 col-md-3 col-lg-4 tuile_wrapper">
+                        <li class="col-xs-4 col-lg-4 tuile_wrapper">
                             <div id="wyca_by_step_check_leds" data-line="line_leds" data-line-placement="top" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
                                 <i class="fa fa-check component_state component_ok"></i>
                                 <i class="fa fa-exclamation-triangle component_state component_warning"></i>
