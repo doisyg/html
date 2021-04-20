@@ -1,6 +1,7 @@
 body{color:#777;font-family:"Open Sans",Arial,sans-serif;line-height:22px;margin:0;font-size:13px;overflow-x:hidden;overflow-y:scroll; background-position:right bottom; background-size:80%; background-repeat:no-repeat; height:100vh; height: calc(var(--vh, 1vh) * 100);}
 @media (min-width: 768px) { 
 	body { background-size:20%;  }
+	.modal-dialog {	margin: 10px auto!important;}
 }
 
 .icone_header { margin-left: 5px; font-size: 16px; display: inline-block; line-height:14px; text-align:center; vertical-align:middle; }
