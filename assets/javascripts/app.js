@@ -439,19 +439,6 @@ $(document).ready(function(e) {
 				
 				if (next == 'install_by_step_service_book') GetServiceBooksByStep();
 				
-				if(next.includes('install_by_step') || next.includes('wyca_by_step')){
-					do_refresh_continously = true;
-				}else{
-					if (do_refresh_continously)
-					{
-						do_refresh_continously = false;
-					}
-					else
-					{
-						do_refresh = true;
-					}
-				}
-				
 				// NORMAL
 				
 				if (next == 'install_normal_setup_sites') GetSitesNormal();
@@ -546,6 +533,7 @@ $(document).ready(function(e) {
 				if (next == 'wyca_by_step_service_book') GetServiceBooksWycaByStep();
 				
 				// MANAGER
+				
 				if (next == 'manager_setup_sites') GetSitesManager();
 				if (next == 'manager_edit_map') GetInfosCurrentMapManager();
 				if (next == 'manager_top') InitTopsActiveManager();
@@ -554,6 +542,22 @@ $(document).ready(function(e) {
 				// USER
 				
 				if (next == 'user_edit_map') GetInfosCurrentMapUser();
+				
+				// CHECK AND REFRESH PHP SESSION
+				
+				if(next.includes('install_by_step') || next.includes('wyca_by_step')){
+					do_refresh_continously = true;
+				}else{
+					if (do_refresh_continously)
+					{
+						do_refresh_continously = false;
+					}
+					else
+					{
+						do_refresh = true;
+						refresh_session_php();
+					}
+				}
 				
 				// Anim HIDE current page
 				var startShowAfter = 0;
