@@ -808,7 +808,8 @@ $(document).ready(function(e) {
 			}
 			else
 			{
-				
+				RemoveClass('#install_by_step_edit_map_svg .moving', 'moving');
+				RemoveClass('#install_by_step_edit_map_svg .editing_point', 'editing_point');
 				RemoveClass('#install_by_step_edit_map_svg .active', 'active');
 				RemoveClass('#install_by_step_edit_map_svg .activ_select', 'activ_select'); 
 				ByStepResizeSVG();
@@ -1070,6 +1071,14 @@ function ByStepInitMap()
 	, RefreshMap: function() { setTimeout(RefreshZoomView, 10); }
 	});
 	
+	if(init_zoom){
+		//WORKING ON CONSOLE 
+		window.panZoom.resize();
+		window.panZoom.updateBBox();
+		window.panZoom.fit();
+		window.panZoom.center();
+	}
+	
 	svgByStep = document.querySelector('#install_by_step_edit_map_svg .svg-pan-zoom_viewport');
 	
 	//window.panZoom = {};
@@ -1085,7 +1094,7 @@ function ByStepInitMap()
 			window.panZoom.center();
 		}
 		$('.install_by_step_edit_map_loading').hide();
-	},100);
+	},200);
 }
 
 function ByStepShakeActiveElement()

@@ -652,8 +652,12 @@ $_LANG['0172ad297374c5e2b221838b56fa274c'] = 'Sélectionnez la carte';
 $_LANG['db87111a800141eeb4083ae88d42a8d9'] = 'Êtes-vous sûr de vouloir passer sur ce site ?';
 $_LANG['3ea46fe23d03788e7cab31d1214ba887'] = 'Ce site possède plusieurs cartes';
 $_LANG['8149d609021280c0f8eba06b77b02ae7'] = 'Êtes-vous sûr de vouloir quitter?';
-$_LANG['666cbb24c2d5d4ec055108dff052d2d0'] = 'Cette page vous permet de télécharger un fichier PNG de votre carte en cliquant sur l\'icône correspondante.';
+$_LANG['29c595dde721e30236ed5ff86ad7407f'] = 'La carte n\'a pas de station de recharge.';
+$_LANG['bb4ee7995f7fea36eb5318a8158c1062'] = 'Êtes-vous sûr de vouloir continuer sans créer de station de recharge ? ?';
+$_LANG['ed4b192c6a21eebf8c2210d71681c920'] = 'Cela pourrait causer des problèmes plus tard.';
+$_LANG['60a6dcf8d5433517080654268ae395cd'] = 'Ajouter un compte';
 $_LANG['5ff02c037fd5e680d2601accfceb5fd4'] = 'L\'objectif est de faire en sorte que tous les murs soient représentés en noir sur la carte et que toutes les zones où le robot peut se déplacer soient représentées en blanc sur la carte.';
 $_LANG['f3aa661b584021c1c8519d098fc807a8'] = 'GetPath';
+$_LANG['666cbb24c2d5d4ec055108dff052d2d0'] = 'Cette page vous permet de télécharger un fichier PNG de votre carte en cliquant sur l\'icône correspondante.';
 
 ?>

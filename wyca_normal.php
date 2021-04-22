@@ -184,7 +184,7 @@
                     	<ul>
 							<li><a href="#" class="btn btn-circle btn-default btn-menu bMoveArea" data-orientation="H"><i class="fas fa-arrows-alt iconMenuGreen" style="position: relative;top:1px;font-size:26px"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-menu bConfigArea"><i class="fa fa-gears iconMenuBlue"></i></a></li>
-							<li><a href="#" class="btn btn-circle btn-default btn-menu bCopyArea"><i class="fa fa-copy iconMenuGreen"></i></a></li>
+							<li><a href="#" class="btn btn-circle btn-default btn-menu bCopyArea"><i class="fa fa-clone iconMenuGreen"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-menu bDeleteArea"><i class="fa fa-trash iconMenuRed"></i></a></li>
                         </ul>
                     </div>
@@ -1979,11 +1979,28 @@
 										<p style="padding-left:5px;margin-top:10px"><i class="fas fa-asterisk" style="color: darkorange;"></i> <?=__('Actual default dock') ?></p>
 										
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+				
+				<div class="modal fade modalSelectMap" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                    <div class="modal-dialog" role="dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="actions mh100vh_55">
+									<div class="h100vh_160" style="overflow:auto; text-align:center">
+										<h4 style="text-align:center;margin:30px 0"><?= __('Select the current map') ?></h4>
+										<div class="row row-eq-height" id="ImportSiteMapList">
+                    
+										</div>										
+                                    </div>
                                     
                                     <div style="clear:both;"></div>
 									
                                     
-                                    <a href="#" class="btn btn-default btn_50 bCloseMasterDock" style="display:none;" data-dismiss="modal"></a>
+                                    <a href="#" class="btn btn-default btn_50 bCloseSelectMap" style="display:none;" data-dismiss="modal"></a>
                                 </div>
                             </div>
                         </div>

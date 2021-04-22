@@ -1507,7 +1507,7 @@ function WycaAPI(options){
 		if(typeof(textAPIAnswerCode) != 'undefined'){
 			switch(ac)
 			{
-				case _this.AnswerCode.NO_ERROR : return typeof(textAPIAnswerCode.NO_ERROR) != 'undefined' ? textAPIAnswerCodeNO_ERROR : 'No error'; break;
+				case _this.AnswerCode.NO_ERROR : return typeof(textAPIAnswerCode.NO_ERROR) != 'undefined' ? textAPIAnswerCode.NO_ERROR : 'No error'; break;
 				case _this.AnswerCode.FORMAT_ERROR_MISSING_DATA : return typeof(textAPIAnswerCode.FORMAT_ERROR_MISSING_DATA) != 'undefined' ? textAPIAnswerCode.FORMAT_ERROR_MISSING_DATA : 'Format error ; missing data'; break;
 				case _this.AnswerCode.FORMAT_ERROR_INVALID_DATA : return typeof(textAPIAnswerCode.FORMAT_ERROR_INVALID_DATA) != 'undefined' ? textAPIAnswerCode.FORMAT_ERROR_INVALID_DATA : 'Format error ; invalid data'; break; 
 				case _this.AnswerCode.NOT_ALLOW : return typeof(textAPIAnswerCode.NOT_ALLOW) != 'undefined' ? textAPIAnswerCode.NOT_ALLOW : 'Not allow'; break;

@@ -107,6 +107,7 @@ $(document).ready(function(e) {
             lastEStop = data;
         },
 		onNavigationIsStarted: function(data) {
+			console.log('onNavigationIsStarted',data);
 			navLaunched = data;
 			if (data)
 			{
@@ -117,6 +118,9 @@ $(document).ready(function(e) {
 			{
 				$('.no_navigation').show();
 				$('.only_navigation').hide();
+				
+				lastRobotPose = JSON.parse('{"T":0,"X":0,"Y":0}');
+				InitRobotPose(lastRobotPose);
 			}
 		},
 		onMappingIsStarted: function(data){

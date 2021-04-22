@@ -153,8 +153,8 @@
             </header>
             <div class="content" style="padding: 0;">
             
-            	<div style="position:relative;max-width:375px; margin:auto;">
-					<svg class="svg_legende" xmlns="http://www.w3.org/2000/svg">
+            	<div class="max_375" style="position:relative;margin:auto;">
+					<svg class="svg_legende max_375" xmlns="http://www.w3.org/2000/svg" style="opacity:0">
 						<line x1="65" y1="142" x2="109" y2="226" stroke-width="1" stroke="#343434" class="line_lidar"/>
 						<line x1="187" y1="122" x2="168" y2="197" stroke-width="1" stroke="#343434" class="line_us"/>
 						<line x1="187" y1="122" x2="134" y2="197" stroke-width="1" stroke="#343434" class="line_us"/>
@@ -164,9 +164,8 @@
 						<line x1="308" y1="351" x2="174" y2="288" stroke-width="1" stroke="#343434" class="line_leds"/>
 					</svg>
                     
-                    <ul class="tuiles row" style="position:relative;max-width:375px; margin:0;">
-                       
-                        <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
+                    <ul class="tuiles row max_375" style="position:relative;margin:0;">
+                        <li class="col-xs-4 col-lg-4 tuile_wrapper">
                             <div id="install_by_step_check_lidar" data-line="line_lidar" data-line-placement="bottom" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
                                 <i class="fa fa-check component_state component_ok"></i>
                                 <i class="fa fa-exclamation-triangle component_state component_warning"></i>
@@ -176,7 +175,7 @@
                                 <?php echo __('Lidar');?>
                             </div>
                         </li>
-                        <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
+                        <li class="col-xs-4 col-lg-4 tuile_wrapper">
                             <div id="install_by_step_check_us" data-line="line_us" data-line-placement="bottom" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
                                 <i class="fa fa-check component_state component_ok"></i>
                                 <i class="fa fa-exclamation-triangle component_state component_warning"></i>
@@ -187,7 +186,7 @@
                             </div>
                             <span class="trait_legende" style="width:calc(var(--vh, 1vh) * 20);transform:rotate(50deg)translateX(0px)translateY(0px);"></span>
                         </li>
-                        <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
+                        <li class="col-xs-4 col-lg-4 tuile_wrapper">
                             <div id="install_by_step_check_motor" data-line="line_motor" data-line-placement="bottom" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
                                 <i class="fa fa-check component_state component_ok"></i>
                                 <i class="fa fa-exclamation-triangle component_state component_warning"></i>
@@ -198,10 +197,10 @@
                             </div>
                             <span class="trait_legende" style="width:calc(var(--vh, 1vh) * 20);transform:rotate(50deg)translateX(0px)translateY(0px);"></span>
                         </li>
-                        <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
+                        <li class="col-xs-4 col-lg-4 tuile_wrapper">
                             <img class="img-responsive" id="elodie_import_top" src="assets/images/elodie_form.png" style="z-index:5">
                         </li>
-                        <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
+                        <li class="col-xs-4 col-lg-4 tuile_wrapper">
                             <div id="install_by_step_check_battery" data-line="line_battery" data-line-placement="top" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
                                 <i class="fa fa-check component_state component_ok"></i>
                                 <i class="fa fa-exclamation-triangle component_state component_warning"></i>
@@ -211,7 +210,7 @@
                                 <?php echo __('Com. Battery');?>
                             </div>
                         </li>
-                        <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
+                        <li class="col-xs-4 col-lg-4 tuile_wrapper">
                             <div id="install_by_step_check_cam3d" data-line="line_sensor" data-line-placement="top" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
                                 <i class="fa fa-check component_state component_ok"></i>
                                 <i class="fa fa-exclamation-triangle component_state component_warning"></i>
@@ -221,7 +220,7 @@
                                 <?php echo __('3D Sensor');?>
                             </div>
                         </li>
-                        <li class="col-xs-4 col-md-3 col-lg-2 tuile_wrapper">
+                        <li class="col-xs-4 col-lg-4 tuile_wrapper">
                             <div id="install_by_step_check_leds" data-line="line_leds" data-line-placement="top" class="is_checkbox anim_tuiles tuile_img tuile1 no_update">
                                 <i class="fa fa-check component_state component_ok"></i>
                                 <i class="fa fa-exclamation-triangle component_state component_warning"></i>
@@ -849,7 +848,7 @@
                     	<ul>
 							<li><a href="#" class="btn btn-circle btn-default btn-menu bMoveArea" data-orientation="H"><i class="fas fa-arrows-alt iconMenuGreen" style="position: relative;top:1px;font-size:26px"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-menu bConfigArea"><i class="fa fa-gears iconMenuBlue"></i></a></li>
-							<li><a href="#" class="btn btn-circle btn-default btn-menu bCopyArea"><i class="fa fa-copy iconMenuGreen"></i></a></li>
+							<li><a href="#" class="btn btn-circle btn-default btn-menu bCopyArea"><i class="fa fa-clone iconMenuGreen"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-menu bDeleteArea"><i class="fa fa-trash iconMenuRed"></i></a></li>
                         </ul>
                     </div>
@@ -1909,6 +1908,29 @@
                         </div>
                     </div>
                     
+					<div class="modal fade modalConfirmNextNoDock" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+                                        <div class="h100vh_160" style="overflow:auto; text-align:center">
+											<i class="fas fa-exclamation-triangle fa-5x" style="margin:20px 0;position:relative;color:#ed9c28">
+												<!--<i class="fas fa-asterisk fa-2x" style="position: absolute;font-size: 16px;color: #343434;top:-8px;right: -9px;"></i>-->
+											</i>
+											<h3 style="margin:20px 0"><?= __('Map doesn\'t have any dock.')?></h3>
+											<h4 style="margin:20px 0"><?= __('Are you sure you want to continue without creating a dock ?')?></h4>
+											<h4 style="margin:20px 0"><?= __('It may cause some issues later.')?></h4>
+                                        </div>
+                                        
+                                        <div style="clear:both;"></div>
+										<a href="#" class="btn btn-primary btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('No');?></a>
+                                        <a href="#" class="btn btn-warning btn_footer_right btn_50 bConfirmNextNoDock" data-dismiss="modal"><?php echo __('Yes');?></a> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					
 					<div class="install_by_step_edit_map_loading loading_big loading_map"><i class="fa fa fa-spinner fa-pulse fa-3x"></i></div>
                 </div>
                 
@@ -1941,12 +1963,9 @@
                     
 			</div>
             <footer>
-            
-            	
-                
-            	
 				<a href="#" class="btn btn-success bSaveEditMap btn_footer_left btn_50"><?php echo __('Save map');?></a>
-				<a href="#" class="btn btn-primary button_goto bSaveEditMap btn_footer_right btn_50 bNextEditMap" data-goto="install_by_step_config" ><?php echo __('Next');?></a>
+				<a href="#" class="btn btn-primary btn_footer_right btn_50 bCheckNextEditMap"><?php echo __('Next');?></a>
+				<a href="#" class="button_goto bNextEditMap bSaveEditMap" data-goto="install_by_step_config" style="display:none;"></a>
             </footer>
         </section>
       
@@ -2310,7 +2329,7 @@
 						<h4 class="iconMenuGreen" ><?php echo __('Create manager');?></h4>
 					</a>
 					
-					<a href="#" class="bAddManager btn btn-primary" style="margin-left: 50%;transform: translateX(-50%);" id="bAddManager"><?= ('Add an account') ?></a>
+					<a href="#" class="bAddManager btn btn-primary" style="margin-left: 50%;transform: translateX(-50%);" id="bAddManager"><?= __('Add an account') ?></a>
                     <ul class="list_managers list_elem">
                     </ul>
 					

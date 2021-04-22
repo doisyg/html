@@ -313,7 +313,7 @@ function ByStepTraceCurrentArea(points)
 }
 */
 
-function GetCenterArea(indexArea)
+function GetCenterBoxArea(indexArea)
 {
 	area = areas[indexArea];
 	
