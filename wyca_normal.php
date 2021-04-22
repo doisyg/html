@@ -112,7 +112,7 @@
                             <div id="wyca_edit_map_zone_zoom_click" style="position:absolute; width:100%; height:100%; top:0; left:0; cursor:pointer;"></div>
                         </div>
                     </div>
-                
+					
                     <div id="wyca_edit_map_all" style="position:relative; margin:auto; width:100%;">
                         <div id="wyca_edit_map_map_navigation" class="zoom" style="position:relative; width:100%; margin:auto; border:1px solid #000;">
                             <svg id="wyca_edit_map_svg" width="0" height="0" style="position:absolute; top:0; left:0; width:100%; height:100%;">
@@ -1858,10 +1858,30 @@
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
                 <h2><?php echo __('Trinary');?></h2>
             </header>
-            <div class="content">
-                
-                <div style="text-align:center;">
-                
+            <div class="content mh100vh_110" style="display:flex;flex-direction:column;">
+                <div id="wyca_setup_trinary_divResultTrinary" class="" style="flex:1 1 100%;background-color:#f0f0f0;display:flex;justify-content:center;align-items:center">
+					<i style="font-size:60px;" class="fa fa-spinner fa-pulse loading_fin_create_map"></i>
+					<canvas id="wyca_setup_trinary_canvas_result_trinary" width="" height="" style="overflow: hidden;position: absolute;top: 0px;left: 0px;width: 100%;height: 100%;touch-action: none;user-select: none;-webkit-user-drag: none;webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas>
+					<!--
+                    <div id="wyca_trinary_zoom_carte_container">
+                        <div id="wyca_trinary_zoom_carte">
+                            <img src="" class="img-responsive" style="max-width:100%; max-height:100%;" />
+                            <div id="wyca_trinary_zone_zoom" style="position:absolute; border:1px solid #00F;"></div>
+                            <div id="wyca_trinary_zone_zoom_click" style="position:absolute; width:100%; height:100%; top:0; left:0; cursor:pointer;"></div>
+                        </div>
+                    </div>
+					
+                    <div id="wyca_edit_map_all" style="position:relative; margin:auto; width:100%;">
+                        <div id="wyca_edit_map_map_navigation" class="zoom" style="position:relative; width:100%; margin:auto; border:1px solid #000;">
+                            <svg id="wyca_edit_map_svg" width="0" height="0" style="position:absolute; top:0; left:0; width:100%; height:100%;">
+                                <image id="wyca_edit_map_image" xlink:href="" x="0" y="0" height="0" width="0" />
+                            </svg>
+                        </div>
+                        <div style="clear:both;"></div>
+                    </div>
+					-->
+				</div>
+				<div>
                     <form id="wyca_setup_trinary_form" method="post">
                         <input type="hidden" name="todo" value="saveMapping" />
                         <input type="hidden" id="wyca_setup_trinary_from_image" name="image" value="" />
@@ -1872,9 +1892,9 @@
                         <input type="hidden" id="wyca_setup_trinary_from_threshold_occupied" name="threshold_occupied" value="" />
                     </form>
                 
-                    <div class="fin_mapping_view" style="height:65vh; width:100%; margin:10px 0; border:1px solid #EFEFEF; position:relative; background-color:#F0F0F0;">
+                    <div class="fin_mapping_view" style="background-color: #F0F0F0;padding-bottom: 10px;padding-left: 5%;padding-right: 5%;">
                         <img id="wyca_setup_trinary_img_map_saved_fin" src="" style="z-index:200; display:none; max-width:100%;" />
-                        <div id="wyca_setup_trinary_divOptionTrinary">
+                        <div id="">
                             <div class="threshold_wrapper">
 								<div class="slider_wrapper">
 									<span class="btn btn_slider_minus"><i class="fas fa-minus-square"></i></span>
@@ -1898,16 +1918,7 @@
                             </div>
                             <a href="#" class="btn btn-sm btn-primary bResetValueThreshold"><?php echo __('Reset values');?></a>
                         </div>
-                        <div id="wyca_setup_trinary_divResultTrinary">
-                            <div style="height:80vh; overflow:auto;">
-                                <i style="font-size:60px;" class="fa fa-spinner fa-pulse loading_fin_create_map"></i>
-                                <canvas id="wyca_setup_trinary_canvas_result_trinary" width="" height="" style="max-width:100%; max-height:65vh;"></canvas>
-                            </div>
-                        </div>
                     </div>
-                    
-                    <div style="clear:both; height:10px;"></div>
-                    
                 </div>         
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>

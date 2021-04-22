@@ -594,8 +594,8 @@ ul.list_test li.done { color:#006600; border-color:#006600; }
 }
 
 .mh100vh_110 {
-	min-height: calc(100vh - 62px);
-  	min-height: calc(var(--vh, 1vh) * 100 - 62px);
+	min-height: calc(100vh - 110px);
+  	min-height: calc(var(--vh, 1vh) * 100 - 110px);
 	padding:1px;
 }
 .mh100vh_160 {
