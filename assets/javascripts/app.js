@@ -66,7 +66,12 @@ function refresh_session_php(){
 			success: function(data) {
 			},
 			error: function(e) {
-				console.log(typeof(textErrorRefreshSession) != 'undefined'? textErrorRefreshSession : 'Error in refresh session');
+				if(e.responseText == 'no_auth' || e.responseText == 'no_right'){
+					console.log(typeof(textErrorRefreshSession) != 'undefined'? textErrorRefreshSession : 'Error in refresh session');
+					$('#modalErrorSession').modal('show');
+					clearInterval(refresh_session_interval);
+				}else
+					console.log(typeof(textErrorRefreshSession) != 'undefined'? textErrorRefreshSession : 'Error in refresh session');
 			}
 		});
 		do_refresh = false;
@@ -349,7 +354,9 @@ $(document).ready(function(e) {
 				}
 			}
 			
-		}else{
+		}
+		else
+		{
 			if(typeof($(this).data('goto')) != 'undefined'){
 				let fromBackBtn = false;
 				if($(this).data('goto').includes('fromBackBtn')){
@@ -432,7 +439,7 @@ $(document).ready(function(e) {
 				
 				if (next == 'install_by_step_service_book') GetServiceBooksByStep();
 				
-				if(next.includes('install_by_step')){
+				if(next.includes('install_by_step') || next.includes('wyca_by_step')){
 					do_refresh_continously = true;
 				}else{
 					if (do_refresh_continously)
