@@ -526,11 +526,11 @@ $(document).ready(function() {
 	$('#wyca_by_step_edit_map_menu_point .bDeletePoint').click(function(e) {
         e.preventDefault();
 		WycaByStepHideMenus();
-		if (wyca_bystepCurrentAction == 'editForbiddenArea' || wyca_bystepCurrentAction == 'addbiddenArea')
+		if (wyca_bystepCurrentAction == 'editForbiddenArea' || wyca_bystepCurrentAction == 'addForbiddenArea')
 		{
 			forbiddens[currentForbiddenIndex].points.splice(currentPointWycaByStepLongTouch.data('index_point'), 1);
 			
-			currentPointNormalLongTouch = null;
+			currentPointWycaByStepLongTouch = null;
 			WycaByStepTraceForbidden(currentForbiddenIndex);
 			WycaByStepSaveElementNeeded(false);
 			WycaByStepDisplayMenu('wyca_by_step_edit_map_menu_forbidden');
@@ -538,7 +538,7 @@ $(document).ready(function() {
 		else if (wyca_bystepCurrentAction == 'editArea' || wyca_bystepCurrentAction == 'addArea')
 		{
 			areas[currentAreaIndex].points.splice(currentPointWycaByStepLongTouch.data('index_point'), 1);
-			currentPointNormalLongTouch = null;
+			currentPointWycaByStepLongTouch = null;
 			WycaByStepTraceArea(currentAreaIndex);
 			WycaByStepSaveElementNeeded(false);
 			WycaByStepDisplayMenu('wyca_by_step_edit_map_menu_area');
