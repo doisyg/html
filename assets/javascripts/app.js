@@ -247,7 +247,7 @@ $(document).ready(function(e) {
 	$( 'body' ).on( 'click', '.button_goto', function(e) {
 		if(isDown)SetCurseurV2(xCentre, yCentre); // REINIT JOYSTICK TO MIDDLE
 		let anim_show = true; // TRIGGER ANIM ? 
-
+		let go_to_end = false;
 		
 		if($(this).hasClass('btn_back')){
 			
