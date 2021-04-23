@@ -550,7 +550,7 @@ $(document).ready(function() {
 	$('#install_by_step_edit_map_menu_point .bDeletePoint').click(function(e) {
         e.preventDefault();
 		ByStepHideMenus();
-		if (bystepCurrentAction == 'editForbiddenArea' || bystepCurrentAction == 'addbiddenArea')
+		if (bystepCurrentAction == 'editForbiddenArea' || bystepCurrentAction == 'addForbiddenArea')
 		{
 			forbiddens[currentForbiddenIndex].points.splice(currentPointByStepLongTouch.data('index_point'), 1);
 			
