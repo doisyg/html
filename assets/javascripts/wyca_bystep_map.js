@@ -885,6 +885,12 @@ function WycaByStepLongPressDock()
 	WycaByStepDisplayMenu('wyca_by_step_edit_map_menu_dock');
 }
 
+function WycaByStepLongPressLandmark()
+{
+	timerWycaByStepLongPress = null;
+	WycaByStepDisplayMenu('wyca_by_step_map_menu_landmark');
+}
+
 function WycaByStepLongPressPoi()
 {
 	timerWycaByStepLongPress = null;
