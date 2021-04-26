@@ -765,6 +765,9 @@
 					<div class="btn-circle btn-lg icon_menu" data-menu="wyca_by_step_edit_map_menu_augmented_pose">
 						<div class="iconAugmentedPose"><i class="fas fa-map-marker-alt iconMenuPurple"></i><i class="fas fa-barcode"></i></div>
 					</div>
+					<div class="btn-circle btn-lg icon_menu" data-menu="wyca_by_step_edit_map_menu_landmark">
+						<i class="fas fa-barcode fa-flip-horizontal iconMenuMagenta" style="position: relative;left: -6px;"></i>
+					</div>
 					<div class="btn-circle btn-lg icon_menu" data-menu="wyca_by_step_edit_map_menu_erase">
 						<i class="fa fa-eraser" style="left: -9px;color: #333333;"></i>
 					</div>
@@ -813,6 +816,9 @@
                         	<li><a href="#" class="btn btn-circle btn-default bAddDock btn-menu" data-orientation="V">
 								<i class="fas fa-charging-station iconMenuGreen" style="position: relative;top: -1px;left: 2px;"></i>
 							</a></li>
+							<li><a href="#" class="btn btn-circle btn-default bAddLandmark btn-menu" data-orientation="V">
+								<i class="fas fa-barcode fa-flip-horizontal iconMenuMagenta" style="position: relative;top: -0px;left: 0px;"></i>
+							</a></li>
                         	<li><a href="#" class="btn btn-circle btn-default bGomme btn-menu" data-orientation="V">
 								<i class="fa fa-eraser "></i>
 							</a></li>
@@ -822,6 +828,7 @@
                         	<li><a href="#" class="btn btn-circle btn-default bMove btn-menu" data-orientation="H" data-toggle="modal" data-target="#wyca_by_step_edit_map_modalTeleop">
 								<i class="fa fa-gamepad iconMenuPurple"></i>
 							</a></li>
+							
 							<li><a href="#" class="btn btn-circle btn-default btn-menu" data-orientation="H" data-toggle="modal" data-target="#wyca_by_step_edit_map_modalRecovery">
 								<i class="fa fa-search iconMenuColorWarning"></i>
 							</a></li>
@@ -865,6 +872,12 @@
 							<li><a href="#" class="btn btn-circle btn-default btn-menu bTestAugmentedPose"><img class="fi-route" src="assets/images/route_green.svg"/></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-menu bConfigAugmentedPose"><i class="fa fa-gears iconMenuBlue"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-menu bDeleteAugmentedPose"><i class="fa fa-trash iconMenuRed"></i></a></li>
+                        </ul>
+                    </div>
+					<div id="wyca_by_step_edit_map_menu_landmark" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
+                    	<ul>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-menu bConfigLandmark"><i class="fa fa-gears iconMenuBlue"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-menu bDeleteLandmark"><i class="fa fa-trash iconMenuRed"></i></a></li>
                         </ul>
                     </div>
                     <div id="wyca_by_step_edit_map_menu_erase" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
@@ -1512,6 +1525,108 @@
                         </div>
                     </div>
                     
+					<div class="modal fade modalAddLandmark" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+                                        <div class="h100vh_160" style="overflow:auto; text-align:center">
+                                        
+                                        	<a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
+											<div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div>
+                                        	<div class="ifUndocked">
+                                                <div style="height:200px; position:relative;">
+                                                
+                                                    <img id="wyca_by_step_edit_map_modalAddLandmark_robot" src="assets/images/robot-dessus.png" width="50" style="position:absolute; top:130px; margin-left:-25px; z-index:300;" />
+                                                    
+                                                    <img id="wyca_by_step_edit_map_modalAddLandmark_landmark0" class="landmark" src="assets/images/reflector.png" width="25" />
+                                                    <img id="wyca_by_step_edit_map_modalAddLandmark_landmark1" class="landmark" src="assets/images/reflector.png" width="25" />
+                                                    <img id="wyca_by_step_edit_map_modalAddLandmark_landmark2" class="landmark" src="assets/images/reflector.png" width="25" />
+                                                    <img id="wyca_by_step_edit_map_modalAddLandmark_landmark3" class="landmark" src="assets/images/reflector.png" width="25" />
+                                                    <img id="wyca_by_step_edit_map_modalAddLandmark_landmark4" class="landmark" src="assets/images/reflector.png" width="25" />
+                                                    <img id="wyca_by_step_edit_map_modalAddLandmark_landmark5" class="landmark" src="assets/images/reflector.png" width="25" />
+                                                    <div class="fiducial_number_wrapper"></div>
+                                                </div>
+                                            
+                                            	<div class ="modal-advice">
+                                                    <p class="texts_add_landmark text_prepare_robot"><?php echo stripslashes(__('Move the robot in front of the reflector and click on the "Scan" button'));?></p>
+                                                    <p class="texts_add_landmark text_set_landmark"><?php echo stripslashes(__('Click on the fiducial to create the landmark'));?></p>
+                                                </div>
+                                                <p><a href="#" class="btn btn-primary bScanAddLandmark">Scan</a></p>
+                                                
+                                                <div style="position:absolute; bottom:50px; left:0; width:100%; z-index:2000;">
+                                                    <div class="joystickDiv" draggable="false" style="margin:auto;">
+                                                        <div class="fond"></div>
+                                                        <div class="curseur"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        
+                                        <div style="clear:both;"></div>
+                                                                                
+                                        
+                                        <a href="#" class="btn btn-default btn_footer_left btn_100" data-dismiss="modal" ><?php echo __('Cancel');?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal fade modalLandmarkOptions" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+                                        <div class="h100vh_160" style="overflow:auto; text-align:center">
+                                        
+                                        	<form>
+                                                <div class="form-group">
+                                                    <label class="col-xs-4 control-label"><?= __('Name')?></label>
+                                                    <div class="col-xs-8">
+                                                        <input type="text" id="wyca_by_step_edit_map_landmark_name" name="landmark_name" value="" class="form-control input-sm mb-md" />
+                                                    </div>
+                                                </div>
+                                                <!--
+                                                <div class="form-group">
+                                                    <label class="col-xs-4 control-label">Number</label>
+                                                    <div class="col-xs-8">
+                                                        <input type="number" id="wyca_by_step_edit_map_landmark_number" name="landmark_number" value="1" class="form-control input-sm mb-md" />
+                                                    </div>
+                                                </div>
+                                                -->
+                                                
+                                                <div class="form-group">
+                                                    <label class="col-xs-4 control-label"><?= __('Fiducial ID')?></label>
+                                                    <div class="col-xs-8">
+                                                        <input type="number" id="wyca_by_step_edit_map_landmark_fiducial_number" name="landmark_fiducial_number" readonly value="1" class="form-control input-sm mb-md" />
+                                                    </div>
+                                                </div>
+                                                
+                                                <input type="hidden" id="wyca_by_step_edit_map_landmark_number" name="landmark_number" value="1" />
+                                                
+                                                <div class="form-group">
+                                                    <label class="col-xs-4 control-label"><?= __('Comment')?></label>
+                                                    <div class="col-xs-8">
+                                                        <textarea id="wyca_by_step_edit_map_landmark_comment" name="landmark_comment" class="form-control input-sm mb-md"></textarea>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            
+                                        </div>
+                                        
+                                        <div style="clear:both;"></div>
+                                       
+                                       
+                                        <a href="#" id="wyca_by_step_edit_map_bLandmarkCancelConfig" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Cancel');?></a> 
+										<a href="#" id="wyca_by_step_edit_map_bLandmarkSaveConfig" class="btn btn-primary btn_footer_right btn_50"><?php echo __('Save');?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					
                     <div class="modal fade modalAugmentedPoseOptions" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
                         <div class="modal-dialog" role="dialog">
                             <div class="modal-content">

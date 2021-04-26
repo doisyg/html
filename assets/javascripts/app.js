@@ -566,7 +566,7 @@ $(document).ready(function(e) {
 				if (next == 'wyca_by_step_site_map' && fromBackBtn) InitSiteSelectMapWycaByStep('back');
 				if (next == 'wyca_by_step_site_map' && !fromBackBtn) InitSiteSelectMapWycaByStep();
 				
-				if (next == 'wyca_by_step_edit_map')GetInfosCurrentMapWycaByStep();
+				if (next == 'wyca_by_step_edit_map') GetInfosCurrentMapWycaByStep();
 				if (next == 'wyca_by_step_mapping_fin'){
 					if(typeof(window.site_name) != 'undefined' && window.site_name != ""){
 						$('#wyca_by_step_mapping_from_name').val(window.site_name)

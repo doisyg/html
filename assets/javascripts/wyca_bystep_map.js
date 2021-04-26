@@ -27,6 +27,7 @@ function GetInfosCurrentMapDoWycaByStep()
 			gommes = Array();
 			docks = data.D.docks;
 			pois = data.D.pois;
+			landmarks = data.D.landmarks;
 			augmented_poses = data.D.augmented_poses;
 			
 			$('#wyca_by_step_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
@@ -779,6 +780,7 @@ function WycaByStepHideMenus()
 	$('#wyca_by_step_edit_map_menu_dock li').hide();
 	$('#wyca_by_step_edit_map_menu_poi li').hide();
 	$('#wyca_by_step_edit_map_menu_augmented_pose li').hide();
+	$('#wyca_by_step_edit_map_menu_landmark li').hide();
 	$('#wyca_by_step_edit_map_menu_erase li').hide();
 	$('#wyca_by_step_edit_map .popupHelp').hide();
 	
