@@ -17,7 +17,7 @@ if ( (! empty($_SERVER['REQUEST_SCHEME']) && $_SERVER['REQUEST_SCHEME'] == 'http
 	$server_request_scheme = 'http';
 }
 
-
+/*
 if($sim){
 
 	$_CONFIG['ROBOT_HOST'] = '';
@@ -30,6 +30,7 @@ if($sim){
 	$_CONFIG['ROBOT_HTTP'] .= $_CONFIG['ROBOT_HOST'];
 
 }
+*/
 
 $_CONFIG['URL_ROOT'] = $server_request_scheme.'://wyca.run/';
 $_CONFIG['URL'] = $server_request_scheme.'://wyca.run/robot_hmi/elodie_v1/';
@@ -60,7 +61,6 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
 	<script>
 		var nbDockAttemptMax = 3;
 		var delayBeforeRetryDock = 30000;
-		var robot_host = '<?php echo (file_exists('C:\\'))?'10.0.0.72:9095':'wyca.run:9095';?>';
 		var api_key = '<?php echo (file_exists('C:\\'))?"5LGU.LaYMMncJaA0i42HwsX9ZX-RCNgj-9V17ROFXt71st":"4tEV6A6Bd8mVQtgHjUj85fGwYeJbsYkChHSRGP21HxaAIE";?>';
 		var robot_host = '<?php echo $_CONFIG["ROBOT_HOST"]?>';
 		var robot_http = '<?php echo $_CONFIG["ROBOT_HTTP"]?>';
@@ -79,7 +79,6 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
 	<script src="<?php echo $_CONFIG['URL_API'];?>wyca_socket_api.js?v=<?= $version ?>"></script>
 	<script src="<?php echo $_CONFIG['URL_API'];?>extern/jquery-1.11.3.min.js"></script>
 	<script src="<?php echo $_CONFIG['URL_API'];?>webrtc.wyca2.min.js?v=<?= $version ?>"></script>
-	<script src="<?php echo $_CONFIG['URL'];?>js/bootstrap.js"></script>
 	
 	<?php if($sim) : ?>
 		<link rel="stylesheet" href="<?php echo $_CONFIG['URL'];?>css/sim_bootstrap.css" />
@@ -92,7 +91,12 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
 		<script src="<?php echo $_CONFIG['URL'];?>js/sim_anim_led.js?v=<?= $version ?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>js/sim_led.js?v=<?= $version ?>"></script>
 		<script src="<?php echo $_CONFIG['URL'];?>js/sim_map_svg.js?v=<?= $version ?>"></script>
-	<?php endif; ?>
+	<?php 
+	else:
+	?>
+	<script src="<?php echo $_CONFIG['URL'];?>js/bootstrap.js"></script>
+    <?php
+	endif; ?>
 	
 	<script src="<?php echo $_CONFIG['URL'];?>js/robot.js?v=<?= $version ?>"></script>
 </head>
@@ -112,67 +116,7 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
     <div style="display:none;">
 	    <div id="waitTime" style="font-size:68px; display:none; "><?= __('Wait') ?> <em></em><?= __('seconde') ?><span class="pluriel">s</span></div>
     </div>
-    <a href="#" id="bHideBouton" style="position:absolute; bottom:0px; right:0px; width:150px; height:150px;"></a>
-	
-    <div id="modalAskCode" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog" role="dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                
-                	<div class="flex">
-                        <div style="max-width:500px; margin:auto; margin-top:50px">
-                            <span id="ConfigCodeError" class="text-muted text-center" style="color:#F00; display:none;font-size:50px;">
-                                <?php echo __('Invalid code');?>
-                            </span>
-                            
-                            <p id="code_aff" class="text-muted text-center" style="font-size:50px;">&nbsp;</p>
-                            
-                            <div id="clavier_code">
-                                
-                                <div class="touche btn btn-lg btn-primary btn-block">1</div>
-                                <div class="touche btn btn-lg btn-primary btn-block">2</div>
-                                <div class="touche btn btn-lg btn-primary btn-block">3</div>
-                                <div class="touche btn btn-lg btn-primary btn-block">4</div>
-                                <div class="touche btn btn-lg btn-primary btn-block">5</div>
-                                <div class="touche btn btn-lg btn-primary btn-block">6</div>
-                                <div class="touche btn btn-lg btn-primary btn-block">7</div>
-                                <div class="touche btn btn-lg btn-primary btn-block">8</div>
-                                <div class="touche btn btn-lg btn-primary btn-block">9</div>
-                                <div class="touche"></div>
-                                <div class="touche btn btn-lg btn-primary btn-block">0</div>
-                                <div class="touche btn btn-lg btn-primary btn-block backspace"><i class="fa fa-step-backward"></i></div>
-                                <div style="clear:both;"></div>        
-                            </div>
-                        
-                            <button class="btn btn-lg btn-primary btn-block" id="connexionCode" disabled="disabled"><?php echo __('Unlock');?></button>
-                            <button class="btn btn-lg btn-primary btn-block" id="cancelCode" data-dismiss="modal"><?php echo __('Cancel');?></button>
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     
-    <div id="modalAdmin" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog" role="dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                
-                	<div class="flex">
-                        <div style="max-width:500px; margin:auto; margin-top:50px">
-                            
-                            <div class="col-md-6"><a href="#" class="btn btn-lg btn-primary" id="bRestartWindows" style="margin:10px; font-size:24px;"><?= __('Restart in') ?><br /><?= __('windows mode') ?></a></div>
-                            <div class="col-md-6"><a href="#" class="btn btn-lg btn-primary" id="bRestartKiosk" style="margin:10px; font-size:24px;"><?= __('Restart in') ?><br /><?= __('kiosk mode') ?></a></div>
-                            
-                            <a href="#" class="btn btn-lg btn-default" style="margin:10px; font-size:50px; margin-top:50px;" data-dismiss="modal"><?php echo __('Close');?></a>
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
 <div id="HMI_simu" class="position-relative" style="<?= !$sim?'display:none':'' ?>">
@@ -254,5 +198,68 @@ $_CONFIG['URL_API'] = $server_request_scheme.'://wyca.run/API/';
 	</div>
 	<span id="tVersion" class="tVersion">v = <span class="font-weight-bold"><?= $version ?></span>
 </div>
+
+<a href="#" id="bHideBouton" style="position:fixed; bottom:0px; right:0px; width:150px; height:150px;"></a>
+
+<div id="modalAskCode" class="modal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            
+                <div class="flex">
+                    <div style="max-width:500px; margin:auto; margin-top:50px">
+                        <span id="ConfigCodeError" class="text-muted text-center" style="color:#F00; display:none;font-size:50px;">
+                            <?php echo __('Invalid code');?>
+                        </span>
+                        
+                        <p id="code_aff" class="text-muted text-center" style="font-size:50px;">&nbsp;</p>
+                        
+                        <div id="clavier_code">
+                            
+                            <div class="touche btn btn-lg btn-primary btn-block">1</div>
+                            <div class="touche btn btn-lg btn-primary btn-block">2</div>
+                            <div class="touche btn btn-lg btn-primary btn-block">3</div>
+                            <div class="touche btn btn-lg btn-primary btn-block">4</div>
+                            <div class="touche btn btn-lg btn-primary btn-block">5</div>
+                            <div class="touche btn btn-lg btn-primary btn-block">6</div>
+                            <div class="touche btn btn-lg btn-primary btn-block">7</div>
+                            <div class="touche btn btn-lg btn-primary btn-block">8</div>
+                            <div class="touche btn btn-lg btn-primary btn-block">9</div>
+                            <div class="touche"></div>
+                            <div class="touche btn btn-lg btn-primary btn-block">0</div>
+                            <div class="touche btn btn-lg btn-primary btn-block backspace"><i class="fa fa-step-backward"></i></div>
+                            <div style="clear:both;"></div>        
+                        </div>
+                    
+                        <button class="btn btn-lg btn-primary btn-block" id="connexionCode" disabled="disabled"><?php echo __('Unlock');?></button>
+                        <button class="btn btn-lg btn-primary btn-block" id="cancelCode" data-dismiss="modal"><?php echo __('Cancel');?></button>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalAdmin" class="modal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            
+                <div class="flex">
+                    <div style="max-width:500px; margin:auto; margin-top:50px">
+                        
+                        <div class="col-md-6"><a href="#" class="btn btn-lg btn-primary" id="bRestartWindows" style="margin:10px; font-size:24px;"><?= __('Restart in') ?><br /><?= __('windows mode') ?></a></div>
+                        <div class="col-md-6"><a href="#" class="btn btn-lg btn-primary" id="bRestartKiosk" style="margin:10px; font-size:24px;"><?= __('Restart in') ?><br /><?= __('kiosk mode') ?></a></div>
+                        
+                        <a href="#" class="btn btn-lg btn-default" style="margin:10px; font-size:50px; margin-top:50px;" data-dismiss="modal"><?php echo __('Close');?></a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
