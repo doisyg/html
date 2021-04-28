@@ -13,7 +13,7 @@ if(isset($_GET['ns'])){
 
 		<meta charset="UTF-8">
 
-		<title>Login | Wyca Robotics</title>
+		<title>Change Password | Wyca Robotics</title>
 		<meta name="author" content="Wyca Robotics">
             
             
