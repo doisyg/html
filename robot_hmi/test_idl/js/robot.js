@@ -231,28 +231,31 @@ function initMap(){
 						ros_hauteur = data.D.ros_height;
 						ros_resolution = data.D.ros_resolution;
 						
-						svg_resolution_width = $('#map').outerWidth() / ros_largeur ;
-						svg_resolution_height = (ros_hauteur * svg_resolution_width) / ros_hauteur;
+						div_height = $('#map').outerHeight();
+						div_width = $('#map').outerWidth();
 						
-						$('#map_svg').attr('width', $('#map').outerWidth());
-						$('#map_svg').attr('height',ros_hauteur * svg_resolution_width);
+						svg_resolution = div_height / ros_hauteur ;
 						
-						$('#map_image').attr('width',$('#map').outerWidth());
-						$('#map_image').attr('height',ros_hauteur * svg_resolution_width);
-						$('#map_image').attr('xlink:href', 'data:image/png;base64,'+data.D.image_tri);
+						let temp_width = ros_largeur * svg_resolution;
 						
-						/*
-						svg_resolution_height = $('#map').outerHeight() / ros_hauteur ;
-						svg_resolution_width = (ros_largeur * svg_resolution_height) / ros_largeur ;
+						if(temp_width > div_width)
+							svg_resolution = svg_resolution * div_width / temp_width;
 						
-						$('#map_svg').attr('width', ros_largeur * svg_resolution_height);
+						offset_image_x = ros_largeur * svg_resolution < div_width ? (div_width - ros_largeur * svg_resolution)/2 : 0;
+						offset_image_y = ros_hauteur * svg_resolution < div_height ? (div_height - ros_hauteur * svg_resolution)/2 : 0;
+							
+						
+						$('#map_svg').attr('width',$('#map').outerWidth());
 						$('#map_svg').attr('height',$('#map').outerHeight());
 						
-						$('#map_image').attr('width', ros_largeur * svg_resolution_height);
-						$('#map_image').attr('height', $('#map').outerHeight());
+						$('#map_image').attr('width', ros_largeur * svg_resolution);
+						$('#map_image').attr('height', ros_hauteur * svg_resolution);
+						$('#map_image').attr('x', offset_image_x);
+						$('#map_image').attr('y', offset_image_y);
 						$('#map_image').attr('xlink:href', 'data:image/png;base64,'+data.D.image_tri);
-						*/
 						
+						svg_resolution_width = svg_resolution;
+						svg_resolution_height = svg_resolution;
 						svgMap = document.querySelector('#map_svg');
 						DrawMapElements();
 						TraceRobot(lastRobotPose);
