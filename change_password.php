@@ -84,7 +84,7 @@ if(isset($_GET['ns'])){
 									
 								</div>
 							</div>
-							<p class="password_format"><?= _('8 characters, lower and uppercase, digit or special char.')?></p>
+							<p class="password_format"><?= __('8 characters, lower and uppercase, digit or special char.')?></p>
 							<div class="form-group">
 								<div class="clearfix">
 									<label class="pull-left"><?php echo __('Confirm Password');?></label>
@@ -99,7 +99,7 @@ if(isset($_GET['ns'])){
 									</span>
 								</div>
 							</div>
-							<p class="password_format"><?= _('8 characters, lower and uppercase, digit or special char.')?></p>
+							<p class="password_format"><?= __('8 characters, lower and uppercase, digit or special char.')?></p>
 							<div class="row">
 								<div class="col-sm-12 text-right">
 									<button type="submit" class="btn btn-primary hidden-xs"><?php echo __('Change password');?></button>
