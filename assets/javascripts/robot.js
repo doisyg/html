@@ -107,6 +107,7 @@ $(document).ready(function(e) {
             lastEStop = data;
         },
 		onNavigationIsStarted: function(data) {
+			console.log('onNavigationIsStarted',data);
 			navLaunched = data;
 			if (data)
 			{
@@ -117,12 +118,17 @@ $(document).ready(function(e) {
 			{
 				$('.no_navigation').show();
 				$('.only_navigation').hide();
+				
+				lastRobotPose = JSON.parse('{"T":0,"X":0,"Y":0}');
+				InitRobotPose(lastRobotPose);
 			}
 		},
-		onMappingIsStarted: function(data) {
+		onMappingIsStarted: function(data){
 			mappingLaunched = data;
 		},
 		onNavigationRobotPose:function(pose){
+			if('{"T":0,"X":0,"Y":0}' == JSON.stringify(pose))
+				console.log('NavRobotPose 0',pose)
 			lastRobotPose = pose;
 			InitRobotPose(pose);
 		},
@@ -161,7 +167,7 @@ $(document).ready(function(e) {
 			if(updatingMap){
 				updatingMap = false;
 			}else{
-				console.log('Map need update');
+				//console.log('Map need update');
 				AskReloadMap();
 			}
 		},

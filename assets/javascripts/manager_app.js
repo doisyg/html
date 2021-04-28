@@ -519,28 +519,100 @@ $(document).ready(function(e) {
 		$('#manager_setup_sites .btn-danger.confirm_delete').addClass('disabled');
 		$('#manager_setup_sites .bSiteSetCurrentElem').addClass('disabled');
 		
-		id_site = parseInt($(this).closest('li').data('id_site'));
+		id_site_to_switch = parseInt($(this).closest('li').data('id_site'));
+		str_site_to_switch =  $(this).parent().find('.societe').text();
 		
-		wycaApi.SetSiteAsCurrent(id_site, function(data) {
-			if (data.A != wycaApi.AnswerCode.NO_ERROR) 
-				ParseAPIAnswerError(data,textErrorSetSite);
+		wycaApi.GetMapsList(id_site_to_switch,function(data){
+			if (data.A != wycaApi.AnswerCode.NO_ERROR)
+				ParseAPIAnswerError(data,textErrorGetMaps);
 			else
 			{
-				wycaApi.GetCurrentSite(function(data) {
-					current_site = data.D;
-					if($('#manager_dashboard_modalCurrentSite').data('original_txt') == undefined)
-						$('#manager_dashboard_modalCurrentSite').data('original_txt',$('#manager_dashboard_modalCurrentSite').find('h3').text());
-					$('#manager_dashboard_modalCurrentSite').find('h3').html($('#manager_dashboard_modalCurrentSite').data('original_txt') + '<br><br><span>' + current_site.name + '</span>')
-					
-					$('#manager_setup_sites .bBackToDashboard').click();
-					$('#manager_dashboard_modalCurrentSite').modal('show');
-					warning_wyca(textBeSureSelectedSite);
-					$('#manager_setup_sites .btn-danger.confirm_delete').removeClass('disabled');
-					$('#manager_setup_sites .bSiteSetCurrentElem').removeClass('disabled');
-				})
+				id_map_to_switch = -1;
+				if(data.D.length >= 2){
+					$('#manager_setup_sites .modalSelectMap .list_maps').html('');
+					$.each(data.D,function(idx,item){
+						if(item.name != ''){
+							let map_item="";
+							map_item+='<div class="col-xs-6 text-center">';
+							map_item+='	<div class="SelectMapItem btn bTuile" id="'+item.id_map+'">';
+							map_item+='		<i class="fas fa-map-marked-alt"></i>';
+							map_item+='		<p class="mapname">'+item.name+'</p>';
+							map_item+='   </div>';
+							map_item+='</div>';
+							$('#manager_setup_sites .modalSelectMap .list_maps').append(map_item);
+						}
+					});
+					$('#manager_setup_sites .modalSelectMap').modal('show');
+				}else{
+					if(str_site_to_switch != ''){
+						if($('#modalConfirmSwitchSite').data('original_txt') == undefined)
+							$('#modalConfirmSwitchSite').data('original_txt',$('#modalConfirmSwitchSite').find('h3').text());
+						$('#modalConfirmSwitchSite').find('h3').html($('#modalConfirmSwitchSite').data('original_txt') + '<br><br><span><i class="fas fa-building"></i><br>' + str_site_to_switch + '</span>')
+					}
+					$('#modalConfirmSwitchSite').modal('show');
+				}
 			}
 		});
 	});
+	
+	//DECLARATION EVENTLISTENER BOUTON CREE DYNAMIQUEMENT .on('event',function(){})
+	$( "#pages_manager #manager_setup_sites .modalSelectMap" ).on( 'click', '.SelectMapItem', function(e) {
+		id_map_to_switch = parseInt($(this).attr('id'));
+		str_map_to_switch = $(this).find('.mapname').html();
+	
+		if($('#modalConfirmSwitchSite').data('original_txt') == undefined)
+			$('#modalConfirmSwitchSite').data('original_txt',$('#modalConfirmSwitchSite').find('h3').text());
+		$('#modalConfirmSwitchSite').find('h3').html($('#modalConfirmSwitchSite').data('original_txt') + '<br><br><span><i class="fas fa-building"></i><br>' + str_site_to_switch + '<br><br><i class="fas fa-map-marked-alt"></i><br>' + str_map_to_switch+'</span>');
+		
+		$('#modalConfirmSwitchSite').modal('show');
+		$('#manager_setup_sites .modalSelectMap').modal('hide');
+	})
+	
+	$('#manager_setup_sites #modalConfirmSwitchSite .bModalConfirmSwitchSiteOk').click(function(e){
+		if(id_site_to_switch != -1){
+			wycaApi.SetSiteAsCurrent(id_site_to_switch, function(data) {
+				if (data.A != wycaApi.AnswerCode.NO_ERROR) 
+					ParseAPIAnswerError(data,textErrorSetSite);
+				else
+				{
+					if(id_map_to_switch != -1){
+						wycaApi.SetMapAsCurrent(id_map_to_switch, function(data){
+							if (data.A == wycaApi.AnswerCode.NO_ERROR){
+								if($('#manager_dashboard_modalCurrentSite').data('original_txt') == undefined)
+									$('#manager_dashboard_modalCurrentSite').data('original_txt',$('#manager_dashboard_modalCurrentSite').find('h3').text());
+								$('#manager_dashboard_modalCurrentSite').find('h3').html($('#manager_dashboard_modalCurrentSite').data('original_txt') + '<br><br><span>' + $('#modalConfirmSwitchSite').find('h3').find('span').html() + '</span>');
+								$('#manager_setup_sites .bBackToDashboard').click();
+								$('#manager_dashboard_modalCurrentSite').modal('show');
+							}else{
+								ParseAPIAnswerError(data,textErrorSetMap);
+								GetSitesmanager();
+							}
+							$('#pages_manager .modalSelectMap .bCloseSelectMap').click();
+							$('#manager_setup_sites .btn-danger.confirm_delete').removeClass('disabled');
+							$('#manager_setup_sites .bSiteSetCurrentElem').removeClass('disabled');
+							id_map_to_switch = -1;
+						})
+					}else{
+						if($('#manager_dashboard_modalCurrentSite').data('original_txt') == undefined)
+							$('#manager_dashboard_modalCurrentSite').data('original_txt',$('#manager_dashboard_modalCurrentSite').find('h3').text());
+						$('#manager_dashboard_modalCurrentSite').find('h3').html($('#manager_dashboard_modalCurrentSite').data('original_txt') + '<br><br><span>' + $('#modalConfirmSwitchSite').find('h3').find('span').html() + '</span>');
+						$('#manager_setup_sites .bBackToDashboard').click();
+						$('#manager_dashboard_modalCurrentSite').modal('show');
+						$('#manager_setup_sites .btn-danger.confirm_delete').removeClass('disabled');
+						$('#manager_setup_sites .bSiteSetCurrentElem').removeClass('disabled');
+					}
+				}
+				id_site_to_switch = -1;
+			})
+		}
+	})
+	
+	$('#manager_setup_sites #modalConfirmSwitchSite .bModalConfirmSwitchSiteClose').click(function(e){
+		
+		$('#manager_setup_sites .btn-danger.confirm_delete').removeClass('disabled');
+		$('#manager_setup_sites .bSiteSetCurrentElem').removeClass('disabled');
+		
+	})
 	
 	$(document).on('click', '#manager_setup_sites .bSiteDeleteElem', function(e) {
 		e.preventDefault();

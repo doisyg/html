@@ -177,8 +177,8 @@ $(document).ready(function() {
 	window.addEventListener('beforeunload', function(e){
 		if (!managerSavedCanClose)
 		{
-			(e || window.event).returnValue = 'Are you sure you want to leave?';
-			return 'Are you sure you want to leave?';
+			(e || window.event).returnValue = (typeof(textAreYouSureToLeave) !='undefined' ? textAreYouSureToLeave : 'Are you sure you want to leave?');
+			return (typeof(textAreYouSureToLeave) !='undefined' ? textAreYouSureToLeave : 'Are you sure you want to leave?');
 		}
 	});
 	
@@ -227,8 +227,11 @@ $(document).ready(function() {
 	
 	$('#manager_edit_map_bUndo').click(function(e) {
         e.preventDefault();
-		if (!$('#manager_edit_map_bUndo').hasClass('disabled'))
-			ManagerUndo();
+		if (!managerCanChangeMenu)
+			ManagerShakeActiveElement();
+		else
+			if (!$('#manager_edit_map_bUndo').hasClass('disabled'))
+				ManagerUndo();
 	});
 	/*
 	$('#manager_edit_map_bUndo').on('touchstart', function(e) { 
@@ -239,8 +242,11 @@ $(document).ready(function() {
 	*/
 	$('#manager_edit_map_bRedo').click(function(e) {
         e.preventDefault();
-		if (!$('#manager_edit_map_bRedo').hasClass('disabled'))
-			ManagerRedo();
+		if (!managerCanChangeMenu)
+			ManagerShakeActiveElement();
+		else
+			if (!$('#manager_edit_map_bRedo').hasClass('disabled'))
+				ManagerRedo();
     });
 	/*
 	$('#manager_edit_map_bRedo').on('touchstart', function(e) { 

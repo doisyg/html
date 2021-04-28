@@ -127,7 +127,7 @@
                     <a href="#" id="wyca_edit_map_bCancelGomme" class="btn btn-circle btn-warning btn-menu"><i class="fa fa-times"></i></a>
                     <a href="#" id="wyca_edit_map_bSaveCurrentElem" class="btn btn-circle btn-primary btn-menu btnSaveElem"><i class="fa fa-check"></i></a>
                     <a href="#" id="wyca_edit_map_bCancelCurrentElem" class="btn btn-circle btn-warning btn-menu btnSaveElem"><i class="fa fa-times"></i></a>
-                    
+                    <a href="#" id="wyca_edit_map_bPlusCurrentElem" class="btn btn-circle btn-info btn-menu btnSaveElem"><i class="fa fa-plus"></i></a>
                     <a href="#" id="wyca_edit_map_bUndo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:20px; left:10px;"><i class="fas fa-undo-alt"></i></a>
                     <a href="#" id="wyca_edit_map_bRedo" class="btn btn-default btn-circle disabled" style="position:absolute; bottom:20px; left:45px;"><i class="fas fa-redo-alt"></i></a>
                     <span id="wyca_edit_map_tRobotNotLocalised" class="tRobotNotLocalised" style="display:none;"><i class="fas fa-exclamation-triangle"></i><?php echo __('The robot is not localized');?></span>
@@ -175,7 +175,9 @@
                     </div>
                     <div id="wyca_edit_map_menu_area" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
                     	<ul>
+							<li><a href="#" class="btn btn-circle btn-default btn-menu bMoveArea" data-orientation="H"><i class="fas fa-arrows-alt iconMenuGreen" style="position: relative;top:1px;font-size:26px"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-menu bConfigArea"><i class="fa fa-gears iconMenuBlue"></i></a></li>
+							<li><a href="#" class="btn btn-circle btn-default btn-menu bCopyArea"><i class="fa fa-clone iconMenuGreen"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-menu bDeleteArea"><i class="fa fa-trash iconMenuRed"></i></a></li>
                         </ul>
                     </div>
@@ -435,6 +437,12 @@
                                         <div class="h100vh_160" style="overflow:auto">
                                             <form>
                                                 <div class="form-group">
+                                                    <label class="col-xs-4 control-label"><?= __('Name')?></label>
+                                                    <div class="col-xs-8">
+                                                        <input type="text" id="wyca_edit_map_area_name" name="area_name" value="" class="form-control input-sm mb-md" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group sep">
                                                     <label class="col-xs-4 control-label"><?php echo __('Area Color');?></label>
                                                     <div class="col-xs-8">
                                                         <div id="wyca_edit_map_area_color_elem" class="input-group color input-group-sm">
@@ -582,10 +590,7 @@
                                         </div>
                                         
                                         <div style="clear:both;"></div>
-                                                                                
-                                        
-                                        <a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Cancel');?></a>
-										<a href="#" id="wyca_edit_map_bModalAddDockSave" class="btn btn-primary btn_footer_right btn_50" data-dismiss="modal" ><?php echo __('Save');?></a>
+                                        <a href="#" class="btn btn-default btn_footer_left btn_100" data-dismiss="modal" ><?php echo __('Cancel');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -687,7 +692,7 @@
                                                         </div>
                                                         <div class="col-xs-6">
                                                             <input type="radio" id="wyca_edit_map_up_elem_direction_back" name="up_elem_direction" value="back" class="form-control" />
-                                                            <label for="up_elem_direction_back" class="control-label"><?= __('Back')?></label>
+                                                            <label for="up_elem_direction_back" class="control-label"><?= __(' Back')?></label>
                                                         </div>
                                                     </div>
                                                     
@@ -837,8 +842,7 @@
                                         
                                         <div style="clear:both;"></div>
                                        
-                                        <a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Cancel');?></a>
-                                        <a href="#" id="wyca_edit_map_bModalAddAugmentedPoseSave" class="btn btn-primary btn_footer_right btn_50" data-dismiss="modal" ><?php echo __('Save');?></a>
+                                        <a href="#" class="btn btn-default btn_footer_left btn_100" data-dismiss="modal" ><?php echo __('Cancel');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -1287,6 +1291,48 @@
                     <ul class="list_sites list_elem">
                     </ul>
                 </div>
+				<div class="modal fade modalSelectMap" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">           
+                    <div class="modal-dialog" role="dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="actions mh100vh_55">
+									<div class="h100vh_160" style="overflow:auto; text-align:center">
+										<h3 style="text-align:center;margin:30px 0"><?= __('This site has several maps') ?></h3>
+										<h4 style="text-align:center;margin:20px 0"><?= __('Choose the current map to load') ?></h4>
+										<div class="row row-eq-height list_maps" id="wyca_setup_sites_SelectMapList">
+										</div>										
+                                    </div>
+                                    
+                                    <div style="clear:both;"></div>
+									
+                                    
+                                    <a href="#" class="btn btn-default btn_100 bCloseSelectMap" style="display:none;" data-dismiss="modal"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+				<div class="modal fade" id="modalConfirmSwitchSite" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+					<div class="modal-dialog" role="dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<div class="actions mh100vh_55">
+									<section class="panel panel-info">
+										<header class="panel-heading">
+											<h2 class="panel-title" style="text-align:center; font-size:50px;"><i class="fa fa-question-circle"></i></h2>
+										</header>
+										<div class="panel-body" style="text-align:center; font-size:24px; line-height:36px;">
+											<h3><?= __('Are you sure to switch to this site ?')?></h3>
+										</div>
+									</section>
+									<div style="clear:both;"></div>
+									<a href="#" id="" class="btn btn-default btn_footer_left btn_50 bModalConfirmSwitchSiteClose" data-dismiss="modal" ><?php echo __('No');?></a>
+									<a href="#" id="" class="btn btn-info btn_footer_right btn_50 bModalConfirmSwitchSiteOk" data-dismiss="modal"><?php echo __('Yes');?></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
 					<div class="content sm-content text-left">
@@ -1295,6 +1341,7 @@
 						<p class=""><?= __('You can delete a site by clicking on the red cross icon.')?></p>
 						<p class=""><?= __('A confimation will be asked for each site you want to delete.')?></p>
 						<p class=""><?= __('You can switch site by clicking on the blue check icon of the site you want to load.')?></p>
+						<p class=""><?= __('You may have to choose the current map if loading a multi map site.')?></p>
 					</div>
 					<p class="legende"><?=__('Click to hide')?></p>
 				</div>
@@ -1763,11 +1810,28 @@
 										<p style="padding-left:5px;margin-top:10px"><i class="fas fa-asterisk" style="color: darkorange;"></i> <?=__('Actual default dock') ?></p>
 										
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+				
+				<div class="modal fade modalSelectMap" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                    <div class="modal-dialog" role="dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="actions mh100vh_55">
+									<div class="h100vh_160" style="overflow:auto; text-align:center">
+										<h4 style="text-align:center;margin:30px 0"><?= __('Select the current map') ?></h4>
+										<div class="row row-eq-height" id="ImportSiteMapList">
+                    
+										</div>										
+                                    </div>
                                     
                                     <div style="clear:both;"></div>
 									
                                     
-                                    <a href="#" class="btn btn-default btn_50 bCloseMasterDock" style="display:none;" data-dismiss="modal"></a>
+                                    <a href="#" class="btn btn-default btn_50 bCloseSelectMap" style="display:none;" data-dismiss="modal"></a>
                                 </div>
                             </div>
                         </div>

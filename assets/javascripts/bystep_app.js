@@ -1541,7 +1541,6 @@ $(document).ready(function(e) {
 				if (data.A == wycaApi.AnswerCode.NO_ERROR)
 				{
 					success_info_wyca((typeof(textMapSaved) != 'undefined'? textMapSaved : 'Map saved'));
-
 					// On reload la carte pour mettre à jours les ids
 					GetInfosCurrentMapByStep();
 					/*
@@ -1553,6 +1552,7 @@ $(document).ready(function(e) {
 				}
 				else
 				{
+					$('#install_by_step_edit_map .burger_menu').removeClass('updatingMap');
 					ParseAPIAnswerError(data);
 				}
 			});
@@ -1715,9 +1715,24 @@ $(document).ready(function(e) {
 		});
     });
 	*/
+	$('#install_by_step_edit_map .bCheckNextEditMap').click(function(e) {
+		if(typeof(docks) == 'undefined' || docks.length == 0){
+			$('#install_by_step_edit_map .modalConfirmNextNoDock').modal('show');
+			
+		}else{
+			$('#install_by_step_edit_map .bNextEditMap').click();
+		}			
+	})
+	
+	$('#install_by_step_edit_map .modalConfirmNextNoDock .bConfirmNextNoDock').click(function(e) {
+		$('#install_by_step_edit_map .bNextEditMap').click();
+	})
+	
+	
 	
 	//AJAX INSTALL STEP CALL
 	$('#install_by_step_edit_map .bNextEditMap').click(function(e) {
+		console.log('clicked');
 		$.ajax({
 			type: "POST",
 			url: 'ajax/install_by_step_edit_map_finish.php',
@@ -1812,28 +1827,28 @@ $(document).ready(function(e) {
 	$('#pages_install_by_step .modalRealTestResult a.bUseRealTest').click(function(e) {
 		e.preventDefault();
 		let temp = battery_lvl_needed == 0?1:parseInt(battery_lvl_needed);
-		let ebl = temp+5;
-		let mbl = 2*temp;
-		mbl < ebl ? mbl = ebl + 5:'';
-		$('#install_by_step_config_i_level_min_gotocharge').val(ebl)
-		$('#install_by_step_config_i_level_min_dotask').val(mbl)
-		$('#pages_install_by_step .modalRealTestResult').modal('hide')
+		let EBL = temp+5;
+		let MBL = 2*temp;
+		MBL < EBL ? MBL = EBL + 5:'';
+		$('#install_by_step_config_i_level_min_gotocharge').val(EBL);
+		$('#install_by_step_config_i_level_min_dotask').val(MBL);
+		$('#pages_install_by_step .modalRealTestResult').modal('hide');
     });
 	
 	$('section#install_by_step_config a.bResetValueEblMbl').click(function(e) {
 		
-		$('#install_by_step_config_i_level_min_gotocharge').val(15)
-		$('#install_by_step_config_i_level_min_dotask').val(20)
+		$('#install_by_step_config_i_level_min_gotocharge').val((typeof(defaultEBL) != 'undefined'? defaultEBL : 15));
+		$('#install_by_step_config_i_level_min_dotask').val((typeof(defaultMBL) != 'undefined'? defaultMBL : 20));
     });
 	
 	//AJAX INSTALL STEP CALL
 	$('#install_by_step_config .bConfigurationSave').click(function(e) {
 		let EBL = parseInt($('#install_by_step_config_i_level_min_gotocharge').val());
 		let MBL = parseInt($('#install_by_step_config_i_level_min_dotask').val());
-		EBL = EBL > 100 ? 15 : EBL;
+		/*EBL = EBL > 100 ? 15 : EBL;
 		EBL = EBL < 0 ? 15 : EBL;
 		MBL = MBL > 100 ? 20 : MBL;
-		MBL = MBL < 0 ? 20 : MBL;
+		MBL = MBL < 0 ? 20 : MBL;*/
 		wycaApi.SetEnergyConfiguration(EBL,MBL, function(data) {
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{

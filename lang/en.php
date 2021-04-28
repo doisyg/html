@@ -631,5 +631,16 @@ $_LANG['109f2f31339812491eb9bc75d9065480'] = 'Error in session';
 $_LANG['d5a40d899dd4fc3fddf2d623b69e91ea'] = 'Error get sound config';
 $_LANG['7826f93e0e1ad56ff239e493cf97163a'] = 'Error on get GlobalVehiculePersistanteDataStorage';
 $_LANG['dbb8c43385e7134b1936431305b7bbbb'] = 'Error on set GlobalVehiculePersistanteDataStorage';
+$_LANG['3bfd163b7f2b0c3b3157bc805a7f7551'] = 'Back';
+$_LANG['3ea46fe23d03788e7cab31d1214ba887'] = 'This site has several maps';
+$_LANG['3b42fc26c3a579ba9b2d46cb7d33c6db'] = 'Choose the current map to load';
+$_LANG['db87111a800141eeb4083ae88d42a8d9'] = 'Are you sure to switch to this site ?';
+$_LANG['d9925f1ee1fbf79dace5f58fcbefb78e'] = 'You may have to choose the current map if loading a multi map site.';
+$_LANG['0154c65a07d5bff9727950a2d8deb877'] = 'This site has several maps.';
+$_LANG['8149d609021280c0f8eba06b77b02ae7'] = 'Are you sure you want to leave?';
+$_LANG['29c595dde721e30236ed5ff86ad7407f'] = 'Map doesn\'t have any dock.';
+$_LANG['bb4ee7995f7fea36eb5318a8158c1062'] = 'Are you sure you want to continue without creating a dock ?';
+$_LANG['ed4b192c6a21eebf8c2210d71681c920'] = 'It may cause some issues later.';
+$_LANG['60a6dcf8d5433517080654268ae395cd'] = 'Add an account';
 
 ?>

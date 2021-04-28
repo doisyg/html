@@ -541,53 +541,56 @@ var robot_traced_manager = false;
 
 function ManagerTraceRobot(robot_x, robot_y, robot_theta)
 {
-	if(robot_x == robot_y && robot_y == robot_theta && robot_x == 0 ){
-		$('#manager_edit_map_tRobotNotLocalised').show();
-		$('#manager_edit_map_robot_circle').remove();
-		$('#manager_edit_map_robot_sens').remove();
-		robot_traced_manager = false;
-	}else{
-		$('#manager_edit_map_tRobotNotLocalised').hide();
-		x = robot_x * 100 / ros_resolution;
-		y = ros_hauteur - (robot_y * 100 / ros_resolution);	
-		angle = 0 - robot_theta * 180 / Math.PI;
+	x = robot_x * 100 / ros_resolution;
+	y = ros_hauteur - (robot_y * 100 / ros_resolution);	
+	angle = 0 - robot_theta * 180 / Math.PI;
+	
+	rayonRobot = (26 / ros_resolution);
+	
+	if (!robot_traced_manager)
+	{
+		robot_traced_manager = true;
 		
-		rayonRobot = (26 / ros_resolution);
-		
-		if (!robot_traced_manager)
-		{
-			robot_traced_manager = true;
-			
-			path = makeSVGElement('circle', { cx: x,
-											cy: y,
-										   r: rayonRobot,
-										   'class': 'robot_elem robot_elem_fond',
-										   'id': 'manager_edit_map_robot_circle',
-										   'data-element_type': 'robot',
-										   'data-element': 'robot'
-										   });
-			svgManager.appendChild(path);
-		}
-		else
-		{
-			$('#manager_edit_map_robot_circle').attr("cx", x);
-			$('#manager_edit_map_robot_circle').attr("cy", y);
-		}
-		
-		$('#manager_edit_map_robot_sens').remove();
-		path = makeSVGElement('polyline', { 'points': (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2),
-										'stroke':'#FFFFFF',
-										'stroke-width':1,
-										'fill':'none',
-										'stroke-linejoin':'round',
-										'stroke-linecap':'round',
-									   'class': 'robot_elem',
-									   'transform':'rotate('+angle+', '+x+', '+y+')',
-									   'id': 'manager_edit_map_robot_sens',
+		path = makeSVGElement('circle', { cx: x,
+										cy: y,
+									   r: rayonRobot,
+									   'class': 'robot_elem robot_elem_fond',
+									   'id': 'manager_edit_map_robot_circle',
 									   'data-element_type': 'robot',
 									   'data-element': 'robot'
 									   });
-		$('#manager_edit_map_robot_circle').after(path);
+		svgManager.appendChild(path);
+	}
+	else
+	{
+		if(robot_x == robot_y && robot_y == robot_theta && robot_x == 0 ){
+			$('#manager_edit_map_tRobotNotLocalised').show();
+			$('#manager_edit_map_robot_circle').hide();
+			$('#manager_edit_map_robot_sens').hide();
+		}else{
+			
+			$('#manager_edit_map_robot_sens').remove();
+			path = makeSVGElement('polyline', { 'points': (x-2)+' '+(y-2)+' '+(x+2)+' '+(y)+' '+(x-2)+' '+(y+2),
+											'stroke':'#FFFFFF',
+											'stroke-width':1,
+											'fill':'none',
+											'stroke-linejoin':'round',
+											'stroke-linecap':'round',
+										   'class': 'robot_elem',
+										   'transform':'rotate('+angle+', '+x+', '+y+')',
+										   'id': 'manager_edit_map_robot_sens',
+										   'data-element_type': 'robot',
+										   'data-element': 'robot'
+										   });
+			$('#manager_edit_map_robot_circle').after(path);
+			
+			$('#manager_edit_map_robot_circle').attr("cx", x);
+			$('#manager_edit_map_robot_circle').attr("cy", y);
+			
+			$('#manager_edit_map_tRobotNotLocalised').hide();
+			$('#manager_edit_map_robot_circle').show();
+			$('#manager_edit_map_robot_sens').show();
+		}
 	}
 }
 

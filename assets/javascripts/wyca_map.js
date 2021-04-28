@@ -128,7 +128,8 @@ function GetInfosCurrentMapDoWyca()
 				
 				wycaCanChangeMenu = true;
 				wycaCurrentAction = '';
-				
+				WycaSaveElementNeeded(!wycaCanChangeMenu);
+				$('#wyca_edit_map .burger_menu').removeClass('updatingMap');
 				WycaHideMenus();
 				
 			},500);
@@ -223,7 +224,8 @@ function WycaDisplayBlockZoom()
 		if (t < 20) t = 20;
 		$('#wyca_edit_map_zoom_popup').css('left', l);
 		$('#wyca_edit_map_zoom_popup').css('top', t);
-		$('#wyca_edit_map_zoom_popup').show();
+		if(!(typeof(showPopupZoom) != 'undefined' && !showPopupZoom))
+			$('#wyca_edit_map_zoom_popup').show();
 		
 		/*
 		
@@ -698,7 +700,8 @@ $(document).ready(function(e) {
 			}
 			else
 			{
-				
+				RemoveClass('#wyca_edit_map_svg .moving', 'moving');
+				RemoveClass('#wyca_edit_map_svg .editing_point', 'editing_point');
 				RemoveClass('#wyca_edit_map_svg .active', 'active');
 				RemoveClass('#wyca_edit_map_svg .activ_select', 'activ_select'); 
 				WycaResizeSVG();
@@ -998,8 +1001,12 @@ function WycaInitMap()
 		this.hammer.destroy()
 	  }
 	}
-	if(typeof(window.panZoomWyca) != 'undefined'){
-		window.panZoomWyca.destroy();
+	let init_zoom = false;
+	if(id_map_zoom != id_map){
+		init_zoom = true;
+		id_map_zoom = id_map;
+		if(typeof(window.panZoomWyca) != 'undefined')
+			window.panZoomWyca.destroy();
 	}
 	// Expose to window namespace for testing purposes
 	
@@ -1013,6 +1020,13 @@ function WycaInitMap()
 	, RefreshMap: function() { setTimeout(WycaRefreshZoomView, 10); }
 	});
 	
+	if(init_zoom){
+		//WORKING ON CONSOLE 
+		window.panZoomWyca.resize();
+		window.panZoomWyca.updateBBox();
+		window.panZoomWyca.fit();
+		window.panZoomWyca.center();
+	}
 	svgWyca = document.querySelector('#wyca_edit_map_svg .svg-pan-zoom_viewport');
 	
 	//window.panZoomWyca = {};
@@ -1020,17 +1034,15 @@ function WycaInitMap()
 	WycaRefreshZoomView();
 	
 	setTimeout(function(){
-		if(typeof(window.panZoomWyca) != 'undefined'){
-			
+		if(init_zoom){
 			//WORKING ON CONSOLE 
 			window.panZoomWyca.resize();
 			window.panZoomWyca.updateBBox();
 			window.panZoomWyca.fit();
 			window.panZoomWyca.center();
-			
 		}
-		setTimeout(function(){$('.wyca_edit_map_loading').hide()},100);
-	},100);
+		$('.wyca_edit_map_loading').hide();
+	},200);
 }
 
 function WycaShakeActiveElement()
@@ -1038,18 +1050,18 @@ function WycaShakeActiveElement()
 	if(!wycaCanChangeMenu){
 		let ca = wycaCurrentAction;
 		let target = '';
-		if(ca == 'addForbiddenArea' || ca == 'editForbiddenArea' || ca == 'editArea' || ca == 'addArea'){
+		if(ca == 'addForbiddenArea' || ca == 'editForbiddenArea' || ca == 'editArea' || ca == 'addArea' || ca == 'moveArea'){
 			//SHAKE BTN BLEU ORANGE
 			target = $('#wyca_edit_map .btnSaveElem');
 		}else if(ca == 'prepareArea' || ca == 'prepareGotoPose' || ca == 'prepareForbiddenArea'){
 			target = $('#wyca_edit_map .btn-circle.icon_menu:visible');
-			setTimeout(function(){$('#wyca_edit_map .times_icon_menu').toggleClass('shake')},1000);
+			setTimeout(function(){$('#wyca_edit_map .times_icon_menu').toggleClass('shake')},100);
 			setTimeout(function(){$('#wyca_edit_map .times_icon_menu').toggleClass('shake')},3000);
 		}else if(ca == 'gomme'){
 			target = $('#wyca_edit_map_bEndGomme');
 		}
 		if(target != ''){
-			setTimeout(function(){target.toggleClass('shake')},1000);
+			setTimeout(function(){target.toggleClass('shake')},100);
 			setTimeout(function(){target.toggleClass('shake')},3000);
 		}
 	}	

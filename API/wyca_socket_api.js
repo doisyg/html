@@ -366,10 +366,6 @@ function WycaAPI(options){
 		LOST        : 9
 	}
 	
-   	if (typeof jQuery === 'undefined') {
-	  throw new Error('WycaAPI requires jQuery')
-	}
-	
 	if ("WebSocket" in window) {
 	} else if ("MozWebSocket" in window) {
 	} else {
@@ -393,8 +389,14 @@ function WycaAPI(options){
 		use_ssl:true,
 		sound_is_on: true
     };
-    this.options = $.extend({}, defaults, options || {});
-   	
+	
+	this.options = JSON.parse(JSON.stringify(defaults));
+	for (var item in options) {
+		if (options.hasOwnProperty(item)) {
+			 this.options[item] = options[item];
+		}
+	}
+	
 	if (this.options.id_robot == undefined || this.options.id_robot == '')
 		throw new Error('WycaAPI - you need to indicate id_robot in options')
 		
@@ -982,7 +984,8 @@ function WycaAPI(options){
 		this.SendWebRTCMessage('CloseSession');
 		this.SendServerMessage('CloseSession');
 		
-		$('#'+_this.options.video_element_id).html('');
+		document.getElementById(_this.options.video_element_id).innerHTML = '';
+		//$('#'+_this.options.video_element_id).html('');
 		
 		if (this.options.onStartSessionClose  != undefined)
 			this.options.onStartSessionClose(reason);
@@ -1441,10 +1444,10 @@ function WycaAPI(options){
 			} else {
 				throw new Error('This Browser does not support WebSockets')
 			}
-			_this.ws.onopen = jQuery.proxy(_this.wsOnOpen, _this);
-			_this.ws.onerror = jQuery.proxy(_this.wsOnError, _this);
-			_this.ws.onclose = jQuery.proxy(_this.wsOnClose , _this);
-			_this.ws.onmessage = jQuery.proxy(_this.wsOnMessage , _this);
+			_this.ws.onopen = _this.wsOnOpen.bind(_this);
+			_this.ws.onerror = _this.wsOnError.bind(_this);
+			_this.ws.onclose = _this.wsOnClose.bind(_this);
+			_this.ws.onmessage = _this.wsOnMessage.bind(_this);
 		}
 	}
 	
@@ -1487,7 +1490,7 @@ function WycaAPI(options){
 		if(typeof(textAPIAnswerCode) != 'undefined'){
 			switch(ac)
 			{
-				case _this.AnswerCode.NO_ERROR : return typeof(textAPIAnswerCode.NO_ERROR) != 'undefined' ? textAPIAnswerCodeNO_ERROR : 'No error'; break;
+				case _this.AnswerCode.NO_ERROR : return typeof(textAPIAnswerCode.NO_ERROR) != 'undefined' ? textAPIAnswerCode.NO_ERROR : 'No error'; break;
 				case _this.AnswerCode.FORMAT_ERROR_MISSING_DATA : return typeof(textAPIAnswerCode.FORMAT_ERROR_MISSING_DATA) != 'undefined' ? textAPIAnswerCode.FORMAT_ERROR_MISSING_DATA : 'Format error ; missing data'; break;
 				case _this.AnswerCode.FORMAT_ERROR_INVALID_DATA : return typeof(textAPIAnswerCode.FORMAT_ERROR_INVALID_DATA) != 'undefined' ? textAPIAnswerCode.FORMAT_ERROR_INVALID_DATA : 'Format error ; invalid data'; break; 
 				case _this.AnswerCode.NOT_ALLOW : return typeof(textAPIAnswerCode.NOT_ALLOW) != 'undefined' ? textAPIAnswerCode.NOT_ALLOW : 'Not allow'; break;

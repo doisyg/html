@@ -13,7 +13,7 @@ function GetInfosCurrentMapWycaByStep()
 
 function GetInfosCurrentMapDoWycaByStep()
 {
-	$('#wyca_by_step_edit_map .burger_menu ').addClass('updatingMap');
+	$('#wyca_by_step_edit_map .burger_menu').addClass('updatingMap');
 	wycaApi.GetCurrentMapComplete(function(data) {
 		if (data.A == wycaApi.AnswerCode.NO_ERROR)
 		{
@@ -132,7 +132,8 @@ function GetInfosCurrentMapDoWycaByStep()
 				
 				wyca_bystepCanChangeMenu = true;
 				wyca_bystepCurrentAction = '';
-				
+				WycaByStepSaveElementNeeded(!wyca_bystepCanChangeMenu);
+				$('#wyca_by_step_edit_map .burger_menu').removeClass('updatingMap');
 				WycaByStepHideMenus();
 				
 			},500); 
@@ -143,7 +144,7 @@ function GetInfosCurrentMapDoWycaByStep()
 		}
 		else
 		{
-			$('#wyca_by_step_edit_map .burger_menu ').removeClass('updatingMap');
+			$('#wyca_by_step_edit_map .burger_menu').removeClass('updatingMap');
 			ParseAPIAnswerError(data,textErrorInitMap);
 		}
 	});
@@ -276,7 +277,8 @@ function WycaByStepDisplayBlockZoom()
 		if (t < 20) t = 20;
 		$('#wyca_by_step_edit_map_zoom_popup').css('left', l);
 		$('#wyca_by_step_edit_map_zoom_popup').css('top', t);
-		$('#wyca_by_step_edit_map_zoom_popup').show();
+		if(!(typeof(showPopupZoom) != 'undefined' && !showPopupZoom))
+			$('#wyca_by_step_edit_map_zoom_popup').show();
 		
 		/*
 		
@@ -749,7 +751,8 @@ $(document).ready(function(e) {
 			}
 			else
 			{
-				
+				RemoveClass('#wyca_by_step_edit_map_svg .moving', 'moving');
+				RemoveClass('#wyca_by_step_edit_map_svg .editing_point', 'editing_point');
 				RemoveClass('#wyca_by_step_edit_map_svg .active', 'active');
 				RemoveClass('#wyca_by_step_edit_map_svg .activ_select', 'activ_select'); 
 				WycaByStepResizeSVG();
@@ -985,10 +988,13 @@ function WycaByStepInitMap()
 		this.hammer.destroy()
 	  }
 	}
-	if(typeof(window.panZoom) != 'undefined'){
-		window.panZoom.destroy();
+	let init_zoom = false;
+	if(id_map_zoom != id_map){
+		init_zoom = true;
+		id_map_zoom = id_map;
+		if(typeof(window.panZoom) != 'undefined')
+			window.panZoom.destroy();
 	}
-
 	// Expose to window namespace for testing purposes
 	
 	window.panZoom = svgPanZoom('#wyca_by_step_edit_map_svg', {
@@ -1001,6 +1007,14 @@ function WycaByStepInitMap()
 	, RefreshMap: function() { setTimeout(RefreshZoomView, 10); }
 	});
 	
+	if(init_zoom){
+		//WORKING ON CONSOLE 
+		window.panZoom.resize();
+		window.panZoom.updateBBox();
+		window.panZoom.fit();
+		window.panZoom.center();
+	}
+	
 	svgWycaByStep = document.querySelector('#wyca_by_step_edit_map_svg .svg-pan-zoom_viewport');
 	
 	//window.panZoom = {};
@@ -1008,17 +1022,15 @@ function WycaByStepInitMap()
 	RefreshZoomView();
 	
 	setTimeout(function(){
-		if(typeof(window.panZoom) != 'undefined'){
-			
+		if(init_zoom){
 			//WORKING ON CONSOLE 
 			window.panZoom.resize();
 			window.panZoom.updateBBox();
 			window.panZoom.fit();
 			window.panZoom.center();
-			
 		}
-		setTimeout(function(){$('.wyca_by_step_edit_map_loading').hide()},100);
-	},100);
+		$('.wyca_by_step_edit_map_loading').hide();
+	},200);
 }
 
 function WycaByStepShakeActiveElement()
@@ -1026,18 +1038,18 @@ function WycaByStepShakeActiveElement()
 	if(!wyca_bystepCanChangeMenu){
 		let ca = wyca_bystepCurrentAction;
 		let target = '';
-		if(ca == 'addForbiddenArea' || ca == 'editForbiddenArea' || ca == 'editArea' || ca == 'addArea'){
+		if(ca == 'addForbiddenArea' || ca == 'editForbiddenArea' || ca == 'editArea' || ca == 'addArea' || ca == 'moveArea'){
 			//SHAKE BTN BLEU ORANGE
 			target = $('#wyca_by_step_edit_map .btnSaveElem');
 		}else if(ca == 'prepareArea' || ca == 'prepareGotoPose' || ca == 'prepareForbiddenArea'){
 			target = $('#wyca_by_step_edit_map .btn-circle.icon_menu:visible');
-			setTimeout(function(){$('#wyca_by_step_edit_map .times_icon_menu').toggleClass('shake')},1000);
+			setTimeout(function(){$('#wyca_by_step_edit_map .times_icon_menu').toggleClass('shake')},100);
 			setTimeout(function(){$('#wyca_by_step_edit_map .times_icon_menu').toggleClass('shake')},3000);
 		}else if(ca == 'gomme'){
 			target = $('#wyca_by_step_edit_map_bEndGomme');
 		}
 		if(target != ''){
-			setTimeout(function(){target.toggleClass('shake')},1000);
+			setTimeout(function(){target.toggleClass('shake')},100);
 			setTimeout(function(){target.toggleClass('shake')},3000);
 		}
 	}	

@@ -482,6 +482,7 @@ $(document).ready(function(e) {
 				}
 				else
 				{
+					$('#wyca_edit_map .burger_menu').removeClass('updatingMap');
 					ParseAPIAnswerError(data,textErrorSetMap);
 				}
 			});
@@ -688,7 +689,8 @@ var height_wyca = 0;
 /* INSTALLATEUR WYCA.JS */
 var create_new_site = false;
 var id_site_to_delete = -1;
-
+var id_site_to_switch = -1;
+var id_map_to_switch = -1;
 $(document).ready(function(e) {
 	//----------------------- IMPORT SITE ----------------------------
 	
@@ -725,30 +727,40 @@ $(document).ready(function(e) {
 						wycaApi.SetSiteAsCurrent(id_site,function(data){
 							if (data.A == wycaApi.AnswerCode.NO_ERROR)
 							{
-								wycaApi.GetCurrentMapData(function(data){
-									if (data.A == wycaApi.AnswerCode.NO_ERROR)
-									{
-										if(data.D.docks.length <= 1){
-											$('#pages_wyca_normal .wyca_setup_import_loading').hide();
-											$('#pages_wyca_normal .wyca_setup_import_content').show();
-											success_wyca(textSiteImported);
-											$('#pages_wyca_normal .bImportSiteBack').click();
-										}else{
-											
-											id_map = data.D.id_map;
-											id_map_last = data.D.id_map;
-								
-											forbiddens = data.D.forbiddens;
-											areas = data.D.areas;
-											docks = data.D.docks;
-											pois = data.D.pois;
-											augmented_poses = data.D.augmented_poses; 
-											
-											InitMasterDockWyca();
-										}
+								wycaApi.GetMapsList(id_site,function(data){
+									let nb_maps_w_name = 0;
+									data.D.forEach((element) => {if(element.name != '')nb_maps_w_name++;});
+									if(nb_maps_w_name <= 1){
+										// IF ONLY ONE MAP
+										wycaApi.GetCurrentMapData(function(data){
+											if (data.A == wycaApi.AnswerCode.NO_ERROR)
+											{
+												if(data.D.docks.length <= 1){
+													$('#pages_wyca_normal .wyca_setup_import_loading').hide();
+													$('#pages_wyca_normal .wyca_setup_import_content').show();
+													success_wyca(textSiteImported);
+													$('#pages_wyca_normal .bImportSiteBack').click();
+												}else{
+													
+													id_map = data.D.id_map;
+													id_map_last = data.D.id_map;
+										
+													forbiddens = data.D.forbiddens;
+													areas = data.D.areas;
+													docks = data.D.docks;
+													pois = data.D.pois;
+													augmented_poses = data.D.augmented_poses; 
+													
+													InitMasterDockWyca();
+												}
+											}else{
+												ParseAPIAnswerError(data);
+												InitSiteImportWyca();
+											}
+										})
 									}else{
-										ParseAPIAnswerError(data);
-										InitSiteImportWyca();
+										// IF MULTIPLES MAP
+										InitSiteImportSelectMapWyca();
 									}
 								})
 							}
@@ -758,9 +770,6 @@ $(document).ready(function(e) {
 								InitSiteImportWyca();
 							}
 						})
-						
-						
-						
 					}
 					else
 					{
@@ -777,6 +786,39 @@ $(document).ready(function(e) {
 		}
     });
 	
+	//----------------------- SELECT MAP ----------------------------
+	
+	//DECLARATION EVENTLISTENER BOUTON CREE DYNAMIQUEMENT .on('event',function(){})
+	$( "#pages_wyca_normal #wyca_setup_import .modalSelectMap #ImportSiteMapList" ).on( 'click', '.SelectMapItem', function(e) {
+		let id_map_import = parseInt($(this).attr('id'));
+		wycaApi.SetMapAsCurrent(id_map_import,function(){
+			wycaApi.GetCurrentMapData(function(data){
+				if (data.A == wycaApi.AnswerCode.NO_ERROR)
+				{
+					if(data.D.docks.length <= 1){
+						$('#pages_wyca_normal .wyca_setup_import_loading').hide();
+						$('#pages_wyca_normal .wyca_setup_import_content').show();
+						success_wyca(textSiteImported);
+						$('#pages_wyca_normal .bImportSiteBack').click();
+					}else{
+						id_map = data.D.id_map;
+						id_map_last = data.D.id_map;
+						forbiddens = data.D.forbiddens;
+						areas = data.D.areas;
+						docks = data.D.docks;
+						pois = data.D.pois;
+						augmented_poses = data.D.augmented_poses;
+						$( "#pages_wyca_normal #wyca_setup_import .modalSelectMap").modal('hide');
+						InitMasterDockWyca();
+					}
+				}else{
+					ParseAPIAnswerError(data);
+					InitSiteImportWyca();
+				}
+			})
+		})
+	})
+	
 	//----------------------- MASTER DOCK ----------------------------
 	
 	//DECLARATION EVENTLISTENER BOUTON CREE DYNAMIQUEMENT .on('event',function(){})
@@ -790,16 +832,14 @@ $(document).ready(function(e) {
 		})
 		data = GetDataMapToSave();
 		wycaApi.SetCurrentMapData(data, function(data){
+			$('#pages_wyca_normal .modalMasterDock').modal('hide');
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
-				$('#pages_wyca_normal .modalMasterDock .bCloseMasterDock').click();
 				success_wyca(textSiteImported);
 				$('#pages_wyca_normal #wyca_setup_import .bImportSiteBack').click();
 			}else{
-				$('#pages_wyca_normal .modalMasterDock .bCloseMasterDock').click();
 				ParseAPIAnswerError(data);
 				InitSiteImportWyca();
-				
 			}
 		})		
 	})
@@ -823,26 +863,102 @@ $(document).ready(function(e) {
 		$('#wyca_setup_sites .btn-danger.confirm_delete').addClass('disabled');
 		$('#wyca_setup_sites .bSiteSetCurrentElem').addClass('disabled');
 		
-		id_site = parseInt($(this).closest('li').data('id_site'));
+		id_site_to_switch = parseInt($(this).closest('li').data('id_site'));
+		str_site_to_switch =  $(this).parent().find('.societe').text();
 		
-		wycaApi.SetSiteAsCurrent(id_site, function(data) {
-			if (data.A != wycaApi.AnswerCode.NO_ERROR) 
-				ParseAPIAnswerError(data,textErrorSetSite);
+		wycaApi.GetMapsList(id_site_to_switch,function(data){
+			if (data.A != wycaApi.AnswerCode.NO_ERROR)
+				ParseAPIAnswerError(data,textErrorGetMaps);
 			else
 			{
-				wycaApi.GetCurrentSite(function(data) {
-					current_site = data.D;
-					if($('#wyca_dashboard_modalCurrentSite').data('original_txt') == undefined)
-						$('#wyca_dashboard_modalCurrentSite').data('original_txt',$('#wyca_dashboard_modalCurrentSite').find('h3').text());
-					$('#wyca_dashboard_modalCurrentSite').find('h3').html($('#wyca_dashboard_modalCurrentSite').data('original_txt') + '<br><br><span>' + current_site.name + '</span>')
-					$('#wyca_setup_sites .bBackToDashboard').click();
-					$('#wyca_dashboard_modalCurrentSite').modal('show');
-					$('#wyca_setup_sites .btn-danger.confirm_delete').removeClass('disabled');
-					$('#wyca_setup_sites .bSiteSetCurrentElem').removeClass('disabled');
-				})
+				id_map_to_switch = -1;
+				let nb_maps_w_name = 0;
+				data.D.forEach((element) => {if(element.name != '')nb_maps_w_name++;});
+				if(nb_maps_w_name >= 2){
+					$('#wyca_setup_sites .modalSelectMap .list_maps').html('');
+					$.each(data.D,function(idx,item){
+						if(item.name != ''){
+							let map_item="";
+							map_item+='<div class="col-xs-6 text-center">';
+							map_item+='	<div class="SelectMapItem btn bTuile" id="'+item.id_map+'">';
+							map_item+='		<i class="fas fa-map-marked-alt"></i>';
+							map_item+='		<p class="mapname">'+item.name+'</p>';
+							map_item+='   </div>';
+							map_item+='</div>';
+							$('#wyca_setup_sites .modalSelectMap .list_maps').append(map_item);
+						}
+					});
+					$('#wyca_setup_sites .modalSelectMap').modal('show');
+				}else{
+					if(str_site_to_switch != ''){
+						if($('#modalConfirmSwitchSite').data('original_txt') == undefined)
+							$('#modalConfirmSwitchSite').data('original_txt',$('#modalConfirmSwitchSite').find('h3').text());
+						$('#modalConfirmSwitchSite').find('h3').html($('#modalConfirmSwitchSite').data('original_txt') + '<br><br><span><i class="fas fa-building"></i><br>' + str_site_to_switch + '</span>')
+					}
+					$('#modalConfirmSwitchSite').modal('show');
+				}
 			}
 		});
 	});
+	
+	//DECLARATION EVENTLISTENER BOUTON CREE DYNAMIQUEMENT .on('event',function(){})
+	$( "#pages_wyca_normal #wyca_setup_sites .modalSelectMap" ).on( 'click', '.SelectMapItem', function(e) {
+		id_map_to_switch = parseInt($(this).attr('id'));
+		str_map_to_switch = $(this).find('.mapname').html();
+	
+		if($('#modalConfirmSwitchSite').data('original_txt') == undefined)
+			$('#modalConfirmSwitchSite').data('original_txt',$('#modalConfirmSwitchSite').find('h3').text());
+		$('#modalConfirmSwitchSite').find('h3').html($('#modalConfirmSwitchSite').data('original_txt') + '<br><br><span><i class="fas fa-building"></i><br>' + str_site_to_switch + '<br><br><i class="fas fa-map-marked-alt"></i><br>' + str_map_to_switch+'</span>');
+		
+		$('#modalConfirmSwitchSite').modal('show');
+		$('#wyca_setup_sites .modalSelectMap').modal('hide');
+	})
+	
+	$('#wyca_setup_sites #modalConfirmSwitchSite .bModalConfirmSwitchSiteOk').click(function(e){
+		if(id_site_to_switch != -1){
+			wycaApi.SetSiteAsCurrent(id_site_to_switch, function(data) {
+				if (data.A != wycaApi.AnswerCode.NO_ERROR) 
+					ParseAPIAnswerError(data,textErrorSetSite);
+				else
+				{
+					if(id_map_to_switch != -1){
+						wycaApi.SetMapAsCurrent(id_map_to_switch, function(data){
+							if (data.A == wycaApi.AnswerCode.NO_ERROR){
+								if($('#wyca_dashboard_modalCurrentSite').data('original_txt') == undefined)
+									$('#wyca_dashboard_modalCurrentSite').data('original_txt',$('#wyca_dashboard_modalCurrentSite').find('h3').text());
+								$('#wyca_dashboard_modalCurrentSite').find('h3').html($('#wyca_dashboard_modalCurrentSite').data('original_txt') + '<br><br><span>' + $('#modalConfirmSwitchSite').find('h3').find('span').html() + '</span>');
+								$('#wyca_setup_sites .bBackToDashboard').click();
+								$('#wyca_dashboard_modalCurrentSite').modal('show');
+							}else{
+								ParseAPIAnswerError(data,textErrorSetMap);
+								GetSitesWyca();
+							}
+							$('#pages_wyca_normal .modalSelectMap .bCloseSelectMap').click();
+							$('#wyca_setup_sites .btn-danger.confirm_delete').removeClass('disabled');
+							$('#wyca_setup_sites .bSiteSetCurrentElem').removeClass('disabled');
+							id_map_to_switch = -1;
+						})
+					}else{
+						if($('#wyca_dashboard_modalCurrentSite').data('original_txt') == undefined)
+							$('#wyca_dashboard_modalCurrentSite').data('original_txt',$('#wyca_dashboard_modalCurrentSite').find('h3').text());
+						$('#wyca_dashboard_modalCurrentSite').find('h3').html($('#wyca_dashboard_modalCurrentSite').data('original_txt') + '<br><br><span>' + $('#modalConfirmSwitchSite').find('h3').find('span').html() + '</span>');
+						$('#wyca_setup_sites .bBackToDashboard').click();
+						$('#wyca_dashboard_modalCurrentSite').modal('show');
+						$('#wyca_setup_sites .btn-danger.confirm_delete').removeClass('disabled');
+						$('#wyca_setup_sites .bSiteSetCurrentElem').removeClass('disabled');
+					}
+				}
+				id_site_to_switch = -1;
+			})
+		}
+	})
+	
+	$('#wyca_setup_sites #modalConfirmSwitchSite .bModalConfirmSwitchSiteClose').click(function(e){
+		
+		$('#wyca_setup_sites .btn-danger.confirm_delete').removeClass('disabled');
+		$('#wyca_setup_sites .bSiteSetCurrentElem').removeClass('disabled');
+		
+	})
 	
 	$(document).on('click', '#wyca_setup_sites .bSiteDeleteElem', function(e) {
 		e.preventDefault();
@@ -1683,27 +1799,27 @@ $(document).ready(function(e) {
 	$('#pages_wyca_normal .modalRealTestResult a.bUseRealTest').click(function(e) {
 		e.preventDefault();
 		let temp = battery_lvl_needed == 0?1:parseInt(battery_lvl_needed);
-		let ebl = temp+5;
-		let mbl = 2*temp;
-		mbl < ebl ? mbl = ebl + 5:'';
-		$('#wyca_setup_config_i_level_min_gotocharge').val(ebl)
-		$('#wyca_setup_config_i_level_min_dotask').val(mbl)
-		$('#pages_wyca_normal .modalRealTestResult').modal('hide')
+		let EBL = temp+5;
+		let MBL = 2*temp;
+		MBL < EBL ? MBL = EBL + 5:'';
+		$('#wyca_setup_config_i_level_min_gotocharge').val(EBL);
+		$('#wyca_setup_config_i_level_min_dotask').val(MBL);
+		$('#pages_wyca_normal .modalRealTestResult').modal('hide');
     });
 	
 	$('section#wyca_setup_config a.bResetValueEblMbl').click(function(e) {
 		
-		$('#wyca_setup_config_i_level_min_gotocharge').val(15)
-		$('#wyca_setup_config_i_level_min_dotask').val(20)
+		$('#wyca_setup_config_i_level_min_gotocharge').val((typeof(defaultEBL) != 'undefined'? defaultEBL : 15));
+		$('#wyca_setup_config_i_level_min_gotocharge').val((typeof(defaultMBL) != 'undefined'? defaultMBL : 20));
     });
 		
 	$('#pages_wyca_normal .bConfigurationSave').click(function(e) {
 		let EBL = parseInt($('#wyca_setup_config_i_level_min_gotocharge').val());
 		let MBL = parseInt($('#wyca_setup_config_i_level_min_dotask').val());
-		EBL = EBL > 100 ? 15 : EBL;
+		/*EBL = EBL > 100 ? 15 : EBL;
 		EBL = EBL < 0 ? 15 : EBL;
 		MBL = MBL > 100 ? 20 : MBL;
-		MBL = MBL < 0 ? 20 : MBL;
+		MBL = MBL < 0 ? 20 : MBL;*/
 		wycaApi.SetEnergyConfiguration(EBL,MBL, function(data) {
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
@@ -2649,7 +2765,7 @@ $(document).ready(function(e) {
 		else
 		{
 			$('#list_all_poi_'+index_li).data('duration', $('#wyca_demo_mode_config_duration').val());
-			$('#list_all_poi_'+index_li+' span').html('Wait ' + $('#wyca_demo_mode_config_duration').val() + ' secondes');
+			$('#list_all_poi_'+index_li+' span').html((typeof(textDemoWait) != 'undefined' ? textDemoWait : 'Wait' )+' '+ $('#wyca_demo_mode_config_duration').val() + ' secondes');
 		}
 			
 		$('#wyca_demo_mode_config_duration').val('');

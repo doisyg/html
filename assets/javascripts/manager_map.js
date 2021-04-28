@@ -73,7 +73,8 @@ function GetInfosCurrentMapDoManager()
 				
 				managerCanChangeMenu = true;
 				managerCurrentAction = '';
-				
+				ManagerSaveElementNeeded(!managerCanChangeMenu);
+				$('#manager_edit_map .burger_menu').removeClass('updatingMap');
 				ManagerHideMenus();
 			},500);
 			$('#manager_edit_map .modal').not('.modalReloadMap').each(function(){$(this).modal('hide')});
@@ -433,7 +434,8 @@ $(document).ready(function(e) {
 			}
 			else
 			{
-				
+				RemoveClass('#manager_edit_map_svg .moving', 'moving');
+				RemoveClass('#manager_edit_map_svg .editing_point', 'editing_point');
 				RemoveClass('#manager_edit_map_svg .active', 'active');
 				RemoveClass('#manager_edit_map_svg .activ_select', 'activ_select'); 
 				ManagerResizeSVG();
@@ -667,7 +669,13 @@ function ManagerInitMap()
 		this.hammer.destroy()
 	  }
 	}
-
+	let init_zoom = false;
+	if(id_map_zoom != id_map){
+		init_zoom = true;
+		id_map_zoom = id_map;
+		if(typeof(window.panZoomManager) != 'undefined')
+			window.panZoomManager.destroy();
+	}
 	// Expose to window namespace for testing purposes
 	
 	window.panZoomManager = svgPanZoom('#manager_edit_map_svg', {
@@ -680,11 +688,50 @@ function ManagerInitMap()
 	, RefreshMap: function() { setTimeout(ManagerRefreshZoomView, 10); }
 	});
 	
+	if(init_zoom){
+		//WORKING ON CONSOLE 
+		window.panZoomManager.resize();
+		window.panZoomManager.updateBBox();
+		window.panZoomManager.fit();
+		window.panZoomManager.center();
+	}
+	
 	svgManager = document.querySelector('#manager_edit_map_svg .svg-pan-zoom_viewport');
 	
 	//window.panZoomManager = {};
 	//window.panZoomManager.getZoom = function () { return 1; }
 	ManagerRefreshZoomView();
 	
-	$('.manager_edit_map_loading').hide();
+	setTimeout(function(){
+		if(init_zoom){
+			//WORKING ON CONSOLE 
+			window.panZoomManager.resize();
+			window.panZoomManager.updateBBox();
+			window.panZoomManager.fit();
+			window.panZoomManager.center();
+		}
+		$('.manager_edit_map_loading').hide();
+	},200);
+}
+
+function ManagerShakeActiveElement()
+{
+	if(!managerCanChangeMenu){
+		let ca = managerCurrentAction;
+		let target = '';
+		if(ca == 'addForbiddenArea' || ca == 'editForbiddenArea' || ca == 'editArea' || ca == 'addArea' || ca == 'moveArea'){
+			//SHAKE BTN BLEU ORANGE
+			target = $('#manager_edit_map .btnSaveElem');
+		}else if(ca == 'prepareArea' || ca == 'prepareGotoPose' || ca == 'prepareForbiddenArea'){
+			target = $('#manager_edit_map .btn-circle.icon_menu:visible');
+			setTimeout(function(){$('#manager_edit_map .times_icon_menu').toggleClass('shake')},100);
+			setTimeout(function(){$('#manager_edit_map .times_icon_menu').toggleClass('shake')},3000);
+		}else if(ca == 'gomme'){
+			target = $('#manager_edit_map_bEndGomme');
+		}
+		if(target != ''){
+			setTimeout(function(){target.toggleClass('shake')},100);
+			setTimeout(function(){target.toggleClass('shake')},3000);
+		}
+	}	
 }
