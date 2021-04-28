@@ -6,3 +6,7 @@ mapping/last_mapping.jpg
 .well-known/
 
 lang/c.conf
+
+_travail/crop/images_cropped/
+
+_travail/crop/images_source/
