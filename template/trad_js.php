@@ -60,6 +60,7 @@ var textBrowserRestartedWindowed = "<?php echo __js('Browser restarted windowed'
 var textMap = "<?php echo __js('Map');?>";
 var textSite = "<?php echo __js('Site');?>";
 var textAreYouSureToLeave = "<?php echo __js('Are you sure you want to leave?');?>";
+var textStayAwayFromObstacles = "<?php echo __js('Stay away from obstacles');?>";
 
 
 var textErrorLang = "<?php echo __js('Error lang');?>";

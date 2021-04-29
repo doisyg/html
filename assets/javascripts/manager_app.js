@@ -2,7 +2,7 @@ $(document).ready(function(e) {
 	// DISPLAY WARNING MODAL
 	$('.modal.modalWarningConnexion').modal('show','slow');
 	
-	$('.joystickDiv').parent().parent().append('<h3 class="warningObstacleTeleopManager"><i class="fas fa-exclamation-triangle text-danger"></i> Stay away from obstacles <i class="fas fa-exclamation-triangle text-danger"></i></h3>');
+	$('.joystickDiv').parent().parent().append('<h3 class="warningObstacleTeleopManager"><i class="fas fa-exclamation-triangle text-danger"></i> '+typeof(textStayAwayFromObstacles) != 'undefined'? textStayAwayFromObstacles : 'Stay away from obstacles')+' <i class="fas fa-exclamation-triangle text-danger"></i></h3>');
 	
 	$('#modalWarningConnexion_bOk').click(function(e){
 		if($('.checkboxWarningConnexion').prop('checked')){
