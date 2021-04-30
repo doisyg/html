@@ -1,0 +1,1 @@
+<?php echo base64_encode(file_get_contents('./map_amcl_cleaned_patrick2.png'));?>

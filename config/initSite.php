@@ -114,7 +114,7 @@ if($_CONFIG['MODE'] == 'PROD'){
 		//$_CONFIG['ROBOT_HOST'] = $VM ? '172.25.65.22' : '192.168.1.56';
 	}else{
 		//SMORILLON
-		$_CONFIG['ROBOT_HOST'] = '192.168.0.33';
+		$_CONFIG['ROBOT_HOST'] = '10.0.0.39'; //192.168.0.33';
 	}
 }
 $_CONFIG['ROBOT_HTTP'] = $server_request_scheme.'://'.$_CONFIG['ROBOT_HOST'];
