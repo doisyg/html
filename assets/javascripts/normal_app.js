@@ -1674,7 +1674,7 @@ $(document).ready(function(e) {
 	$('section#install_normal_setup_config a.bResetValueEblMbl').click(function(e) {
 		
 		$('#install_normal_setup_config_i_level_min_gotocharge').val((typeof(defaultEBL) != 'undefined'? defaultEBL : 15));
-		$('#install_normal_setup_config_i_level_min_gotocharge').val((typeof(defaultMBL) != 'undefined'? defaultMBL : 20));
+		$('#install_normal_setup_config_i_level_min_dotask').val((typeof(defaultMBL) != 'undefined'? defaultMBL : 20));
     });
 		
 	$('#pages_install_normal .bConfigurationSave').click(function(e) {
