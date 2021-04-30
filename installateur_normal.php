@@ -1939,8 +1939,8 @@
 				</div>
             </div>
             <footer>
-                <a href="#" class="btn btn-default button_goto bImportSiteBack" data-goto="install_normal_setup" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><i class="fa fa-chevron-left"></i> <?php echo __('Back');?></a>
-                <a href="#" class="btn btn-primary bImportSiteDo" style="left:auto; width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Import');?></a>
+                <a href="#" class="btn btn-default button_goto bImportSiteBack btn_footer_left btn_50" data-goto="install_normal_setup"><?php echo __('Back');?></a>
+                <a href="#" class="btn btn-primary bImportSiteDo btn_footer_right btn_50"><?php echo __('Import');?></a>
             </footer>
         </section>
         
