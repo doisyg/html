@@ -10,3 +10,6 @@ lang/c.conf
 _travail/crop/images_cropped/
 
 _travail/crop/images_source/
+_travail/replace_header_footer/temp/
+
+_travail/replace_header_footer/header_footer/temp/

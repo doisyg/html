@@ -80,7 +80,7 @@ $defaultHeight = 736;
 	
 	inputY.addEventListener('change', (event) => {
 		svgRect.setAttribute("y", event.target.value);
-		inputWidth.setAttribute("max", maxY - event.target.value);
+		inputHeight.setAttribute("max", maxY - event.target.value);
 	});
 	
 	inputWidth.addEventListener('change', (event) => {
