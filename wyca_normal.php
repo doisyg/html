@@ -2280,7 +2280,7 @@
 						<h4 class="iconMenuGreen"><?php echo __('Create wyca');?></h4>
 					</div>
 					
-					<a href="#" class="bAddWyca btn btn-primary" style="margin-left:50%;transform:translateX(-50%);"><?= ('Add an account') ?></a>
+					<a href="#" class="bAddWyca btn btn-primary" style="margin-left:50%;transform:translateX(-50%);"><?= __('Add an account') ?></a>
 					<ul class="list_wycas list_elem">
 					</ul>
 					
@@ -2391,7 +2391,7 @@
 						<h4 class="iconMenuGreen"><?php echo __('Create installer');?></h4>
 					</div>
 					
-					<a href="#" class="bAddInstaller btn btn-primary" style="margin-left:50%;transform:translateX(-50%);"><?= ('Add an account') ?></a>
+					<a href="#" class="bAddInstaller btn btn-primary" style="margin-left:50%;transform:translateX(-50%);"><?= __('Add an account') ?></a>
 					<ul class="list_installers list_elem">
 					</ul>
 					
@@ -2503,7 +2503,7 @@
 						<h4 class="iconMenuGreen"><?php echo __('Create user');?></h4>
 					</div>
 					
-					<a href="#" class="bAddUser btn btn-primary" style="margin-left:50%;transform:translateX(-50%);"><?= ('Add an account') ?></a>
+					<a href="#" class="bAddUser btn btn-primary" style="margin-left:50%;transform:translateX(-50%);"><?= __('Add an account') ?></a>
 					<ul class="list_users list_elem">
 					</ul>
 					
@@ -2616,7 +2616,7 @@
 						<h4 class="iconMenuGreen"><?php echo __('Create manager');?></h4>
 					</div>
 					
-					<a href="#" class="bAddManager btn btn-primary" style="margin-left:50%;transform:translateX(-50%);"><?= ('Add an account') ?></a>
+					<a href="#" class="bAddManager btn btn-primary" style="margin-left:50%;transform:translateX(-50%);"><?= __('Add an account') ?></a>
 					<ul class="list_managers list_elem">
 					</ul>
 					

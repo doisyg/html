@@ -908,7 +908,7 @@
 					</li>
 				</ul>
 				
-				<a href="#" class="bAddUser btn btn-primary"><?= ('Add an account') ?></a>
+				<a href="#" class="bAddUser btn btn-primary"><?= __('Add an account') ?></a>
 				<ul class="list_users list_elem">
 				</ul>
 				

@@ -2203,7 +2203,7 @@
 						<h4 class="iconMenuGreen"><?php echo __('Create user');?></h4>
 					</div>
 					
-					<a href="#" class="bAddUser btn btn-primary" style="margin-left:50%;transform:translateX(-50%);"><?= ('Add an account') ?></a>
+					<a href="#" class="bAddUser btn btn-primary" style="margin-left:50%;transform:translateX(-50%);"><?= __('Add an account') ?></a>
 					<ul class="list_users list_elem">
 					</ul>
 					
@@ -2316,7 +2316,7 @@
 						<h4 class="iconMenuGreen"><?php echo __('Create manager');?></h4>
 					</div>
 					
-					<a href="#" class="bAddManager btn btn-primary" style="margin-left:50%;transform:translateX(-50%);"><?= ('Add an account') ?></a>
+					<a href="#" class="bAddManager btn btn-primary" style="margin-left:50%;transform:translateX(-50%);"><?= __('Add an account') ?></a>
 					<ul class="list_managers list_elem">
 					</ul>
 					
