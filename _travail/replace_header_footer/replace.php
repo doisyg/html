@@ -20,7 +20,8 @@ else
 
 if(isset($_POST['footer'])){
 	$imFooter = imagecreatefrompng($_POST['footer_name']);
-	$y2 = $height - imagesy($imFooter) - $y1;
+	//$y2 = $height - imagesy($imFooter) - $y1;
+	$y2 = $height - imagesy($imFooter);
 }
 else
 	$y2 = $height;
@@ -40,8 +41,7 @@ foreach(scandir($dirSource) as $filename) {
 		
 		$fn = str_replace('step','normal',$filename);
 		$dest = $dirDest.'/'.$fn;
-		var_dump($dest);
-		var_dump($im);
+		 
 		imagepng($im,$dest);
 		imagedestroy($im);
 	}
