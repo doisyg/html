@@ -47,11 +47,27 @@ function TraceRobot(pose)
 									   'data-element': 'robot'
 									   });
 		svgMap.appendChild(path);
-	}else{
+		
+		path = makeSVGElement('polyline', { 'points': (x-2*svg_resolution_width)+' '+(y-2*svg_resolution_width)+' '+(x+2*svg_resolution_width)+' '+(y)+' '+(x-2*svg_resolution_width)+' '+(y+2*svg_resolution_width),
+										'stroke':'#FFFFFF',
+										'stroke-width':Math.round(1*svg_resolution_width),
+										'fill':'none',
+										'stroke-linejoin':'round',
+										'stroke-linecap':'round',
+									   'class': 'map_elem robot_elem',
+									   'transform':'rotate('+angle+', '+x+', '+y+')',
+									   'id': 'robot_sens',
+									   'data-element_type': 'robot',
+									   'data-element': 'robot'
+									   });
+		$('#robot_circle').after(path);
+	}
+	else
+	{
 		if(robot_x == robot_y && robot_y == robot_theta && robot_x == 0 ){
 			$('#tRobotNotLocalised').show();
-			$('#install_by_step_edit_map_robot_circle').hide();
-			$('#install_by_step_edit_map_robot_sens').hide();
+			$('#robot_circle').hide();
+			$('#robot_sens').hide();
 		}else{
 			$('#tRobotNotLocalised').hide();
 		
