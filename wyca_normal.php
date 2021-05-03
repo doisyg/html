@@ -1330,9 +1330,10 @@
 					<ul style="color:#000;">
 						<li><div class="iconForbiddenArea"><i class="fas fa-vector-square"></i><i class="fa fa-minus-circle iconMenuRed"></i></div><span class="description"><?=__('Add forbidden area')?></span></li>
 						<li><i class="fa fa-draw-polygon iconMenuGreen" style="font-size: 26px;"></i><span class="description"><?=__('Add custom area')?></span></li>
-						<li><i class="fa fa-map-marker-alt iconMenuBlue"></i><span class="description"><?=__('Add POI')?></span></li>
+						<li><i class="fa fa-map-marker-alt iconMenuBlue"></i><span class="description"><?=__('Add a POI')?></span></li>
 						<li><div class="iconAugmentedPose"><i class="fas fa-map-marker-alt iconMenuPurple"></i><i class="fas fa-barcode"></i></div><span class="description"><?=__('Add Augmented pose')?></span></li>
 						<li><i class="fa fa-charging-station iconMenuGreen"></i><span class="description"><?=__('Add docking station')?></span></li>
+						<li><i class="fas fa-barcode fa-flip-horizontal iconMenuMagenta" style="position: relative;left: -15px;"></i><span class="description"><?=__('Add landmark')?></span></li>
 						<li><i class="fa fa-eraser"></i><span class="description"><?=__('Erase pixel')?></span></li>
 						<li><i class="fa fa-crosshairs iconMenuBlue"></i><span class="description"><?=__('Move the robot to this point')?></span></li>
 						<li><i class="fa fa-gamepad iconMenuPurple"></i><span class="description"><?=__('Teleop the robot')?></span></li>
@@ -1478,7 +1479,7 @@
                 <div class="wyca_setup_maps_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
                 
                 <div class="loaded col-md-12" style="padding-top:30px;">
-                	<a href="#" class="btn btn-primary disabled" data-toggle="modal" data-target="#wyca_setup_maps .modalAskNewMap"><?= __('Add new map')?></a>
+                	<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#wyca_setup_maps .modalAskNewMap"><?= __('Add new map')?></a>
                 
                     <ul class="list_maps list_elem">
                     </ul>

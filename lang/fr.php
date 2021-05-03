@@ -256,7 +256,7 @@ $_LANG['15af95789102cc4d6601356777c3861a'] = 'Cliquez sur la carte pour sélecti
 $_LANG['eed597be9ab43d7002354dc0aceaa605'] = 'Cliquez sur l\'icône Stop pour annuler l\'action pendant que le robot est en mouvement.';
 $_LANG['3885925e32719990be7d5f3dce84df7d'] = 'Ajouter une zone personnalisée';
 $_LANG['4e25837a6456d473fb860efcd9a3c24b'] = 'Ajouter une position augmentée';
-$_LANG['f97ee4f64e364522e8ed659b9845e650'] = 'Ajouter station de recharge';
+$_LANG['f97ee4f64e364522e8ed659b9845e650'] = 'Ajouter une station de recharge';
 $_LANG['f2e22cc4244019c6a9a0352b983b8d81'] = 'Effacer les pixels';
 $_LANG['8d616bd599b102e44de47f14d015c6bf'] = 'Déplacer le robot jusqu\'à ce point';
 $_LANG['04a430eccff10fef0b4233284daf8a9d'] = 'Prendre le controle du robot';
@@ -657,5 +657,7 @@ $_LANG['bb4ee7995f7fea36eb5318a8158c1062'] = 'Êtes-vous sûr de vouloir continu
 $_LANG['ed4b192c6a21eebf8c2210d71681c920'] = 'Cela pourrait causer des problèmes plus tard.';
 $_LANG['60a6dcf8d5433517080654268ae395cd'] = 'Ajouter un compte';
 $_LANG['60562de4bbf89e4384127166747c690a'] = 'Restez éloigné des obstacles';
+$_LANG['d3685e913af3920cb7daa2f5c556ba25'] = 'Ajouter un point de repère';
+$_LANG['0e09ecf49131d342cbf1357c5469db91'] = 'Ajouter un POI';
 
 ?>
