@@ -608,7 +608,7 @@ $_LANG['4a0d306983cf34ba40a55aab1fc673aa'] = 'Une confimation sera demandée pou
 $_LANG['f6a3a043e3b28d6f2f8c76b9dde095dd'] = 'Vous pouvez changer de carte en cliquant sur l\'icône bleue de la carte que vous voulez charger.';
 $_LANG['6e107d3765b03b1158bf0c56b2270056'] = 'Changement de carte';
 $_LANG['1cf76e4b6918e9fece5b8fcedeba2c8c'] = 'Changer de carte en placant le robot devant un repère partagé par plusieurs cartes.';
-$_LANG['99cad591e60ed88d1bf2ad7705f110fe'] = 'Teleop robot';
+$_LANG['99cad591e60ed88d1bf2ad7705f110fe'] = 'Prise de contrôle';
 $_LANG['f7324dbd3a04b1ea084facfcaafa3f18'] = 'Changement de carte effectué!';
 $_LANG['ec93cb985a65caecae15493e523d244d'] = 'Erreur changement carte';
 $_LANG['90c42d95a211636ced855891f6eff8a4'] = 'Annuler changement carte';
@@ -659,5 +659,6 @@ $_LANG['60a6dcf8d5433517080654268ae395cd'] = 'Ajouter un compte';
 $_LANG['60562de4bbf89e4384127166747c690a'] = 'Restez éloigné des obstacles';
 $_LANG['d3685e913af3920cb7daa2f5c556ba25'] = 'Ajouter un point de repère';
 $_LANG['0e09ecf49131d342cbf1357c5469db91'] = 'Ajouter un POI';
+$_LANG['9506f0fd0f7f1b07960b15b4c9e68d1a'] = 'Démarrer';
 
 ?>

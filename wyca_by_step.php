@@ -2055,7 +2055,7 @@
 									</div>
 									<div style="clear:both;"></div>                                   
 									<a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal"><?php echo __('Cancel');?></a>
-									<a href="#" class="btn btn-primary bRealTestDo btn_footer_right btn_50" ><?php echo __('Go');?></a>
+									<a href="#" class="btn btn-primary bRealTestDo btn_footer_right btn_50" ><?php echo __('Launch');?></a>
 								</div>
 							</div>
 						</div>
