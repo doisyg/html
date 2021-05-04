@@ -1,8 +1,8 @@
-
 var minStokeWidth = 1;
 var maxStokeWidth = 5;
 
 var robot_traced = false;
+var rotate_led = false;
 
 function makeSVGElement(tag, attrs, texte='')
 {
@@ -25,7 +25,7 @@ function TraceRobot(pose)
 	robot_x = pose.X;
 	robot_y = pose.Y;
 	robot_theta = pose.T;
-	
+
 	x = (robot_x * 100 / ros_resolution) * svg_resolution_width;
 	y = (ros_hauteur - (robot_y * 100 / ros_resolution)) * svg_resolution_height;
 	angle = 0 - robot_theta * 180 / Math.PI;
@@ -36,8 +36,6 @@ function TraceRobot(pose)
 
 	if (!robot_traced)
 	{
-		robot_traced = true;
-		$('#robot_circle').remove();
 		path = makeSVGElement('circle', { cx: x,
 										cy: y,
 									   r: rayonRobot,
@@ -47,7 +45,19 @@ function TraceRobot(pose)
 									   'data-element': 'robot'
 									   });
 		svgMap.appendChild(path);
+		robot_traced = true;
+	}
+	if(pose === '' || (robot_x == robot_y && robot_y == robot_theta && robot_x == 0 )){
+		$('#tRobotNotLocalised').show();
+		$('#robot_circle').hide();
+		$('#robot_sens').hide();
+	}
+	else
+	{
+		$('#robot_circle').attr("cx", x);
+		$('#robot_circle').attr("cy", y);
 		
+		$('#robot_sens').remove();
 		path = makeSVGElement('polyline', { 'points': (x-2*svg_resolution_width)+' '+(y-2*svg_resolution_width)+' '+(x+2*svg_resolution_width)+' '+(y)+' '+(x-2*svg_resolution_width)+' '+(y+2*svg_resolution_width),
 										'stroke':'#FFFFFF',
 										'stroke-width':Math.round(1*svg_resolution_width),
@@ -61,39 +71,15 @@ function TraceRobot(pose)
 									   'data-element': 'robot'
 									   });
 		$('#robot_circle').after(path);
-	}
-	else
-	{
-		if(robot_x == robot_y && robot_y == robot_theta && robot_x == 0 ){
-			$('#tRobotNotLocalised').show();
-			$('#robot_circle').hide();
-			$('#robot_sens').hide();
-		}else{
-			$('#tRobotNotLocalised').hide();
+		$('#tRobotNotLocalised').hide();
+		$('#robot_circle').show();
+		$('#robot_sens').show();
 		
-			$('#robot_circle').attr("cx", x);
-			$('#robot_circle').attr("cy", y);
-			
-			$('#robot_sens').remove();
-			path = makeSVGElement('polyline', { 'points': (x-2*svg_resolution_width)+' '+(y-2*svg_resolution_width)+' '+(x+2*svg_resolution_width)+' '+(y)+' '+(x-2*svg_resolution_width)+' '+(y+2*svg_resolution_width),
-											'stroke':'#FFFFFF',
-											'stroke-width':Math.round(1*svg_resolution_width),
-											'fill':'none',
-											'stroke-linejoin':'round',
-											'stroke-linecap':'round',
-										   'class': 'map_elem robot_elem',
-										   'transform':'rotate('+angle+', '+x+', '+y+')',
-										   'id': 'robot_sens',
-										   'data-element_type': 'robot',
-										   'data-element': 'robot'
-										   });
-			$('#robot_circle').after(path);
-		
-		}
+		if($('#LED_wrapper').length > 0 && rotate_led);
+			$('#LED_wrapper').css('transform','rotate('+ (-90 - pose.T * 180 / Math.PI) +'deg)')
 	}
+	
 }
-
-
 
 function TraceForbidden(indexForbidden)
 {
@@ -305,6 +291,7 @@ function TracePoi(indexPoi)
 	svgMap.appendChild(path);
 	
 }
+
 function TraceAugmentedPose(indexAugmentedPose)
 {
 	augmented_pose = augmented_poses[indexAugmentedPose];
@@ -358,7 +345,8 @@ function TraceAugmentedPose(indexAugmentedPose)
 	svgMap.appendChild(path);
 }
 
-function DrawMapElements(){
+function DrawMapElements()
+{
 	
 	$('#map_svg .forbidden_elem').remove();
 	$.each(forbiddens, function( index, forbidden ) {
