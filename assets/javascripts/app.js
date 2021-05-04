@@ -406,7 +406,9 @@ $(document).ready(function(e) {
 						teleopEnable = true;
 						wycaApi.TeleopStart();
 					}
-				}else{
+				}
+				else
+				{
 					if(teleopEnable || teleopEnable == 'not_init'){
 						teleopEnable = false;
 						wycaApi.TeleopStop();

@@ -995,12 +995,27 @@ $(document).ready(function(e) {
 		
 		create_new_map = true;
 		setCookie('create_new_map',create_new_map); // SET COOKIES
-		$('#pages_wyca').removeClass('active');
-		$('#pages_install_by_step section.page').hide();
+		$('#pages_wyca_normal').removeClass('active');
+		$('#pages_wyca_by_step section.page').hide();
 		
-		$('.title_section').html($('#pages_install_by_step #install_by_step_mapping > header > h2').text())
-		$('#pages_install_by_step').addClass('active');
-		$('#install_by_step_mapping').show();
+		//CHECK JOYSTICK TO START/STOP TELEOP ON NEXT PAGE
+		if($('#pages_wyca_by_step #wyca_by_step_mapping').find('.joystickDiv').length > 0){
+			if(!teleopEnable || teleopEnable == 'not_init'){
+				teleopEnable = true;
+				wycaApi.TeleopStart();
+			}
+		}
+		else
+		{
+			if(teleopEnable || teleopEnable == 'not_init'){
+				teleopEnable = false;
+				wycaApi.TeleopStop();
+			}
+		}
+		
+		$('.title_section').html($('#pages_wyca_by_step #wyca_by_step_mapping > header > h2').text())
+		$('#pages_wyca_by_step').addClass('active');
+		$('#wyca_by_step_mapping').show();
 	});
 	
 	$(document).on('click', '#wyca_setup_maps .bMapSetCurrentElem', function(e) {

@@ -1013,6 +1013,21 @@ $(document).ready(function(e) {
 		$('#pages_install_normal').removeClass('active');
 		$('#pages_install_by_step section.page').hide();
 		
+		//CHECK JOYSTICK TO START/STOP TELEOP ON NEXT PAGE
+		if($('#pages_install_by_step #install_by_step_mapping').find('.joystickDiv').length > 0){
+			if(!teleopEnable || teleopEnable == 'not_init'){
+				teleopEnable = true;
+				wycaApi.TeleopStart();
+			}
+		}
+		else
+		{
+			if(teleopEnable || teleopEnable == 'not_init'){
+				teleopEnable = false;
+				wycaApi.TeleopStop();
+			}
+		}
+		
 		$('.title_section').html($('#pages_install_by_step #install_by_step_mapping > header > h2').text())
 		$('#pages_install_by_step').addClass('active');
 		$('#install_by_step_mapping').show();
