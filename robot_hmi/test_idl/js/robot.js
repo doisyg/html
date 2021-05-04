@@ -257,8 +257,8 @@ function initMap(){
 						svg_resolution_width = svg_resolution;
 						svg_resolution_height = svg_resolution;
 						svgMap = document.querySelector('#map_svg');
-						DrawMapElements();
 						TraceRobot(lastRobotPose);
+						DrawMapElements();
 						setTimeout(function(){
 							$('#loader_map').hide();
 							$('#map_svg').show();
