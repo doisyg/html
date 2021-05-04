@@ -76,7 +76,7 @@ function TraceRobot(pose)
 		$('#robot_sens').show();
 		
 		if($('#LED_wrapper').length > 0 && rotate_led);
-			$('#LED_wrapper').css('transform','rotate('+ (-90 - pose.T * 180 / Math.PI) +'deg)')
+			$('#LED_wrapper').css('transform','rotate('+ (90 - pose.T * 180 / Math.PI) +'deg)')
 	}
 	
 }
