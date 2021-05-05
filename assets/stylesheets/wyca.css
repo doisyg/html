@@ -117,9 +117,13 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 	ul.tuiles li { padding-top:15%; position:relative; } 
 	ul.tuiles.heightauto li { padding-top:0; position:relative; }
 	ul.tuiles li a, ul.tuiles li div { font-size:28px;    line-height: 32px;}
-	ul.tuiles li i { font-size:80px; padding-top:10%; display:block; padding-bottom:50px; }
+	ul.tuiles li i { font-size:50px; padding-top:10%; display:block; padding-bottom:20px; }
 	ul.tuiles li.tuile_wrapper i { font-size:56px; padding-top:5%; display:block; padding-bottom:10px; }
 	ul.tuiles li img.i {height: 79px!important;padding-top:5%!important;}
+}
+
+@media (min-width: 1500px) {
+	ul.tuiles li i { font-size:80px; padding-top:10%; display:block; padding-bottom:50px; }
 }
 
 .btn-wyca {
@@ -338,6 +342,7 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 .modalAddDock .dock { position:absolute; top:130px; margin-left:-12.5px; z-index:300; display:none; }
 .modalAddPoi .poi { position:absolute; top:130px; margin-left:-12.5px; z-index:300; display:none; }
 .modalAddAugmentedPose .augmented_pose { position:absolute; top:130px; margin-left:-12.5px; z-index:300; display:none; }
+.modalAddLandmark .landmark { position:absolute; top:130px; margin-left:-12.5px; z-index:300; display:none; }
 
 .form-control.success{
 	border-color: #187f18a8;
@@ -909,6 +914,8 @@ img.fi-robot{
 	left:10px;
 	z-index:3;
 	background:#589fb2;
+	cursor: pointer;
+	transition:0.5s all;
 }
 .burger_menu_open{
 	
@@ -933,6 +940,9 @@ img.fi-robot{
     background: #fff;
     transition: 0.5s all;
     border-radius: 15px;
+}
+.burger_menu.updatingMap{
+	pointer-events:none;cursor:not-allowed;background:#a4a4a4;
 }
 .btn-circle.btn-menu{
 	width: 40px;
@@ -1009,6 +1019,7 @@ img.fi-robot{
 .iconMenuRed{color:#da3939}
 .iconMenuColorWarning{color:#ed9c28}
 .iconMenuPurple{color:#5d24cb}
+.iconMenuMagenta{color:#ee29ee}
 
 img.fi-route {
     max-height: 59px!important;
@@ -1541,6 +1552,26 @@ span.toggle_details{
 	text-align:left;
 }
 .recovery_feedback i{
+	font-size: 16px;
+    margin: 4px 0;
+}
+
+.switch_map_feedback{
+	text-align:center;
+	margin:30px 0;
+}
+.switch_map_feedback .switch_map_step{
+	margin:10px 0;
+	transition:0.5s all;
+	display:none;
+}
+.switch_map_feedback h5{
+	margin:5px 0;
+}
+.switch_map_feedback .col-xs-10 h5{
+	text-align:left;
+}
+.switch_map_feedback i{
 	font-size: 16px;
     margin: 4px 0;
 }

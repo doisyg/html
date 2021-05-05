@@ -853,6 +853,51 @@ function WycaByStepTraceAugmentedPose(indexAugmentedPose)
 		AddClass('#wyca_by_step_edit_map_svg .augmented_pose_elem_'+augmented_pose.id_augmented_pose, 'active');
 }
 
+function WycaByStepTraceLandmark(indexLandmark)
+{
+	landmark = landmarks[indexLandmark];
+	if (landmark.deleted != undefined && landmark.deleted) { $('#wyca_by_step_edit_map_svg .landmark_elem_'+landmark.id_landmark).remove(); return; }
+	
+	is_active = false;
+	if ($('#wyca_by_step_edit_map_svg .landmark_elem_'+landmark.id_landmark).length > 0)
+	{
+		t = $('#wyca_by_step_edit_map_svg .landmark_elem_'+landmark.id_landmark);
+		if (t.attr('class') != t.attr('class').replace('active', ''))
+		{
+			is_active = true;
+		}
+	}
+	
+	if (downOnMovable && movableDown.data('element_type') == 'landmark')
+	{
+		index_point_movable = movableDown.data('index_point');
+	}
+	else
+		$('#wyca_by_step_edit_map_svg .landmark_elem_'+landmark.id_landmark).remove();
+	
+	x = landmark.fiducial_pose_x * 100 / ros_resolution;
+	y = ros_hauteur - (landmark.fiducial_pose_y * 100 / ros_resolution);	
+	
+	angle = 0 - landmark.fiducial_pose_t * 180 / Math.PI - 90;
+	
+	path = makeSVGElement('rect', { x: x-5, y:y-1, height:2, width:10,
+				   'stroke-width': minStokeWidth,
+				   'fill':'none',
+				   'transform':'rotate('+angle+', '+x+', '+y+')',
+				   
+				   
+				   'class':'landmark_elem landmark_elem_fond landmark_elem_'+landmark.id_landmark,
+				   'id': 'wyca_by_step_edit_map_landmark_'+landmark.id_landmark,
+				   'data-id_landmark': landmark.id_landmark,
+				   'data-element_type': 'landmark',
+				   'data-element': 'landmark'
+				  });
+	svgWycaByStep.appendChild(path);
+	
+	if (is_active)
+		AddClass('#wyca_by_step_edit_map_svg .landmark_elem_'+landmark.id_landmark, 'active');
+}
+
 function WycaByStepTraceGoToPose(x,y)
 {
 	path = makeSVGElement('circle', { cx: x,
@@ -975,6 +1020,10 @@ function WycaByStepResizeSVG()
 	$('#wyca_by_step_edit_map_svg .augmented_pose_elem').remove();
 	$.each(augmented_poses, function( index, augmented_pose ) {
 		WycaByStepTraceAugmentedPose(index);
+	});
+	$('#wyca_by_step_edit_map_svg .landmark_elem').remove();
+	$.each(landmarks, function( index, landmark ) {
+		WycaByStepTraceLandmark(index);
 	});
 }
 

@@ -48,14 +48,17 @@ var nextIdArea = 300000;
 var nextIdDock = 300000;
 var nextIdPoi = 300000;
 var nextIdAugmentedPose = 300000;
+var nextIdLandmark = 300000;
 var forbiddens = Array();
 var areas = Array();
 var gommes = Array();
 var docks = Array();
 var pois = Array();
+var augmented_poses = Array();
+var landmarks = Array();
 var id_map = -1;
 var id_map_zoom = -1;
-var augmented_poses = Array();
+
 
 var blockZoom = false;
 var gotoTest = false;
@@ -125,6 +128,7 @@ var intervalRefreshConn = null;
 var indexDockElem = 0;
 var indexPoiElem = 0;
 var indexAugmentedPoseElem = 0;
+var indexLandmarkElem = 0;
 
 var boolHelpArea=true;
 var boolHelpForbidden=true;
@@ -297,6 +301,32 @@ function GetAugmentedPoseIndexFromID(id)
 	ret = null;
 	$.each(augmented_poses, function(indexInArray, augmented_pose){
 		if (augmented_pose.id_augmented_pose == id)
+		{
+			ret = indexInArray;
+			return ret;
+		}
+	});
+	return ret;
+}
+
+function GetLandmarkFromID(id)
+{
+	ret = null;
+	$.each(landmarks, function(indexInArray, landmark){
+		if (landmark.id_landmark == id)
+		{
+			ret = landmark;
+			return ret;
+		}
+	});
+	return ret;
+}
+
+function GetLandmarkIndexFromID(id)
+{
+	ret = null;
+	$.each(landmarks, function(indexInArray, landmark){
+		if (landmark.id_landmark == id)
 		{
 			ret = indexInArray;
 			return ret;

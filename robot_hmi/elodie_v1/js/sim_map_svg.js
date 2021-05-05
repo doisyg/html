@@ -1,8 +1,8 @@
-
 var minStokeWidth = 1;
 var maxStokeWidth = 5;
 
 var robot_traced = false;
+var rotate_led = false;
 
 function makeSVGElement(tag, attrs, texte='')
 {
@@ -25,42 +25,37 @@ function TraceRobot(pose)
 	robot_x = pose.X;
 	robot_y = pose.Y;
 	robot_theta = pose.T;
+
+	x = (robot_x * 100 / ros_resolution) * svg_resolution_width;
+	y = (ros_hauteur - (robot_y * 100 / ros_resolution)) * svg_resolution_height;
+	angle = 0 - robot_theta * 180 / Math.PI;
+	rayonRobot = (26 / ros_resolution) * svg_resolution_width;
 	
-	if(robot_x == robot_y && robot_y == robot_theta && robot_x == 0 ){
-		$(tRobotNotLocalised).show();
-		$('#robot_circle').remove();
-		$('#robot_sens').remove();
+	x = typeof(offset_image_x) == 'undefined' ? x : x + offset_image_x;
+	y = typeof(offset_image_y) == 'undefined' ? y : y + offset_image_y;
+
+	if (!robot_traced)
+	{
+		path = makeSVGElement('circle', { cx: x,
+										cy: y,
+									   r: rayonRobot,
+									   'class': 'map_elem robot_elem robot_elem_fond',
+									   'id': 'robot_circle',
+									   'data-element_type': 'robot',
+									   'data-element': 'robot'
+									   });
+		svgMap.appendChild(path);
 		robot_traced = true;
-	}else{
-		$('#tRobotNotLocalised').hide();
-		
-		x = (robot_x * 100 / ros_resolution) * svg_resolution_width;
-		y = (ros_hauteur - (robot_y * 100 / ros_resolution)) * svg_resolution_height;
-		angle = 0 - robot_theta * 180 / Math.PI;
-		rayonRobot = (26 / ros_resolution) * svg_resolution_width;
-		
-		x = typeof(offset_image_x) == 'undefined' ? x : x + offset_image_x;
-		y = typeof(offset_image_y) == 'undefined' ? y : y + offset_image_y;
-	
-		if (true || !robot_traced) // true pour le mettre au premier plan
-		{
-			robot_traced = true;
-			$('#robot_circle').remove();
-			path = makeSVGElement('circle', { cx: x,
-											cy: y,
-										   r: rayonRobot,
-										   'class': 'map_elem robot_elem robot_elem_fond',
-										   'id': 'robot_circle',
-										   'data-element_type': 'robot',
-										   'data-element': 'robot'
-										   });
-			svgMap.appendChild(path);
-		}
-		else
-		{
-			$('#robot_circle').attr("cx", x);
-			$('#robot_circle').attr("cy", y);
-		}
+	}
+	if(pose === '' || (robot_x == robot_y && robot_y == robot_theta && robot_x == 0 )){
+		$('#tRobotNotLocalised').show();
+		$('#robot_circle').hide();
+		$('#robot_sens').hide();
+	}
+	else
+	{
+		$('#robot_circle').attr("cx", x);
+		$('#robot_circle').attr("cy", y);
 		
 		$('#robot_sens').remove();
 		path = makeSVGElement('polyline', { 'points': (x-2*svg_resolution_width)+' '+(y-2*svg_resolution_width)+' '+(x+2*svg_resolution_width)+' '+(y)+' '+(x-2*svg_resolution_width)+' '+(y+2*svg_resolution_width),
@@ -76,14 +71,15 @@ function TraceRobot(pose)
 									   'data-element': 'robot'
 									   });
 		$('#robot_circle').after(path);
+		$('#tRobotNotLocalised').hide();
+		$('#robot_circle').show();
+		$('#robot_sens').show();
 		
-		/*
-		if($('#LED_wrapper').length > 0);
-			$('#LED_wrapper').css('transform','rotate('+ (-90 - pose.T * 180 / Math.PI) +'deg)');*/
+		if($('#LED_wrapper').length > 0 && rotate_led);
+			$('#LED_wrapper').css('transform','rotate('+ (90 - pose.T * 180 / Math.PI) +'deg)')
 	}
+	
 }
-
-
 
 function TraceForbidden(indexForbidden)
 {
@@ -295,6 +291,7 @@ function TracePoi(indexPoi)
 	svgMap.appendChild(path);
 	
 }
+
 function TraceAugmentedPose(indexAugmentedPose)
 {
 	augmented_pose = augmented_poses[indexAugmentedPose];
@@ -348,7 +345,8 @@ function TraceAugmentedPose(indexAugmentedPose)
 	svgMap.appendChild(path);
 }
 
-function DrawMapElements(){
+function DrawMapElements()
+{
 	
 	$('#map_svg .forbidden_elem').remove();
 	$.each(forbiddens, function( index, forbidden ) {

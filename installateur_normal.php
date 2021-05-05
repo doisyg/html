@@ -6,14 +6,15 @@
             </header>
             <div class="content">
                 <ul class="tuiles row">
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile1" data-goto="install_normal_edit_map" href="#"><i class="far fa-map"></i><?php echo __('Map');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile1" data-goto="install_normal_edit_map" href="#"><i class="fas fa-map-marked-alt"></i><?php echo __('Map');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="install_normal_move" href="#"><i class="fa fa-gamepad"></i><?php echo __('Control robot');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="install_normal_recovery" href="#"><i class="fa fa-search"></i><?php echo __('Recovery');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="install_normal_setup" href="#"><i class="fa fa-gears"></i><?php echo __('Setup');?></a></li>
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5" data-goto="install_normal_accounts" href="#"><i class="fas fa-users"></i><?php echo __('Accounts');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" data-goto="install_normal_service_book" href="#"><i class="fa fa-book"></i><?php echo __('Service book');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7" href="logout.php"><i class="fas fa-power-off"></i><?php echo __('Logout');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8 todo" data-goto="install_normal_help" href="#"><i class="fa fa-question"></i><?php echo __('Help');?></a></li>
+					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" data-goto="install_normal_switch_map_landmark" href="#"><i class="fas fa-exchange-alt"></i><?php echo __('Switch map');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7" data-goto="install_normal_service_book" href="#"><i class="fa fa-book"></i><?php echo __('Service book');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8" href="logout.php"><i class="fas fa-power-off"></i><?php echo __('Logout');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile9 todo" data-goto="install_normal_help" href="#"><i class="fa fa-question"></i><?php echo __('Help');?></a></li>
                 </ul>
 				<div class="modal fade modalCurrentSite" id="install_normal_dashboard_modalCurrentSite" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
 					<div class="modal-dialog" role="dialog">
@@ -90,6 +91,9 @@
 					<div class="btn-circle btn-lg icon_menu" data-menu="install_normal_edit_map_menu_augmented_pose">
 						<div class="iconAugmentedPose"><i class="fas fa-map-marker-alt iconMenuPurple"></i><i class="fas fa-barcode"></i></div>
 					</div>
+					<div class="btn-circle btn-lg icon_menu" data-menu="install_normal_edit_map_menu_landmark">
+						<i class="fas fa-barcode fa-flip-horizontal iconMenuMagenta" style="position: relative;left: -6px;"></i>
+					</div>
 					<div class="btn-circle btn-lg icon_menu" data-menu="install_normal_edit_map_menu_erase">
 						<i class="fa fa-eraser" style="left: -9px;color: #333333;"></i>
 					</div>
@@ -137,6 +141,9 @@
 							</a></li>
                         	<li><a href="#" class="btn btn-circle btn-default bAddDock btn-menu" data-orientation="V">
 								<i class="fas fa-charging-station iconMenuGreen" style="position: relative;top: -1px;left: 2px;"></i>
+							</a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default bAddLandmark btn-menu" data-orientation="V">
+								<i class="fas fa-barcode fa-flip-horizontal iconMenuMagenta" style="position: relative;top: -0px;left: 0px;"></i>
 							</a></li>
                         	<li><a href="#" class="btn btn-circle btn-default bGomme btn-menu" data-orientation="V">
 								<i class="fa fa-eraser "></i>
@@ -190,6 +197,12 @@
 							<li><a href="#" class="btn btn-circle btn-default btn-menu bTestAugmentedPose"><img class="fi-route" src="assets/images/route_green.svg"/></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-menu bConfigAugmentedPose"><i class="fa fa-gears iconMenuBlue"></i></a></li>
                         	<li><a href="#" class="btn btn-circle btn-default btn-menu bDeleteAugmentedPose"><i class="fa fa-trash iconMenuRed"></i></a></li>
+                        </ul>
+                    </div>
+                    <div id="install_normal_edit_map_menu_landmark" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
+                    	<ul>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-menu bConfigLandmark"><i class="fa fa-gears iconMenuBlue"></i></a></li>
+                        	<li><a href="#" class="btn btn-circle btn-default btn-menu bDeleteLandmark"><i class="fa fa-trash iconMenuRed"></i></a></li>
                         </ul>
                     </div>
                     <div id="install_normal_edit_map_menu_erase" class="menu_icon_touch" style="position:absolute; left:50%; top:50%;">
@@ -653,7 +666,7 @@
                             </div>
                         </div>
                     </div>
-                    
+					
 					<div class="modal fade modalDockElemOptions" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
                         <div class="modal-dialog" role="dialog">
                             <div class="modal-content">
@@ -716,6 +729,108 @@
                                        
                                         <a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Cancel');?></a> 
 										<a href="#" class="btn btn-primary bDockElemSave btn_footer_right btn_50" data-dismiss="modal"><?php echo __('Save');?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					
+					<div class="modal fade modalAddLandmark" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+                                        <div class="h100vh_160" style="overflow:auto; text-align:center">
+                                        
+                                        	<a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
+											<div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div>
+                                        	<div class="ifUndocked">
+                                                <div style="height:200px; position:relative;">
+                                                
+                                                    <img id="install_normal_edit_map_modalAddLandmark_robot" src="assets/images/robot-dessus.png" width="50" style="position:absolute; top:130px; margin-left:-25px; z-index:300;" />
+                                                    
+                                                    <img id="install_normal_edit_map_modalAddLandmark_landmark0" class="landmark" src="assets/images/reflector.png" width="25" />
+                                                    <img id="install_normal_edit_map_modalAddLandmark_landmark1" class="landmark" src="assets/images/reflector.png" width="25" />
+                                                    <img id="install_normal_edit_map_modalAddLandmark_landmark2" class="landmark" src="assets/images/reflector.png" width="25" />
+                                                    <img id="install_normal_edit_map_modalAddLandmark_landmark3" class="landmark" src="assets/images/reflector.png" width="25" />
+                                                    <img id="install_normal_edit_map_modalAddLandmark_landmark4" class="landmark" src="assets/images/reflector.png" width="25" />
+                                                    <img id="install_normal_edit_map_modalAddLandmark_landmark5" class="landmark" src="assets/images/reflector.png" width="25" />
+                                                    <div class="fiducial_number_wrapper"></div>
+                                                </div>
+                                            
+                                            	<div class ="modal-advice">
+                                                    <p class="texts_add_landmark text_prepare_robot"><?php echo stripslashes(__('Move the robot in front of the reflector and click on the "Scan" button'));?></p>
+                                                    <p class="texts_add_landmark text_set_landmark"><?php echo stripslashes(__('Click on the fiducial to create the landmark'));?></p>
+                                                </div>
+                                                <p><a href="#" class="btn btn-primary bScanAddLandmark">Scan</a></p>
+                                                
+                                                <div style="position:absolute; bottom:50px; left:0; width:100%; z-index:2000;">
+                                                    <div class="joystickDiv" draggable="false" style="margin:auto;">
+                                                        <div class="fond"></div>
+                                                        <div class="curseur"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        
+                                        <div style="clear:both;"></div>
+                                                                                
+                                        
+                                        <a href="#" class="btn btn-default btn_footer_left btn_100" data-dismiss="modal" ><?php echo __('Cancel');?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal fade modalLandmarkOptions" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog" role="dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="actions mh100vh_55">
+                                        <div class="h100vh_160" style="overflow:auto; text-align:center">
+                                        
+                                        	<form>
+                                                <div class="form-group">
+                                                    <label class="col-xs-4 control-label"><?= __('Name')?></label>
+                                                    <div class="col-xs-8">
+                                                        <input type="text" id="install_normal_edit_map_landmark_name" name="landmark_name" value="" class="form-control input-sm mb-md" />
+                                                    </div>
+                                                </div>
+                                                <!--
+                                                <div class="form-group">
+                                                    <label class="col-xs-4 control-label">Number</label>
+                                                    <div class="col-xs-8">
+                                                        <input type="number" id="install_normal_edit_map_landmark_number" name="landmark_number" value="1" class="form-control input-sm mb-md" />
+                                                    </div>
+                                                </div>
+                                                -->
+                                                
+                                                <div class="form-group">
+                                                    <label class="col-xs-4 control-label"><?= __('Fiducial ID')?></label>
+                                                    <div class="col-xs-8">
+                                                        <input type="number" id="install_normal_edit_map_landmark_fiducial_number" name="landmark_fiducial_number" readonly value="1" class="form-control input-sm mb-md" />
+                                                    </div>
+                                                </div>
+                                                
+                                                <input type="hidden" id="install_normal_edit_map_landmark_number" name="landmark_number" value="1" />
+                                                
+                                                <div class="form-group">
+                                                    <label class="col-xs-4 control-label"><?= __('Comment')?></label>
+                                                    <div class="col-xs-8">
+                                                        <textarea id="install_normal_edit_map_landmark_comment" name="landmark_comment" class="form-control input-sm mb-md"></textarea>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            
+                                        </div>
+                                        
+                                        <div style="clear:both;"></div>
+                                       
+                                       
+                                        <a href="#" id="install_normal_edit_map_bLandmarkCancelConfig" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('Cancel');?></a> 
+										<a href="#" id="install_normal_edit_map_bLandmarkSaveConfig" class="btn btn-primary btn_footer_right btn_50"><?php echo __('Save');?></a>
                                     </div>
                                 </div>
                             </div>
@@ -1080,7 +1195,7 @@
                                 <div class="modal-header">
                                     <div class="actions mh100vh_55">
                                         <div class="h100vh_160" style="overflow:auto; text-align:center">
-											<i class="far fa-map fa-5x" style="margin:20px 0;position:relative">
+											<i class="fas fa-map-marked-alt fa-5x" style="margin:20px 0;position:relative">
 												<!--<i class="fas fa-asterisk fa-2x" style="position: absolute;font-size: 16px;color: #343434;top:-8px;right: -9px;"></i>-->
 											</i>
 											<h4 style="margin:20px 0"><?= __('The map has been modified externally.')?></h4>
@@ -1136,9 +1251,10 @@
 					<ul style="color:#000;">
 						<li><div class="iconForbiddenArea"><i class="fas fa-vector-square"></i><i class="fa fa-minus-circle iconMenuRed"></i></div><span class="description"><?=__('Add forbidden area')?></span></li>
 						<li><i class="fa fa-draw-polygon iconMenuGreen" style="font-size: 26px;"></i><span class="description"><?=__('Add custom area')?></span></li>
-						<li><i class="fa fa-map-marker-alt iconMenuBlue"></i><span class="description"><?=__('Add POI')?></span></li>
+						<li><i class="fa fa-map-marker-alt iconMenuBlue"></i><span class="description"><?=__('Add a POI')?></span></li>
 						<li><div class="iconAugmentedPose"><i class="fas fa-map-marker-alt iconMenuPurple"></i><i class="fas fa-barcode"></i></div><span class="description"><?=__('Add Augmented pose')?></span></li>
 						<li><i class="fa fa-charging-station iconMenuGreen"></i><span class="description"><?=__('Add docking station')?></span></li>
+						<li><i class="fas fa-barcode fa-flip-horizontal iconMenuMagenta" style="position: relative;left: -15px;"></i><span class="description"><?=__('Add landmark')?></span></li>
 						<li><i class="fa fa-eraser"></i><span class="description"><?=__('Erase pixel')?></span></li>
 						<li><i class="fa fa-crosshairs iconMenuBlue"></i><span class="description"><?=__('Move the robot to this point')?></span></li>
 						<li><i class="fa fa-gamepad iconMenuPurple"></i><span class="description"><?=__('Teleop the robot')?></span></li>
@@ -1170,16 +1286,19 @@
             <div class="content">
                 <ul class="tuiles row">
                     <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile1" data-goto="install_normal_setup_sites" href="#"><i class="fa fa-building"></i><?php echo __('Sites');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="install_normal_setup_tops" href="#"><i class="fa fa-cube"></i><?php echo __('Tops');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="install_normal_setup_config" href="#"><i class="fas fa-battery-three-quarters"></i><?php echo __('Battery settings');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="install_normal_setup_sound" href="#"><i class="fas fa-volume-up"></i><?php echo __('Sound');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5" data-goto="install_normal_setup_wifi" href="#"><i class="fas fa-wifi"></i><?php echo __('Wifi');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" data-goto="install_normal_setup_language" href="#"><i class="fa fa-language"></i><?php echo __('Language');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7" data-goto="install_normal_setup_export" href="#"><i class="fa fa-upload"></i><?php echo __('Export site');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8" data-goto="install_normal_setup_import" href="#"><i class="fa fa-download"></i><?php echo __('Import site');?></a></li>
-					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile9" data-goto="install_normal_setup_trinary" href="#"><i class="far fa-map"></i><?php echo __('Map trinary');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile10" data-goto="install_normal_setup_download_map" href="#"><i class="fas fa-file-download"></i><?php echo __('Download map');?></a></li>
-                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile11" data-goto="install_normal_setup_reset" href="#"><i class="fa fa-eraser"></i><?php echo __('Factory data reset');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile2" data-goto="install_normal_setup_maps" href="#"><i class="fas fa-layer-group"></i><?php echo __('Maps');?></a></li>
+					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile3" data-goto="install_normal_setup_tops" href="#"><i class="fa fa-cube"></i><?php echo __('Tops');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile4" data-goto="install_normal_setup_config" href="#"><i class="fas fa-battery-three-quarters"></i><?php echo __('Battery settings');?></a></li>
+                    
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile5" data-goto="install_normal_setup_sound" href="#"><i class="fas fa-volume-up"></i><?php echo __('Sound');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile6" data-goto="install_normal_setup_wifi" href="#"><i class="fas fa-wifi"></i><?php echo __('Wifi');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile7" data-goto="install_normal_setup_language" href="#"><i class="fa fa-language"></i><?php echo __('Language');?></a></li>
+					
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile8" data-goto="install_normal_setup_export" href="#"><i class="fa fa-upload"></i><?php echo __('Export site');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile9" data-goto="install_normal_setup_import" href="#"><i class="fa fa-download"></i><?php echo __('Import site');?></a></li>
+					<li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile10" data-goto="install_normal_setup_trinary" href="#"><i class="far fa-map"></i><?php echo __('Map trinary');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile11" data-goto="install_normal_setup_download_map" href="#"><i class="fas fa-file-download"></i><?php echo __('Download map');?></a></li>
+                    <li class="col-xs-4 col-md-3 col-lg-2"><a class="button_goto anim_tuiles tuile12" data-goto="install_normal_setup_reset" href="#"><i class="fa fa-eraser"></i><?php echo __('Factory data reset');?></a></li>
 				</ul>
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
@@ -1395,7 +1514,60 @@
 				 <a href="#" class="button_goto bBackToDashboardSetup" style="display:none" data-goto="install_normal_setup"></a>
             </footer>
         </section>
-        
+		
+        <section id="install_normal_setup_maps" class="page with_footer">
+	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Maps');?></h2>
+            </header>
+            <div class="content">
+                
+                <div class="install_normal_setup_maps_loading loading_big" style="padding-top:50px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
+                
+                <div class="loaded col-md-12" style="padding-top:30px;">
+                	<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#install_normal_setup_maps .modalAskNewMap"><?= __('Add new map')?></a>
+                
+                    <ul class="list_maps list_elem">
+                    </ul>
+                </div>
+				<div class="modal fade modalAskNewMap" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+					<div class="modal-dialog" role="dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<div class="actions mh100vh_55">
+									<div class="h100vh_160" style="overflow:auto; text-align:center">
+										<i class="fas fa-layer-group fa-5x" style="margin:20px 0;position:relative"></i>
+										<h4 style="margin:20px 0"><?= __('Add a new map to the current site ?')?></h4>
+										<h4 style="margin:20px 0"><?= __('You will be redirected to the mapping step.')?></h4>
+									</div>
+									
+									<div style="clear:both;"></div>
+									
+									<a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal" ><?php echo __('No');?></a> 
+									<a href="#" class="btn btn-primary btn_footer_right btn_50 bAddMap" data-dismiss="modal"><?php echo __('Add Map');?></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content sm-content text-left">
+						<p class=""><?= __('This page allow you to manage maps')?></p>
+						<p class=""><?= __('You can create a new map by clicking on the correspondant button.')?></p>
+						<p class=""><?= __('You can delete a map by clicking on the red cross icon.')?></p>
+						<p class=""><?= __('A confimation will be asked for each map you want to delete.')?></p>
+						<p class=""><?= __('You can switch map by clicking on the blue check icon of the map you want to load.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
+            </div>
+            <footer>
+                <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_setup"><?php echo __('Back');?></a>
+            </footer>
+        </section>
+		
 		<section id="install_normal_setup_config" class="page with_footer">
 	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_setup"></a>
             <header>
@@ -1453,7 +1625,7 @@
 									</div>
 									<div style="clear:both;"></div>                                   
 									<a href="#" class="btn btn-default btn_footer_left btn_50" data-dismiss="modal"><?php echo __('Cancel');?></a>
-									<a href="#" class="btn btn-primary bRealTestDo btn_footer_right btn_50" ><?php echo __('Go');?></a>
+									<a href="#" class="btn btn-primary bRealTestDo btn_footer_right btn_50" ><?php echo __('Launch');?></a>
 								</div>
 							</div>
 						</div>
@@ -1768,8 +1940,8 @@
 				</div>
             </div>
             <footer>
-                <a href="#" class="btn btn-default button_goto bImportSiteBack" data-goto="install_normal_setup" style="width:50%; position:absolute; left:0; bottom:0px; font-size:30px;"><i class="fa fa-chevron-left"></i> <?php echo __('Back');?></a>
-                <a href="#" class="btn btn-primary bImportSiteDo" style="left:auto; width:50%; position:absolute; right:0; bottom:0px; font-size:30px;"><?php echo __('Import');?></a>
+                <a href="#" class="btn btn-default button_goto bImportSiteBack btn_footer_left btn_50" data-goto="install_normal_setup"><?php echo __('Back');?></a>
+                <a href="#" class="btn btn-primary bImportSiteDo btn_footer_right btn_50"><?php echo __('Import');?></a>
             </footer>
         </section>
         
@@ -2032,7 +2204,7 @@
 						<h4 class="iconMenuGreen"><?php echo __('Create user');?></h4>
 					</div>
 					
-					<a href="#" class="bAddUser btn btn-primary" style="margin-left:50%;transform:translateX(-50%);"><?= ('Add an account') ?></a>
+					<a href="#" class="bAddUser btn btn-primary" style="margin-left:50%;transform:translateX(-50%);"><?= __('Add an account') ?></a>
 					<ul class="list_users list_elem">
 					</ul>
 					
@@ -2145,7 +2317,7 @@
 						<h4 class="iconMenuGreen"><?php echo __('Create manager');?></h4>
 					</div>
 					
-					<a href="#" class="bAddManager btn btn-primary" style="margin-left:50%;transform:translateX(-50%);"><?= ('Add an account') ?></a>
+					<a href="#" class="bAddManager btn btn-primary" style="margin-left:50%;transform:translateX(-50%);"><?= __('Add an account') ?></a>
 					<ul class="list_managers list_elem">
 					</ul>
 					
@@ -2294,6 +2466,110 @@
             </footer>
         </section>
         
+        <section id="install_normal_switch_map_landmark" class="page with_footer">
+	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_dashboard"></a>
+            <header>
+                <div class="pull-left"><img src="assets/images/logo.png" /></div>
+                <h2><?php echo __('Switch map');?></h2>
+            </header>
+            <div class="content">
+                <h4 style="text-align:center"><?php echo __('Switch map by placing the robot in front of landmark shared by maps.');?></h4>
+				<a href="#" class="bTeleop btn btn-lg btn-primary" style="transform:translateX(-50%);left:50%;position: relative;margin-top:30px;"><?= __('Teleop robot')?></a> 
+				<div class="install_normal_switch_map_landmark_loading loading_big" style="padding-top:30px;"><i class="fa fa fa-spinner fa-pulse"></i></div>
+                <div class="loaded col-md-12" style="padding-top:30px;">
+					
+                    <ul class="list_switch_map_landmarks list_elem">
+                    </ul>
+                    
+				</div>
+			
+				<div id="install_normal_switch_map_landmark_modalFeedback" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+					<div class="modal-dialog" role="dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<div class="actions mh100vh_55">
+									<div class="h100vh_160" style="overflow:auto; text-align:center;">
+										<div class="" style="text-align:center; margin-top:20px;"><a href="#" class="btn btn-danger btn-lg bCancelSwitchMap" style="display:none;"><?=__('Cancel Switch Map') ?></a></div>
+										<div class="install_normal_switch_map_landmark_feedback switch_map_feedback">
+											<hr style="border-top: 1px solid #909090;">
+											<div class="row switch_map_step SwitchMapScan" id="">
+												<div class="col-xs-10"><h5><?= __('Scan reflectors')?></h5></div>
+												<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+											</div>
+											<div class="row switch_map_step SwitchMapPose" id="">
+												<div class="col-xs-10"><h5><?= __('Robot position initiated')?></h5></div>
+												<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+											</div>
+											<div class="row switch_map_step SwitchMapSwitchMap" id="">
+												<div class="col-xs-10"><h5><?= __('Switch map')?></h5></div>
+												<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+											</div>
+											<div class="row switch_map_step SwitchMapStopNav" id="">
+												<div class="col-xs-10"><h5><?= __('Navigation stopped')?></h5></div>
+												<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+											</div>
+											<div class="row switch_map_step SwitchMapStartNav" id="">
+												<div class="col-xs-10"><h5><?= __('Navigation started')?></h5></div>
+												<div class="col-xs-2"><i class="fas fa-check iconMenuGreen" style="display:none;"></i><i class="fa fa fa-spinner fa-pulse"></i></div>
+											</div>
+											<hr style="border-top: 1px solid #909090;">
+										</div>
+									</div>
+									
+									<div style="clear:both;"></div>
+								   
+									<!--<a href="#" class="btn btn-primary btn_footer_left btn_100" data-dismiss="modal"><?php echo __('Close');?></a>-->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div id="install_normal_switch_map_landmark_modalTeleop" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+					<div class="modal-dialog" role="dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<div class="actions mh100vh_55">
+									<div class="h100vh_160" style="overflow:auto; text-align:center;">
+										
+										<div style="height:60px;"></div>
+										
+										<a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
+										<div class="btn_big_popup ifDocking ifUndocking"><i class="fa fa fa-spinner fa-pulse"></i></div>
+										<div class="ifUndocked">
+											
+											<div style="text-align:center; width:100%; z-index:2000; margin-top:50px;">
+												<div class="joystickDiv" draggable="false" style="margin:auto;">
+													<div class="fond"></div>
+													<div class="curseur"></div>
+												</div>
+											</div>
+										</div>
+										
+									</div>
+									
+									<div style="clear:both;"></div>
+								   
+									<a href="#" class="btn btn-primary btn_footer_left btn_100" data-dismiss="modal"><?php echo __('Close');?></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="popupHelp">
+					<h2><?=__('Help')?></h2>
+					<div class="content text-left">
+						<p class=""><?= __('This page allows you to manage switch between maps using landmarks.')?></p>
+					</div>
+					<p class="legende"><?=__('Click to hide')?></p>
+				</div>
+            </div>
+            <footer>
+                <a href="#" class="btn btn-default btn_footer_left btn_100 button_goto" data-goto="install_normal_dashboard"><?php echo __('Back');?></a>
+            </footer>
+        </section>
+		
         <section id="install_normal_service_book" class="page with_footer">
 	        <a href="#" class="bBackButton button_goto" data-goto="install_normal_dashboard"></a>
             <header>

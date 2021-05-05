@@ -495,6 +495,51 @@ function ManagerTraceAugmentedPose(indexAugmentedPose)
 		AddClass('#manager_edit_map_svg .augmented_pose_elem_'+augmented_pose.id_augmented_pose, 'active');
 }
 
+function ManagerTraceLandmark(indexLandmark)
+{
+	landmark = landmarks[indexLandmark];
+	if (landmark.deleted != undefined && landmark.deleted) { $('#manager_edit_map_svg .landmark_elem_'+landmark.id_landmark).remove(); return; }
+	
+	is_active = false;
+	if ($('#manager_edit_map_svg .landmark_elem_'+landmark.id_landmark).length > 0)
+	{
+		t = $('#manager_edit_map_svg .landmark_elem_'+landmark.id_landmark);
+		if (t.attr('class') != t.attr('class').replace('active', ''))
+		{
+			is_active = true;
+		}
+	}
+	
+	if (downOnMovable && movableDown.data('element_type') == 'landmark')
+	{
+		index_point_movable = movableDown.data('index_point');
+	}
+	else
+		$('#manager_edit_map_svg .landmark_elem_'+landmark.id_landmark).remove();
+	
+	x = landmark.fiducial_pose_x * 100 / ros_resolution;
+	y = ros_hauteur - (landmark.fiducial_pose_y * 100 / ros_resolution);	
+	
+	angle = 0 - landmark.fiducial_pose_t * 180 / Math.PI - 90;
+	
+	path = makeSVGElement('rect', { x: x-5, y:y-1, height:2, width:10,
+				   'stroke-width': minStokeWidth,
+				   'fill':'none',
+				   'transform':'rotate('+angle+', '+x+', '+y+')',
+				   
+				   
+				   'class':'landmark_elem landmark_elem_fond landmark_elem_'+landmark.id_landmark,
+				   'id': 'manager_edit_map_landmark_'+landmark.id_landmark,
+				   'data-id_landmark': landmark.id_landmark,
+				   'data-element_type': 'landmark',
+				   'data-element': 'landmark'
+				  });
+	svgManager.appendChild(path);
+	
+	if (is_active)
+		AddClass('#manager_edit_map_svg .landmark_elem_'+landmark.id_landmark, 'active');
+}
+
 function ManagerTraceGoToPose(x,y)
 {
 	path = makeSVGElement('circle', { cx: x,
@@ -537,6 +582,7 @@ function ManagerTraceGoToPose(x,y)
 						  });
 	svgManager.appendChild(path);
 }
+
 var robot_traced_manager = false;
 
 function ManagerTraceRobot(robot_x, robot_y, robot_theta)
@@ -617,5 +663,9 @@ function ManagerResizeSVG()
 	$('#manager_edit_map_svg .augmented_pose_elem').remove();
 	$.each(augmented_poses, function( index, augmented_pose ) {
 		ManagerTraceAugmentedPose(index);
+	});
+	$('#manager_edit_map_svg .landmark_elem').remove();
+	$.each(landmarks, function( index, landmark ) {
+		ManagerTraceLandmark(index);
 	});
 }

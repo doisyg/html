@@ -176,6 +176,7 @@ $(document).ready(function(e) {
 						gommes = Array();
 						docks = data.D.docks;
 						pois = data.D.pois;
+						landmarks = data.D.landmarks;
 						augmented_poses = data.D.augmented_poses;
 						
 						$('#install_normal_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
@@ -271,6 +272,7 @@ $(document).ready(function(e) {
 						gommes = Array();
 						docks = data.D.docks;
 						pois = data.D.pois;
+						landmarks = data.D.landmarks;
 						augmented_poses = data.D.augmented_poses;
 						
 						$('#install_normal_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
@@ -366,6 +368,7 @@ $(document).ready(function(e) {
 						gommes = Array();
 						docks = data.D.docks;
 						pois = data.D.pois;
+						landmarks = data.D.landmarks;
 						augmented_poses = data.D.augmented_poses;
 						
 						$('#install_normal_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
@@ -467,6 +470,10 @@ $(document).ready(function(e) {
 					default: NormalBufferMapSaveElemName = ''; break;
 				}
 			}
+			normalCanChangeMenu = true;
+			normalCurrentAction = '';
+			NormalHideMenus();
+			
 			data = GetDataMapToSave();
 			
 			if ($(this).hasClass('button_goto'))
@@ -702,7 +709,9 @@ var height_normal = 0;
 
 /* INSTALLATEUR WYCA.JS */
 var create_new_site = false;
+var create_new_map = false;
 var id_site_to_delete = -1;
+var id_map_to_delete = -1;
 
 $(document).ready(function(e) {
 	//----------------------- IMPORT SITE ----------------------------
@@ -992,6 +1001,145 @@ $(document).ready(function(e) {
 			$('#install_normal_setup_sites .bSiteSetCurrentElem').removeClass('disabled');
 		});
 		
+	});
+	
+	// --------------------- ADD MAP --------------------
+	
+	$('#install_normal_setup_maps .bAddMap').click(function(e) {
+		e.preventDefault();
+		
+		create_new_map = true;
+		setCookie('create_new_map',create_new_map); // SET COOKIES
+		$('#pages_install_normal').removeClass('active');
+		$('#pages_install_by_step section.page').hide();
+		
+		//CHECK JOYSTICK TO START/STOP TELEOP ON NEXT PAGE
+		if($('#pages_install_by_step #install_by_step_mapping').find('.joystickDiv').length > 0){
+			if(!teleopEnable || teleopEnable == 'not_init'){
+				teleopEnable = true;
+				wycaApi.TeleopStart();
+			}
+		}
+		else
+		{
+			if(teleopEnable || teleopEnable == 'not_init'){
+				teleopEnable = false;
+				wycaApi.TeleopStop();
+			}
+		}
+		
+		$('.title_section').html($('#pages_install_by_step #install_by_step_mapping > header > h2').text())
+		$('#pages_install_by_step').addClass('active');
+		$('#install_by_step_mapping').show();
+	});
+	
+	$(document).on('click', '#install_normal_setup_maps .bMapSetCurrentElem', function(e) {
+		e.preventDefault();
+		
+		id_map = parseInt($(this).closest('li').data('id_map'));
+		
+		
+		wycaApi.SetMapAsCurrent(id_map, function(data) {
+			if (data.A != wycaApi.AnswerCode.NO_ERROR) 
+				ParseAPIAnswerError(data,textErrorStopNavigation);
+			else
+			{
+				GetMapsNormal();
+			}
+		});
+	});
+	
+	$(document).on('click', '#install_normal_setup_maps .bMapDeleteElem', function(e) {
+		e.preventDefault();
+		
+		id_map_to_delete = parseInt($(this).closest('li').data('id_map'));
+		
+		wycaApi.DeleteMap(id_map_to_delete, function(data) {
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$('#install_normal_setup_maps_list_map_elem_'+id_map_to_delete).remove();
+			}
+			else
+			{
+				ParseAPIAnswerError(data);
+			}
+		});
+	});
+	
+	//---------------------- SWITCH MAP WITH LANDMARK -----------------------
+	$(document).on('click', '#install_normal_switch_map_landmark .bMapSetCurrentElem',function(e) {
+		e.preventDefault();
+		id_map = parseInt($(this).closest('li').data('id_map'));
+		
+		/*INIT FEEDBACK DISPLAY*/
+		$('#install_normal_switch_map_landmark .switch_map_feedback .switch_map_step').css('opacity','0').hide();
+		$('#install_normal_switch_map_landmark .switch_map_feedback .switch_map_step .fa-check').hide();
+		$('#install_normal_switch_map_landmark .switch_map_feedback .switch_map_step .fa-pulse').show();
+		
+		wycaApi.on('onSwitchMapWithLandmarkFeedback', function(data) {
+			if(data.A == wycaApi.AnswerCode.NO_ERROR){
+				target = '';
+				switch(data.M){
+					case 'Scan reflector': 		target = '#install_normal_switch_map_landmark .switch_map_feedback .switch_map_step.SwitchMapScan';			break;
+					case 'Init pose': 			target = '#install_normal_switch_map_landmark .switch_map_feedback .switch_map_step.SwitchMapPose';			break;
+					case 'Switch map': 			target = '#install_normal_switch_map_landmark .switch_map_feedback .switch_map_step.SwitchMapSwitchMap';		break;
+					case 'Stop navigation':		target = '#install_normal_switch_map_landmark .switch_map_feedback .switch_map_step.SwitchMapStopNav';		break;
+					case 'Start navigation': 	target = '#install_normal_switch_map_landmark .switch_map_feedback .switch_map_step.SwitchMapStartNav';		break;
+				}
+				
+				target = $(target);
+				if(target.prevAll('.switch_map_step:visible').length > 0){
+					target.prevAll('.switch_map_step:visible').find('.fa-check').show();
+					target.prevAll('.switch_map_step:visible').find('.fa-pulse').hide();
+				}
+				target.css('opacity','1').show();
+			}
+		});
+		
+		wycaApi.on('onSwitchMapWithLandmarkResult', function(data) {
+			
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				
+				$('#install_normal_switch_map_landmark .switch_map_step:visible').find('.fa-check').show();
+				$('#install_normal_switch_map_landmark .switch_map_step:visible').find('.fa-pulse').hide();
+				setTimeout(function(){
+					$('#install_normal_switch_map_landmark #install_normal_switch_map_landmark_modalFeedback').modal('hide');
+					success_wyca(textSwitchMapDone);
+				},500)
+			}
+			else
+			{
+				$('#install_normal_switch_map_landmark #install_normal_switch_map_landmark_modalFeedback').modal('hide');
+				ParseAPIAnswerError(data);
+			}
+			GetSwitchMapsWyca();
+			// On rebranche l'ancienne fonction
+			wycaApi.on('onSwitchMapWithLandmarkResult', onSwitchMapWithLandmarkResult);
+			wycaApi.on('onSwitchMapWithLandmarkFeedback', onSwitchMapWithLandmarkFeedback);
+		});
+		
+		//console.log('SwitchMapWithLandmark ',id_map,' is commented // ');
+		
+		wycaApi.SwitchMapWithLandmark(id_map, function(data) {
+			if (data.A != wycaApi.AnswerCode.NO_ERROR) 
+				ParseAPIAnswerError(data,textErrorSwitchMap);
+			else
+			{
+				$('#install_normal_switch_map_landmark #install_normal_switch_map_landmark_modalFeedback').modal('show');
+			}
+		});
+	});
+	
+	$('#install_normal_switch_map_landmark .bCancelSwitchMap').click(function(e) {
+		$('#install_normal_switch_map_landmark .bCancelSwitchMap').addClass('disabled');
+		wycaApi.SwitchMapWithLandmarkCancel(function(data) {
+			$('#install_normal_switch_map_landmark .bCancelSwitchMap').removeClass('disabled');
+		})
+	})
+	
+	$('#install_normal_switch_map_landmark .bTeleop').click(function() {
+		$('#install_normal_switch_map_landmark_modalTeleop').modal('show');
 	});
 	
 	//------------------- SERVICE BOOK ------------------------
@@ -1541,7 +1689,7 @@ $(document).ready(function(e) {
 	$('section#install_normal_setup_config a.bResetValueEblMbl').click(function(e) {
 		
 		$('#install_normal_setup_config_i_level_min_gotocharge').val((typeof(defaultEBL) != 'undefined'? defaultEBL : 15));
-		$('#install_normal_setup_config_i_level_min_gotocharge').val((typeof(defaultMBL) != 'undefined'? defaultMBL : 20));
+		$('#install_normal_setup_config_i_level_min_dotask').val((typeof(defaultMBL) != 'undefined'? defaultMBL : 20));
     });
 		
 	$('#pages_install_normal .bConfigurationSave').click(function(e) {
