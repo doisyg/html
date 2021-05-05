@@ -604,6 +604,8 @@ function WycaInitTrinaryDo()
 			threshold_free_wyca = data.D.threshold_free;
 			threshold_occupied_wyca = data.D.threshold_occupied;
 			
+			$('#wyca_setup_trinary_threshold_free_slider').val(threshold_free_wyca).change();
+			$('#wyca_setup_trinary_threshold_occupied_slider').val(threshold_occupied_wyca).change();
 			setTimeout(function() {
 				canvas_wyca = document.createElement('canvas');
 				
