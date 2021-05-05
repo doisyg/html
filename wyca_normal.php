@@ -111,7 +111,7 @@
 					
                     <div id="wyca_edit_map_zoom_carte_container">
                         <div id="wyca_edit_map_zoom_carte">
-                            <img src=""  class="img-responsive" style="max-width:100%; max-height:100%;" />
+                            <img src="" class="img-responsive" style="max-width:100%; max-height:100%;" />
                             <div id="wyca_edit_map_zone_zoom" style="position:absolute; border:1px solid #00F;"></div>
                             <div id="wyca_edit_map_zone_zoom_click" style="position:absolute; width:100%; height:100%; top:0; left:0; cursor:pointer;"></div>
                         </div>
@@ -2028,68 +2028,64 @@
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
                 <h2><?php echo __('Trinary');?></h2>
             </header>
-            <div class="content mh100vh_110" style="display:flex;flex-direction:column;">
-                <div id="wyca_setup_trinary_divResultTrinary" class="" style="flex:1 1 100%;background-color:#f0f0f0;display:flex;justify-content:center;align-items:center">
+            <div class="content mh100vh_110">
+                <div id="wyca_setup_trinary_divResultTrinary" class="" style="flex:1 1 100%;background-color:#f0f0f0;display:flex;justify-content:center;align-items:center;position:relative">
 					<i style="font-size:60px;" class="fa fa-spinner fa-pulse loading_fin_create_map"></i>
-					<canvas id="wyca_setup_trinary_canvas_result_trinary" width="" height="" style="overflow: hidden;position: absolute;top: 0px;left: 0px;width: 100%;height: 100%;touch-action: none;user-select: none;-webkit-user-drag: none;webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas>
-					<!--
-                    <div id="wyca_trinary_zoom_carte_container">
-                        <div id="wyca_trinary_zoom_carte">
-                            <img src="" class="img-responsive" style="max-width:100%; max-height:100%;" />
-                            <div id="wyca_trinary_zone_zoom" style="position:absolute; border:1px solid #00F;"></div>
-                            <div id="wyca_trinary_zone_zoom_click" style="position:absolute; width:100%; height:100%; top:0; left:0; cursor:pointer;"></div>
+					
+					<svg id="wyca_setup_trinary_svg" width="0" height="0" style="position:absolute; top:0; left:0; width:100%; height:100%;">
+						<image id="wyca_setup_trinary_image" xlink:href="" x="0" y="0" height="0" width="0" />
+					</svg>
+					
+					<canvas id="wyca_setup_trinary_canvas_result_trinary" width="" height="" style="overflow: hidden;position: absolute;top: 0px;left: 0px;width: 100%;height: 100%;touch-action: none;user-select: none;-webkit-user-drag: none;webkit-tap-highlight-color: rgba(0, 0, 0, 0);display:none"></canvas>
+					
+                    <div id="wyca_setup_trinary_zoom_carte_container" >
+                        <div id="wyca_setup_trinary_zoom_carte">
+                            <img src=""  class="img-responsive" style="max-width:100%; max-height:100%;" />
+                            <div id="wyca_setup_trinary_zone_zoom" style="position:absolute; border:1px solid #00F;"></div>
+                            <div id="wyca_setup_trinary_zone_zoom_click" style="position:absolute; width:100%; height:100%; top:0; left:0; cursor:pointer;"></div>
                         </div>
                     </div>
 					
-                    <div id="wyca_edit_map_all" style="position:relative; margin:auto; width:100%;">
-                        <div id="wyca_edit_map_map_navigation" class="zoom" style="position:relative; width:100%; margin:auto; border:1px solid #000;">
-                            <svg id="wyca_edit_map_svg" width="0" height="0" style="position:absolute; top:0; left:0; width:100%; height:100%;">
-                                <image id="wyca_edit_map_image" xlink:href="" x="0" y="0" height="0" width="0" />
-                            </svg>
-                        </div>
-                        <div style="clear:both;"></div>
-                    </div>
-					-->
 				</div>
-				<div>
-                    <form id="wyca_setup_trinary_form" method="post">
-                        <input type="hidden" name="todo" value="saveMapping" />
-                        <input type="hidden" id="wyca_setup_trinary_from_image" name="image" value="" />
-                        <input type="hidden" id="wyca_setup_trinary_from_image_tri" name="image_tri" value="" />
-                        <input type="hidden" id="wyca_setup_trinary_from_ros_hauteur" name="ros_hauteur" value="" />
-                        <input type="hidden" id="wyca_setup_trinary_from_ros_largeur" name="ros_largeur" value="" />
-                        <input type="hidden" id="wyca_setup_trinary_from_threshold_free" name="threshold_free" value="" />
-                        <input type="hidden" id="wyca_setup_trinary_from_threshold_occupied" name="threshold_occupied" value="" />
-                    </form>
-                
-                    <div class="fin_mapping_view" style="background-color: #F0F0F0;padding-bottom: 10px;padding-left: 5%;padding-right: 5%;">
-                        <img id="wyca_setup_trinary_img_map_saved_fin" src="" style="z-index:200; display:none; max-width:100%;" />
-                        <div id="">
-                            <div class="threshold_wrapper">
-								<div class="slider_wrapper">
-									<span class="btn btn_slider_minus"><i class="fas fa-minus-square"></i></span>
-									<div id="wyca_setup_trinary_threshold_free_slider_elem" class="mt-lg mb-lg slider-primary" data-plugin-slider data-plugin-options='{ "value": 25, "range": "min", "max": 100 }' data-plugin-slider-output="#wyca_setup_trinary_threshold_free_slider">
-										<input id="wyca_setup_trinary_threshold_free_slider" type="hidden" value="25" />
-									</div>
-									<span class="btn btn_slider_plus"><i class="fas fa-plus-square"></i></span>
+			
+				<div class="fin_mapping_view">
+					<img id="wyca_setup_trinary_img_map_saved_fin" src="" style="z-index:200; display:none; max-width:100%;" />
+					<div id="">
+						<div class="threshold_wrapper">
+							<div class="slider_wrapper">
+								<span class="btn btn_slider_minus"><i class="fas fa-minus-square"></i></span>
+								<div id="wyca_setup_trinary_threshold_free_slider_elem" class="mt-lg mb-lg slider-primary" data-plugin-slider data-plugin-options='{ "value": 25, "range": "min", "max": 100 }' data-plugin-slider-output="#wyca_setup_trinary_threshold_free_slider">
+									<input id="wyca_setup_trinary_threshold_free_slider" type="hidden" value="25" />
 								</div>
-								<p id="wyca_setup_trinary_threshold_free_output"><?php echo __('Empty area threshold');?> : <b>25</b></p>
-                            </div>
-							
-                            <div class="threshold_wrapper">
-								<div class="slider_wrapper">
-									<span class="btn btn_slider_minus"><i class="fas fa-minus-square"></i></span>
-									 <div id="wyca_setup_trinary_threshold_occupied_slider_elem" class="mt-lg mb-lg slider-primary" data-plugin-slider data-plugin-options='{ "value": 65, "range": "min", "max": 100 }' data-plugin-slider-output="#wyca_setup_trinary_threshold_occupied_slider">
-										<input id="wyca_setup_trinary_threshold_occupied_slider" type="hidden" value="65" />
-									</div>
-									<span class="btn btn_slider_plus"><i class="fas fa-plus-square"></i></span>
+								<span class="btn btn_slider_plus"><i class="fas fa-plus-square"></i></span>
+							</div>
+							<p id="wyca_setup_trinary_threshold_free_output"><?php echo __('Empty area threshold');?> : <b>25</b></p>
+						</div>
+						
+						<div class="threshold_wrapper">
+							<div class="slider_wrapper">
+								<span class="btn btn_slider_minus"><i class="fas fa-minus-square"></i></span>
+								 <div id="wyca_setup_trinary_threshold_occupied_slider_elem" class="mt-lg mb-lg slider-primary" data-plugin-slider data-plugin-options='{ "value": 65, "range": "min", "max": 100 }' data-plugin-slider-output="#wyca_setup_trinary_threshold_occupied_slider">
+									<input id="wyca_setup_trinary_threshold_occupied_slider" type="hidden" value="65" />
 								</div>
-								<p id="wyca_setup_trinary_threshold_occupied_output"><?php echo __('Object detection threshold');?> : <b>65</b></p>
-                            </div>
-                            <a href="#" class="btn btn-sm btn-primary bResetValueThreshold"><?php echo __('Reset values');?></a>
-                        </div>
-                    </div>
-                </div>         
+								<span class="btn btn_slider_plus"><i class="fas fa-plus-square"></i></span>
+							</div>
+							<p id="wyca_setup_trinary_threshold_occupied_output"><?php echo __('Object detection threshold');?> : <b>65</b></p>
+						</div>
+						<a href="#" class="btn btn-sm btn-primary bResetValueThreshold"><?php echo __('Reset values');?></a>
+					</div>
+				</div>
+			   
+				<form id="wyca_setup_trinary_form" method="post">
+					<input type="hidden" name="todo" value="saveMapping" />
+					<input type="hidden" id="wyca_setup_trinary_from_image" name="image" value="" />
+					<input type="hidden" id="wyca_setup_trinary_from_image_tri" name="image_tri" value="" />
+					<input type="hidden" id="wyca_setup_trinary_from_ros_hauteur" name="ros_hauteur" value="" />
+					<input type="hidden" id="wyca_setup_trinary_from_ros_largeur" name="ros_largeur" value="" />
+					<input type="hidden" id="wyca_setup_trinary_from_threshold_free" name="threshold_free" value="" />
+					<input type="hidden" id="wyca_setup_trinary_from_threshold_occupied" name="threshold_occupied" value="" />
+				</form>
+			
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
 					<div class="content text-left sm-content">

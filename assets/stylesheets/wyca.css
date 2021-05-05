@@ -203,6 +203,27 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 	
 }
 
+/* TRINARY ZOOM */
+
+#wyca_setup_trinary_zoom_carte_container { z-index:1000; background-color:#f0f0f0; position:absolute; top:10px; right:10px; }
+#main_row.hide_element #wyca_setup_trinary_zoom_carte_container { right:50px; }
+#wyca_setup_trinary_zoom_carte { position:relative; width:100px; border:1px solid #000; overflow: hidden; }
+
+
+#wyca_setup_trinary .content{
+	display:flex;flex-direction:column;padding:10px;
+}
+
+#wyca_setup_trinary_zone_zoom{border-color:rgb(88 159 178)!important;}
+.fin_mapping_view{
+	background-color: #F0F0F0;
+    padding: 10px;
+    padding-left: 5%;
+    padding-right: 5%;
+    border-top: 1px solid #777777;
+}
+
+
 .table_wifi img { width:25px; }
 .table_wifi tr.active {color: #343434; font-weight: bold;}
 .wifi_connexion_progress { text-align:center; font-size:40px; display:none; }

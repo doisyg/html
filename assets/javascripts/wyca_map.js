@@ -1132,8 +1132,143 @@ function WycaShakeActiveElement()
 	}	
 }
 
-//TRINARY
 
+//TRINARY FUNCS ZOOM
+
+$(document).ready(function(e) {
+
+	/**************************/
+	/*        ZOOM            */
+	/**************************/
+	
+	$('#wyca_setup_trinary_zone_zoom_click').mousedown(function(e) {
+       e.preventDefault();
+	   downOnZoomClickTrinary = true;
+    });
+    
+	$('#wyca_setup_trinary_zone_zoom_click').mousemove(function(e) {
+       e.preventDefault();
+	   if (downOnZoomClickTrinary)
+	   {
+			w = $('#wyca_setup_trinary_zoom_carte').width();
+			h = $('#wyca_setup_trinary_zoom_carte').height();
+			
+			wZoom = $('#wyca_setup_trinary_zone_zoom').width();
+			hZoom = $('#wyca_setup_trinary_zone_zoom').height();
+			
+			x = e.offsetX - wZoom / 2;
+			y = e.offsetY - hZoom / 2;
+					
+			//zoom = current_map_obj.ros_width / $('#wyca_setup_trinary_svg').width() / window.panZoomWycaTrinary.getZoom();
+			zoom = WycaTrinaryGetZoom();
+			
+			largeur_img = current_map_obj.ros_width / zoom
+			
+			x = - x / w * largeur_img;
+			y = - y / w * largeur_img;
+			
+			window.panZoomWycaTrinary.pan({'x':x, 'y':y});
+	   }
+    });
+	
+	$('#wyca_setup_trinary_zone_zoom_click').click(function(e) {
+		e.preventDefault();
+		
+		w = $('#wyca_setup_trinary_zoom_carte').width();
+		h = $('#wyca_setup_trinary_zoom_carte').height();
+		
+		wZoom = $('#wyca_setup_trinary_zone_zoom').width();
+		hZoom = $('#wyca_setup_trinary_zone_zoom').height();
+		
+		x = e.offsetX - wZoom / 2;
+		y = e.offsetY - hZoom / 2;
+				
+		//zoom = current_map_obj.ros_width / $('#wyca_setup_trinary_svg').width() / window.panZoomWycaTrinary.getZoom();
+		zoom = WycaTrinaryGetZoom();
+		
+		largeur_img = current_map_obj.ros_width / zoom
+		
+		x = - x / w * largeur_img;
+		y = - y / w * largeur_img;
+		
+		window.panZoomWycaTrinary.pan({'x':x, 'y':y});
+	});
+	
+	$('#wyca_setup_trinary_zone_zoom_click').on('touchstart', function(e) {
+       e.preventDefault();
+	   downOnZoomClickTrinary = true;
+	   
+	    w = $('#wyca_setup_trinary_zoom_carte').width();
+		h = $('#wyca_setup_trinary_zoom_carte').height();
+		
+		wZoom = $('#wyca_setup_trinary_zone_zoom').width();
+		hZoom = $('#wyca_setup_trinary_zone_zoom').height();
+		
+		r = document.getElementById("wyca_setup_trinary_zoom_carte_container").getBoundingClientRect();
+		
+		x = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) : event.pageX) - r.left;
+		y = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) : event.pageY) - r.top;
+		
+		x = x - wZoom / 2;
+		y = y - hZoom / 2;
+				
+		//zoom = current_map_obj.ros_width / $('#wyca_setup_trinary_svg').width() / window.panZoomWycaTrinary.getZoom();
+		zoom = WycaTrinaryGetZoom();
+		
+		largeur_img = current_map_obj.ros_width / zoom
+		
+		x = - x / w * largeur_img;
+		y = - y / w * largeur_img;
+		
+		window.panZoomWycaTrinary.pan({'x':x, 'y':y});
+	   
+    });
+	
+	$('#wyca_setup_trinary_zone_zoom_click').on('touchend', function(e) {
+       e.preventDefault();
+	   downOnZoomClickTrinary = false;
+    });
+	
+	$('#wyca_setup_trinary_zone_zoom_click').on('touchmove', function(e) {
+       e.preventDefault();
+	   if (downOnZoomClickTrinary)
+	   {
+		    w = $('#wyca_setup_trinary_zoom_carte').width();
+			h = $('#wyca_setup_trinary_zoom_carte').height();
+			
+			wZoom = $('#wyca_setup_trinary_zone_zoom').width();
+			hZoom = $('#wyca_setup_trinary_zone_zoom').height();
+			
+			r = document.getElementById("wyca_setup_trinary_zoom_carte_container").getBoundingClientRect();
+		
+			x = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) : event.pageX) - r.left;
+			y = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) : event.pageY) - r.top;
+			
+			x = x - wZoom / 2;
+			y = y - hZoom / 2;
+					
+			//zoom = current_map_obj.ros_width / $('#wyca_setup_trinary_svg').width() / window.panZoomWycaTrinary.getZoom();
+			zoom = WycaTrinaryGetZoom();
+			
+			largeur_img = current_map_obj.ros_width / zoom
+			
+			x = - x / w * largeur_img;
+			y = - y / w * largeur_img;
+			
+			window.panZoomWycaTrinary.pan({'x':x, 'y':y});
+	   }
+    });
+	
+	$('#wyca_setup_trinary_svg').on('touchend', function(e) {
+		resetPanTrinary = true;
+	});
+	$('#wyca_setup_trinary_svg').on('touchstart', function(e) {
+		resetPanTrinary = true;
+	});
+})
+
+var downOnZoomClickTrinary = false;
+var resetPanTrinary = false;
 
 function WycaInitTrinaryMap()
 {
@@ -1165,10 +1300,10 @@ function WycaInitTrinaryMap()
 		this.hammer.on('panstart panmove', function(ev){
 			
 		  // On pan start reset panned variables
-		  if (ev.type === 'panstart' || resetPan) {
+		  if (ev.type === 'panstart' || resetPanTrinary) {
 			pannedX = 0;
 			pannedY = 0;
-			resetPan = false;
+			resetPanTrinary = false;
 		  }
 
 		  // Pan only the difference
@@ -1195,54 +1330,40 @@ function WycaInitTrinaryMap()
 		this.hammer.destroy()
 	  }
 	}
-	let init_zoom = false;
-	if(id_map_zoom != id_map){
-		init_zoom = true;
-		id_map_zoom = id_map;
-		if(typeof(window.panZoomWycaTrinary) != 'undefined')
-			window.panZoomWycaTrinary.destroy();
-	}
+
+	if(typeof(window.panZoomWycaTrinary) != 'undefined')
+		window.panZoomWycaTrinary.destroy();
 	// Expose to window namespace for testing purposes
 	
-	window.panZoomWycaTrinary = svgPanZoom('#wyca_edit_map_svg', {
+	window.panZoomWycaTrinary = svgPanZoom('#wyca_setup_trinary_svg', {
 	  zoomEnabled: true
 	, controlIconsEnabled: false
 	, maxZoom: 20
 	, fit: 1
 	, center: 1
 	, customEventsHandler: eventsHandlerWyca
-	, RefreshTrinaryMap: function() { setTimeout(WycaTrinaryRefreshZoomView, 10); }
+	, RefreshMap: function() { setTimeout(WycaTrinaryRefreshZoomView, 10); }
 	});
 	
-	if(init_zoom){
+	if(true){
 		//WORKING ON CONSOLE 
 		window.panZoomWycaTrinary.resize();
 		window.panZoomWycaTrinary.updateBBox();
 		window.panZoomWycaTrinary.fit();
 		window.panZoomWycaTrinary.center();
 	}
-	svgWycaTrinary = document.querySelector('#wyca_edit_map_svg .svg-pan-zoom_viewport');
+	svgWycaTrinary = document.querySelector('#wyca_setup_trinary_svg .svg-pan-zoom_viewport');
 	
 	//window.panZoomWycaTrinary = {};
 	//window.panZoomWycaTrinary.getZoom = function () { return 1; }
-	WycaRefreshZoomView();
+	WycaTrinaryRefreshZoomView();
 	
-	setTimeout(function(){
-		if(init_zoom){
-			//WORKING ON CONSOLE 
-			window.panZoomWycaTrinary.resize();
-			window.panZoomWycaTrinary.updateBBox();
-			window.panZoomWycaTrinary.fit();
-			window.panZoomWycaTrinary.center();
-		}
-		$('.wyca_edit_map_loading').hide();
-	},200);
 }
 
 function WycaTrinaryGetZoom()
 {
-	var obj = $('#wyca_edit_map_svg g');
-	obj.attr('id', 'wyca_edit_map_svg_g');
+	var obj = $('#wyca_setup_trinary_svg g');
+	obj.attr('id', 'wyca_setup_trinary_svg_g');
 	 var transformMatrix = obj.css("-webkit-transform") ||
 	   obj.css("-moz-transform")    ||
 	   obj.css("-ms-transform")     ||
@@ -1250,7 +1371,7 @@ function WycaTrinaryGetZoom()
 	   obj.css("transform");
 	   
 	if (transformMatrix == undefined && typeof(window.panZoomWycaTrinary) != 'undefined' )
-	 	return  ros_largeur / $('#wyca_edit_map_svg').width() / window.panZoomWycaTrinary.getZoom()
+	 	return  current_map_obj.ros_width / $('#wyca_setup_trinary_svg').width() / window.panZoomWycaTrinary.getZoom()
 	if(transformMatrix != undefined){
 		var matrix = transformMatrix.replace(/[^0-9\-.,]/g, '').split(',');
 	 
@@ -1263,16 +1384,17 @@ function WycaTrinaryGetZoom()
 
 function WycaTrinaryRefreshZoomView()
 {
-	pSVG = $('#wyca_edit_map_svg').position();
-	pImg = $('#wyca_edit_map_svg image').position();
+	//console.log('WycaTrinaryRefreshZoomView');
+	pSVG = $('#wyca_setup_trinary_svg').position();
+	pImg = $('#wyca_setup_trinary_svg image').position();
 	pImg.left -= pSVG.left;
 	pImg.top -= pSVG.top;
 	
-	//zoom = ros_largeur / $('#wyca_edit_map_svg').width() / window.panZoom.getZoom();
-	zoom = WycaGetZoom();
+	//zoom = ros_width / $('#wyca_setup_trinary_svg').width() / window.panZoom.getZoom();
+	zoom = WycaTrinaryGetZoom();
 	
-	wZoom = $('#wyca_edit_map_zoom_carte').width();
-	hZoom = $('#wyca_edit_map_zoom_carte').height();
+	wZoom = $('#wyca_setup_trinary_zoom_carte').width();
+	hZoom = $('#wyca_setup_trinary_zoom_carte').height();
 	
 	wNew = 0;
 	hNew = 0;
@@ -1282,22 +1404,22 @@ function WycaTrinaryRefreshZoomView()
 	if (false && pImg.left > 0)
 		lNew = 0;
 	else
-		lNew = -(pImg.left*zoom) / ros_largeur * wZoom;
+		lNew = -(pImg.left*zoom) / current_map_obj.ros_width * wZoom;
 	if (false && pImg.top > 0)
 		tNew = 0;
 	else
-		tNew = -(pImg.top*zoom) / ros_largeur * wZoom;
+		tNew = -(pImg.top*zoom) / current_map_obj.ros_width * wZoom;
 	
-	hNew = $('#wyca_edit_map_svg').height() * zoom  / ros_largeur * wZoom;
-	wNew = $('#wyca_edit_map_svg').width() * zoom  / ros_largeur * wZoom;
+	hNew = $('#wyca_setup_trinary_svg').height() * zoom  / current_map_obj.ros_width * wZoom;
+	wNew = $('#wyca_setup_trinary_svg').width() * zoom  / current_map_obj.ros_width * wZoom;
 	
 	//if (tNew + hNew > hZoom) hNew = hZoom - tNew;
 	//if (lNew + wNew > wZoom) wNew = wZoom - lNew;
 		
-	$('#wyca_edit_map_zone_zoom').width(wNew);
-	$('#wyca_edit_map_zone_zoom').height(hNew);
+	$('#wyca_setup_trinary_zone_zoom').width(wNew);
+	$('#wyca_setup_trinary_zone_zoom').height(hNew);
 				
-	$('#wyca_edit_map_zone_zoom').css('top', tNew - 1);
-	$('#wyca_edit_map_zone_zoom').css('left', lNew - 1);
+	$('#wyca_setup_trinary_zone_zoom').css('top', tNew - 1);
+	$('#wyca_setup_trinary_zone_zoom').css('left', lNew - 1);
 	
 }
