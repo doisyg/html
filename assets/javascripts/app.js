@@ -3494,10 +3494,10 @@ function GetLastMappingByStep()
 	if (wycaApi.websocketAuthed)
 	{
 		wycaApi.GetLastMapping(function(data) {
-			
+		//wycaApi.GetCurrentMapComplete(function(data) { //TEST W/0 MAPPING
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
-			
+				//data.D = data.D.image; //TEST W/0 MAPPING
 				var img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
 				img.src = 'data:image/png;base64,' + data.D;
 				
