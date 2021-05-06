@@ -568,21 +568,21 @@ var color_free_wyca = 255;
 var color_occupied_wyca = 0;
 var color_unknow_wyca = 205;
 
-function WycaInitTrinary()
+function InitTrinaryWyca()
 {
 	if (wycaApi.websocketAuthed)
 	{
-		WycaInitTrinaryDo();
+		InitTrinaryWycaDo();
 	}
 	else
 	{
-		setTimeout(WycaInitTrinary, 500);
+		setTimeout(InitTrinaryWyca, 500);
 	}
 }
 
 var current_map_obj = {};
 
-function WycaInitTrinaryDo()
+function InitTrinaryWycaDo()
 {
 	$('#wyca_setup_trinary .loading_fin_create_map').show();
 	$('#wyca_setup_trinary .bSaveTrinaryMap ').addClass('disabled');
@@ -626,7 +626,7 @@ function WycaInitTrinaryDo()
 				$('#wyca_setup_trinary_image').attr('width', data.D.ros_width);
 				$('#wyca_setup_trinary_image').attr('height', data.D.ros_height);
 				
-				WycaInitTrinaryMap();
+				InitTrinaryMapWyca();
 				CalculateMapTrinaryWyca();
 			}, 100);
 		}

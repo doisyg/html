@@ -1160,7 +1160,7 @@ $(document).ready(function(e) {
 			y = e.offsetY - hZoom / 2;
 					
 			//zoom = current_map_obj.ros_width / $('#install_normal_setup_trinary_svg').width() / window.panZoomWycaTrinary.getZoom();
-			zoom = NormalTrinaryGetZoom();
+			zoom = TrinaryGetZoomNormal();
 			
 			largeur_img = current_map_obj.ros_width / zoom
 			
@@ -1184,7 +1184,7 @@ $(document).ready(function(e) {
 		y = e.offsetY - hZoom / 2;
 				
 		//zoom = current_map_obj.ros_width / $('#install_normal_setup_trinary_svg').width() / window.panZoomWycaTrinary.getZoom();
-		zoom = NormalTrinaryGetZoom();
+		zoom = TrinaryGetZoomNormal();
 		
 		largeur_img = current_map_obj.ros_width / zoom
 		
@@ -1213,7 +1213,7 @@ $(document).ready(function(e) {
 		y = y - hZoom / 2;
 				
 		//zoom = current_map_obj.ros_width / $('#install_normal_setup_trinary_svg').width() / window.panZoomWycaTrinary.getZoom();
-		zoom = NormalTrinaryGetZoom();
+		zoom = TrinaryGetZoomNormal();
 		
 		largeur_img = current_map_obj.ros_width / zoom
 		
@@ -1248,7 +1248,7 @@ $(document).ready(function(e) {
 			y = y - hZoom / 2;
 					
 			//zoom = current_map_obj.ros_width / $('#install_normal_setup_trinary_svg').width() / window.panZoomWycaTrinary.getZoom();
-			zoom = NormalTrinaryGetZoom();
+			zoom = TrinaryGetZoomNormal();
 			
 			largeur_img = current_map_obj.ros_width / zoom
 			
@@ -1270,7 +1270,7 @@ $(document).ready(function(e) {
 var downOnZoomClickTrinary = false;
 var resetPanTrinary = false;
 
-function NormalInitTrinaryMap()
+function InitTrinaryNormalMap()
 {
 	var eventsHandlerWyca;
 
@@ -1342,7 +1342,7 @@ function NormalInitTrinaryMap()
 	, fit: 1
 	, center: 1
 	, customEventsHandler: eventsHandlerWyca
-	, RefreshMap: function() { setTimeout(NormalTrinaryRefreshZoomView, 10); }
+	, RefreshMap: function() { setTimeout(TrinaryRefreshZoomViewNormal, 10); }
 	});
 	
 	if(true){
@@ -1356,11 +1356,11 @@ function NormalInitTrinaryMap()
 	
 	//window.panZoomWycaTrinary = {};
 	//window.panZoomWycaTrinary.getZoom = function () { return 1; }
-	NormalTrinaryRefreshZoomView();
+	TrinaryRefreshZoomViewNormal();
 	
 }
 
-function NormalTrinaryGetZoom()
+function TrinaryGetZoomNormal()
 {
 	var obj = $('#install_normal_setup_trinary_svg g');
 	obj.attr('id', 'install_normal_setup_trinary_svg_g');
@@ -1382,16 +1382,16 @@ function NormalTrinaryGetZoom()
 	}
 }
 
-function NormalTrinaryRefreshZoomView()
+function TrinaryRefreshZoomViewNormal()
 {
-	//console.log('NormalTrinaryRefreshZoomView');
+	//console.log('TrinaryRefreshZoomViewNormal');
 	pSVG = $('#install_normal_setup_trinary_svg').position();
 	pImg = $('#install_normal_setup_trinary_svg image').position();
 	pImg.left -= pSVG.left;
 	pImg.top -= pSVG.top;
 	
 	//zoom = ros_width / $('#install_normal_setup_trinary_svg').width() / window.panZoom.getZoom();
-	zoom = NormalTrinaryGetZoom();
+	zoom = TrinaryGetZoomNormal();
 	
 	wZoom = $('#install_normal_setup_trinary_zoom_carte').width();
 	hZoom = $('#install_normal_setup_trinary_zoom_carte').height();

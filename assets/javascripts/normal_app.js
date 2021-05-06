@@ -582,21 +582,21 @@ var color_free_normal = 255;
 var color_occupied_normal = 0;
 var color_unknow_normal = 205;
 
-function NormalInitTrinary()
+function InitTrinaryNormal()
 {
 	if (wycaApi.websocketAuthed)
 	{
-		NormalInitTrinaryDo();
+		InitTrinaryNormalDo();
 	}
 	else
 	{
-		setTimeout(NormalInitTrinary, 500);
+		setTimeout(InitTrinaryNormal, 500);
 	}
 }
 
 var current_map_obj = {};
 
-function NormalInitTrinaryDo()
+function InitTrinaryNormalDo()
 {
 	$('#install_normal_setup_trinary .loading_fin_create_map').show();
 	$('#install_normal_setup_trinary .bSaveTrinaryMap ').addClass('disabled');
@@ -641,7 +641,7 @@ function NormalInitTrinaryDo()
 				$('#install_normal_setup_trinary_image').attr('width', data.D.ros_width);
 				$('#install_normal_setup_trinary_image').attr('height', data.D.ros_height);
 				
-				NormalInitTrinaryMap();
+				InitTrinaryNormalMap();
 				CalculateMapTrinaryNormal();
 			}, 100);
 		}

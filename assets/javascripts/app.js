@@ -523,7 +523,7 @@ $(document).ready(function(e) {
 				if (next == 'install_normal_user') GetUsersNormal();
 				if (next == 'install_normal_service_book') GetServiceBooksNormal();
 				if (next == 'install_normal_edit_map') GetInfosCurrentMapNormal();
-				if (next == 'install_normal_setup_trinary') NormalInitTrinary();
+				if (next == 'install_normal_setup_trinary') InitTrinaryNormal();
 				
 				// WYCA
 				
@@ -547,7 +547,7 @@ $(document).ready(function(e) {
 				if (next == 'wyca_installer') GetInstallersWyca();
 				if (next == 'wyca_service_book') GetServiceBooksWyca();
 				if (next == 'wyca_edit_map') GetInfosCurrentMapWyca();
-				if (next == 'wyca_setup_trinary') WycaInitTrinary();
+				if (next == 'wyca_setup_trinary') InitTrinaryWyca();
 				
 				if (next == 'wyca_demo_mode_config') InitWycaDemo();
 				if (next == 'wyca_demo_mode_start_stop') InitWycaDemoState();
