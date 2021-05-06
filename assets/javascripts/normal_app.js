@@ -618,6 +618,9 @@ function NormalInitTrinaryDo()
 			threshold_free_normal = data.D.threshold_free;
 			threshold_occupied_normal = data.D.threshold_occupied;
 			
+			$('#install_normal_setup_trinary_threshold_free_slider').val(threshold_free_normal).change();
+			$('#install_normal_setup_trinary_threshold_occupied_slider').val(threshold_occupied_normal).change();
+			
 			setTimeout(function() {
 				canvas_normal = document.createElement('canvas');
 				
@@ -631,6 +634,14 @@ function NormalInitTrinaryDo()
 				canvas_normal.height = img_normal.naturalHeight;
 				canvas_normal.getContext('2d').drawImage(img_normal, 0, 0, img_normal.naturalWidth, img_normal.naturalHeight);
 				
+				//SVG MAP TRINARY
+				$('#install_normal_setup_trinary_svg').attr('width', data.D.ros_width);
+				$('#install_normal_setup_trinary_svg').attr('height', data.D.ros_height);
+				
+				$('#install_normal_setup_trinary_image').attr('width', data.D.ros_width);
+				$('#install_normal_setup_trinary_image').attr('height', data.D.ros_height);
+				
+				NormalInitTrinaryMap();
 				CalculateMapTrinaryNormal();
 			}, 100);
 		}
@@ -694,6 +705,11 @@ function CalculateMapTrinaryDoNormal()
 	var idata = ctx.createImageData(width_normal, height_normal);
 	idata.data.set(buffer);
 	ctx.putImageData(idata, 0, 0);
+	//MAP TRINARY
+	
+	$('#install_normal_setup_trinary_image').attr('xlink:href', canvasDessin.toDataURL());
+	
+	$('#install_normal_setup_trinary .img-responsive').attr('src',canvasDessin.toDataURL());
 	
 	$('#install_normal_setup_trinary .loading_fin_create_map').hide();
 	$('#install_normal_setup_trinary .bSaveTrinaryMap ').removeClass('disabled');

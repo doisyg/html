@@ -1132,7 +1132,6 @@ function WycaShakeActiveElement()
 	}	
 }
 
-
 //TRINARY FUNCS ZOOM
 
 $(document).ready(function(e) {

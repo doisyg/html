@@ -205,16 +205,29 @@ ul.tuiles li .tuile_img.is_checkbox.active { border-color:#00CCFF; }
 
 /* TRINARY ZOOM */
 
+#install_by_step_mapping_zoom_carte_container { z-index:1000; background-color:#f0f0f0; position:absolute; top:10px; right:10px; }
+#main_row.hide_element #install_by_step_mapping_zoom_carte_container { right:50px; }
+#install_by_step_mapping_zoom_carte { position:relative; width:100px; border:1px solid #000; overflow: hidden; }
+
+#install_normal_setup_trinary_zoom_carte_container { z-index:1000; background-color:#f0f0f0; position:absolute; top:10px; right:10px; }
+#main_row.hide_element #install_normal_setup_trinary_zoom_carte_container { right:50px; }
+#install_normal_setup_trinary_zoom_carte { position:relative; width:100px; border:1px solid #000; overflow: hidden; }
+
+#wyca_by_step_mapping_zoom_carte_container { z-index:1000; background-color:#f0f0f0; position:absolute; top:10px; right:10px; }
+#main_row.hide_element #wyca_by_step_mapping_zoom_carte_container { right:50px; }
+#wyca_by_step_mapping_zoom_carte { position:relative; width:100px; border:1px solid #000; overflow: hidden; }
+
 #wyca_setup_trinary_zoom_carte_container { z-index:1000; background-color:#f0f0f0; position:absolute; top:10px; right:10px; }
 #main_row.hide_element #wyca_setup_trinary_zoom_carte_container { right:50px; }
 #wyca_setup_trinary_zoom_carte { position:relative; width:100px; border:1px solid #000; overflow: hidden; }
 
 
-#wyca_setup_trinary .content{
+#wyca_setup_trinary .content,#wyca_by_step_mapping_fin .content,#install_by_step_mapping_fin .content,#install_normal_setup_trinary .content{
 	display:flex;flex-direction:column;padding:10px;
 }
 
-#wyca_setup_trinary_zone_zoom{border-color:rgb(88 159 178)!important;}
+#wyca_setup_trinary_zone_zoom,#wyca_by_step_mapping_zone_zoom,#install_by_step_mapping_zone_zoom,#install_normal_setup_trinary_zone_zoom{border-color:rgb(88 159 178)!important;}
+
 .fin_mapping_view{
 	background-color: #F0F0F0;
     padding: 10px;

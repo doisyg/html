@@ -2036,8 +2036,6 @@
 						<image id="wyca_setup_trinary_image" xlink:href="" x="0" y="0" height="0" width="0" />
 					</svg>
 					
-					<canvas id="wyca_setup_trinary_canvas_result_trinary" width="" height="" style="overflow: hidden;position: absolute;top: 0px;left: 0px;width: 100%;height: 100%;touch-action: none;user-select: none;-webkit-user-drag: none;webkit-tap-highlight-color: rgba(0, 0, 0, 0);display:none"></canvas>
-					
                     <div id="wyca_setup_trinary_zoom_carte_container" >
                         <div id="wyca_setup_trinary_zoom_carte">
                             <img src=""  class="img-responsive" style="max-width:100%; max-height:100%;" />
@@ -2046,8 +2044,10 @@
                         </div>
                     </div>
 					
+					<canvas id="wyca_setup_trinary_canvas_result_trinary" width="" height="" style="overflow: hidden;position: absolute;top: 0px;left: 0px;width: 100%;height: 100%;touch-action: none;user-select: none;-webkit-user-drag: none;webkit-tap-highlight-color: rgba(0, 0, 0, 0);display:none"></canvas>
+					
 				</div>
-			
+				
 				<div class="fin_mapping_view">
 					<img id="wyca_setup_trinary_img_map_saved_fin" src="" style="z-index:200; display:none; max-width:100%;" />
 					<div id="">

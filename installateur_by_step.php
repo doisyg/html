@@ -632,58 +632,66 @@
                 <div class="pull-left"><img src="assets/images/logo.png" /></div>
                 <h2><?php echo __('Mapping config');?></h2>
             </header>
-            <div class="content">
-                
-                <div style="text-align:center;">
-                
-                    <form id="install_by_step_mapping_form" method="post">
-                        <input type="hidden" name="todo" value="saveMapping" />
-                        <input type="hidden" id="install_by_step_mapping_from_image" name="image" value="" />
-                        <input type="hidden" id="install_by_step_mapping_from_image_tri" name="image_tri" value="" />
-                        <input type="hidden" id="install_by_step_mapping_from_ros_hauteur" name="ros_hauteur" value="" />
-                        <input type="hidden" id="install_by_step_mapping_from_ros_largeur" name="ros_largeur" value="" />
-                        <input type="hidden" id="install_by_step_mapping_from_threshold_free" name="threshold_free" value="" />
-                        <input type="hidden" id="install_by_step_mapping_from_threshold_occupied" name="threshold_occupied" value="" />
-                        <input type="text" id="install_by_step_mapping_from_name" name="nom" placeholder="<?php echo __('Map name')?>" class="form-control" style="margin-bottom:20px;" />
-                    </form>
-                
-                    <div class="fin_mapping_view" style="height:65vh; width:100%; margin:10px 0; border:1px solid #EFEFEF; position:relative; background-color:#F0F0F0;">
-                        <img id="install_by_step_mapping_img_map_saved_fin" src="" style="z-index:200; display:none; max-width:100%;" />
-                        <div id="install_by_step_mapping_divOptionTrinary">
-							<div class="threshold_wrapper">
-								<div class="slider_wrapper">
-									<span class="btn btn_slider_minus"><i class="fas fa-minus-square"></i></span>
-									<div id="install_by_step_mapping_threshold_free_slider_elem" class="mt-lg mb-lg slider-primary" data-plugin-slider data-plugin-options='{ "value": 25, "range": "min", "max": 100 }' data-plugin-slider-output="#install_by_step_mapping_threshold_free_slider">
-										<input id="install_by_step_mapping_threshold_free_slider" type="hidden" value="25" />
-									</div>
-									<span class="btn btn_slider_plus"><i class="fas fa-plus-square"></i></span>
-								</div>
-								<p id="install_by_step_mapping_threshold_free_output"><?php echo __('Empty area threshold');?> : <b>25</b></p>
-                            </div>
-							
-                            <div class="threshold_wrapper">
-								<div class="slider_wrapper">
-									<span class="btn btn_slider_minus"><i class="fas fa-minus-square"></i></span>
-									 <div id="install_by_step_mapping_threshold_occupied_slider_elem" class="mt-lg mb-lg slider-primary" data-plugin-slider data-plugin-options='{ "value": 65, "range": "min", "max": 100 }' data-plugin-slider-output="#install_by_step_mapping_threshold_occupied_slider">
-										<input id="install_by_step_mapping_threshold_occupied_slider" type="hidden" value="65" />
-									</div>
-									<span class="btn btn_slider_plus"><i class="fas fa-plus-square"></i></span>
-								</div>
-								<p id="install_by_step_mapping_threshold_occupied_output"><?php echo __('Object detection threshold');?> : <b>65</b></p>
-                            </div>
-                            <a href="#" class="btn btn-sm btn-primary bResetValueThreshold"><?php echo __('Reset values');?></a>
-                        </div>
-                        <div id="install_by_step_mapping_divResultTrinary">
-                            <div style="max-height:80vh; overflow:auto;">
-                                <i style="font-size:60px;" class="fa fa-spinner fa-pulse loading_fin_create_map"></i>
-                                <canvas id="install_by_step_mapping_canvas_result_trinary" width="" height="" style="max-width:100%; max-height:65vh;"></canvas>
-                            </div>
+            <div class="content mh100vh_110">
+				<form id="install_by_step_mapping_form" method="post" style="margin-bottom:10px;">
+					<input type="hidden" name="todo" value="saveMapping" />
+					<input type="hidden" id="install_by_step_mapping_from_image" name="image" value="" />
+					<input type="hidden" id="install_by_step_mapping_from_image_tri" name="image_tri" value="" />
+					<input type="hidden" id="install_by_step_mapping_from_ros_hauteur" name="ros_hauteur" value="" />
+					<input type="hidden" id="install_by_step_mapping_from_ros_largeur" name="ros_largeur" value="" />
+					<input type="hidden" id="install_by_step_mapping_from_threshold_free" name="threshold_free" value="" />
+					<input type="hidden" id="install_by_step_mapping_from_threshold_occupied" name="threshold_occupied" value="" />
+					<input type="text" id="install_by_step_mapping_from_name" name="nom" placeholder="<?php echo __('Map name')?>" class="form-control"/>
+				</form>
+				
+				<div id="install_by_step_mapping_divResultTrinary" style="flex:1 1 100%;background-color:#f0f0f0;display:flex;justify-content:center;align-items:center;position:relative">
+					
+					<i style="font-size:60px;" class="fa fa-spinner fa-pulse loading_fin_create_map"></i>
+					
+					<svg id="install_by_step_mapping_svg" width="0" height="0" style="position:absolute; top:0; left:0; width:100%; height:100%;">
+						<image id="install_by_step_mapping_image" xlink:href="" x="0" y="0" height="0" width="0" />
+					</svg>
+					
+                    <div id="install_by_step_mapping_zoom_carte_container" >
+                        <div id="install_by_step_mapping_zoom_carte">
+                            <img src=""  class="img-responsive" style="max-width:100%; max-height:100%;" />
+                            <div id="install_by_step_mapping_zone_zoom" style="position:absolute; border:1px solid #00F;"></div>
+                            <div id="install_by_step_mapping_zone_zoom_click" style="position:absolute; width:100%; height:100%; top:0; left:0; cursor:pointer;"></div>
                         </div>
                     </div>
-                    
-                    <div style="clear:both; height:10px;"></div>
-                    
-                </div>
+					
+					<canvas id="install_by_step_mapping_canvas_result_trinary" width="" height="" style="max-width:100%; max-height:65vh;display:none"></canvas>
+					
+				</div>
+				
+				<div class="fin_mapping_view" >
+					<img id="install_by_step_mapping_img_map_saved_fin" src="" style="z-index:200; display:none; max-width:100%;" />
+					<div id="">
+						<div class="threshold_wrapper">
+							<div class="slider_wrapper">
+								<span class="btn btn_slider_minus"><i class="fas fa-minus-square"></i></span>
+								<div id="install_by_step_mapping_threshold_free_slider_elem" class="mt-lg mb-lg slider-primary" data-plugin-slider data-plugin-options='{ "value": 25, "range": "min", "max": 100 }' data-plugin-slider-output="#install_by_step_mapping_threshold_free_slider">
+									<input id="install_by_step_mapping_threshold_free_slider" type="hidden" value="25" />
+								</div>
+								<span class="btn btn_slider_plus"><i class="fas fa-plus-square"></i></span>
+							</div>
+							<p id="install_by_step_mapping_threshold_free_output"><?php echo __('Empty area threshold');?> : <b>25</b></p>
+						</div>
+						
+						<div class="threshold_wrapper">
+							<div class="slider_wrapper">
+								<span class="btn btn_slider_minus"><i class="fas fa-minus-square"></i></span>
+								 <div id="install_by_step_mapping_threshold_occupied_slider_elem" class="mt-lg mb-lg slider-primary" data-plugin-slider data-plugin-options='{ "value": 65, "range": "min", "max": 100 }' data-plugin-slider-output="#install_by_step_mapping_threshold_occupied_slider">
+									<input id="install_by_step_mapping_threshold_occupied_slider" type="hidden" value="65" />
+								</div>
+								<span class="btn btn_slider_plus"><i class="fas fa-plus-square"></i></span>
+							</div>
+							<p id="install_by_step_mapping_threshold_occupied_output"><?php echo __('Object detection threshold');?> : <b>65</b></p>
+						</div>
+						<a href="#" class="btn btn-sm btn-primary bResetValueThreshold"><?php echo __('Reset values');?></a>
+					</div>
+				</div>
+				
 				<div class="popupHelp">
 					<h2><?=__('Help')?></h2>
 					<div class="content text-left sm-content">
