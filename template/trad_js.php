@@ -39,6 +39,7 @@ var textBuildingMap = "<?php echo __js('Building the map');?>";
 var textStartAutonomous = "<?php echo __js('Start autonomous navigation');?>";
 var textBtnCheckTest = "<?php echo __js('Testing');?>";
 var textBtnCheckNext = "<?php echo __js('Next');?>";
+var textBtnCheckBack = "<?php echo __js('Back');?>";
 var textLessThanOne = "<?php echo __js('Less than 1');?>";
 var textTitleRequired = "<?php echo __js('Title required.');?>";
 var textCommentRequired = "<?php echo __js('Comment required.');?>";

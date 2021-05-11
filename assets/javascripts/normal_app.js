@@ -52,6 +52,101 @@ $(document).ready(function(e) {
 		
     });
 	
+	// ----------------------- AUTO DIAG --------------------------
+	
+	$(document).on('click', '#install_normal_setup_check div.is_checkbox.checked', function(e) {
+		e.preventDefault();
+		
+		if ($(this).hasClass('component_ok'))
+		{
+			// On n'affiche rien ; le composant est ok
+		}
+		else
+		{
+			// Problème sur le composant, on affiche le détail
+			/*
+			0: OK
+			1: Frequency warning
+			2: Frequency error
+			3: Software error;
+			4: Device error
+			5: Not applicable (for cam top)
+			*/
+			
+			text = '';
+			switch($(this).attr('id'))
+			{
+				case 'install_normal_setup_check_lidar':
+					if (save_check_components_result.LI == 0) text = ''; 
+					else if (save_check_components_result.LI == 1) text = 'The frequency of feedback of information from the Lidar is abnormal but acceptable.';
+					else if (save_check_components_result.LI == 2) text = 'The frequency of feedback of information from the Lidar is abnormal.';
+					else if (save_check_components_result.LI == 3) text = 'A software feature of the Lidar encounters an error.';
+					else if (save_check_components_result.LI == 4) text = 'Lidar no longer responds.';
+					else if (save_check_components_result.LI == 5) text = '';
+					break;
+				case 'install_normal_setup_check_us':
+					if (save_check_components_result.US == 0) text = ''; 
+					else if (save_check_components_result.US == 1) text = 'The frequency of feedback of information from the ultrasonic sensors is abnormal but acceptable.';
+					else if (save_check_components_result.US == 2) text = 'The frequency of feedback of information from the ultrasonic sensors is abnormal.';
+					else if (save_check_components_result.US == 3) text = 'A software feature of the ultrasonic sensors encounters an error.';
+					else if (save_check_components_result.US == 4) text = 'Ultrasonic sensors no longer responds.';
+					else if (save_check_components_result.US == 5) text = '';
+					break;
+				case 'install_normal_setup_check_motor':
+					if (save_check_components_result.M == 0) text = ''; 
+					else if (save_check_components_result.M == 1) text = 'The frequency of feedback of information from the motor card is abnormal but acceptable.';
+					else if (save_check_components_result.M == 2) text = 'The frequency of feedback of information from the motor card is abnormal.';
+					else if (save_check_components_result.M == 3) text = 'A software feature of the motor card encounters an error.';
+					else if (save_check_components_result.M == 4) text = 'Motor card no longer responds.';
+					else if (save_check_components_result.M == 5) text = '';
+					break;
+				case 'install_normal_setup_check_battery':
+					if (save_check_components_result.B == 0) text = ''; 
+					else if (save_check_components_result.B == 1) text = 'The frequency of feedback of information from the battery is abnormal but acceptable.';
+					else if (save_check_components_result.B == 2) text = 'The frequency of feedback of information from the battery is abnormal.';
+					else if (save_check_components_result.B == 3) text = 'A software feature of the battery encounters an error.';
+					else if (save_check_components_result.B == 4) text = 'Battery no longer responds.';
+					else if (save_check_components_result.B == 5) text = '';
+					break;
+				case 'install_normal_setup_check_cam3d':
+					if (save_check_components_result.CL == 0) text = 'Camera left is OK'; 
+					else if (save_check_components_result.CL == 1) text = 'The frequency of feedback of information from the camera left is abnormal but acceptable.';
+					else if (save_check_components_result.CL == 2) text = 'The frequency of feedback of information from the camera left is abnormal.';
+					else if (save_check_components_result.CL == 3) text = 'A software feature of the camera left encounters an error.';
+					else if (save_check_components_result.CL == 4) text = 'Camera left no longer responds.';
+					else if (save_check_components_result.CL == 5) text = '';
+					
+					text += "<br /><br />";
+					
+					if (save_check_components_result.CR == 0) text += 'Camera right is OK'; 
+					else if (save_check_components_result.CR == 1) text += 'The frequency of feedback of information from the camera right is abnormal but acceptable.';
+					else if (save_check_components_result.CR == 2) text += 'The frequency of feedback of information from the camera right is abnormal.';
+					else if (save_check_components_result.CR == 3) text += 'A software feature of the camera right encounters an error.';
+					else if (save_check_components_result.CR == 4) text += 'Camera right no longer responds.';
+					else if (save_check_components_result.CR == 5) text += '';
+					
+					break;
+				case 'install_normal_setup_check_leds':
+					if (save_check_components_result.LE == 0) text = ''; 
+					else if (save_check_components_result.LE == 1) text = 'The frequency of feedback of information from the leds is abnormal but acceptable.';
+					else if (save_check_components_result.LE == 2) text = 'The frequency of feedback of information from the leds is abnormal.';
+					else if (save_check_components_result.LE == 3) text = 'A software feature of the leds encounters an error.';
+					else if (save_check_components_result.LE == 4) text = 'Leds no longer responds.';
+					else if (save_check_components_result.LE == 5) text = '';
+					break;
+			}
+			
+			
+			if (text != '')
+			{
+				if ($(this).hasClass('component_warning'))
+					warning_wyca(text);
+				else
+					alert_wyca(text);
+			}
+		}
+	});
+	
 	// ----------------------- MAPPING CONFIG THRESHOLDS ------------------------
 	
 	$('#install_normal_setup_trinary .bResetValueThreshold').click(function(e) {
