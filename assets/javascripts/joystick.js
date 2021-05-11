@@ -1,6 +1,5 @@
 var JoystickDebug = false;
 var isManette = false;
-
 /* DYNAMICS VAR */
 var widthCurseurJoystick = 104;
 var heightCurseurJoystick = 104;
@@ -23,6 +22,7 @@ var nbCall0 = 0;
 var lastValueX = 0;
 var lastValueY = 0;
 var isDown = false;
+var teleopSafe = true;
 
 var delayPublish = 200;
 var intervalSendCommande = null;
@@ -71,6 +71,7 @@ $(document).ready(function(e) {
 	
 	$('.joystickDiv .curseur').mousedown(function(e){
 		e.preventDefault();
+		teleopSafe = $(this).hasClass('withoutForbidden')? false:true;
 		isDown = true;
 		SetCurseurV2(e.pageX, e.pageY);
 	});
@@ -78,6 +79,7 @@ $(document).ready(function(e) {
 	$(document).mouseup(function(e) {
 		if(isDown)
 		{
+			teleopSafe = true;
 			isDown = false;
 			SetCurseurV2(xCentre, yCentre);
 		}
@@ -95,6 +97,7 @@ $(document).ready(function(e) {
 	
 	$('.joystickDiv .curseur').on('touchmove', function(e){
 		isDown = true;
+		teleopSafe = $(this).hasClass('withoutForbidden')? false:true;
 		SetCurseurV2((event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX), (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY));
 		
 		if (intervalSendCommande == null)
@@ -105,6 +108,7 @@ $(document).ready(function(e) {
 	$(document).on('touchend', function(e) {
 		if(isDown)
 		{
+			teleopSafe = true;
 			isDown = false;
 			SetCurseurV2(xCentre, yCentre);
 		}
@@ -121,6 +125,7 @@ $(document).ready(function(e) {
 	$(document).on('touchcancel', function(e) {
 		if(isDown)
 		{
+			teleopSafe = true;
 			isDown = false;
 			SetCurseurV2(xCentre, yCentre);
 		}
@@ -237,7 +242,10 @@ function SendCommande()
 			if (nbCall0 < 5)
 			{
 				nbCall0++;
-				wycaApi.Teleop(lastValueX * -0.7, lastValueY * -1.2);
+				if(teleopSafe)
+					wycaApi.Teleop(lastValueX * -0.7, lastValueY * -1.2);
+				else
+					wycaApi.TeleopPasSafe(lastValueX * -0.7, lastValueY * -1.2);
 				if(JoystickDebug){
 					console.log('Wyca Teleop X Z');
 					console.log(Date.now(),lastValueX * -0.7, lastValueY * -1.2);
@@ -252,7 +260,10 @@ function SendCommande()
 		else if (isDown)
 		{
 			nbCall0 = 0;
-			wycaApi.Teleop(lastValueX * -0.7, lastValueY * -1.2);
+			if(teleopSafe)
+				wycaApi.Teleop(lastValueX * -0.7, lastValueY * -1.2);
+			else
+				wycaApi.TeleopPasSafe(lastValueX * -0.7, lastValueY * -1.2);
 			if(JoystickDebug){
 				console.log('Wyca Teleop X Z');
 				console.log(Date.now(),lastValueX * -0.7, lastValueY * -1.2);
