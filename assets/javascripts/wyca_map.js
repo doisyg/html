@@ -131,6 +131,7 @@ function GetInfosCurrentMapDoWyca()
 				wycaCurrentAction = '';
 				WycaSaveElementNeeded(!wycaCanChangeMenu);
 				$('#wyca_edit_map .burger_menu').removeClass('updatingMap');
+				$('#wyca_edit_map .bSaveEditMap').html(textBtnSaveMap).removeClass('disabled'); // REMOVE SPINNER ON BTN
 				WycaHideMenus();
 				
 			},500);

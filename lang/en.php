@@ -647,5 +647,6 @@ $_LANG['902b0d55fddef6f8d651fe1035b7d4bd'] = 'Error';
 $_LANG['0e09ecf49131d342cbf1357c5469db91'] = 'Add POI';
 $_LANG['d3685e913af3920cb7daa2f5c556ba25'] = 'Add landmark';
 $_LANG['9506f0fd0f7f1b07960b15b4c9e68d1a'] = 'Launch';
+$_LANG['4e11db406c6c9f234fe8579cc9bc5ef6'] = 'Saving';
 
 ?>

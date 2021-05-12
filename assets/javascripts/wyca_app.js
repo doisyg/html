@@ -555,7 +555,7 @@ $(document).ready(function(e) {
 			wycaCanChangeMenu = true;
 			wycaCurrentAction = '';
 			WycaHideMenus();
-			
+			$('#wyca_edit_map .bSaveEditMap').html('<i class="fa fa fa-spinner fa-pulse"></i> '+textBtnSavingMap).addClass('disabled'); // ADD SPINNER ON BTN + DISABLE BTN
 			data = GetDataMapToSave();
 			
 			if ($(this).hasClass('button_goto'))

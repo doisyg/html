@@ -300,7 +300,7 @@ $(document).ready(function(e) {
 			managerCanChangeMenu = true;
 			managerCurrentAction = '';
 			ManagerHideMenus();
-			
+			$('#manager_edit_map .bSaveEditMap').html('<i class="fa fa fa-spinner fa-pulse"></i> '+textBtnSavingMap).addClass('disabled'); // ADD SPINNER ON BTN + DISABLE BTN
 			data = GetDataMapToSave();
 			
 			if ($(this).hasClass('button_goto'))

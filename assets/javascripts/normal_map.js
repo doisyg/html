@@ -133,6 +133,7 @@ function GetInfosCurrentMapDoNormal()
 				normalCurrentAction = '';
 				NormalSaveElementNeeded(!normalCanChangeMenu);
 				$('#install_normal_edit_map .burger_menu').removeClass('updatingMap');
+				$('#install_normal_edit_map .bSaveEditMap').html(textBtnSaveMap).removeClass('disabled'); // REMOVE SPINNER ON BTN
 				NormalHideMenus();
 			},500);
 			$('#install_normal_edit_map .modal').not('.modalReloadMap').each(function(){$(this).modal('hide')});
