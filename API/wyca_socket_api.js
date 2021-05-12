@@ -82,6 +82,7 @@ function WycaAPI(options){
 	 
 		// Topics publishers
 		JOYSTICK_TWIST_SAFE_TO_BE			: 0x2201,
+		JOYSTICK_TWIST_SAFE_TO_BE_WITHOUT_FORBIDDEN			: 0x2202,
 	 
 	// General
 		GET_LAST_STATUT			: 0x1107,
@@ -1847,6 +1848,14 @@ function WycaAPI(options){
 	{
 		var action = {
 			"O": _this.CommandCode.JOYSTICK_TWIST_SAFE_TO_BE,
+			"P": { X:x, Z:z }
+		};
+		_this.wycaSend(JSON.stringify(action));	
+	}
+	this.TeleopWithoutForbidden = function(x, z)
+	{
+		var action = {
+			"O": _this.CommandCode.JOYSTICK_TWIST_SAFE_TO_BE_WITHOUT_FORBIDDEN,
 			"P": { X:x, Z:z }
 		};
 		_this.wycaSend(JSON.stringify(action));	
