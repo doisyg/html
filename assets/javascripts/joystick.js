@@ -79,7 +79,6 @@ $(document).ready(function(e) {
 	$(document).mouseup(function(e) {
 		if(isDown)
 		{
-			teleopSafe = true;
 			isDown = false;
 			SetCurseurV2(xCentre, yCentre);
 		}
@@ -108,7 +107,6 @@ $(document).ready(function(e) {
 	$(document).on('touchend', function(e) {
 		if(isDown)
 		{
-			teleopSafe = true;
 			isDown = false;
 			SetCurseurV2(xCentre, yCentre);
 		}
@@ -125,7 +123,6 @@ $(document).ready(function(e) {
 	$(document).on('touchcancel', function(e) {
 		if(isDown)
 		{
-			teleopSafe = true;
 			isDown = false;
 			SetCurseurV2(xCentre, yCentre);
 		}
@@ -144,7 +141,7 @@ function SetVitesse(v)
 
 function SetCurseurV2(x, y)
 {	
-	d = distanceJoystick (x, y, xCentre, yCentre);
+	d = DistanceJoystick (x, y, xCentre, yCentre);
 	
 	if ($('.joystickDiv:visible').length > 0)
 	{
@@ -247,12 +244,14 @@ function SendCommande()
 				else
 					wycaApi.TeleopWithoutForbidden(lastValueX * -0.7, lastValueY * -1.2);
 				if(JoystickDebug){
-					console.log('Wyca Teleop 0 0');
-					console.log(Date.now(),lastValueX * -0.7, lastValueY * -1.2);
+					let temp = 'Teleop';
+					temp += !teleopSafe?' w/oF 0 0 ':' 0 0 ';
+					console.log(temp+TimeDebug(),lastValueX * -0.7, lastValueY * -1.2);
 				}
 			}
 			else
 			{
+				teleopSafe=true;
 				clearInterval(intervalSendCommande);
 				intervalSendCommande = null;
 			}
@@ -265,14 +264,39 @@ function SendCommande()
 			else
 				wycaApi.TeleopWithoutForbidden(lastValueX * -0.7, lastValueY * -1.2);
 			if(JoystickDebug){
-				console.log('Wyca Teleop X Z');
-				console.log(Date.now(),lastValueX * -0.7, lastValueY * -1.2);
+				let temp = 'Teleop';
+				temp += !teleopSafe?' w/oF X Z ':' X Z ';
+				console.log(temp+TimeDebug(),lastValueX * -0.7, lastValueY * -1.2);
 			}
 		}
 	}
 }
 
-function distanceJoystick(x1, y1, x2, y2)
+function DistanceJoystick(x1, y1, x2, y2)
 {
 	return Math.sqrt( (x2-x1)*(x2-x1) + (y2-y1)*(y2-y1));
+}
+
+function TimeDebug()
+{
+	let date = new Date(Date.now());
+	let day = false;
+	let month = false;
+	let year = false;
+	let hour = false;
+	let minute = true;
+	let second = true;
+	let milisecond = true;
+	
+	let res = '';
+	res += day?date.getDay()+"/":'';
+	res += month?date.getMonth()+"/":'';
+	res += year?date.getYear()+"/":'';
+	res += hour?date.getHours()+":":'';
+	res += minute?date.getMinutes()+":":'';
+	res += second?date.getSeconds()+":":'';
+	res += milisecond?date.getMilliseconds():'';
+	if(res.substr(res.length - 1) == ':' || res.substr(res.length - 1) == '/')
+		res = res.slice(0, -1)
+	return res;
 }
