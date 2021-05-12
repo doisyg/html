@@ -119,4 +119,39 @@
 	</div>
 </div>
 
+<div id="modalLoading" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog" role="dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<div class="actions mh100vh_55">
+					<div class="h100vh_160" style="overflow:auto; text-align:center;">
+						
+						<div style="height:60px;"></div>
+						
+						<h3><?= __('Loading') ?></h3>
+						<div class="loadingProgress progress progress-striped light active m-md">
+							<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;">
+							</div>
+						</div>
+						
+					</div>
+					
+					<div style="clear:both;"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="popup_error">
+	<section class="panel panel-secondary" data-portlet-item="">
+		<header class="panel-heading">
+			<div class="panel-actions">
+				<a href="#" class="fa fa-times"></a>
+			</div>
+			<h2 class="panel-title"><?= __('Error') ?></h2>
+		</header>
+		<div class="panel-body"></div>
+	</section>
+</div>
 

@@ -161,7 +161,7 @@ $_LANG['7c521095e4dace513eaa734a0fd711f4'] = 'Go to position';
 $_LANG['15af95789102cc4d6601356777c3861a'] = 'Click on the map to choose the position you\'re aiming for.';
 $_LANG['eed597be9ab43d7002354dc0aceaa605'] = 'Click on the stop icon to cancel action while the vehicle is moving.';
 $_LANG['3885925e32719990be7d5f3dce84df7d'] = 'Add custom area';
-$_LANG['4e25837a6456d473fb860efcd9a3c24b'] = 'Add Augmented pose';
+$_LANG['4e25837a6456d473fb860efcd9a3c24b'] = 'Add augmented pose';
 $_LANG['f97ee4f64e364522e8ed659b9845e650'] = 'Add docking station';
 $_LANG['f2e22cc4244019c6a9a0352b983b8d81'] = 'Erase pixel';
 $_LANG['8d616bd599b102e44de47f14d015c6bf'] = 'Move the robot to this point';
@@ -642,5 +642,10 @@ $_LANG['29c595dde721e30236ed5ff86ad7407f'] = 'Map doesn\'t have any dock.';
 $_LANG['bb4ee7995f7fea36eb5318a8158c1062'] = 'Are you sure you want to continue without creating a dock ?';
 $_LANG['ed4b192c6a21eebf8c2210d71681c920'] = 'It may cause some issues later.';
 $_LANG['60a6dcf8d5433517080654268ae395cd'] = 'Add an account';
+$_LANG['60562de4bbf89e4384127166747c690a'] = 'Stay away from obstacles';
+$_LANG['902b0d55fddef6f8d651fe1035b7d4bd'] = 'Error';
+$_LANG['0e09ecf49131d342cbf1357c5469db91'] = 'Add POI';
+$_LANG['d3685e913af3920cb7daa2f5c556ba25'] = 'Add landmark';
+$_LANG['9506f0fd0f7f1b07960b15b4c9e68d1a'] = 'Launch';
 
 ?>

@@ -27,6 +27,7 @@ function GetInfosCurrentMapDoWyca()
 			gommes = Array();
 			docks = data.D.docks;
 			pois = data.D.pois;
+			landmarks = data.D.landmarks;
 			augmented_poses = data.D.augmented_poses;
 			
 			$('#wyca_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
@@ -261,6 +262,7 @@ var currentAreaWycaLongTouch = null;
 var currentDockWycaLongTouch = null;
 var currentPoiWycaLongTouch = null;
 var currentAugmentedPoseWycaLongTouch = null;
+var currentLandmarkWycaLongTouch = null;
 
 $(document).ready(function(e) {
 	$('#wyca_edit_map .modal').on('shown.bs.modal', function () {
@@ -536,6 +538,62 @@ $(document).ready(function(e) {
 	});
 	*/
 	
+	$(document).on('touchend', '#wyca_edit_map_svg .landmark_elem', function(e) {
+		$('#wyca_edit_map_zoom_popup').hide();
+		if (timerWycaLongPress != null)
+		{
+			clearTimeout(timerWycaLongPress);
+			timerWycaLongPress = null;
+		}
+		if (timerWycaVeryLongPress != null)
+		{
+			clearTimeout(timerWycaVeryLongPress);
+			timerWycaVeryLongPress = null;
+		}
+	});
+	
+	/*
+	$(document).on('touchstart', '#wyca_edit_map_svg .landmark_elem', function(e) {
+		if (timerWycaLongPress != null)
+		{
+			clearTimeout(timerWycaLongPress);
+			timerWycaLongPress = null;
+		}
+		if (timerWycaVeryLongPress != null)
+		{
+			clearTimeout(timerWycaVeryLongPress);
+			timerWycaVeryLongPress = null;
+		}
+		
+		if (wycaCanChangeMenu)
+		{
+			timerWycaLongPress = setTimeout(WycaLongPressDock, 500);
+			//timerWycaVeryLongPress = setTimeout(WycaLongVeryPressSVG, 1500);
+			eventTouchStart = e;
+			currentDockWycaLongTouch = $(this);
+		}
+		WycaDisplayBlockZoom();
+		
+		WycaHideMenus();
+		
+	});
+	*/
+	
+	$(document).on('touchmove', '#wyca_edit_map_svg .landmark_elem', function(e) {
+    	//WycaHideMenus();
+		if (timerWycaLongPress != null)
+		{
+			clearTimeout(timerWycaLongPress);
+			timerWycaLongPress = null;
+		}
+		if (timerWycaVeryLongPress != null)
+		{
+			clearTimeout(timerWycaVeryLongPress);
+			timerWycaVeryLongPress = null;
+		}
+		//WycaDisplayBlockZoom();
+	});
+	
 	$(document).on('touchmove', '#wyca_edit_map_svg .dock_elem', function(e) {
     	//WycaHideMenus();
 		if (timerWycaLongPress != null)
@@ -728,6 +786,7 @@ function WycaHideMenus()
 	$('#wyca_edit_map_menu_dock li').hide();
 	$('#wyca_edit_map_menu_poi li').hide();
 	$('#wyca_edit_map_menu_augmented_pose li').hide();
+	$('#wyca_edit_map_menu_landmark li').hide();
 	$('#wyca_edit_map_menu_erase li').hide();
 	$('#wyca_edit_map .popupHelp').hide();
 	
@@ -896,6 +955,12 @@ function WycaLongPressDock()
 {
 	timerWycaLongPress = null;
 	WycaDisplayMenu('wyca_edit_map_menu_dock');
+}
+
+function WycaLongPressLandmark()
+{
+	timerWycaLongPress = null;
+	WycaDisplayMenu('wyca_edit_map_menu_landmark');
 }
 
 function WycaLongPressPoi()

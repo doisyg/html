@@ -136,6 +136,19 @@ function WycaUndo()
 			augmented_poses[elem.data].deleted = false;
 			WycaTraceAugmentedPose(elem.data);
 			break;
+		case 'add_landmark':
+			landmarks.pop();
+			a = JSON.parse(elem.data);
+			$('#wyca_edit_map_svg .landmark_elem_'+a.id_landmark).remove();
+			break;
+		case 'edit_landmark':
+			landmarks[elem.data.index] = JSON.parse(elem.data.old);
+			WycaTraceLandmark(elem.data.index);
+			break;
+		case 'delete_landmark':
+			landmarks[elem.data].deleted = false;
+			WycaTraceLandmark(elem.data);
+			break;
 	}
 	wycaHistoriqueIndex--;
 	
@@ -215,6 +228,18 @@ function WycaRedo()
 			augmented_poses[elem.data].deleted = true;
 			WycaTraceAugmentedPose(elem.data);
 			break;
+		case 'add_landmark':
+			landmarks.push(JSON.parse(elem.data));
+			WycaTraceLandmark(landmarks.length-1);
+			break;
+		case 'edit_landmark':
+			landmarks[elem.data.index] = JSON.parse(elem.data.new);
+			WycaTraceLandmark(elem.data.index);
+			break;
+		case 'delete_landmark':
+			landmarks[elem.data].deleted = true;
+			WycaTraceLandmark(elem.data);
+			break;
 	}
 	
 	WycaRefreshHistorique();
@@ -290,8 +315,7 @@ function WycaSaveElementNeeded(need)
 	}
 }
 
-$(document).ready(function()
-{
+$(document).ready(function(){
 	/* RELOAD MAP */
 	
 	$('#wyca_edit_map #wyca_edit_map_bAbortReloadMap').click(function(){
@@ -763,6 +787,7 @@ $(document).ready(function()
 								gommes = Array();
 								docks = data.D.docks;
 								pois = data.D.pois;
+								landmarks = data.D.landmarks;
 								augmented_poses = data.D.augmented_poses;
 								/*
 								$('#wyca_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
@@ -827,6 +852,7 @@ $(document).ready(function()
 								gommes = Array();
 								docks = data.D.docks;
 								pois = data.D.pois;
+								landmarks = data.D.landmarks;
 								augmented_poses = data.D.augmented_poses;
 								
 								$('#wyca_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
@@ -909,6 +935,30 @@ $(document).ready(function()
 		}
     });
 	
+	/* MENU LANDMARK */
+	
+	$('#wyca_edit_map_menu_landmark .bDeleteLandmark').click(function(e) {
+        e.preventDefault();
+		WycaHideMenus();
+		i = GetLandmarkIndexFromID(currentLandmarkWycaLongTouch.data('id_landmark'));
+		WycaDeleteLandmark(i);
+    });
+	
+	$('#wyca_edit_map_menu_landmark .bConfigLandmark').click(function(e) {
+        e.preventDefault();
+		//WycaHideMenus();
+		wycaCurrentAction = 'editLandmark';
+	
+		currentLandmarkIndex = GetLandmarkIndexFromID(currentLandmarkWycaLongTouch.data('id_landmark'));
+		landmark = landmarks[currentLandmarkIndex];
+		$('#wyca_edit_map_landmark_number').val(landmark.num);
+		$('#wyca_edit_map_landmark_fiducial_number').val(landmark.id_fiducial);
+		$('#wyca_edit_map_landmark_name').val(landmark.name);
+		$('#wyca_edit_map_landmark_comment').val(landmark.comment);
+		
+		$('#wyca_edit_map_container_all .modalLandmarkOptions').modal('show');
+    });
+	
 	/* MENU POI */
 	
 	$('#wyca_edit_map_menu_poi .bDeletePoi').click(function(e) {
@@ -967,6 +1017,7 @@ $(document).ready(function()
 								gommes = Array();
 								docks = data.D.docks;
 								pois = data.D.pois;
+								landmarks = data.D.landmarks;
 								augmented_poses = data.D.augmented_poses;
 								/*
 								$('#wyca_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
@@ -1032,6 +1083,7 @@ $(document).ready(function()
 								gommes = Array();
 								docks = data.D.docks;
 								pois = data.D.pois;
+								landmarks = data.D.landmarks;
 								augmented_poses = data.D.augmented_poses;
 								
 								$('#wyca_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
@@ -1218,6 +1270,7 @@ $(document).ready(function()
 								gommes = Array();
 								docks = data.D.docks;
 								pois = data.D.pois;
+								landmarks = data.D.landmarks;
 								augmented_poses = data.D.augmented_poses;
 								/*
 								$('#wyca_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
@@ -1282,6 +1335,7 @@ $(document).ready(function()
 								gommes = Array();
 								docks = data.D.docks;
 								pois = data.D.pois;
+								landmarks = data.D.landmarks;
 								augmented_poses = data.D.augmented_poses;
 								
 								$('#wyca_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
@@ -1719,6 +1773,55 @@ $(document).ready(function()
 			AddClass('#wyca_edit_map_svg .poi_elem_'+poi.id_poi, 'active');
 			if (poi.id_fiducial < 1) // Movable que si il n'est pas lié à un reflecteur
 				AddClass('#wyca_edit_map_svg .poi_elem_'+poi.id_poi, 'movable');
+		}
+		else
+			WycaAvertCantChange();
+	});
+	
+	$(document).on('click', '#wyca_edit_map_svg .landmark_elem', function(e) {
+		e.preventDefault();
+		
+		if (wycaCurrentAction == 'addLandmark')
+		{
+		}
+		else if (wycaCurrentAction == 'gomme')
+		{
+		}
+		else if (wycaCanChangeMenu)
+		{
+			RemoveClass('#wyca_edit_map_svg .active', 'active');
+			RemoveClass('#wyca_edit_map_svg .activ_select', 'activ_select'); 
+			RemoveClass('#wyca_edit_map_svg .landmark_elem', 'movable');
+						
+			currentSelectedItem = Array();
+			currentSelectedItem.push({'type':'landmark', 'id':$(this).data('id_landmark')});	
+			
+			$('#wyca_edit_map_boutonsLandmark').show();
+			
+            $('#wyca_edit_map_boutonsStandard').hide();
+			
+			$('#wyca_edit_map_boutonsLandmark a').show();
+			
+			$('body').removeClass('no_current select');
+			$('.select').css("strokeWidth", minStokeWidth);
+			currentLandmarkWycaLongTouch=$(this);
+			//MENU AUGMENTED POSE DISPLAY
+			if (wycaCurrentAction != 'editLandmark' && wycaCurrentAction != 'addLandmark')
+			{
+				WycaHideCurrentMenuNotSelect();
+				WycaDisplayMenu('wyca_edit_map_menu_landmark');
+			}
+			
+			wycaCurrentAction = 'editLandmark';	
+			currentStep = '';
+			
+			currentLandmarkIndex = GetLandmarkIndexFromID($(this).data('id_landmark'));
+			landmark = landmarks[currentLandmarkIndex];
+			saveCurrentLandmark = JSON.stringify(landmark);
+			
+			AddClass('#wyca_edit_map_svg .landmark_elem_'+landmark.id_landmark, 'active');
+			if (landmark.id_fiducial < 1) // Movable que si il n'est pas lié à un reflecteur
+				AddClass('#wyca_edit_map_svg .landmark_elem_'+landmark.id_landmark, 'movable');
 		}
 		else
 			WycaAvertCantChange();
@@ -2264,7 +2367,6 @@ $(document).ready(function()
 		WycaGoToPose('A');
 	});
 	
-	
 	/* BTN MENU AREA */
 	
 	$('#wyca_edit_map_menu .bAddArea').click(function(e) {
@@ -2386,7 +2488,7 @@ $(document).ready(function()
 		{
 			$('#wyca_edit_map_container_all .texts_add_dock').hide();
 			$('#wyca_edit_map_container_all .text_prepare_robot').show();
-			
+			$('#wyca_edit_map_container_all .modalAddDock .fiducial_number_wrapper ').html('');
 			$('#wyca_edit_map_container_all .modalAddDock .dock').hide();
 			$('#wyca_edit_map_container_all .modalAddDock .fiducial_number_wrapper ').html('');
 			$('#wyca_edit_map_container_all .modalAddDock').modal('show');
@@ -2820,6 +2922,197 @@ $(document).ready(function()
 			$('#wyca_edit_map_boutonsRotate').show();
 		}
 	});
+	
+	/* BTN MENU LANDMARK */
+	
+	$('#wyca_edit_map_menu .bAddLandmark').click(function(e) {
+        e.preventDefault();
+		WycaHideMenus();
+		if (wycaCanChangeMenu)
+		{
+			$('#wyca_edit_map_container_all .texts_add_landmark').hide();
+			$('#wyca_edit_map_container_all .text_prepare_robot').show();
+			
+			$('#wyca_edit_map_container_all .modalAddLandmark .landmark').hide();
+			$('#wyca_edit_map_container_all .modalAddLandmark .fiducial_number_wrapper ').html('');
+			$('#wyca_edit_map_container_all .modalAddLandmark').modal('show');
+		}
+		else
+			WycaAvertCantChange();
+	});
+	
+	$('#wyca_edit_map_container_all .modalAddLandmark .joystickDiv .curseur').on('touchstart', function(e) {
+		$('#wyca_edit_map_container_all .modalAddLandmark .landmark').hide();
+		$('#wyca_edit_map_container_all .modalAddLandmark .fiducial_number_wrapper ').html('');
+	});
+	
+	$('#wyca_edit_map_container_all .modalAddLandmark .bScanAddLandmark').click(function(e) {
+		$('#wyca_edit_map_container_all .modalAddLandmark .bScanAddLandmark').addClass('disabled');
+		
+		wycaApi.GetMapFiducialsVisible(function(data) {
+			
+			$('#wyca_edit_map_container_all .modalAddLandmark .bScanAddLandmark').removeClass('disabled');	
+			
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				console.log(data);
+				
+				$('#wyca_edit_map_container_all .modalAddLandmark .landmark').hide();
+				
+				posRobot = $('#wyca_edit_map_container_all .modalAddLandmark #wyca_edit_map_modalAddLandmark_robot').offset();
+				
+				let modalOffset = $('#wyca_edit_map_container_all .modalAddLandmark .modal-content').offset();
+				
+				posRobot.left -= modalOffset.left; 
+				posRobot.top -= modalOffset.top; 
+				
+				$('#wyca_edit_map_container_all .texts_add_landmark').hide();
+				if (data.D.length > 0)
+					$('#wyca_edit_map_container_all .text_set_landmark').show();
+				else
+					$('#wyca_edit_map_container_all .text_prepare_robot').show();
+				
+				$('#wyca_edit_map_container_all .modalAddLandmark .fiducial_number_wrapper ').html('');
+				
+				for (i=0; i< data.D.length; i++)
+				{
+					if (data.D[i].TY != 'Dock' && data.D[i].ID != -1)
+					{
+						/*
+						distance = Math.sqrt((data.D[i].P.X - lastRobotPose.X)*(data.D[i].P.X - lastRobotPose.X) + (data.D[i].P.Y - lastRobotPose.Y)*(data.D[i].P.Y - lastRobotPose.Y));
+						x_from_robot = Math.cos(lastRobotPose.T) * distance;
+						y_from_robot = Math.sin(lastRobotPose.T) * distance;
+						*/
+						
+						new_point = RotatePoint (data.D[i].P, lastRobotPose, lastRobotPose.T - Math.PI/2);
+						x_from_robot = new_point.X - lastRobotPose.X;
+						y_from_robot = new_point.Y - lastRobotPose.Y;
+						
+						let x =  posRobot.left + x_from_robot * 100;
+						let y =  posRobot.top - y_from_robot * 100;
+						let xx = x + 10*Math.sin(0 - (data.D[i].P.T - lastRobotPose.T));
+						let yy = y - 10*Math.cos(0 - (data.D[i].P.T - lastRobotPose.T));
+						
+						angle = 0 - (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
+						
+						// 1px / cm
+						
+						//FIDUCIAL
+						$('#wyca_edit_map_container_all .modalAddLandmark #wyca_edit_map_modalAddLandmark_landmark'+i).show();
+						$('#wyca_edit_map_container_all .modalAddLandmark #wyca_edit_map_modalAddLandmark_landmark'+i).css('left',posRobot.left + x_from_robot * 100); // lidar : y * -1
+						$('#wyca_edit_map_container_all .modalAddLandmark #wyca_edit_map_modalAddLandmark_landmark'+i).css('top',posRobot.top - y_from_robot * 100); // +20 position lidar, - 12.5 pour le centre
+						//angle = (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
+						
+						$('#wyca_edit_map_container_all .modalAddLandmark #wyca_edit_map_modalAddLandmark_landmark'+i).css({'-webkit-transform' : 'rotate('+ angle +'deg)',
+																	 '-moz-transform' : 'rotate('+ angle +'deg)',
+																	 '-ms-transform' : 'rotate('+ angle +'deg)',
+																	 'transform' : 'rotate('+ angle +'deg)'});
+						
+						$('#wyca_edit_map_container_all .modalAddLandmark .fiducial_number_wrapper ').append('<span class="fiducial_number" id="fiducial_number'+i+'" data-id="'+data.D[i].ID+'">'+data.D[i].ID+'</span>');
+						
+						$('#wyca_edit_map_container_all .modalAddLandmark #fiducial_number'+i).css('left',xx); // lidar : y * -1
+						$('#wyca_edit_map_container_all .modalAddLandmark #fiducial_number'+i).css('top',yy); // 
+						$('#wyca_edit_map_container_all .modalAddLandmark #fiducial_number'+i).css({'-webkit-transform' : 'rotate('+ angle +'deg)',
+																	 '-moz-transform' : 'rotate('+ (angle-180) +'deg)',
+																	 '-ms-transform' : 'rotate('+ (angle-180) +'deg)',
+																	 'transform' : 'rotate('+ (angle-180) +'deg)'});
+						//angle = (data.D[i].P.T - lastRobotPose.T) * 180 / Math.PI;
+						$('#wyca_edit_map_container_all .modalAddLandmark #wyca_edit_map_modalAddLandmark_landmark'+i).data('id_fiducial', data.D[i].ID);
+						$('#wyca_edit_map_container_all .modalAddLandmark #wyca_edit_map_modalAddLandmark_landmark'+i).data('x', data.D[i].P.X);
+						$('#wyca_edit_map_container_all .modalAddLandmark #wyca_edit_map_modalAddLandmark_landmark'+i).data('y', data.D[i].P.Y);
+						$('#wyca_edit_map_container_all .modalAddLandmark #wyca_edit_map_modalAddLandmark_landmark'+i).data('theta', data.D[i].P.T);
+					}
+				}
+			}
+			else
+			{
+				ParseAPIAnswerError(data,textErrorGetFiducials);
+			}
+		});
+    });
+	
+	$('#wyca_edit_map_container_all .modalAddLandmark .landmark').click(function(e) {
+        e.preventDefault();
+		that = $(this);
+		
+		nextIdLandmark++;
+
+		d = {'id_landmark':nextIdLandmark, 'id_map':id_map, 'id_fiducial':that.data('id_fiducial'), 'fiducial_pose_x':that.data('x'), 'fiducial_pose_y':that.data('y'), 'fiducial_pose_t':that.data('theta'), 'name':'Landmark', 'comment':'','active':true};
+		WycaAddHistorique({'action':'add_landmark', 'data':JSON.stringify(d)});
+		landmarks.push(d);
+		WycaTraceLandmark(landmarks.length-1);
+		
+		$('#wyca_edit_map_container_all .modalAddLandmark').modal('hide');
+		
+		currentLandmarkIndex = landmarks.length-1;
+		landmark = landmarks[currentLandmarkIndex];
+		
+		$('#wyca_edit_map_landmark_name').val(landmark.name);
+		$('#wyca_edit_map_landmark_fiducial_number').val(landmark.id_fiducial);
+		$('#wyca_edit_map_landmark_comment').val(landmark.comment);
+					
+		indexLandmarkElem++;
+		
+		$('#wyca_edit_map_container_all .modalLandmarkOptions #wyca_edit_map_bLandmarkCancelConfig').addClass('disabled');
+		$('#wyca_edit_map_container_all .modalLandmarkOptions').modal('show');
+	
+    });
+	
+	$('#wyca_edit_map_bLandmarkSaveConfig').click(function(e) {
+		if(!CheckName(landmarks, $('#wyca_edit_map_landmark_name').val(), currentLandmarkIndex)){
+			
+			landmark = landmarks[currentLandmarkIndex];
+			saveCurrentLandmark = JSON.stringify(landmark);
+					
+			landmark.name = $('#wyca_edit_map_landmark_name').val();
+			landmark.num = parseInt($('#wyca_edit_map_landmark_number').val());
+			landmark.comment = $('#wyca_edit_map_landmark_comment').val();
+			
+			landmarks[currentLandmarkIndex] = landmark;
+					
+			if (wycaCurrentAction == 'editLandmark')
+				WycaAddHistorique({'action':'edit_landmark', 'data':{'index':currentLandmarkIndex, 'old':saveCurrentLandmark, 'new':JSON.stringify(landmarks[currentLandmarkIndex])}});
+			saveCurrentLandmark = JSON.stringify(landmarks[currentLandmarkIndex]);
+			WycaTraceLandmark(currentLandmarkIndex);
+			
+			$('#wyca_edit_map_container_all .modalLandmarkOptions').modal('hide');
+			$('#wyca_edit_map_container_all .modalLandmarkOptions #wyca_edit_map_bLandmarkCancelConfig').removeClass('disabled');
+		}else{
+			alert_wyca(textNameUsed);
+		};
+	});
+	
+	$('#wyca_edit_map_bLandmarkCreateFromMap').click(function(e) {
+        if (wycaCanChangeMenu)
+		{
+			blockZoom = true;
+			
+			$('#wyca_edit_map_boutonsLandmark').show();
+            $('#wyca_edit_map_boutonsStandard').hide();
+			
+			$('#wyca_edit_map_boutonsLandmark #wyca_edit_map_bLandmarkSave').hide();
+			$('#wyca_edit_map_boutonsLandmark #wyca_edit_map_bLandmarkDelete').hide();
+			$('#wyca_edit_map_boutonsLandmark #wyca_edit_map_bLandmarkDirection').hide();
+			
+			wycaCurrentAction = 'addLandmark';	
+			currentStep = 'setPose';
+			
+			$('body').removeClass('no_current');
+			$('body').addClass('addLandmark');
+			
+			$('#wyca_edit_map_message_aide').html(textClickOnMapPose);
+			$('#wyca_edit_map_message_aide').show();
+		}
+		else
+			WycaAvertCantChange();
+    });
+	
+	$('#wyca_edit_map_bLandmarkDelete').click(function(e) {
+        if (confirm('Are you sure you want to delete this landmark?'))
+		{
+			WycaDeleteLandmark(currentLandmarkIndex);
+		}
+    });
 	
 	/* BTN MENU POI */
 	
@@ -4931,6 +5224,103 @@ function WycaDeleteDock(indexInArray)
 	$('.btn-mode-gene').addClass('btn-default');
 	
 	$('#wyca_edit_map_boutonsDock').hide();
+    $('#wyca_edit_map_boutonsStandard').show();
+	blockZoom = false;
+	
+	WycaSetModeSelect();
+}
+
+// LANDMARK FUNCS
+
+function WycaLandmarkSave()
+{
+	if (wycaCurrentAction == 'addLandmark')
+	{
+		$('#wyca_edit_map_landmark_name').val('');
+		$('#wyca_edit_map_modalLandmarkEditName').modal('show');
+	}
+	else if (wycaCurrentAction == 'editLandmark')
+	{	
+		WycaSaveElementNeeded(false);
+		
+		landmark = landmarks[currentLandmarkIndex];
+		RemoveClass('#wyca_edit_map_svg .landmark_elem_'+landmark.id_landmark, 'movable');
+		
+		WycaAddHistorique({'action':'edit_landmark', 'data':{'index':currentLandmarkIndex, 'old':saveCurrentLandmark, 'new':JSON.stringify(landmarks[currentLandmarkIndex])}});
+		saveCurrentLandmark = JSON.stringify(landmarks[currentLandmarkIndex]);
+		RemoveClass('#wyca_edit_map_svg .active', 'active');
+		
+		wycaCurrentAction = '';
+		currentStep = '';
+		
+		$('#wyca_edit_map_boutonsRotate').hide();
+		
+		$('#wyca_edit_map_boutonsLandmark').hide();
+		$('#wyca_edit_map_boutonsStandard').show();
+		$('#wyca_edit_map_message_aide').hide();
+		blockZoom = false;
+		
+		$('body').addClass('no_current');
+		
+		WycaSetModeSelect();
+	}
+}
+
+function WycaLandmarkCancel()
+{
+	WycaSaveElementNeeded(false);
+	
+	$('#wyca_edit_map_svg .landmark_elem_current').remove();
+	RemoveClass('#wyca_edit_map_svg .active', 'active');
+
+	$('body').addClass('no_current');
+	
+	if (wycaCurrentAction == 'addLandmark')
+	{
+		$('#wyca_edit_map_svg .landmark_elem_0').remove();
+		$('#wyca_edit_map_svg .landmark_elem_current').remove();
+	}
+	else if (wycaCurrentAction == 'editLandmark')
+	{
+		landmark = landmarks[currentLandmarkIndex];
+		RemoveClass('#wyca_edit_map_svg .landmark_elem_'+landmark.id_landmark, 'movable');
+		
+		landmarks[currentLandmarkIndex] = JSON.parse(saveCurrentLandmark);
+		WycaTraceLandmark(currentLandmarkIndex);
+	}
+	wycaCurrentAction = '';
+	currentStep = '';
+	
+	$('#wyca_edit_map_boutonsRotate').hide();
+	
+	$('#wyca_edit_map_boutonsLandmark').hide();
+	$('#wyca_edit_map_boutonsStandard').show();
+	$('#wyca_edit_map_message_aide').hide();
+	blockZoom = false;
+	
+	WycaSetModeSelect();
+}
+
+function WycaDeleteLandmark(indexInArray)
+{
+	if ($('.cancel:visible').length > 0) $('.cancel:visible').click();
+	
+	landmarks[indexInArray].deleted = true;
+	
+	WycaAddHistorique({'action':'delete_landmark', 'data':indexInArray});
+	
+	data = landmarks[indexInArray];
+	$('#wyca_edit_map_svg .landmark_elem_'+data.id_landmark).remove();
+	
+	RemoveClass('#wyca_edit_map_svg .active', 'active');
+	
+	wycaCurrentAction = '';
+	currentStep = '';
+	
+	$('.btn-mode-gene').removeClass('btn-primary');
+	$('.btn-mode-gene').addClass('btn-default');
+	
+	$('#wyca_edit_map_boutonsLandmark').hide();
     $('#wyca_edit_map_boutonsStandard').show();
 	blockZoom = false;
 	

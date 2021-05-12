@@ -37,6 +37,101 @@ $(document).ready(function(e) {
 		
     });
 	
+	// ----------------------- AUTO DIAG --------------------------
+	
+	$(document).on('click', '#wyca_setup_check div.is_checkbox.checked', function(e) {
+		e.preventDefault();
+		
+		if ($(this).hasClass('component_ok'))
+		{
+			// On n'affiche rien ; le composant est ok
+		}
+		else
+		{
+			// Problème sur le composant, on affiche le détail
+			/*
+			0: OK
+			1: Frequency warning
+			2: Frequency error
+			3: Software error;
+			4: Device error
+			5: Not applicable (for cam top)
+			*/
+			
+			text = '';
+			switch($(this).attr('id'))
+			{
+				case 'wyca_setup_check_lidar':
+					if (save_check_components_result.LI == 0) text = ''; 
+					else if (save_check_components_result.LI == 1) text = 'The frequency of feedback of information from the Lidar is abnormal but acceptable.';
+					else if (save_check_components_result.LI == 2) text = 'The frequency of feedback of information from the Lidar is abnormal.';
+					else if (save_check_components_result.LI == 3) text = 'A software feature of the Lidar encounters an error.';
+					else if (save_check_components_result.LI == 4) text = 'Lidar no longer responds.';
+					else if (save_check_components_result.LI == 5) text = '';
+					break;
+				case 'wyca_setup_check_us':
+					if (save_check_components_result.US == 0) text = ''; 
+					else if (save_check_components_result.US == 1) text = 'The frequency of feedback of information from the ultrasonic sensors is abnormal but acceptable.';
+					else if (save_check_components_result.US == 2) text = 'The frequency of feedback of information from the ultrasonic sensors is abnormal.';
+					else if (save_check_components_result.US == 3) text = 'A software feature of the ultrasonic sensors encounters an error.';
+					else if (save_check_components_result.US == 4) text = 'Ultrasonic sensors no longer responds.';
+					else if (save_check_components_result.US == 5) text = '';
+					break;
+				case 'wyca_setup_check_motor':
+					if (save_check_components_result.M == 0) text = ''; 
+					else if (save_check_components_result.M == 1) text = 'The frequency of feedback of information from the motor card is abnormal but acceptable.';
+					else if (save_check_components_result.M == 2) text = 'The frequency of feedback of information from the motor card is abnormal.';
+					else if (save_check_components_result.M == 3) text = 'A software feature of the motor card encounters an error.';
+					else if (save_check_components_result.M == 4) text = 'Motor card no longer responds.';
+					else if (save_check_components_result.M == 5) text = '';
+					break;
+				case 'wyca_setup_check_battery':
+					if (save_check_components_result.B == 0) text = ''; 
+					else if (save_check_components_result.B == 1) text = 'The frequency of feedback of information from the battery is abnormal but acceptable.';
+					else if (save_check_components_result.B == 2) text = 'The frequency of feedback of information from the battery is abnormal.';
+					else if (save_check_components_result.B == 3) text = 'A software feature of the battery encounters an error.';
+					else if (save_check_components_result.B == 4) text = 'Battery no longer responds.';
+					else if (save_check_components_result.B == 5) text = '';
+					break;
+				case 'wyca_setup_check_cam3d':
+					if (save_check_components_result.CL == 0) text = 'Camera left is OK'; 
+					else if (save_check_components_result.CL == 1) text = 'The frequency of feedback of information from the camera left is abnormal but acceptable.';
+					else if (save_check_components_result.CL == 2) text = 'The frequency of feedback of information from the camera left is abnormal.';
+					else if (save_check_components_result.CL == 3) text = 'A software feature of the camera left encounters an error.';
+					else if (save_check_components_result.CL == 4) text = 'Camera left no longer responds.';
+					else if (save_check_components_result.CL == 5) text = '';
+					
+					text += "<br /><br />";
+					
+					if (save_check_components_result.CR == 0) text += 'Camera right is OK'; 
+					else if (save_check_components_result.CR == 1) text += 'The frequency of feedback of information from the camera right is abnormal but acceptable.';
+					else if (save_check_components_result.CR == 2) text += 'The frequency of feedback of information from the camera right is abnormal.';
+					else if (save_check_components_result.CR == 3) text += 'A software feature of the camera right encounters an error.';
+					else if (save_check_components_result.CR == 4) text += 'Camera right no longer responds.';
+					else if (save_check_components_result.CR == 5) text += '';
+					
+					break;
+				case 'wyca_setup_check_leds':
+					if (save_check_components_result.LE == 0) text = ''; 
+					else if (save_check_components_result.LE == 1) text = 'The frequency of feedback of information from the leds is abnormal but acceptable.';
+					else if (save_check_components_result.LE == 2) text = 'The frequency of feedback of information from the leds is abnormal.';
+					else if (save_check_components_result.LE == 3) text = 'A software feature of the leds encounters an error.';
+					else if (save_check_components_result.LE == 4) text = 'Leds no longer responds.';
+					else if (save_check_components_result.LE == 5) text = '';
+					break;
+			}
+			
+			
+			if (text != '')
+			{
+				if ($(this).hasClass('component_warning'))
+					warning_wyca(text);
+				else
+					alert_wyca(text);
+			}
+		}
+	});
+	
 	// ----------------------- MAPPING CONFIG THRESHOLDS ------------------------
 	
 	$('#wyca_setup_trinary .bResetValueThreshold').click(function(e) {
@@ -161,6 +256,7 @@ $(document).ready(function(e) {
 						gommes = Array();
 						docks = data.D.docks;
 						pois = data.D.pois;
+						landmarks = data.D.landmarks;
 						augmented_poses = data.D.augmented_poses;
 						
 						$('#wyca_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
@@ -258,6 +354,7 @@ $(document).ready(function(e) {
 						gommes = Array();
 						docks = data.D.docks;
 						pois = data.D.pois;
+						landmarks = data.D.landmarks;
 						augmented_poses = data.D.augmented_poses;
 						
 						$('#wyca_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
@@ -353,6 +450,7 @@ $(document).ready(function(e) {
 						gommes = Array();
 						docks = data.D.docks;
 						pois = data.D.pois;
+						landmarks = data.D.landmarks;
 						augmented_poses = data.D.augmented_poses;
 						
 						$('#wyca_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
@@ -454,6 +552,10 @@ $(document).ready(function(e) {
 					default: WycaBufferMapSaveElemName = ''; break;
 				}
 			}
+			wycaCanChangeMenu = true;
+			wycaCurrentAction = '';
+			WycaHideMenus();
+			
 			data = GetDataMapToSave();
 			
 			if ($(this).hasClass('button_goto'))
@@ -979,6 +1081,145 @@ $(document).ready(function(e) {
 			$('#wyca_setup_sites .btn-danger.confirm_delete').removeClass('disabled');
 			$('#wyca_setup_sites .bSiteSetCurrentElem').removeClass('disabled');
 		});
+	});
+	
+	// --------------------- ADD MAP --------------------
+	
+	$('#wyca_setup_maps .bAddMap').click(function(e) {
+		e.preventDefault();
+		
+		create_new_map = true;
+		setCookie('create_new_map',create_new_map); // SET COOKIES
+		$('#pages_wyca_normal').removeClass('active');
+		$('#pages_wyca_by_step section.page').hide();
+		
+		//CHECK JOYSTICK TO START/STOP TELEOP ON NEXT PAGE
+		if($('#pages_wyca_by_step #wyca_by_step_mapping').find('.joystickDiv').length > 0){
+			if(!teleopEnable || teleopEnable == 'not_init'){
+				teleopEnable = true;
+				wycaApi.TeleopStart();
+			}
+		}
+		else
+		{
+			if(teleopEnable || teleopEnable == 'not_init'){
+				teleopEnable = false;
+				wycaApi.TeleopStop();
+			}
+		}
+		
+		$('.title_section').html($('#pages_wyca_by_step #wyca_by_step_mapping > header > h2').text())
+		$('#pages_wyca_by_step').addClass('active');
+		$('#wyca_by_step_mapping').show();
+	});
+	
+	$(document).on('click', '#wyca_setup_maps .bMapSetCurrentElem', function(e) {
+		e.preventDefault();
+		
+		id_map = parseInt($(this).closest('li').data('id_map'));
+		
+		
+		wycaApi.SetMapAsCurrent(id_map, function(data) {
+			if (data.A != wycaApi.AnswerCode.NO_ERROR) 
+				ParseAPIAnswerError(data,textErrorStopNavigation);
+			else
+			{
+				GetMapsWyca();
+			}
+		});
+	});
+	
+	$(document).on('click', '#wyca_setup_maps .bMapDeleteElem', function(e) {
+		e.preventDefault();
+		
+		id_map_to_delete = parseInt($(this).closest('li').data('id_map'));
+		
+		wycaApi.DeleteMap(id_map_to_delete, function(data) {
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$('#wyca_setup_maps_list_map_elem_'+id_map_to_delete).remove();
+			}
+			else
+			{
+				ParseAPIAnswerError(data);
+			}
+		});
+	});
+	
+	//---------------------- SWITCH MAP WITH LANDMARK -----------------------
+	$(document).on('click', '#wyca_switch_map_landmark .bMapSetCurrentElem',function(e) {
+		e.preventDefault();
+		id_map = parseInt($(this).closest('li').data('id_map'));
+		
+		/*INIT FEEDBACK DISPLAY*/
+		$('#wyca_switch_map_landmark .switch_map_feedback .switch_map_step').css('opacity','0').hide();
+		$('#wyca_switch_map_landmark .switch_map_feedback .switch_map_step .fa-check').hide();
+		$('#wyca_switch_map_landmark .switch_map_feedback .switch_map_step .fa-pulse').show();
+		
+		wycaApi.on('onSwitchMapWithLandmarkFeedback', function(data) {
+			if(data.A == wycaApi.AnswerCode.NO_ERROR){
+				target = '';
+				switch(data.M){
+					case 'Scan reflector': 		target = '#wyca_switch_map_landmark .switch_map_feedback .switch_map_step.SwitchMapScan';			break;
+					case 'Init pose': 			target = '#wyca_switch_map_landmark .switch_map_feedback .switch_map_step.SwitchMapPose';			break;
+					case 'Switch map': 			target = '#wyca_switch_map_landmark .switch_map_feedback .switch_map_step.SwitchMapSwitchMap';		break;
+					case 'Stop navigation':		target = '#wyca_switch_map_landmark .switch_map_feedback .switch_map_step.SwitchMapStopNav';		break;
+					case 'Start navigation': 	target = '#wyca_switch_map_landmark .switch_map_feedback .switch_map_step.SwitchMapStartNav';		break;
+				}
+				
+				target = $(target);
+				if(target.prevAll('.switch_map_step:visible').length > 0){
+					target.prevAll('.switch_map_step:visible').find('.fa-check').show();
+					target.prevAll('.switch_map_step:visible').find('.fa-pulse').hide();
+				}
+				target.css('opacity','1').show();
+			}
+		});
+		
+		wycaApi.on('onSwitchMapWithLandmarkResult', function(data) {
+			
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				
+				$('#wyca_switch_map_landmark .switch_map_step:visible').find('.fa-check').show();
+				$('#wyca_switch_map_landmark .switch_map_step:visible').find('.fa-pulse').hide();
+				setTimeout(function(){
+					$('#wyca_switch_map_landmark #wyca_switch_map_landmark_modalFeedback').modal('hide');
+					success_wyca(textSwitchMapDone);
+				},500)
+			}
+			else
+			{
+				$('#wyca_switch_map_landmark #wyca_switch_map_landmark_modalFeedback').modal('hide');
+				ParseAPIAnswerError(data);
+			}
+			GetSwitchMapsWyca();
+			// On rebranche l'ancienne fonction
+			wycaApi.on('onSwitchMapWithLandmarkResult', onSwitchMapWithLandmarkResult);
+			wycaApi.on('onSwitchMapWithLandmarkFeedback', onSwitchMapWithLandmarkFeedback);
+		});
+		
+		//console.log('SwitchMapWithLandmark ',id_map,' is commented // ');
+		
+		wycaApi.SwitchMapWithLandmark(id_map, function(data) {
+			if (data.A != wycaApi.AnswerCode.NO_ERROR) 
+				ParseAPIAnswerError(data,textErrorSwitchMap);
+			else
+			{
+				$('#wyca_switch_map_landmark #wyca_switch_map_landmark_modalFeedback').modal('show');
+			}
+		});
+	});
+	
+	$('#wyca_switch_map_landmark .bCancelSwitchMap').click(function(e) {
+		$('#wyca_switch_map_landmark .bCancelSwitchMap').addClass('disabled');
+		wycaApi.SwitchMapWithLandmarkCancel(function(data) {
+			$('#wyca_switch_map_landmark .bCancelSwitchMap').removeClass('disabled');
+		})
+	})
+	
+	$('#wyca_switch_map_landmark .bTeleop').click(function() {
+		$('#wyca_switch_map_landmark_modalTeleop').modal('show');
 	});
 	
 	//------------------- SERVICE BOOK ------------------------
@@ -2564,6 +2805,7 @@ function InitWycaDemo()
 					gommes = Array();
 					docks = data.D.docks;
 					pois = data.D.pois;
+					landmarks = data.D.landmarks;
 					augmented_poses = data.D.augmented_poses;
 					
 					largeurSlam = data.D.ros_width;

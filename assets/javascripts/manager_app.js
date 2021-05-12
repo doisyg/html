@@ -2,7 +2,7 @@ $(document).ready(function(e) {
 	// DISPLAY WARNING MODAL
 	$('.modal.modalWarningConnexion').modal('show','slow');
 	
-	$('.joystickDiv').parent().parent().append('<h3 class="warningObstacleTeleopManager"><i class="fas fa-exclamation-triangle text-danger"></i> Stay away from obstacles <i class="fas fa-exclamation-triangle text-danger"></i></h3>');
+	$('.joystickDiv').parent().parent().append('<h3 class="warningObstacleTeleopManager"><i class="fas fa-exclamation-triangle text-danger"></i> '+typeof(textStayAwayFromObstacles) != 'undefined'? textStayAwayFromObstacles : 'Stay away from obstacles')+' <i class="fas fa-exclamation-triangle text-danger"></i></h3>');
 	
 	$('#modalWarningConnexion_bOk').click(function(e){
 		if($('.checkboxWarningConnexion').prop('checked')){
@@ -127,6 +127,7 @@ $(document).ready(function(e) {
 						gommes = Array();
 						docks = data.D.docks;
 						pois = data.D.pois;
+						landmarks = data.D.landmarks;
 						augmented_poses = data.D.augmented_poses;
 						
 						$('#manager_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
@@ -221,6 +222,7 @@ $(document).ready(function(e) {
 						gommes = Array();
 						docks = data.D.docks;
 						pois = data.D.pois;
+						landmarks = data.D.landmarks;
 						augmented_poses = data.D.augmented_poses;
 						
 						$('#manager_edit_map_zoom_carte .img-responsive').attr('src', 'data:image/png;base64,'+data.D.image_tri);
@@ -295,6 +297,10 @@ $(document).ready(function(e) {
 		}
 		else
 		{
+			managerCanChangeMenu = true;
+			managerCurrentAction = '';
+			ManagerHideMenus();
+			
 			data = GetDataMapToSave();
 			
 			if ($(this).hasClass('button_goto'))
@@ -633,6 +639,116 @@ $(document).ready(function(e) {
 			$('#manager_setup_sites .btn-danger.confirm_delete').removeClass('disabled');
 			$('#manager_setup_sites .bSiteSetCurrentElem').removeClass('disabled');
 		});
+	});
+	
+	$(document).on('click', '#manager_setup_maps .bMapSetCurrentElem', function(e) {
+		e.preventDefault();
+		
+		id_map = parseInt($(this).closest('li').data('id_map'));
+		
+		
+		wycaApi.SetMapAsCurrent(id_map, function(data) {
+			if (data.A != wycaApi.AnswerCode.NO_ERROR) 
+				ParseAPIAnswerError(data,textErrorStopNavigation);
+			else
+			{
+				GetMapsManager();
+			}
+		});
+	});
+	
+	$(document).on('click', '#manager_setup_maps .bMapDeleteElem', function(e) {
+		e.preventDefault();
+		
+		id_map_to_delete = parseInt($(this).closest('li').data('id_map'));
+		
+		wycaApi.DeleteMap(id_map_to_delete, function(data) {
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				$('#manager_setup_maps_list_map_elem_'+id_map_to_delete).remove();
+			}
+			else
+			{
+				ParseAPIAnswerError(data);
+			}
+		});
+	});
+	
+	//---------------------- SWITCH MAP WITH LANDMARK -----------------------
+	
+	$(document).on('click', '#manager_switch_map_landmark .bMapSetCurrentElem',function(e) {
+		e.preventDefault();
+		id_map = parseInt($(this).closest('li').data('id_map'));
+		
+		/*INIT FEEDBACK DISPLAY*/
+		$('#manager_switch_map_landmark .switch_map_feedback .switch_map_step').css('opacity','0').hide();
+		$('#manager_switch_map_landmark .switch_map_feedback .switch_map_step .fa-check').hide();
+		$('#manager_switch_map_landmark .switch_map_feedback .switch_map_step .fa-pulse').show();
+		
+		wycaApi.on('onSwitchMapWithLandmarkFeedback', function(data) {
+			if(data.A == wycaApi.AnswerCode.NO_ERROR){
+				target = '';
+				switch(data.M){
+					case 'Scan reflector': 		target = '#manager_switch_map_landmark .switch_map_feedback .switch_map_step.SwitchMapScan';			break;
+					case 'Init pose': 			target = '#manager_switch_map_landmark .switch_map_feedback .switch_map_step.SwitchMapPose';			break;
+					case 'Switch map': 			target = '#manager_switch_map_landmark .switch_map_feedback .switch_map_step.SwitchMapSwitchMap';		break;
+					case 'Stop navigation':		target = '#manager_switch_map_landmark .switch_map_feedback .switch_map_step.SwitchMapStopNav';		break;
+					case 'Start navigation': 	target = '#manager_switch_map_landmark .switch_map_feedback .switch_map_step.SwitchMapStartNav';		break;
+				}
+				
+				target = $(target);
+				if(target.prevAll('.switch_map_step:visible').length > 0){
+					target.prevAll('.switch_map_step:visible').find('.fa-check').show();
+					target.prevAll('.switch_map_step:visible').find('.fa-pulse').hide();
+				}
+				target.css('opacity','1').show();
+			}
+		});
+		
+		wycaApi.on('onSwitchMapWithLandmarkResult', function(data) {
+			
+			if (data.A == wycaApi.AnswerCode.NO_ERROR)
+			{
+				
+				$('#manager_switch_map_landmark .switch_map_step:visible').find('.fa-check').show();
+				$('#manager_switch_map_landmark .switch_map_step:visible').find('.fa-pulse').hide();
+				setTimeout(function(){
+					$('#manager_switch_map_landmark #manager_switch_map_landmark_modalFeedback').modal('hide');
+					success_wyca(textSwitchMapDone);
+				},500)
+			}
+			else
+			{
+				$('#manager_switch_map_landmark #manager_switch_map_landmark_modalFeedback').modal('hide');
+				ParseAPIAnswerError(data);
+			}
+			GetSwitchMapsWyca();
+			// On rebranche l'ancienne fonction
+			wycaApi.on('onSwitchMapWithLandmarkResult', onSwitchMapWithLandmarkResult);
+			wycaApi.on('onSwitchMapWithLandmarkFeedback', onSwitchMapWithLandmarkFeedback);
+		});
+		
+		//console.log('SwitchMapWithLandmark ',id_map,' is commented // ');
+		
+		wycaApi.SwitchMapWithLandmark(id_map, function(data) {
+			if (data.A != wycaApi.AnswerCode.NO_ERROR) 
+				ParseAPIAnswerError(data,textErrorSwitchMap);
+			else
+			{
+				$('#manager_switch_map_landmark #manager_switch_map_landmark_modalFeedback').modal('show');
+			}
+		});
+	});
+	
+	$('#manager_switch_map_landmark .bCancelSwitchMap').click(function(e) {
+		$('#manager_switch_map_landmark .bCancelSwitchMap').addClass('disabled');
+		wycaApi.SwitchMapWithLandmarkCancel(function(data) {
+			$('#manager_switch_map_landmark .bCancelSwitchMap').removeClass('disabled');
+		})
+	})
+	
+	$('#manager_switch_map_landmark .bTeleop').click(function() {
+		$('#manager_switch_map_landmark_modalTeleop').modal('show');
 	});
 	
 });

@@ -39,6 +39,7 @@ var textBuildingMap = "<?php echo __js('Building the map');?>";
 var textStartAutonomous = "<?php echo __js('Start autonomous navigation');?>";
 var textBtnCheckTest = "<?php echo __js('Testing');?>";
 var textBtnCheckNext = "<?php echo __js('Next');?>";
+var textBtnCheckBack = "<?php echo __js('Back');?>";
 var textLessThanOne = "<?php echo __js('Less than 1');?>";
 var textTitleRequired = "<?php echo __js('Title required.');?>";
 var textCommentRequired = "<?php echo __js('Comment required.');?>";
@@ -50,6 +51,7 @@ var textNoRealTest = "<?php echo __js('You need at least 2 docks, POIs or augmen
 var textTopNowActive = "<?php echo __js('Top is now active !');?>";
 var textConfirmActiveElement = "<?php echo __js('You must confirm the active element');?>";
 var textRecoveryDone = "<?php echo __js('Recovery done !');?>";
+var textSwitchMapDone = "<?php echo __js('Switch map done !');?>";
 var textNoStartMovingFoward = "<?php echo __js('You cannot start with moving forward');?>";
 var textNoStartRotation = "<?php echo __js('You cannot start with a rotation');?>";
 var textConfirmCheckbox = "<?php echo __js('You must confirm by checking the checkbox');?>";
@@ -59,6 +61,7 @@ var textBrowserRestartedWindowed = "<?php echo __js('Browser restarted windowed'
 var textMap = "<?php echo __js('Map');?>";
 var textSite = "<?php echo __js('Site');?>";
 var textAreYouSureToLeave = "<?php echo __js('Are you sure you want to leave?');?>";
+var textStayAwayFromObstacles = "<?php echo __js('Stay away from obstacles');?>";
 
 
 var textErrorLang = "<?php echo __js('Error lang');?>";
@@ -101,6 +104,7 @@ var textErrorGetMapping = "<?php echo __js('Error get mapping');?>";
 var textErrorInput = "<?php echo __js('Error on input');?>";
 var textErrorGetGlobalVehiculePersistanteDataStorage = "<?php echo __js('Error on get GlobalVehiculePersistanteDataStorage');?>";
 var textErrorSetGlobalVehiculePersistanteDataStorage = "<?php echo __js('Error on set GlobalVehiculePersistanteDataStorage');?>";
+var textErrorSwitchMap = "<?php echo __js('Error on switch map');?>";
 
 var textErrorRefreshSession = "<?php echo __js('Error in refresh session');?>"; 
 
