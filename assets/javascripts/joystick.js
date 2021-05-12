@@ -71,7 +71,7 @@ $(document).ready(function(e) {
 	
 	$('.joystickDiv .curseur').mousedown(function(e){
 		e.preventDefault();
-		teleopSafe = $(this).hasClass('withoutForbidden')? false:true;
+		teleopSafe = $(this).parent().hasClass('withoutForbidden')? false:true;
 		isDown = true;
 		SetCurseurV2(e.pageX, e.pageY);
 	});
@@ -97,7 +97,7 @@ $(document).ready(function(e) {
 	
 	$('.joystickDiv .curseur').on('touchmove', function(e){
 		isDown = true;
-		teleopSafe = $(this).hasClass('withoutForbidden')? false:true;
+		teleopSafe = $(this).parent().hasClass('withoutForbidden')? false:true;
 		SetCurseurV2((event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX), (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY));
 		
 		if (intervalSendCommande == null)
@@ -245,9 +245,9 @@ function SendCommande()
 				if(teleopSafe)
 					wycaApi.Teleop(lastValueX * -0.7, lastValueY * -1.2);
 				else
-					wycaApi.TeleopPasSafe(lastValueX * -0.7, lastValueY * -1.2);
+					wycaApi.TeleopWithoutForbidden(lastValueX * -0.7, lastValueY * -1.2);
 				if(JoystickDebug){
-					console.log('Wyca Teleop X Z');
+					console.log('Wyca Teleop 0 0');
 					console.log(Date.now(),lastValueX * -0.7, lastValueY * -1.2);
 				}
 			}
@@ -263,7 +263,7 @@ function SendCommande()
 			if(teleopSafe)
 				wycaApi.Teleop(lastValueX * -0.7, lastValueY * -1.2);
 			else
-				wycaApi.TeleopPasSafe(lastValueX * -0.7, lastValueY * -1.2);
+				wycaApi.TeleopWithoutForbidden(lastValueX * -0.7, lastValueY * -1.2);
 			if(JoystickDebug){
 				console.log('Wyca Teleop X Z');
 				console.log(Date.now(),lastValueX * -0.7, lastValueY * -1.2);
