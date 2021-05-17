@@ -76,6 +76,7 @@ function GetInfosCurrentMapDoManager()
 				managerCurrentAction = '';
 				ManagerSaveElementNeeded(!managerCanChangeMenu);
 				$('#manager_edit_map .burger_menu').removeClass('updatingMap');
+				$('#manager_edit_map .bSaveEditMap').html(textBtnSaveMap).removeClass('disabled'); // REMOVE SPINNER ON BTN
 				ManagerHideMenus();
 			},500);
 			$('#manager_edit_map .modal').not('.modalReloadMap').each(function(){$(this).modal('hide')});

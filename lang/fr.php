@@ -660,5 +660,6 @@ $_LANG['60562de4bbf89e4384127166747c690a'] = 'Restez éloigné des obstacles';
 $_LANG['d3685e913af3920cb7daa2f5c556ba25'] = 'Ajouter un point de repère';
 $_LANG['0e09ecf49131d342cbf1357c5469db91'] = 'Ajouter un POI';
 $_LANG['9506f0fd0f7f1b07960b15b4c9e68d1a'] = 'Démarrer';
+$_LANG['4e11db406c6c9f234fe8579cc9bc5ef6'] = 'Sauvegarde';
 
 ?>

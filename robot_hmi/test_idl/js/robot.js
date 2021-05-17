@@ -207,6 +207,8 @@ function initMap(){
 	if (wycaApi.websocketAuthed)
 	{
 		$('#map_svg').children('.map_elem').remove();
+		if(robot_traced)
+			robot_traced = false;
 		wycaApi.GetCurrentSite(function(data){
 			if (data.A == wycaApi.AnswerCode.NO_ERROR){
 				
