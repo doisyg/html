@@ -759,9 +759,10 @@ $(document).ready(function(e) {
 					
 					setTimeout(function() {
 						canvas = document.createElement('canvas');
-						
+					
 						width = img.naturalWidth;
 						height = img.naturalHeight;
+						$('#install_by_step_mapping_fin .loading_fin_create_map').hide();
 						
 						$('#install_by_step_mapping_canvas_result_trinary').attr('width', img.naturalWidth);
 						$('#install_by_step_mapping_canvas_result_trinary').attr('height', img.naturalHeight);
@@ -769,7 +770,15 @@ $(document).ready(function(e) {
 						canvas.width = img.naturalWidth;
 						canvas.height = img.naturalHeight;
 						canvas.getContext('2d').drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
-						$('#install_by_step_mapping_fin .bMappingSaveMap ').addClass('disabled');
+						
+						//SVG MAP TRINARY
+						$('#install_by_step_mapping_svg').attr('width', img.naturalWidth);
+						$('#install_by_step_mapping_svg').attr('height', img.naturalHeight);
+						
+						$('#install_by_step_mapping_image').attr('width', img.naturalWidth);
+						$('#install_by_step_mapping_image').attr('height', img.naturalHeight);
+						
+						InitTrinaryMap();
 						CalculateMapTrinary();
 					}, 100);
 				});
