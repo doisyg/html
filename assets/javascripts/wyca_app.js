@@ -200,7 +200,7 @@ $(document).ready(function(e) {
 							}
 							else
 							{
-								ParseAPIAnswerError(data,textErrorSaveMap);
+								ParseAPIAnswerError(data,textErrorTrinary);
 							}							
 						});
 					}
@@ -663,21 +663,21 @@ var color_free_wyca = 255;
 var color_occupied_wyca = 0;
 var color_unknow_wyca = 205;
 
-function WycaInitTrinary()
+function InitTrinaryWyca()
 {
 	if (wycaApi.websocketAuthed)
 	{
-		WycaInitTrinaryDo();
+		InitTrinaryWycaDo();
 	}
 	else
 	{
-		setTimeout(WycaInitTrinary, 500);
+		setTimeout(InitTrinaryWyca, 500);
 	}
 }
 
 var current_map_obj = {};
 
-function WycaInitTrinaryDo()
+function InitTrinaryWycaDo()
 {
 	$('#wyca_setup_trinary .loading_fin_create_map').show();
 	$('#wyca_setup_trinary .bSaveTrinaryMap ').addClass('disabled');
@@ -699,6 +699,8 @@ function WycaInitTrinaryDo()
 			threshold_free_wyca = data.D.threshold_free;
 			threshold_occupied_wyca = data.D.threshold_occupied;
 			
+			$('#wyca_setup_trinary_threshold_free_slider').val(threshold_free_wyca).change();
+			$('#wyca_setup_trinary_threshold_occupied_slider').val(threshold_occupied_wyca).change();
 			setTimeout(function() {
 				canvas_wyca = document.createElement('canvas');
 				
@@ -712,6 +714,14 @@ function WycaInitTrinaryDo()
 				canvas_wyca.height = img_wyca.naturalHeight;
 				canvas_wyca.getContext('2d').drawImage(img_wyca, 0, 0, img_wyca.naturalWidth, img_wyca.naturalHeight);
 				
+				//SVG MAP TRINARY
+				$('#wyca_setup_trinary_svg').attr('width', data.D.ros_width);
+				$('#wyca_setup_trinary_svg').attr('height', data.D.ros_height);
+				
+				$('#wyca_setup_trinary_image').attr('width', data.D.ros_width);
+				$('#wyca_setup_trinary_image').attr('height', data.D.ros_height);
+				
+				InitTrinaryMapWyca();
 				CalculateMapTrinaryWyca();
 			}, 100);
 		}
@@ -775,6 +785,12 @@ function CalculateMapTrinaryDoWyca()
 	var idata = ctx.createImageData(width_wyca, height_wyca);
 	idata.data.set(buffer);
 	ctx.putImageData(idata, 0, 0);
+	
+	//MAP TRINARY
+	
+	$('#wyca_setup_trinary_image').attr('xlink:href', canvasDessin.toDataURL());
+	
+	$('#wyca_setup_trinary .img-responsive').attr('src',canvasDessin.toDataURL());
 	
 	$('#wyca_setup_trinary .loading_fin_create_map').hide();
 	$('#wyca_setup_trinary .bSaveTrinaryMap ').removeClass('disabled');

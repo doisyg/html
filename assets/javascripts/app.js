@@ -524,7 +524,7 @@ $(document).ready(function(e) {
 				if (next == 'install_normal_user') GetUsersNormal();
 				if (next == 'install_normal_service_book') GetServiceBooksNormal();
 				if (next == 'install_normal_edit_map') GetInfosCurrentMapNormal();
-				if (next == 'install_normal_setup_trinary') NormalInitTrinary();
+				if (next == 'install_normal_setup_trinary') InitTrinaryNormal();
 				
 				// WYCA
 				
@@ -549,7 +549,7 @@ $(document).ready(function(e) {
 				if (next == 'wyca_installer') GetInstallersWyca();
 				if (next == 'wyca_service_book') GetServiceBooksWyca();
 				if (next == 'wyca_edit_map') GetInfosCurrentMapWyca();
-				if (next == 'wyca_setup_trinary') WycaInitTrinary();
+				if (next == 'wyca_setup_trinary') InitTrinaryWyca();
 				
 				if (next == 'wyca_demo_mode_config') InitWycaDemo();
 				if (next == 'wyca_demo_mode_start_stop') InitWycaDemoState();
@@ -3873,6 +3873,8 @@ function InitInstallWifiPageByStep()
 
 // BYSTEP AND WYCA_BYSTEP RELATED FUNCS
 
+/* WYCA BYSTEP */
+
 function InitMappingWycaByStep()
 {
 	imgMappingLoaded = true;
@@ -3944,10 +3946,11 @@ function GetLastMappingWycaByStep()
 	if (wycaApi.websocketAuthed)
 	{
 		wycaApi.GetLastMapping(function(data) {
-			
+		//wycaApi.GetCurrentMapComplete(function(data) { //TEST W/0 MAPPING
+		
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
-			
+				//data.D = data.D.image; //TEST W/0 MAPPING
 				var img = document.getElementById("wyca_by_step_mapping_img_map_saved_fin");
 				img.src = 'data:image/png;base64,' + data.D;
 				
@@ -3967,6 +3970,14 @@ function GetLastMappingWycaByStep()
 					canvas.height = img.naturalHeight;
 					canvas.getContext('2d').drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
 					
+					//SVG MAP TRINARY
+					$('#wyca_by_step_mapping_svg').attr('width', img.naturalWidth);
+					$('#wyca_by_step_mapping_svg').attr('height', img.naturalHeight);
+					
+					$('#wyca_by_step_mapping_image').attr('width', img.naturalWidth);
+					$('#wyca_by_step_mapping_image').attr('height', img.naturalHeight);
+					
+					InitTrinaryMap();
 					CalculateMapTrinary();
 				}, 100);
 			}
@@ -4005,6 +4016,190 @@ function InitMaintenanceWycaByStep()
 	if(getCookie('create_new_site') != '')
 		create_new_site = JSON.parse(getCookie('create_new_site'));
 }
+
+function DrawSvgCheckWycaByStep()
+{
+	let svg = $('#wyca_by_step_check svg.svg_legende');
+	svg.css('opacity',0);
+	if(svg.width() < 300){
+		setTimeout(DrawSvgCheckWycaByStep,50);		
+	}else{
+		let base_w = 375;
+		let base_h = 492.5;
+		let base_hw_card = 111.65625;
+		let base_elodie_height = 120;
+		let base_offsetY = base_hw_card  + 50 + 20;
+		let base_offsetX = (base_w/4) + 10;
+		
+		let elodie_height = $('#wyca_by_step_check img#elodie_import_top')[0].getBoundingClientRect().height;
+		
+		let data = $('svg.svg_legende')[0].getBoundingClientRect();
+		let svg_offsetX = data.x;
+		let svg_offsetY = data.y;
+		let lg_offsetX = window.outerWidth > 1200 ? window.outerWidth/100 : 0;
+		let lg_offsetY = window.outerWidth > 1200 ? window.outerHeight/100 : 0;
+		
+		$('#wyca_by_step_check div.is_checkbox').each(function(idx,item){
+			let data = item.getBoundingClientRect();
+			
+			let top = window.scrollY + data.top;
+			let left = window.scrollX + data.left;
+			
+			let height = data.height;
+			let width = data.width;
+			
+			let offsetY = height + 50 + 20; //(50 margin et padding div , 20 margin img elodie)
+			let offsetX = height + 50 + 20; //(50 margin et padding div , 20 margin img elodie)
+			
+			let line = $(item).data('line');
+			
+			let placement = $(item).data('line-placement');
+			let svgLines = $('svg.svg_legende .'+line);
+			svgLines.each(function(){
+				svgLine = $(this);
+				let x1,x2,y1,y2;
+				
+				if(isNaN(svgLine.attr('_x1'))){
+					x1 = svgLine.attr('x1');
+					y1 = svgLine.attr('y1');
+					x2 = svgLine.attr('x2');
+					y2 = svgLine.attr('y2');
+					svgLine.attr('_x1',x1);
+					svgLine.attr('_y1',y1);
+					svgLine.attr('_x2',x2);
+					svgLine.attr('_y2',y2);
+				}else{
+					x1 = svgLine.attr('_x1');
+					y1 = svgLine.attr('_y1');
+					x2 = svgLine.attr('_x2');
+					y2 = svgLine.attr('_y2');
+				}
+				
+				let _x1,_x2,_y1,_y2;
+				
+				//CIBLE ELODIE
+				let ratioX = (x2 - base_offsetX)/base_w;
+				_x2 = (svg.innerWidth()/4 + 10) + ratioX * svg.innerWidth();
+				
+				let ratioY = (y2 - base_offsetY)/base_elodie_height;
+				_y2 = ratioY * elodie_height + offsetY - (svg_offsetY - 54);
+				
+				//ORIGINE FLECHE
+				if(typeof(placement) != 'undefined'){
+					switch(placement){
+						case 'bottom' : 
+							_x1 = left + width/2 - svg_offsetX;
+							_y1 = top + height - svg_offsetY;
+							_x2 = _x2 + lg_offsetX;
+							_y2 = _y2 - lg_offsetY;
+						break;				
+						case 'top' : 
+							_x1 = left + width/2 - svg_offsetX;
+							_y1 = top - svg_offsetY;
+							//_x2 = _x2 + lg_offsetX;
+							_y2 = _y2 - lg_offsetY;
+						break;				
+						case 'left' : 
+							_x1 = left - svg_offsetX;
+							_y1 = top + height/2 - svg_offsetY;
+						break;				
+						case 'right' : 
+							_x1 = left + width - svg_offsetX;
+							_y1 = top + height/2 - svg_offsetY;
+						break;				
+						default:
+							_x1 = left + width/2 - svg_offsetX;
+							_y1 = top + height - svg_offsetY;
+						break;			
+					}
+				}
+				
+				_x1 = Math.round(_x1);
+				_x2 = Math.round(_x2);
+				_y1 = Math.round(_y1);
+				_y2 = Math.round(_y2);
+				
+				//console.log('Origine Calcul',_x1,_y1,'Origine Svg',svgLine.attr('x1'),svgLine.attr('y1'));
+				//console.log('Cible Calcul',_x2,_y2,'Cible Svg',svgLine.attr('x2'),svgLine.attr('y2'));
+				
+				svgLine.attr('x1',_x1);
+				svgLine.attr('y1',_y1);
+				svgLine.attr('x2',_x2);
+				svgLine.attr('y2',_y2);
+			})
+		})
+		svg.css('opacity',1);
+		console.log('SVG draw');
+	}
+}
+
+function InitCheckWycaByStep()
+{
+	
+	if (wycaApi.websocketAuthed)
+	{
+		//INIT 
+		$('#wyca_by_step_check .test').removeClass('test'); // REMOVE CLASS TEST
+		$('#wyca_by_step_check .checked').removeClass('checked'); // REMOVE CLASS CHECKED
+		$('.wyca_by_step_check_next').removeClass('disabled').addClass('disabled'); //DISABLE BTN
+		$('.wyca_by_step_check_next').html('<i class="fa fa fa-spinner fa-pulse"></i> '+textBtnCheckTest); // ADD SPINNER ON BTN
+		$('#wyca_by_step_check .is_checkbox').removeClass('component_ok component_warning component_error'); // REMOVE OLD TEST CLASS
+		
+		if(timer_anim_check!=undefined){clearTimeout(timer_anim_check);timer_anim_check=undefined;}
+		
+		let lg = $('#wyca_by_step_check div.is_checkbox:not(".checked")').length;
+		let rd = Math.floor(Math.random() * Math.floor(lg));
+		$('#wyca_by_step_check div.is_checkbox:not(".checked")').eq(rd).addClass('test');
+		
+		wycaApi.CheckComponents(function (data){
+			
+			save_check_components_result = data.D;
+			
+			/*
+			0: OK
+			1: Frequency warning
+			2: Frequency error
+			3: Software error;
+			4: Device error
+			5: Not applicable (for cam top)
+			*/
+			
+			if (data.D.LI == 0) $('#wyca_by_step_check_lidar').addClass('component_ok'); 
+			else if (data.D.LI == 1) $('#wyca_by_step_check_lidar').addClass('component_warning');
+			else $('#wyca_by_step_check_lidar').addClass('component_error'); 
+			
+			if (data.D.US == 0) $('#wyca_by_step_check_us').addClass('component_ok'); 
+			else if (data.D.US == 1) $('#wyca_by_step_check_us').addClass('component_warning');
+			else $('#wyca_by_step_check_us').addClass('component_error'); 
+			
+			if (data.D.M == 0) $('#wyca_by_step_check_motor').addClass('component_ok'); 
+			else if (data.D.M == 1) $('#wyca_by_step_check_motor').addClass('component_warning');
+			else $('#wyca_by_step_check_motor').addClass('component_error'); 
+			
+			if (data.D.B == 0) $('#wyca_by_step_check_battery').addClass('component_ok'); 
+			else if (data.D.B == 1) $('#wyca_by_step_check_battery').addClass('component_warning');
+			else $('#wyca_by_step_check_battery').addClass('component_error'); 
+			
+			if (data.D.CL == 0 && data.D.CR == 0) $('#wyca_by_step_check_cam3d').addClass('component_ok'); 
+			else if (data.D.CL <= 1 && data.D.CR <= 1) $('#wyca_by_step_check_cam3d').addClass('component_warning');
+			else $('#wyca_by_step_check_cam3d').addClass('component_error'); 
+			
+			if (data.D.LE == 0) $('#wyca_by_step_check_leds').addClass('component_ok'); 
+			else if (data.D.LE == 1) $('#wyca_by_step_check_leds').addClass('component_warning');
+			else $('#wyca_by_step_check_leds').addClass('component_error'); 
+			
+			setTimeout(StartAnimCheckComposantInstall, 2000);
+			
+		});
+		DrawSvgCheckWycaByStep();
+	}
+	else
+	{
+		setTimeout(InitCheckWycaByStep, 500);
+	}
+}
+
+/* BYSTEP */
 
 function InitMappingByStep()
 {
@@ -4077,10 +4272,10 @@ function GetLastMappingByStep()
 	if (wycaApi.websocketAuthed)
 	{
 		wycaApi.GetLastMapping(function(data) {
-			
+		//wycaApi.GetCurrentMapComplete(function(data) { //TEST W/0 MAPPING
 			if (data.A == wycaApi.AnswerCode.NO_ERROR)
 			{
-			
+				//data.D = data.D.image; //TEST W/0 MAPPING
 				var img = document.getElementById("install_by_step_mapping_img_map_saved_fin");
 				img.src = 'data:image/png;base64,' + data.D;
 				
@@ -4100,6 +4295,14 @@ function GetLastMappingByStep()
 					canvas.height = img.naturalHeight;
 					canvas.getContext('2d').drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
 					
+					//SVG MAP TRINARY
+					$('#install_by_step_mapping_svg').attr('width', img.naturalWidth);
+					$('#install_by_step_mapping_svg').attr('height', img.naturalHeight);
+					
+					$('#install_by_step_mapping_image').attr('width', img.naturalWidth);
+					$('#install_by_step_mapping_image').attr('height', img.naturalHeight);
+					
+					InitTrinaryMap();
 					CalculateMapTrinary();
 				}, 100);
 			}

@@ -2734,6 +2734,12 @@ function CalculateMapTrinaryDo()
 	idata.data.set(buffer);
 	ctx.putImageData(idata, 0, 0);
 	
+	//MAP TRINARY
+	
+	$('#install_by_step_mapping_image').attr('xlink:href', canvasDessin.toDataURL());
+	
+	$('#install_by_step_mapping_fin .img-responsive').attr('src',canvasDessin.toDataURL());
+	
 	$('#install_by_step_mapping_fin .loading_fin_create_map').hide();
 	$('#install_by_step_mapping_fin .bMappingSaveMap ').removeClass('disabled');
 }	

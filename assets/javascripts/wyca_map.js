@@ -1132,3 +1132,294 @@ function WycaShakeActiveElement()
 		}
 	}	
 }
+
+//TRINARY FUNCS ZOOM
+
+$(document).ready(function(e) {
+
+	/**************************/
+	/*        ZOOM            */
+	/**************************/
+	
+	$('#wyca_setup_trinary_zone_zoom_click').mousedown(function(e) {
+       e.preventDefault();
+	   downOnZoomClickTrinary = true;
+    });
+    
+	$('#wyca_setup_trinary_zone_zoom_click').mousemove(function(e) {
+       e.preventDefault();
+	   if (downOnZoomClickTrinary)
+	   {
+			w = $('#wyca_setup_trinary_zoom_carte').width();
+			h = $('#wyca_setup_trinary_zoom_carte').height();
+			
+			wZoom = $('#wyca_setup_trinary_zone_zoom').width();
+			hZoom = $('#wyca_setup_trinary_zone_zoom').height();
+			
+			x = e.offsetX - wZoom / 2;
+			y = e.offsetY - hZoom / 2;
+					
+			//zoom = current_map_obj.ros_width / $('#wyca_setup_trinary_svg').width() / window.panZoomWycaTrinary.getZoom();
+			zoom = TrinaryGetZoomWyca();
+			
+			largeur_img = current_map_obj.ros_width / zoom
+			
+			x = - x / w * largeur_img;
+			y = - y / w * largeur_img;
+			
+			window.panZoomWycaTrinary.pan({'x':x, 'y':y});
+	   }
+    });
+	
+	$('#wyca_setup_trinary_zone_zoom_click').click(function(e) {
+		e.preventDefault();
+		
+		w = $('#wyca_setup_trinary_zoom_carte').width();
+		h = $('#wyca_setup_trinary_zoom_carte').height();
+		
+		wZoom = $('#wyca_setup_trinary_zone_zoom').width();
+		hZoom = $('#wyca_setup_trinary_zone_zoom').height();
+		
+		x = e.offsetX - wZoom / 2;
+		y = e.offsetY - hZoom / 2;
+				
+		//zoom = current_map_obj.ros_width / $('#wyca_setup_trinary_svg').width() / window.panZoomWycaTrinary.getZoom();
+		zoom = TrinaryGetZoomWyca();
+		
+		largeur_img = current_map_obj.ros_width / zoom
+		
+		x = - x / w * largeur_img;
+		y = - y / w * largeur_img;
+		
+		window.panZoomWycaTrinary.pan({'x':x, 'y':y});
+	});
+	
+	$('#wyca_setup_trinary_zone_zoom_click').on('touchstart', function(e) {
+       e.preventDefault();
+	   downOnZoomClickTrinary = true;
+	   
+	    w = $('#wyca_setup_trinary_zoom_carte').width();
+		h = $('#wyca_setup_trinary_zoom_carte').height();
+		
+		wZoom = $('#wyca_setup_trinary_zone_zoom').width();
+		hZoom = $('#wyca_setup_trinary_zone_zoom').height();
+		
+		r = document.getElementById("wyca_setup_trinary_zoom_carte_container").getBoundingClientRect();
+		
+		x = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) : event.pageX) - r.left;
+		y = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) : event.pageY) - r.top;
+		
+		x = x - wZoom / 2;
+		y = y - hZoom / 2;
+				
+		//zoom = current_map_obj.ros_width / $('#wyca_setup_trinary_svg').width() / window.panZoomWycaTrinary.getZoom();
+		zoom = TrinaryGetZoomWyca();
+		
+		largeur_img = current_map_obj.ros_width / zoom
+		
+		x = - x / w * largeur_img;
+		y = - y / w * largeur_img;
+		
+		window.panZoomWycaTrinary.pan({'x':x, 'y':y});
+	   
+    });
+	
+	$('#wyca_setup_trinary_zone_zoom_click').on('touchend', function(e) {
+       e.preventDefault();
+	   downOnZoomClickTrinary = false;
+    });
+	
+	$('#wyca_setup_trinary_zone_zoom_click').on('touchmove', function(e) {
+       e.preventDefault();
+	   if (downOnZoomClickTrinary)
+	   {
+		    w = $('#wyca_setup_trinary_zoom_carte').width();
+			h = $('#wyca_setup_trinary_zoom_carte').height();
+			
+			wZoom = $('#wyca_setup_trinary_zone_zoom').width();
+			hZoom = $('#wyca_setup_trinary_zone_zoom').height();
+			
+			r = document.getElementById("wyca_setup_trinary_zoom_carte_container").getBoundingClientRect();
+		
+			x = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) : event.pageX) - r.left;
+			y = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) : event.pageY) - r.top;
+			
+			x = x - wZoom / 2;
+			y = y - hZoom / 2;
+					
+			//zoom = current_map_obj.ros_width / $('#wyca_setup_trinary_svg').width() / window.panZoomWycaTrinary.getZoom();
+			zoom = TrinaryGetZoomWyca();
+			
+			largeur_img = current_map_obj.ros_width / zoom
+			
+			x = - x / w * largeur_img;
+			y = - y / w * largeur_img;
+			
+			window.panZoomWycaTrinary.pan({'x':x, 'y':y});
+	   }
+    });
+	
+	$('#wyca_setup_trinary_svg').on('touchend', function(e) {
+		resetPanTrinary = true;
+	});
+	$('#wyca_setup_trinary_svg').on('touchstart', function(e) {
+		resetPanTrinary = true;
+	});
+})
+
+var downOnZoomClickTrinary = false;
+var resetPanTrinary = false;
+
+function InitTrinaryMapWyca()
+{
+	var eventsHandlerWyca;
+
+	eventsHandlerWyca = {
+	  haltEventListeners: ['touchstart', 'touchend', 'touchmove', 'touchleave', 'touchcancel', 'mousemove', 'mouseup', 'mousedown']
+	, init: function(options) {
+		var instance = options.instance
+		  , initialScale = 1
+		  , pannedX = 0
+		  , pannedY = 0
+
+		// Init Hammer
+		// Listen only for pointer and touch events
+		this.hammer = Hammer(options.svgElement, {
+		  inputClass: Hammer.SUPPORT_POINTER_EVENTS ? Hammer.PointerEventInput : Hammer.TouchInput
+		})
+
+		// Enable pinch
+		this.hammer.get('pinch').set({enable: true})
+
+		// Handle double tap
+		this.hammer.on('doubletap', function(ev){
+		  instance.zoomIn()
+		})
+
+		// Handle pan
+		this.hammer.on('panstart panmove', function(ev){
+			
+		  // On pan start reset panned variables
+		  if (ev.type === 'panstart' || resetPanTrinary) {
+			pannedX = 0;
+			pannedY = 0;
+			resetPanTrinary = false;
+		  }
+
+		  // Pan only the difference
+		  instance.panBy({x: ev.deltaX - pannedX, y: ev.deltaY - pannedY})
+		  pannedX = ev.deltaX
+		  pannedY = ev.deltaY
+		})
+
+		// Handle pinch
+		this.hammer.on('pinchstart pinchmove', function(ev){
+		  // On pinch start remember initial zoom
+		  if (ev.type === 'pinchstart') {
+			initialScale = instance.getZoom()
+			instance.zoomAtPoint(initialScale * ev.scale, {x: ev.center.x, y: ev.center.y})
+		  }
+
+		  instance.zoomAtPoint(initialScale * ev.scale, {x: ev.center.x, y: ev.center.y})
+		})
+		// Prevent moving the page on some devices when panning over SVG
+		options.svgElement.addEventListener('touchmove', function(e){ /*e.preventDefault(); */ });
+	  }
+
+	, destroy: function(){
+		this.hammer.destroy()
+	  }
+	}
+
+	if(typeof(window.panZoomWycaTrinary) != 'undefined')
+		window.panZoomWycaTrinary.destroy();
+	// Expose to window namespace for testing purposes
+	
+	window.panZoomWycaTrinary = svgPanZoom('#wyca_setup_trinary_svg', {
+	  zoomEnabled: true
+	, controlIconsEnabled: false
+	, maxZoom: 20
+	, fit: 1
+	, center: 1
+	, customEventsHandler: eventsHandlerWyca
+	, RefreshMap: function() { setTimeout(TrinaryRefreshZoomViewWyca, 10); }
+	});
+	
+	if(true){
+		//WORKING ON CONSOLE 
+		window.panZoomWycaTrinary.resize();
+		window.panZoomWycaTrinary.updateBBox();
+		window.panZoomWycaTrinary.fit();
+		window.panZoomWycaTrinary.center();
+	}
+	svgWycaTrinary = document.querySelector('#wyca_setup_trinary_svg .svg-pan-zoom_viewport');
+	
+	//window.panZoomWycaTrinary = {};
+	//window.panZoomWycaTrinary.getZoom = function () { return 1; }
+	TrinaryRefreshZoomViewWyca();
+	
+}
+
+function TrinaryGetZoomWyca()
+{
+	var obj = $('#wyca_setup_trinary_svg g');
+	obj.attr('id', 'wyca_setup_trinary_svg_g');
+	 var transformMatrix = obj.css("-webkit-transform") ||
+	   obj.css("-moz-transform")    ||
+	   obj.css("-ms-transform")     ||
+	   obj.css("-o-transform")      ||
+	   obj.css("transform");
+	   
+	if (transformMatrix == undefined && typeof(window.panZoomWycaTrinary) != 'undefined' )
+	 	return  current_map_obj.ros_width / $('#wyca_setup_trinary_svg').width() / window.panZoomWycaTrinary.getZoom()
+	if(transformMatrix != undefined){
+		var matrix = transformMatrix.replace(/[^0-9\-.,]/g, '').split(',');
+	 
+	 
+		return 1 / parseFloat(matrix[0]);
+	}else{
+		return 1;
+	}
+}
+
+function TrinaryRefreshZoomViewWyca()
+{
+	//console.log('TrinaryRefreshZoomViewWyca');
+	pSVG = $('#wyca_setup_trinary_svg').position();
+	pImg = $('#wyca_setup_trinary_svg image').position();
+	pImg.left -= pSVG.left;
+	pImg.top -= pSVG.top;
+	
+	//zoom = ros_width / $('#wyca_setup_trinary_svg').width() / window.panZoom.getZoom();
+	zoom = TrinaryGetZoomWyca();
+	
+	wZoom = $('#wyca_setup_trinary_zoom_carte').width();
+	hZoom = $('#wyca_setup_trinary_zoom_carte').height();
+	
+	wNew = 0;
+	hNew = 0;
+	tNew = 0;
+	lNew = 0;
+	
+	if (false && pImg.left > 0)
+		lNew = 0;
+	else
+		lNew = -(pImg.left*zoom) / current_map_obj.ros_width * wZoom;
+	if (false && pImg.top > 0)
+		tNew = 0;
+	else
+		tNew = -(pImg.top*zoom) / current_map_obj.ros_width * wZoom;
+	
+	hNew = $('#wyca_setup_trinary_svg').height() * zoom  / current_map_obj.ros_width * wZoom;
+	wNew = $('#wyca_setup_trinary_svg').width() * zoom  / current_map_obj.ros_width * wZoom;
+	
+	//if (tNew + hNew > hZoom) hNew = hZoom - tNew;
+	//if (lNew + wNew > wZoom) wNew = wZoom - lNew;
+		
+	$('#wyca_setup_trinary_zone_zoom').width(wNew);
+	$('#wyca_setup_trinary_zone_zoom').height(hNew);
+				
+	$('#wyca_setup_trinary_zone_zoom').css('top', tNew - 1);
+	$('#wyca_setup_trinary_zone_zoom').css('left', lNew - 1);
+	
+}

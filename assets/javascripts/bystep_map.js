@@ -1119,3 +1119,294 @@ function ByStepShakeActiveElement()
 		}
 	}	
 }
+
+//TRINARY FUNCS ZOOM
+
+$(document).ready(function(e) {
+
+	/**************************/
+	/*        ZOOM            */
+	/**************************/
+	
+	$('#install_by_step_mapping_zone_zoom_click').mousedown(function(e) {
+       e.preventDefault();
+	   downOnZoomClickTrinary = true;
+    });
+    
+	$('#install_by_step_mapping_zone_zoom_click').mousemove(function(e) {
+       e.preventDefault();
+	   if (downOnZoomClickTrinary)
+	   {
+			w = $('#install_by_step_mapping_zoom_carte').width();
+			h = $('#install_by_step_mapping_zoom_carte').height();
+			
+			wZoom = $('#install_by_step_mapping_zone_zoom').width();
+			hZoom = $('#install_by_step_mapping_zone_zoom').height();
+			
+			x = e.offsetX - wZoom / 2;
+			y = e.offsetY - hZoom / 2;
+					
+			//zoom = $('#install_by_step_mapping_image').attr('width') / $('#install_by_step_mapping_svg').width() / window.panZoomTrinary.getZoom();
+			zoom = TrinaryGetZoom();
+			
+			largeur_img = $('#install_by_step_mapping_image').attr('width') / zoom
+			
+			x = - x / w * largeur_img;
+			y = - y / w * largeur_img;
+			
+			window.panZoomTrinary.pan({'x':x, 'y':y});
+	   }
+    });
+	
+	$('#install_by_step_mapping_zone_zoom_click').click(function(e) {
+		e.preventDefault();
+		
+		w = $('#install_by_step_mapping_zoom_carte').width();
+		h = $('#install_by_step_mapping_zoom_carte').height();
+		
+		wZoom = $('#install_by_step_mapping_zone_zoom').width();
+		hZoom = $('#install_by_step_mapping_zone_zoom').height();
+		
+		x = e.offsetX - wZoom / 2;
+		y = e.offsetY - hZoom / 2;
+				
+		//zoom = $('#install_by_step_mapping_image').attr('width') / $('#install_by_step_mapping_svg').width() / window.panZoomTrinary.getZoom();
+		zoom = TrinaryGetZoom();
+		
+		largeur_img = $('#install_by_step_mapping_image').attr('width') / zoom
+		
+		x = - x / w * largeur_img;
+		y = - y / w * largeur_img;
+		
+		window.panZoomTrinary.pan({'x':x, 'y':y});
+	});
+	
+	$('#install_by_step_mapping_zone_zoom_click').on('touchstart', function(e) {
+       e.preventDefault();
+	   downOnZoomClickTrinary = true;
+	   
+	    w = $('#install_by_step_mapping_zoom_carte').width();
+		h = $('#install_by_step_mapping_zoom_carte').height();
+		
+		wZoom = $('#install_by_step_mapping_zone_zoom').width();
+		hZoom = $('#install_by_step_mapping_zone_zoom').height();
+		
+		r = document.getElementById("install_by_step_mapping_zoom_carte_container").getBoundingClientRect();
+		
+		x = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) : event.pageX) - r.left;
+		y = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) : event.pageY) - r.top;
+		
+		x = x - wZoom / 2;
+		y = y - hZoom / 2;
+				
+		//zoom = $('#install_by_step_mapping_image').attr('width') / $('#install_by_step_mapping_svg').width() / window.panZoomTrinary.getZoom();
+		zoom = TrinaryGetZoom();
+		
+		largeur_img = $('#install_by_step_mapping_image').attr('width') / zoom
+		
+		x = - x / w * largeur_img;
+		y = - y / w * largeur_img;
+		
+		window.panZoomTrinary.pan({'x':x, 'y':y});
+	   
+    });
+	
+	$('#install_by_step_mapping_zone_zoom_click').on('touchend', function(e) {
+       e.preventDefault();
+	   downOnZoomClickTrinary = false;
+    });
+	
+	$('#install_by_step_mapping_zone_zoom_click').on('touchmove', function(e) {
+       e.preventDefault();
+	   if (downOnZoomClickTrinary)
+	   {
+		    w = $('#install_by_step_mapping_zoom_carte').width();
+			h = $('#install_by_step_mapping_zoom_carte').height();
+			
+			wZoom = $('#install_by_step_mapping_zone_zoom').width();
+			hZoom = $('#install_by_step_mapping_zone_zoom').height();
+			
+			r = document.getElementById("install_by_step_mapping_zoom_carte_container").getBoundingClientRect();
+		
+			x = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX) : event.pageX) - r.left;
+			y = (event.targetTouches ? (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY) : event.pageY) - r.top;
+			
+			x = x - wZoom / 2;
+			y = y - hZoom / 2;
+					
+			//zoom = $('#install_by_step_mapping_image').attr('width') / $('#install_by_step_mapping_svg').width() / window.panZoomTrinary.getZoom();
+			zoom = TrinaryGetZoom();
+			
+			largeur_img = $('#install_by_step_mapping_image').attr('width') / zoom
+			
+			x = - x / w * largeur_img;
+			y = - y / w * largeur_img;
+			
+			window.panZoomTrinary.pan({'x':x, 'y':y});
+	   }
+    });
+	
+	$('#install_by_step_mapping_svg').on('touchend', function(e) {
+		resetPanTrinary = true;
+	});
+	$('#install_by_step_mapping_svg').on('touchstart', function(e) {
+		resetPanTrinary = true;
+	});
+})
+
+var downOnZoomClickTrinary = false;
+var resetPanTrinary = false;
+
+function InitTrinaryMap()
+{
+	var eventsHandlerWyca;
+
+	eventsHandlerWyca = {
+	  haltEventListeners: ['touchstart', 'touchend', 'touchmove', 'touchleave', 'touchcancel', 'mousemove', 'mouseup', 'mousedown']
+	, init: function(options) {
+		var instance = options.instance
+		  , initialScale = 1
+		  , pannedX = 0
+		  , pannedY = 0
+
+		// Init Hammer
+		// Listen only for pointer and touch events
+		this.hammer = Hammer(options.svgElement, {
+		  inputClass: Hammer.SUPPORT_POINTER_EVENTS ? Hammer.PointerEventInput : Hammer.TouchInput
+		})
+
+		// Enable pinch
+		this.hammer.get('pinch').set({enable: true})
+
+		// Handle double tap
+		this.hammer.on('doubletap', function(ev){
+		  instance.zoomIn()
+		})
+
+		// Handle pan
+		this.hammer.on('panstart panmove', function(ev){
+			
+		  // On pan start reset panned variables
+		  if (ev.type === 'panstart' || resetPanTrinary) {
+			pannedX = 0;
+			pannedY = 0;
+			resetPanTrinary = false;
+		  }
+
+		  // Pan only the difference
+		  instance.panBy({x: ev.deltaX - pannedX, y: ev.deltaY - pannedY})
+		  pannedX = ev.deltaX
+		  pannedY = ev.deltaY
+		})
+
+		// Handle pinch
+		this.hammer.on('pinchstart pinchmove', function(ev){
+		  // On pinch start remember initial zoom
+		  if (ev.type === 'pinchstart') {
+			initialScale = instance.getZoom()
+			instance.zoomAtPoint(initialScale * ev.scale, {x: ev.center.x, y: ev.center.y})
+		  }
+
+		  instance.zoomAtPoint(initialScale * ev.scale, {x: ev.center.x, y: ev.center.y})
+		})
+		// Prevent moving the page on some devices when panning over SVG
+		options.svgElement.addEventListener('touchmove', function(e){ /*e.preventDefault(); */ });
+	  }
+
+	, destroy: function(){
+		this.hammer.destroy()
+	  }
+	}
+
+	if(typeof(window.panZoomTrinary) != 'undefined')
+		window.panZoomTrinary.destroy();
+	// Expose to window namespace for testing purposes
+	
+	window.panZoomTrinary = svgPanZoom('#install_by_step_mapping_svg', {
+	  zoomEnabled: true
+	, controlIconsEnabled: false
+	, maxZoom: 20
+	, fit: 1
+	, center: 1
+	, customEventsHandler: eventsHandlerWyca
+	, RefreshMap: function() { setTimeout(TrinaryRefreshZoomView, 10); }
+	});
+	
+	if(true){
+		//WORKING ON CONSOLE 
+		window.panZoomTrinary.resize();
+		window.panZoomTrinary.updateBBox();
+		window.panZoomTrinary.fit();
+		window.panZoomTrinary.center();
+	}
+	svgTrinary = document.querySelector('#install_by_step_mapping_svg .svg-pan-zoom_viewport');
+	
+	//window.panZoomTrinary = {};
+	//window.panZoomTrinary.getZoom = function () { return 1; }
+	TrinaryRefreshZoomView();
+	
+}
+
+function TrinaryGetZoom()
+{
+	var obj = $('#install_by_step_mapping_svg g');
+	obj.attr('id', 'install_by_step_mapping_svg_g');
+	 var transformMatrix = obj.css("-webkit-transform") ||
+	   obj.css("-moz-transform")    ||
+	   obj.css("-ms-transform")     ||
+	   obj.css("-o-transform")      ||
+	   obj.css("transform");
+	   
+	if (transformMatrix == undefined && typeof(window.panZoomTrinary) != 'undefined' )
+	 	return  $('#install_by_step_mapping_image').attr('width') / $('#install_by_step_mapping_svg').width() / window.panZoomTrinary.getZoom()
+	if(transformMatrix != undefined){
+		var matrix = transformMatrix.replace(/[^0-9\-.,]/g, '').split(',');
+	 
+	 
+		return 1 / parseFloat(matrix[0]);
+	}else{
+		return 1;
+	}
+}
+
+function TrinaryRefreshZoomView()
+{
+	//console.log('TrinaryRefreshZoomView');
+	pSVG = $('#install_by_step_mapping_svg').position();
+	pImg = $('#install_by_step_mapping_svg image').position();
+	pImg.left -= pSVG.left;
+	pImg.top -= pSVG.top;
+	
+	//zoom = ros_width / $('#install_by_step_mapping_svg').width() / window.panZoom.getZoom();
+	zoom = TrinaryGetZoom();
+	
+	wZoom = $('#install_by_step_mapping_zoom_carte').width();
+	hZoom = $('#install_by_step_mapping_zoom_carte').height();
+	
+	wNew = 0;
+	hNew = 0;
+	tNew = 0;
+	lNew = 0;
+	
+	if (false && pImg.left > 0)
+		lNew = 0;
+	else
+		lNew = -(pImg.left*zoom) / $('#install_by_step_mapping_image').attr('width') * wZoom;
+	if (false && pImg.top > 0)
+		tNew = 0;
+	else
+		tNew = -(pImg.top*zoom) / $('#install_by_step_mapping_image').attr('width') * wZoom;
+	
+	hNew = $('#install_by_step_mapping_svg').height() * zoom  / $('#install_by_step_mapping_image').attr('width') * wZoom;
+	wNew = $('#install_by_step_mapping_svg').width() * zoom  / $('#install_by_step_mapping_image').attr('width') * wZoom;
+	
+	//if (tNew + hNew > hZoom) hNew = hZoom - tNew;
+	//if (lNew + wNew > wZoom) wNew = wZoom - lNew;
+		
+	$('#install_by_step_mapping_zone_zoom').width(wNew);
+	$('#install_by_step_mapping_zone_zoom').height(hNew);
+				
+	$('#install_by_step_mapping_zone_zoom').css('top', tNew - 1);
+	$('#install_by_step_mapping_zone_zoom').css('left', lNew - 1);
+	
+}
