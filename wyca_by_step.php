@@ -475,7 +475,7 @@
                 
 				<div class="ifUndocked ifNRecovery">
                     <div style="text-align:center; width:100%; z-index:2000; margin-top:20px;">
-                        <div class="joystickDiv" draggable="false" style="margin:auto;">
+                        <div class="joystickDiv withoutForbidden" draggable="false" style="margin:auto;">
                             <div class="fond"></div>
                             <div class="curseur"></div>
                         </div>
@@ -576,7 +576,7 @@
                     <a href="#" class="bUndock btn btn-primary btn_big_popup ifDocked" style="position: absolute;bottom: 50px;z-index: 2000;display: none;left:50%;transform:translateX(-50%)"><i class="fa fa-upload"></i> <?php echo __('Undock robot');?></a>
                     <div class="btn_big_popup ifDocking ifUndocking" style="position: absolute;bottom: 50px;z-index: 2000;display: none;left:50%;transform:translateX(-50%)"><i class="fa fa fa-spinner fa-pulse"></i></div>
                     <div class="ifUndocked" style="position:absolute; bottom:50px; left:0; width:100%; z-index:2000;">
-                        <div class="joystickDiv" draggable="false" style="margin:auto;">
+                        <div class="joystickDiv withoutForbidden" draggable="false" style="margin:auto;">
                             <div class="fond"></div>
                             <div class="curseur"></div>
                         </div>
@@ -934,7 +934,7 @@
 										   
 											<div class="ifUndocked ifNRecovery">
 												<div style="text-align:center; width:100%; z-index:2000; margin-top:20px;">
-													<div class="joystickDiv" draggable="false" style="margin:auto;">
+													<div class="joystickDiv withoutForbidden" draggable="false" style="margin:auto;">
 														<div class="fond"></div>
 														<div class="curseur"></div>
 													</div>

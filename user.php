@@ -407,7 +407,7 @@
 		   
 			<div class="ifUndocked ifNRecovery">
 				<div style="text-align:center; width:100%; z-index:2000; margin-top:20px;">
-					<div class="joystickDiv" draggable="false" style="margin:auto;">
+					<div class="joystickDiv withoutForbidden" draggable="false" style="margin:auto;">
 						<div class="fond"></div>
 						<div class="curseur"></div>
 					</div>

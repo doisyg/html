@@ -1,6 +1,5 @@
 var JoystickDebug = false;
 var isManette = false;
-
 /* DYNAMICS VAR */
 var widthCurseurJoystick = 104;
 var heightCurseurJoystick = 104;
@@ -23,6 +22,7 @@ var nbCall0 = 0;
 var lastValueX = 0;
 var lastValueY = 0;
 var isDown = false;
+var teleopSafe = true;
 
 var delayPublish = 200;
 var intervalSendCommande = null;
@@ -71,6 +71,7 @@ $(document).ready(function(e) {
 	
 	$('.joystickDiv .curseur').mousedown(function(e){
 		e.preventDefault();
+		teleopSafe = $(this).parent().hasClass('withoutForbidden')? false:true;
 		isDown = true;
 		SetCurseurV2(e.pageX, e.pageY);
 	});
@@ -95,6 +96,7 @@ $(document).ready(function(e) {
 	
 	$('.joystickDiv .curseur').on('touchmove', function(e){
 		isDown = true;
+		teleopSafe = $(this).parent().hasClass('withoutForbidden')? false:true;
 		SetCurseurV2((event.targetTouches[0] ? event.targetTouches[0].pageX : event.changedTouches[event.changedTouches.length-1].pageX), (event.targetTouches[0] ? event.targetTouches[0].pageY : event.changedTouches[event.changedTouches.length-1].pageY));
 		
 		if (intervalSendCommande == null)
@@ -139,7 +141,7 @@ function SetVitesse(v)
 
 function SetCurseurV2(x, y)
 {	
-	d = distanceJoystick (x, y, xCentre, yCentre);
+	d = DistanceJoystick (x, y, xCentre, yCentre);
 	
 	if ($('.joystickDiv:visible').length > 0)
 	{
@@ -237,14 +239,19 @@ function SendCommande()
 			if (nbCall0 < 5)
 			{
 				nbCall0++;
-				wycaApi.Teleop(lastValueX * -0.7, lastValueY * -1.2);
+				if(teleopSafe)
+					wycaApi.Teleop(lastValueX * -0.7, lastValueY * -1.2);
+				else
+					wycaApi.TeleopWithoutForbidden(lastValueX * -0.7, lastValueY * -1.2);
 				if(JoystickDebug){
-					console.log('Wyca Teleop X Z');
-					console.log(Date.now(),lastValueX * -0.7, lastValueY * -1.2);
+					let temp = 'Teleop';
+					temp += !teleopSafe?' w/oF 0 0 ':' 0 0 ';
+					console.log(temp+TimeDebug(),lastValueX * -0.7, lastValueY * -1.2);
 				}
 			}
 			else
 			{
+				teleopSafe=true;
 				clearInterval(intervalSendCommande);
 				intervalSendCommande = null;
 			}
@@ -252,16 +259,44 @@ function SendCommande()
 		else if (isDown)
 		{
 			nbCall0 = 0;
-			wycaApi.Teleop(lastValueX * -0.7, lastValueY * -1.2);
+			if(teleopSafe)
+				wycaApi.Teleop(lastValueX * -0.7, lastValueY * -1.2);
+			else
+				wycaApi.TeleopWithoutForbidden(lastValueX * -0.7, lastValueY * -1.2);
 			if(JoystickDebug){
-				console.log('Wyca Teleop X Z');
-				console.log(Date.now(),lastValueX * -0.7, lastValueY * -1.2);
+				let temp = 'Teleop';
+				temp += !teleopSafe?' w/oF X Z ':' X Z ';
+				console.log(temp+TimeDebug(),lastValueX * -0.7, lastValueY * -1.2);
 			}
 		}
 	}
 }
 
-function distanceJoystick(x1, y1, x2, y2)
+function DistanceJoystick(x1, y1, x2, y2)
 {
 	return Math.sqrt( (x2-x1)*(x2-x1) + (y2-y1)*(y2-y1));
+}
+
+function TimeDebug()
+{
+	let date = new Date(Date.now());
+	let day = false;
+	let month = false;
+	let year = false;
+	let hour = false;
+	let minute = true;
+	let second = true;
+	let milisecond = true;
+	
+	let res = '';
+	res += day?date.getDay()+"/":'';
+	res += month?date.getMonth()+"/":'';
+	res += year?date.getYear()+"/":'';
+	res += hour?date.getHours()+":":'';
+	res += minute?date.getMinutes()+":":'';
+	res += second?date.getSeconds()+":":'';
+	res += milisecond?date.getMilliseconds():'';
+	if(res.substr(res.length - 1) == ':' || res.substr(res.length - 1) == '/')
+		res = res.slice(0, -1)
+	return res;
 }
